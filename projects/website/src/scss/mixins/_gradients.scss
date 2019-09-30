@@ -1,0 +1,3 @@
+@mixin gradient($color-map) {
+    background: linear-gradient(map-get($color-map, main), map-get($color-map, darker));
+}

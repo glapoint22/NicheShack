@@ -1,0 +1,23 @@
+
+// ....................................................................Generate Color Map..................................................................
+@function generate-color-map($main-color) {
+    $scale: 25%;
+    $color-map: ();
+    $color-list: darkest, darker, dark, main, light, lighter, lightest;
+
+    $percentage: -(3 * $scale);
+
+    @each $color-name in $color-list {
+        $color-map: map-merge($color-map, ($color-name: scale-color($main-color, $lightness: $percentage)));
+        $percentage: $percentage + $scale;
+    }
+
+    @return $color-map;
+}
+
+
+
+// ....................................................................Get Class Extension..................................................................
+@function get-class-extension($breakpoint-key) {
+   @return if(map-get($breakpoints, $breakpoint-key) == 0, "", "-#{$breakpoint-key}");
+}

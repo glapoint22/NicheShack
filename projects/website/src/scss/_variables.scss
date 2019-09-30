@@ -1,0 +1,20 @@
+$font-size-base: 14px;
+$font-weight-base: 400;
+$line-height-base: 1.5;
+$num-columns: 12;
+$base-color: #e6e6e6;
+$background-color: #1b1b1b;
+$primary-theme-color: #8a0077;
+$primary-theme-colors: generate-color-map($primary-theme-color);
+$alt-theme-color: #ffba00;
+$alt-theme-colors: generate-color-map($alt-theme-color);
+$breakpoints: (
+    xxs: 0,
+    xs: 480px,
+    sm: 600px,
+    md: 768px,
+    lg: 1024px,
+    xl: 1280px,
+    xxl: 1440px
+);
+$displays: none, inline, inline-block, block, table, table-row, table-cell, flex, inline-flex;

@@ -1,0 +1,12 @@
+// ....................................................................Media Breakpoint..................................................................
+@mixin media-breakpoint($breakpoint) {
+    // If the breakpoint is not zero, create the media query
+    @if $breakpoint != 0 {
+        @media (min-width: $breakpoint) {
+            @content;
+        }
+    } @else {
+        // Dont's create the media query, just use the content
+        @content;
+    }
+}

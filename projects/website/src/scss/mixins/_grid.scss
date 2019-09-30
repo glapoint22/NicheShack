@@ -1,0 +1,80 @@
+// .......................................................................Make Grid......................................................................
+@mixin make-grid() {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    // Create a media query for each breakpoint
+    @each $key in map-keys($breakpoints) {
+        $breakpoint: map-get($breakpoints, $key);
+        
+        @include media-breakpoint($breakpoint) {
+            max-width: if($breakpoint == 0, 100%, #{($breakpoint * 0.95)});
+        }
+    }
+}
+
+
+
+// .......................................................................Make Columns......................................................................
+@mixin make-columns() {
+    // Create the placeholder selector
+    %column {
+        position: relative;
+        width: 100%;
+    }
+    
+    // Loop through the breakpoints
+    @each $key in map-keys($breakpoints) {
+        // This will be either an empty string or the breakpoint key (-xs)
+        $extension: get-class-extension($key);
+
+        // Create the column classes (.col-xs-4)
+        @for $i from 1 through $num-columns {
+            .col#{$extension}-#{$i} {
+                @extend %column;
+            }
+        }
+
+        // .col-lg          .col-md-auto
+        .col#{$extension}, .col#{$extension}-auto {
+            @extend %column;
+        }
+
+        
+        // Create the media queries for each column class
+        @include media-breakpoint(map-get($breakpoints, $key)) {
+            .col#{$extension}{
+                flex-basis: 0;
+                flex-grow: 1;
+                max-width: 100%;
+            }
+
+            .col#{$extension}-auto {
+                flex: 0 0 auto;
+                width: auto;
+                max-width: 100%;
+            }
+
+
+            @for $i from 1 through $num-columns {
+                .col#{$extension}-#{$i} {
+                    flex: 0 0 percentage($i / $num-columns);
+                    max-width: percentage($i / $num-columns);
+                }
+            }
+
+
+            // This will create the offset class
+            // $num-columns - 1 because offsetting by the width of an entire row isn't possible
+            @for $i from 0 through ($num-columns - 1) {
+                @if not ($extension == "" and $i == 0) {
+                    .offset#{$extension}-#{$i} {
+                        $num: $i / $num-columns;
+                        margin-left: if($num == 0, 0, percentage($num));
+                    }
+                }
+            }
+        }
+    }
+}
