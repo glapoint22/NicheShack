@@ -1,0 +1,11 @@
+@mixin button-colors($backgrond-color1, $background-color2, $font-color) {
+    background: linear-gradient($backgrond-color1, $background-color2);
+    color: $font-color;
+    &:hover:not(:disabled) {
+        background: linear-gradient(darken($backgrond-color1, 5%), darken($background-color2, 5%));
+    }
+    &:disabled {
+        background: linear-gradient(darken($backgrond-color1, 20%), darken($background-color2, 10%));
+        color: darken($font-color, 50%);
+    }
+}

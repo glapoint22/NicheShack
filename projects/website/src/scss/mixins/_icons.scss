@@ -1,0 +1,15 @@
+@mixin fontawesome-icon($name, $font) {
+    .#{$name} {
+        font-family: FontAwesome;
+        -webkit-font-smoothing: antialiased;
+        display: block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+        @content;
+        &:before {
+            content: $font;
+        }
+    }
+}

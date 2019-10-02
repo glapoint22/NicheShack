@@ -1,0 +1,68 @@
+@each $key in map-keys($breakpoints) {
+    @include media-breakpoint($key) {
+        $extension: get-class-extension($key);
+
+        // Margin and padding properties
+        $margin: mrg;
+        $padding: pad;
+
+        // Positions
+        $top: top;
+        $right: rgt;
+        $bottom: bot;
+        $left: lft;
+
+        // This will create margins and paddings
+        @each $prop, $abbrev in (margin: $margin, padding: $padding) {
+            @each $size, $length in $spacers {
+                .#{$abbrev}#{$extension}-#{$size} { #{$prop}: $length; }
+                .#{$abbrev}-#{$top}#{$extension}-#{$size} {
+                    #{$prop}-top: $length;
+                }
+                .#{$abbrev}-#{$right}#{$extension}-#{$size} {
+                    #{$prop}-right: $length;
+                }
+                .#{$abbrev}-#{$bottom}#{$extension}-#{$size} {
+                    #{$prop}-bottom: $length;
+                }
+                .#{$abbrev}-#{$left}#{$extension}-#{$size} {
+                    #{$prop}-left: $length;
+                }
+            }
+        }
+
+        // Negative margins
+        @each $size, $length in $spacers {
+            @if $size != 0 {
+                .#{$margin}#{$extension}-n#{$size} { margin: -$length; }
+                .#{$margin}-#{$top}#{$extension}-n#{$size} {
+                    margin-top: -$length;
+                }
+                .#{$margin}-#{$right}#{$extension}-n#{$size} {
+                    margin-right: -$length;
+                }
+                .#{$margin}-#{$bottom}#{$extension}-n#{$size} {
+                    margin-bottom: -$length;
+                }
+                .#{$margin}-#{$left}#{$extension}-n#{$size} {
+                    margin-left: -$length;
+                }
+            }
+        }
+
+        // Margin auto
+        .#{$margin}#{$extension}-auto { margin: auto; }
+        .#{$margin}-#{$top}#{$extension}-auto {
+            margin-top: auto;
+        }
+        .#{$margin}-#{$right}#{$extension}-auto {
+            margin-right: auto;
+        }
+        .#{$margin}-#{$bottom}#{$extension}-auto {
+            margin-bottom: auto;
+        }
+        .#{$margin}-#{$left}#{$extension}-auto {
+            margin-left: auto;
+        }
+    }
+}

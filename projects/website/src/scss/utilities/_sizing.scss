@@ -1,0 +1,5 @@
+@each $prop, $abbrev in (width: wdh, height: hgt) {
+    @each $size, $length in $sizes {
+        .#{$abbrev}-#{$size} { #{$prop}: $length; }
+    }
+}

@@ -43,7 +43,7 @@
 
         
         // Create the media queries for each column class
-        @include media-breakpoint(map-get($breakpoints, $key)) {
+        @include media-breakpoint($key) {
             .col#{$extension}{
                 flex-basis: 0;
                 flex-grow: 1;

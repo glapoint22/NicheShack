@@ -1,0 +1,7 @@
+<button #button class="dropdown-button" (mousedown)="onMousedown(dropdown)" (click)="onClick(dropdown)">Health & Fitness</button>
+<div>
+    <div #dropdown class="dropdown" tabindex="0" (keydown)="onKeydown($event, dropdown)" (blur)="onBlur(dropdown)" [style.minWidth.px]="button.clientWidth">
+        <div>Health & Fitness</div>
+        <div>There</div>
+    </div>
+</div>

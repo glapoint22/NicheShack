@@ -1,5 +1,7 @@
 // ....................................................................Media Breakpoint..................................................................
-@mixin media-breakpoint($breakpoint) {
+@mixin media-breakpoint($key) {
+    $breakpoint: map-get($breakpoints, $key);
+
     // If the breakpoint is not zero, create the media query
     @if $breakpoint != 0 {
         @media (min-width: $breakpoint) {

@@ -1,9 +1,13 @@
 @each $key in map-keys($breakpoints) {
-    @include media-breakpoint(map-get($breakpoints, $key)) {
+    @include media-breakpoint($key) {
         $extension: get-class-extension($key);
 
-        @each $value in $displays {
-            .disp#{$extension}-#{$value} { display: $value; }
+        .hide#{$extension} {
+            display: none;
+        }
+
+        .show#{$extension} {
+            display: block;
         }
     }
 }
