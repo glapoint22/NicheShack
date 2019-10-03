@@ -1,0 +1,48 @@
+// Borders
+.border         { border: $border-width solid; }
+.border-top     { border-top: $border-width solid; }
+.border-right   { border-right: $border-width solid; }
+.border-bottom  { border-bottom: $border-width solid; }
+.border-left    { border-left: $border-width solid; }
+
+.border-0        { border: 0; }
+.border-top-0    { border-top: 0; }
+.border-right-0  { border-right: 0; }
+.border-bottom-0 { border-bottom: 0; }
+.border-left-0   { border-left: 0; }
+.outline         { outline: $border-width solid; }
+.outline-0       { outline: 0; }
+
+
+// Border colors
+.border-gray {border-color: #3d3d3d}
+.border-primary-color {border-color: $primary-theme-color}
+.border-alt-color {border-color: $alt-theme-color}
+
+
+// Border rounded
+.border-rounded {
+    border-radius: $border-radius;
+}
+.border-rounded-top {
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+}
+.border-rounded-right {
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+}
+.border-rounded-bottom {
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+}
+.border-rounded-left {
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+}
+.border-rounded-circle {
+    border-radius: 50%;
+}
+.border-rounded-0 {
+    border-radius: 0;
+}

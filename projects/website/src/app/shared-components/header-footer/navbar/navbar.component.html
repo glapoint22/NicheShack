@@ -1,6 +1,21 @@
-<nav class="navbar theme-gradient">
-    <img src="assets/Logo.png">
-    <i class="menu-bars mrg-lft-3 mrg-rgt-4"></i>
-    <dropdown-button></dropdown-button>
-    <input class="wdh-50 pad-1">
+<nav class="navbar theme-gradient shadow">
+    <!-- Logo and menu bars -->
+    <img src="assets/Logo.png" class="flex-shrink-0">
+    <i class="menu-bars margin-left-4 margin-right-4"></i>
+
+    <!-- Search -->
+    <div class="display-flex width-70">
+        <dropdown-button [isRounded]="true" [items]="searchCategories"></dropdown-button>
+        <input class="flex-fill padding-left-2 border-0 outline-0">
+        <button class="alt-button button-rounded-right"><i class="fas fa-search"></i></button>
+    </div>
+
+    <div class="margin-left-4 margin-bottom-n2">
+        <div>Hello, Gabe</div>
+        <div class="display-flex alt-theme-color">
+            <div class="margin-right-5">Account</div>
+            <div class="margin-right-5">Orders</div>
+            <div>Order Support</div>
+        </div>
+    </div>
 </nav>

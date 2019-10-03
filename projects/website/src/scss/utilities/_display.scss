@@ -9,5 +9,9 @@
         .show#{$extension} {
             display: block;
         }
+
+        @each $value in $displays {
+            .display#{$extension}-#{$value} { display: $value; }
+        }
     }
 }

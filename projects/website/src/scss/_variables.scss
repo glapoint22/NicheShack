@@ -2,6 +2,8 @@ $font-size-base: 14px;
 $font-weight-base: 400;
 $line-height-base: 1.5;
 $num-columns: 12;
+$border-width: 1px;
+$border-radius: .25rem;
 
 
 // Colors
@@ -11,7 +13,7 @@ $primary-theme-color: #8a0077;
 $primary-theme-colors: generate-color-map($primary-theme-color);
 $alt-theme-color: #ffba00;
 $alt-theme-colors: generate-color-map($alt-theme-color);
-$default-button-colors: #7f7f7f, #494949;
+$default-button-colors: #919191, #696969;
 
 // Breakpoints
 $breakpoints: (
@@ -49,3 +51,6 @@ $sizes: (
     100: 100%,
     auto: auto
 );
+
+// Displays
+$displays: inline, inline-block, block, table, table-row, table-cell, flex, inline-flex;

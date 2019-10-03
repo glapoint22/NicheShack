@@ -1,0 +1,45 @@
+@each $key in map-keys($breakpoints) {
+    @include media-breakpoint($key) {
+        $extension: get-class-extension($key);
+
+        .flex#{$extension}-row            { flex-direction: row; }
+        .flex#{$extension}-column         { flex-direction: column; }
+        .flex#{$extension}-row-reverse    { flex-direction: row-reverse; }
+        .flex#{$extension}-column-reverse { flex-direction: column-reverse; }
+
+        .flex#{$extension}-wrap         { flex-wrap: wrap; }
+        .flex#{$extension}-nowrap       { flex-wrap: nowrap; }
+        .flex#{$extension}-wrap-reverse { flex-wrap: wrap-reverse; }
+        .flex#{$extension}-fill         { flex: 1 1 auto; }
+        .flex#{$extension}-grow-0       { flex-grow: 0; }
+        .flex#{$extension}-grow-1       { flex-grow: 1; }
+        .flex#{$extension}-shrink-0     { flex-shrink: 0; }
+        .flex#{$extension}-shrink-1     { flex-shrink: 1; }
+
+        .justify-content#{$extension}-start   { justify-content: flex-start; }
+        .justify-content#{$extension}-end     { justify-content: flex-end; }
+        .justify-content#{$extension}-center  { justify-content: center; }
+        .justify-content#{$extension}-between { justify-content: space-between; }
+        .justify-content#{$extension}-around  { justify-content: space-around; }
+
+        .align-items#{$extension}-start    { align-items: flex-start; }
+        .align-items#{$extension}-end      { align-items: flex-end; }
+        .align-items#{$extension}-center   { align-items: center; }
+        .align-items#{$extension}-baseline { align-items: baseline; }
+        .align-items#{$extension}-stretch  { align-items: stretch; }
+
+        .align-content#{$extension}-start   { align-content: flex-start; }
+        .align-content#{$extension}-end     { align-content: flex-end; }
+        .align-content#{$extension}-center  { align-content: center; }
+        .align-content#{$extension}-between { align-content: space-between; }
+        .align-content#{$extension}-around  { align-content: space-around; }
+        .align-content#{$extension}-stretch { align-content: stretch; }
+
+        .align-self#{$extension}-auto     { align-self: auto; }
+        .align-self#{$extension}-start    { align-self: flex-start; }
+        .align-self#{$extension}-end      { align-self: flex-end; }
+        .align-self#{$extension}-center   { align-self: center; }
+        .align-self#{$extension}-baseline { align-self: baseline; }
+        .align-self#{$extension}-stretch  { align-self: stretch; }
+    }
+}

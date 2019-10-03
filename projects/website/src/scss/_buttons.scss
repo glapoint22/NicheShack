@@ -3,9 +3,18 @@ button {
     border: none;
     padding: 0.4rem 0.8rem;
     outline: 0;
+    white-space: nowrap;
     @include button-colors(nth($default-button-colors, 1), nth($default-button-colors, 2), $base-color);
 }
 
 .alt-button {
     @include button-colors(map-get($alt-theme-colors, lighter), map-get($alt-theme-colors, dark), map-get($alt-theme-colors, darkest));
+}
+
+.button-rounded-left {
+    border-radius: 6.25rem 0 0 6.25rem;
+}
+
+.button-rounded-right {
+    border-radius: 0 6.25rem 6.25rem 0;
 }

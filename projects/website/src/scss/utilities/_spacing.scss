@@ -3,14 +3,14 @@
         $extension: get-class-extension($key);
 
         // Margin and padding properties
-        $margin: mrg;
-        $padding: pad;
+        $margin: margin;
+        $padding: padding;
 
         // Positions
         $top: top;
-        $right: rgt;
-        $bottom: bot;
-        $left: lft;
+        $right: right;
+        $bottom: bottom;
+        $left: left;
 
         // This will create margins and paddings
         @each $prop, $abbrev in (margin: $margin, padding: $padding) {

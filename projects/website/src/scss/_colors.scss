@@ -1,3 +1,11 @@
 .theme-gradient {
     @include gradient($primary-theme-colors);
 }
+
+.primary-theme-color {
+    color: $primary-theme-color;
+}
+
+.alt-theme-color {
+    color: $alt-theme-color;
+}
