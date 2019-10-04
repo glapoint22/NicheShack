@@ -40,9 +40,39 @@
     border-top-left-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
 }
+
+
+.border-oval-top {
+    border-top-left-radius: $border-radius + 6;
+    border-top-right-radius: $border-radius + 6;
+}
+.border-oval-right {
+    border-top-right-radius: $border-radius + 6;
+    border-bottom-right-radius: $border-radius + 6;
+}
+.border-oval-bottom {
+    border-bottom-right-radius: $border-radius + 6;
+    border-bottom-left-radius: $border-radius + 6;
+}
+.border-oval-left {
+    border-top-left-radius: $border-radius + 6;
+    border-bottom-left-radius: $border-radius + 6;
+}
+
+
+
+
 .border-rounded-circle {
     border-radius: 50%;
 }
-.border-rounded-0 {
-    border-radius: 0;
+
+// Reset
+@each $key in map-keys($breakpoints) {
+    @include media-breakpoint($key) {
+        $extension: get-class-extension($key);
+        .border-rounded-0#{$extension} { border-radius: 0; }
+    }
 }
+
+
+

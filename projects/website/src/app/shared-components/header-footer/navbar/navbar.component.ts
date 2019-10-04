@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
     this.searchCategories = [
       {
         key: '0',
-        value: 'Health & Fitness'
+        value: 'Spirituality, New Age & Alternative Beliefs'
       },
       {
         key: '1',

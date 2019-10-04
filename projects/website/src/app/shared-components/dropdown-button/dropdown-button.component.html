@@ -1,7 +1,9 @@
-<button #button class="dropdown-button" [ngClass]="{'button-rounded-left': isRounded}" (mousedown)="showDropdown ? isMouseDown = true: isMouseDown = false" (click)="onClick(dropdown)">
+<!-- Button -->
+<button #button class="dropdown-button arrow-down-after" (mousedown)="showDropdown ? isMouseDown = true: isMouseDown = false" (click)="onClick(dropdown)">
     {{caption}}
 </button>
 
+<!-- Dropdown -->
 <div> 
     <div #dropdown class="dropdown" [ngClass]="{'show-dropdown shadow': showDropdown}" tabindex="0" (keydown)="onKeydown($event, dropdown)" (blur)="showDropdown = false" [style.minWidth.px]="button.clientWidth">
         <div *ngFor="let item of items">

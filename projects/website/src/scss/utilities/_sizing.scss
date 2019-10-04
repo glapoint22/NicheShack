@@ -1,5 +1,11 @@
-@each $prop, $abbrev in (width: width, height: height) {
-    @each $size, $length in $sizes {
-        .#{$abbrev}-#{$size} { #{$prop}: $length; }
+@each $key in map-keys($breakpoints) {
+    @include media-breakpoint($key) {
+        $extension: get-class-extension($key);
+
+        @each $prop, $abbrev in (width: width, height: height) {
+            @each $size, $length in $sizes {
+                .#{$abbrev}#{$extension}-#{$size} { #{$prop}: $length; }
+            }
+        }
     }
 }

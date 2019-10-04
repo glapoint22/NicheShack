@@ -7,7 +7,6 @@ import { KeyValue } from '@angular/common';
   styleUrls: ['./dropdown-button.component.scss']
 })
 export class DropdownButtonComponent implements OnChanges {
-  @Input() isRounded: boolean;
   @Input() items: Array<KeyValue<string, string>>;
   @Output() itemClick: EventEmitter<KeyValue<string, string>> = new EventEmitter();
   public isMouseDown: boolean;

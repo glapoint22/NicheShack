@@ -17,7 +17,8 @@ $default-button-colors: #919191, #696969;
 
 // Breakpoints
 $breakpoints: (
-    xxs: 0,
+    z: 0,
+    xxs: 320px,
     xs: 480px,
     sm: 600px,
     md: 768px,
@@ -54,3 +55,6 @@ $sizes: (
 
 // Displays
 $displays: inline, inline-block, block, table, table-row, table-cell, flex, inline-flex;
+
+// Positions
+$positions: static, relative, absolute, fixed, sticky;

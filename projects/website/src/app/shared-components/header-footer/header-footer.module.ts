@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NavfooterComponent } from './navfooter/navfooter.component';
 import { DropdownButtonModule } from '../dropdown-button/dropdown-button.module';
+import { CategoryDropdownButtonComponent } from './navbar/category-dropdown-button/category-dropdown-button.component';
 
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
-    NavfooterComponent
+    NavfooterComponent,
+    CategoryDropdownButtonComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { DropdownButtonModule } from '../dropdown-button/dropdown-button.module'
   ],
   exports: [
     NavbarComponent,
-    NavfooterComponent
+    NavfooterComponent,
+    CategoryDropdownButtonComponent
   ]
 })
 export class HeaderFooterModule { }
