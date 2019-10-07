@@ -1,8 +1,8 @@
-<nav class="theme-color-gradient shadow padding-3 fixed-top display-flex align-items-center" style="min-height: 79px;">
+<nav class="primary-color-gradient shadow padding-3 fixed-top display-flex align-items-center" style="min-height: 79px;">
     
     <!-- Logo and menu bars -->
     <div class="display-flex margin-bottom-2">
-        <i class="fas fa-bars margin-right-3 alt-theme-color" (click)="categoryMenu.onClick()" (mousedown)="categoryMenu.onMousedown()"></i>
+        <i class="fas fa-bars margin-right-3 alt-color" (click)="categoryMenu.onClick()" (mousedown)="categoryMenu.onMousedown()"></i>
         <img src="assets/Logo.png" class="flex-shrink-0 margin-right-2 show-sm">
     </div>
     
@@ -19,8 +19,11 @@
         <!-- Navigation container -->
         <div class="margin-left-3 margin-bottom-n2 show-md">
             <div class="text-truncate show-md" style="max-width: 140px; font-size: 0.75rem;">Hello, WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW</div>
-            <div class="display-flex alt-theme-color text-nowrap">
-                <div class="margin-right-md-5 margin-top-3 margin-top-md-0 arrow-down-after">Account</div>
+            <div class="display-flex alt-color text-nowrap">
+                <div class="margin-right-md-5 margin-top-3 margin-top-md-0">
+                    Account
+                    <div class="arrow-down"></div>
+                </div>
                 <div class="margin-right-lg-5">Orders</div>
                 <div class="show-lg">Order Support</div>
             </div>

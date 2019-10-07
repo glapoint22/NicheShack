@@ -1,13 +1,15 @@
 <!-- Button -->
-<button #button class="dropdown-button arrow-down-after" (mousedown)="showDropdown ? isMouseDown = true: isMouseDown = false" (click)="onClick(dropdown)">
+<button #button class="dropdown-button" (mousedown)="showDropdown ? isMouseDown = true: isMouseDown = false" (click)="onClick(dropdown)">
     {{caption}}
+    <div class="arrow-down"></div>
 </button>
+
 
 <!-- Dropdown -->
 <div> 
     <div #dropdown class="dropdown border border-primary-color background-color" [ngClass]="{'show-dropdown': showDropdown}" tabindex="0" (keydown)="onKeydown($event, dropdown)" (blur)="showDropdown = false" [style.minWidth.px]="button.clientWidth">
         <div *ngFor="let item of items">
-            <div class="dropdown-item primary-theme-background-color-hover" [ngClass]="{'show-dropdown-item': showDropdown}" (click)="onItemClick(item)">{{item.value}}</div>
+            <div class="dropdown-item primary-background-color-hover" [ngClass]="{'show-dropdown-item': showDropdown}" (click)="onItemClick(item)">{{item.value}}</div>
         </div>
     </div>
 </div>

@@ -8,7 +8,7 @@ button {
 }
 
 .alt-button {
-    @include button-colors(map-get($alt-theme-colors, lighter), map-get($alt-theme-colors, dark), map-get($alt-theme-colors, darkest));
+    @include button-colors(map-get(generate-color-map($alt-theme-color), lighter), map-get(generate-color-map($alt-theme-color), dark), map-get(generate-color-map($alt-theme-color), darkest));
 }
 
 .button-rounded-left {

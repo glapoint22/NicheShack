@@ -9,7 +9,7 @@
     left: 0px;
     right: auto;
     bottom: 0px;
-    max-width: 400px;
+    max-width: 360px;
     outline: 0;
 }
 
@@ -19,5 +19,10 @@
 }
 
 .translate {
-    transform: translate(0, 0) !important;
+    transform: translate(0, 0);
+}
+
+.fa-times {
+    font-size: 1.5rem;
+    cursor: pointer;
 }

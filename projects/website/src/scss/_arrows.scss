@@ -1,17 +1,18 @@
-@mixin arrow-down {
-    content: "";
+.arrow-down {
     border-top: solid 0.5rem;
     border-left: solid 0.375rem transparent;
     border-right: solid 0.375rem transparent;
     position: relative;
-    top: 0.75rem;
     left: 0.25rem;
+    display: inline-block;
 }
 
-.arrow-down-before::before {
-    @include arrow-down();
-}
 
-.arrow-down-after::after {
-    @include arrow-down();
+.arrow-right {
+    border-top: solid 0.375rem transparent;
+    border-bottom: solid 0.375rem transparent;
+    border-left: solid 0.5rem;
+    position: relative;
+    left: 0.25rem;
+    display: inline-block;
 }

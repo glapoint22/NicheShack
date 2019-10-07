@@ -9,10 +9,9 @@ $border-radius: .25rem;
 // Colors
 $base-color: #dadada;
 $background-color: #1b1b1b;
+$background-color-dark: #121212;
 $primary-theme-color: #8a0077;
-$primary-theme-colors: generate-color-map($primary-theme-color);
 $alt-theme-color: #ffba00;
-$alt-theme-colors: generate-color-map($alt-theme-color);
 $default-button-colors: #919191, #696969;
 
 // Breakpoints
@@ -40,15 +39,25 @@ $spacers: (
 
 // Sizes
 $sizes: (
+    5: 5%,
     10: 10%,
+    15: 15%,
     20: 20%,
+    25: 25%,
     30: 30%,
+    35: 35%,
     40: 40%,
+    45: 45%,
     50: 50%,
+    55: 55%,
     60: 60%,
+    65: 65%,
     70: 70%,
+    75: 75%,
     80: 80%,
+    85: 85%,
     90: 90%,
+    95: 95%,
     100: 100%,
     auto: auto
 );
@@ -58,3 +67,14 @@ $displays: inline, inline-block, block, table, table-row, table-cell, flex, inli
 
 // Positions
 $positions: static, relative, absolute, fixed, sticky;
+
+// Overflows
+$overflows: auto, hidden;
+
+// Font Sizes
+$font-sizes: (
+    sm: 0.5,
+    md: 1,
+    lg: 1.25,
+    xl: 1.5
+);

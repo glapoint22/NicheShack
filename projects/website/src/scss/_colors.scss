@@ -1,13 +1,16 @@
-.theme-color-gradient {
-    @include gradient($primary-theme-colors);
+.primary-color-gradient {
+    @include gradient(generate-color-map($primary-theme-color));
 }
 .alt-color-gradient {
-    @include gradient($alt-theme-colors);
+    @include gradient(generate-color-map($alt-theme-color));
 }
 
 .background-color {
     background-color: $background-color;
 }
+.background-color-dark {
+    background-color: $background-color-dark;
+}
 
-@include generate-colors($primary-theme-colors, 'primary-theme');
-@include generate-colors($alt-theme-colors, 'alt-theme');
+@include generate-colors(generate-color-map($primary-theme-color), 'primary');
+@include generate-colors(generate-color-map($alt-theme-color), 'alt');
