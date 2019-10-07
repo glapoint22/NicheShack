@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
+import { HomeComponentsModule } from './components/home-components.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { HeaderFooterModule } from '../../shared-components/header-footer/header
   imports: [
     CommonModule,
     HomeRoutingModule,
-    HeaderFooterModule
+    HeaderFooterModule,
+    HomeComponentsModule
   ]
 })
 export class HomeModule { }

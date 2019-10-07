@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NavfooterComponent } from './navfooter/navfooter.component';
-import { DropdownButtonModule } from '../dropdown-button/dropdown-button.module';
 import { CategoryDropdownButtonComponent } from './navbar/category-dropdown-button/category-dropdown-button.component';
+import { CategoryMenuComponent } from './navbar/category-menu/category-menu.component';
 
 
 
@@ -11,16 +11,17 @@ import { CategoryDropdownButtonComponent } from './navbar/category-dropdown-butt
   declarations: [
     NavbarComponent,
     NavfooterComponent,
-    CategoryDropdownButtonComponent
+    CategoryDropdownButtonComponent,
+    CategoryMenuComponent
   ],
   imports: [
-    CommonModule,
-    DropdownButtonModule
+    CommonModule
   ],
   exports: [
     NavbarComponent,
     NavfooterComponent,
-    CategoryDropdownButtonComponent
+    CategoryDropdownButtonComponent,
+    CategoryMenuComponent
   ]
 })
 export class HeaderFooterModule { }

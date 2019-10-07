@@ -5,9 +5,9 @@
 
 <!-- Dropdown -->
 <div> 
-    <div #dropdown class="dropdown" [ngClass]="{'show-dropdown shadow': showDropdown}" tabindex="0" (keydown)="onKeydown($event, dropdown)" (blur)="showDropdown = false" [style.minWidth.px]="button.clientWidth">
+    <div #dropdown class="dropdown border border-primary-color background-color" [ngClass]="{'show-dropdown': showDropdown}" tabindex="0" (keydown)="onKeydown($event, dropdown)" (blur)="showDropdown = false" [style.minWidth.px]="button.clientWidth">
         <div *ngFor="let item of items">
-            <div class="dropdown-item" (click)="onItemClick(item)">{{item.value}}</div>
+            <div class="dropdown-item primary-theme-background-color-hover" [ngClass]="{'show-dropdown-item': showDropdown}" (click)="onItemClick(item)">{{item.value}}</div>
         </div>
     </div>
 </div>

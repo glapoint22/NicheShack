@@ -1,0 +1,23 @@
+.modal-background {
+    z-index: 90;
+    top: 79px;
+}
+
+.menu {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: auto;
+    bottom: 0px;
+    max-width: 400px;
+    outline: 0;
+}
+
+.transform {
+    transform: translate(0, -100%);
+    transition: transform 0.2s;
+}
+
+.translate {
+    transform: translate(0, 0) !important;
+}

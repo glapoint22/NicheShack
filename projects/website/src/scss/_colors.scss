@@ -1,11 +1,13 @@
-.theme-gradient {
+.theme-color-gradient {
     @include gradient($primary-theme-colors);
 }
-
-.primary-theme-color {
-    color: $primary-theme-color;
+.alt-color-gradient {
+    @include gradient($alt-theme-colors);
 }
 
-.alt-theme-color {
-    color: $alt-theme-color;
+.background-color {
+    background-color: $background-color;
 }
+
+@include generate-colors($primary-theme-colors, 'primary-theme');
+@include generate-colors($alt-theme-colors, 'alt-theme');

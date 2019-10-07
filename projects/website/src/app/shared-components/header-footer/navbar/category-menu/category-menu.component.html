@@ -1,0 +1,10 @@
+<div [ngClass]="{'fade-in': show}" class="modal-background fade">
+    <div #menu (keydown)="onKeydown($event, menu)" tabindex="0" (blur)="show = false" class="menu width-100 background-color border border-gray transform" [ngClass]="{'translate': show}">
+        
+                <i style="font-size: 1.5rem" class="fas fa-times margin-top-2 margin-bottom-2 margin-right-2 alt-theme-color float-right"></i>
+            
+            <div class="border-bottom border-gray padding-2" style="font-size: 18px; clear: both;">Health & Fitness</div>
+            <div class="border-bottom border-gray padding-2" style="font-size: 18px; clear: both;">Self-Help</div>
+        
+    </div>
+</div>

@@ -1,0 +1,10 @@
+@mixin generate-colors($color-map, $color-name) {
+    @each $color-grade, $color in $color-map {
+        $color-grade: if($color-grade == 'main', "", '-' + $color-grade);
+
+        .#{$color-name}-color#{$color-grade} { color: $color }
+        .#{$color-name}-color#{$color-grade}-hover:hover { color: $color }
+        .#{$color-name}-background-color#{$color-grade} { background-color: $color}
+        .#{$color-name}-background-color#{$color-grade}-hover:hover { background-color: $color}
+    }
+}

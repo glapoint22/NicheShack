@@ -1,0 +1,9 @@
+@each $key in map-keys($breakpoints) {
+    @include media-breakpoint($key) {
+        $extension: get-class-extension($key);
+
+        .float#{$extension}-left  { float: left; }
+        .float#{$extension}-right { float: right; }
+        .float#{$extension}-none  { float: none; }
+    }
+}

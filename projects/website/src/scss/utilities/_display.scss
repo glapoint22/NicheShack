@@ -8,7 +8,6 @@
     }
 
     @include media-breakpoint($key) {
-        
         @if not($extension == "") {
             .hide#{$extension} {
                 display: none;
@@ -19,7 +18,6 @@
             }
         }
 
-        
 
         @each $value in $displays {
             .display#{$extension}-#{$value} { display: $value; }
