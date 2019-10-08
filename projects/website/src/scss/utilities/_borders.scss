@@ -16,8 +16,14 @@
 
 // Border colors
 .border-gray {border-color: #3d3d3d}
-.border-primary-color {border-color: $primary-theme-color}
-.border-alt-color {border-color: $alt-theme-color}
+@include generate-border-colors(generate-color-map($primary-theme-color), 'primary');
+@include generate-border-colors(generate-color-map($alt-theme-color), 'alt');
+
+
+// Border widths
+.border-width-sm { border-width: 0.125rem }
+.border-width-md { border-width: 0.25rem }
+.border-width-lg { border-width: 0.5rem }
 
 
 // Border rounded

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NavfooterComponent } from './navfooter/navfooter.component';
 import { CategoryDropdownButtonComponent } from './navbar/category-dropdown-button/category-dropdown-button.component';
-import { CategoryMenuComponent } from './navbar/category-menu/category-menu.component';
+import { NavMenuComponent } from './navbar/nav-menu/nav-menu.component';
 
 
 
@@ -12,7 +12,7 @@ import { CategoryMenuComponent } from './navbar/category-menu/category-menu.comp
     NavbarComponent,
     NavfooterComponent,
     CategoryDropdownButtonComponent,
-    CategoryMenuComponent
+    NavMenuComponent
   ],
   imports: [
     CommonModule
@@ -21,7 +21,7 @@ import { CategoryMenuComponent } from './navbar/category-menu/category-menu.comp
     NavbarComponent,
     NavfooterComponent,
     CategoryDropdownButtonComponent,
-    CategoryMenuComponent
+    NavMenuComponent
   ]
 })
 export class HeaderFooterModule { }

@@ -5,11 +5,11 @@ import { Niche } from 'projects/website/src/app/interfaces/niche';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'category-menu',
-  templateUrl: './category-menu.component.html',
-  styleUrls: ['./category-menu.component.scss']
+  selector: 'nav-menu',
+  templateUrl: './nav-menu.component.html',
+  styleUrls: ['./nav-menu.component.scss']
 })
-export class CategoryMenuComponent implements OnInit {
+export class NavMenuComponent implements OnInit {
   public show: boolean;
   private isMouseDown: boolean;
   public categories: Array<Category>;
@@ -17,8 +17,8 @@ export class CategoryMenuComponent implements OnInit {
   public currentCategory: Category;
   public nicheView: boolean;
 
-  @ViewChild('menu', {static: false}) menu: ElementRef;
-  
+  @ViewChild('menu', { static: false }) menu: ElementRef;
+
 
   constructor(private categoriesService: CategoriesService, private router: Router) { }
 
@@ -49,7 +49,7 @@ export class CategoryMenuComponent implements OnInit {
   }
 
   onMousedown() {
-    if(this.show) {
+    if (this.show) {
       this.isMouseDown = true;
     } else {
       this.isMouseDown = false;
@@ -68,5 +68,4 @@ export class CategoryMenuComponent implements OnInit {
     });
     this.show = false;
   }
-
 }

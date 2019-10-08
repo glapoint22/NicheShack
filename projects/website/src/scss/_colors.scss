@@ -14,3 +14,7 @@
 
 @include generate-colors(generate-color-map($primary-theme-color), 'primary');
 @include generate-colors(generate-color-map($alt-theme-color), 'alt');
+
+.background-color-dark-gray {
+    background-color: $dark-gray;
+}

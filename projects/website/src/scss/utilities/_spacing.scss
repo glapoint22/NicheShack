@@ -12,6 +12,21 @@
         $bottom: bottom;
         $left: left;
 
+        // Margin auto
+        .#{$margin}#{$extension}-auto { margin: auto; }
+        .#{$margin}-#{$top}#{$extension}-auto {
+            margin-top: auto;
+        }
+        .#{$margin}-#{$right}#{$extension}-auto {
+            margin-right: auto;
+        }
+        .#{$margin}-#{$bottom}#{$extension}-auto {
+            margin-bottom: auto;
+        }
+        .#{$margin}-#{$left}#{$extension}-auto {
+            margin-left: auto;
+        }
+
         // This will create margins and paddings
         @each $prop, $abbrev in (margin: $margin, padding: $padding) {
             @each $size, $length in $spacers {
@@ -48,21 +63,6 @@
                     margin-left: -$length;
                 }
             }
-        }
-
-        // Margin auto
-        .#{$margin}#{$extension}-auto { margin: auto; }
-        .#{$margin}-#{$top}#{$extension}-auto {
-            margin-top: auto;
-        }
-        .#{$margin}-#{$right}#{$extension}-auto {
-            margin-right: auto;
-        }
-        .#{$margin}-#{$bottom}#{$extension}-auto {
-            margin-bottom: auto;
-        }
-        .#{$margin}-#{$left}#{$extension}-auto {
-            margin-left: auto;
         }
     }
 }
