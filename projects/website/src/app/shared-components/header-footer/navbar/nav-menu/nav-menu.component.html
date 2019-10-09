@@ -1,7 +1,10 @@
 <div [ngClass]="{'fade-in': show}" class="modal-background fade">
-    <div #menu (keydown)="onKeydown($event, menu)" tabindex="0" (blur)="show = false"
-        class="background-color-dark position-absolute-identity width-100 transform" [ngClass]="{'translate': show}"
-        style="max-width: 360px; outline: 0;">
+
+    <!-- Menu -->
+    <div #showHideElement (keydown)="onKeydown($event)" (blur)="onBlur()" tabindex="0"
+        class="background-color-dark position-absolute-identity transform border border-primary-color outline-0"
+        [ngClass]="{'translate': show}" style="max-width: 270px;">
+
 
         <!-- Close -->
         <div class="background-color-dark-gray padding-top-2 padding-bottom-2 overflow-auto">
@@ -13,101 +16,49 @@
         <div class="position-absolute-identity" style="top: 40px;">
             <div class="height-100 overflow-auto">
 
-                <!-- Account -->
+                <!-- Account & Categories -->
                 <div *ngIf="!nicheView">
                     <!-- Account Heading -->
-                    <div class="padding-left-2 alt-color font-size-lg font-bold margin-top-2">
-                        Account
-                    </div>
+                    <h3 class="padding-left-2 alt-color">Account</h3>
 
-                    <!-- Sign In -->
-                    <div class="padding-2 primary-background-color-dark-hover cursor-pointer">
-                        <i class="fas fa-sign-in-alt primary-color margin-left-3 margin-right-2 font-size=lg"></i>
-                        <span>Sign In</span>
-                    </div>
+                    <!-- Account Navigation -->
+                    <account-navigation [show]="true"></account-navigation>
+
+                    <!-- Heading -->
+                    <h3 class="padding-left-2 alt-color margin-top-4">Categories</h3>
 
 
-                    <!-- Your Account -->
-                    <div class="padding-2 primary-background-color-dark-hover cursor-pointer">
-                        <i class="fas fa-user-alt primary-color margin-left-3 margin-right-2 font-size=lg"></i>
-                        <span>Your Account</span>
-                    </div>
-
-
-                    <!-- Your Orders -->
-                    <div class="padding-2 primary-background-color-dark-hover cursor-pointer">
-                        <i class="fas fa-file-invoice primary-color margin-left-3 margin-right-2 font-size=lg"></i>
-                        <span>Your Orders</span>
-                    </div>
-
-
-                    <!-- Your Lists -->
-                    <div class="padding-2 primary-background-color-dark-hover cursor-pointer">
-                        <i class="fas fa-clipboard-list primary-color margin-left-3 margin-right-2 font-size=lg"></i>
-                        <span>Your Lists</span>
-                    </div>
-
-
-                    <!-- Your Email Preferences -->
-                    <div class="padding-2 primary-background-color-dark-hover cursor-pointer">
-                        <i class="fas fa-envelope primary-color margin-left-3 margin-right-2 font-size=lg"></i>
-                        <span>Your Email Preferences</span>
-                    </div>
-
-
-                    <!-- Sign Out -->
-                    <div class="padding-2 primary-background-color-dark-hover cursor-pointer">
-                        <i class="fas fa-sign-out-alt primary-color margin-left-3 margin-right-2 font-size=lg"></i>
-                        <span>Sign Out</span>
-                    </div>
-
-
-                    <!-- Create Account -->
-                    <div class="padding-2 primary-background-color-dark-hover cursor-pointer">
-                        <i class="fas fa-user-plus primary-color margin-left-3 margin-right-2 font-size=lg"></i>
-                        <span>Create Account</span>
-                    </div>
-
-                    <!-- Border -->
-                    <div
-                        class="border-bottom border-primary-color width-90 margin-auto margin-top-3 margin-bottom-3 border-width-lg border-rounded">
-                    </div>
-                </div>
-
-
-
-                <!-- Main Menu -->
-                <div *ngIf="nicheView"
-                    class="border-bottom border-gray margin-bottom-2 margin-top-2 padding-2 primary-background-color-hover cursor-pointer"
-                    (click)="nicheView = false">
-                    <i class="fas fa-arrow-left font-size-md">
-                        Main Menu
-                    </i>
-                </div>
-
-
-                <!-- Heading -->
-                <div class="padding-left-2 alt-color font-size-lg font-bold margin-top-2">
-                    {{nicheView ? currentCategory.name : 'Categories'}}
-                </div>
-
-                <!-- Categories -->
-                <div *ngIf="!nicheView">
+                    <!-- Categories -->
                     <div *ngFor="let category of categories"
-                        class="padding-2 padding-left-4 primary-background-color-dark-hover cursor-pointer"
+                        class="padding-1 padding-left-2 primary-background-color-dark-hover cursor-pointer"
                         (click)="onCategoryClick(category.id)">
                         <span>{{category.name}}</span>
-                        <span class="arrow-right float-right margin-1 margin-right-3 alt-color"></span>
                     </div>
                 </div>
 
-                <!-- Niches -->
+
+                <!-- Main Menu Navigation & Niches -->
                 <div *ngIf="nicheView">
+
+                    <!-- Main Menu -->
+                    <div class="border-bottom border-gray margin-bottom-2 margin-top-2 padding-2 primary-background-color-dark-hover cursor-pointer"
+                        (click)="nicheView = false">
+                        <i class="fas fa-arrow-left font-size-md">
+                            Main Menu
+                        </i>
+                    </div>
+
+                    <!-- Category Heading -->
+                    <h3 class="padding-left-2 alt-color margin-top-4">{{currentCategory.name}}</h3>
+
+                    <!-- Niches -->
                     <div *ngFor="let niche of niches"
-                        class="padding-2 padding-left-4 primary-background-color-dark-hover cursor-pointer"
+                        class="padding-1 padding-left-2 primary-background-color-dark-hover cursor-pointer"
                         (click)="onNicheClick(niche.id)">
                         <span>{{niche.name}}</span>
                     </div>
+
+
                 </div>
             </div>
         </div>

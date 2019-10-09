@@ -1,23 +1,10 @@
 .dropdown {
-    position: absolute;
     display: inline-block;
     overflow: auto;
-    outline: 0;
-    opacity: 0;
     max-height: 17rem;
 }
 
-.show-dropdown {
-    opacity: 1;
-}
-
 .dropdown-item {
-    display: none;
     padding: 0 5px;
     font-size: 0.8125rem;
-    cursor: pointer;
-}
-
-.show-dropdown-item {
-    display: block;
 }

@@ -1,26 +1,30 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoriesService } from 'projects/website/src/app/services/categories.service';
 import { Category } from 'projects/website/src/app/interfaces/category';
 import { Niche } from 'projects/website/src/app/interfaces/niche';
 import { Router } from '@angular/router';
+import { ShowHideComponent } from '../../../show-hide/show-hide.component';
 
 @Component({
   selector: 'nav-menu',
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss']
 })
-export class NavMenuComponent implements OnInit {
-  public show: boolean;
-  private isMouseDown: boolean;
+export class NavMenuComponent extends ShowHideComponent implements OnInit {
   public categories: Array<Category>;
   public niches: Array<Niche>;
   public currentCategory: Category;
   public nicheView: boolean;
 
-  @ViewChild('menu', { static: false }) menu: ElementRef;
 
+  constructor(private categoriesService: CategoriesService, private router: Router) {
+    super();
+  }
 
-  constructor(private categoriesService: CategoriesService, private router: Router) { }
+  onClick() {
+    this.nicheView = false;
+    super.onClick();
+  }
 
   ngOnInit() {
     this.categoriesService.categories.subscribe((categories: Array<Category>) => {
@@ -28,33 +32,6 @@ export class NavMenuComponent implements OnInit {
     });
   }
 
-  onKeydown(event: KeyboardEvent, dropdown: HTMLElement) {
-    // If escape is pressed, hide the menu
-    if (event.code === 'Escape' || event.keyCode === 27) {
-      this.show = false;
-      dropdown.blur();
-    }
-  }
-
-  onClick() {
-    if (this.isMouseDown) {
-      this.isMouseDown = false;
-      return;
-    }
-
-    // show the menu and set the focus
-    this.nicheView = false;
-    this.show = true;
-    this.menu.nativeElement.focus();
-  }
-
-  onMousedown() {
-    if (this.show) {
-      this.isMouseDown = true;
-    } else {
-      this.isMouseDown = false;
-    }
-  }
 
   onCategoryClick(categoryId: number) {
     this.currentCategory = this.categories[categoryId];

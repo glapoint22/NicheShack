@@ -1,0 +1,22 @@
+.dropdown {
+    position: absolute;
+    outline: 0;
+    opacity: 0;
+    background-color: $background-color-dark;
+    border: 1px solid $primary-theme-color;
+    border-radius: $border-radius;
+    @include shadow;
+}
+
+.show-dropdown {
+    opacity: 1;
+}
+
+.dropdown-item {
+    display: none;
+    cursor: pointer;
+}
+
+.show-dropdown-item {
+    display: block;
+}

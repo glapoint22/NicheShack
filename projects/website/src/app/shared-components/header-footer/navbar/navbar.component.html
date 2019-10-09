@@ -20,9 +20,10 @@
         <div class="margin-left-3 margin-bottom-n2 show-md">
             <div class="text-truncate show-md" style="max-width: 140px; font-size: 0.75rem;">Hello, WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW</div>
             <div class="display-flex alt-color text-nowrap">
-                <div class="margin-right-md-5 margin-top-3 margin-top-md-0">
+                <div class="margin-right-md-5 margin-top-3 margin-top-md-0 position-relative cursor-pointer" (click)="accountMenu.onClick()" (mousedown)="accountMenu.onMousedown()">
                     Account
                     <div class="arrow-down"></div>
+                    <account-menu #accountMenu></account-menu>
                 </div>
                 <div class="margin-right-lg-5">Orders</div>
                 <div class="show-lg">Order Support</div>
