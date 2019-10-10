@@ -1,19 +1,38 @@
-@each $position in $positions {
-    .position-#{$position} { position: $position; }
-}
+@each $key in map-keys($breakpoints) {
+    @include media-breakpoint($key) {
+        $extension: get-class-extension($key);
 
-.fixed-top {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 100;
-}
-
-.position-absolute-identity {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+        @each $position in $positions {
+            .position-#{$position}#{$extension} { position: $position; }
+        }
+        
+        .fixed-top#{$extension} {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 100;
+        }
+        
+        .position-absolute-identity#{$extension} {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        
+        .position-absolute-bottom#{$extension} {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        
+        .position-absolute-bottom-right#{$extension} {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+    }
 }

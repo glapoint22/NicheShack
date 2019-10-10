@@ -1,5 +1,5 @@
 <div #showHideElement tabindex="0" (keydown)="onKeydown($event)" (blur)="onBlur()"
     class="dropdown dropdown-menu-arrow" [ngClass]="{'show-dropdown': show}"
     style="left: -68px; top: 25px;">
-    <account-navigation [show]="show"></account-navigation>
+    <account-navigation [show]="show" [showHideElement]="showHideElement"></account-navigation>
 </div>

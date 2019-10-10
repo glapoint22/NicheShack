@@ -150,3 +150,8 @@ fieldset {
 [hidden] {
     display: none !important;
 }
+
+a { 
+    color: inherit;
+    &:link { text-decoration: none }
+}

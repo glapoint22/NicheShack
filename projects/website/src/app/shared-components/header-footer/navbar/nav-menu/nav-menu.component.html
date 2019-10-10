@@ -1,4 +1,4 @@
-<div [ngClass]="{'fade-in': show}" class="modal-background fade">
+<div [ngClass]="{'fade-in': show}" class="modal-background fade" modal [showModal]="show">
 
     <!-- Menu -->
     <div #showHideElement (keydown)="onKeydown($event)" (blur)="onBlur()" tabindex="0"
@@ -22,7 +22,7 @@
                     <h3 class="padding-left-2 alt-color">Account</h3>
 
                     <!-- Account Navigation -->
-                    <account-navigation [show]="true"></account-navigation>
+                    <account-navigation [show]="true" [showHideElement]="showHideElement"></account-navigation>
 
                     <!-- Heading -->
                     <h3 class="padding-left-2 alt-color margin-top-4">Categories</h3>

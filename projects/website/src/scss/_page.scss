@@ -1,0 +1,22 @@
+.page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+.content-container {
+    padding-bottom: 279px;
+}
+
+
+
+@media (min-width: map-get($breakpoints, md)) {
+    .content-container {
+        padding-bottom: 166px;
+    }
+}
+
+@media (min-width: map-get($breakpoints, xl)) {
+    .content-container {
+        padding-bottom: 136px;
+    }
+}

@@ -1,30 +1,8 @@
-<div class="primary-color primary-background-color-dark-child-hover primary-color-light-child-hover">
-    <a routerLink="/sign-in" class="dropdown-item" [ngClass]="{'show-dropdown-item': show}">
-        <i class="fas fa-sign-in-alt"></i>
-        <span>Sign In</span>
-    </a>
-    <a routerLink="/account" class="dropdown-item" [ngClass]="{'show-dropdown-item': show}">
-        <i class="fas fa-user"></i>
-        <span>Your Account</span>
-    </a>
-    <a routerLink="/account/orders" class="dropdown-item" [ngClass]="{'show-dropdown-item': show}">
-        <i class="fas fa-file-invoice"></i>
-        <span>Your Orders</span>
-    </a>
-    <a routerLink="/account/lists" class="dropdown-item" [ngClass]="{'show-dropdown-item': show}">
-        <i class="fas fa-clipboard-list"></i>
-        <span>Your Lists</span>
-    </a>
-    <a routerLink="/preferences" class="dropdown-item" [ngClass]="{'show-dropdown-item': show}">
-        <i class="fas fa-envelope"></i>
-        <span>Your Email Preferences</span>
-    </a>
-    <a routerLink="/sign-in" class="dropdown-item" [ngClass]="{'show-dropdown-item': show}">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Sign Out</span>
-    </a>
-    <a routerLink="/create-account" class="dropdown-item" [ngClass]="{'show-dropdown-item': show}">
-        <i class="fas fa-user-plus"></i>
-        <span>Create Account</span>
-    </a>
+<div class="primary-color" (mousedown)="$event.preventDefault()">
+    <div *ngFor="let dropdownItem of dropdownItems"
+        class="dropdown-item primary-background-color-dark-hover primary-color-light-hover"
+        [ngClass]="{'show-dropdown-item': show}" (click)="onClick(dropdownItem)">
+        <i [class]="'fas ' + dropdownItem.icon"></i>
+        <span>{{dropdownItem.caption}}</span>
+    </div>
 </div>
