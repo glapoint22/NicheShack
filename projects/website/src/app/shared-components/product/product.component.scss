@@ -1,0 +1,16 @@
+.product:hover > .quick-look {
+    visibility: visible;
+}
+
+.quick-look {
+    position: absolute;
+    top: 160px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 90%;
+    text-align: center; 
+    font-weight: bold;
+    visibility: hidden;
+    padding: 0.25rem;
+}

@@ -1,7 +1,15 @@
 <navbar></navbar>
+
 <div class="page-container">
     <div class="content-container">
-        
+
+        <!-- Product Groups -->
+        <product-group 
+            *ngFor="let productGroup of productGroups" 
+            [caption]="productGroup.caption"
+            [products]="productGroup.products">
+        </product-group>
+
         <navfooter></navfooter>
     </div>
 </div>

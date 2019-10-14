@@ -4,9 +4,7 @@
 
         .#{$color-name}-color#{$color-grade} { color: $color }
         .#{$color-name}-color#{$color-grade}-hover:hover { color: $color }
-        .#{$color-name}-color#{$color-grade}-child-hover > *:hover { color: $color }
         .#{$color-name}-background-color#{$color-grade} { background-color: $color}
         .#{$color-name}-background-color#{$color-grade}-hover:hover { background-color: $color}
-        .#{$color-name}-background-color#{$color-grade}-child-hover > *:hover { background-color: $color}
     }
 }

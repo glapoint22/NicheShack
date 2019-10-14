@@ -4,19 +4,19 @@
 }
 
 .content-container {
+    // Padding for header
+    padding-top: 79px;
+
+    // Padding for footer
     padding-bottom: 279px;
 }
 
 
-
-@media (min-width: map-get($breakpoints, md)) {
-    .content-container {
-        padding-bottom: 166px;
-    }
-}
-
-@media (min-width: map-get($breakpoints, xl)) {
-    .content-container {
-        padding-bottom: 136px;
+// Media queries for footer padding
+@each $min-width, $padding in (map-get($breakpoints, md): 166px, map-get($breakpoints, xl): 136px) {
+    @media (min-width: $min-width) {
+        .content-container {
+            padding-bottom: $padding;
+        }
     }
 }

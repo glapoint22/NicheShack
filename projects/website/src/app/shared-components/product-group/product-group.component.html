@@ -1,0 +1,31 @@
+<div #container class="product-group-container">
+
+    <!-- Caption -->
+    <div class="alt-color text-center margin-3 font-size-3">{{caption}}</div>
+
+    <!-- Slider -->
+    <div #slider class="slider" [style.transform]="'translateX(-' + translate + 'px)'">
+
+        <!-- Products -->
+        <div *ngFor="let product of products; let i = index">
+            <div *ngIf="i < (showAll ? products.length : 4)"
+                class="hide-md product-container border-bottom border-gray padding-bottom-2">
+                <product [product]="product"></product>
+            </div>
+
+            <div class="hide show-md product-container">
+                <product [product]="product"></product>
+            </div>
+        </div>
+
+        <!-- See more/See less -->
+        <div (click)="showAll = !showAll" class="hide-md margin-bottom-3 alt-color width-100 text-center">
+            {{showAll ? 'See less' : 'See more'}}</div>
+    </div>
+
+    <!-- Arrows -->
+    <div class="fas arrow-icon-left" *ngIf="translate != 0" (click)="onLeftArrowClick()"></div>
+    <div class="fas arrow-icon-right" *ngIf="slider.offsetWidth > container.offsetWidth + margin && !lastPage"
+        (click)="onRightArrowClick(container.offsetWidth)"></div>
+
+</div>

@@ -1,0 +1,47 @@
+.product {
+    position: relative;
+    cursor: pointer;
+    width: 240px;
+
+    .img-container {
+        line-height: initial;
+        width: 100px;
+        height: auto;
+        flex-shrink: 0;
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    }
+}
+
+@media (min-width: map-get($breakpoints, xxs)) {
+    .product {
+        width: 300px;
+    
+        .img-container {
+            width: 150px;
+            img {
+                max-width: 150px;
+                max-height: 150px;
+            }
+        }
+    }
+}
+
+
+
+@media (min-width: map-get($breakpoints, md)) {
+    .product {
+        width: 200px;
+    
+        .img-container {
+            line-height: 200px;
+            width: 200px;
+            img {
+                max-width: 200px;
+                max-height: 200px;
+            }
+        }
+    }
+}

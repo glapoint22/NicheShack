@@ -1,0 +1,55 @@
+$breakpoints: (
+    768px: 632px,
+    900px: 848px,
+    1116px: 1064px,
+    1440px: 1280px,
+);
+
+.product-group-container {
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+}
+
+
+.slider {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.product-container {
+    margin: 1rem 3rem;
+}
+
+.arrow-icon-left, .arrow-icon-right {
+    visibility: hidden;
+    top: 145px;
+}
+
+
+@media (min-width: nth(nth($breakpoints, 1),1)) {
+    .slider {
+        flex-wrap: nowrap;
+        width: max-content;
+    }
+
+    .product-container {
+        margin: 0;
+        margin-right: 1rem;
+    }
+
+    .arrow-icon-left, .arrow-icon-right {
+        visibility: visible;
+    }
+}
+
+@each $breakpoint, $width in $breakpoints {
+    @media (min-width: $breakpoint) {
+        .product-group-container {
+            width: $width;
+        }
+    }
+}
