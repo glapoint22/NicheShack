@@ -11,7 +11,6 @@ export class ProductGroupComponent {
   @Input() products: Array<Product>;
 
   public margin: number = 16;
-  public lastPage: boolean;
   public showAll: boolean;
   public translate: number = 0;
 
@@ -24,15 +23,6 @@ export class ProductGroupComponent {
     // Increment the page
     this.currentPage++;
 
-    // Calculate how many products should be on each page
-    let productsPerPage = (containerWidth + this.margin) / (this.productWidth + this.margin);
-
-    // Calculate the remaining products based on the current page and how many products per page
-    let remainingProducts = this.products.length - (this.currentPage * productsPerPage);
-
-    // See if we are on the last page
-    if (remainingProducts <= 0) this.lastPage = true;
-
     // Calculate how much to move the slider
     this.currentTranslation = this.translate = containerWidth + this.margin + this.currentTranslation;
     this.translations.push(this.currentTranslation);
@@ -40,13 +30,21 @@ export class ProductGroupComponent {
 
 
   onLeftArrowClick() {
-    // We are not on the last page anymore
-    this.lastPage = false;
-
     // Get the previous translation from the array to move the slider back
     this.currentTranslation = this.translate = this.translations[this.translations.length - 2];
     this.currentPage--;
     this.translations.pop();
+  }
+
+  isLastPage(containerWidth: number) {
+    // Calculate how many products should be on each page
+    let productsPerPage = (containerWidth + this.margin) / (this.productWidth + this.margin);
+
+    // Calculate the remaining products based on the current page and how many products per page
+    let remainingProducts = this.products.length - (this.currentPage * productsPerPage);
+
+    // See if we are on the last page
+    return remainingProducts <= 0;
   }
 
 
@@ -56,7 +54,6 @@ export class ProductGroupComponent {
     this.currentPage = 1;
     this.currentTranslation = 0;
     this.translations = [this.currentTranslation];
-    this.lastPage = false;
     this.showAll = false;
   }
 }

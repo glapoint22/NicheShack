@@ -11,9 +11,7 @@ $product-width: 216px;
 .slider {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     transition: transform 0.5s ease-in-out;
-    width: 100%;
 }
 
 .product-container {
@@ -32,7 +30,6 @@ $product-width: 216px;
             @if($key == md) {
                 .slider {
                     flex-wrap: nowrap;
-                    width: max-content;
                 }
             
                 .product-container {

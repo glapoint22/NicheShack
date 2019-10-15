@@ -25,7 +25,6 @@
 
     <!-- Arrows -->
     <div class="fas arrow-icon-left" *ngIf="translate != 0" (click)="onLeftArrowClick()"></div>
-    <div class="fas arrow-icon-right" *ngIf="slider.offsetWidth > container.offsetWidth + margin && !lastPage"
+    <div class="fas arrow-icon-right" *ngIf="!isLastPage(container.offsetWidth)"
         (click)="onRightArrowClick(container.offsetWidth)"></div>
-
 </div>

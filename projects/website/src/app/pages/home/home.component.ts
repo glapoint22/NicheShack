@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { DataService } from 'services/data.service';
 import { ProductGroup } from '../../interfaces/product-group';
 import { PageComponent } from '../page/page.component';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'home',
