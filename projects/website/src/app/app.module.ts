@@ -3,14 +3,17 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PageComponent } from './pages/page/page.component';
 import { TransferHttpCacheModule } from '@nguniversal/common';
+import { ValidationPageComponent } from './pages/validation-page/validation-page.component';
+import { AuthInterceptor } from './auth-interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageComponent
+    PageComponent,
+    ValidationPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -18,7 +21,13 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
     HttpClientModule,
     TransferHttpCacheModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

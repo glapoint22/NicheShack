@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ShowHideComponent } from '../../../show-hide/show-hide.component';
 
 @Component({
@@ -6,13 +6,4 @@ import { ShowHideComponent } from '../../../show-hide/show-hide.component';
   templateUrl: './account-menu.component.html',
   styleUrls: ['./account-menu.component.scss']
 })
-export class AccountMenuComponent extends ShowHideComponent implements OnInit {
-
-  constructor() {
-    super();
-  }
-
-  ngOnInit() {
-  }
-
-}
+export class AccountMenuComponent extends ShowHideComponent { }

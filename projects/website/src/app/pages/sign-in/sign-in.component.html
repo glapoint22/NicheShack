@@ -1,0 +1,55 @@
+<!-- Logo -->
+<img src="assets/Logo.png" routerLink="">
+
+<div *ngIf="isError" class="warning">
+    <i class="fas fa-exclamation-triangle"></i>
+    <div class="warning-text">
+        Your password and email do not match. Please try again.
+    </div>
+</div>
+
+<form (ngSubmit)="onSubmit()" #form="ngForm">
+    <div class="form-title">Sign In</div>
+
+    <!-- Email -->
+    <div *ngIf="valid(email); else invalidEmail" class="caption">Email:</div>
+
+    <!-- Invalid email -->
+    <ng-template #invalidEmail>
+        <div class="not-valid caption">
+            Please enter a valid email address.
+        </div>
+    </ng-template>
+    <input class="dark" required email [(ngModel)]="account.email" name="email" #email="ngModel">
+
+    <!-- Password -->
+    <div *ngIf="valid(password); else invalidPassword" class="caption" style="display: inline-block;">Password:
+    </div>
+    <a tabindex="10" routerLink="/forgot-password" class="gold-link">Forgot your password?</a>
+
+    <!-- Invalid password -->
+    <ng-template #invalidPassword>
+        <div class="not-valid caption" style="display: inline-block;">
+            Please provide a password.
+        </div>
+    </ng-template>
+    <input type="password" class="dark" required [(ngModel)]="account.password" name="password" #password="ngModel">
+
+    <!-- Sign in button -->
+    <button class="gold-button">Sign in</button>
+
+    <div style="margin-left: 20px; margin-bottom: 20px;">
+        <!-- <checkbox [type]="'checkbox'" [label]="'Keep me signed in.'" [checked]="account.isPersistent"
+            (change)="account.isPersistent = !account.isPersistent"></checkbox> -->
+    </div>
+
+    <hr>
+
+    <div class="caption" style="text-align: center; margin-bottom: 10px;">Don’t have an account?</div>
+    <button type="button" class="gray-button" (click)="onCreateAccountClick()">Create an account</button>
+</form>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a routerLink="/terms" style="margin-right: 20px;">Terms of Use</a>
+    <a routerLink="/privacy-policy">Privacy Policy</a>
+</div>

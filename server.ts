@@ -22,6 +22,8 @@ import {join} from 'path';
 
 import * as compression from 'compression';
 
+import * as proxy from 'http-proxy-middleware';
+
 // Express server
 const app = express();
 
@@ -44,6 +46,11 @@ app.engine('html', ngExpressEngine({
 
 app.set('view engine', 'html');
 app.set('views', DIST_FOLDER);
+
+app.use(
+  '/api',
+  proxy('/api', { target: 'http://localhost:50007' })
+);
 
 // Example Express Rest API endpoints
 // app.get('/api/**', (req, res) => { });

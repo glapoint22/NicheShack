@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../interfaces/category';
 import { AsyncSubject } from 'rxjs';
-import { DataService } from './data.service';
+import { DataService } from 'services/data.service';
 
 @Injectable({
   providedIn: 'root'
