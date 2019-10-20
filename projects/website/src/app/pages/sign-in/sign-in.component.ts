@@ -5,6 +5,8 @@ import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { Account } from '../../classes/account';
 import { DataService } from 'services/data.service';
+import { TokenData } from 'interfaces/token-data';
+import { AuthService } from 'services/auth.service';
 
 @Component({
   selector: 'sign-in',
@@ -21,10 +23,11 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
     @Inject(DOCUMENT) document,
     @Inject(PLATFORM_ID) platformId: Object,
     public router: Router,
-    private dataService: DataService) {
+    private dataService: DataService,
+    private authService: AuthService) {
     super(titleService, metaService, document, platformId);
   }
-  
+
 
   ngOnInit() {
     this.title = 'Sign In';
@@ -36,14 +39,17 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
 
   submitData(): void {
     this.dataService.post('api/Account/SignIn', this.account)
-      .subscribe(() => {},
+      .subscribe((tokenData: TokenData) => {
+        // Set the cookies
+        this.authService.setCookies(tokenData.accessToken, tokenData.refreshToken);
+      },
         error => {
           if (error.status == 401) this.isError = true;
         });
   }
 
   onCreateAccountClick() {
-    
+
   }
 
 }

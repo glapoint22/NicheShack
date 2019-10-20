@@ -7,7 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PageComponent } from './pages/page/page.component';
 import { TransferHttpCacheModule } from '@nguniversal/common';
 import { ValidationPageComponent } from './pages/validation-page/validation-page.component';
-import { AuthInterceptor } from './auth-interceptor';
+import { ClientInterceptor } from 'interceptors/client-interceptor';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { AuthInterceptor } from './auth-interceptor';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: ClientInterceptor,
       multi: true
     }
   ],

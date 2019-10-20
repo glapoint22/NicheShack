@@ -7,7 +7,7 @@ import { DataService } from 'services/data.service';
   providedIn: 'root'
 })
 export class CategoriesService {
-  public categories = new AsyncSubject();
+  public categories = new AsyncSubject<Array<Category>>();
 
   constructor(dataService: DataService) {
     dataService.get('api/categories')

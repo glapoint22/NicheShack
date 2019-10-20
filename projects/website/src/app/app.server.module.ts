@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {UniversalInterceptor} from './universal-interceptor';
+import { ServerInterceptor } from 'interceptors/server-interceptor';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import {UniversalInterceptor} from './universal-interceptor';
   bootstrap: [AppComponent],
   providers: [{
     provide: HTTP_INTERCEPTORS,
-    useClass: UniversalInterceptor,
+    useClass: ServerInterceptor,
     multi: true
   }]
 })

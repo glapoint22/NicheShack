@@ -24,6 +24,8 @@ import * as compression from 'compression';
 
 import * as proxy from 'http-proxy-middleware';
 
+import * as proxyConfig from './proxy.config';
+
 // Express server
 const app = express();
 
@@ -49,7 +51,7 @@ app.set('views', DIST_FOLDER);
 
 app.use(
   '/api',
-  proxy('/api', { target: 'http://localhost:50007' })
+  proxy('/api', { target: proxyConfig[0].target })
 );
 
 // Example Express Rest API endpoints
@@ -64,6 +66,7 @@ app.get('*', (req, res) => {
   res.render('index', {
     req: req,
     res: res,
+    // Needed to inject the request and response into the interceptors
     providers: [
       {
         provide: 'REQUEST', useValue: (req)
