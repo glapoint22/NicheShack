@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscriber } from 'rxjs';
 import { DataService } from 'services/data.service';
 import * as jwtDecode from 'jwt-decode';
 import { HttpRequest, HttpHeaders } from '@angular/common/http';
@@ -38,14 +38,13 @@ export class AuthService {
 
             // read the access token from the cookie
             if (tokenString) token = tokenString.substr(tokenString.indexOf('=') + 1);
-
         }
 
         return token;
     }
 
     public refresh(): Observable<string> {
-        return new Observable<string>(observer => {
+        return new Observable<string>((subscriber: Subscriber<string>) => {
 
             // If refreshing in not already in progress
             if (!this.isRefreshing) {
@@ -56,11 +55,10 @@ export class AuthService {
                     .subscribe((tokenData: TokenData) => {
                         let accessToken: string;
 
-                        if(tokenData) accessToken = tokenData.accessToken;
-
                         // Pass the access token
-                        observer.next(accessToken);
-                        observer.complete();
+                        if (tokenData) accessToken = tokenData.accessToken;
+                        subscriber.next(accessToken);
+                        subscriber.complete();
                         this.waitForAccessToken.next(accessToken);
                         this.waitForAccessToken.complete();
                     });
@@ -69,17 +67,25 @@ export class AuthService {
                 this.waitForAccessToken
                     .subscribe((accessToken: string) => {
                         // Pass the access token
-                        observer.next(accessToken);
-                        observer.complete();
+                        subscriber.next(accessToken);
+                        subscriber.complete();
                         this.isRefreshing = false;
                     });
             }
-
-        })
+        });
     }
 
     isAccessTokenExpired(token: string): boolean {
-        let jwtToken = jwtDecode(token);
+        let jwtToken;
+
+        // Make sure we don't get any errors while trying decode the token
+        try {
+            jwtToken = jwtDecode(token);
+        } catch (error) {
+            return true;
+        }
+
+        // Has token expired?
         return new Date(jwtToken.exp * 1000).valueOf() - new Date().valueOf() < 0;
     }
 
@@ -111,7 +117,7 @@ export class AuthService {
                 // Refresh cookie
                 .cookie('refresh', refreshToken, expiration);
 
-        // Set cookies on client
+            // Set cookies on client
         } else {
             expiration = jwtToken.isPersistent == 'True' ? '; expires=' + this.cookieExpiration.toUTCString() : '';
 
@@ -121,7 +127,5 @@ export class AuthService {
             // Refresh cookie
             document.cookie = 'refresh=' + refreshToken + expiration;
         }
-
-
     }
 }

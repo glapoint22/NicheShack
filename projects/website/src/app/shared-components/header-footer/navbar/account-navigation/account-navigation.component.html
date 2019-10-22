@@ -1,8 +1,9 @@
 <div class="primary-color" (mousedown)="$event.preventDefault()">
-    <div *ngFor="let dropdownItem of dropdownItems"
-        class="dropdown-item primary-background-color-dark-hover primary-color-light-hover"
-        [ngClass]="{'show-dropdown-item': show}" (click)="onClick(dropdownItem)">
-        <i [class]="'fas ' + dropdownItem.icon"></i>
-        <span>{{dropdownItem.caption}}</span>
+    <div *ngFor="let dropdownItem of dropdownItems">
+        <div *ngIf="dropdownItem.show" class="dropdown-item primary-background-color-dark-hover primary-color-light-hover"
+            [ngClass]="{'show-dropdown-item': show}" (click)="onClick(dropdownItem)">
+            <i [class]="'fas ' + dropdownItem.icon"></i>
+            <span>{{dropdownItem.caption}}</span>
+        </div>
     </div>
 </div>

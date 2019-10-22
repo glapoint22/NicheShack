@@ -3,10 +3,11 @@ import { ValidationPageComponent } from '../validation-page/validation-page.comp
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-import { Account } from '../../classes/account';
 import { DataService } from 'services/data.service';
 import { TokenData } from 'interfaces/token-data';
 import { AuthService } from 'services/auth.service';
+import { Account } from 'classes/account';
+import { AccountService } from 'services/account.service';
 
 @Component({
   selector: 'sign-in',
@@ -16,6 +17,7 @@ import { AuthService } from 'services/auth.service';
 export class SignInComponent extends ValidationPageComponent implements OnInit {
   public account: Account = new Account();
   public isError: boolean;
+  private redirectUrl: string;
 
   constructor(
     titleService: Title,
@@ -24,7 +26,8 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
     @Inject(PLATFORM_ID) platformId: Object,
     public router: Router,
     private dataService: DataService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private accountService: AccountService) {
     super(titleService, metaService, document, platformId);
   }
 
@@ -32,7 +35,7 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
   ngOnInit() {
     this.title = 'Sign In';
     this.share = false;
-    // this.redirectUrl = this.authService.redirectUrl;
+    this.redirectUrl = this.accountService.redirectUrl;
     this.account.isPersistent = true;
     super.ngOnInit();
   }
@@ -42,6 +45,8 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
       .subscribe((tokenData: TokenData) => {
         // Set the cookies
         this.authService.setCookies(tokenData.accessToken, tokenData.refreshToken);
+        this.accountService.setAccount(this.redirectUrl);
+        // this.router.navigate([this.redirectUrl]);
       },
         error => {
           if (error.status == 401) this.isError = true;

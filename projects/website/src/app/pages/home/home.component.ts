@@ -20,7 +20,7 @@ export class HomeComponent extends PageComponent implements OnInit {
   ngOnInit() {
     this.title = 'What\'s your niche?';
     this.description = 'Online shopping from the largest affiliate marketing site on the planet, promoting items from thousands of companies and individuals.';
-    this.image = '/Images/tlou2.jpg';
+    // this.image = '/Images/tlou2.jpg';
 
     super.ngOnInit();
     this.dataService.get('api/Home')

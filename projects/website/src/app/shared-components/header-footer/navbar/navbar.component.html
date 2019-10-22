@@ -18,7 +18,7 @@
 
         <!-- Navigation container -->
         <div class="margin-left-3 margin-bottom-n2 show-md">
-            <div class="text-truncate show-md" style="max-width: 140px; font-size: 0.75rem;">Hello, WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW</div>
+            <div class="text-truncate show-md customer-name">{{customerName ? 'Hello, ' + customerName : 'Sign in'}}</div>
             <div class="display-flex alt-color text-nowrap">
                 <div class="margin-right-md-5 margin-top-3 margin-top-md-0 position-relative cursor-pointer" (click)="accountMenu.onClick()" (mousedown)="accountMenu.onMousedown()">
                     Account

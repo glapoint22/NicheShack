@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountService } from 'services/account.service';
+import { Customer } from 'classes/customer';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'account-navigation',
@@ -9,53 +12,77 @@ import { Router } from '@angular/router';
 export class AccountNavigationComponent implements OnInit {
   @Input() show: boolean;
   @Input() showHideElement: HTMLElement;
-  public dropdownItems: Array<any>;
+  public dropdownItems: Array<any> = [];
+  private subscription: Subscription;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private accountService: AccountService) { }
 
   ngOnInit() {
-    this.dropdownItems = [
-      {
-        caption: 'Sign In',
-        url: 'sign-in',
-        icon: 'fa-sign-in-alt'
-      },
-      {
-        caption: 'Your Account',
-        url: 'account',
-        icon: 'fa-user'
-      },
-      {
-        caption: 'Your Orders',
-        url: 'account/orders',
-        icon: 'fa-file-invoice'
-      },
-      {
-        caption: 'Your Lists',
-        url: 'lists',
-        icon: 'fa-clipboard-list'
-      },
-      {
-        caption: 'Your Email Preferences',
-        url: 'preferences',
-        icon: 'fa-envelope'
-      },
-      {
-        caption: 'Sign Out',
-        url: 'sign-out',
-        icon: 'fa-sign-out-alt'
-      },
-      {
-        caption: 'Create Account',
-        url: 'create-account',
-        icon: 'fa-user-plus'
-      }
-    ];
+    this.subscription = this.accountService.isSignedIn.subscribe((isSignedIn: boolean) => {
+      this.dropdownItems = [
+        {
+          caption: 'Sign In',
+          url: 'sign-in',
+          icon: 'fa-sign-in-alt',
+          show: !isSignedIn,
+          click: () => { }
+        },
+        {
+          caption: 'Your Account',
+          url: 'account',
+          icon: 'fa-user',
+          show: true,
+          click: () => { }
+        },
+        {
+          caption: 'Your Orders',
+          url: 'account/orders',
+          icon: 'fa-file-invoice',
+          show: true,
+          click: () => { }
+        },
+        {
+          caption: 'Your Lists',
+          url: 'lists',
+          icon: 'fa-clipboard-list',
+          show: true,
+          click: () => { }
+        },
+        {
+          caption: 'Your Email Preferences',
+          url: 'preferences',
+          icon: 'fa-envelope',
+          show: true,
+          click: () => { }
+        },
+        {
+          caption: 'Sign Out',
+          url: 'sign-in',
+          icon: 'fa-sign-out-alt',
+          show: isSignedIn,
+          click: () => this.accountService.signOut()
+        },
+        {
+          caption: 'Create Account',
+          url: 'create-account',
+          icon: 'fa-user-plus',
+          show: !isSignedIn,
+          click: () => { }
+        }
+      ];
+    });
+
+
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   onClick(dropdownItem: any) {
     this.router.navigate([dropdownItem.url]);
     this.showHideElement.blur();
+    dropdownItem.click();
   }
 
 }

@@ -3,6 +3,9 @@ import { KeyValue } from '@angular/common';
 import { CategoriesService } from '../../../services/categories.service';
 import { Category } from '../../../interfaces/category';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { AccountService } from 'services/account.service';
+import { Customer } from 'classes/customer';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'navbar',
@@ -12,10 +15,19 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 export class NavbarComponent implements OnInit {
   public categories: Array<KeyValue<number, string>> = []
   public selectedCategoryIndex: number = 0;
+  public customerName: string;
+  private subscription: Subscription;
 
-  constructor(private categoriesService: CategoriesService, private route: ActivatedRoute) { }
+  constructor(private categoriesService: CategoriesService, private route: ActivatedRoute, private accountService: AccountService) { }
 
   ngOnInit(): void {
+    // Get the customer's first name
+    this.subscription = this.accountService.customer
+      .subscribe((customer: Customer) => {
+        this.customerName = customer ? customer.firstName : null;
+      });
+
+
     this.route.queryParamMap.subscribe((queryParams: ParamMap) => {
       // If we don't have categories yet, use the categories service to get them from the database
       if (this.categories.length == 0) {
@@ -29,6 +41,10 @@ export class NavbarComponent implements OnInit {
         this.setSelectedCategory(queryParams);
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 
