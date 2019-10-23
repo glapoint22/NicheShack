@@ -1,0 +1,31 @@
+.form-page {
+    margin: auto;
+    max-width: 360px;
+    margin-top: 80px;
+    img {
+        display: block;
+        margin: auto;
+        margin-bottom: 30px;
+    }
+
+    form {
+        border: 1px solid $alt-theme-color;
+        border-radius: 5px;
+    }
+
+    
+
+    input:not([type="checkbox"]), textarea, h1, h4, button {
+        width: 88%;
+        margin: auto;
+    }
+
+    h1 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    input:not([type="checkbox"]), button {
+        margin-bottom: 20px;
+    }
+}

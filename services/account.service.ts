@@ -11,30 +11,7 @@ import { Router } from '@angular/router';
 export class AccountService {
     public customer = new ReplaySubject<Customer>(1);
     public isSignedIn = new ReplaySubject<boolean>(1);
-
-    // redirectUrl
-    private _redirectUrl: string;
-    public get redirectUrl(): string {
-        let url: string;
-
-        // if _redirectUrl is null, assign url an empty string. This will redirect to the home page
-        if (!this._redirectUrl) {
-            url = ''
-        } else {
-            // We have a path to redirct to, so give it to url
-            url = this._redirectUrl;
-
-            // Clear so we don't redirect again
-            this._redirectUrl = null;
-        }
-
-        return url;
-    }
-    public set redirectUrl(v: string) {
-        // Set the value
-        this._redirectUrl = v;
-    }
-
+    public redirectUrl: string = '';
 
     constructor(private dataService: DataService, private router: Router) {
         this.setAccount();

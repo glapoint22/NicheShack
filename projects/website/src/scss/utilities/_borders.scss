@@ -15,7 +15,7 @@
 
 
 // Border colors
-.border-gray {border-color: #3d3d3d}
+.border-gray {border-color: $border-gray}
 @include generate-border-colors(generate-color-map($primary-theme-color), 'primary');
 @include generate-border-colors(generate-color-map($alt-theme-color), 'alt');
 

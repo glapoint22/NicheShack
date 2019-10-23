@@ -1,55 +1,60 @@
-<!-- Logo -->
-<img src="assets/Logo.png" routerLink="">
+<div class="form-page">
+    <!-- Logo -->
+    <img src="assets/Logo.png" routerLink="">
 
-<div *ngIf="isError" class="warning">
-    <i class="fas fa-exclamation-triangle"></i>
-    <div class="warning-text">
-        Your password and email do not match. Please try again.
-    </div>
-</div>
-
-<form (ngSubmit)="onSubmit()" #form="ngForm">
-    <div class="form-title">Sign In</div>
-
-    <!-- Email -->
-    <div *ngIf="valid(email); else invalidEmail" class="caption">Email:</div>
-
-    <!-- Invalid email -->
-    <ng-template #invalidEmail>
-        <div class="not-valid caption">
-            Please enter a valid email address.
+    <div *ngIf="isError">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div>
+            Your password and email do not match. Please try again.
         </div>
-    </ng-template>
-    <input class="dark" required email [(ngModel)]="account.email" name="email" #email="ngModel">
-
-    <!-- Password -->
-    <div *ngIf="valid(password); else invalidPassword" class="caption" style="display: inline-block;">Password:
     </div>
-    <a tabindex="10" routerLink="/forgot-password" class="gold-link">Forgot your password?</a>
 
-    <!-- Invalid password -->
-    <ng-template #invalidPassword>
-        <div class="not-valid caption" style="display: inline-block;">
-            Please provide a password.
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+        <h1>Sign In</h1>
+
+        <!-- Email -->
+        <h4 *ngIf="valid(email); else invalidEmail">Email:</h4>
+
+        <!-- Invalid email -->
+        <ng-template #invalidEmail>
+            <div>
+                Please enter a valid email address.
+            </div>
+        </ng-template>
+        <input required email [(ngModel)]="account.email" name="email" #email="ngModel">
+
+        <!-- Password -->
+        <div style="width: 88%; margin: auto;">
+            <h4 class="display-inline" *ngIf="valid(password); else invalidPassword">Password:</h4>
+            <a class="alt-color float-right" tabindex="10" routerLink="/forgot-password">Forgot your password?</a>
         </div>
-    </ng-template>
-    <input type="password" class="dark" required [(ngModel)]="account.password" name="password" #password="ngModel">
+        
 
-    <!-- Sign in button -->
-    <button class="gold-button">Sign in</button>
+        <!-- Invalid password -->
+        <ng-template #invalidPassword>
+            <div>
+                Please provide a password.
+            </div>
+        </ng-template>
+        <input type="password" required [(ngModel)]="account.password" name="password" #password="ngModel">
 
-    <div style="margin-left: 20px; margin-bottom: 20px;">
-        <input type="checkbox" (change)="account.isPersistent = !account.isPersistent"
-            [checked]="account.isPersistent"><label>Keep me signed in.</label>
+        <!-- Sign in button -->
+        <button class="alt-button">Sign in</button>
+
+        <div style="width: 88%; margin: auto">
+            <input type="checkbox" (change)="account.isPersistent = !account.isPersistent"
+                [checked]="account.isPersistent"><label>Keep me signed in.</label>
+        </div>
+        
+
+        <hr>
+
+        <div class="text-center margin-bottom-2">Don’t have an account?</div>
+        <button type="button" (click)="onCreateAccountClick()">Create an account</button>
+    </form>
+
+    <div class="text-center margin-top-3 margin-bottom-3 text-underline">
+        <a class="margin-right-3" routerLink="/terms">Terms of Use</a>
+        <a routerLink="/privacy-policy">Privacy Policy</a>
     </div>
-
-    <hr>
-
-    <div class="caption" style="text-align: center; margin-bottom: 10px;">Don’t have an account?</div>
-    <button type="button" class="gray-button" (click)="onCreateAccountClick()">Create an account</button>
-</form>
-
-<div style="text-align: center; margin-top: 20px;">
-    <a routerLink="/terms" style="margin-right: 20px;">Terms of Use</a>
-    <a routerLink="/privacy-policy">Privacy Policy</a>
 </div>

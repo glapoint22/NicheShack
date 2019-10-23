@@ -36,6 +36,7 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
     this.title = 'Sign In';
     this.share = false;
     this.redirectUrl = this.accountService.redirectUrl;
+    this.accountService.redirectUrl = '';
     this.account.isPersistent = true;
     super.ngOnInit();
   }
@@ -46,7 +47,6 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
         // Set the cookies
         this.authService.setCookies(tokenData.accessToken, tokenData.refreshToken);
         this.accountService.setAccount(this.redirectUrl);
-        // this.router.navigate([this.redirectUrl]);
       },
         error => {
           if (error.status == 401) this.isError = true;

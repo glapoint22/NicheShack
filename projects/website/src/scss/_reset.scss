@@ -64,6 +64,16 @@ label {
     display: inline-block;
 }
 
+input:not([type="checkbox"]) {
+    border-radius: 4px;
+    border: 1px solid $border-gray;
+    background: #282828;
+    color: $base-color;
+    outline: none;
+    height: 30px;
+    padding-left: 5px;
+}
+
 input,
 button,
 select,
@@ -76,8 +86,9 @@ textarea {
 }
 
 button,
-input {
+input:not([type="checkbox"]) {
     overflow: visible;
+    display: block;
 }
 
 button,
