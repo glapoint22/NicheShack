@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable, Subscriber, Subscription } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import { AccountService } from 'services/account.service';
-import { tap } from 'rxjs/operators';
+import { tap, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountGuard implements CanActivate, CanLoad {
-  private subscription: Subscription;
-
   constructor(private accountService: AccountService, private router: Router) { }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
@@ -43,11 +41,9 @@ export class AccountGuard implements CanActivate, CanLoad {
 
   isSignedIn(): Observable<boolean> {
     return new Observable<boolean>((subscriber: Subscriber<boolean>) => {
-      // Unsubscribe so we don't have multiple subscriptions
-      if (this.subscription) this.subscription.unsubscribe();
-
       // Find out if the customer is signed in
-      this.subscription = this.accountService.isSignedIn
+      this.accountService.isSignedIn
+        .pipe(take(1))
         .subscribe((signedIn: boolean) => {
           subscriber.next(signedIn);
           subscriber.complete();

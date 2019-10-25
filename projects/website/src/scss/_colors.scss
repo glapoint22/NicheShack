@@ -1,8 +1,8 @@
 .primary-color-gradient {
-    @include gradient(generate-color-map($primary-theme-color));
+    @include gradient($primary-theme-color-map);
 }
 .alt-color-gradient {
-    @include gradient(generate-color-map($alt-theme-color));
+    @include gradient($alt-theme-color-map);
 }
 
 .background-color {
@@ -12,8 +12,8 @@
     background-color: $background-color-dark;
 }
 
-@include generate-colors(generate-color-map($primary-theme-color), 'primary');
-@include generate-colors(generate-color-map($alt-theme-color), 'alt');
+@include generate-colors($primary-theme-color-map, 'primary');
+@include generate-colors($alt-theme-color-map, 'alt');
 
 .background-color-dark-gray {
     background-color: $dark-gray;
@@ -21,4 +21,8 @@
 
 .disabled-color {
     color: #545454;
+}
+
+.error-color {
+    color: #ff0000;
 }

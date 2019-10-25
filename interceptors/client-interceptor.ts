@@ -43,7 +43,7 @@ export class ClientInterceptor implements HttpInterceptor {
                     if (event instanceof HttpResponse) {
 
                         // Set the cookies if the response is from the token refresh
-                        if (event.url == location.href + this.authService.refreshUrl && event.body) {
+                        if (event.url == location.origin + '/' + this.authService.refreshUrl && event.body) {
                             this.authService.setCookies(event.body.accessToken, event.body.refreshToken);
                         }
                     }

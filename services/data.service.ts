@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -46,7 +46,7 @@ export class DataService {
       // This will display the not found page
       if(error.status == 404) this.notFound = true;
 
-      return of<any>();
+      return throwError(error);
     }
   }
 }

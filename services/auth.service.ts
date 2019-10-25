@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, Subscriber } from 'rxjs';
+import { Observable, Subject, Subscriber, Subscription } from 'rxjs';
 import { DataService } from 'services/data.service';
 import * as jwtDecode from 'jwt-decode';
 import { HttpRequest, HttpHeaders } from '@angular/common/http';
@@ -45,7 +45,6 @@ export class AuthService {
 
     public refresh(): Observable<string> {
         return new Observable<string>((subscriber: Subscriber<string>) => {
-
             // If refreshing in not already in progress
             if (!this.isRefreshing) {
                 this.isRefreshing = true;
@@ -55,6 +54,9 @@ export class AuthService {
                     .subscribe((tokenData: TokenData) => {
                         let accessToken: string;
 
+                        // Flag that we are done refreshing
+                        this.isRefreshing = false;
+
                         // Pass the access token
                         if (tokenData) accessToken = tokenData.accessToken;
                         subscriber.next(accessToken);
@@ -63,13 +65,13 @@ export class AuthService {
                         this.waitForAccessToken.complete();
                     });
             } else {
-                // Refreshing has already started, so we need to wait for the access token
-                this.waitForAccessToken
+                // Refreshing has already started, so we need to wait for the refreshing process to finish
+                let subscription: Subscription = this.waitForAccessToken
                     .subscribe((accessToken: string) => {
                         // Pass the access token
                         subscriber.next(accessToken);
                         subscriber.complete();
-                        this.isRefreshing = false;
+                        subscription.unsubscribe();
                     });
             }
         });

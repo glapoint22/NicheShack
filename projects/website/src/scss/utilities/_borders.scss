@@ -16,8 +16,8 @@
 
 // Border colors
 .border-gray {border-color: $border-gray}
-@include generate-border-colors(generate-color-map($primary-theme-color), 'primary');
-@include generate-border-colors(generate-color-map($alt-theme-color), 'alt');
+@include generate-border-colors($primary-theme-color-map, 'primary');
+@include generate-border-colors($alt-theme-color-map, 'alt');
 
 
 // Border widths

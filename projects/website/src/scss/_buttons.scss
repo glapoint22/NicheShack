@@ -4,11 +4,12 @@ button {
     padding: 0.4rem 0.8rem;
     outline: 0;
     white-space: nowrap;
+    font-weight: bold;
     @include button-colors(nth($default-button-colors, 1), nth($default-button-colors, 2), $base-color);
 }
 
 .alt-button {
-    @include button-colors(map-get(generate-color-map($alt-theme-color), lighter), map-get(generate-color-map($alt-theme-color), dark), map-get(generate-color-map($alt-theme-color), darkest));
+    @include button-colors(map-get($alt-theme-color-map, lighter), map-get($alt-theme-color-map, dark), map-get($alt-theme-color-map, darkest));
 }
 
 .button-rounded-left {

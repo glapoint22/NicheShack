@@ -44,7 +44,7 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
   submitData(): void {
     this.dataService.post('api/Account/SignIn', this.account)
       .subscribe((tokenData: TokenData) => {
-        // Set the cookies
+        // Set the cookies and account
         this.authService.setCookies(tokenData.accessToken, tokenData.refreshToken);
         this.accountService.setAccount(this.redirectUrl);
       },
@@ -54,7 +54,6 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
   }
 
   onCreateAccountClick() {
-
+    this.router.navigate(['/create-account']);
   }
-
 }

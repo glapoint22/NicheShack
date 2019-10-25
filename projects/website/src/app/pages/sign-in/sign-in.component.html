@@ -1,15 +1,15 @@
 <div class="form-page">
     <!-- Logo -->
-    <img src="assets/Logo.png" routerLink="">
+    <img class="display-block margin-auto margin-bottom-4 cursor-pointer" src="assets/Logo.png" routerLink="" title="Niche Shack Homepage">
 
-    <div *ngIf="isError">
-        <i class="fas fa-exclamation-triangle"></i>
-        <div>
+    <div *ngIf="isError" class="display-flex padding-2 border border-rounded border-alt-color margin-bottom-4">
+        <i class="fas fa-exclamation-triangle font-size-7 margin-right-2 alt-color"></i>
+        <div class="error-color">
             Your password and email do not match. Please try again.
         </div>
     </div>
 
-    <form (ngSubmit)="onSubmit()" #form="ngForm">
+    <form class="border border-rounded border-alt-color" (ngSubmit)="onSubmit()" #form="ngForm">
         <h1>Sign In</h1>
 
         <!-- Email -->
@@ -17,35 +17,35 @@
 
         <!-- Invalid email -->
         <ng-template #invalidEmail>
-            <div>
-                Please enter a valid email address.
-            </div>
+            <h4 class="error-color">Please enter a valid email address.</h4>
         </ng-template>
         <input required email [(ngModel)]="account.email" name="email" #email="ngModel">
 
         <!-- Password -->
-        <div style="width: 88%; margin: auto;">
-            <h4 class="display-inline" *ngIf="valid(password); else invalidPassword">Password:</h4>
-            <a class="alt-color float-right" tabindex="10" routerLink="/forgot-password">Forgot your password?</a>
+        <div *ngIf="valid(password); else invalidPassword" class="margin-auto" style="width: 88%">
+            <h4 class="display-inline">Password:</h4>
+            <a class="alt-color float-right font-size-2" style="text-decoration: underline;" tabindex="10"
+                routerLink="/forgot-password">Forgot your password?</a>
         </div>
-        
+
 
         <!-- Invalid password -->
         <ng-template #invalidPassword>
-            <div>
-                Please provide a password.
-            </div>
+            <h4 class="error-color">Passwords must be at least 6 characters.</h4>
+            <a class="alt-color font-size-2 margin-auto display-block"
+                style="text-decoration: underline; width: 88%; margin-bottom: 5px;" tabindex="10"
+                routerLink="/forgot-password">Forgot your password?</a>
         </ng-template>
-        <input type="password" required [(ngModel)]="account.password" name="password" #password="ngModel">
+        <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="account.password" name="password" #password="ngModel">
 
         <!-- Sign in button -->
         <button class="alt-button">Sign in</button>
 
-        <div style="width: 88%; margin: auto">
+        <div class="margin-auto" style="width: 88%">
             <input type="checkbox" (change)="account.isPersistent = !account.isPersistent"
                 [checked]="account.isPersistent"><label>Keep me signed in.</label>
         </div>
-        
+
 
         <hr>
 
@@ -53,7 +53,7 @@
         <button type="button" (click)="onCreateAccountClick()">Create an account</button>
     </form>
 
-    <div class="text-center margin-top-3 margin-bottom-3 text-underline">
+    <div class="text-center margin-top-3 margin-bottom-3 text-underline disabled-color">
         <a class="margin-right-3" routerLink="/terms">Terms of Use</a>
         <a routerLink="/privacy-policy">Privacy Policy</a>
     </div>
