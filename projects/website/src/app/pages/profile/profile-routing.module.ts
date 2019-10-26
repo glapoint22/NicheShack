@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ProfileComponent
+  },
+  {
+    path: 'change-name',
+    loadChildren: () => import('../../pages/change-name/change-name.module').then(m => m.ChangeNameModule)
   }
 ];
 

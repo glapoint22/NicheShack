@@ -1,0 +1,55 @@
+<navbar></navbar>
+
+<div class="page-container">
+    <div class="content-container">
+
+        <div class="form-page content-margin">
+            <!-- breadcrumb -->
+            <div class="text-center margin-bottom-4">
+                <a class="primary-color-light primary-color-lighter-hover" routerLink="/account"
+                    style="text-decoration: underline;">Your Account</a>
+                <i class="fas fa-caret-right" style="margin: 0 10px;"></i>
+                <a class="primary-color-light primary-color-lighter-hover" routerLink="/account/profile"
+                    style="text-decoration: underline;">Profile</a>
+                <i class="fas fa-caret-right" style="margin: 0 10px;"></i>
+                <span class="gray-color">Change Name</span>
+            </div>
+
+            <!-- Logo -->
+            <img class="display-block margin-auto margin-bottom-4 cursor-pointer" src="assets/Logo.png" routerLink=""
+                title="Niche Shack Homepage">
+
+            <!-- Form -->
+            <form class="border border-rounded border-alt-color" (ngSubmit)="onSubmit()" #form="ngForm">
+                <h1>Change Name</h1>
+
+                <!-- First Name -->
+                <h4 *ngIf="valid(firstName); else invalidFirstName">First Name:</h4>
+
+                <!-- Invalid first name -->
+                <ng-template #invalidFirstName>
+                    <h4 class="error-color">Please provide a first name.</h4>
+                </ng-template>
+                <input required [(ngModel)]="customer.firstName" name="firstName" #firstName="ngModel"
+                    autocomplete="off">
+
+
+
+                <!-- Last Name -->
+                <h4 *ngIf="valid(lastName); else invalidLastName">Last Name:</h4>
+
+                <!-- Invalid last name -->
+                <ng-template #invalidLastName>
+                    <h4 class="error-color">Please provide a last name.</h4>
+                </ng-template>
+                <input required [(ngModel)]="customer.lastName" name="lastName" #lastName="ngModel" autocomplete="off">
+
+
+                <!-- Save button -->
+                <button class="alt-button">Save</button>
+            </form>
+        </div>
+
+        <navfooter></navfooter>
+    </div>
+</div>
