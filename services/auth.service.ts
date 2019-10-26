@@ -107,27 +107,32 @@ export class AuthService {
 
     setCookies(accessToken: string, refreshToken: string, response: any = {}) {
         let jwtToken = jwtDecode(accessToken);
-        let expiration: string | any;
+
 
         // Set cookies on server
         if (Object.keys(response).length > 0) {
-            expiration = jwtToken.isPersistent == 'True' ? { expires: this.cookieExpiration } : {};
+            let cookieOptions: any = {};
+
+            // Set the options for the cookies
+            if (jwtToken.isPersistent) cookieOptions.expires = this.cookieExpiration;
+            cookieOptions.path = '/';
+
             response
                 // Access cookie
-                .cookie('access', accessToken, expiration)
+                .cookie('access', accessToken, cookieOptions)
 
                 // Refresh cookie
-                .cookie('refresh', refreshToken, expiration);
+                .cookie('refresh', refreshToken, cookieOptions);
 
             // Set cookies on client
         } else {
-            expiration = jwtToken.isPersistent == 'True' ? '; expires=' + this.cookieExpiration.toUTCString() : '';
+            let expiration: string = jwtToken.isPersistent == 'True' ? '; expires=' + this.cookieExpiration.toUTCString() : '';
 
             // Access cookie
-            document.cookie = 'access=' + accessToken + expiration;
+            document.cookie = 'access=' + accessToken + expiration + '; path=/';
 
             // Refresh cookie
-            document.cookie = 'refresh=' + refreshToken + expiration;
+            document.cookie = 'refresh=' + refreshToken + expiration + '; path=/';
         }
     }
 }

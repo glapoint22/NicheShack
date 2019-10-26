@@ -6,7 +6,6 @@ import { DOCUMENT } from '@angular/common';
 import { DataService } from 'services/data.service';
 
 @Component({
-  selector: 'home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

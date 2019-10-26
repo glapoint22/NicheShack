@@ -1,0 +1,66 @@
+<navbar></navbar>
+
+<div class="page-container">
+    <div class="content-container">
+
+        <div class="margin-auto content-margin padding-left-3 padding-right-3" style="max-width: 700px;">
+            
+            <!-- breadcrumb -->
+            <div class="margin-bottom-4">
+                <a class="primary-color-light primary-color-lighter-hover" routerLink="/account" style="text-decoration: underline;">Your Account</a>
+                <i class="fas fa-caret-right" style="margin: 0 10px;"></i>
+                <span class="gray-color">Profile</span>
+            </div>
+
+
+            <!-- Account Updated -->
+            <div *ngIf="accountUpdated" class="margin-bottom-4 border border-alt-color border-rounded padding-3">
+                <i class="fas fa-check margin-right-2 success-color"></i>
+                All changes have been successfully saved.
+            </div>
+
+            <!-- Page Title -->
+            <h1 class="alt-color">Profile</h1>
+
+
+
+            <!-- Name -->
+            <div
+                class="display-flex align-items-center border-top border-bottom border-gray padding-top-2 padding-bottom-2">
+                <div class="flex-fill">
+                    <div class="alt-color">Name:</div>
+                    <div class="text-truncate max-width">{{customer.firstName}} {{customer.lastName}}</div>
+                </div>
+                <button (click)="navigate('account/profile/change-name')">Edit</button>
+            </div>
+
+
+
+
+            <!-- Email -->
+            <div class="display-flex align-items-center border-bottom border-gray padding-top-2 padding-bottom-2">
+                <div class="flex-fill">
+                    <div class="alt-color">Email:</div>
+                    <div class="text-truncate max-width">{{customer.email}}</div>
+                </div>
+                <button (click)="navigate('account/profile/change-email')">Edit</button>
+            </div>
+
+
+
+
+
+            <!-- Password -->
+            <div class="display-flex align-items-center border-bottom border-gray padding-top-2 padding-bottom-2">
+                <div class="flex-fill">
+                    <div class="alt-color">Password:</div>
+                    <div>********</div>
+                </div>
+                <button (click)="navigate('account/profile/change-password')">Edit</button>
+            </div>
+
+
+        </div>
+        <navfooter></navfooter>
+    </div>
+</div>

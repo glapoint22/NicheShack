@@ -12,6 +12,7 @@ export class AccountService {
     public customer = new ReplaySubject<Customer>(1);
     public isSignedIn = new ReplaySubject<boolean>(1);
     public redirectUrl: string = '';
+    public accountUpdated: boolean;
 
     constructor(private dataService: DataService, private router: Router) {
         this.setAccount();
