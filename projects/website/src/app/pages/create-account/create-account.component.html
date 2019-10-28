@@ -1,0 +1,98 @@
+<div class="form-page content-margin">
+    <!-- Logo -->
+    <img src="assets/Logo.png" routerLink="" title="Niche Shack Homepage">
+
+    <!-- Error -->
+    <div *ngIf="error" class="error-box">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div>{{error}}</div>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #form="ngForm" [matchValue]="['password', 'reEnteredPassword']">
+        <h1>Create Account</h1>
+
+        <!-- First Name -->
+        <h4 *ngIf="valid(firstName); else invalidFirstName">First name:</h4>
+
+        <!-- Invalid first name -->
+        <ng-template #invalidFirstName>
+            <h4 class="error-color">Please provide a valid first name.</h4>
+        </ng-template>
+        <input required pattern="^\b[a-zA-Z\s]{1,40}\b$" [(ngModel)]="account.firstName" name="firstName"
+            #firstName="ngModel" autocomplete="off">
+
+
+
+        <!-- Last Name -->
+        <h4 *ngIf="valid(lastName); else invalidLastName">Last name:</h4>
+
+        <!-- Invalid last name -->
+        <ng-template #invalidLastName>
+            <h4 class="error-color">Please provide a valid last name.</h4>
+        </ng-template>
+        <input required pattern="^\b[a-zA-Z\s]{1,40}\b$" [(ngModel)]="account.lastName" name="lastName"
+            #lastName="ngModel" autocomplete="off">
+
+
+
+        <!-- Email -->
+        <h4 *ngIf="valid(emailAddress); else invalidEmail">Email:</h4>
+
+        <!-- Invalid email -->
+        <ng-template #invalidEmail>
+            <h4 class="error-color">Please provide a valid email address.</h4>
+        </ng-template>
+        <input required email [(ngModel)]="account.email" name="email" #emailAddress="ngModel" autocomplete="off">
+
+
+
+        <!-- Password -->
+        <h4 *ngIf="valid(_password); else invalidPassword">Password:</h4>
+
+        <!-- Invalid password -->
+        <ng-template #invalidPassword>
+            <h4 class="error-color">Passwords must be at least 6 characters.</h4>
+        </ng-template>
+        <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="account.password" name="password"
+            #_password="ngModel" autocomplete="off">
+
+        <div class="fixed-width margin-auto margin-top-n3 margin-bottom-3 font-size-2">
+            <i class="fas fa-info margin-right-2 primary-color-light font-italic"></i>
+            <span class="alt-color">Passwords must be at least 6 characters.</span>
+        </div>
+
+
+
+        <!-- Re-enter password -->
+        <h4 *ngIf="valid(re_enter_password); else invalidReEnteredPassword">Re-enter password:</h4>
+
+        <!-- Invalid re-entered password -->
+        <ng-template #invalidReEnteredPassword>
+            <h4 class="error-color">Please make sure passwords match.</h4>
+        </ng-template>
+        <input type="password" [(ngModel)]="reEnteredPassword" name="reEnteredPassword" #re_enter_password="ngModel"
+            autocomplete="off">
+
+
+        <!-- Disclaimer -->
+        <div class="text-center font-size-2 gray-color margin-2">
+            <span>By clicking Create Account, you acknowledge you have read and agreed to our </span><a style="text-decoration: underline;"
+                routerLink="/terms">Terms of Use</a><span> and </span><a style="text-decoration: underline;" routerLink="/privacy-policy">Privacy
+                Policy</a>
+        </div>
+
+        <!-- Create account button -->
+        <button type="submit" class="alt-button">Create Account</button>
+
+        <hr>
+
+
+        <div class="text-center margin-bottom-1">Already have an account?</div>
+        <button type="button" (click)="onSignInClick()">Sign in</button>
+    </form>
+
+    <div class="text-center margin-top-3 margin-bottom-3 text-underline disabled-color">
+        <a class="margin-right-3" routerLink="/terms">Terms of Use</a>
+        <a routerLink="/privacy-policy">Privacy Policy</a>
+    </div>
+</div>
