@@ -66,4 +66,10 @@ $fixed-width: 88%;
     .fixed-width {
         width: $fixed-width;
     }
+
+    hr {
+        border: 1px solid #464646;
+        width: 80%;
+        margin-bottom: 10px;
+    }
 }

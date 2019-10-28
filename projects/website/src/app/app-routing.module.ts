@@ -18,6 +18,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule),
     canLoad: [AccountGuard],
     canActivate: [AccountGuard]
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./pages/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
   }
 ];
 
