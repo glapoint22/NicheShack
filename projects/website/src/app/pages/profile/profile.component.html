@@ -6,10 +6,10 @@
         <div class="margin-auto content-margin padding-left-3 padding-right-3" style="max-width: 700px;">
             
             <!-- breadcrumb -->
-            <div class="margin-bottom-4">
-                <a class="primary-color-light primary-color-lighter-hover" routerLink="/account" style="text-decoration: underline;">Your Account</a>
-                <i class="fas fa-caret-right" style="margin: 0 10px;"></i>
-                <span class="gray-color">Profile</span>
+            <div class="breadcrumb">
+                <a routerLink="/account">Your Account</a>
+                <i class="fas fa-caret-right"></i>
+                <span>Profile</span>
             </div>
 
 
@@ -31,7 +31,7 @@
                     <div class="alt-color">Name:</div>
                     <div class="text-truncate max-width">{{customer.firstName}} {{customer.lastName}}</div>
                 </div>
-                <button (click)="navigate('account/profile/change-name')">Edit</button>
+                <button class="alt-button" (click)="navigate('account/profile/change-name')">Edit</button>
             </div>
 
 
@@ -43,7 +43,7 @@
                     <div class="alt-color">Email:</div>
                     <div class="text-truncate max-width">{{customer.email}}</div>
                 </div>
-                <button (click)="navigate('account/profile/change-email')">Edit</button>
+                <button class="alt-button" (click)="navigate('account/profile/change-email')">Edit</button>
             </div>
 
 
@@ -56,7 +56,7 @@
                     <div class="alt-color">Password:</div>
                     <div>********</div>
                 </div>
-                <button (click)="navigate('account/profile/change-password')">Edit</button>
+                <button class="alt-button" (click)="navigate('account/profile/change-password')">Edit</button>
             </div>
 
 

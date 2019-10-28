@@ -1,0 +1,20 @@
+.breadcrumb {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    a {
+        color: $alt-theme-color;
+        text-decoration: underline;
+        &:hover {
+            color: map-get($alt-theme-color-map, light) ;
+        }
+    }
+
+    .fa-caret-right {
+        margin: 0 10px;
+    }
+
+    span {
+        color: $gray;
+    }
+}

@@ -5,14 +5,12 @@
 
         <div class="form-page content-margin">
             <!-- breadcrumb -->
-            <div class="text-center margin-bottom-4">
-                <a class="primary-color-light primary-color-lighter-hover" routerLink="/account"
-                    style="text-decoration: underline;">Your Account</a>
-                <i class="fas fa-caret-right" style="margin: 0 10px;"></i>
-                <a class="primary-color-light primary-color-lighter-hover" routerLink="/account/profile"
-                    style="text-decoration: underline;">Profile</a>
-                <i class="fas fa-caret-right" style="margin: 0 10px;"></i>
-                <span class="gray-color">Change Name</span>
+            <div class="breadcrumb">
+                <a routerLink="/account">Your Account</a>
+                <i class="fas fa-caret-right"></i>
+                <a routerLink="/account/profile">Profile</a>
+                <i class="fas fa-caret-right"></i>
+                <span>Change Name</span>
             </div>
 
             <!-- Logo -->
@@ -20,7 +18,7 @@
                 title="Niche Shack Homepage">
 
             <!-- Form -->
-            <form class="border border-rounded border-alt-color" (ngSubmit)="onSubmit()" #form="ngForm">
+            <form (ngSubmit)="onSubmit()" #form="ngForm">
                 <h1>Change Name</h1>
 
                 <!-- First Name -->

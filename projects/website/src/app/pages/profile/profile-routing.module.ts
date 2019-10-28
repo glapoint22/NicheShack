@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'change-name',
     loadChildren: () => import('../../pages/change-name/change-name.module').then(m => m.ChangeNameModule)
+  },
+  {
+    path: 'change-email',
+    loadChildren: () => import('../../pages/change-email/change-email.module').then(m => m.ChangeEmailModule)
   }
 ];
 
