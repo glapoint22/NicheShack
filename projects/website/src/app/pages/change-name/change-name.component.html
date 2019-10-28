@@ -14,8 +14,7 @@
             </div>
 
             <!-- Logo -->
-            <img class="display-block margin-auto margin-bottom-4 cursor-pointer" src="assets/Logo.png" routerLink=""
-                title="Niche Shack Homepage">
+            <img src="assets/Logo.png" routerLink="" title="Niche Shack Homepage">
 
             <!-- Form -->
             <form (ngSubmit)="onSubmit()" #form="ngForm">
@@ -28,7 +27,7 @@
                 <ng-template #invalidFirstName>
                     <h4 class="error-color">Please provide a first name.</h4>
                 </ng-template>
-                <input required [(ngModel)]="customer.firstName" name="firstName" #firstName="ngModel"
+                <input required [(ngModel)]="_firstName" name="firstName" #firstName="ngModel"
                     autocomplete="off">
 
 
@@ -40,7 +39,7 @@
                 <ng-template #invalidLastName>
                     <h4 class="error-color">Please provide a last name.</h4>
                 </ng-template>
-                <input required [(ngModel)]="customer.lastName" name="lastName" #lastName="ngModel" autocomplete="off">
+                <input required [(ngModel)]="_lastName" name="lastName" #lastName="ngModel" autocomplete="off">
 
 
                 <!-- Save button -->

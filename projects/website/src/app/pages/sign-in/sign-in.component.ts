@@ -16,7 +16,7 @@ import { AccountService } from 'services/account.service';
 })
 export class SignInComponent extends ValidationPageComponent implements OnInit {
   public account: Account = new Account();
-  public isError: boolean;
+  public error: string;
   private redirectUrl: string;
 
   constructor(
@@ -49,7 +49,9 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
         this.accountService.setAccount(this.redirectUrl);
       },
         error => {
-          if (error.status == 401) this.isError = true;
+          if (error.status == 409) {
+            this.error = error.error;
+          }
         });
   }
 

@@ -4,8 +4,32 @@ $fixed-width: 88%;
     margin: auto;
     max-width: 360px;
 
+    img {
+        display: block;
+        margin: auto;
+        margin-bottom: 1.5rem;
+        cursor: pointer;
+    }
+
+    .error-box {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        border: 1px solid $alt-color;
+        border-radius: .25rem;
+        margin-bottom: 1.5rem;
+        color: $error-color;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        .fa-exclamation-triangle {
+            font-size: 2rem;
+            margin-right: 0.75rem;
+            color: $alt-color;
+        }
+    }
+
     form {
-        border: 1px solid $alt-theme-color;
+        border: 1px solid $alt-color;
         border-radius: $border-radius;
     }
 
@@ -16,7 +40,7 @@ $fixed-width: 88%;
 
     input:not([type="checkbox"]) {
         border-radius: 4px;
-        border: 1px solid $border-gray;
+        border: 1px solid $border-gray-color;
         background: #282828;
         color: $base-color;
         outline: none;
@@ -27,7 +51,7 @@ $fixed-width: 88%;
     h1 {
         margin-top: 10px;
         margin-bottom: 10px;
-        color: $alt-theme-color;
+        color: $alt-color;
     }
 
     h4 {

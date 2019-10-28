@@ -13,11 +13,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./change-email.component.scss']
 })
 export class ChangeEmailComponent extends ValidationPageComponent implements OnInit {
-  public oldEmail: string;
+  public currentEmail: string;
   public reEnteredEmail: string;
   public error: string;
   public customer: Customer = new Customer();
   public _password: string;
+  public _email: string;
   private subscription: Subscription;
 
   constructor(
@@ -40,24 +41,29 @@ export class ChangeEmailComponent extends ValidationPageComponent implements OnI
     this.subscription = this.accountService.customer
       .subscribe((customer: Customer) => {
         this.customer = customer;
-        if (customer) this.oldEmail = customer.email;
+        if (this.customer) {
+          this._email = this.currentEmail = customer.email;
+        }
       });
   }
 
   onSubmit() {
-    if (this.form.controls['newEmail'].value == this.oldEmail) {
-      this.form.controls['newEmail'].setErrors({ oldEmailMatch: true })
+    if (this.form.controls['newEmail'].value == this.currentEmail) {
+      this.form.controls['newEmail'].setErrors({ emailMatch: true })
     }
     super.onSubmit();
   }
 
 
   submitData(): void {
-    this.dataService.put('api/Account/UpdateEmail', { 
-      email: this.customer.email,
+    this.dataService.put('api/Account/UpdateEmail', {
+      email: this._email,
       password: this._password
-     })
+    })
       .subscribe(() => {
+        // Update the customer's email
+        this.customer.email = this._email;
+
         // Flag that the account has been updated and navigate back to the profile page
         this.accountService.accountUpdated = true;
         this.router.navigate(['account', 'profile']);

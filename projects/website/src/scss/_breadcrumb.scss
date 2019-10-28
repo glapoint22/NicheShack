@@ -3,10 +3,10 @@
     margin-bottom: 3rem;
 
     a {
-        color: $alt-theme-color;
+        color: $alt-color;
         text-decoration: underline;
         &:hover {
-            color: map-get($alt-theme-color-map, light) ;
+            color: map-get($alt-color-map, light) ;
         }
     }
 
@@ -15,6 +15,6 @@
     }
 
     span {
-        color: $gray;
+        color: $gray-color;
     }
 }

@@ -3,7 +3,7 @@
     outline: 0;
     opacity: 0;
     background-color: $background-color-dark;
-    border: 1px solid $primary-theme-color;
+    border: 1px solid $primary-color;
     border-radius: $border-radius;
     @include shadow;
 }
