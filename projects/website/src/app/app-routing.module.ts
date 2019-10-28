@@ -26,6 +26,10 @@ const routes: Routes = [
   {
     path: 'create-account',
     loadChildren: () => import('./pages/create-account/create-account.module').then(m => m.CreateAccountModule)
+  },
+  {
+    path: 'create-password',
+    loadChildren: () => import('./pages/create-password/create-password.module').then(m => m.CreatePasswordModule)
   }
 ];
 
