@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'create-password',
     loadChildren: () => import('./pages/create-password/create-password.module').then(m => m.CreatePasswordModule)
+  },
+  {
+    path: 'verification',
+    loadChildren: () => import('./pages/verification/verification.module').then(m => m.VerificationModule)
   }
 ];
 
