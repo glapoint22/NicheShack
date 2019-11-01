@@ -1,0 +1,48 @@
+@import '../../../scss/variables';
+
+$img-size: 100px;
+
+input {
+    height: 34px;
+}
+
+.img-container {
+    width: $img-size;
+    height: $img-size;
+    img {
+        max-width: $img-size;
+        max-height: $img-size;
+    }
+}
+
+hr {
+    margin-block-start: 4%;
+    margin-block-end: 4%;
+    height: auto;
+    margin-right: 10px;
+    border-color: $border-gray-color;
+    border-style: solid;
+}
+
+h4 {
+    margin-bottom: 0;
+}
+
+.purchase-info {
+    min-width: 250px;
+    padding: 0.5rem;
+    flex: 1;
+
+    .line-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        div:first-child {
+            color: $gray-color;
+            margin-right: 10px;
+        }
+        div:last-child {
+            color: $alt-color;
+        }
+    }
+}

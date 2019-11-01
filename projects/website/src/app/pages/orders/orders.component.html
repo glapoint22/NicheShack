@@ -1,0 +1,198 @@
+<navbar></navbar>
+
+<div class="page-container">
+    <div class="content-container">
+
+        <!-- Content -->
+        <div class="content padding-left-3 padding-right-3" style="max-width: 900px;">
+            <div class="display-flex justify-content-between align-items-center">
+                <h1 [innerHTML]="queryParams.params.search ? 'Search Results' : 'Your Orders'"></h1>
+
+                <form (ngSubmit)="onSearch()" class="display-flex align-items-center show-sm" #form="ngForm">
+                    <input class="border-oval-left" [(ngModel)]="searchwords" name="search" placeholder="Search orders"
+                        style="width: 300px;">
+                    <button class="alt-button button-rounded-right"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+
+
+
+
+            <div class="show-sm">
+                <!-- Number of orders placed -->
+                <div class="display-flex align-items-center" *ngIf="filter && !queryParams.params.search">
+                    <div class="margin-right-1">{{orders.length}} order{{orders.length == 1 ? '' : 's'}} placed in</div>
+                    <dropdown-button [items]="filter" [defaultIndex]="getDefaultIndex()"
+                        (itemClick)="onFilterClick($event)"></dropdown-button>
+                </div>
+
+
+                <!-- Number of products matching -->
+                <div *ngIf="queryParams.params.search">
+                    <div>{{count}} {{displayType == 'order' ? 'order' : 'product'}}{{count == 1 ? '' : 's'}} matching
+                        "{{queryParams.params.search}}"</div>
+                </div>
+            </div>
+
+
+            <!-- Search Orders / Filters -->
+            <button class="width-100 hide-sm alt-button margin-bottom-3">Search Orders / Filter</button>
+
+
+            <!-- Display type is order -->
+            <div *ngIf="displayType == 'order'" class="width-100 margin-top-sm-5">
+                <div *ngFor="let order of orders; let i = index">
+                    <div *ngIf="currentViewedOrderIndex < 0 || i == currentViewedOrderIndex">
+
+                        
+
+                        <!-- Navigation box -->
+                        <div class="border border-bottom-0 border-gray padding-3 hide-sm background-color-dark">
+
+                            <!-- View Order Details -->
+                            <div *ngIf="!viewOrderDetails" class="display-flex justify-content-between"
+                                (click)="viewOrderDetails = true; currentViewedOrderIndex = i">
+                                <div>View Order Details</div>
+                                <i class="fas fa-chevron-right font-size-4 alt-color"></i>
+                            </div>
+
+                            <!-- Back -->
+                            <div *ngIf="viewOrderDetails" class="display-flex"
+                                (click)="viewOrderDetails = false; currentViewedOrderIndex = -1">
+                                <i class="fas fa-chevron-left font-size-4 alt-color margin-right-2"></i>
+                                <div>Back</div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div
+                            class="background-color-dark-gray padding-2 border border-bottom-0 border-gray display-xs-flex justify-content-between">
+                            <div class="margin-bottom-3 margin-bottom-xs-0">
+                                <h4>Ordered On:</h4>
+                                <div>{{order.date}}</div>
+                            </div>
+
+                            <div>
+                                <h4>Order Number:</h4>
+                                <div>{{order.orderNumber}}</div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="border border-gray display-flex margin-bottom-4 justify-content-between">
+
+                            <!-- Products -->
+                            <div *ngIf="!viewOrderDetails" class="flex-fill">
+                                <div *ngFor="let product of order.products">
+                                    <div class="display-flex">
+                                        <!-- Product Image -->
+                                        <div
+                                            class="img-container display-flex align-items-center justify-content-center margin-3 flex-shrink-0">
+                                            <img
+                                                [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">
+                                        </div>
+
+                                        <!-- Product Info -->
+                                        <div class="margin-top-2 margin-right-2 text-break">
+                                            <h4>{{product.title}}</h4>
+                                            <div class="gray-color">{{product.type}}</div>
+                                            <div *ngIf="product.quantity > 0" class="gray-color">Quantity:
+                                                {{product.quantity}}</div>
+                                            <div class="alt-color">{{product.price | currency:'USD'}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="show-sm">
+
+                            <!-- Purchase info -->
+                            <div class="purchase-info" [ngClass]="{'show-sm': !viewOrderDetails}">
+
+
+                                <!-- <div class="margin-bottom-3">
+                                    <h4>Order Info</h4>
+                                    <div class="line-item">
+                                        <div>Ordered On:</div>
+                                        <div>{{order.date}}</div>
+                                    </div>
+
+                                    <div class="line-item">
+                                        <div>Order Number:</div>
+                                        <div>{{order.orderNumber}}</div>
+                                    </div>
+                                </div> -->
+
+
+                                <!-- Payment Method -->
+                                <div class="margin-bottom-3">
+                                    <h4>Payment Method</h4>
+                                    <div class="line-item">
+                                        <div>{{order.paymentMethod}}:</div>
+                                        <img [src]="'assets/'+ order.paymentMethodImg" [title]="order.paymentMethod">
+                                    </div>
+                                </div>
+
+
+
+                                <!-- Order Summary -->
+                                <div class="margin-bottom-3">
+                                    <h4>Order Summary</h4>
+
+                                    <div class="line-item">
+                                        <div>Item(s) Subtotal:</div>
+                                        <div>{{order.subtotal | currency:'USD'}}</div>
+                                    </div>
+
+                                    <div class="line-item">
+                                        <div>Shipping & Handling:</div>
+                                        <div>{{order.shippingHandling | currency:'USD'}}</div>
+                                    </div>
+
+                                    <div class="line-item">
+                                        <div>Discount:</div>
+                                        <div>{{order.discount | currency:'USD'}}</div>
+                                    </div>
+
+                                    <div class="line-item">
+                                        <div>Tax:</div>
+                                        <div>{{order.tax | currency:'USD'}}</div>
+                                    </div>
+
+                                    <div class="line-item">
+                                        <div>Total:</div>
+                                        <div>{{order.total | currency:'USD'}}</div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+            <navfooter></navfooter>
+        </div>
+    </div>

@@ -11,9 +11,16 @@
     padding-bottom: 279px;
 }
 
-.content-margin {
+
+.content {
+    margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+
+    h1 {
+        color: $alt-color;
+        margin-bottom: 30px;
+    }
 }
 
 

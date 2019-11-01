@@ -34,6 +34,12 @@ const routes: Routes = [
   {
     path: 'verification',
     loadChildren: () => import('./pages/verification/verification.module').then(m => m.VerificationModule)
+  },
+  {
+    path: 'orders',
+    loadChildren: () => import('./pages/orders/orders.module').then(m => m.OrdersModule),
+    canLoad: [AccountGuard],
+    canActivate: [AccountGuard]
   }
 ];
 
