@@ -3,15 +3,6 @@
     z-index: 90;
 }
 
-.transform {
-    transform: translate(0, -100%);
-    transition: transform 0.2s;
-}
-
-.translate {
-    transform: translate(0, 0);
-}
-
 .fa-times {
     font-size: 1rem;
     cursor: pointer;

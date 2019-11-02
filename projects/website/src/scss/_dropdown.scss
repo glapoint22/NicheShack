@@ -20,3 +20,12 @@
 .show-dropdown-item {
     display: block;
 }
+
+.transform {
+    transform: translate(0, -100%);
+    transition: transform 0.2s;
+}
+
+.translate {
+    transform: translate(0, 0);
+}

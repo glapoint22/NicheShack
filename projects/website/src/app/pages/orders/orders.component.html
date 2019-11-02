@@ -1,16 +1,59 @@
 <navbar></navbar>
 
+
+<!-- Filter Menu -->
+<div class="width-100 background-color-dark position-fixed transform border border-primary-color hide-sm"
+    [ngClass]="{'translate': showFilterMenu}" style="z-index: 1000; min-height: 100%;">
+
+    <!-- Close header -->
+    <div class="background-color-dark-gray padding-top-2 padding-bottom-2 overflow-auto">
+        <i (click)="showFilterMenu = false; setSelectedFilter()"
+            class="fas fa-times margin-right-2 alt-color float-right"></i>
+    </div>
+
+
+    <div class="position-absolute-identity" style="top:30px;">
+        <div class="padding-2 overflow-auto height-100 position-relative">
+
+
+            <!-- Caption -->
+            <h3 class="alt-color">Filter by order date</h3>
+
+            <!-- Options -->
+            <radio-button *ngFor="let filterOption of filter; let i = index" [name]="'option'"
+                [label]="filterOption.value" [checked]="i == getDefaultIndex()"
+                (change)="selectedFilter = filterOption"></radio-button>
+
+
+            <!-- Apply button -->
+            <div class="margin-n1" style="height: 50px;">
+                <div class="background-color-dark-gray position-fixed text-center position-fixed-bottom"
+                    style="height:50px;">
+                    <button class="alt-button margin-top-2 width-95"
+                        (click)="onFilterClick(selectedFilter); showFilterMenu = false">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <div class="page-container">
     <div class="content-container">
 
         <!-- Content -->
         <div class="content padding-left-3 padding-right-3" style="max-width: 900px;">
-            <div class="display-flex justify-content-between align-items-center">
-                <h1 [innerHTML]="queryParams.params.search ? 'Search Results' : 'Your Orders'"></h1>
-
-                <form (ngSubmit)="onSearch()" class="display-flex align-items-center show-sm" #form="ngForm">
-                    <input class="border-oval-left" [(ngModel)]="searchwords" name="search" placeholder="Search orders"
-                        style="width: 300px;">
+            <div class="display-flex justify-content-between align-items-center margin-bottom-3 flex-wrap">
+                <h1>Your Orders</h1>
+                <i class="fas fa-bars hide-sm font-size-4 alt-color" (click)="showFilterMenu = true"
+                    *ngIf="!viewOrderDetails && displayType == 'order'"></i>
+                <form (ngSubmit)="onSearch()"
+                    class="display-flex align-items-center width-100 width-sm-60 margin-top-3 margin-top-sm-0"
+                    #form="ngForm">
+                    <input type="text" class="border-oval-left padding-left-3 width-100" [(ngModel)]="searchwords"
+                        name="search" placeholder="Search all orders">
                     <button class="alt-button button-rounded-right"><i class="fas fa-search"></i></button>
                 </form>
             </div>
@@ -27,27 +70,32 @@
                 </div>
 
 
-                <!-- Number of products matching -->
-                <div *ngIf="queryParams.params.search">
-                    <div>{{count}} {{displayType == 'order' ? 'order' : 'product'}}{{count == 1 ? '' : 's'}} matching
-                        "{{queryParams.params.search}}"</div>
-                </div>
+
+            </div>
+
+            <!-- Number of products matching -->
+            <div *ngIf="queryParams.params.search && displayType == 'product'" class="margin-bottom-2 gray-color">
+                <div>{{count}} {{displayType == 'order' ? 'order' : 'product'}}{{count == 1 ? '' : 's'}} matching
+                    "{{queryParams.params.search}}"</div>
             </div>
 
 
-            <!-- Search Orders / Filters -->
-            <button class="width-100 hide-sm alt-button margin-bottom-3">Search Orders / Filter</button>
 
 
-            <!-- Display type is order -->
+            <!-- ................................................Display type: Order........................................ -->
             <div *ngIf="displayType == 'order'" class="width-100 margin-top-sm-5">
+                <h2 *ngIf="orders && orders.length == 0"
+                    class="text-center margin-top-5 gray-color border border-gray padding-4 hide-sm">No orders found
+                </h2>
+
                 <div *ngFor="let order of orders; let i = index">
                     <div *ngIf="currentViewedOrderIndex < 0 || i == currentViewedOrderIndex">
 
-                        
+
 
                         <!-- Navigation box -->
-                        <div class="border border-bottom-0 border-gray padding-3 hide-sm background-color-dark">
+                        <div class="border border-bottom-0 border-gray padding-3 background-color-dark"
+                            [ngClass]="{'hide-sm': !viewOrderDetails}">
 
                             <!-- View Order Details -->
                             <div *ngIf="!viewOrderDetails" class="display-flex justify-content-between"
@@ -91,7 +139,7 @@
                                     <div class="display-flex">
                                         <!-- Product Image -->
                                         <div
-                                            class="img-container display-flex align-items-center justify-content-center margin-3 flex-shrink-0">
+                                            class="img-container display-flex align-items-center justify-content-center margin-2 flex-shrink-0">
                                             <img
                                                 [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">
                                         </div>
@@ -113,84 +161,87 @@
                             <!-- Purchase info -->
                             <div class="purchase-info" [ngClass]="{'show-sm': !viewOrderDetails}">
 
+                                <div class="display-flex flex-column height-100 justify-content-between">
+                                    <div>
+                                        <!-- Payment Method -->
+                                        <div class="margin-bottom-3">
+                                            <h4>Payment Method</h4>
+                                            <div class="line-item">
+                                                <div>{{order.paymentMethod}}:</div>
+                                                <img [src]="'assets/'+ order.paymentMethodImg"
+                                                    [title]="order.paymentMethod">
+                                            </div>
+                                        </div>
 
-                                <!-- <div class="margin-bottom-3">
-                                    <h4>Order Info</h4>
-                                    <div class="line-item">
-                                        <div>Ordered On:</div>
-                                        <div>{{order.date}}</div>
+
+
+                                        <!-- Order Summary -->
+                                        <div class="margin-bottom-3">
+                                            <h4>Order Summary</h4>
+
+                                            <div class="line-item">
+                                                <div>Item(s) Subtotal:</div>
+                                                <div>{{order.subtotal | currency:'USD'}}</div>
+                                            </div>
+
+                                            <div class="line-item">
+                                                <div>Shipping & Handling:</div>
+                                                <div>{{order.shippingHandling | currency:'USD'}}</div>
+                                            </div>
+
+                                            <div class="line-item">
+                                                <div>Discount:</div>
+                                                <div>{{order.discount | currency:'USD'}}</div>
+                                            </div>
+
+                                            <div class="line-item">
+                                                <div>Tax:</div>
+                                                <div>{{order.tax | currency:'USD'}}</div>
+                                            </div>
+
+                                            <div class="line-item">
+                                                <div>Total:</div>
+                                                <div>{{order.total | currency:'USD'}}</div>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="line-item">
-                                        <div>Order Number:</div>
-                                        <div>{{order.orderNumber}}</div>
-                                    </div>
-                                </div> -->
 
-
-                                <!-- Payment Method -->
-                                <div class="margin-bottom-3">
-                                    <h4>Payment Method</h4>
-                                    <div class="line-item">
-                                        <div>{{order.paymentMethod}}:</div>
-                                        <img [src]="'assets/'+ order.paymentMethodImg" [title]="order.paymentMethod">
-                                    </div>
-                                </div>
-
-
-
-                                <!-- Order Summary -->
-                                <div class="margin-bottom-3">
-                                    <h4>Order Summary</h4>
-
-                                    <div class="line-item">
-                                        <div>Item(s) Subtotal:</div>
-                                        <div>{{order.subtotal | currency:'USD'}}</div>
-                                    </div>
-
-                                    <div class="line-item">
-                                        <div>Shipping & Handling:</div>
-                                        <div>{{order.shippingHandling | currency:'USD'}}</div>
-                                    </div>
-
-                                    <div class="line-item">
-                                        <div>Discount:</div>
-                                        <div>{{order.discount | currency:'USD'}}</div>
-                                    </div>
-
-                                    <div class="line-item">
-                                        <div>Tax:</div>
-                                        <div>{{order.tax | currency:'USD'}}</div>
-                                    </div>
-
-                                    <div class="line-item">
-                                        <div>Total:</div>
-                                        <div>{{order.total | currency:'USD'}}</div>
+                                    <!-- Buttons -->
+                                    <div>
+                                        <button (click)="onBuyAgainClick(order.hoplink)"
+                                            class="alt-button margin-bottom-2 width-100">Buy again</button>
+                                        <button class="width-100">Write a review</button>
                                     </div>
                                 </div>
-
-
-
-
                             </div>
-
-
                         </div>
                     </div>
-
                 </div>
+            </div>
 
 
 
+            <!-- ................................................Display type: Product........................................ -->
+            <div *ngIf="displayType == 'product'" class="border-top border-gray margin-top-3">
+                <div *ngFor="let product of products">
+                    <div class="display-flex border-bottom border-gray padding-3">
+                        <!-- Product Image -->
+                        <div
+                            class="img-container display-flex align-items-center justify-content-center margin-right-3 flex-shrink-0">
+                            <img [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">
+                        </div>
 
-
-
-
-
-
-
-
-
+                        <!-- Product Info -->
+                        <div class="text-break">
+                            <h4>{{product.title}}</h4>
+                            <div class="gray-color">Ordered on {{product.date}}</div>
+                            <div class="alt-color text-underline cursor-pointer margin-bottom-2"
+                                (click)="searchwords = product.orderNumber; onSearch()">View order</div>
+                            <button class="alt-button" (click)="onBuyAgainClick(product.hoplink)">Buy again</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <navfooter></navfooter>

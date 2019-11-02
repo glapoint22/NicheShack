@@ -6,6 +6,7 @@ import { OrdersComponent } from './orders.component';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
 import { DropdownButtonModule } from '../../shared-components/dropdown-button/dropdown-button.module';
 import { FormsModule } from '@angular/forms';
+import { CustomInputModule } from '../../custom-input/custom-input.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     OrdersRoutingModule,
     HeaderFooterModule,
     DropdownButtonModule,
-    FormsModule
+    FormsModule,
+    CustomInputModule
   ]
 })
 export class OrdersModule { }

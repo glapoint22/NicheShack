@@ -24,6 +24,15 @@ $disabled-color: #545454;
 $primary-color-map: generate-color-map($primary-color);
 $alt-color-map: generate-color-map($alt-color);
 
+
+// Custom Input
+$checkmark-background-color: #eee;
+$checkmark-background-hover-color: #ccc;
+$checkmark-background-checked-color: white;
+$checkmark-indicator-color: $primary-color;
+$custom-input-size: 1rem;
+
+
 // Breakpoints
 $breakpoints: (
     z: 0,

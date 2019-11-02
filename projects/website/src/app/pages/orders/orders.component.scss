@@ -1,8 +1,8 @@
 @import '../../../scss/variables';
 
-$img-size: 100px;
+$img-size: 60px;
 
-input {
+input[type="text"] {
     height: 34px;
 }
 
@@ -19,17 +19,17 @@ hr {
     margin-block-start: 4%;
     margin-block-end: 4%;
     height: auto;
-    margin-right: 10px;
     border-color: $border-gray-color;
     border-style: solid;
 }
 
-h4 {
+h4, h1 {
     margin-bottom: 0;
 }
 
+
 .purchase-info {
-    min-width: 250px;
+    min-width: initial;
     padding: 0.5rem;
     flex: 1;
 
@@ -43,6 +43,24 @@ h4 {
         }
         div:last-child {
             color: $alt-color;
+        }
+    }
+}
+
+@media (min-width: map-get($breakpoints, sm)) {
+    .purchase-info {
+        min-width: 250px;
+    }
+}
+
+@media (min-width: map-get($breakpoints, xxs)) {
+    $img-size: 100px;
+    .img-container {
+        width: $img-size;
+        height: $img-size;
+        img {
+            max-width: $img-size;
+            max-height: $img-size;
         }
     }
 }

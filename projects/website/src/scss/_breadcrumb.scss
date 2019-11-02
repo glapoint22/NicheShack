@@ -6,7 +6,7 @@
         color: $alt-color;
         text-decoration: underline;
         &:hover {
-            color: map-get($alt-color-map, light) ;
+            color: map-get($alt-color-map, light);
         }
     }
 

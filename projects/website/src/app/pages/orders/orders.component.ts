@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { PageComponent } from '../page/page.component';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT, KeyValue } from '@angular/common';
@@ -12,7 +12,6 @@ import { OrderProductQueryResult } from '../../interfaces/order-product-query-re
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent extends PageComponent implements OnInit {
-  // @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
   public searchwords: string;
   public displayType: string;
   public orders: Array<ProductOrder>;
@@ -23,6 +22,7 @@ export class OrdersComponent extends PageComponent implements OnInit {
   public queryParams: ParamMap;
   public viewOrderDetails: boolean;
   public currentViewedOrderIndex: number = -1;
+  public showFilterMenu: boolean;
 
   constructor(
     titleService: Title,
@@ -81,13 +81,17 @@ export class OrdersComponent extends PageComponent implements OnInit {
             this.count = this.products.length;
           }
 
-          // Set the time span filter based on the selected filter (ex. "Last 30 days")
-          if (this.filter) {
-            let index = Math.max(0, this.filter.findIndex(x => x.key == queryParams.get('filter')));
-            this.selectedFilter = this.filter[index];
-          }
+          this.setSelectedFilter();
         });
     });
+  }
+
+  setSelectedFilter() {
+    // Set the time span filter based on the selected filter (ex. "Last 30 days")
+    if (this.filter) {
+      let index = Math.max(0, this.filter.findIndex(x => x.key == this.queryParams.get('filter')));
+      this.selectedFilter = this.filter[index];
+    }
   }
 
   getDefaultIndex() {
@@ -117,4 +121,9 @@ export class OrdersComponent extends PageComponent implements OnInit {
     });
   }
 
+
+  onBuyAgainClick(hoplink) {
+    // Navigate to the product page
+    window.location.href = hoplink;
+  }
 }
