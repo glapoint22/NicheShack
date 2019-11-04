@@ -4,7 +4,8 @@ import { Directive, Input, TemplateRef, ViewContainerRef, ElementRef } from '@an
   selector: '[show]'
 })
 export class ShowDirective {
-  private hasView = false;
+  private condition: boolean;
+  private id: string = 'show-hide';
 
   constructor(
     private templateRef: TemplateRef<any>,
@@ -12,30 +13,47 @@ export class ShowDirective {
     private el: ElementRef) { }
 
   @Input() set show(condition: boolean) {
-    if (condition && !this.el.nativeElement.nextSibling.style.opacity) {
-      this.hasView = true;
-      this.viewContainer.createEmbeddedView(this.templateRef);
-      
-      // Add opacity and transition properties
-      this.el.nativeElement.nextSibling.style.opacity = 0;
-      this.el.nativeElement.nextSibling.style.transition = 'opacity 0.2s linear';
+    this.condition = condition;
+    if (condition) {
+      // If element does not exist
+      if (!this.el.nativeElement.nextSibling || (this.el.nativeElement.nextSibling && this.el.nativeElement.nextSibling.id != this.id)) {
+        // Create the element
+        this.viewContainer.createEmbeddedView(this.templateRef);
 
-      // This event is triggered when the element has faded out
-      this.el.nativeElement.nextSibling.addEventListener("transitionend", (event) => {
-        if (!this.hasView && event.propertyName == 'opacity') {
-          // Remove the element
-          this.viewContainer.clear();
-        }
+        // Assign the ID
+        this.el.nativeElement.nextSibling.id = this.id;
+
+        // Wait for the DOM to be updated
+        setTimeout(() => {
+          // Add the classes to the class list
+          this.toggleClasses();
+        }, 100);
+
+
+        this.el.nativeElement.nextSibling.addEventListener("transitionend", () => {
+          if (this.condition == false) {
+            // Remove the element
+            this.viewContainer.clear();
+          }
+        });
+
+      } else {
+        // Add the classes to the class list
+        this.toggleClasses();
+      }
+    } else if (condition == false) {
+      // Remove the classes from the class list
+      this.toggleClasses();
+    }
+  }
+
+  toggleClasses() {
+    // This will remove or add classes to the class list
+    if (this.el.nativeElement.nextSibling) {
+      let classes: Array<string> = this.el.nativeElement.nextSibling.attributes["classes"].value.split(' ');
+      classes.forEach((currentClass: string) => {
+        this.el.nativeElement.nextSibling.classList.toggle(currentClass);
       });
-
-      // Wait 100 milliseconds to set the opacity property
-      setTimeout(() => {
-        this.el.nativeElement.nextSibling.style.opacity = 1;
-      }, 100);
-    } else if (!condition && this.hasView) {
-      // Set the opacity to 0 to start the fading out
-      this.el.nativeElement.nextSibling.style.opacity = 0;
-      this.hasView = false;
     }
   }
 }
