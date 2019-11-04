@@ -63,7 +63,7 @@
 
             <div class="show-sm">
                 <!-- Number of orders placed -->
-                <div class="display-flex align-items-center" *ngIf="filter && !queryParams.params.search">
+                <div class="display-flex align-items-center" *ngIf="filter && !route.snapshot.queryParams.search">
                     <div class="margin-right-1">{{orders.length}} order{{orders.length == 1 ? '' : 's'}} placed in</div>
                     <dropdown-button [items]="filter" [defaultIndex]="getDefaultIndex()"
                         (itemClick)="onFilterClick($event)"></dropdown-button>
@@ -74,9 +74,9 @@
             </div>
 
             <!-- Number of products matching -->
-            <div *ngIf="queryParams.params.search && displayType == 'product'" class="margin-bottom-2 gray-color">
-                <div>{{count}} {{displayType == 'order' ? 'order' : 'product'}}{{count == 1 ? '' : 's'}} matching
-                    "{{queryParams.params.search}}"</div>
+            <div *ngIf="route.snapshot.queryParams.search && displayType == 'product'" class="margin-bottom-2 gray-color">
+                <div>{{count}} product{{count == 1 ? '' : 's'}} matching
+                    "{{route.snapshot.queryParams.search}}"</div>
             </div>
 
 

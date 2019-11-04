@@ -29,7 +29,7 @@ export class OrdersComponent extends PageComponent implements OnInit {
     metaService: Meta,
     @Inject(DOCUMENT) document,
     private router: Router,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private dataService: DataService,
   ) { super(titleService, metaService, document) }
 

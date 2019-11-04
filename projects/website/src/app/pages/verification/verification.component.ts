@@ -15,6 +15,7 @@ export class VerificationComponent extends ValidationPageComponent implements On
   public email: string;
   public error: string;
   public resentCode: boolean;
+  public code: string;
   private subscription: Subscription;
 
   constructor(
