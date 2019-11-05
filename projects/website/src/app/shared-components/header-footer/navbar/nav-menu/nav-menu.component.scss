@@ -1,9 +1,32 @@
+@import "../../../../../scss/variables";
+
 .modal-background {
     top: 79px;
     z-index: 90;
+
+    .menu {
+        background-color: $background-color-dark;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border: 1px solid $primary-color;
+        outline: 0;
+        max-width: 270px;
+    }
 }
 
 .fa-times {
     font-size: 1rem;
     cursor: pointer;
+}
+
+.fade-start .menu {
+    transform: translate(0, -100%);
+    transition: transform 0.2s;
+}
+
+.fade-end .menu {
+    transform: translate(0, 0);
 }

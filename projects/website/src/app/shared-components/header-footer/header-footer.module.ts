@@ -8,7 +8,7 @@ import { AccountMenuComponent } from './navbar/account-menu/account-menu.compone
 import { AccountNavigationComponent } from './navbar/account-navigation/account-navigation.component';
 import { ShowHideModule } from '../show-hide/show-hide.module';
 import { RouterModule } from '@angular/router';
-import { ModalModule } from '../../directives/modal/modal.module';
+import { ShowModule } from '../../directives/show/show.module';
 
 
 
@@ -25,7 +25,7 @@ import { ModalModule } from '../../directives/modal/modal.module';
     CommonModule,
     ShowHideModule,
     RouterModule,
-    ModalModule
+    ShowModule
   ],
   exports: [
     NavbarComponent,

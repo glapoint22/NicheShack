@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'services/account.service';
-import { Customer } from 'classes/customer';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,7 +9,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./account-navigation.component.scss']
 })
 export class AccountNavigationComponent implements OnInit {
-  @Input() show: boolean;
   @Input() showHideElement: HTMLElement;
   public dropdownItems: Array<any> = [];
   private subscription: Subscription;

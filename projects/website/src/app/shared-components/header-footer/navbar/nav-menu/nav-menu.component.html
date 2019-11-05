@@ -1,11 +1,8 @@
-<div [ngClass]="{'fade-in': show}" class="modal-background fade" modal [showModal]="show">
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start">
 
     <!-- Menu -->
-    <div #showHideElement (keydown)="onKeydown($event)" (blur)="onBlur()" tabindex="0"
-        class="background-color-dark position-absolute-identity transform border border-primary-color outline-0"
-        [ngClass]="{'translate': show}" style="max-width: 270px;">
-
-
+    <div #showHideElement (keydown)="onKeydown($event)" (blur)="onBlur()" tabindex="0" class="menu">
+        
         <!-- Close -->
         <div class="background-color-dark-gray padding-top-2 padding-bottom-2 overflow-auto">
             <i (click)="show = false" class="fas fa-times margin-right-2 alt-color float-right"></i>
@@ -22,7 +19,7 @@
                     <h3 class="padding-left-2 alt-color">Account</h3>
 
                     <!-- Account Navigation -->
-                    <account-navigation [show]="true" [showHideElement]="showHideElement"></account-navigation>
+                    <account-navigation [showHideElement]="showHideElement"></account-navigation>
 
                     <!-- Heading -->
                     <h3 class="padding-left-2 alt-color margin-top-4">Categories</h3>

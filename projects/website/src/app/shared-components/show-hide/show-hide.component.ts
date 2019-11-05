@@ -14,9 +14,17 @@ export class ShowHideComponent {
       return;
     }
 
-    // show the element and set the focus
+    // show the element
     this.show = true;
-    this.showHideElement.nativeElement.focus();
+
+    // Wait until the element exists then set the focus
+    let interval = window.setInterval(() => {
+      if (this.showHideElement) {
+        this.showHideElement.nativeElement.focus();
+        window.clearInterval(interval);
+      }
+    }, 1);
+
   }
 
   onKeydown(event: KeyboardEvent) {

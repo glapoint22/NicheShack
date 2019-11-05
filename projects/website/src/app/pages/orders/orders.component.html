@@ -2,8 +2,8 @@
 
 
 <!-- Filter Menu -->
-<div class="width-100 background-color-dark position-fixed transform border border-primary-color hide-sm"
-    [ngClass]="{'translate': showFilterMenu}" style="z-index: 1000; min-height: 100%;">
+<div *show="showFilterMenu" class="width-100 background-color-dark position-fixed border border-primary-color fade-translate-start"
+    style="z-index: 1000; min-height: 100%;" transitionClass="fade-translate-end">
 
     <!-- Close header -->
     <div class="background-color-dark-gray padding-top-2 padding-bottom-2 overflow-auto">

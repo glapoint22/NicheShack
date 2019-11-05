@@ -27,7 +27,7 @@ export class ShowDirective {
         setTimeout(() => {
           // Add the classes to the class list
           this.toggleClasses();
-        }, 100);
+        }, 20);
 
 
         this.el.nativeElement.nextSibling.addEventListener("transitionend", () => {
@@ -50,7 +50,7 @@ export class ShowDirective {
   toggleClasses() {
     // This will remove or add classes to the class list
     if (this.el.nativeElement.nextSibling) {
-      let classes: Array<string> = this.el.nativeElement.nextSibling.attributes["classes"].value.split(' ');
+      let classes: Array<string> = this.el.nativeElement.nextSibling.attributes["transitionClass"].value.split(' ');
       classes.forEach((currentClass: string) => {
         this.el.nativeElement.nextSibling.classList.toggle(currentClass);
       });
