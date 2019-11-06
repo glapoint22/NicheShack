@@ -6,7 +6,7 @@ export class ShowHideComponent {
   public show: boolean;
   public isMouseDown: boolean;
 
-  onClick() {
+  onClick(...args: any[]) {
     // Don't show the element if there was a mousedown event
     // This prevents the element from showing when the button is clicked again
     if (this.isMouseDown) {

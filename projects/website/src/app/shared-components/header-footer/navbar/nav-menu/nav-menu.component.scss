@@ -3,7 +3,7 @@
 .modal-background {
     top: 79px;
     z-index: 90;
-
+    display: block;
     .menu {
         background-color: $background-color-dark;
         position: absolute;
@@ -22,11 +22,15 @@
     cursor: pointer;
 }
 
-.fade-start .menu {
-    transform: translate(0, -100%);
-    transition: transform 0.2s;
+.fade-start {
+    .menu {
+        transform: translate(0, -100%);
+        transition: transform 0.2s;
+    }
 }
 
-.fade-end .menu {
-    transform: translate(0, 0);
+.fade-end {
+    .menu {
+        transform: translate(0, 0);
+    }
 }

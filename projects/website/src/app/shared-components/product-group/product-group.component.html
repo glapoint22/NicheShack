@@ -4,17 +4,13 @@
     <div class="alt-color text-center margin-3 font-size-4">{{caption}}</div>
 
     <!-- Slider -->
-    <div #slider class="slider" [style.transform]="'translateX(-' + translate + 'px)'">
+    <div #slider class="slider justify-content-center justify-content-md-start" [style.transform]="'translateX(-' + translate + 'px)'">
 
         <!-- Products -->
         <div *ngFor="let product of products; let i = index">
             <div *ngIf="i < (showAll ? products.length : 4)"
-                class="hide-md product-container border-bottom border-gray padding-bottom-2">
-                <product [product]="product"></product>
-            </div>
-
-            <div class="hide show-md product-container">
-                <product [product]="product"></product>
+                class="product-container border-bottom border-gray border-none-md padding-bottom-2 padding-bottom-md-0">
+                <product [product]="product" (quickLookClick)="quickLook.onClick($event)"></product>
             </div>
         </div>
 
@@ -28,3 +24,5 @@
     <div class="fas arrow-icon-right" *ngIf="!isLastPage(container.offsetWidth)"
         (click)="onRightArrowClick(container.offsetWidth)"></div>
 </div>
+
+<quick-look #quickLook></quick-look>

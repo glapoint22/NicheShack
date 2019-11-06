@@ -8,7 +8,7 @@
 
     <!-- Quick Look -->
     <div class="quick-look alt-background-color alt-color-darkest"
-        (click)="onQuickLookButtonClick(); $event.stopPropagation()">
+        (click)="onQuickLookClick(); $event.stopPropagation()">
         Quick Look
     </div>
 
@@ -22,7 +22,7 @@
 
 
         <!-- Reviews -->
-        <span class="text-nowrap alt-color-dark" *ngIf="product.rating > 0">
+        <span class="text-nowrap margin-left-2 primary-color-light" *ngIf="product.rating > 0">
             {{product.totalReviews | number}} reviews
         </span>
 

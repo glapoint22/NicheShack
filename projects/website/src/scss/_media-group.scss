@@ -1,0 +1,24 @@
+.media-group {
+    max-height: 314px;
+    overflow: auto;
+    margin: 14px 0 14px 14px;
+    .media-thumbnail {
+        width: 88px;
+        height: 50px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        margin-bottom: 16px;
+        text-align: center;
+        color: #e2e2e2;
+        line-height: 50px;
+        font-size: 30px;
+        cursor: pointer;
+    }
+    .media-thumbnail:last-child {
+        margin-bottom: 0;
+    }
+    .media-thumbnail:hover {
+        color: white;
+    }
+}

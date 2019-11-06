@@ -1,4 +1,4 @@
-import { Component, Input, HostListener } from '@angular/core';
+import { Component, Input, HostListener, OnInit } from '@angular/core';
 import { Product } from '../../interfaces/product';
 
 @Component({
@@ -6,7 +6,7 @@ import { Product } from '../../interfaces/product';
   templateUrl: './product-group.component.html',
   styleUrls: ['./product-group.component.scss']
 })
-export class ProductGroupComponent {
+export class ProductGroupComponent implements OnInit {
   @Input() caption: string;
   @Input() products: Array<Product>;
 
@@ -18,6 +18,12 @@ export class ProductGroupComponent {
   private productWidth: number = 200;
   private currentTranslation: number = 0;
   private translations: Array<number> = [this.currentTranslation];
+
+
+  ngOnInit(): void {
+    this.setShowAll();
+  }
+
 
   onRightArrowClick(containerWidth: number) {
     // Increment the page
@@ -47,6 +53,14 @@ export class ProductGroupComponent {
     return remainingProducts <= 0;
   }
 
+  setShowAll () {
+    if (window.screen.width < 768) {
+      this.showAll = false;
+    } else {
+      this.showAll = true;
+    }
+  }
+
 
   @HostListener('window:resize') onResize() {
     // Reset properties
@@ -54,6 +68,6 @@ export class ProductGroupComponent {
     this.currentPage = 1;
     this.currentTranslation = 0;
     this.translations = [this.currentTranslation];
-    this.showAll = false;
+    this.setShowAll();
   }
 }

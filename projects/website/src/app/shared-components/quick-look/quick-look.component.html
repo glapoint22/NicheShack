@@ -1,0 +1,54 @@
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start">
+
+    <div #showHideElement (keydown)="onKeydown($event)" (blur)="onBlur()" tabindex="0">
+        <div *ngIf="product && product.description; else loading">
+            <div class="display-flex" style="max-width: 600px;">
+
+                <!-- Media group -->
+                <div class="media-group flex-shrink-0">
+                    <div *ngFor="let media of media" class="media-thumbnail"
+                        [style.background-image]="'url('+ media.thumbnail + ')'" (click)="onMediaClick(media)">
+                        <i *ngIf="media.type == 'Video'" class="far fa-play-circle"></i>
+                    </div>
+                </div>
+
+
+
+
+                <div style="display: flex;">
+                    <div>
+                            <img [src]="'/images/' + product.image">
+                    </div>
+                    
+                    <div>
+                        <div>{{product.title}}</div>
+
+                        <stars [rating]="product.rating"></stars>
+                        <span>{{product.totalReviews | number}} reviews</span>
+
+                        <div>
+                            <div *ngIf="product.maxPrice === 0">
+                                {{product.minPrice | currency:'USD'}}
+                            </div>
+                            <div *ngIf="product.maxPrice > 0">
+                                {{product.minPrice | currency:'USD'}} -
+                                {{product.maxPrice | currency:'USD'}}
+                            </div>
+                        </div>
+                        <div>{{product.description}}</div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <!-- Loading -->
+        <ng-template #loading>
+            <i class="fas fa-spinner fa-pulse font-size-7"></i>
+        </ng-template>
+
+    </div>
+</div>
