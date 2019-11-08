@@ -1,5 +1,6 @@
-import { Component, Input, HostListener, OnInit } from '@angular/core';
+import { Component, Input, HostListener, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Product } from '../../interfaces/product';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'product-group',
@@ -19,9 +20,13 @@ export class ProductGroupComponent implements OnInit {
   private currentTranslation: number = 0;
   private translations: Array<number> = [this.currentTranslation];
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+
 
   ngOnInit(): void {
-    this.setShowAll();
+    if (isPlatformBrowser(this.platformId)) {
+      this.setShowAll();
+    }
   }
 
 
@@ -53,7 +58,7 @@ export class ProductGroupComponent implements OnInit {
     return remainingProducts <= 0;
   }
 
-  setShowAll () {
+  setShowAll() {
     if (window.screen.width < 768) {
       this.showAll = false;
     } else {

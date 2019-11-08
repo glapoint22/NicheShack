@@ -1,7 +1,9 @@
 .media-group {
-    max-height: 314px;
-    overflow: auto;
-    margin: 14px 0 14px 14px;
+    max-height: 248px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-shrink: 0;
+    margin: 1rem;
     .media-thumbnail {
         width: 88px;
         height: 50px;
@@ -14,6 +16,7 @@
         line-height: 50px;
         font-size: 30px;
         cursor: pointer;
+        background: red;
     }
     .media-thumbnail:last-child {
         margin-bottom: 0;

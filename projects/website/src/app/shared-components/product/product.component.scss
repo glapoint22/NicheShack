@@ -1,10 +1,10 @@
-.product:hover > .quick-look {
+.product:hover .quick-look {
     visibility: visible;
 }
 
 .quick-look {
     position: absolute;
-    top: 160px;
+    bottom: 20px;
     left: 0;
     right: 0;
     margin: auto;
@@ -13,4 +13,5 @@
     font-weight: bold;
     visibility: hidden;
     padding: 0.25rem;
+    line-height: 22px;
 }

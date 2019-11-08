@@ -1,9 +1,10 @@
 .product {
-    position: relative;
+    
     cursor: pointer;
     width: 240px;
 
     .img-container {
+        position: relative;
         line-height: initial;
         width: 100px;
         height: auto;

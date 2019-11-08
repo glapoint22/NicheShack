@@ -1,54 +1,75 @@
 <div *show="show" transitionClass="fade-end" class="modal-background fade-start">
 
-    <div #showHideElement (keydown)="onKeydown($event)" (blur)="onBlur()" tabindex="0">
-        <div *ngIf="product && product.description; else loading">
-            <div class="display-flex" style="max-width: 600px;">
+    <div *ngIf="quickLook$ | async; else loading" #showHideElement (keydown)="onKeydown($event)" (blur)="onBlur()" 
+        tabindex="0"
+        class="outline-0 background-color-dark border border-primary-color overflow-auto"
+        style="max-width: 800px; max-height: 100%">
 
+
+
+        <!-- Close -->
+        <div class="padding-2">
+            <div class="float-right margin-2 alt-color cursor-pointer alt-color-light-hover" (click)="show = false">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+
+        <!-- Content -->
+        <div class="display-flex flex-wrap flex-sm-nowrap">
+            <div class="display-flex">
                 <!-- Media group -->
-                <div class="media-group flex-shrink-0">
+                <div *ngIf="media.length > 0" class="media-group">
                     <div *ngFor="let media of media" class="media-thumbnail"
-                        [style.background-image]="'url('+ media.thumbnail + ')'" (click)="onMediaClick(media)">
+                        
+                        >
                         <i *ngIf="media.type == 'Video'" class="far fa-play-circle"></i>
                     </div>
                 </div>
 
-
-
-
-                <div style="display: flex;">
-                    <div>
-                            <img [src]="'/images/' + product.image">
-                    </div>
-                    
-                    <div>
-                        <div>{{product.title}}</div>
-
-                        <stars [rating]="product.rating"></stars>
-                        <span>{{product.totalReviews | number}} reviews</span>
-
-                        <div>
-                            <div *ngIf="product.maxPrice === 0">
-                                {{product.minPrice | currency:'USD'}}
-                            </div>
-                            <div *ngIf="product.maxPrice > 0">
-                                {{product.minPrice | currency:'USD'}} -
-                                {{product.maxPrice | currency:'USD'}}
-                            </div>
-                        </div>
-                        <div>{{product.description}}</div>
-                    </div>
+                <!-- Image -->
+                <div class="margin-top-3" [ngClass]="{'margin-left-3': media.length == 0}">
+                    <img [src]="'/images/' + product.image" style="max-width: 100%; width: auto; height: auto">
                 </div>
-
             </div>
 
 
+            <!-- Product Info -->
+            <div>
+                <div class="padding-3" style="max-width: 400px;">
+                    <!-- Title -->
+                    <h1 class="text-break">{{product.title}}</h1>
+
+                    <!-- Rating -->
+                    <stars class="margin-right-1" [rating]="product.rating"></stars>
+                    <span class="text-nowrap primary-color-light" *ngIf="product.rating > 0">
+                        {{product.totalReviews | number}} reviews
+                    </span>
+
+                    <!-- Price -->
+                    <div class="alt-color">
+                        <div *ngIf="product.maxPrice === 0">
+                            {{product.minPrice | currency:'USD'}}
+                        </div>
+                        <div *ngIf="product.maxPrice > 0">
+                            {{product.minPrice | currency:'USD'}} -
+                            {{product.maxPrice | currency:'USD'}}
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="margin-top-2">{{product.description}}</div>
+                </div>
+            </div>
 
         </div>
 
-        <!-- Loading -->
-        <ng-template #loading>
-            <i class="fas fa-spinner fa-pulse font-size-7"></i>
-        </ng-template>
-
+        <!-- View Details Button -->
+        <button class="alt-button float-right margin-2" (click)="onViewDetailsClick()">View Details</button>
     </div>
+
+    <!-- Loading -->
+    <ng-template #loading>
+        <i class="fas fa-spinner fa-pulse font-size-7"></i>
+    </ng-template>
 </div>
