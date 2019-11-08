@@ -3,27 +3,34 @@ import { CategoriesService } from 'projects/website/src/app/services/categories.
 import { Category } from 'projects/website/src/app/interfaces/category';
 import { Niche } from 'projects/website/src/app/interfaces/niche';
 import { Router } from '@angular/router';
-import { ShowHideComponent } from '../../../show-hide/show-hide.component';
 
 @Component({
   selector: 'nav-menu',
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss']
 })
-export class NavMenuComponent extends ShowHideComponent implements OnInit {
+export class NavMenuComponent implements OnInit {
   public categories: Array<Category>;
   public niches: Array<Niche>;
   public currentCategory: Category;
   public nicheView: boolean;
+  public show: boolean;
+  private isMouseDown: boolean;
 
 
-  constructor(private categoriesService: CategoriesService, private router: Router) {
-    super();
-  }
+  constructor(private categoriesService: CategoriesService, private router: Router) { }
 
   onClick() {
+    // Don't show the element if there was a mousedown event
+    // This prevents the element from showing when the button is clicked again
+    if (this.isMouseDown) {
+      this.show = false;
+      this.isMouseDown = false;
+      return;
+    }
+
     this.nicheView = false;
-    super.onClick();
+    this.show = true;
   }
 
   ngOnInit() {
@@ -44,5 +51,13 @@ export class NavMenuComponent extends ShowHideComponent implements OnInit {
       queryParams: { 'categoryId': this.currentCategory.id, 'nicheId': nicheId }
     });
     this.show = false;
+  }
+
+  onMousedown() {
+    if (this.show) {
+      this.isMouseDown = true;
+    } else {
+      this.isMouseDown = false;
+    }
   }
 }

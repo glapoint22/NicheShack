@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { QuickLookComponent } from './quick-look.component';
 import { ShowModule } from '../../directives/show/show.module';
 import { StarsModule } from '../stars/stars.module';
+import { HideModule } from '../../directives/hide/hide.module';
 
 
 
@@ -11,7 +12,8 @@ import { StarsModule } from '../stars/stars.module';
   imports: [
     CommonModule,
     ShowModule,
-    StarsModule
+    StarsModule,
+    HideModule
   ],
   exports: [QuickLookComponent]
 })

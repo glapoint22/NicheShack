@@ -4,8 +4,8 @@ import { Directive, Input, TemplateRef, ViewContainerRef, ElementRef } from '@an
   selector: '[show]'
 })
 export class ShowDirective {
-  private condition: boolean;
   private id: string = 'show-hide';
+  private foo;
 
   constructor(
     private templateRef: TemplateRef<any>,
@@ -13,7 +13,6 @@ export class ShowDirective {
     private el: ElementRef) { }
 
   @Input() set show(condition: boolean) {
-    this.condition = condition;
     if (condition) {
       // If element does not exist
       if (!this.el.nativeElement.nextSibling || (this.el.nativeElement.nextSibling && this.el.nativeElement.nextSibling.id != this.id)) {
@@ -27,23 +26,22 @@ export class ShowDirective {
         setTimeout(() => {
           // Add the classes to the class list
           this.toggleClasses();
+          this.el.nativeElement.nextSibling.focus();
         }, 20);
 
-
-        this.el.nativeElement.nextSibling.addEventListener("transitionend", () => {
-          if (this.condition == false) {
-            // Remove the element
-            this.viewContainer.clear();
-          }
-        });
-
       } else {
+        clearTimeout(this.foo);
         // Add the classes to the class list
         this.toggleClasses();
+        this.el.nativeElement.nextSibling.focus();
       }
     } else if (condition == false) {
       // Remove the classes from the class list
       this.toggleClasses();
+
+     this.foo = setTimeout(() => {
+        this.viewContainer.clear();
+      }, 200);
     }
   }
 

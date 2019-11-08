@@ -6,9 +6,9 @@ import { CategoryDropdownButtonComponent } from './navbar/category-dropdown-butt
 import { NavMenuComponent } from './navbar/nav-menu/nav-menu.component';
 import { AccountMenuComponent } from './navbar/account-menu/account-menu.component';
 import { AccountNavigationComponent } from './navbar/account-navigation/account-navigation.component';
-import { ShowHideModule } from '../show-hide/show-hide.module';
 import { RouterModule } from '@angular/router';
 import { ShowModule } from '../../directives/show/show.module';
+import { HideModule } from '../../directives/hide/hide.module';
 
 
 
@@ -23,9 +23,9 @@ import { ShowModule } from '../../directives/show/show.module';
   ],
   imports: [
     CommonModule,
-    ShowHideModule,
     RouterModule,
-    ShowModule
+    ShowModule,
+    HideModule
   ],
   exports: [
     NavbarComponent,

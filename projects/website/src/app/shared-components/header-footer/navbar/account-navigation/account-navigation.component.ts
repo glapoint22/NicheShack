@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./account-navigation.component.scss']
 })
 export class AccountNavigationComponent implements OnInit {
-  @Input() showHideElement: HTMLElement;
   public dropdownItems: Array<any> = [];
   private subscription: Subscription;
 
@@ -79,7 +78,6 @@ export class AccountNavigationComponent implements OnInit {
 
   onClick(dropdownItem: any) {
     this.router.navigate([dropdownItem.url]);
-    this.showHideElement.blur();
     dropdownItem.click();
   }
 

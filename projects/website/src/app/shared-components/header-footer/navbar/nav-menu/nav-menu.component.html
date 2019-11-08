@@ -1,7 +1,7 @@
-<div *show="show" transitionClass="fade-end" class="modal-background fade-start">
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" hide (onHide)="show = false">
 
     <!-- Menu -->
-    <div #showHideElement (keydown)="onKeydown($event)" (blur)="onBlur()" tabindex="0" class="menu">
+    <div class="menu" (mousedown)="$event.stopPropagation()">
         
         <!-- Close -->
         <div class="background-color-dark-gray padding-top-2 padding-bottom-2 overflow-auto">
@@ -19,7 +19,7 @@
                     <h3 class="padding-left-2 alt-color">Account</h3>
 
                     <!-- Account Navigation -->
-                    <account-navigation [showHideElement]="showHideElement"></account-navigation>
+                    <account-navigation></account-navigation>
 
                     <!-- Heading -->
                     <h3 class="padding-left-2 alt-color margin-top-4">Categories</h3>

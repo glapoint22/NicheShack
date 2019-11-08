@@ -7,9 +7,9 @@
 
 <!-- Dropdown -->
 <div> 
-    <div #showHideElement *show="show" class="dropdown fade-start" transitionClass="fade-end" tabindex="0" (keydown)="onKeydown($event)" (blur)="onBlur()">
+    <div *show="show" class="dropdown fade-start" transitionClass="fade-end" tabindex="0" hide (onHide)="show = false" (blur)="show = false">
         <div *ngFor="let item of items">
-            <div class="dropdown-item" (click)="onItemClick(item)">{{item.value}}</div>
+            <div class="dropdown-item" (click)="onItemClick(item)" (mousedown)="$event.stopPropagation()">{{item.value}}</div>
         </div>
     </div>
 </div>

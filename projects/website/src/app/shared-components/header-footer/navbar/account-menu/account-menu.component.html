@@ -1,6 +1,6 @@
-<div *show="show" #showHideElement tabindex="0" (keydown)="onKeydown($event)" (blur)="onBlur()"
+<div *show="show" tabindex="0" hide (onHide)="show = false" (blur)="show = false"
     class="dropdown dropdown-menu-arrow fade-start"
     style="left: -68px; top: 25px;"
     transitionClass="fade-end">
-    <account-navigation [showHideElement]="showHideElement"></account-navigation>
+    <account-navigation (mousedown)="$event.stopPropagation()"></account-navigation>
 </div>

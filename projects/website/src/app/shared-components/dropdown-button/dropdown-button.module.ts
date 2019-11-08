@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownButtonComponent } from './dropdown-button.component';
 import { ShowModule } from '../../directives/show/show.module';
+import { HideModule } from '../../directives/hide/hide.module';
 
 
 
@@ -9,7 +10,8 @@ import { ShowModule } from '../../directives/show/show.module';
   declarations: [DropdownButtonComponent],
   imports: [
     CommonModule,
-    ShowModule
+    ShowModule,
+    HideModule
   ],
   exports: [DropdownButtonComponent]
 })
