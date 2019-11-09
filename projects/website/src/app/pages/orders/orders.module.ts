@@ -7,7 +7,7 @@ import { HeaderFooterModule } from '../../shared-components/header-footer/header
 import { DropdownButtonModule } from '../../shared-components/dropdown-button/dropdown-button.module';
 import { FormsModule } from '@angular/forms';
 import { CustomInputModule } from '../../custom-input/custom-input.module';
-import { ShowModule } from '../../directives/show/show.module';
+import { ShowHideModule } from '../../directives/show-hide/show-hide.module';
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { ShowModule } from '../../directives/show/show.module';
     DropdownButtonModule,
     FormsModule,
     CustomInputModule,
-    ShowModule
+    ShowHideModule
   ]
 })
 export class OrdersModule { }

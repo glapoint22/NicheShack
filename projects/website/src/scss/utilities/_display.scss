@@ -20,7 +20,7 @@
 
 
         @each $value in $displays {
-            .display#{$extension}-#{$value} { display: $value; }
+            .display-#{$value}#{$extension} { display: $value; }
         }
     }
 }

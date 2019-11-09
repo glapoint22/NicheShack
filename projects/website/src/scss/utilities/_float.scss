@@ -2,8 +2,8 @@
     @include media-breakpoint($key) {
         $extension: get-class-extension($key);
 
-        .float#{$extension}-left  { float: left; }
-        .float#{$extension}-right { float: right; }
-        .float#{$extension}-none  { float: none; }
+        .float-left#{$extension}  { float: left; }
+        .float-right#{$extension} { float: right; }
+        .float-none#{$extension}  { float: none; }
     }
 }

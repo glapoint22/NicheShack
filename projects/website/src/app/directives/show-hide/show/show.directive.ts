@@ -5,7 +5,7 @@ import { Directive, Input, TemplateRef, ViewContainerRef, ElementRef } from '@an
 })
 export class ShowDirective {
   private id: string = 'show-hide';
-  private foo;
+  private timer: number;
 
   constructor(
     private templateRef: TemplateRef<any>,
@@ -23,14 +23,14 @@ export class ShowDirective {
         this.el.nativeElement.nextSibling.id = this.id;
 
         // Wait for the DOM to be updated
-        setTimeout(() => {
+        window.setTimeout(() => {
           // Add the classes to the class list
           this.toggleClasses();
           this.el.nativeElement.nextSibling.focus();
         }, 20);
 
       } else {
-        clearTimeout(this.foo);
+        clearTimeout(this.timer);
         // Add the classes to the class list
         this.toggleClasses();
         this.el.nativeElement.nextSibling.focus();
@@ -39,7 +39,7 @@ export class ShowDirective {
       // Remove the classes from the class list
       this.toggleClasses();
 
-     this.foo = setTimeout(() => {
+     this.timer = window.setTimeout(() => {
         this.viewContainer.clear();
       }, 200);
     }

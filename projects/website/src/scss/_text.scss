@@ -13,9 +13,9 @@
     @include media-breakpoint($key) {
         $extension: get-class-extension($key);
 
-        .text#{$extension}-left   { text-align: left; }
-        .text#{$extension}-right  { text-align: right; }
-        .text#{$extension}-center { text-align: center; }
+        .text-left#{$extension}   { text-align: left; }
+        .text-right#{$extension}  { text-align: right; }
+        .text-center#{$extension} { text-align: center; }
     }
 }
 

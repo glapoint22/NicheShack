@@ -4,12 +4,12 @@
     <div class="alt-color text-center margin-3 font-size-4">{{caption}}</div>
 
     <!-- Slider -->
-    <div #slider class="slider justify-content-center justify-content-md-start" [style.transform]="'translateX(-' + translate + 'px)'">
+    <div #slider class="slider justify-content-center justify-content-start-md" [style.transform]="'translateX(-' + translate + 'px)'">
 
         <!-- Products -->
         <div *ngFor="let product of products; let i = index">
             <div *ngIf="i < (showAll ? products.length : 4)"
-                class="product-container border-bottom border-gray border-none-md padding-bottom-2 padding-bottom-md-0">
+                class="product-container border-bottom border-gray border-none-md padding-bottom-2 padding-bottom-0-md">
                 <product [product]="product" (quickLookClick)="quickLook.show($event)"></product>
             </div>
         </div>

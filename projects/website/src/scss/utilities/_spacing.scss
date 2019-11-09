@@ -13,34 +13,34 @@
         $left: left;
 
         // Margin auto
-        .#{$margin}#{$extension}-auto { margin: auto; }
-        .#{$margin}-#{$top}#{$extension}-auto {
+        .#{$margin}-auto#{$extension} { margin: auto; }
+        .#{$margin}-#{$top}-auto#{$extension} {
             margin-top: auto;
         }
-        .#{$margin}-#{$right}#{$extension}-auto {
+        .#{$margin}-#{$right}-auto#{$extension} {
             margin-right: auto;
         }
-        .#{$margin}-#{$bottom}#{$extension}-auto {
+        .#{$margin}-#{$bottom}-auto#{$extension} {
             margin-bottom: auto;
         }
-        .#{$margin}-#{$left}#{$extension}-auto {
+        .#{$margin}-#{$left}-auto#{$extension} {
             margin-left: auto;
         }
 
         // This will create margins and paddings
         @each $prop, $abbrev in (margin: $margin, padding: $padding) {
             @each $size, $length in $spacers {
-                .#{$abbrev}#{$extension}-#{$size} { #{$prop}: $length; }
-                .#{$abbrev}-#{$top}#{$extension}-#{$size} {
+                .#{$abbrev}-#{$size}#{$extension} { #{$prop}: $length; }
+                .#{$abbrev}-#{$top}-#{$size}#{$extension} {
                     #{$prop}-top: $length;
                 }
-                .#{$abbrev}-#{$right}#{$extension}-#{$size} {
+                .#{$abbrev}-#{$right}-#{$size}#{$extension} {
                     #{$prop}-right: $length;
                 }
-                .#{$abbrev}-#{$bottom}#{$extension}-#{$size} {
+                .#{$abbrev}-#{$bottom}-#{$size}#{$extension} {
                     #{$prop}-bottom: $length;
                 }
-                .#{$abbrev}-#{$left}#{$extension}-#{$size} {
+                .#{$abbrev}-#{$left}-#{$size}#{$extension} {
                     #{$prop}-left: $length;
                 }
             }
@@ -49,17 +49,17 @@
         // Negative margins
         @each $size, $length in $spacers {
             @if $size != 0 {
-                .#{$margin}#{$extension}-n#{$size} { margin: -$length; }
-                .#{$margin}-#{$top}#{$extension}-n#{$size} {
+                .#{$margin}-n#{$size}#{$extension} { margin: -$length; }
+                .#{$margin}-#{$top}-n#{$size}#{$extension} {
                     margin-top: -$length;
                 }
-                .#{$margin}-#{$right}#{$extension}-n#{$size} {
+                .#{$margin}-#{$right}-n#{$size}#{$extension} {
                     margin-right: -$length;
                 }
-                .#{$margin}-#{$bottom}#{$extension}-n#{$size} {
+                .#{$margin}-#{$bottom}-n#{$size}#{$extension} {
                     margin-bottom: -$length;
                 }
-                .#{$margin}-#{$left}#{$extension}-n#{$size} {
+                .#{$margin}-#{$left}-n#{$size}#{$extension} {
                     margin-left: -$length;
                 }
             }

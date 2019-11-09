@@ -15,22 +15,13 @@ export class NavMenuComponent implements OnInit {
   public currentCategory: Category;
   public nicheView: boolean;
   public show: boolean;
-  private isMouseDown: boolean;
 
 
   constructor(private categoriesService: CategoriesService, private router: Router) { }
 
   onClick() {
-    // Don't show the element if there was a mousedown event
-    // This prevents the element from showing when the button is clicked again
-    if (this.isMouseDown) {
-      this.show = false;
-      this.isMouseDown = false;
-      return;
-    }
-
     this.nicheView = false;
-    this.show = true;
+    this.show = !this.show;
   }
 
   ngOnInit() {
@@ -51,13 +42,5 @@ export class NavMenuComponent implements OnInit {
       queryParams: { 'categoryId': this.currentCategory.id, 'nicheId': nicheId }
     });
     this.show = false;
-  }
-
-  onMousedown() {
-    if (this.show) {
-      this.isMouseDown = true;
-    } else {
-      this.isMouseDown = false;
-    }
   }
 }

@@ -1,4 +1,4 @@
-import { Directive, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Directive, HostListener, Output, EventEmitter } from '@angular/core';
 
 @Directive({
   selector: '[hide]'
@@ -6,14 +6,7 @@ import { Directive, HostListener, ElementRef, Output, EventEmitter } from '@angu
 export class HideDirective {
   @Output() onHide: EventEmitter<void> = new EventEmitter();
 
-  constructor(private el: ElementRef) {
-    // let interval = window.setInterval(() => {
-    //   if (this.el.nativeElement.id != '') {
-    //     this.el.nativeElement.focus();
-    //     window.clearInterval(interval);
-    //   }
-    // }, 1);
-  }
+  constructor() {}
 
   @HostListener('keydown', ['$event'])
   onKeydown(event: KeyboardEvent) {

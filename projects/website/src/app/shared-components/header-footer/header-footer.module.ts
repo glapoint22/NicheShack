@@ -7,8 +7,7 @@ import { NavMenuComponent } from './navbar/nav-menu/nav-menu.component';
 import { AccountMenuComponent } from './navbar/account-menu/account-menu.component';
 import { AccountNavigationComponent } from './navbar/account-navigation/account-navigation.component';
 import { RouterModule } from '@angular/router';
-import { ShowModule } from '../../directives/show/show.module';
-import { HideModule } from '../../directives/hide/hide.module';
+import { ShowHideModule } from '../../directives/show-hide/show-hide.module';
 
 
 
@@ -24,8 +23,7 @@ import { HideModule } from '../../directives/hide/hide.module';
   imports: [
     CommonModule,
     RouterModule,
-    ShowModule,
-    HideModule
+    ShowHideModule
   ],
   exports: [
     NavbarComponent,

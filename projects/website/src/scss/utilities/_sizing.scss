@@ -4,7 +4,7 @@
 
         @each $prop, $abbrev in (width: width, height: height) {
             @each $size, $length in $sizes {
-                .#{$abbrev}#{$extension}-#{$size} { #{$prop}: $length; }
+                .#{$abbrev}-#{$size}#{$extension} { #{$prop}: $length; }
             }
         }
     }

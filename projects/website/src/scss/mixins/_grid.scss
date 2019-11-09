@@ -29,15 +29,15 @@
         // This will be either an empty string or the breakpoint key (-xs)
         $extension: get-class-extension($key);
 
-        // Create the column classes (.col-xs-4)
+        // Create the column classes
         @for $i from 1 through $num-columns {
-            .col#{$extension}-#{$i} {
+            .col-#{$i}#{$extension} {
                 @extend %column;
             }
         }
 
-        // .col-lg          .col-md-auto
-        .col#{$extension}, .col#{$extension}-auto {
+        
+        .col#{$extension}, .col-auto#{$extension} {
             @extend %column;
         }
 
@@ -50,7 +50,7 @@
                 max-width: 100%;
             }
 
-            .col#{$extension}-auto {
+            .col-auto#{$extension} {
                 flex: 0 0 auto;
                 width: auto;
                 max-width: 100%;
@@ -58,7 +58,7 @@
 
 
             @for $i from 1 through $num-columns {
-                .col#{$extension}-#{$i} {
+                .col-#{$i}#{$extension} {
                     flex: 0 0 percentage($i / $num-columns);
                     max-width: percentage($i / $num-columns);
                 }
@@ -69,7 +69,7 @@
             // $num-columns - 1 because offsetting by the width of an entire row isn't possible
             @for $i from 0 through ($num-columns - 1) {
                 @if not ($extension == "" and $i == 0) {
-                    .offset#{$extension}-#{$i} {
+                    .offset-#{$i}#{$extension} {
                         $num: $i / $num-columns;
                         margin-left: if($num == 0, 0, percentage($num));
                     }
