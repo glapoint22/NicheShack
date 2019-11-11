@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Customer } from 'classes/customer';
 import { AccountService } from 'services/account.service';
-import { DataService } from 'services/data.service';
 
 @Component({
   templateUrl: './verification.component.html',
@@ -23,11 +22,10 @@ export class VerificationComponent extends ValidationPageComponent implements On
     titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
-    dataService: DataService,
     @Inject(PLATFORM_ID) platformId: Object,
     public router: Router,
     private accountService: AccountService) {
-    super(titleService, metaService, document, dataService, platformId);
+    super(titleService, metaService, document, platformId);
   }
 
   ngOnInit() {

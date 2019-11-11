@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, Subject } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  public error:HttpErrorResponse;
+  public error: HttpErrorResponse;
 
   constructor(private http: HttpClient) { }
 
@@ -36,7 +36,7 @@ export class DataService {
 
   handleError() {
     return (error: HttpErrorResponse) => {
-      if (error.status != 409) {
+      if (error.status != 404 && error.status != 409) {
         this.error = error;
       }
 

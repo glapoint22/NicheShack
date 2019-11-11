@@ -26,11 +26,11 @@ export class ChangeEmailComponent extends ValidationPageComponent implements OnI
     titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
-    dataService: DataService,
     @Inject(PLATFORM_ID) platformId: Object,
+    private dataService: DataService,
     private accountService: AccountService,
     private router: Router) {
-    super(titleService, metaService, document, dataService, platformId);
+    super(titleService, metaService, document, platformId);
   }
 
   ngOnInit() {

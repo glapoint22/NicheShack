@@ -24,12 +24,12 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
     titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
-    dataService: DataService,
     @Inject(PLATFORM_ID) platformId: Object,
     public router: Router,
     private authService: AuthService,
+    private dataService: DataService,
     private accountService: AccountService) {
-    super(titleService, metaService, document, dataService, platformId);
+    super(titleService, metaService, document, platformId);
   }
 
 

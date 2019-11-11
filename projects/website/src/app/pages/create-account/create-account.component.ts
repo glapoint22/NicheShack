@@ -20,10 +20,10 @@ export class CreateAccountComponent extends ValidationPageComponent implements O
     titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
-    dataService: DataService,
     @Inject(PLATFORM_ID) platformId: Object,
+    private dataService: DataService,
     public router: Router) {
-    super(titleService, metaService, document, dataService, platformId);
+    super(titleService, metaService, document, platformId);
   }
 
   ngOnInit() {

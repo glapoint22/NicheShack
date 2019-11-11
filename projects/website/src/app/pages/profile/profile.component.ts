@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Customer } from 'classes/customer';
 import { AccountService } from 'services/account.service';
-import { DataService } from 'services/data.service';
 
 @Component({
   templateUrl: './profile.component.html',
@@ -21,10 +20,9 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
     titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
-    dataService: DataService,
     private router: Router,
     private accountService: AccountService) {
-    super(titleService, metaService, document, dataService);
+    super(titleService, metaService, document);
   }
 
   ngOnInit() {

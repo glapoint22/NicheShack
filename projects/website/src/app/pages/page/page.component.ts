@@ -1,14 +1,12 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-import { DataService } from 'services/data.service';
-import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   template: ''
 })
-export class PageComponent implements OnInit, OnDestroy {
+export class PageComponent implements OnInit {
   // Properties for each page
   public title: string;
   public description: string;
@@ -23,8 +21,7 @@ export class PageComponent implements OnInit, OnDestroy {
 
   constructor(private titleService: Title,
     private metaService: Meta,
-    @Inject(DOCUMENT) private document: Document,
-    public dataService: DataService) { }
+    @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit() {
     // Title

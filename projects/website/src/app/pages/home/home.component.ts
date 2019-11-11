@@ -15,8 +15,8 @@ export class HomeComponent extends PageComponent implements OnInit {
   constructor(titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
-    dataService: DataService) {
-    super(titleService, metaService, document, dataService);
+    private dataService: DataService) {
+    super(titleService, metaService, document);
   }
 
   ngOnInit() {

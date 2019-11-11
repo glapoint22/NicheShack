@@ -22,11 +22,11 @@ export class ChangeNameComponent extends ValidationPageComponent implements OnIn
     titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
-    dataService: DataService,
     @Inject(PLATFORM_ID) platformId: Object,
     private accountService: AccountService,
+    private dataService: DataService,
     private router: Router) {
-    super(titleService, metaService, document, dataService, platformId);
+    super(titleService, metaService, document, platformId);
   }
 
   ngOnInit() {

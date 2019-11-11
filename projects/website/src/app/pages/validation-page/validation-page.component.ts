@@ -3,7 +3,6 @@ import { PageComponent } from '../page/page.component';
 import { NgForm, NgModel } from '@angular/forms';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { DataService } from 'services/data.service';
 
 @Component({
   template: ''
@@ -14,9 +13,8 @@ export class ValidationPageComponent extends PageComponent implements AfterViewI
   constructor(titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
-    dataService: DataService,
     @Inject(PLATFORM_ID) private platformId: Object) {
-    super(titleService, metaService, document, dataService)
+    super(titleService, metaService, document)
   }
 
   ngAfterViewInit() {
