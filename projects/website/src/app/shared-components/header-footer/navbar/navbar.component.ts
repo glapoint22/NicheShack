@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { CategoriesService } from '../../../services/categories.service';
 import { Category } from '../../../interfaces/category';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   public categories: Array<KeyValue<number, string>> = []
   public selectedCategoryIndex: number = 0;
   public customerName: string;

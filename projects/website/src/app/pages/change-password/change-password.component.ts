@@ -18,11 +18,11 @@ export class ChangePasswordComponent extends ValidationPageComponent implements 
   constructor(
     titleService: Title,
     metaService: Meta,
-    @Inject(DOCUMENT) document,
+    @Inject(DOCUMENT) document: Document,
+    dataService: DataService,
     @Inject(PLATFORM_ID) platformId: Object,
     private router: Router,
-    private dataService: DataService,
-    private accountService: AccountService) { super(titleService, metaService, document, platformId); }
+    private accountService: AccountService) { super(titleService, metaService, document, dataService, platformId); }
 
   ngOnInit() {
     this.title = 'Change Password';

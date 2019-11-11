@@ -27,11 +27,11 @@ export class OrdersComponent extends PageComponent implements OnInit {
   constructor(
     titleService: Title,
     metaService: Meta,
-    @Inject(DOCUMENT) document,
+    @Inject(DOCUMENT) document: Document,
+    dataService: DataService,
     private router: Router,
     public route: ActivatedRoute,
-    private dataService: DataService,
-  ) { super(titleService, metaService, document) }
+  ) { super(titleService, metaService, document, dataService) }
 
   ngOnInit() {
     // Set the page properties

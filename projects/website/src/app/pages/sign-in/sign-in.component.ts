@@ -8,6 +8,7 @@ import { TokenData } from 'interfaces/token-data';
 import { AuthService } from 'services/auth.service';
 import { Account } from 'classes/account';
 import { AccountService } from 'services/account.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'sign-in',
@@ -16,19 +17,19 @@ import { AccountService } from 'services/account.service';
 })
 export class SignInComponent extends ValidationPageComponent implements OnInit {
   public account: Account = new Account();
-  public error: string;
+  public conflictError: string;
   private redirectUrl: string;
 
   constructor(
     titleService: Title,
     metaService: Meta,
-    @Inject(DOCUMENT) document,
+    @Inject(DOCUMENT) document: Document,
+    dataService: DataService,
     @Inject(PLATFORM_ID) platformId: Object,
     public router: Router,
-    private dataService: DataService,
     private authService: AuthService,
     private accountService: AccountService) {
-    super(titleService, metaService, document, platformId);
+    super(titleService, metaService, document, dataService, platformId);
   }
 
 
@@ -48,9 +49,9 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
         this.authService.setCookies(tokenData.accessToken, tokenData.refreshToken);
         this.accountService.setAccount(this.redirectUrl);
       },
-        error => {
-          if (error.status == 409) {
-            this.error = error.error;
+        (errorResponse: HttpErrorResponse) => {
+          if (errorResponse.status == 409) {
+            this.conflictError = errorResponse.error;
           }
         });
   }

@@ -36,6 +36,11 @@ export class AccountService {
                 this.customer.next(customer);
                 this.isSignedIn.next(customer != null);
                 if (redirectUrl != null) this.router.navigate([redirectUrl]);
+            }, () => {
+                this.customer.next(null);
+                this.customer.complete();
+                this.isSignedIn.next(true);
+                this.isSignedIn.complete();
             });
     }
 }

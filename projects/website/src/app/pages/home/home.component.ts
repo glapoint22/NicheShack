@@ -12,8 +12,11 @@ import { DataService } from 'services/data.service';
 export class HomeComponent extends PageComponent implements OnInit {
   public productGroups: Array<ProductGroup>;
 
-  constructor(titleService: Title, metaService: Meta, @Inject(DOCUMENT) document, private dataService: DataService) {
-    super(titleService, metaService, document);
+  constructor(titleService: Title,
+    metaService: Meta,
+    @Inject(DOCUMENT) document: Document,
+    dataService: DataService) {
+    super(titleService, metaService, document, dataService);
   }
 
   ngOnInit() {

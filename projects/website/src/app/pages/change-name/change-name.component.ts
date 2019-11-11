@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { ValidationPageComponent } from '../validation-page/validation-page.component';
 import { Customer } from 'classes/customer';
 import { Title, Meta } from '@angular/platform-browser';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './change-name.component.html',
   styleUrls: ['./change-name.component.scss']
 })
-export class ChangeNameComponent extends ValidationPageComponent implements OnInit {
+export class ChangeNameComponent extends ValidationPageComponent implements OnInit, OnDestroy {
   public _firstName: string;
   public _lastName: string;
   private customer: Customer = new Customer();
@@ -21,12 +21,12 @@ export class ChangeNameComponent extends ValidationPageComponent implements OnIn
   constructor(
     titleService: Title,
     metaService: Meta,
-    @Inject(DOCUMENT) document,
+    @Inject(DOCUMENT) document: Document,
+    dataService: DataService,
     @Inject(PLATFORM_ID) platformId: Object,
     private accountService: AccountService,
-    private dataService: DataService,
     private router: Router) {
-    super(titleService, metaService, document, platformId);
+    super(titleService, metaService, document, dataService, platformId);
   }
 
   ngOnInit() {

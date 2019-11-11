@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'services/account.service';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './account-navigation.component.html',
   styleUrls: ['./account-navigation.component.scss']
 })
-export class AccountNavigationComponent implements OnInit {
+export class AccountNavigationComponent implements OnInit, OnDestroy {
   public dropdownItems: Array<any> = [];
   private subscription: Subscription;
 

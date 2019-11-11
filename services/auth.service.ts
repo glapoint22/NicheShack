@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, Subscriber, Subscription } from 'rxjs';
 import { DataService } from 'services/data.service';
 import * as jwtDecode from 'jwt-decode';
-import { HttpRequest, HttpHeaders } from '@angular/common/http';
+import { HttpRequest, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { TokenData } from 'interfaces/token-data';
 
 
@@ -63,6 +63,9 @@ export class AuthService {
                         subscriber.complete();
                         this.waitForAccessToken.next(accessToken);
                         this.waitForAccessToken.complete();
+                    }, (error: HttpErrorResponse) => {
+                        subscriber.error(error);
+                        this.waitForAccessToken.next(null);
                     });
             } else {
                 // Refreshing has already started, so we need to wait for the refreshing process to finish

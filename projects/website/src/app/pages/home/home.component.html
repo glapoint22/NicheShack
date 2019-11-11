@@ -5,9 +5,7 @@
         <!-- Carousel:  1496px x 451px-->
 
         <!-- Product Groups -->
-        <product-group 
-            *ngFor="let productGroup of productGroups" 
-            [caption]="productGroup.caption"
+        <product-group *ngFor="let productGroup of productGroups" [caption]="productGroup.caption"
             [products]="productGroup.products">
         </product-group>
 

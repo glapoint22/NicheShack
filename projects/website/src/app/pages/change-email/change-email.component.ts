@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { ValidationPageComponent } from '../validation-page/validation-page.component';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
@@ -7,15 +7,16 @@ import { Customer } from 'classes/customer';
 import { AccountService } from 'services/account.service';
 import { DataService } from 'services/data.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   templateUrl: './change-email.component.html',
   styleUrls: ['./change-email.component.scss']
 })
-export class ChangeEmailComponent extends ValidationPageComponent implements OnInit {
+export class ChangeEmailComponent extends ValidationPageComponent implements OnInit, OnDestroy {
   public currentEmail: string;
   public reEnteredEmail: string;
-  public error: string;
+  public conflictError: string;
   public customer: Customer = new Customer();
   public _password: string;
   public _email: string;
@@ -24,12 +25,12 @@ export class ChangeEmailComponent extends ValidationPageComponent implements OnI
   constructor(
     titleService: Title,
     metaService: Meta,
-    @Inject(DOCUMENT) document,
+    @Inject(DOCUMENT) document: Document,
+    dataService: DataService,
     @Inject(PLATFORM_ID) platformId: Object,
     private accountService: AccountService,
-    private dataService: DataService,
     private router: Router) {
-    super(titleService, metaService, document, platformId);
+    super(titleService, metaService, document, dataService, platformId);
   }
 
   ngOnInit() {
@@ -68,9 +69,9 @@ export class ChangeEmailComponent extends ValidationPageComponent implements OnI
         this.accountService.accountUpdated = true;
         this.router.navigate(['account', 'profile']);
       },
-        error => {
-          if (error.status == 409) {
-            this.error = error.error;
+        (errorResponse: HttpErrorResponse) => {
+          if (errorResponse.status == 409) {
+            this.conflictError = errorResponse.error;
           }
         });
   }

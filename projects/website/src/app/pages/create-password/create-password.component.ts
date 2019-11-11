@@ -3,6 +3,7 @@ import { ValidationPageComponent } from '../validation-page/validation-page.comp
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
+import { DataService } from 'services/data.service';
 
 @Component({
   templateUrl: './create-password.component.html',
@@ -16,10 +17,11 @@ export class CreatePasswordComponent extends ValidationPageComponent implements 
   constructor(
     titleService: Title,
     metaService: Meta,
-    @Inject(DOCUMENT) document,
+    @Inject(DOCUMENT) document: Document,
+    dataService: DataService,
     @Inject(PLATFORM_ID) platformId: Object,
     public router: Router) {
-    super(titleService, metaService, document, platformId);
+    super(titleService, metaService, document, dataService, platformId);
   }
 
   ngOnInit() {

@@ -8,12 +8,14 @@ import { PageComponent } from './pages/page/page.component';
 import { TransferHttpCacheModule } from '@nguniversal/common';
 import { ValidationPageComponent } from './pages/validation-page/validation-page.component';
 import { ClientInterceptor } from 'interceptors/client-interceptor';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageComponent,
-    ValidationPageComponent
+    ValidationPageComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

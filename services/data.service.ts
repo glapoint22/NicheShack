@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  public isError: boolean;
-  public notFound: boolean;
+  public error:HttpErrorResponse;
 
   constructor(private http: HttpClient) { }
 
@@ -32,19 +31,14 @@ export class DataService {
   }
 
   delete(url: string, params: any) {
-    return this.http.delete(url, {params: params}).pipe(catchError(this.handleError()));
+    return this.http.delete(url, { params: params }).pipe(catchError(this.handleError()));
   }
 
   handleError() {
-    return (error) => {
-      if (error.status != 409 && error.status != 401) {
-        // showError
-        this.isError = true;
+    return (error: HttpErrorResponse) => {
+      if (error.status != 409) {
+        this.error = error;
       }
-
-      // If we get a not found error, set the not found property to true
-      // This will display the not found page
-      if(error.status == 404) this.notFound = true;
 
       return throwError(error);
     }
