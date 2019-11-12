@@ -9,6 +9,8 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
 import { ValidationPageComponent } from './pages/validation-page/validation-page.component';
 import { ClientInterceptor } from 'interceptors/client-interceptor';
 import { ErrorComponent } from './error/error.component';
+import { ShowHideModule } from './directives/show-hide/show-hide.module';
+import { PageNotFoundModule } from './pages/page-not-found/page-not-found.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { ErrorComponent } from './error/error.component';
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     HttpClientModule,
-    TransferHttpCacheModule
+    TransferHttpCacheModule,
+    ShowHideModule,
+    PageNotFoundModule
   ],
   providers: [
     {

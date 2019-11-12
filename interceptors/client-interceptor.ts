@@ -4,16 +4,19 @@ import { Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { mergeMap, tap } from 'rxjs/operators';
 import { AuthService } from 'services/auth.service';
+import { DataService } from 'services/data.service';
 
 @Injectable()
 export class ClientInterceptor implements HttpInterceptor {
 
-    constructor(private authService: AuthService, @Inject(PLATFORM_ID) private platformId: Object) { }
+    constructor(private authService: AuthService, @Inject(PLATFORM_ID) private platformId: Object, private dataService: DataService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let token: string;
 
         if (isPlatformBrowser(this.platformId)) {
+            // Flag that we are loading
+            this.dataService.loading = true;
 
             // Grab the access token from the access cookie
             token = this.authService.getAccessTokenFromCookie(document.cookie);
@@ -41,6 +44,14 @@ export class ClientInterceptor implements HttpInterceptor {
                 // Make sure we only run this on the client
                 if (isPlatformBrowser(this.platformId)) {
                     if (event instanceof HttpResponse) {
+
+                        // Set loading to false
+                        if (event.url != location.origin + '/api/categories' &&
+                            event.url != location.origin + '/api/Account/GetCustomer') {
+                            this.dataService.loading = false;
+                        }
+
+
 
                         // Set the cookies if the response is from the token refresh
                         if (event.url == location.origin + '/' + this.authService.refreshUrl && event.body) {

@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class DataService {
   public error: HttpErrorResponse;
+  public loading: boolean;
 
   constructor(private http: HttpClient) { }
 
@@ -36,6 +37,9 @@ export class DataService {
 
   handleError() {
     return (error: HttpErrorResponse) => {
+      // Flag that we are not loading
+      this.loading = false;
+
       if (error.status != 404 && error.status != 409) {
         this.error = error;
       }

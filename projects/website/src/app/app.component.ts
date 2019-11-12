@@ -7,7 +7,11 @@ import { DataService } from 'services/data.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  public loading: boolean
 
   constructor(public dataService: DataService) { }
 
+  ngDoCheck() {
+    this.loading = this.dataService.loading;
+  }
 }

@@ -1,6 +1,6 @@
 <div *show="isVisible" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" hide (onHide)="isVisible = false">
 
-    <div *ngIf="quickLook$ | async; else loading" (mousedown)="$event.stopPropagation()"
+    <div *ngIf="quickLook$ | async" (mousedown)="$event.stopPropagation()"
         class="background-color-dark border border-primary-color overflow-auto"
         style="max-width: 800px; max-height: 100%">
 
@@ -64,9 +64,4 @@
         <!-- View Details Button -->
         <button class="alt-button float-right margin-2" (click)="onViewDetailsClick()">View Details</button>
     </div>
-
-    <!-- Loading -->
-    <ng-template #loading>
-        <i class="fas fa-spinner fa-pulse font-size-7"></i>
-    </ng-template>
 </div>
