@@ -46,12 +46,7 @@ export class ClientInterceptor implements HttpInterceptor {
                     if (event instanceof HttpResponse) {
 
                         // Set loading to false
-                        if (event.url != location.origin + '/api/categories' &&
-                            event.url != location.origin + '/api/Account/GetCustomer') {
-                            this.dataService.loading = false;
-                        }
-
-
+                        this.dataService.loading = false;
 
                         // Set the cookies if the response is from the token refresh
                         if (event.url == location.origin + '/' + this.authService.refreshUrl && event.body) {
