@@ -16,7 +16,9 @@ export class ClientInterceptor implements HttpInterceptor {
 
         if (isPlatformBrowser(this.platformId)) {
             // Flag that we are loading
-            this.dataService.loading = true;
+            if (req.url != this.authService.refreshUrl) {
+                this.dataService.loading = true;
+            }
 
             // Grab the access token from the access cookie
             token = this.authService.getAccessTokenFromCookie(document.cookie);
@@ -31,6 +33,8 @@ export class ClientInterceptor implements HttpInterceptor {
                         // Here we are getting a new access token from the server. When it arrives, we continue
                         // with the pending api requests
                         return this.authService.refresh().pipe(mergeMap((accessToken: string) => {
+                            // Set loading to false and continue with the api requests
+                            this.dataService.loading = false;
                             return next.handle(this.authService.setHttpRequest(req, accessToken));
                         }));
                     }
@@ -46,7 +50,10 @@ export class ClientInterceptor implements HttpInterceptor {
                     if (event instanceof HttpResponse) {
 
                         // Set loading to false
-                        this.dataService.loading = false;
+                        if (event.url != location.origin + '/' + this.authService.refreshUrl) {
+                            this.dataService.loading = false;
+                        }
+
 
                         // Set the cookies if the response is from the token refresh
                         if (event.url == location.origin + '/' + this.authService.refreshUrl && event.body) {
