@@ -126,4 +126,8 @@ export class OrdersComponent extends PageComponent implements OnInit {
     // Navigate to the product page
     window.location.href = hoplink;
   }
+
+  onWriteReviewClick(productId: string) {
+    this.router.navigate(['write-review', productId]);
+  }
 }

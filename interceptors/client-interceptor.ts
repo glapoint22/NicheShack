@@ -8,6 +8,7 @@ import { DataService } from 'services/data.service';
 
 @Injectable()
 export class ClientInterceptor implements HttpInterceptor {
+    private requestCount: number;
 
     constructor(private authService: AuthService, @Inject(PLATFORM_ID) private platformId: Object, private dataService: DataService) { }
 
@@ -16,9 +17,9 @@ export class ClientInterceptor implements HttpInterceptor {
 
         if (isPlatformBrowser(this.platformId)) {
             // Flag that we are loading
-            if (req.url != this.authService.refreshUrl) {
-                this.dataService.loading = true;
-            }
+            if(!this.dataService.loading) this.requestCount = 0;
+            this.requestCount++;
+            this.dataService.loading = true;
 
             // Grab the access token from the access cookie
             token = this.authService.getAccessTokenFromCookie(document.cookie);
@@ -33,8 +34,11 @@ export class ClientInterceptor implements HttpInterceptor {
                         // Here we are getting a new access token from the server. When it arrives, we continue
                         // with the pending api requests
                         return this.authService.refresh().pipe(mergeMap((accessToken: string) => {
-                            // Set loading to false and continue with the api requests
-                            this.dataService.loading = false;
+                            // Set loading to false when requests are complete
+                            this.requestCount--;
+                            if (this.requestCount == 0) {
+                                this.dataService.loading = false;
+                            }
                             return next.handle(this.authService.setHttpRequest(req, accessToken));
                         }));
                     }
@@ -49,8 +53,9 @@ export class ClientInterceptor implements HttpInterceptor {
                 if (isPlatformBrowser(this.platformId)) {
                     if (event instanceof HttpResponse) {
 
-                        // Set loading to false
-                        if (event.url != location.origin + '/' + this.authService.refreshUrl) {
+                        // Set loading to false when requests are complete
+                        this.requestCount--;
+                        if (this.requestCount == 0) {
                             this.dataService.loading = false;
                         }
 

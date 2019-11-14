@@ -17,6 +17,7 @@ export class AppComponent {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationStart) {
         this.dataService.error = null;
+        this.dataService.loading = false;
       }
     });
   }

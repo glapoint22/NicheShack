@@ -24,10 +24,10 @@ export class QuickLookComponent {
 
 
     this.quickLook$ = this.dataService.get('api/Products/QuickLookProduct', [{ key: 'id', value: this.product.id }])
-      .pipe(tap((results) => {
-        this.media = results.media;
-        this.product.description = results.description;
-      }))
+      .pipe(tap((response) => {
+        this.media = response.media;
+        this.product.description = response.description;
+      }));
 
   }
 

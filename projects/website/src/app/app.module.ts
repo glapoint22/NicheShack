@@ -10,22 +10,22 @@ import { ValidationPageComponent } from './pages/validation-page/validation-page
 import { ClientInterceptor } from 'interceptors/client-interceptor';
 import { ErrorComponent } from './error/error.component';
 import { ShowHideModule } from './directives/show-hide/show-hide.module';
-import { PageNotFoundModule } from './pages/page-not-found/page-not-found.module';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageComponent,
     ValidationPageComponent,
-    ErrorComponent
+    ErrorComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     HttpClientModule,
     TransferHttpCacheModule,
-    ShowHideModule,
-    PageNotFoundModule
+    ShowHideModule
   ],
   providers: [
     {
