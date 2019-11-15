@@ -1,115 +1,115 @@
-<navbar></navbar>
+<ng-container *ngIf="product$ | async as product">
 
-<div class="page-container">
-    <div class="content-container">
+    <navbar></navbar>
 
-
-        <!-- Content -->
-        <div class="content padding-left-3 padding-right-3">
-
-            <ng-container *ngIf="!submitted; else reviewSubmitted">
-                <!-- Page Title -->
-                <h1>Write a Review</h1>
+    <div class="page-container">
+        <div class="content-container">
 
 
+            <!-- Content -->
+            <div class="content padding-left-3 padding-right-3">
 
-                <ng-container *ngIf="product$ | async as product">
+                <ng-container *ngIf="!submitted; else reviewSubmitted">
+                    <!-- Page Title -->
+                    <h1>Write a Review</h1>
+
+
                     <!-- Product Title -->
                     <h2>{{product.title}}</h2>
 
                     <!-- Image -->
                     <img [src]="'/images/' + product.image" class="margin-right-3">
+
+                    <!-- Form -->
+                    <form (ngSubmit)="onSubmit()" #form="ngForm">
+                        <!-- Rating -->
+                        <div *ngIf="!form.submitted || review.rating > 0; else noRating">
+                            <h4 *ngIf="review.rating == undefined">
+                                How would you rate this?
+                            </h4>
+
+                            <h4 *ngIf="review.rating == 1">
+                                You are very dissatisfied.
+                            </h4>
+                            <h4 *ngIf="review.rating == 2">
+                                Not what you were hoping for.
+                            </h4>
+
+                            <h4 *ngIf="review.rating == 3">
+                                You think this item is fair.
+                            </h4>
+
+                            <h4 *ngIf="review.rating == 4">
+                                It meets your expectations.
+                            </h4>
+
+                            <h4 *ngIf="review.rating == 5">
+                                You are very satisfied.
+                            </h4>
+                        </div>
+
+                        <ng-template #noRating>
+                            <h4 class="error-color">
+                                Please rate this item.
+                            </h4>
+                        </ng-template>
+
+                        <div class="margin-bottom-4">
+                            <input type="hidden" required [(ngModel)]="review.rating" name="rating">
+                            <span *ngFor="let i of [1,2,3,4,5]" (click)="review.rating = i"
+                                class="alt-color font-size-6 cursor-pointer">
+                                <i [class]="getStar(i)"></i>
+                            </span>
+                        </div>
+
+
+                        <!-- Review Title -->
+                        <h4 *ngIf="valid(title); else invalidTitle">
+                            Review title
+                        </h4>
+
+                        <!-- Invalid review title -->
+                        <ng-template #invalidTitle>
+                            <h4 class="error-color">
+                                Please provide a title for your review.
+                            </h4>
+                        </ng-template>
+                        <input required [(ngModel)]="review.title" name="title" #title="ngModel">
+
+
+
+                        <!-- Review text -->
+                        <h4 *ngIf="valid(reviewText); else invalidText">
+                            Write your review
+                        </h4>
+
+                        <!-- Invalid review text -->
+                        <ng-template #invalidText>
+                            <h4 class="error-color">
+                                Please write something about the item.
+                            </h4>
+                        </ng-template>
+                        <textarea required [(ngModel)]="review.text" name="reviewText" #reviewText="ngModel"></textarea>
+
+                        <!-- Submit button -->
+                        <button class="alt-button" type="submit">Submit Review</button>
+                    </form>
                 </ng-container>
 
 
-                <!-- Form -->
-                <form (ngSubmit)="onSubmit()" #form="ngForm">
-                    <!-- Rating -->
-                    <div *ngIf="!form.submitted || review.rating > 0; else noRating">
-                        <h4 *ngIf="review.rating == undefined">
-                            How would you rate this?
-                        </h4>
 
-                        <h4 *ngIf="review.rating == 1">
-                            You are very dissatisfied.
-                        </h4>
-                        <h4 *ngIf="review.rating == 2">
-                            Not what you were hoping for.
-                        </h4>
-
-                        <h4 *ngIf="review.rating == 3">
-                            You think this item is fair.
-                        </h4>
-
-                        <h4 *ngIf="review.rating == 4">
-                            It meets your expectations.
-                        </h4>
-
-                        <h4 *ngIf="review.rating == 5">
-                            You are very satisfied.
-                        </h4>
-                    </div>
-
-                    <ng-template #noRating>
-                        <h4 class="error-color">
-                            Please rate this item.
-                        </h4>
-                    </ng-template>
-
-                    <div class="margin-bottom-4">
-                        <input type="hidden" required [(ngModel)]="review.rating" name="rating">
-                        <span *ngFor="let i of [1,2,3,4,5]" (click)="review.rating = i" class="alt-color font-size-6 cursor-pointer">
-                            <i [class]="getStar(i)"></i>
-                        </span>
-                    </div>
+                <ng-template #reviewSubmitted>
+                    <h1>
+                        Thanks for your review!
+                    </h1>
+                    <button class="alt-button" (click)="goHome()">Continue
+                        Shopping</button>
+                </ng-template>
 
 
-                    <!-- Review Title -->
-                    <h4 *ngIf="valid(title); else invalidTitle">
-                        Review title
-                    </h4>
+            </div>
 
-                    <!-- Invalid review title -->
-                    <ng-template #invalidTitle>
-                        <h4 class="error-color">
-                            Please provide a title for your review.
-                        </h4>
-                    </ng-template>
-                    <input required [(ngModel)]="review.title" name="title" #title="ngModel">
-
-
-
-                    <!-- Review text -->
-                    <h4 *ngIf="valid(reviewText); else invalidText">
-                        Write your review
-                    </h4>
-
-                    <!-- Invalid review text -->
-                    <ng-template #invalidText>
-                        <h4 class="error-color">
-                            Please write something about the item.
-                        </h4>
-                    </ng-template>
-                    <textarea required [(ngModel)]="review.text" name="reviewText" #reviewText="ngModel"></textarea>
-
-                    <!-- Submit button -->
-                    <button class="alt-button" type="submit">Submit Review</button>
-                </form>
-            </ng-container>
-
-
-
-            <ng-template #reviewSubmitted>
-                <h1>
-                    Thanks for your review!
-                </h1>
-                <button class="alt-button" (click)="goHome()">Continue
-                    Shopping</button>
-            </ng-template>
-
-
+            <navfooter></navfooter>
         </div>
-
-        <navfooter></navfooter>
     </div>
-</div>
+</ng-container>

@@ -1,9 +1,14 @@
-<router-outlet *ngIf="!dataService.error"></router-outlet>
+<router-outlet *ngIf="!dataService.error && !dataService.pageNotFound"></router-outlet>
 
 <!-- Error -->
 <error *ngIf="dataService.error"></error>
 
+<!-- Page Not Found -->
+<page-not-found *ngIf="dataService.pageNotFound"></page-not-found>
+
 <!-- Loading -->
-<div *show="loading" class="modal-background fade-start" transitionClass="fade-end">
-    <i class="fas fa-spinner fa-pulse font-size-7"></i>
-</div>
+<ng-container *ngIf="isBrowser">
+    <div *show="loading" class="modal-background fade-start" transitionClass="fade-end">
+        <i class="fas fa-spinner fa-pulse font-size-7"></i>
+    </div>
+</ng-container>

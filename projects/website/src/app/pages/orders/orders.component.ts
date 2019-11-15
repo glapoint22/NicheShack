@@ -122,12 +122,16 @@ export class OrdersComponent extends PageComponent implements OnInit {
   }
 
 
-  onBuyAgainClick(hoplink) {
+  onBuyAgainClick(hoplink: string) {
     // Navigate to the product page
     window.location.href = hoplink;
   }
 
   onWriteReviewClick(productId: string) {
     this.router.navigate(['write-review', productId]);
+  }
+
+  onProductClick(product) {
+    this.router.navigate([product.urlTitle, product.id]);
   }
 }

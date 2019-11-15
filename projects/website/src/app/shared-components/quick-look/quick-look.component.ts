@@ -4,6 +4,7 @@ import { DataService } from 'services/data.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Media } from '../../interfaces/media';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'quick-look',
@@ -16,7 +17,7 @@ export class QuickLookComponent {
   public quickLook$: Observable<any>;
   public isVisible: boolean;
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private router: Router) { }
 
   show(product: Product) {
     this.isVisible = true;
@@ -36,7 +37,7 @@ export class QuickLookComponent {
   }
 
   onViewDetailsClick() {
-
+    this.router.navigate([this.product.urlTitle, this.product.id]);
   }
 
 }

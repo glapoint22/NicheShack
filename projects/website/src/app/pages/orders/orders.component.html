@@ -145,15 +145,13 @@
                                 <div *ngFor="let product of order.products">
                                     <div class="display-flex">
                                         <!-- Product Image -->
-                                        <div
-                                            class="img-container display-flex align-items-center justify-content-center margin-2 flex-shrink-0">
-                                            <img
-                                                [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">
+                                        <div class="img-container display-flex align-items-center justify-content-center margin-2 flex-shrink-0 cursor-pointer" (click)="onProductClick({id: order.productId, urlTitle: order.urlTitle})">
+                                            <img [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">
                                         </div>
 
                                         <!-- Product Info -->
                                         <div class="margin-top-2 margin-right-2 text-break">
-                                            <h4>{{product.title}}</h4>
+                                            <h4 class="text-hover-underline cursor-pointer" (click)="onProductClick({id: order.productId, urlTitle: order.urlTitle})">{{product.title}}</h4>
                                             <div class="gray-color">{{product.type}}</div>
                                             <div *ngIf="product.quantity > 0" class="gray-color">Quantity:
                                                 {{product.quantity}}</div>
@@ -234,14 +232,13 @@
                 <div *ngFor="let product of products">
                     <div class="display-flex border-bottom border-gray padding-3">
                         <!-- Product Image -->
-                        <div
-                            class="img-container display-flex align-items-center justify-content-center margin-right-3 flex-shrink-0">
+                        <div class="img-container display-flex align-items-center justify-content-center margin-right-3 flex-shrink-0 cursor-pointer" (click)="onProductClick({id: product.productId, urlTitle: product.urlTitle})">
                             <img [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">
                         </div>
 
                         <!-- Product Info -->
                         <div class="text-break">
-                            <h4>{{product.title}}</h4>
+                            <h4 class="text-hover-underline cursor-pointer" (click)="onProductClick({id: product.productId, urlTitle: product.urlTitle})">{{product.title}}</h4>
                             <div class="gray-color">Ordered on {{product.date}}</div>
                             <div class="alt-color text-underline cursor-pointer margin-bottom-2"
                                 (click)="searchwords = product.orderNumber; onSearch()">View order</div>

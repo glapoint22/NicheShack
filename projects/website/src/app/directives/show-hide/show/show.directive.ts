@@ -47,7 +47,7 @@ export class ShowDirective {
 
   toggleClasses() {
     // This will remove or add classes to the class list
-    if (this.el.nativeElement.nextSibling) {
+    if (this.el.nativeElement.nextSibling && this.el.nativeElement.nextSibling.attributes && this.el.nativeElement.nextSibling.attributes["transitionClass"]) {
       let classes: Array<string> = this.el.nativeElement.nextSibling.attributes["transitionClass"].value.split(' ');
       classes.forEach((currentClass: string) => {
         this.el.nativeElement.nextSibling.classList.toggle(currentClass);

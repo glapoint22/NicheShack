@@ -26,6 +26,7 @@
 // Misc
 .text-decoration-none { text-decoration: none; }
 .text-underline {text-decoration: underline;}
+.text-hover-underline:hover {text-decoration: underline;}
 
 .text-break {
     word-break: break-word; // IE & < Edge 18
