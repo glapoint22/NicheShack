@@ -1,8 +1,22 @@
-<navbar></navbar>
+<ng-container *ngIf="product$ | async as product">
+    <navbar></navbar>
 
-<div class="page-container">
-    <div class="content-container">
-        
-        <navfooter></navfooter>
+    <div class="page-container">
+        <div class="content-container">
+            <div class="content padding-left-4 padding-right-4" style="max-width: 1200px;">
+
+                <!-- Product Info -->
+                <product-info [productInfo]="product.productInfo"></product-info>
+
+                <!-- Customer Reviews -->
+                <ng-container *ngFor="let review of reviews$ | async">
+                    <review [review]="review"></review>
+                </ng-container>
+
+                <navfooter></navfooter>
+            </div>
+
+
+        </div>
     </div>
-</div>
+</ng-container>

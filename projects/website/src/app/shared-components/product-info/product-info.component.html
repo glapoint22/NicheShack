@@ -1,0 +1,46 @@
+<div class="display-flex flex-wrap flex-nowrap-sm">
+    <div class="display-flex">
+        
+        <!-- Media group -->
+        <div *ngIf="productInfo.media.length > 0" class="media-group">
+            <div *ngFor="let media of productInfo.media" class="media-thumbnail">
+                <i *ngIf="media.type == 'Video'" class="far fa-play-circle"></i>
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="margin-top-3">
+            <img [src]="'/images/' + productInfo.product.image" class="width-100 width-auto-xs">
+        </div>
+    </div>
+
+
+    <!-- Product -->
+    <div class="margin-left-0 margin-left-4-sm">
+        <div>
+            <!-- Title -->
+            <div class="text-break font-size-6 font-bold white-color">{{productInfo.product.title}}</div>
+
+            <!-- Rating -->
+            <stars class="margin-right-1" [rating]="productInfo.product.rating"></stars>
+            <span class="text-nowrap primary-color-light" *ngIf="productInfo.product.rating > 0">
+                {{productInfo.product.totalReviews | number}} reviews
+            </span>
+
+            <!-- Price -->
+            <div class="alt-color">
+                <div *ngIf="productInfo.product.maxPrice === 0">
+                    {{productInfo.product.minPrice | currency:'USD'}}
+                </div>
+                <div *ngIf="productInfo.product.maxPrice > 0">
+                    {{productInfo.product.minPrice | currency:'USD'}} -
+                    {{productInfo.product.maxPrice | currency:'USD'}}
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="margin-top-2">{{productInfo.product.description}}</div>
+        </div>
+    </div>
+
+</div>

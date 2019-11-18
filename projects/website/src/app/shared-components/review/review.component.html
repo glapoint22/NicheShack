@@ -1,0 +1,58 @@
+<div class="border-bottom border-gray padding-bottom-3 margin-bottom-3" style="max-width: 1200px">
+    <div style="max-width: 800px">
+
+        <!-- Stars and review title -->
+        <stars [rating]="review.rating"></stars>
+        <span class="margin-left-1 font-bold font-size-3">
+            {{review.title}}
+        </span>
+
+        <!-- Username, date, verified purchase -->
+        <div class="gray-color">
+            <div>{{review.username}}</div>
+
+            <div> {{review.date}}</div>
+        </div>
+
+        <div class="primary-color-light" *ngIf="review.isVerified">
+            Verified Purchase
+        </div>
+
+
+        <!-- review text -->
+        <div class="margin-top-3 margin-bottom-3">
+            {{review.text}}
+        </div>
+
+        <div>
+            <!-- Review helpful text -->
+            <span class="alt-color margin-right-2" *ngIf="!review.hasBeenRated">
+                Was this review helpful?
+            </span>
+
+            <!-- Thanks for feedback text -->
+            <span *ngIf="review.hasBeenRated" class="success-color">
+                <i class="fas fa-check success-color"></i> Thanks for your feedback.
+            </span>
+
+            <!-- Review rating container -->
+            <span>
+                <span class="margin-right-3 cursor-pointer text-nowrap" *ngIf="!review.hasBeenRated"
+                    (click)="onRateReviewClick(1, 0)">
+                    <i class="fas fa-thumbs-up primary-color-light margin-right-1"></i>
+                    <span>{{review.likes}}</span>
+                </span>
+
+                <span class="cursor-pointer margin-right-3 text-nowrap" *ngIf="!review.hasBeenRated" (click)="onRateReviewClick(0, 1)">
+                    <i class="fas fa-thumbs-down primary-color-light margin-right-1"></i>
+                    <span>{{review.dislikes}}</span>
+                </span>
+
+                <span class="primary-color-light cursor-pointer text-nowrap" (click)="onReportReviewClick()">
+                    <i class="fas fa-flag"></i>
+                    Report this review
+                </span>
+            </span>
+        </div>
+    </div>
+</div>
