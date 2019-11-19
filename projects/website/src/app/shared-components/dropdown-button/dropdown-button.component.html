@@ -7,7 +7,7 @@
 
 <!-- Dropdown -->
 <div> 
-    <div *show="show" class="dropdown fade-start" transitionClass="fade-end" tabindex="0" hide (onHide)="show = false" (blur)="show = false">
+    <div *show="show" class="dropdown fade-start" transitionClass="fade-end" tabindex="0" (onHide)="show = false" (blur)="show = false">
         <div *ngFor="let item of items">
             <div class="dropdown-item" (click)="onItemClick(item)" (mousedown)="$event.stopPropagation()">{{item.value}}</div>
         </div>

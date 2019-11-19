@@ -1,7 +1,7 @@
 import { Directive, HostListener, Output, EventEmitter } from '@angular/core';
 
 @Directive({
-  selector: '[hide]'
+  selector: '[onHide]'
 })
 export class HideDirective {
   @Output() onHide: EventEmitter<void> = new EventEmitter();

@@ -31,7 +31,7 @@
             </span>
 
             <!-- Thanks for feedback text -->
-            <span *ngIf="review.hasBeenRated" class="success-color">
+            <span *ngIf="review.hasBeenRated" class="success-color margin-right-2">
                 <i class="fas fa-check success-color"></i> Thanks for your feedback.
             </span>
 
@@ -48,7 +48,7 @@
                     <span>{{review.dislikes}}</span>
                 </span>
 
-                <span class="primary-color-light cursor-pointer text-nowrap" (click)="onReportReviewClick()">
+                <span class="primary-color-light cursor-pointer text-nowrap" (click)="reportReviewClick()">
                     <i class="fas fa-flag"></i>
                     Report this review
                 </span>

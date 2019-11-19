@@ -1,5 +1,4 @@
-<div *show="isVisible" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" hide
-    (onHide)="isVisible = false">
+<div *show="isVisible" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onHide)="isVisible = false">
 
     <div *ngIf="productInfo$ | async as productInfo" (mousedown)="$event.stopPropagation()"
         class="background-color-dark border border-primary-color overflow-auto"

@@ -1,4 +1,4 @@
-<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" hide (onHide)="show = false">
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onHide)="show = false">
 
     <!-- Menu -->
     <div class="menu" (mousedown)="$event.stopPropagation()">

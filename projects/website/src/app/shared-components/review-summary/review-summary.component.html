@@ -1,0 +1,58 @@
+<div style="width: 500px; margin: auto">
+    <h2 class="text-center alt-color">Customer Reviews</h2>
+
+
+
+    <div *ngIf="product.rating > 0; else noRating">
+        <div class="display-flex align-items-center">
+            <div class="alt-color font-size-8 font-bold margin-right-2">{{product.rating | number:'1.1-1'}}</div>
+
+            <div>
+                <stars [rating]="product.rating"></stars>
+                <div class="primary-color-light">
+                    {{product.totalReviews | number}} review{{product.totalReviews > 1 ? 's' : ''}}
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <ng-template #noRating>
+        <div *ngIf="product.rating == 0">
+            Be the first to review this item!
+        </div>
+    </ng-template>
+
+
+
+    <!-- <div>
+        <button (click)="onWriteReview()">
+            Write a Review
+        </button>
+    </div>
+
+
+
+    <div *ngIf="product.rating > 0">
+        <div *ngFor="let stat of reviewStats; let i = index">
+            <div>{{stat.name}}</div>
+            <div style="width: 200px;
+            height: 15px;
+            background: #333333;
+            display: inline-block;
+            vertical-align: middle;
+            border-radius: 10px;" [style.marginLeft.px]="i == 4 ? 12 : 5">
+                <div style="height: 15px;
+                background: gold;
+                border-radius: 10px;" [style.width.px]="stat.percentage * 2"></div>
+            </div>
+
+            <div>
+                {{(stat.percentage)}}%
+            </div>
+        </div>
+    </div> -->
+</div>

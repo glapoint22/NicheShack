@@ -1,0 +1,32 @@
+.prompt {
+    width: 100%;
+    max-width: 320px;
+    background-color: $background-color-dark;
+    border: 1px solid $primary-color;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    .title-bar {
+        position: relative;
+        @include gradient($primary-color-map);
+        height: 40px;
+        line-height: 40px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-weight: bold;
+        padding-left: 10px;
+        user-select: none;
+        .close-button {
+            position: absolute;
+            top: 0;
+            right: 10px;
+            margin-top: -5px;
+            cursor: pointer;
+        }
+    }
+    .prompt-content {
+        padding: 10px;
+        overflow: auto;
+    }
+}

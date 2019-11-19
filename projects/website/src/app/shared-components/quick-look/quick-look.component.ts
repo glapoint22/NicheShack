@@ -3,7 +3,6 @@ import { Product } from '../../interfaces/product';
 import { DataService } from 'services/data.service';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { Media } from '../../interfaces/media';
 import { Router } from '@angular/router';
 import { ProductInfo } from '../../interfaces/product-info';
 

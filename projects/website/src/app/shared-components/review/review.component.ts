@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Review } from '../../classes/review';
 import { DataService } from 'services/data.service';
 
@@ -9,6 +9,7 @@ import { DataService } from 'services/data.service';
 })
 export class ReviewComponent {
   @Input() review: Review;
+  @Output() onReportReviewClick: EventEmitter<void> = new EventEmitter();
 
   constructor(private dataService: DataService) { }
 
@@ -24,7 +25,8 @@ export class ReviewComponent {
       });
   }
 
-  onReportReviewClick() {
+  reportReviewClick() {
+    this.onReportReviewClick.emit();
   }
 
 }
