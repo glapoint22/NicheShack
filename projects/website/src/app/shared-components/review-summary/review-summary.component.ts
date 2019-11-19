@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Product } from '../../interfaces/product';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'review-summary',
@@ -11,7 +12,7 @@ export class ReviewSummaryComponent implements OnInit {
   public reviewStats: Array<any> = [];
   private percentageTotal: number = 0;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -67,6 +68,10 @@ export class ReviewSummaryComponent implements OnInit {
     percentage = Math.round(percentage * 100);
     this.percentageTotal += percentage;
     return percentage;
+  }
+
+  onWriteReviewClick(productId: string) {
+    this.router.navigate(['write-review', productId]);
   }
 
 }

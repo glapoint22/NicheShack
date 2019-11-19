@@ -1,0 +1,13 @@
+@import '../../../scss/variables';
+
+.bar-base {
+    width: 200px;
+    height: 15px;
+    background: $border-gray-color;
+    border-radius: 10px;
+    .bar {
+        height: 15px;
+        background: $alt-color;
+        border-radius: 10px;
+    }
+}
