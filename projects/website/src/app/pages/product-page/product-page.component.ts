@@ -1,33 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DataService } from 'services/data.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Review } from '../../classes/review';
 import { concatMap, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { Title, Meta } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
+import { PageComponent } from '../page/page.component';
 
 @Component({
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.scss']
 })
-export class ProductPageComponent implements OnInit {
-  public product$: Observable<any>;
+export class ProductPageComponent extends PageComponent implements OnInit {
+  public productData$: Observable<any>;
   public reviews$: Observable<Array<Review>>;
 
-  constructor(private dataService: DataService, private route: ActivatedRoute) { }
+  constructor(
+    titleService: Title,
+    metaService: Meta,
+    @Inject(DOCUMENT) document: Document,
+    private dataService: DataService,
+    private route: ActivatedRoute,
+  ) { super(titleService, metaService, document) }
 
   ngOnInit() {
-    this.product$ = this.dataService
+    this.productData$ = this.dataService
       .get('api/Products/ProductDetail', [{ key: 'id', value: this.route.snapshot.params.id }])
       .pipe(
-        concatMap(product => {
+        concatMap(productData => {
           // If product exists
-          if (product) {
+          if (productData) {
+            // Set the page properties
+            this.title = productData.productInfo.product.title;
+            this.description = productData.productInfo.product.description;
+            this.image = '/images/' + productData.productInfo.product.shareImage;
+            super.ngOnInit();
+
+            // Get the review options
             return this.dataService
               .get('api/ProductReviews/ReviewOptions')
               .pipe(map(reviewOptions => ({
-                content: product.content,
-                pricePoints: product.pricePoints,
-                productInfo: product.productInfo,
+                content: productData.content,
+                pricePoints: productData.pricePoints,
+                productInfo: productData.productInfo,
                 reviewsPerPage: reviewOptions.reviewsPerPage,
                 sortOptions: reviewOptions.sortOptions
               })))

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Product } from '../../interfaces/product';
 import { Router } from '@angular/router';
 
@@ -7,15 +7,12 @@ import { Router } from '@angular/router';
   templateUrl: './review-summary.component.html',
   styleUrls: ['./review-summary.component.scss']
 })
-export class ReviewSummaryComponent implements OnInit {
+export class ReviewSummaryComponent {
   @Input() product: Product;
   public reviewStats: Array<any> = [];
   private percentageTotal: number = 0;
 
   constructor(private router: Router) { }
-
-  ngOnInit() {
-  }
 
   ngOnChanges(): void {
     if (this.product.id) {
@@ -73,5 +70,4 @@ export class ReviewSummaryComponent implements OnInit {
   onWriteReviewClick(productId: string) {
     this.router.navigate(['write-review', productId]);
   }
-
 }

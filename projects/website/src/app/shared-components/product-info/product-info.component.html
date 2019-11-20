@@ -1,6 +1,6 @@
 <div class="display-flex flex-wrap flex-nowrap-sm">
     <div class="display-flex flex-shrink-1 flex-shrink-0-sm">
-        
+
         <!-- Media group -->
         <div *ngIf="productInfo.media.length > 0" class="media-group">
             <div *ngFor="let media of productInfo.media" class="media-thumbnail">
@@ -38,8 +38,24 @@
                 </div>
             </div>
 
+            <button class="alt-button margin-top-2 margin-bottom-2"
+                (click)="onBuyClick(productInfo.product.hoplink)">Visit Product Page To Buy</button>
+
             <!-- Description -->
             <div class="margin-top-2">{{productInfo.product.description}}</div>
+
+            <!-- Share -->
+            <div class="display-flex margin-top-3">
+                <div class="margin-right-3 cursor-pointer" (click)="shareService.onFacebookClick(getProductUrl())">
+                    <img src="assets/Facebook.png" title="Share on Facebook">
+                </div>
+                <div class="margin-right-3 cursor-pointer" (click)="shareService.onTwitterClick(getProductUrl(), 'Check out what I found at NicheShack.com!')">
+                    <img src="assets/Twitter.png" title="Share on Twitter">
+                </div>
+                <div class="cursor-pointer" (click)="shareService.onPinterestClick(getProductUrl(), productInfo.product.shareImage, productInfo.product.description)">
+                    <img src="assets/Pinterest.png" title="Share on Pinterest">
+                </div>
+            </div>
         </div>
     </div>
 

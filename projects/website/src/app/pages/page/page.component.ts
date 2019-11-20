@@ -21,7 +21,7 @@ export class PageComponent implements OnInit {
 
   constructor(private titleService: Title,
     private metaService: Meta,
-    @Inject(DOCUMENT) private document: Document) { }
+    @Inject(DOCUMENT) public document: Document) { }
 
   ngOnInit() {
     // Title
@@ -54,6 +54,23 @@ export class PageComponent implements OnInit {
       this.metaService.addTag({ name: 'twitter:title', content: this.title });
       this.metaService.addTag({ name: 'twitter:description', content: this.description });
       this.metaService.addTag({ name: 'twitter:image', content: this.domain + this.image });
+
+      this.setFacebookSDK();
     }
+  }
+
+  setFacebookSDK() {
+    let script: HTMLScriptElement = this.document.createElement('script');
+    let code: string = "window.fbAsyncInit = function() { FB.init({ appId: '"
+      + this.facebookAppId + "', autoLogAppEvents : true, xfbml : true, version: 'v3.3'});};"
+
+    script.appendChild(this.document.createTextNode(code));
+    this.document.body.insertBefore(script, this.document.body.childNodes[0]);
+
+    script = this.document.createElement('script');
+    script.async = true;
+    script.defer = true;
+    script.src = 'https://connect.facebook.net/en_US/sdk.js';
+    this.document.body.insertBefore(script, this.document.body.childNodes[1]);
   }
 }

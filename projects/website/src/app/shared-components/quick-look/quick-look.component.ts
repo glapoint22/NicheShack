@@ -21,7 +21,11 @@ export class QuickLookComponent {
     this.isVisible = true;
 
     this.productInfo$ = this.dataService.get('api/Products/QuickLookProduct', [{ key: 'id', value: product.id }])
-      .pipe(tap(response => product.description = response.description), map((response) => ({
+      .pipe(tap(response => {
+        product.description = response.product.description;
+        product.hoplink = response.product.hoplink;
+        product.shareImage = response.product.shareImage;
+      }), map((response) => ({
         product: product,
         media: response.media
       })));

@@ -1,4 +1,4 @@
-<ng-container *ngIf="product$ | async as product">
+<ng-container *ngIf="productData$ | async as productData">
     <navbar></navbar>
 
     <div class="page-container">
@@ -6,10 +6,10 @@
             <div class="content padding-left-4 padding-right-4" style="max-width: 1200px;">
 
                 <!-- Product Info -->
-                <product-info [productInfo]="product.productInfo"></product-info>
+                <product-info [productInfo]="productData.productInfo"></product-info>
 
                 <!-- Review Summary -->
-                <review-summary [product]="product.productInfo.product"></review-summary>
+                <review-summary [product]="productData.productInfo.product"></review-summary>
 
                 <!-- Customer Reviews -->
                 <ng-container *ngFor="let review of reviews$ | async">
