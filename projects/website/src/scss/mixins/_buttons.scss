@@ -4,8 +4,4 @@
     &:hover:not(:disabled) {
         background: linear-gradient(lighten($backgrond-color1, 5%), lighten($background-color2, 5%));
     }
-    &:disabled {
-        background: linear-gradient(darken($backgrond-color1, 20%), darken($background-color2, 10%));
-        color: darken($font-color, 50%);
-    }
 }

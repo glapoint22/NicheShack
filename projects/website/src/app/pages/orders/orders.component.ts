@@ -36,7 +36,6 @@ export class OrdersComponent extends PageComponent implements OnInit {
   ngOnInit() {
     // Set the page properties
     this.title = 'Your Orders';
-    this.share = false;
     super.ngOnInit();
 
     this.route.queryParamMap.subscribe((queryParams: ParamMap) => {

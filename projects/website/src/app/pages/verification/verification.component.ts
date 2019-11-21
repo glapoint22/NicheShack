@@ -30,7 +30,6 @@ export class VerificationComponent extends ValidationPageComponent implements On
 
   ngOnInit() {
     this.title = 'Verification';
-    this.share = false;
     super.ngOnInit();
 
     // Get customer info

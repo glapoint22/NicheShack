@@ -88,6 +88,16 @@ select {
 
 select {
     word-wrap: normal;
+    border-radius: 4px;
+    border: 1px solid $border-gray-color;
+    background: $dark-gray-color;
+    color: #ffffff;
+    outline: none;
+    height: 24px;
+    cursor: pointer;
+    &:disabled {
+        color: $disabled-color;
+    }
 }
 
 button,

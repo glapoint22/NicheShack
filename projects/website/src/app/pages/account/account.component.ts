@@ -9,7 +9,6 @@ export class AccountComponent extends PageComponent implements OnInit {
 
   ngOnInit() {
     this.title = 'Your Account';
-    this.share = false;
     super.ngOnInit();
   }
 }

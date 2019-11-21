@@ -1,0 +1,64 @@
+<div #modal *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onShow)="setDefault()"
+    (onHide)="show = false">
+    <div class="prompt" (mousedown)="$event.stopPropagation()">
+        <div class="title-bar">
+            Report Item
+            <div class="close-button" (click)="show = false" title="Close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+        <div class="prompt-content">
+
+            <!-- Not Submitted -->
+            <ng-container *ngIf="!submitted; else isSubmitted">
+                <h4>Please tell us about the issue:</h4>
+
+                <!-- Where is issue -->
+                <select class="dark" [(ngModel)]="selectedWhereOption"
+                    (change)="selectedWhatOption = selectedWhereOption.options[0]">
+                    <option *ngFor="let whereOption of options" [ngValue]="whereOption">{{whereOption.name}}</option>
+                </select>
+
+
+                <!-- What is issue -->
+                <select class="dark" [(ngModel)]="selectedWhatOption"
+                    [disabled]="selectedWhereOption.name == 'Where is the issue?'">
+                    <option *ngFor="let whatOption of selectedWhereOption.options" [ngValue]="whatOption">
+                        {{whatOption.name}}
+                    </option>
+                </select>
+
+                <!-- Comments -->
+                <h4>Comments (optional):</h4>
+                <textarea [(ngModel)]="comments"></textarea>
+
+
+                <!-- Buttons -->
+                <div class="float-right">
+                    <button class="margin-right-2" (click)="show = false">Cancel</button>
+
+                    <button class="alt-button" (click)="onSubmit(); modal.focus()"
+                        [disabled]="selectedWhatOption.name === 'What is the issue?'">Submit</button>
+                </div>
+            </ng-container>
+
+
+            <ng-template #isSubmitted>
+                <h2 class="alt-color">Thank You!</h2>
+
+                <div class="margin-bottom-3">
+                    Your feedback helps us make Niche Shack shopping better for millions of customers.
+                </div>
+
+                <button class="alt-button float-right" (click)="show = false">Done</button>
+            </ng-template>
+
+
+
+
+
+
+        </div>
+    </div>
+</div>

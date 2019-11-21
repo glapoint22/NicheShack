@@ -35,7 +35,6 @@ export class ChangeEmailComponent extends ValidationPageComponent implements OnI
 
   ngOnInit() {
     this.title = 'Change Email';
-    this.share = false;
     super.ngOnInit();
 
     // Get customer info

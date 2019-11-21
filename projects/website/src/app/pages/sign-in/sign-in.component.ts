@@ -35,7 +35,6 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
 
   ngOnInit() {
     this.title = 'Sign In';
-    this.share = false;
     this.redirectUrl = this.accountService.redirectUrl;
     this.accountService.redirectUrl = '';
     this.account.isPersistent = true;

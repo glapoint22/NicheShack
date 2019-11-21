@@ -28,7 +28,6 @@ export class CreateAccountComponent extends ValidationPageComponent implements O
 
   ngOnInit() {
     this.title = 'Create Account';
-    this.share = false;
     super.ngOnInit();
   }
 

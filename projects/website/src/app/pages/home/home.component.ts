@@ -1,15 +1,15 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ProductGroup } from '../../interfaces/product-group';
-import { PageComponent } from '../page/page.component';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { DataService } from 'services/data.service';
+import { SharePageComponent } from '../share-page/share-page.component';
 
 @Component({
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent extends PageComponent implements OnInit {
+export class HomeComponent extends SharePageComponent implements OnInit {
   public productGroups: Array<ProductGroup>;
 
   constructor(titleService: Title,

@@ -31,7 +31,6 @@ export class ChangeNameComponent extends ValidationPageComponent implements OnIn
 
   ngOnInit() {
     this.title = 'Change Name';
-    this.share = false;
     super.ngOnInit();
 
     // Get customer info

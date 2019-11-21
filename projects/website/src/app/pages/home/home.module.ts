@@ -6,6 +6,7 @@ import { HomeComponent } from './home.component';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
 import { HomeComponentsModule } from './components/home-components.module';
 import { ProductGroupModule } from '../../shared-components/product-group/product-group.module';
+import { SharePageModule } from '../share-page/share-page.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ProductGroupModule } from '../../shared-components/product-group/produc
     HomeRoutingModule,
     HeaderFooterModule,
     HomeComponentsModule,
-    ProductGroupModule
+    ProductGroupModule,
+    SharePageModule
   ]
 })
 export class HomeModule { }

@@ -23,7 +23,6 @@ export class ForgotPasswordComponent extends ValidationPageComponent implements 
 
   ngOnInit() {
     this.title = 'Forgot Password';
-    this.share = false;
     super.ngOnInit();
   }
 

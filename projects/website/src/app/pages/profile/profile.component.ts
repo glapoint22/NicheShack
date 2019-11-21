@@ -27,7 +27,6 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
 
   ngOnInit() {
     this.title = 'Profile';
-    this.share = false;
     super.ngOnInit();
 
     // Flag if account has been updated

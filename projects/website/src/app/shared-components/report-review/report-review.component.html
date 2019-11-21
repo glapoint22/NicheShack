@@ -9,6 +9,7 @@
 
         <div class="prompt-content">
 
+            <!-- Content -->
             <ng-container *ngIf="!isSubmitted; else submitted">
                 <div class="margin-bottom-3">
                     If you find this review to be offensive or irrelevant to the item in question, please let us know by
@@ -19,7 +20,7 @@
                 <button class="float-right margin-right-3" (click)="show = false">Cancel</button>
             </ng-container>
 
-
+            <!-- Submitted -->
             <ng-template #submitted>
                 <div class="margin-bottom-3">
                     Thanks for your feedback.

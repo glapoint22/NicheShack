@@ -16,7 +16,7 @@
 
 
     <!-- Product -->
-    <div class="margin-left-0 margin-left-4-sm">
+    <div class="margin-left-0 margin-left-3-sm">
         <div>
             <!-- Title -->
             <div class="text-break font-size-6 font-bold white-color">{{productInfo.product.title}}</div>
@@ -45,18 +45,31 @@
             <div class="margin-top-2">{{productInfo.product.description}}</div>
 
             <!-- Share -->
-            <div class="display-flex margin-top-3">
+            <div class="display-flex margin-top-3 flex-wrap">
                 <div class="margin-right-3 cursor-pointer" (click)="shareService.onFacebookClick(getProductUrl())">
                     <img src="assets/Facebook.png" title="Share on Facebook">
                 </div>
                 <div class="margin-right-3 cursor-pointer" (click)="shareService.onTwitterClick(getProductUrl(), 'Check out what I found at NicheShack.com!')">
                     <img src="assets/Twitter.png" title="Share on Twitter">
                 </div>
-                <div class="cursor-pointer" (click)="shareService.onPinterestClick(getProductUrl(), productInfo.product.shareImage, productInfo.product.description)">
+                <div class="cursor-pointer margin-right-3 margin-bottom-2" (click)="shareService.onPinterestClick(getProductUrl(), productInfo.product.shareImage, productInfo.product.description)">
                     <img src="assets/Pinterest.png" title="Share on Pinterest">
                 </div>
+
+                <!-- Report item & Add to List -->
+                <div class="primary-color-light text-underline margin-left-auto">
+                    <div class="cursor-pointer font-size-2" (click)="reportItem.show = true">
+                        <i class="fas fa-flag margin-right-1"></i>
+                        <span>Report this item</span>
+                    </div>
+                </div>
             </div>
+
+            <!-- Add to list button -->
+            <button class="primary-button margin-top-2" (click)="addList.show = true">Add to List</button>
         </div>
     </div>
-
 </div>
+
+<report-item #reportItem></report-item>
+<add-to-list #addList [product]="productInfo.product"></add-to-list>

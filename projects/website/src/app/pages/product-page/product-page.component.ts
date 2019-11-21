@@ -6,13 +6,13 @@ import { concatMap, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-import { PageComponent } from '../page/page.component';
+import { SharePageComponent } from '../share-page/share-page.component';
 
 @Component({
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.scss']
 })
-export class ProductPageComponent extends PageComponent implements OnInit {
+export class ProductPageComponent extends SharePageComponent implements OnInit {
   public productData$: Observable<any>;
   public reviews$: Observable<Array<Review>>;
 
