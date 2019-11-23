@@ -8,13 +8,9 @@
                 <!-- Product Info -->
                 <product-info [productInfo]="productData.productInfo"></product-info>
 
-                <!-- Review Summary -->
-                <review-summary [product]="productData.productInfo.product"></review-summary>
-
-                <!-- Customer Reviews -->
-                <ng-container *ngFor="let review of reviews$ | async">
-                    <review [review]="review" (onReportReviewClick)="reportReview.show = true"></review>
-                </ng-container>
+                <!-- Reviews -->
+                <div class="page-section">Customer Reviews</div>
+                <reviews [product]="productData.productInfo.product"></reviews>
 
                 <navfooter></navfooter>
             </div>
@@ -23,5 +19,3 @@
         </div>
     </div>
 </ng-container>
-
-<report-review #reportReview></report-review>

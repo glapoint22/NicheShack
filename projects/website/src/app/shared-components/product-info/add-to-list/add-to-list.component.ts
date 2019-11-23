@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from '../../../interfaces/product';
 import { KeyValue } from '@angular/common';
 
@@ -9,6 +9,7 @@ import { KeyValue } from '@angular/common';
 })
 export class AddToListComponent implements OnInit {
   @Input() product: Product;
+  @Output() onCreateListClick: EventEmitter<void> = new EventEmitter();
   public show: boolean;
   public lists: Array<KeyValue<string, string>>;
   public selectedList: KeyValue<string, string>;
@@ -19,19 +20,19 @@ export class AddToListComponent implements OnInit {
   ngOnInit() {
     this.lists = [
       {
-        key: 'Favorites',
-        value: 'QOGTUMWTSG'
+        key: 'QOGTUMWTSG',
+        value: 'Favorites',
       },
       {
-        key: 'Shopping',
-        value: 'KEOFUJWJCE'
+        key: 'KEOFUJWJCE',
+        value: 'Shopping'
       }
     ]
 
     // Add this at the beginning of the list
     this.lists.unshift({
-      key: 'Select your list',
-      value: ''
+      key: '',
+      value: 'Select your list'
     });
 
     this.setDefault();

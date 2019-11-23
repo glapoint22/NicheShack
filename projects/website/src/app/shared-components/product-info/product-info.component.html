@@ -19,7 +19,7 @@
     <div class="margin-left-0 margin-left-3-sm">
         <div>
             <!-- Title -->
-            <div class="text-break font-size-6 font-bold white-color">{{productInfo.product.title}}</div>
+            <div class="text-break font-size-5 font-bold white-color">{{productInfo.product.title}}</div>
 
             <!-- Rating -->
             <stars class="margin-right-1" [rating]="productInfo.product.rating"></stars>
@@ -66,10 +66,11 @@
             </div>
 
             <!-- Add to list button -->
-            <button class="primary-button margin-top-2" (click)="addList.show = true">Add to List</button>
+            <button class="primary-button margin-top-2" (click)="addToList.show = true">Add to List</button>
         </div>
     </div>
 </div>
 
 <report-item #reportItem></report-item>
-<add-to-list #addList [product]="productInfo.product"></add-to-list>
+<add-to-list #addToList [product]="productInfo.product" (onCreateListClick)="createList.show = true; addToList.show = false"></add-to-list>
+<create-list #createList (onCreateListHide)="addToList.show = true"></create-list>

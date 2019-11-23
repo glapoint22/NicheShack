@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'reviews',
-    loadChildren: () => import('../../pages/reviews/reviews.module').then(m => m.ReviewsModule)
+    loadChildren: () => import('../../pages/reviews-page/reviews-page.module').then(m => m.ReviewsPageModule)
   }
 ];
 

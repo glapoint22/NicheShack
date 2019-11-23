@@ -15,14 +15,14 @@
                 <h4>Please tell us about the issue:</h4>
 
                 <!-- Where is issue -->
-                <select class="dark" [(ngModel)]="selectedWhereOption"
+                <select [(ngModel)]="selectedWhereOption"
                     (change)="selectedWhatOption = selectedWhereOption.options[0]">
                     <option *ngFor="let whereOption of options" [ngValue]="whereOption">{{whereOption.name}}</option>
                 </select>
 
 
                 <!-- What is issue -->
-                <select class="dark" [(ngModel)]="selectedWhatOption"
+                <select [(ngModel)]="selectedWhatOption"
                     [disabled]="selectedWhereOption.name == 'Where is the issue?'">
                     <option *ngFor="let whatOption of selectedWhereOption.options" [ngValue]="whatOption">
                         {{whatOption.name}}

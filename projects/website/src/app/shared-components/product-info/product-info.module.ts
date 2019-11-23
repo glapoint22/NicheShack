@@ -6,6 +6,7 @@ import { ReportItemComponent } from './report-item/report-item.component';
 import { ShowHideModule } from '../../directives/show-hide/show-hide.module';
 import { FormsModule } from '@angular/forms';
 import { AddToListComponent } from './add-to-list/add-to-list.component';
+import { CreateListModule } from '../create-list/create-list.module';
 
 
 
@@ -19,7 +20,8 @@ import { AddToListComponent } from './add-to-list/add-to-list.component';
     CommonModule,
     StarsModule,
     ShowHideModule,
-    FormsModule
+    FormsModule,
+    CreateListModule
   ],
   exports: [
     ProductInfoComponent,

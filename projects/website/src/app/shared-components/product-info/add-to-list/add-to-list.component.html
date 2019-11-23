@@ -16,16 +16,16 @@
 
             <ng-container *ngIf="!submitted; else isSubmitted">
                 <select [(ngModel)]="selectedList" class="width-100">
-                    <option *ngFor="let list of lists" [ngValue]="list">{{list.key}}</option>
+                    <option *ngFor="let list of lists" [ngValue]="list">{{list.value}}</option>
                 </select>
 
                 <div class="margin-top-3">
-                    <button class="primary-button">Create a List</button>
+                    <button class="primary-button" (click)="onCreateListClick.emit()">Create a List</button>
                     <div class="float-right">
                         <button class="margin-right-2" (click)="show = false">Cancel</button>
 
                         <button class="alt-button" (click)="onSubmit(); modal.focus()"
-                            [disabled]="selectedList.key === 'Select your list'">Submit</button>
+                            [disabled]="selectedList.value === 'Select your list'">Submit</button>
                     </div>
                 </div>
             </ng-container>
@@ -33,7 +33,7 @@
 
             <ng-template #isSubmitted>
                 <h4 class="margin-bottom-3 text-center alt-color">
-                    This item was added to {{selectedList.key}}
+                    This item was added to {{selectedList.value}}.
                 </h4>
 
                 <div class="float-right">

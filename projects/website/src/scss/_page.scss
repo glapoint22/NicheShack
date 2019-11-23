@@ -23,6 +23,13 @@
     }
 }
 
+.page-section {
+    font-size: 22px;
+    color: $alt-color;
+    text-align: center;
+    margin: 2rem;
+}
+
 
 // Media queries for footer padding
 @each $min-width, $padding in (map-get($breakpoints, md): 166px, map-get($breakpoints, xl): 136px) {

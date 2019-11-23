@@ -1,0 +1,32 @@
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onShow)="setDefault()"
+    (onHide)="hide()">
+    <div class="prompt" (mousedown)="$event.stopPropagation()">
+        <div class="title-bar">
+            Create a List
+            <div class="close-button" (click)="hide()" title="Close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+        <div class="prompt-content">
+
+            <h4>List Name:</h4>
+            <input #listName="ngModel" name="listName" required [(ngModel)]="name">
+
+
+            <h4>Brief Description (optional):</h4>
+            <textarea [(ngModel)]="description"></textarea>
+
+            <!-- Buttons -->
+            <div class="float-right">
+                <button class="margin-right-2" (click)="hide()">Cancel</button>
+
+                <button class="alt-button" (click)="onSubmit()"
+                    [disabled]="!listName.valid">Submit</button>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

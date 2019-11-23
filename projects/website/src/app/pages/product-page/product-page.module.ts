@@ -5,10 +5,7 @@ import { ProductPageRoutingModule } from './product-page-routing.module';
 import { ProductPageComponent } from './product-page.component';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
 import { ProductInfoModule } from '../../shared-components/product-info/product-info.module';
-import { ReviewModule } from '../../shared-components/review/review.module';
-import { ReportReviewModule } from '../../shared-components/report-review/report-review.module';
-import { ReviewSummaryModule } from '../../shared-components/review-summary/review-summary.module';
-
+import { ReviewsModule } from '../../shared-components/reviews/reviews.module';
 
 @NgModule({
   declarations: [ProductPageComponent],
@@ -17,9 +14,7 @@ import { ReviewSummaryModule } from '../../shared-components/review-summary/revi
     ProductPageRoutingModule,
     HeaderFooterModule,
     ProductInfoModule,
-    ReviewModule,
-    ReportReviewModule,
-    ReviewSummaryModule
+    ReviewsModule
   ]
 })
 export class ProductPageModule { }
