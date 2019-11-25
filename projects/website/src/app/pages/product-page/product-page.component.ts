@@ -29,4 +29,10 @@ export class ProductPageComponent extends SharePageComponent implements OnInit {
         if (!productData) this.dataService.pageNotFound = true;
       }));
   }
+
+  hasIndex(priceIndices, index) {
+    return priceIndices.some(x => x == index);
+  }
+
+  
 }

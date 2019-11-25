@@ -8,6 +8,41 @@
                 <!-- Product Info -->
                 <product-info [productInfo]="productData.productInfo"></product-info>
 
+
+                <!-- Product Conent -->
+                <ng-container *ngIf="productData.content.length > 1">
+                    <!-- Heading -->
+                    <h3 class="margin-top-5 white-color"
+                        [ngClass]="{'text-center margin-left-2': productData.pricePoints.length > 1}">
+                        {{productData.pricePoints.length > 1 ? 'Payment options' : 'Included with your purchase'}}
+                    </h3>
+
+
+                    <!-- Content -->
+                    <div [ngClass]="{'display-flex justify-content-center flex-wrap': productData.pricePoints.length > 1}">
+                        
+                        <!-- Price Points -->
+                        <div *ngFor="let pricePoint of productData.pricePoints; let i = index" [ngClass]="{'margin-bottom-4 margin-right-2 margin-left-2 border border-gray': productData.pricePoints.length > 1}">
+                            <div *ngIf="productData.pricePoints.length > 1" class="alt-color font-size-3 font-bold border-bottom border-gray text-center padding-2 background-color-dark-gray">
+                                {{pricePoint}}
+                            </div>
+
+                            <!-- Content Item -->
+                            <div [ngClass]="{'padding-2': productData.pricePoints.length > 1}">
+                                <ng-container *ngFor="let content of productData.content">
+                                    <div *ngIf="hasIndex(content.priceIndices, i)">
+                                        <img [src]="'images/' + content.type.image" [title]="content.type.name">
+                                        <span class="margin-left-1" [title]="content.type.name">
+                                            {{content.title}}
+                                        </span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+
                 <!-- Reviews -->
                 <div class="page-section">Customer Reviews</div>
                 <reviews [product]="productData.productInfo.product"></reviews>
