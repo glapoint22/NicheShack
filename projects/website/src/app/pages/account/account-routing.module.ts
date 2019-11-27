@@ -15,6 +15,14 @@ const routes: Routes = [
   {
     path: 'orders',
     loadChildren: () => import('../../pages/orders/orders.module').then(m => m.OrdersModule)
+  },
+  {
+    path: 'lists',
+    loadChildren: () => import('../../pages/lists/lists.module').then(m => m.ListsModule)
+  },
+  {
+    path: 'email-subscriptions',
+    loadChildren: () => import('../../pages/email-subscriptions/email-subscriptions.module').then(m => m.EmailSubscriptionsModule)
   }
 ];
 

@@ -26,7 +26,13 @@ export class ProductPageComponent extends SharePageComponent implements OnInit {
     this.productData$ = this.dataService
       .get('api/Products/ProductDetail', [{ key: 'id', value: this.route.snapshot.params.id }])
       .pipe(tap((productData) => {
-        if (!productData) this.dataService.pageNotFound = true;
+        if (!productData) {
+          this.dataService.pageNotFound = true;
+        } else {
+          this.title = productData.productInfo.product.title;
+          this.description = productData.productInfo.product.description;
+          super.ngOnInit();
+        }
       }));
   }
 
@@ -34,5 +40,5 @@ export class ProductPageComponent extends SharePageComponent implements OnInit {
     return priceIndices.some(x => x == index);
   }
 
-  
+
 }

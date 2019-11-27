@@ -8,7 +8,7 @@
     padding-top: 79px;
 
     // Padding for footer
-    padding-bottom: 279px;
+    padding-bottom: 309px;
 }
 
 
@@ -16,6 +16,8 @@
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    padding-left: map-get($spacers, 4);
+    padding-right: map-get($spacers, 4);
 
     h1 {
         color: $alt-color;
@@ -32,7 +34,7 @@
 
 
 // Media queries for footer padding
-@each $min-width, $padding in (map-get($breakpoints, md): 166px, map-get($breakpoints, xl): 136px) {
+@each $min-width, $padding in (map-get($breakpoints, md): 196px, map-get($breakpoints, xl): 166px) {
     @media (min-width: $min-width) {
         .content-container {
             padding-bottom: $padding;

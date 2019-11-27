@@ -9,7 +9,7 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public loading: boolean;
+  // public loading: boolean;
   public isBrowser: boolean;
 
   constructor(public dataService: DataService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
@@ -27,7 +27,7 @@ export class AppComponent {
     });
   }
 
-  ngDoCheck() {
-    this.loading = this.dataService.loading;
-  }
+  // ngDoCheck() {
+  //   this.loading = this.dataService.loading;
+  // }
 }

@@ -1,1 +1,120 @@
-<p>lists works!</p>
+<ng-container *ngIf="listData$ | async as listData">
+    <navbar></navbar>
+
+    <div class="page-container">
+        <div class="content-container">
+
+            <!-- Content -->
+            <div class="content" style="max-width: 1170px;">
+
+
+                <div class="display-flex">
+                    <!-- Lists Container -->
+                    <div class="width-100" style="max-width: 210px;">
+                        <h2 class="alt-color">Your Lists</h2>
+
+                        <!-- Each list -->
+                        <div class="margin-bottom-4 cursor-pointer padding-2" *ngFor="let list of listData.lists"
+                            [ngClass]="{'primary-background-color-darker cursor-default': list.selected}"
+                            (click)="onListClick(list)">
+                            <h3>{{list.name}}</h3>
+
+                            <div *ngIf="list.owner" class="alt-color">
+                                Owner: {{list.owner}}
+                            </div>
+                            <div>
+                                {{list.description}}
+                            </div>
+                            <div class="primary-color-light">
+                                {{list.totalItems + ' item' + (list.totalItems == 1 ? '' : 's')}}
+                            </div>
+                        </div>
+
+                        <button class="primary-button">Create a List</button>
+                    </div>
+
+                    <!-- Selected List -->
+                    <div class="margin-left-4">
+                        <h1>{{selectedList.name}}</h1>
+
+                        <!-- Products -->
+                        <ng-container *ngIf="listData.products.length > 0; else noProducts">
+                            <ng-container *ngFor="let product of listData.products; let i = index">
+
+
+                                <div *ngIf="product.deleted || product.movedToList; else displayProduct">
+                                    <i class="fas fa-check"></i>
+                                    <span *ngIf="product.deleted">{{product.title}} has been deleted. </span>
+                                    <span *ngIf="product.movedToList">
+                                        {{product.title}} has been moved to
+                                        <span
+                                            (click)="onListClick(product.movedToList)">{{product.movedToList.name}}</span><span>.</span>
+                                    </span>
+                                    <span (click)="undo(product.deleted ? 'deleted' : 'movedTo', product)">Undo</span>
+                                </div>
+
+
+                                <ng-template #displayProduct>
+
+                                    <div class="display-flex flex-wrap margin-bottom-3">
+
+
+                                        <!-- Product Image -->
+                                        <div class="display-flex align-items-center justify-content-center margin-2 flex-shrink-0 cursor-pointer"
+                                            style="width: 150px; height: 150px">
+                                            <img [src]="'/images/' + product.image"
+                                                style="max-width: 150px; max-height: 150px;">
+                                        </div>
+
+                                        <!-- Product Info -->
+                                        <div class="margin-top-2 margin-right-2 text-break">
+                                            <h3 class="text-hover-underline cursor-pointer">{{product.title}}</h3>
+
+
+                                            <!-- Price -->
+                                            <div class="alt-color">
+                                                <div *ngIf="product.maxPrice === 0">
+                                                    {{product.minPrice | currency:'USD'}}
+                                                </div>
+                                                <div *ngIf="product.maxPrice > 0">
+                                                    {{product.minPrice | currency:'USD'}} -
+                                                    {{product.maxPrice | currency:'USD'}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+
+
+                                </ng-template>
+
+
+
+                            </ng-container>
+
+
+
+
+
+                        </ng-container>
+
+
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
+            </div>
+
+            <navfooter></navfooter>
+        </div>
+    </div>
+</ng-container>

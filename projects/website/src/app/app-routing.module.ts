@@ -34,12 +34,6 @@ const routes: Routes = [
     canActivate: [AccountGuard]
   },
   {
-    path: 'lists',
-    loadChildren: () => import('./pages/lists/lists.module').then(m => m.ListsModule),
-    canLoad: [AccountGuard],
-    canActivate: [AccountGuard]
-  },
-  {
     path: 'shared-list/:sharedListId',
     loadChildren: () => import('./pages/shared-list/shared-list.module').then(m => m.SharedListModule)
   },
@@ -80,16 +74,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule)
   },
   {
-    path: 'email-subscriptions',
-    loadChildren: () => import('./pages/email-subscriptions/email-subscriptions.module').then(m => m.EmailSubscriptionsModule)
-  },
-  {
     path: 'write-review/:id',
     loadChildren: () => import('./pages/write-review/write-review.module').then(m => m.WriteReviewModule),
     canLoad: [AccountGuard],
     canActivate: [AccountGuard]
   },
-
   {
     path: ':urlTitle/:id',
     loadChildren: () => import('./pages/product-page/product-page.module').then(m => m.ProductPageModule)

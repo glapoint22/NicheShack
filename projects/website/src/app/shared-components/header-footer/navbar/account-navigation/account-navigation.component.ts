@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'services/account.service';
 import { Subscription } from 'rxjs';
@@ -40,14 +40,14 @@ export class AccountNavigationComponent implements OnInit, OnDestroy {
         },
         {
           caption: 'Your Lists',
-          url: 'lists',
+          url: 'account/lists',
           icon: 'fa-clipboard-list',
           show: true,
           click: () => { }
         },
         {
           caption: 'Your Email Subscriptions',
-          url: 'email-subscriptions',
+          url: 'account/email-subscriptions',
           icon: 'fa-envelope',
           show: true,
           click: () => { }

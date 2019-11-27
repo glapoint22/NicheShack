@@ -1,7 +1,7 @@
 @import '../../../scss/variables';
 
 $breakpoint-keys: map-keys($breakpoints);
-$max-widths: (155px, 235px, 395px, 515px, 615px);
+$max-widths: (140px, 235px, 395px, 515px, 615px);
 
 // Media queries for name and email fields - max width
 @for $i from 1 through length($max-widths) {
