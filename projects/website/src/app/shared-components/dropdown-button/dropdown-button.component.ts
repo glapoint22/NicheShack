@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { KeyValue } from '@angular/common';
 
 @Component({
@@ -9,20 +9,25 @@ import { KeyValue } from '@angular/common';
 export class DropdownButtonComponent implements OnChanges {
   @Input() items: Array<KeyValue<string, string>>;
   @Input() defaultIndex: number = 0;
+  @Input() caption: string;
   @Output() itemClick: EventEmitter<KeyValue<string, string>> = new EventEmitter();
-  public caption: string;
+
   public show: boolean;
   private isMouseDown: boolean;
+  private foo: boolean;
+  
 
-  ngOnChanges(): void {
-    if(this.items.length > 0) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.caption)this.foo = true;
+
+    if (!this.foo && this.items.length > 0) {
       this.caption = this.items[this.defaultIndex].value;
     }
   }
 
   onItemClick(item: KeyValue<string, string>) {
     this.itemClick.emit(item);
-    this.caption = item.value;
+    if(!this.foo) this.caption = item.value;
     this.show = false;
   }
 

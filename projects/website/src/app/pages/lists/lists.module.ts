@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ListsRoutingModule } from './lists-routing.module';
 import { ListsComponent } from './lists.component';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
+import { StarsModule } from '../../shared-components/stars/stars.module';
+import { DropdownButtonModule } from '../../shared-components/dropdown-button/dropdown-button.module';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { HeaderFooterModule } from '../../shared-components/header-footer/header
   imports: [
     CommonModule,
     ListsRoutingModule,
-    HeaderFooterModule
+    HeaderFooterModule,
+    DropdownButtonModule,
+    StarsModule
   ]
 })
 export class ListsModule { }

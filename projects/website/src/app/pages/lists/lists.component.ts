@@ -14,6 +14,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class ListsComponent extends SharePageComponent implements OnInit {
   public listData$: Observable<any>;
   public selectedList: any = {};
+  public otherLists;
 
   constructor(
     titleService: Title,
@@ -45,11 +46,18 @@ export class ListsComponent extends SharePageComponent implements OnInit {
         .pipe(tap(listData => {
           if (!listData) {
             this.dataService.pageNotFound = true;
-          }else {
+          } else {
             this.selectedList = listData.lists.find(x => x.selected);
+
+            this.otherLists = listData.lists.filter(x => !x.selected).map(x => ({
+              key: x.id,
+              value: x.name + (x.owner != 'You' ? ' (' + x.owner +  ')' : '')
+            }));
+
+
           }
 
-          
+
         }))
 
     });
@@ -62,6 +70,28 @@ export class ListsComponent extends SharePageComponent implements OnInit {
     if (!list.selected) {
       this.router.navigate(['account/lists'], { queryParams: { 'listId': list.id } });
     }
+  }
+
+  // getMoveToList(lists) {
+  //   return lists.filter(x => !x.selected).map(x => ({
+  //     key: x.id,
+  //     value: x.name + (x.owner != 'You' ? ' (' + x.owner +  ')' : '')
+  //   }));
+  // }
+
+  onBuyClick(hoplink: string) {
+    window.location.href = hoplink;
+  }
+
+
+  onDelete(product: any) {
+    product.deleted = true;
+  }
+
+  onMoveProduct(list: any, product: any) {
+    product.movedToList = list.value;
+
+    // Update database!
   }
 
 }

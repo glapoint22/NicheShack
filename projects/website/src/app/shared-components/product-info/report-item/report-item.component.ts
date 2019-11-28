@@ -163,7 +163,7 @@ export class ReportItemComponent implements OnInit {
             value: 'inactive'
           },
           {
-            name: 'Publisher\'s site is down' ,
+            name: 'Product site is no longer in service or has been disabled' ,
             value: 'site-down'
           }
         ]
