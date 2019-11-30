@@ -7,16 +7,16 @@ import { DataService } from 'services/data.service';
   styleUrls: ['./create-list.component.scss']
 })
 export class CreateListComponent {
-  @Output() onCreateListHide: EventEmitter<void> = new EventEmitter();
+  @Output() onCreateListHide: EventEmitter<string> = new EventEmitter();
   public show: boolean;
   public name: string;
   public description: string;
 
   constructor(private dataService: DataService) { }
-  
-  hide() {
+
+  hide(listId?: string) {
     this.show = false;
-    this.onCreateListHide.emit();
+    this.onCreateListHide.emit(listId);
   }
 
   setDefault() {
@@ -29,8 +29,8 @@ export class CreateListComponent {
       name: this.name,
       description: this.description
     })
-      .subscribe(() => {
-        this.hide();
+      .subscribe((response: any) => {
+        this.hide(response.listId);
       })
 
   }
