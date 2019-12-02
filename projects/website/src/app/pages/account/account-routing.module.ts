@@ -21,6 +21,10 @@ const routes: Routes = [
     loadChildren: () => import('../../pages/lists/lists.module').then(m => m.ListsModule)
   },
   {
+    path: 'lists/:listId',
+    loadChildren: () => import('../../pages/lists/lists.module').then(m => m.ListsModule)
+  },
+  {
     path: 'email-subscriptions',
     loadChildren: () => import('../../pages/email-subscriptions/email-subscriptions.module').then(m => m.EmailSubscriptionsModule)
   }

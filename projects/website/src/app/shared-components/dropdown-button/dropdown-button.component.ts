@@ -14,20 +14,20 @@ export class DropdownButtonComponent implements OnChanges {
 
   public show: boolean;
   private isMouseDown: boolean;
-  private foo: boolean;
-  
+  private preventCaptionChange: boolean;
+
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.caption)this.foo = true;
+    if (changes.caption) this.preventCaptionChange = true;
 
-    if (!this.foo && this.items.length > 0) {
+    if (!this.preventCaptionChange && this.items.length > 0) {
       this.caption = this.items[this.defaultIndex].value;
     }
   }
 
   onItemClick(item: KeyValue<string, string>) {
     this.itemClick.emit(item);
-    if(!this.foo) this.caption = item.value;
+    if (!this.preventCaptionChange) this.caption = item.value;
     this.show = false;
   }
 

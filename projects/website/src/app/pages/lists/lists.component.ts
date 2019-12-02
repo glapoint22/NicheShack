@@ -3,22 +3,23 @@ import { SharePageComponent } from '../share-page/share-page.component';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT, KeyValue } from '@angular/common';
 import { DataService } from 'services/data.service';
-import { Observable, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable, of, merge } from 'rxjs';
+import { tap, concatMap, map } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './lists.component.html',
   styleUrls: ['./lists.component.scss']
 })
 export class ListsComponent extends SharePageComponent implements OnInit {
-  public sortOptions$: Observable<any>;
-  public selectedList: any = {};
-  public otherLists;
-  public listData: any = {};
   public sortOptions: Array<KeyValue<string, string>>;
   public selectedSortOption: KeyValue<string, string>;
+  public moveToLists: Array<any>;
 
+  public lists$: Observable<any>;
+  public listData$: Observable<any>;
+  public products$: Observable<any>;
+  public currentList: any;
 
 
   constructor(
@@ -27,88 +28,108 @@ export class ListsComponent extends SharePageComponent implements OnInit {
     @Inject(DOCUMENT) document: Document,
     private dataService: DataService,
     private router: Router,
-    private route: ActivatedRoute
+    public route: ActivatedRoute
   ) { super(titleService, metaService, document) }
 
   ngOnInit() {
-    let parameters: Array<any> = [];
+    let listExist$: Observable<boolean>;
+    let listId = this.route.snapshot.paramMap.get('listId');
 
-    // Set the page properties
-    if (this.title == undefined) {
-      this.title = 'Your Lists';
-    }
-    super.ngOnInit();
-
-    if (this.route.snapshot.queryParams.listId) {
-      parameters = [{ key: 'listId', value: this.route.snapshot.queryParams.listId }];
+    // If there is a list id, we need to find out if it is legitimate
+    if (listId) {
+      listExist$ = this.dataService.get('api/lists/ListExists', [{ key: 'listId', value: listId }]);
+    } else {
+      listExist$ = of(true);
     }
 
-    this.sortOptions$ = this.dataService
-      .get('api/Lists/SortOptions', parameters)
-      .pipe(tap(sortOptions => {
-        if (!sortOptions) {
+    this.lists$ = listExist$
+      .pipe(concatMap((exists) => {
+        // If the id does not exists, flag page not found
+        if (!exists) {
           this.dataService.pageNotFound = true;
-        } else {
-          this.sortOptions = sortOptions.map(x => ({
-            key: x.Key,
-            value: x.Value
-          }));
-
-          this.setSelectedSortOption();
-
+          return of();
         }
+
+        // retrieve all of this customer's list
+        return this.dataService.get('api/lists')
+          .pipe(
+            tap(response => {
+              if (response.lists.length > 0) {
+                // If there is a list id, assign that as the current list. Else, assign the first list as the current list
+                this.currentList = this.route.snapshot.paramMap.get('listId') ? response.lists.find(x => x.id == this.route.snapshot.paramMap.get('listId')) : response.lists[0];
+                this.currentList.selected = true;
+
+                // Set the array of lists to move products to
+                this.setMoveToLists(response.lists);
+
+                // This will remap the sort options to lower case
+                this.sortOptions = response.sortOptions.map(x => ({
+                  key: x.Key,
+                  value: x.Value
+                }));
+              }
+            }),
+            map(x => x.lists));
       }));
 
-    this.route.queryParamMap.subscribe((queryParams: ParamMap) => {
-      parameters = [];
 
-      //Set the parameters array from the query params
-      for (let i = 0; i < queryParams.keys.length; i++) {
-        parameters.push({ key: queryParams.keys[i], value: queryParams.get(queryParams.keys[i]) });
-      }
-
+    // Fetch the data for the current list
+    this.listData$ = this.route.paramMap.pipe(concatMap(() =>
       this.dataService
-        .get('api/Lists', parameters)
-        .subscribe(listData => {
-          if (!listData) {
-            this.dataService.pageNotFound = true;
-          } else {
-            if(listData.length == 0) return;
+        .get('api/Lists/ListData', [{ key: 'listId', value: this.currentList.id }])
+    ));
 
-            if (this.listData.lists) this.setSelectedSortOption();
+    // Get products if query params have changed
+    let queryParamMap$ = this.route.queryParamMap
+      .pipe(concatMap(() => {
+        if (this.route.snapshot.queryParamMap.get('sort')) return this.getProducts();
+        return of();
+      }));
 
+    // Get products if params have changed
+    let paramMap$ = this.route.paramMap
+      .pipe(concatMap(() => {
+        if (!this.route.snapshot.queryParamMap.get('sort')) return this.getProducts();
+        return of();
+      }));
 
-            this.listData = listData;
-
-
-            this.selectedList = listData.lists.find(x => x.selected);
-
-            this.otherLists = listData.lists.filter(x => !x.selected).map(x => ({
-              key: x.id,
-              value: x.name + (x.owner != 'You' ? ' (' + x.owner + ')' : '')
-            }));
-
-
-          }
-
-
-        })
-
-    });
-
-
+      // Merge the two observables into one to retrieve the products
+    this.products$ = merge(queryParamMap$, paramMap$)
+      .pipe(tap(() => {
+        // Set the selected sort option
+        let index = Math.max(0, this.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
+        this.selectedSortOption = this.sortOptions[index];
+      }))
   }
 
 
-  setSelectedSortOption() {
-    let index = Math.max(0, this.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
-    this.selectedSortOption = this.sortOptions[index];
+
+  setMoveToLists(lists: any) {
+    this.moveToLists = lists.filter(x => x != this.currentList).map(x => ({
+      key: x.id,
+      value: x.name + (x.owner != 'You' ? ' (' + x.owner + ')' : '')
+    }));
   }
 
 
-  onListClick(list) {
+
+
+  getProducts(): Observable<any> {
+    return this.dataService
+      .get('api/Lists/Products', [
+        { key: 'listId', value: this.currentList.id },
+        { key: 'sort', value: this.route.snapshot.queryParamMap.get('sort') }
+      ]);
+  }
+
+
+  onListClick(list: any, lists: Array<any>) {
     if (!list.selected) {
-      this.router.navigate(['account/lists'], { queryParams: { 'listId': list.id } });
+      this.currentList.selected = false;
+      this.currentList = list;
+      this.currentList.selected = true;
+      this.setMoveToLists(lists);
+      this.router.navigate(['account/lists', list.id]);
     }
   }
 
@@ -147,9 +168,8 @@ export class ListsComponent extends SharePageComponent implements OnInit {
   }
 
   onCreateListHide(listId: string) {
-    if(listId) {
-      this.router.navigate(['account', 'lists'], {queryParams: { listId: listId }});
-    }
+    if (listId) location.href = 'account/lists/' + listId;
+
   }
 
 }

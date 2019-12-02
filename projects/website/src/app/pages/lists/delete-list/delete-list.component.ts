@@ -9,19 +9,20 @@ import { Router } from '@angular/router';
 })
 export class DeleteListComponent {
   @Input() listId: string;
-  @Input() lists: Array<any>;
+  // @Input() lists: Array<any>;
   public show: boolean;
 
-  constructor(private dataService: DataService, private router: Router) { }
+  constructor(private dataService: DataService) { }
 
   onDelete() {
     this.dataService.delete('api/Lists', {
       listId: this.listId
     })
       .subscribe(() => {
-        this.router.navigate(['account', 'lists']);
-        let index = this.lists.findIndex(x => x.listId == this.listId);
-        this.lists.splice(index, 1);
+        location.href = 'account/lists';
+        // this.router.navigate(['account', 'lists']);
+        // let index = this.lists.findIndex(x => x.listId == this.listId);
+        // this.lists.splice(index, 1);
         this.show = false;
       });
   }

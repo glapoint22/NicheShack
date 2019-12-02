@@ -26,7 +26,10 @@ export class ShowDirective {
         window.setTimeout(() => {
           // Add the classes to the class list
           this.toggleClasses();
-          this.el.nativeElement.nextSibling.focus();
+          if (this.el.nativeElement.nextSibling.focus) {
+            this.el.nativeElement.nextSibling.focus();
+          }
+
         }, 20);
 
       } else {
@@ -39,7 +42,7 @@ export class ShowDirective {
       // Remove the classes from the class list
       this.toggleClasses();
 
-     this.timer = window.setTimeout(() => {
+      this.timer = window.setTimeout(() => {
         this.viewContainer.clear();
       }, 200);
     }
