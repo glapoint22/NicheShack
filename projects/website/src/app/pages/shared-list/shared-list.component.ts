@@ -5,66 +5,52 @@ import { DOCUMENT, KeyValue } from '@angular/common';
 import { DataService } from 'services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PageComponent } from '../page/page.component';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { tap, concatMap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './shared-list.component.html',
   styleUrls: ['./shared-list.component.scss']
 })
-export class SharedListComponent extends PageComponent implements OnInit {
-  public sortOptions$: Observable<any>;
-  public sortOptions: Array<KeyValue<string, string>>;
-  public selectedSortOption: KeyValue<string, string>;
+export class SharedListComponent extends ListsComponent implements OnInit {
+  public listOwner$: Observable<string>;
+  public products$: Observable<any>;
 
   constructor(
     titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
-    private dataService: DataService,
-    private route: ActivatedRoute
+    dataService: DataService,
+    router: Router,
+    route: ActivatedRoute
   ) {
-    super(titleService, metaService, document);
+    super(titleService, metaService, document, dataService, router, route);
   }
 
   ngOnInit() {
+    this.selectedList = {id: this.route.snapshot.paramMap.get('listId')}
     super.ngOnInit();
 
-    this.sortOptions$ = this.dataService
-      .get('api/Lists/SortOptions', [{ key: 'listId', value: this.route.snapshot.params.listId }])
-      .pipe(tap(sortOptions => {
-        if (!sortOptions) {
+
+
+
+
+  }
+
+
+  init() {
+    this.listOwner$ = this.dataService
+      .get('api/lists/ListOwner', [{ key: 'listId', value: this.route.snapshot.paramMap.get('listId') }], 'text')
+      .pipe(tap((listOwner: string) => {
+        if (!listOwner) {
           this.dataService.pageNotFound = true;
-        } else {
-          this.sortOptions = sortOptions.map(x => ({
-            key: x.Key,
-            value: x.Value
-          }));
-
-          this.setSelectedSortOption();
-
+        }else {
+          this.title = listOwner + '\'s List';
+          PageComponent.prototype.ngOnInit.call(this);
         }
       }));
-
   }
 
-  setSelectedSortOption() {
-    let index = Math.max(0, this.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
-    this.selectedSortOption = this.sortOptions[index];
-  }
 
-  // getListData(parameters) {
-  //   this.dataService
-  //     .get('api/Lists/Shared', parameters)
-  //     .subscribe(listData => {
-  //       if (!listData) {
-  //         this.dataService.pageNotFound = true;
-  //       } else {
-  //         if (listData.length == 0) return;
-  //         if(this.listData.products) this.setSelectedSortOption();
-  //         this.listData = listData;
-  //       }
-  //     })
-  // }
 
 }

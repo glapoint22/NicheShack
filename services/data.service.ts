@@ -13,14 +13,14 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  get(url: string, parameters?: Array<any>): Observable<any> {
+  get(url: string, parameters?: Array<any>, responseType?: any): Observable<any> {
     let params = new HttpParams();
 
     //Set the params
     if (parameters) parameters.forEach(x => params = params.set(x.key, x.value));
 
     //Get the data
-    return this.http.get(url, { params: params }).pipe(catchError(this.handleError()));
+    return this.http.get(url, { params: params, responseType: responseType }).pipe(catchError(this.handleError()));
   }
 
 

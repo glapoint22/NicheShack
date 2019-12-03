@@ -1,4 +1,5 @@
-<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onHide)="show = false">
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onHide)="show = false"
+    (onShow)="onShow()">
     <div class="prompt" (mousedown)="$event.stopPropagation()">
         <div class="title-bar">
             Share List
@@ -8,73 +9,68 @@
         </div>
 
         <div class="prompt-content">
+            <div class="alt-color">Share List with Others</div>
 
-
-
-
-
-
-            <div>Invite Collaborators</div>
-
-            <div>
-                People you invite can veiw and edit this list.
-            </div>
-
-            <button (click)="viewEdit = true; viewOnly = false; viewOnlyLinkCopied = false;">View & Edit</button>
-
-            <!-- View & Edit -->
-            <div *ngIf="viewEdit">
-                <div (click)="onShareClick('Facebook', 'Collaborate')">
-                    <img src="assets/Facebook.png" title="Share on Facebook">
-                </div>
-                <div (click)="onShareClick('Twitter', 'Collaborate')">
-                    <img src="assets/Twitter.png" title="Share on Twitter">
-                </div>
-                <i class="fas fa-link link" (click)="viewEditLinkCopied = true; onShareClick('Link', 'Collaborate')"
-                    title="Copy Link"></i>
-
-            </div>
-            <div *ngIf="viewEditLinkCopied">
-                <i class="fas fa-check"></i> Link Copied
-            </div>
-
-            <hr>
-
-
-            <div>Share List with Others</div>
-
-            <div>
+            <div class="margin-bottom-1">
                 People you share with can only view this list.
             </div>
 
-            <button (click)="viewOnly = true; viewEdit = false; viewEditLinkCopied = false;">View
-                Only</button>
+            <button class="alt-button"
+                (click)="viewOnly = !viewOnly; viewEdit = false; viewEditLinkCopied = false;">View Only</button>
 
 
             <!-- Share -->
-            <div *ngIf="viewOnly" style="margin-bottom: 15px;">
+            <div class="share-container" *ngIf="viewOnly">
                 <div (click)="onShareClick('Facebook', 'View')">
                     <img src="assets/Facebook.png" title="Share on Facebook">
                 </div>
                 <div (click)="onShareClick('Twitter', 'View')">
                     <img src="assets/Twitter.png" title="Share on Twitter">
                 </div>
-                <i class="fas fa-link link" (click)="viewOnlyLinkCopied = true; onShareClick('Link', 'View')"
-                    title="Copy Link"></i>
+                <div>
+                    <i class="fas fa-link link" (click)="viewOnlyLinkCopied = true; onShareClick('Link', 'View')"
+                        title="Copy Link"></i>
+                </div>
+
             </div>
-            <div *ngIf="viewOnlyLinkCopied">
-                <i class="fas fa-check"></i> Link Copied
+
+
+            <div class="text-center" *ngIf="viewOnlyLinkCopied">
+                <i class="fas fa-check success-color"></i> Link Copied
             </div>
 
 
+            <hr class="margin-top-3 margin-bottom-3 border-gray">
 
 
+            <div class="alt-color">Invite Collaborators</div>
+
+            <div class="margin-bottom-1">
+                People you invite can veiw and edit this list.
+            </div>
+
+            <button class="alt-button"
+                (click)="viewEdit = !viewEdit; viewOnly = false; viewOnlyLinkCopied = false;">View & Edit</button>
+
+            <!-- View & Edit -->
+            <div class="share-container" *ngIf="viewEdit">
+                <div (click)="onShareClick('Facebook', 'Collaborate')">
+                    <img src="assets/Facebook.png" title="Share on Facebook">
+                </div>
+                <div (click)="onShareClick('Twitter', 'Collaborate')">
+                    <img src="assets/Twitter.png" title="Share on Twitter">
+                </div>
+                <div>
+                    <i class="fas fa-link link" (click)="viewEditLinkCopied = true; onShareClick('Link', 'Collaborate')"
+                        title="Copy Link"></i>
+                </div>
 
 
-
-
+            </div>
+            <div class="text-center" *ngIf="viewEditLinkCopied">
+                <i class="fas fa-check success-color"></i> Link Copied
+            </div>
         </div>
     </div>
     <input id="copy" type="text" style="position: absolute; top: -100px; left: -100px">
 </div>
-

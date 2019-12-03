@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ShareService } from '../../../services/share.service';
 
 @Component({
@@ -17,6 +17,12 @@ export class ShareListComponent {
 
   constructor(private shareService: ShareService) { }
 
+  onShow() {
+    this.viewEdit = false;
+    this.viewOnly = false;
+    this.viewEditLinkCopied = false;
+    this.viewOnlyLinkCopied = false;
+  }
 
 
   onShareClick(action: string, type: string) {
