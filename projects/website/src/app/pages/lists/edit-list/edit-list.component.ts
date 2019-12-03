@@ -35,5 +35,4 @@ export class EditListComponent implements OnInit {
         this.show = false;
       });
   }
-
 }

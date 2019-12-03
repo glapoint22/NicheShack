@@ -1,6 +1,8 @@
 <div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onHide)="show = false"
     (onShow)="onShow()">
     <div class="prompt" (mousedown)="$event.stopPropagation()">
+        
+        <!-- Share List -->
         <div class="title-bar">
             Share List
             <div class="close-button" (click)="show = false" title="Close">
@@ -19,7 +21,7 @@
                 (click)="viewOnly = !viewOnly; viewEdit = false; viewEditLinkCopied = false;">View Only</button>
 
 
-            <!-- Share -->
+            <!-- Icons -->
             <div class="share-container" *ngIf="viewOnly">
                 <div (click)="onShareClick('Facebook', 'View')">
                     <img src="assets/Facebook.png" title="Share on Facebook">
@@ -31,10 +33,10 @@
                     <i class="fas fa-link link" (click)="viewOnlyLinkCopied = true; onShareClick('Link', 'View')"
                         title="Copy Link"></i>
                 </div>
-
             </div>
 
 
+            <!-- Link Copied -->
             <div class="text-center" *ngIf="viewOnlyLinkCopied">
                 <i class="fas fa-check success-color"></i> Link Copied
             </div>
@@ -43,6 +45,7 @@
             <hr class="margin-top-3 margin-bottom-3 border-gray">
 
 
+            <!-- Invite Collaborators -->
             <div class="alt-color">Invite Collaborators</div>
 
             <div class="margin-bottom-1">
@@ -52,7 +55,7 @@
             <button class="alt-button"
                 (click)="viewEdit = !viewEdit; viewOnly = false; viewOnlyLinkCopied = false;">View & Edit</button>
 
-            <!-- View & Edit -->
+            <!-- Icons -->
             <div class="share-container" *ngIf="viewEdit">
                 <div (click)="onShareClick('Facebook', 'Collaborate')">
                     <img src="assets/Facebook.png" title="Share on Facebook">
@@ -64,9 +67,9 @@
                     <i class="fas fa-link link" (click)="viewEditLinkCopied = true; onShareClick('Link', 'Collaborate')"
                         title="Copy Link"></i>
                 </div>
-
-
             </div>
+
+            <!-- Link Copied -->
             <div class="text-center" *ngIf="viewEditLinkCopied">
                 <i class="fas fa-check success-color"></i> Link Copied
             </div>

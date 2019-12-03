@@ -21,6 +21,8 @@ export class ListsComponent extends SharePageComponent implements OnInit {
   public listData$: Observable<any>;
   public products$: Observable<any>;
   public selectedList: any;
+  public showManageListMenu: boolean;
+  public showListsMenu: boolean;
 
 
   constructor(

@@ -9,7 +9,6 @@
         </div>
 
         <div class="prompt-content">
-
             <h4>List Name:</h4>
             <input #listName="ngModel" name="listName" required [(ngModel)]="name">
 
@@ -24,9 +23,6 @@
                 <button class="alt-button" (click)="onSave()"
                     [disabled]="!listName.valid">Save</button>
             </div>
-
-
-
         </div>
     </div>
 </div>

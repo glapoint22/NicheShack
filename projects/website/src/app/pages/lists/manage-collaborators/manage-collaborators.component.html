@@ -10,6 +10,7 @@
 
         <div class="prompt-content" style="max-height: 200px;">
 
+            <!-- Collaborators -->
             <div *ngIf="!confirm; else confirmRemove" class="border-top" style="border-top-color: #1d1d1d;">
                 <div *ngFor="let collaborator of collaborators"
                     class="display-flex justify-content-between align-items-center padding-2 border-bottom" style="border-bottom-color: #1d1d1d;">
@@ -21,7 +22,7 @@
             </div>
 
 
-
+            <!-- Confirm Remove -->
             <ng-template #confirmRemove>
                 <div class="text-break margin-bottom-3">
                     Are you sure you want to remove {{currentCollaborator.name}} from this list?
@@ -34,8 +35,6 @@
                     <button class="alt-button" (click)="onRemoveCollaborator()">Remove</button>
                 </div>
             </ng-template>
-
-
         </div>
     </div>
 </div>

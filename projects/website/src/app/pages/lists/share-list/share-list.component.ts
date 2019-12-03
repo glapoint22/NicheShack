@@ -54,5 +54,4 @@ export class ShareListComponent {
         document.execCommand("copy");
     }
   }
-
 }

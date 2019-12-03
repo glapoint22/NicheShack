@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ListsComponent } from '../lists/lists.component';
 import { Title, Meta } from '@angular/platform-browser';
-import { DOCUMENT, KeyValue } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { DataService } from 'services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PageComponent } from '../page/page.component';
-import { Observable, of } from 'rxjs';
-import { tap, concatMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './shared-list.component.html',
@@ -28,13 +28,8 @@ export class SharedListComponent extends ListsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedList = {id: this.route.snapshot.paramMap.get('listId')}
+    this.selectedList = { id: this.route.snapshot.paramMap.get('listId') }
     super.ngOnInit();
-
-
-
-
-
   }
 
 
@@ -44,13 +39,12 @@ export class SharedListComponent extends ListsComponent implements OnInit {
       .pipe(tap((listOwner: string) => {
         if (!listOwner) {
           this.dataService.pageNotFound = true;
-        }else {
+        } else {
           this.title = listOwner + '\'s List';
+
+          // Call Page Component's NgOnInit
           PageComponent.prototype.ngOnInit.call(this);
         }
       }));
   }
-
-
-
 }

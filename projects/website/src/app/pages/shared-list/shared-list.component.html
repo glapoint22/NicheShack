@@ -6,18 +6,11 @@
     <div class="page-container">
         <div class="content-container">
             <div class="content" style="max-width: 1440px;">
-
-
-
                 <div class="margin-left-4 width-100 position-relative">
                     <h1>{{listOwner}}'s List</h1>
 
 
                     <ng-container *ngIf="sortOptions$ | async">
-
-
-
-
 
 
                         <!-- Products -->
@@ -100,43 +93,9 @@
                             </ng-template>
                         </ng-container>
                     </ng-container>
-
-
                 </div>
-
-                <!-- No Lists -->
-                <ng-template #noLists>
-                    <div class="display-flex align-items-center">
-                        <div class="width-100" style="max-width: 210px;">
-                            <h1>Your Lists</h1>
-                            <!-- Create list button -->
-                            <button class="primary-button" (click)="createList.show = true">Create a List</button>
-                        </div>
-
-                        <div class="margin-left-4 width-100 text-center border border-gray padding-3 font-size-3"
-                            style="max-width: 600px;">
-                            You currently have no lists. Click the "Create a List" button to create your list.
-                        </div>
-                    </div>
-
-                </ng-template>
             </div>
-
             <navfooter></navfooter>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </ng-container>
