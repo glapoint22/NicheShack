@@ -1,0 +1,180 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(black, 0);
+  }
+
+body {
+    margin: 0;
+    font-size: $font-size-base;
+    font-weight: $font-weight-base;
+    line-height: $line-height-base;
+    color: $base-color;
+    background-color: $background-color;
+    text-align: left;
+}
+
+[tabindex="-1"]:focus {
+    outline: 0 !important;
+}
+
+hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+ol, ul {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+  
+svg {
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+
+th {
+    text-align: inherit;
+}
+
+label {
+    display: inline-block;
+}
+
+
+input,
+button,
+select,
+optgroup,
+textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button,
+input {
+    overflow: visible;
+}
+
+button,
+select {
+    text-transform: none;
+}
+
+select {
+    word-wrap: normal;
+    border-radius: 4px;
+    border: 1px solid $border-color;
+    background: $input-background-color;
+    color: #ffffff;
+    outline: none;
+    height: 24px;
+    cursor: pointer;
+    &:disabled {
+        color: $disabled-color;
+    }
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    &:not(:disabled) {
+        cursor: pointer;
+    }
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+    padding: 0;
+    border-style: none;
+}
+
+input, textarea {
+    border-radius: 4px;
+    border: 1px solid $border-color;
+    background: $input-background-color;
+    color: $base-color;
+    outline: none;
+    height: 30px;
+    padding-left: 5px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    box-sizing: border-box;
+    padding: 0;
+    height: initial;
+}
+
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"] {
+    -webkit-appearance: listbox;
+}
+
+textarea {
+    overflow: auto;
+    resize: none;
+    display: block;
+}
+
+fieldset {
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+[type="search"] {
+    outline-offset: -2px; // 2. Correct the outline style in Safari.
+    -webkit-appearance: none;
+}
+
+[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+a { 
+    color: inherit;
+    &:link { text-decoration: none }
+}

@@ -1,0 +1,4 @@
+// ....................................................................Get Class Extension..................................................................
+@function get-class-extension($breakpoint-key) {
+    @return if(map-get($breakpoints, $breakpoint-key) == 0, "", "-#{$breakpoint-key}");
+ }

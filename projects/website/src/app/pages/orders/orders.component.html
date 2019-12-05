@@ -90,7 +90,7 @@
             <!-- ................................................Display type: Order........................................ -->
             <div *ngIf="displayType == 'order'" class="width-100 margin-top-5-sm">
                 <h2 *ngIf="orders && orders.length == 0"
-                    class="text-center margin-top-5 gray-color border border-gray padding-4 hide-sm">No orders found
+                    class="text-center margin-top-5 gray-color border padding-4 hide-sm">No orders found
                 </h2>
 
                 <div *ngFor="let order of orders; let i = index">
@@ -99,7 +99,7 @@
 
 
                         <!-- Navigation box -->
-                        <div class="border border-bottom-0 border-gray padding-3 background-color-dark"
+                        <div class="border border-bottom-0  padding-3 background-color-dark"
                             [ngClass]="{'hide-sm': !viewOrderDetails}">
 
                             <!-- View Order Details -->
@@ -121,7 +121,7 @@
 
 
                         <div
-                            class="background-color-dark-gray padding-2 border border-bottom-0 border-gray display-flex-xs justify-content-between">
+                            class="background-color-dark-gray padding-2 border border-bottom-0  display-flex-xs justify-content-between">
                             <div class="margin-bottom-3 margin-bottom-0-xs">
                                 <h4>Ordered On:</h4>
                                 <div>{{order.date}}</div>
@@ -136,7 +136,7 @@
 
 
 
-                        <div class="border border-gray display-flex margin-bottom-4 justify-content-between">
+                        <div class="border display-flex margin-bottom-4 justify-content-between">
 
                             <!-- Products -->
                             <div *ngIf="!viewOrderDetails" class="flex-fill">
@@ -226,9 +226,9 @@
 
 
             <!-- ................................................Display type: Product........................................ -->
-            <div *ngIf="displayType == 'product'" class="border-top border-gray margin-top-3">
+            <div *ngIf="displayType == 'product'" class="border-top  margin-top-3">
                 <div *ngFor="let product of products">
-                    <div class="display-flex border-bottom border-gray padding-3">
+                    <div class="display-flex border-bottom  padding-3">
                         <!-- Product Image -->
                         <div class="img-container display-flex align-items-center justify-content-center margin-right-3 flex-shrink-0 cursor-pointer" (click)="onProductClick({id: product.productId, urlTitle: product.urlTitle})">
                             <img [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">

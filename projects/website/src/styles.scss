@@ -2,12 +2,11 @@
 @import "./scss/variables";
 @import "./scss/mixins";
 @import "./scss/colors";
-@import "./scss/reset";
+@import "../../../scss/reset";
 @import "./scss/grid";
 @import "./scss/buttons";
 @import "./scss/shadows";
-@import "./scss/text";
-@import "./scss/utilities";
+@import "../../../scss/utilities";
 @import "./scss/arrows";
 @import "./scss/modal";
 @import "./scss/transitions";

@@ -9,7 +9,7 @@
         <!-- Products -->
         <div *ngFor="let product of products; let i = index">
             <div *ngIf="i < (showAll ? products.length : 4)"
-                class="product-container border-bottom border-gray border-none-md padding-bottom-2 padding-bottom-0-md">
+                class="product-container border-bottom  border-none-md padding-bottom-2 padding-bottom-0-md">
                 <product [product]="product" (quickLookClick)="quickLook.show($event)"></product>
             </div>
         </div>

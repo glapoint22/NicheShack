@@ -23,7 +23,7 @@
 
                         <!-- Each List -->
                         <div class="margin-bottom-4 cursor-pointer padding-2" *ngFor="let list of lists"
-                            [ngClass]="{'background-color-dark-gray cursor-default border border-gray': list == selectedList}"
+                            [ngClass]="{'background-color-dark-gray cursor-default border': list == selectedList}"
                             (click)="onListClick(list, lists); showListsMenu = false">
                             <h3>{{list.name}}</h3>
 
@@ -126,7 +126,7 @@
 
                                 <!-- Each List -->
                                 <div class="margin-bottom-4 cursor-pointer padding-2" *ngFor="let list of lists"
-                                    [ngClass]="{'background-color-dark-gray cursor-default border border-gray': list == selectedList}"
+                                    [ngClass]="{'background-color-dark-gray cursor-default border': list == selectedList}"
                                     (click)="onListClick(list, lists)">
                                     <h3>{{list.name}}</h3>
 
@@ -168,8 +168,8 @@
 
 
 
-                                            <div class="border-top border-gray clear-both">
-                                                <div *ngFor="let product of products" class="border-bottom border-gray">
+                                            <div class="border-top  clear-both">
+                                                <div *ngFor="let product of products" class="border-bottom ">
                                                     <ng-container
                                                         *ngIf="!product.deleted && !product.movedToList; else removedProduct">
                                                         <div class="display-flex justify-content-between flex-wrap">
@@ -303,7 +303,7 @@
                             <button class="primary-button" (click)="createList.show = true">Create a List</button>
                         </div>
 
-                        <div class="margin-left-4 width-100 text-center border border-gray padding-3 font-size-3"
+                        <div class="margin-left-4 width-100 text-center border padding-3 font-size-3"
                             style="max-width: 600px;">
                             You currently have no lists. Click the "Create a List" button to create your list.
                         </div>

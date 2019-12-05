@@ -1,9 +1,9 @@
 // Borders
-.border         { border: $border-width solid; }
-.border-top     { border-top: $border-width solid; }
-.border-right   { border-right: $border-width solid; }
-.border-bottom  { border-bottom: $border-width solid; }
-.border-left    { border-left: $border-width solid; }
+.border         { border: $border-width solid $border-color; }
+.border-top     { border-top: $border-width solid $border-color; }
+.border-right   { border-right: $border-width solid $border-color; }
+.border-bottom  { border-bottom: $border-width solid $border-color; }
+.border-left    { border-left: $border-width solid $border-color; }
 
 .border-0        { border: 0; }
 .border-top-0    { border-top: 0; }
@@ -15,7 +15,6 @@
 
 
 // Border colors
-.border-gray {border-color: $border-gray-color}
 @include generate-border-colors($primary-color-map, 'primary');
 @include generate-border-colors($alt-color-map, 'alt');
 

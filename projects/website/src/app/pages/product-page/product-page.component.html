@@ -22,8 +22,8 @@
                     <div [ngClass]="{'display-flex justify-content-center flex-wrap': productData.pricePoints.length > 1}">
                         
                         <!-- Price Points -->
-                        <div *ngFor="let pricePoint of productData.pricePoints; let i = index" [ngClass]="{'margin-bottom-4 margin-right-2 margin-left-2 border border-gray': productData.pricePoints.length > 1}">
-                            <div *ngIf="productData.pricePoints.length > 1" class="alt-color font-size-3 font-bold border-bottom border-gray text-center padding-2 background-color-dark-gray">
+                        <div *ngFor="let pricePoint of productData.pricePoints; let i = index" [ngClass]="{'margin-bottom-4 margin-right-2 margin-left-2 border': productData.pricePoints.length > 1}">
+                            <div *ngIf="productData.pricePoints.length > 1" class="alt-color font-size-3 font-bold border-bottom  text-center padding-2 background-color-dark-gray">
                                 {{pricePoint}}
                             </div>
 

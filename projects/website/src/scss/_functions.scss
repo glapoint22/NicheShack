@@ -1,3 +1,4 @@
+@import '../../../../scss/functions';
 
 // ....................................................................Generate Color Map..................................................................
 @function generate-color-map($main-color) {
@@ -13,11 +14,4 @@
     }
 
     @return $color-map;
-}
-
-
-
-// ....................................................................Get Class Extension..................................................................
-@function get-class-extension($breakpoint-key) {
-   @return if(map-get($breakpoints, $breakpoint-key) == 0, "", "-#{$breakpoint-key}");
 }
