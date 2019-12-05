@@ -14,11 +14,6 @@
 .outline-0       { outline: 0; }
 
 
-// Border colors
-@include generate-border-colors($primary-color-map, 'primary');
-@include generate-border-colors($alt-color-map, 'alt');
-
-
 // Border widths
 .border-width-1 { border-width: 0.125rem }
 .border-width-2 { border-width: 0.25rem }
