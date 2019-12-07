@@ -20,6 +20,18 @@ const routes: Routes = [
   {
     path: 'page-builder',
     loadChildren: () => import('./pages/page-builder/page-builder.module').then(m => m.PageBuilderModule)
+  },
+  {
+    path: 'change-name',
+    loadChildren: () => import('./pages/change-name/change-name.module').then(m => m.ChangeNameModule)
+  },
+  {
+    path: 'change-email',
+    loadChildren: () => import('./pages/change-email/change-email.module').then(m => m.ChangeEmailModule)
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./pages/change-password/change-password.module').then(m => m.ChangePasswordModule)
   }
 ];
 
