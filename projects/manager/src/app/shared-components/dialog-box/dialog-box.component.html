@@ -1,0 +1,27 @@
+<!-- Main Container -->
+<div class="position-absolute" style="left:500px; top: 500px; box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);">
+
+    <!-- Bar -->
+    <div class="bar">{{title}}
+        <!-- X Button -->
+        <div class="x-button">X</div>
+    </div>
+
+    <!-- Base -->
+    <div class="base">
+
+        <!-- Content Container -->
+        <div class="width-100 padding-3">
+            <ng-content></ng-content>
+        </div>
+
+        <!-- Button Container -->
+        <div class="button-container margin-top-3 margin-bottom-3">
+
+            <!-- Button 1 -->
+            <button >Cancel</button>
+            <!-- Button 2 -->
+            <button style="float: right;">OK</button>
+        </div>
+    </div>
+</div>

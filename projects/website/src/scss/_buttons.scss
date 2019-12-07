@@ -5,7 +5,7 @@ button {
     outline: 0;
     white-space: nowrap;
     font-weight: bold;
-    @include button-colors(nth($default-button-colors, 1), nth($default-button-colors, 2), $base-color);
+    @include button-colors(nth($default-button-colors, 1), nth($default-button-colors, 2), $default-font-color);
     &:disabled {
         background: linear-gradient(darken(nth($default-button-colors, 1), 20%), darken(nth($default-button-colors, 2), 10%));
         color: #808080;

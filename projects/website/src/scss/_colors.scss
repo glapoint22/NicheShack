@@ -6,10 +6,10 @@
 }
 
 .background-color {
-    background-color: $background-color;
+    background-color: $default-background-color;
 }
 .background-color-dark {
-    background-color: $background-color-dark;
+    background-color: $default-background-color-dark;
 }
 
 @include generate-colors($primary-color-map, 'primary');

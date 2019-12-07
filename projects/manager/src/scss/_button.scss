@@ -1,0 +1,16 @@
+button {
+    border-radius: 5px;
+    background: linear-gradient($button-gradient-light, $button-gradient-dark);
+    border: none;
+    outline: 0;
+    user-select: none;
+    color: $button-text-color;
+    &:hover {
+        background: linear-gradient(lighten($button-gradient-light, 10%), lighten($button-gradient-dark, 10%));
+        color: lighten($button-text-color, 10%);
+    }
+    &:active {
+        box-shadow: 0 0 1px 1px $selected-border-color;
+    }
+}
+
