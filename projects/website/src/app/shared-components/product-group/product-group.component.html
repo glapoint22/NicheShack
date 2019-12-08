@@ -19,10 +19,10 @@
             {{showAll ? 'See less' : 'See more'}}</div>
     </div>
 
-    <!-- Arrows -->
-    <div class="fas arrow-icon-left" *ngIf="translate != 0" (click)="onLeftArrowClick()"></div>
-    <div class="fas arrow-icon-right" *ngIf="!isLastPage(container.offsetWidth)"
-        (click)="onRightArrowClick(container.offsetWidth)"></div>
+    <!-- Buttons -->
+    <div class="left-button" *ngIf="translate != 0" (click)="onLeftButtonClick()"></div>
+    <div class="right-button" *ngIf="!isLastPage(container.offsetWidth)"
+        (click)="onRightButtonClick(container.offsetWidth)"></div>
 </div>
 
 <quick-look #quickLook></quick-look>

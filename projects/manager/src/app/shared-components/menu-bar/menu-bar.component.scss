@@ -1,0 +1,41 @@
+@import '../../../scss/variables';
+@import '../../../../../../scss/arrows';
+
+.menu-bar {
+    width: 100%;
+    height: 32px;
+    border: 1px solid $border-color;
+    background: #252525;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+.menu-button {
+    width: 20px;
+    height: 20px;
+    margin-right: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        color: lighten($default-font-color, 20%);
+    }
+}
+
+.notification-circle {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    background: #fa3e3e;
+    left: 10px;
+    top: -4px;
+    color: white;
+    font-size: 0.75rem;
+}
