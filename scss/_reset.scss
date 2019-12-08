@@ -155,10 +155,14 @@ textarea {
 }
 
 fieldset {
-    min-width: 0;
-    padding: 0;
-    margin: 0;
-    border: 0;
+    padding: 15px;
+    padding-block-start: 0.625em;
+    margin-bottom: 12px;
+    border: 2px groove #424141;
+    legend {
+        color: #7d7d7d;
+        font-size: 12px;
+    }
 }
 
 [type="search"] {

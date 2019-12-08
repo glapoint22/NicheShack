@@ -8,7 +8,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DialogBoxComponent implements OnInit {
 
   @Input()
-  title = 'Dialog Box Name';
+  dialogBoxName = "Dialog Box Name";
+  @Input()
+  buttonLeftName = "ButtonLeft";
+  @Input()
+  buttonRightName = "ButtonRight";
 
   constructor() { }
 
