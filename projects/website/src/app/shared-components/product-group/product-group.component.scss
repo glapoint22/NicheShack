@@ -1,4 +1,5 @@
 @import '../../../scss/variables';
+@import '../../../../../../scss/arrows';
 
 $container-width: 632px;
 $product-width: 216px;
@@ -20,10 +21,47 @@ $product-width: 216px;
     margin: 1rem 3rem;
 }
 
-.arrow-icon-left, .arrow-icon-right {
+.left-button, .right-button {
     visibility: hidden;
-    top: 145px;
+    top: 180px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    border: 1px solid $border-color;
+    background: rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+    &:after {
+        transition: transform .1s ease-out 0s;
+    }
+    &:hover:after {
+        transform: scale(1.25);
+    }
 }
+
+.left-button {
+    left: 10px;
+    &:after {
+        content: '';
+        width: 0; 
+        height: 0; 
+        @extend .arrow-left;
+    }
+}
+
+.right-button {
+    right: 10px;
+    &:after {
+        content: '';
+        width: 0; 
+        height: 0; 
+        @extend .arrow-right;
+    }
+}
+
 
 
 @each $key, $value in $breakpoints {
@@ -39,7 +77,7 @@ $product-width: 216px;
                     margin-right: 1rem;
                 }
             
-                .arrow-icon-left, .arrow-icon-right {
+                .left-button, .right-button {
                     visibility: visible;
                 }
             }

@@ -30,7 +30,7 @@ export class ProductGroupComponent implements OnInit {
   }
 
 
-  onRightArrowClick(containerWidth: number) {
+  onRightButtonClick(containerWidth: number) {
     // Increment the page
     this.currentPage++;
 
@@ -40,7 +40,7 @@ export class ProductGroupComponent implements OnInit {
   }
 
 
-  onLeftArrowClick() {
+  onLeftButtonClick() {
     // Get the previous translation from the array to move the slider back
     this.currentTranslation = this.translate = this.translations[this.translations.length - 2];
     this.currentPage--;
