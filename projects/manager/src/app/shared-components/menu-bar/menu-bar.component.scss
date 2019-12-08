@@ -11,18 +11,9 @@
     flex-direction: row-reverse;
 }
 
-.menu-button {
-    width: 20px;
-    height: 20px;
-    margin-right: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
 
-    &:hover {
-        color: lighten($default-font-color, 20%);
-    }
+.icon-container {
+    margin-right: 1.5rem;
 }
 
 .notification-circle {
