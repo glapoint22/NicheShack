@@ -9,6 +9,7 @@ button {
     color: $button-text-color;
     font-family: 'Tahoma';
     font-size: 14px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     &:hover {
         background: linear-gradient(lighten($button-gradient-light, 10%), lighten($button-gradient-dark, 10%));
         color: lighten($button-text-color, 10%);
