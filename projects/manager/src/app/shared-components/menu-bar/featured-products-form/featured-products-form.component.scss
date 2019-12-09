@@ -7,3 +7,11 @@
     margin-top: -9px;
     margin-bottom: 7px;
 }
+
+select {
+    overflow: auto;
+    cursor: default;
+    option {
+        cursor: pointer;
+    }
+}

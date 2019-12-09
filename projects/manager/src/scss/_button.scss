@@ -48,3 +48,15 @@ button {
 .arrow-button-rotate {
     transform: rotate(90deg);
 }
+
+.form-button-container {
+    max-width: 235px; 
+    width: 100%; 
+    margin: auto;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    button {
+        width: 90px;
+    }
+}

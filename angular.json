@@ -171,7 +171,8 @@
             "aot": false,
             "assets": [
               "projects/manager/src/favicon.ico",
-              "projects/manager/src/assets"
+              "projects/manager/src/assets",
+              "projects/manager/src/images"
             ],
             "styles": [
               "projects/manager/src/styles.scss"

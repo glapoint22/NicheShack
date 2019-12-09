@@ -5,10 +5,19 @@ import { NicheShackEditorRoutingModule } from './niche-shack-editor-routing.modu
 import { NicheShackEditorComponent } from './niche-shack-editor.component';
 import { DialogBoxModule } from '../../shared-components/dialog-box/dialog-box.module';
 import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module';
+import { ProductFormComponent } from './product-form/product-form.component';
 
 
 @NgModule({
-  declarations: [NicheShackEditorComponent],
-  imports: [CommonModule, NicheShackEditorRoutingModule, DialogBoxModule, MenuBarModule]
+  declarations: [
+    NicheShackEditorComponent,
+    ProductFormComponent
+  ],
+  imports: [
+    CommonModule,
+    NicheShackEditorRoutingModule,
+    DialogBoxModule,
+    MenuBarModule
+  ]
 })
 export class NicheShackEditorModule { }

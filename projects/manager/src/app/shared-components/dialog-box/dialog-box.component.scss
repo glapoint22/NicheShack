@@ -3,6 +3,7 @@
 .container {
     position: absolute;
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
 }
 
 .bar {
@@ -13,7 +14,7 @@
     border-top: 1px solid $dialog-box-bar-border-top;
     border-bottom: 1px solid $dialog-box-bar-border-bottom;
     border-right: 1px solid $dialog-box-bar-border-right;
-    font-size: 11px;
+    font-size: 12px;
     user-select: none;
     display: flex;
     justify-content: space-between;
@@ -52,15 +53,4 @@
     border-left: 1px solid $dialog-box-base-border-left;
     border-right: 1px solid $dialog-box-base-border-right;
     border-bottom: 1px solid $dialog-box-base-border-bottom;
-}
-
-.button-container {
-    max-width: 235px; 
-    width: 100%; 
-    margin: auto;
-    margin-bottom: 1rem;
-}
-
-button {
-    width: 90px;
 }
