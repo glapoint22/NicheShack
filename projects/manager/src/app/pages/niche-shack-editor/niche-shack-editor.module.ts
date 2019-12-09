@@ -6,12 +6,14 @@ import { NicheShackEditorComponent } from './niche-shack-editor.component';
 import { DialogBoxModule } from '../../shared-components/dialog-box/dialog-box.module';
 import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module';
 import { ProductFormComponent } from './product-form/product-form.component';
+import { ContentTypeFormComponent } from './content-type-form/content-type-form.component';
 
 
 @NgModule({
   declarations: [
     NicheShackEditorComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    ContentTypeFormComponent
   ],
   imports: [
     CommonModule,

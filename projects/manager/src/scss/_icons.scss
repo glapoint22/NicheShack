@@ -6,7 +6,16 @@
     align-items: center;
     cursor: pointer;
     color: $icon-color;
+    margin-left: 5px;
     &:hover {
         color: lighten($icon-color, 20%);
     }
+}
+
+.icon-bar {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: -9px;
+    margin-bottom: 7px;
 }
