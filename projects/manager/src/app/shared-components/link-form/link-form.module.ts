@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogBoxComponent } from './dialog-box.component';
+import { LinkFormComponent } from './link-form.component';
 
 
 
 @NgModule({
   declarations: [
-    DialogBoxComponent
+    LinkFormComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    DialogBoxComponent
+    LinkFormComponent
   ]
 })
-export class DialogBoxModule { }
+export class LinkFormModule { }
