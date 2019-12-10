@@ -1,0 +1,45 @@
+.search-bar {
+    display: flex;
+    div {
+        width: 30px;
+        height: 30px; background: #404040;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid $border-color;
+        border-bottom: 1px solid $border-color;
+
+        &:first-child {
+            border-top-left-radius: 50%;
+            border-bottom-left-radius: 50%;
+            border-left: 1px solid $border-color;
+        }
+
+        &:last-child {
+            border-top-right-radius: 50%;
+            border-bottom-right-radius: 50%;
+            border-right: 1px solid $border-color;
+            &:after {
+                content: '';
+                width: 0; 
+                height: 0; 
+                @extend .arrow-down;
+            }
+        }
+
+        &:hover {
+            background-color: lighten(#404040, 10%);
+            border-color: lighten($border-color, 10%);
+            color: lighten($default-font-color, 10%);
+        }
+
+        &:active {
+            border: 1px solid $selected-border-color;
+        }
+    }
+
+    input {
+        flex:1;
+    }
+}

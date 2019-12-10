@@ -1,0 +1,49 @@
+@import '../../../scss/variables';
+@import '../../../scss/mixins.scss';
+
+.panel-light {
+    height: 540px;
+}
+
+.media-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+    
+    div {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        background: #363636;
+        border: 1px solid #404040;
+        margin: 10px;
+        box-sizing: content-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        
+        &:hover:not(.selected):after {
+            @include overlay($hover-fill-color, $hover-border-color);
+        }
+        
+        img {
+            max-width: 150px;
+            max-height: 150px;
+        }
+    }
+
+    .selected {
+        &:after {
+            @include overlay($selected-fill-color, $selected-border-color);
+        }
+    }
+
+    
+}
+
+.icon-container {
+    font-size: 18px;
+}

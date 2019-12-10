@@ -7,6 +7,7 @@ import { DialogBoxModule } from '../../shared-components/dialog-box/dialog-box.m
 import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ContentTypeFormComponent } from './content-type-form/content-type-form.component';
+import { MediaBrowserModule } from '../../shared-components/media-browser/media-browser.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ContentTypeFormComponent } from './content-type-form/content-type-form.
     CommonModule,
     NicheShackEditorRoutingModule,
     DialogBoxModule,
-    MenuBarModule
+    MenuBarModule,
+    MediaBrowserModule
   ]
 })
 export class NicheShackEditorModule { }
