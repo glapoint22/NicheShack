@@ -5,6 +5,7 @@ import { MessageFormComponent } from './message-form/message-form.component';
 import { ProductReportFormComponent } from './product-report-form/product-report-form.component';
 import { FeaturedProductsFormComponent } from './featured-products-form/featured-products-form.component';
 import { ReviewComplaintFormComponent } from './review-complaint-form/review-complaint-form.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 
 
@@ -14,7 +15,8 @@ import { ReviewComplaintFormComponent } from './review-complaint-form/review-com
     MessageFormComponent,
     ProductReportFormComponent,
     FeaturedProductsFormComponent,
-    ReviewComplaintFormComponent
+    ReviewComplaintFormComponent,
+    NotificationsComponent
   ],
   imports: [
     CommonModule
@@ -24,7 +26,8 @@ import { ReviewComplaintFormComponent } from './review-complaint-form/review-com
     MessageFormComponent,
     ProductReportFormComponent,
     FeaturedProductsFormComponent,
-    ReviewComplaintFormComponent
+    ReviewComplaintFormComponent,
+    NotificationsComponent
   ]
 })
 export class MenuBarModule { }
