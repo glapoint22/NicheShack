@@ -1,4 +1,5 @@
 @import '../../../../scss/variables';
+@import '../../../../scss/mixins.scss';
 
 .container {
     position: relative; 
@@ -67,19 +68,17 @@
     height: 70px;
     position: relative;
 
-    &:hover {
-
-        &:after {
-            content: '';
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            border: 1px solid $hover-border-color;
-            background-color: $hover-fill-color;
-            position: absolute;
-        }
+    
+    &:hover:not(.selected):after {
+        @include overlay($hover-fill-color, $hover-border-color);
     }
+    
+    img {
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    
 
     div {
         &:first-child {
@@ -120,5 +119,11 @@
                 background-image: linear-gradient(transparent, #1f1f1f);
             }
         }
+    }
+}
+
+.selected {
+    &:after {
+        @include overlay($selected-fill-color, $selected-border-color);
     }
 }

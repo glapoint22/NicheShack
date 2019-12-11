@@ -1,0 +1,33 @@
+.base {
+    background-color: #252526; 
+    padding-top: 8px; 
+    padding-bottom: 8px; 
+    width: 100%; 
+    max-width: 275px; 
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.75)
+}
+
+.menu-option {
+    height: 26px; 
+    font-family: Arial; 
+    font-size: 13px; 
+    color: #cccccc; 
+    padding-left: 27px; 
+    padding-right: 27px; 
+    display: flex; 
+    align-items: center; 
+    user-select: none; 
+    justify-content: space-between;
+    position: relative;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+}
+
+.divider {
+    background-color: #616162; 
+    height: 1px; 
+    margin: 5px 11px 5px 11px;
+}
