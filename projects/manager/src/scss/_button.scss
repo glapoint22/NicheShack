@@ -19,35 +19,48 @@ button {
     }
 }
 
-.arrow-button {
-    width: 22px;
-    height: 22px;
-    background: #383838;
-    border: 1px solid $border-color;
+
+.arrow-button-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transform: rotate(0);
-    transition: transform 0.25s ease-in-out;
-    &:hover {
-        color: lighten($default-font-color, 10%);
-        border-color: lighten($border-color, 10%);;
+
+    .arrow-button {
+        width: 22px;
+        height: 22px;
+        background: #383838;
+        border: 1px solid $border-color;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 5px;
+        cursor: pointer;
+        transform: rotate(0);
+        transition: transform 0.25s ease-in-out;
+        &:hover {
+            color: lighten($default-font-color, 10%);
+            border-color: lighten($border-color, 10%);;
+        }
+        &:active {
+            box-shadow: 0 0 1px 1px $selected-border-color;
+        }
+        &:after {
+            content: '';
+            width: 0; 
+            height: 0; 
+            @extend .arrow-right;
+        }
     }
-    &:active {
-        box-shadow: 0 0 1px 1px $selected-border-color;
-    }
-    &:after {
-        content: '';
-        width: 0; 
-        height: 0; 
-        @extend .arrow-right;
+
+    & input {
+        display: none;
+        &:checked ~ .arrow-button {
+            transform: rotate(90deg);
+        }
     }
 }
 
-.arrow-button-rotate {
-    transform: rotate(90deg);
-}
+
+
 
 .form-button-container {
     max-width: 235px; 

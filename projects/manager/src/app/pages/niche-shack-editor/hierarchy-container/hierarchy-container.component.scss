@@ -66,9 +66,22 @@
     }
 }
 
-.icon-bar {
+.sort-container {
+    display: flex;;
+    align-items: center;
+    justify-content: space-between;
+    .close {
+        cursor: pointer;
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+.icon-bar, .sort-container {
     margin-top: 10px;
     margin-bottom: 10px;
     border-top: 2px groove #343434;
     border-bottom: 2px groove #343434;
+    padding: 5px;
 }

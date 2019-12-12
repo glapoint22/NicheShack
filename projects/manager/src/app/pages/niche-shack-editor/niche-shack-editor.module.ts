@@ -9,6 +9,7 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { ContentTypeFormComponent } from './content-type-form/content-type-form.component';
 import { MediaBrowserModule } from '../../shared-components/media-browser/media-browser.module';
 import { HierarchyContainerComponent } from './hierarchy-container/hierarchy-container.component';
+import { HierarchyComponent } from './hierarchy/hierarchy.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { HierarchyContainerComponent } from './hierarchy-container/hierarchy-con
     NicheShackEditorComponent,
     ProductFormComponent,
     ContentTypeFormComponent,
-    HierarchyContainerComponent
+    HierarchyContainerComponent,
+    HierarchyComponent
   ],
   imports: [
     CommonModule,
