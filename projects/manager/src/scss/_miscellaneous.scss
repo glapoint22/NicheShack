@@ -1,3 +1,5 @@
+
+// Search bar
 .search-bar {
     display: flex;
     div {
@@ -41,5 +43,41 @@
 
     input {
         flex:1;
+        width: 100%;
+    }
+}
+
+
+// Filter Menu
+.filter-menu {
+    width: 150px;
+    padding: 5px;
+    background: #2a2a2a;
+    position: absolute;
+    right: 10px;
+    border-top: 1px solid #454545;
+    border-right: 1px solid #141414;
+    border-bottom: 1px solid #0c0c0c;
+    border-left: 1px solid #3d3d3d;
+    box-shadow: 4px 4px 12px 0px rgba(0, 0, 0, 0.5);
+    
+    label {
+        cursor: pointer;
+        &:not(:last-child){
+            margin-bottom: 5px;
+        }
+    }
+
+    i {
+        visibility: hidden;
+        margin-right: 5px;
+        font-size: 11px;
+    }
+
+    input {
+        display: none;
+        &:checked ~ i {
+            visibility: visible;
+        }
     }
 }

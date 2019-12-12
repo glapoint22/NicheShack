@@ -8,13 +8,15 @@ import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module'
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ContentTypeFormComponent } from './content-type-form/content-type-form.component';
 import { MediaBrowserModule } from '../../shared-components/media-browser/media-browser.module';
+import { HierarchyContainerComponent } from './hierarchy-container/hierarchy-container.component';
 
 
 @NgModule({
   declarations: [
     NicheShackEditorComponent,
     ProductFormComponent,
-    ContentTypeFormComponent
+    ContentTypeFormComponent,
+    HierarchyContainerComponent
   ],
   imports: [
     CommonModule,
