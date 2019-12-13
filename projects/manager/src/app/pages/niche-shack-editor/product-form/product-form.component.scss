@@ -1,0 +1,25 @@
+.form {
+    width: initial;
+    height: 100%;
+    position: relative;
+}
+
+.tabs-container {
+    margin: 1rem 0 0 1rem;
+}
+
+.panel-light {
+    position: absolute;
+    top: 72px;
+    left: 1rem;
+    right: 1rem;
+    width: initial;
+    bottom: 55px;
+}
+
+.buttons-container {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+}

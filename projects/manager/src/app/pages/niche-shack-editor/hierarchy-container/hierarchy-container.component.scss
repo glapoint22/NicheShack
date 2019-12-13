@@ -3,15 +3,10 @@
 
 .container {
     display: flex;
-    position: absolute;
-    top: 37px;left: 0;
-    bottom: 0;
-    width: 100%;
-    max-width: 394px;
+    height: 100%;
 
     .base {
-        width: 100%;
-        max-width: 375px;
+        width: 350px;
         background: #1e1e1e;
         height: 100%;
         border: 1px solid $border-color;
@@ -43,7 +38,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
+        flex-shrink: 0;
 
         &:first-child {
             &:after {
