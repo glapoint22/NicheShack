@@ -1,0 +1,33 @@
+<ng-container *ngIf="true; else searchResults">
+    <!-- Category -->
+    <div class="arrow-button-container">
+        <input type="checkbox" [id]="'Health & Fitness'">
+        <label class="arrow-button" [for]="'Health & Fitness'"></label>
+        <div>Health & Fitness</div>
+    </div>
+
+    <!-- Content -->
+    <div class="padding-left-5">
+
+        <!-- Niche -->
+        <div class="arrow-button-container">
+            <input type="checkbox" [id]="'Diets & Weight Loss'">
+            <label class="arrow-button" [for]="'Diets & Weight Loss'"></label>
+            <div>Diets & Weight Loss</div>
+        </div>
+
+        <!-- Content -->
+        <div class="padding-left-5">
+            <!-- Products -->
+            <div>1 Hour Belly Blast Diet</div>
+            <div>14 Day Rapid Fat Loss Plan</div>
+            <div>7 Day Blood Pressure Solution</div>
+        </div>
+    </div>
+</ng-container>
+
+<!-- Search results -->
+<ng-template #searchResults>
+    <div>How to be a <span style="color: white; font-weight: bold;">Gump</span>y</div>
+    <div>Once a <span style="color: white; font-weight: bold;">Gump</span>y always a <span style="color: white; font-weight: bold;">Gump</span>y</div>
+</ng-template>

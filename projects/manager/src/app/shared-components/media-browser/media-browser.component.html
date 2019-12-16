@@ -1,17 +1,38 @@
 
-<!-- Search bar -->
-<div class="search-bar">
-    <div><i class="fas fa-search"></i></div>
-    <input>
-    <div></div>
+<!-- Search bar & filter menu -->
+<div class="position-relative">
+    <!-- Search bar -->
+    <div class="search-bar">
+        <div><i class="fas fa-search"></i></div>
+        <input>
+        <div></div>
+    </div>
+
+    <!-- Filter menu -->
+    <div class="filter-menu">
+        <label>
+            <input type="radio" name="media-filter">
+            <i class="fas fa-check"></i>
+            Filter by Category
+        </label>
+
+        <label>
+            <input type="radio" name="media-filter" checked>
+            <i class="fas fa-check"></i>
+            Filter by Products
+        </label>
+    </div>
 </div>
+
+
+
 
 
 
 
 <div class="display-flex justify-content-between margin-top-3">
     <!-- Tabs -->
-    <div class="tabs-container">
+    <div class="tabs-container width-100">
         <div class="tab selected-tab">Images</div>
         <div class="tab" style="left: 114px">Videos</div>
     </div>
@@ -27,8 +48,8 @@
 
 <!-- Panel -->
 <div class="panel-light">
-    <div class="media-container">
-        <ng-container *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
+    <div class="media-container justify-content-center justify-content-start-lg">
+        <ng-container *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12]">
             <div>
                 <img src="images/68010370e5514c82b1e5b138143d0862.png">
             </div>
