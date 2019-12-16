@@ -6,7 +6,6 @@
     align-items: center;
     cursor: pointer;
     color: $icon-color;
-    margin-left: 5px;
     &:hover {
         color: lighten($icon-color, 20%);
     }

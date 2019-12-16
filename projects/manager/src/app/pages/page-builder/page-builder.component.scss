@@ -1,0 +1,35 @@
+.carousel {
+    width: 29px;
+    height: 33px;
+    background: url("/assets/Carousel.png") no-repeat;
+    margin-top: 15px;
+
+    &:hover {
+        background: url("/assets/CarouselHover.png") no-repeat;
+        cursor: pointer;
+    }
+}
+
+// .container{
+//     // margin: 20px auto;
+//     width:100%;
+//     height:100px;
+//     background-color:#fff;
+//     display:grid;
+//     grid-template-columns: 60px 60px;
+//     // grid-row: auto auto;
+//     grid-column-gap: 1px;
+//     grid-row-gap: 1px;
+//     .box{
+//       background-color:#333;
+//     //   padding:20px;
+//     //   border-radius:10px;
+//       color:#fff;
+//       display:flex;
+//       align-items:center;
+//       justify-content:center;
+//     //   font-size:40px;
+//       font-family:sans-serif;
+//     }
+  
+//   }
