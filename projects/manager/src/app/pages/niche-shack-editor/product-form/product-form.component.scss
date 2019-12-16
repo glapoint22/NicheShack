@@ -5,11 +5,13 @@
 }
 
 .tabs-container {
-    margin: 1rem 0 0 1rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
 }
 
 .panel-light {
     position: absolute;
+    overflow: auto;
     top: 72px;
     left: 1rem;
     right: 1rem;

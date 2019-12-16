@@ -1,7 +1,9 @@
 .tabs-container {
     position: relative;
-    height: 26px;
-
+    height: 27px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-right: 1rem;
     .tab {
         position: absolute;
         top: 4px;
