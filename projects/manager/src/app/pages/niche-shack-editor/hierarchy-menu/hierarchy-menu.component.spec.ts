@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContextMenuComponent } from './context-menu.component';
+import { HierarchyMenuComponent } from './hierarchy-menu.component';
 
-describe('ContextMenuComponent', () => {
-  let component: ContextMenuComponent;
-  let fixture: ComponentFixture<ContextMenuComponent>;
+describe('HierarchyMenuComponent', () => {
+  let component: HierarchyMenuComponent;
+  let fixture: ComponentFixture<HierarchyMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContextMenuComponent ]
+      declarations: [ HierarchyMenuComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ContextMenuComponent);
+    fixture = TestBed.createComponent(HierarchyMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

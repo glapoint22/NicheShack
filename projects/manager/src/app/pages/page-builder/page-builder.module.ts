@@ -6,7 +6,6 @@ import { PageBuilderComponent } from './page-builder.component';
 import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module';
 import { DialogBoxModule } from '../../shared-components/dialog-box/dialog-box.module';
 import { LinkFormModule } from '../../shared-components/link-form/link-form.module';
-import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
 
 
 @NgModule({
@@ -16,8 +15,7 @@ import { ContextMenuModule } from '../../shared-components/context-menu/context-
     PageBuilderRoutingModule,
     MenuBarModule,
     DialogBoxModule,
-    LinkFormModule,
-    ContextMenuModule
+    LinkFormModule
   ]
 })
 export class PageBuilderModule { }
