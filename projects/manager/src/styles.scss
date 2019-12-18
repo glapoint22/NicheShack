@@ -1,6 +1,7 @@
 @import '../../../scss/functions';
 @import './scss/variables';
 @import '../../../scss/mixins/breakpoints';
+@import '../../../scss/mixins/grid';
 @import '../../../scss/reset';
 @import '../../../scss/utilities';
 @import './scss/button';
@@ -11,3 +12,4 @@
 @import './scss/mixins.scss';
 @import './scss/miscellaneous';
 @import './scss/form';
+@import '../../../scss/grid';

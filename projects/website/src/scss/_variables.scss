@@ -1,7 +1,5 @@
 @import '../../../../scss/variables';
 
-$num-columns: 12;
-
 
 // Colors
 $default-font-color: #dadada;
@@ -18,6 +16,7 @@ $error-color: #ff0000;
 $disabled-color: #545454;
 $white-color: white;
 $input-background-color: #282828;
+$input-color: $default-font-color;
 
 // Color Maps
 $primary-color-map: generate-color-map($primary-color);

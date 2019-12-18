@@ -1,8 +1,121 @@
-.display-flex {
-    flex-wrap: wrap;
-    align-items: baseline;
+@import '../../../../scss/variables';
+
+.icon-bar {
+    border: 1px solid $border-color;
+    border-bottom: 0;
+    padding: 5px;
+    margin-top: 5px;
+    background-color: #2d2d2d;
 }
 
-fieldset {
-    margin-right: 20px;
+.background {
+    background: $input-background-color;
+    border: 1px solid $border-color;
+    padding: 0.5rem;
+    overflow: auto;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+table {
+    min-width: 200px;
+
+    tr:first-child > td, tr > td:first-child {
+        background: #414141;
+    }
+
+    tr:nth-child(2) > td:nth-child(n+2) {
+        background: #3a3a3a;
+    }
+
+    tr:nth-child(2) > td:nth-child(3) {
+        width: 80px;
+        user-select: none;
+    }
+
+
+    tr:nth-child(n+3) > td:nth-child(2) {
+        cursor: pointer;
+    }
+
+
+    tr:nth-child(n+3) > td:nth-child(n+4) {
+        cursor: pointer;
+    }
+
+
+    tr:nth-child(n+3):nth-child(odd) > td:nth-child(n+2) {
+        background: #272727;
+    }
+
+    tr:nth-child(n+3):nth-child(even) > td:nth-child(n+2) {
+        background: #313030;
+    }
+
+    tr > td:first-child {
+        width: 22px;
+    }
+
+    tr > td:nth-child(2) {
+        width: 32px;
+    }
+
+    td {
+        border: 1px solid $border-color;
+        text-align: center;
+        padding: 5px;
+        height: 22px;
+        max-width: 150px;
+    }
+
+    .selected-row > td {
+        position: relative;
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: $selected-fill-color;
+            border-top: 1px solid $selected-border-color;
+            border-bottom: 1px solid $selected-border-color;
+        }
+
+        &:first-child {
+            border-left: 1px solid $selected-border-color;
+        }
+
+        &:last-child {
+            border-right: 1px solid $selected-border-color;
+        }
+    }
+
+
+    @for $i from 1 through 20 {
+        &.selected-column-#{$i} * td:nth-child(#{$i}) {
+            position: relative;
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                background: $selected-fill-color;
+                border-left: 1px solid $selected-border-color;
+                border-right: 1px solid $selected-border-color;
+            }
+        }
+    
+        &.selected-column-#{$i} > tr:first-child > td:nth-child(#{$i}) {
+            border-top: 1px solid $selected-border-color;
+        }
+    
+        &.selected-column-#{$i} > tr:last-child > td:nth-child(#{$i}) {
+            border-bottom: 1px solid $selected-border-color;
+        }
+    }
 }

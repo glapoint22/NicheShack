@@ -30,7 +30,7 @@
         $extension: get-class-extension($key);
 
         // Create the column classes
-        @for $i from 1 through $num-columns {
+        @for $i from 1 through $num-grid-columns {
             .col-#{$i}#{$extension} {
                 @extend %column;
             }
@@ -57,20 +57,20 @@
             }
 
 
-            @for $i from 1 through $num-columns {
+            @for $i from 1 through $num-grid-columns {
                 .col-#{$i}#{$extension} {
-                    flex: 0 0 percentage($i / $num-columns);
-                    max-width: percentage($i / $num-columns);
+                    flex: 0 0 percentage($i / $num-grid-columns);
+                    max-width: percentage($i / $num-grid-columns);
                 }
             }
 
 
             // This will create the offset class
-            // $num-columns - 1 because offsetting by the width of an entire row isn't possible
-            @for $i from 0 through ($num-columns - 1) {
+            // $num-grid-columns - 1 because offsetting by the width of an entire row isn't possible
+            @for $i from 0 through ($num-grid-columns - 1) {
                 @if not ($extension == "" and $i == 0) {
                     .offset-#{$i}#{$extension} {
-                        $num: $i / $num-columns;
+                        $num: $i / $num-grid-columns;
                         margin-left: if($num == 0, 0, percentage($num));
                     }
                 }
