@@ -5,7 +5,7 @@ import { ChangePasswordRoutingModule } from './change-password-routing.module';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
 import { ChangePasswordComponent } from './change-password.component';
 import { FormsModule } from '@angular/forms';
-import { MatchValueModule } from '../../directives/match-value/match-value.module';
+import { MatchValueModule } from 'directives/match-value/match-value.module';
 
 
 @NgModule({

@@ -1,1 +1,46 @@
-<p>sign-in works!</p>
+<div class="form-page">
+    <!-- Error -->
+    <div *ngIf="conflictError" class="error-box">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div>{{conflictError}}</div>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+        <h1>Sign In</h1>
+
+        <!-- Email -->
+        <h4 *ngIf="valid(email); else invalidEmail">Email:</h4>
+
+        <!-- Invalid email -->
+        <ng-template #invalidEmail>
+            <h4 class="error">Please enter a valid email address.</h4>
+        </ng-template>
+        <input required email [(ngModel)]="account.email" name="email" #email="ngModel">
+
+        <!-- Password -->
+        <div *ngIf="valid(password); else invalidPassword" class="margin-auto" style="width: 88%">
+            <h4 class="display-inline">Password:</h4>
+            <a class="alt-color float-right font-size-2" style="text-decoration: underline;" tabindex="10"
+                routerLink="/forgot-password">Forgot your password?</a>
+        </div>
+
+
+        <!-- Invalid password -->
+        <ng-template #invalidPassword>
+            <h4 class="error">Passwords must be at least 6 characters.</h4>
+            <a class="alt-color font-size-2 margin-auto display-block"
+                style="text-decoration: underline; width: 88%; margin-bottom: 5px;" tabindex="10"
+                routerLink="/forgot-password">Forgot your password?</a>
+        </ng-template>
+        <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="account.password" name="password"
+            #password="ngModel">
+
+        <!-- Sign in button -->
+        <button>Sign in</button>
+
+        <div class="margin-auto margin-bottom-3" style="width: 88%">
+            <input type="checkbox" (change)="account.isPersistent = !account.isPersistent"
+                [checked]="account.isPersistent"><label class="margin-left-2">Keep me signed in.</label>
+        </div>
+    </form>
+</div>
