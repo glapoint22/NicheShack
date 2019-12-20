@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CreateAccountRoutingModule } from './create-account-routing.module';
 import { CreateAccountComponent } from './create-account.component';
 import { FormsModule } from '@angular/forms';
-import { MatchValueModule } from '../../directives/match-value/match-value.module';
+import { MatchValueModule } from 'directives/match-value/match-value.module';
 
 
 @NgModule({

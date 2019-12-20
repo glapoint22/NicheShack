@@ -2,13 +2,30 @@
 
 .icon-bar {
     border: 1px solid $border-color;
+    border-bottom: 0;
     padding: 5px;
     margin-top: 5px;
     background-color: #2d2d2d;
     justify-content: center;
     flex-wrap: wrap;
+    flex-direction: row;
+    
+    & > div {
+        display: flex;
+        border-left: 1px solid $border-color;
+        margin: 0;
+        padding: 0 5px;
+    }
+
+    & > div:last-child {
+        border-right: 1px solid $border-color;
+    }
+}
+
+.icon-container {
+    margin: 0 3px;
 }
 
 textarea {
-    height: 310px;
+    height: 266px;
 }

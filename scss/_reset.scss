@@ -91,7 +91,7 @@ select {
     border-radius: 4px;
     border: 1px solid $border-color;
     background: $input-background-color;
-    color: #ffffff;
+    color: $input-color;
     outline: none;
     height: 24px;
     cursor: pointer;
@@ -127,7 +127,7 @@ button::-moz-focus-inner,
 input, textarea {
     border: 1px solid $border-color;
     background: $input-background-color;
-    color: $default-font-color;
+    color: $input-color;
     outline: none;
     height: 30px;
     padding-left: 5px;

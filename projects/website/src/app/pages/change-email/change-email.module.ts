@@ -5,7 +5,7 @@ import { ChangeEmailRoutingModule } from './change-email-routing.module';
 import { ChangeEmailComponent } from './change-email.component';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
 import { FormsModule } from '@angular/forms';
-import { MatchValueModule } from '../../directives/match-value/match-value.module';
+import { MatchValueModule } from 'directives/match-value/match-value.module';
 
 
 @NgModule({

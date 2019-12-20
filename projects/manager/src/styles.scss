@@ -1,6 +1,7 @@
 @import '../../../scss/functions';
 @import './scss/variables';
 @import '../../../scss/mixins/breakpoints';
+@import '../../../scss/mixins/grid';
 @import '../../../scss/reset';
 @import '../../../scss/utilities';
 @import './scss/button';
@@ -10,4 +11,20 @@
 @import './scss/tabs';
 @import './scss/mixins.scss';
 @import './scss/miscellaneous';
+@import '../../../scss/validation-form';
 @import './scss/form';
+@import '../../../scss/grid';
+@import './scss/menu';
+
+body {
+    background-image: url('assets/BackgroundLogo.png');
+    background-repeat: no-repeat;
+    background-position: 50% 75vh;
+    background-attachment: fixed;
+}
+
+@media (max-width: 600px) {
+    body {
+        background-size: contain;
+    }
+}

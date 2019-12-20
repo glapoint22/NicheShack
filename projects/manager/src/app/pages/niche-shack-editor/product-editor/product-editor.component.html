@@ -1,18 +1,213 @@
-<div class="display-flex">
-    <fieldset class="flex-fill width-100" style="max-width: 310px;">
-        <legend>Hoplink</legend>
-        <input type="text">
-    </fieldset>
-
-    <fieldset>
-        <legend>Featured</legend>
-        <span class="margin-right-2">Featured</span>
-        <input type="checkbox">
-    </fieldset>
-</div>
-
-<fieldset style="width: fit-content;">
-    <legend>Description</legend>
-    <product-description></product-description>
+<!-- Hoplink -->
+<fieldset class="width-100">
+    <legend>Hoplink</legend>
+    <input type="text">
 </fieldset>
 
+
+<div class="grid">
+    <div class="row" style="margin-bottom: 12px;">
+
+        <!-- Description -->
+        <div class="col-5-xl">
+            <fieldset class="margin-right-3-xl">
+                <legend>Description</legend>
+                <product-description></product-description>
+            </fieldset>
+        </div>
+
+        <!-- Image -->
+        <div class="col-4-xl col-6-lg">
+            <fieldset class="margin-right-3-lg">
+                <legend>Image</legend>
+                <div class="icon-bar">
+                    <div class="icon-container" title="Media Browser">
+                        <i class="fas fa-photo-video"></i>
+                    </div>
+                </div>
+
+                <div class="background display-flex justify-content-center align-items-center" style="height: 270px;">
+                    <img src="images/68010370e5514c82b1e5b138143d0862.png" style="max-width: 75%; max-height: 75%;">
+                </div>
+
+            </fieldset>
+        </div>
+
+
+        <!-- Filters -->
+        <div class="col-3-xl col-6-lg">
+            <fieldset>
+                <legend>Filters</legend>
+
+                <div class="icon-bar">
+                    <!-- Collapse -->
+                    <div class="icon-container" title="Collapse">
+                        <i class="fas fa-minus-square"></i>
+                    </div>
+
+                    <!-- Trash -->
+                    <div class="icon-container" title="Delete">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+
+                    <!-- Add -->
+                    <div class="icon-container" title="Add filter">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                </div>
+
+                <div class="background" style="height: 270px;">
+
+                    <div class="arrow-button-container">
+                        <input type="checkbox" [id]="'Billing Type'">
+                        <label class="arrow-button" [for]="'Billing Type'"></label>
+                        <div>Billing Type</div>
+                    </div>
+
+                    <!-- Content -->
+                    <div style="padding-left: 28px;">
+                        <div class="display-flex align-items-center">
+                            <input type="checkbox">
+                            <div>Single Payment</div>
+                        </div>
+
+                        <div class="display-flex align-items-center">
+                            <input type="checkbox">
+                            <div>Trial</div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="arrow-button-container">
+                        <input type="checkbox" [id]="'Gender'">
+                        <label class="arrow-button" [for]="'Gender'"></label>
+                        <div>Gender</div>
+                    </div>
+
+                </div>
+
+            </fieldset>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+
+        <!-- Content -->
+        <div class="col-8-xxl">
+            <fieldset class="margin-right-3-xxl" style="height: 293px; position: relative;">
+                <legend>Content</legend>
+                <div class="icon-bar">
+                    <!-- Trash -->
+                    <div class="icon-container" title="Delete">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+
+                    <!-- Add -->
+                    <div class="icon-container" title="Add">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                </div>
+                <div class="background"
+                    style="height: 214px; position: absolute; top: 60px; left: 15px; right: 15px; bottom: 0">
+
+
+                    <table #table>
+                        <!-- To select a row, use the selected-row class -->
+                        <tr class="selected-row">
+                            <!-- This shows how to select a column -->
+                            <td *ngFor="let i of [1, 2, 3, 4]"
+                                (click)="table.setAttribute('class', 'selected-column-' + i)"></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>Content</td>
+                            <td contenteditable="true">$0.00</td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td>
+                                <i class="fas fa-plus-circle"></i>
+                            </td>
+                            <td contenteditable="true"></td>
+                            <td><i class="fas fa-check"></i></td>
+                        </tr>
+
+
+
+                        <tr>
+                            <td></td>
+                            <td>
+                                <i class="fas fa-plus-circle"></i>
+                            </td>
+                            <td contenteditable="true"></td>
+                            <td></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+
+
+        <!-- Media -->
+        <div class="col-2-xxl col-6-md">
+            <fieldset class="margin-right-3-md">
+                <legend>Media</legend>
+                <div class="icon-bar">
+                    <!-- Trash -->
+                    <div class="icon-container" title="Delete">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+
+                    <!-- Add -->
+                    <div class="icon-container" title="Add">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+
+                    <div class="icon-container" title="Play video">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                </div>
+
+                <div class="background" style="height: 214px;">
+                    <div class="margin-bottom-2 display-flex justify-content-center align-items-center"
+                        style="width: 88px; height: 50px; background: red; cursor: pointer;">
+                        <i class="far fa-play-circle font-size-6"></i>
+                    </div>
+
+                </div>
+            </fieldset>
+        </div>
+
+
+        <!-- Keywords -->
+        <div class="col-2-xxl col-6-md">
+            <fieldset>
+                <legend>Keywords</legend>
+                <div class="icon-bar">
+                    <!-- Trash -->
+                    <div class="icon-container" title="Delete Keyword(s)">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+
+                    <!-- Add -->
+                    <div class="icon-container" title="Add keyword">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                </div>
+
+                <div class="background" style="height: 214px;">
+                    <div>Gumpy</div>
+                    <div>Ice Cream</div>
+                </div>
+            </fieldset>
+        </div>
+
+    </div>
+</div>

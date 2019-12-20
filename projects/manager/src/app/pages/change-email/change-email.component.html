@@ -1,1 +1,65 @@
-<p>change-email works!</p>
+<menu-bar></menu-bar>
+
+<div class="form-page">
+    <!-- Error -->
+    <div *ngIf="conflictError" class="error-box">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div>{{conflictError}}</div>
+    </div>
+
+
+    <!-- Form -->
+    <form (ngSubmit)="onSubmit()" #form="ngForm" [matchValue]="['newEmail', 'reEnteredEmail']">
+        <h1>Change Email</h1>
+
+        <!-- Old email -->
+        <h4>Current email:</h4>
+        <div class="margin-bottom-3 fixed-width margin-auto disabled-color">{{currentEmail}}</div>
+
+
+        <!-- Email -->
+        <h4 *ngIf="valid(newEmailAddress); else invalidNewEmail">New email:</h4>
+
+        <!-- Invalid new email -->
+        <ng-template #invalidNewEmail>
+            <!-- Emails are the same -->
+            <h4 *ngIf="newEmailAddress.errors.emailMatch" class="error">
+                The new email address is the same as your current email address.
+            </h4>
+
+            <!-- Invalid email -->
+            <h4 *ngIf="newEmailAddress.errors.email || newEmailAddress.errors.required" class="error">
+                Please provide a valid email address.
+            </h4>
+        </ng-template>
+        <input required email [(ngModel)]="_email" name="newEmail" #newEmailAddress="ngModel" autocomplete="off">
+
+
+
+        <!-- Re-enter email -->
+        <h4 *ngIf="valid(reEnteredEmailAddress); else invalidReEnteredEmail">Re-enter email:</h4>
+
+        <!-- Invalid re-entered email -->
+        <ng-template #invalidReEnteredEmail>
+            <h4 class="error">Please make sure emails match.</h4>
+        </ng-template>
+        <input required [(ngModel)]="reEnteredEmail" name="reEnteredEmail" #reEnteredEmailAddress="ngModel"
+            autocomplete="off">
+
+
+
+        <!-- Password -->
+        <h4 *ngIf="valid(password); else invalidPassword">Password:</h4>
+
+        <!-- Invalid password -->
+        <ng-template #invalidPassword>
+            <h4 class="error">Passwords must be at least 6 characters.</h4>
+        </ng-template>
+        <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="_password" name="password"
+            #password="ngModel">
+
+
+        <!-- Save button -->
+        <button>Save</button>
+    </form>
+</div>

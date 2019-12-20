@@ -16,7 +16,7 @@
 
         <!-- Invalid first name -->
         <ng-template #invalidFirstName>
-            <h4 class="error-color">Please provide a valid first name.</h4>
+            <h4 class="error">Please provide a valid first name.</h4>
         </ng-template>
         <input required pattern="^\b[a-zA-Z\s]{1,40}\b$" [(ngModel)]="account.firstName" name="firstName"
             #firstName="ngModel" autocomplete="off">
@@ -28,7 +28,7 @@
 
         <!-- Invalid last name -->
         <ng-template #invalidLastName>
-            <h4 class="error-color">Please provide a valid last name.</h4>
+            <h4 class="error">Please provide a valid last name.</h4>
         </ng-template>
         <input required pattern="^\b[a-zA-Z\s]{1,40}\b$" [(ngModel)]="account.lastName" name="lastName"
             #lastName="ngModel" autocomplete="off">
@@ -40,7 +40,7 @@
 
         <!-- Invalid email -->
         <ng-template #invalidEmail>
-            <h4 class="error-color">Please provide a valid email address.</h4>
+            <h4 class="error">Please provide a valid email address.</h4>
         </ng-template>
         <input required email [(ngModel)]="account.email" name="email" #emailAddress="ngModel" autocomplete="off">
 
@@ -51,7 +51,7 @@
 
         <!-- Invalid password -->
         <ng-template #invalidPassword>
-            <h4 class="error-color">Passwords must be at least 6 characters.</h4>
+            <h4 class="error">Passwords must be at least 6 characters.</h4>
         </ng-template>
         <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="account.password" name="password"
             #_password="ngModel" autocomplete="off">
@@ -68,7 +68,7 @@
 
         <!-- Invalid re-entered password -->
         <ng-template #invalidReEnteredPassword>
-            <h4 class="error-color">Please make sure passwords match.</h4>
+            <h4 class="error">Please make sure passwords match.</h4>
         </ng-template>
         <input type="password" [(ngModel)]="reEnteredPassword" name="reEnteredPassword" #re_enter_password="ngModel"
             autocomplete="off">

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ValidationPageComponent } from '../validation-page/validation-page.component';
 
 @Component({
-  selector: 'app-change-email',
   templateUrl: './change-email.component.html',
   styleUrls: ['./change-email.component.scss']
 })
-export class ChangeEmailComponent implements OnInit {
+export class ChangeEmailComponent extends ValidationPageComponent implements OnInit {
 
-  constructor() { }
 
   ngOnInit() {
   }
