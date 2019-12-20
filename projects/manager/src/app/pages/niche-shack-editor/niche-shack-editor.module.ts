@@ -13,6 +13,7 @@ import { HierarchyComponent } from './hierarchy/hierarchy.component';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
 import { ProductDescriptionComponent } from './product-description/product-description.component';
 import { HierarchyMenuComponent } from './hierarchy-menu/hierarchy-menu.component';
+import { ColorPickerModule } from '../../shared-components/color-picker/color-picker.module';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { HierarchyMenuComponent } from './hierarchy-menu/hierarchy-menu.componen
     NicheShackEditorRoutingModule,
     DialogBoxModule,
     MenuBarModule,
-    MediaBrowserModule
+    MediaBrowserModule,
+    ColorPickerModule
   ]
 })
 export class NicheShackEditorModule { }
