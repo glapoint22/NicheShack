@@ -24,6 +24,15 @@
     }
 }
 
+.panel-lighter {
+    background: #414141;
+    border-top: 1px solid #595959;
+    border-right: 1px solid #232323;
+    border-bottom: 1px solid #151515;
+    border-left: 1px solid #595959;
+    padding: 10px;
+}
+
 .panel-dark {
     background-color: #222222;
     border-left: 1px solid #101010;
@@ -32,6 +41,6 @@
     border-bottom: 1px solid #3d3d3d;
 }
 
-.panel-light, .panel-dark {
+.panel-light, .panel-lighter, .panel-dark {
     width: 100%;
 }

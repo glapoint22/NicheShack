@@ -1,9 +1,9 @@
 .tabs-container {
     position: relative;
+    top: 1px;
     height: 27px;
-    overflow-x: auto;
-    overflow-y: hidden;
     margin-right: 1rem;
+    overflow: auto;
     .tab {
         position: absolute;
         top: 4px;
@@ -24,6 +24,9 @@
         &:hover:not(.selected-tab) {
             background: lighten(#2d2d2d, 5%);
             color: lighten(#8a8989, 10%);
+            border-top-color: lighten(#353535, 10%);
+            border-right-color: lighten(#222222, 10%);
+            border-left-color: lighten(#353535, 10%);
         }
     }
 
@@ -35,6 +38,54 @@
         border-top: 1px solid #4a4a4a;
         color: #b2b2b2;
         z-index: 10;
+        cursor: default;
+    }
+}
+
+
+.vertical-tabs-container {
+    position: relative;
+    margin-top: 10px; 
+    display: flex; 
+    flex-direction: column;
+    left: 1px;
+    max-width: 35px;
+    width: 100%;
+
+    .vertical-tab {
+        margin-left: 4px;
+        width: 30px;
+        height: 40px;
+        font-size: 16px;
+        background: #383838;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid #424242;
+        border-bottom: 1px solid #282828;
+        border-left: 1px solid #464646;
+        border-top-left-radius: 7px;
+        border-bottom-left-radius: 7px;
+        color: #5d5d5d;
+        cursor: pointer;
+        user-select: none;
+        &:hover:not(.selected-vertical-tab) {
+            background: lighten(#383838, 3%);
+            color: lighten(#5d5d5d, 10%);
+            border-top-color: lighten(#424242, 6%);
+            border-bottom-color: lighten(#282828, 6%);
+            border-left-color: lighten(#464646, 6%);
+        }
+    }
+
+    .selected-vertical-tab {
+        margin-left: 0px;
+        width: 35px;
+        background: #414141;
+        border-left: 1px solid #626262;
+        border-top: 1px solid #595959;
+        border-bottom: 1px solid #2e2e2e;
+        color: #c4c4c4;
         cursor: default;
     }
 }

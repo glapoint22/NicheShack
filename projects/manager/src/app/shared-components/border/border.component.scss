@@ -1,0 +1,102 @@
+@import '../../../scss/variables';
+
+.border-style-container {
+    width: 100%;
+    margin-left: 30px;
+    padding-top: 10px;
+}
+
+.border-style-row {
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.border-styles {
+    position: relative;
+    border-color: #666666;
+    width: 22px;
+    height: 22px;
+
+    &:hover:not(.border-style-selected) {
+        border-color: $hover-border-color;
+        cursor: pointer;
+    }
+}
+
+.border-style-selected {
+    border-color: #107ad4;
+}
+
+.border-groove-dark {
+    border: 1px solid #0b0b0b;
+    width: 21px;
+    height: 21px;
+    margin:5px
+}
+
+.border-groove-light {
+    border-width: 1px;
+    border-style: solid;
+    width: 21px;
+    height: 21px;
+}
+
+.border-ridge-light {
+    border-width: 1px;
+    border-style: solid;
+    width: 21px;
+    height: 21px;
+    margin:5px
+}
+
+.border-ridge-dark {
+    border: 1px solid #0b0b0b;
+    width: 21px;
+    height: 21px;
+}
+
+.border-inset-top-left {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    border-left: 2px solid #0b0b0b;
+    border-top: 2px solid #0b0b0b;
+    margin: 5px;
+}
+
+.border-inset-bottom-right {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    height: 22px;
+    width: 22px;
+    border-bottom-width: 2px; 
+    border-bottom-style: solid;
+    border-right-width: 2px;
+    border-right-style: solid;
+}
+
+.border-outset-right-bottom {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    border-right: 2px solid #0b0b0b;
+    border-bottom: 2px solid #0b0b0b;
+    margin: 5px;
+}
+
+
+.border-outset-top-left {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    height: 22px;
+    width: 22px;
+    border-top-width: 2px; 
+    border-top-style: solid;
+    border-left-width: 2px;
+    border-left-style: solid;
+}
