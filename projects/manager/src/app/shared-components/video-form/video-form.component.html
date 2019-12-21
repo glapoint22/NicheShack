@@ -1,4 +1,3 @@
-
 <!-- Panel Light -->
 <div class="display-flex">
 
@@ -9,16 +8,22 @@
         <div title="Video" class="vertical-tab selected-vertical-tab"> <i class="fas fa-film"></i> </div>
 
         <!-- Margins -->
-        <div title="Margins" class="vertical-tab"> <i class="fas fa-arrow-left" style="display: flex; align-items: center;"> <span style="font-size: 20px; font-family: Arial">I</span> </i> </div>
+        <div title="Margins" class="vertical-tab"> <i class="fas fa-arrow-left"
+                style="display: flex; align-items: center;"> <span style="font-size: 20px; font-family: Arial">I</span>
+            </i> </div>
 
     </div>
 
     <!-- Panel Lighter -->
-    <div class="panel-lighter" style="border-radius: 10px; height: 250px;">
+    <div class="panel-light" style="height: 329px;">
 
         <!-- <margins></margins> -->
-
+        <media-browser [mediaType]="'image'"></media-browser>
     </div>
+</div>
 
-
+<!-- Buttons -->
+<div class="form-button-container">
+    <button>Ok</button>
+    <button>Cancel</button>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'media-browser',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./media-browser.component.scss']
 })
 export class MediaBrowserComponent implements OnInit {
+  @Input() mediaType: string;
 
   constructor() { }
 

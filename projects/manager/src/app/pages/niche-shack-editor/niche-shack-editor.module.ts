@@ -14,6 +14,7 @@ import { ProductEditorComponent } from './product-editor/product-editor.componen
 import { ProductDescriptionComponent } from './product-description/product-description.component';
 import { HierarchyMenuComponent } from './hierarchy-menu/hierarchy-menu.component';
 import { ColorPickerModule } from '../../shared-components/color-picker/color-picker.module';
+import { VideoFormModule } from '../../shared-components/video-form/video-form.module';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ColorPickerModule } from '../../shared-components/color-picker/color-pi
     DialogBoxModule,
     MenuBarModule,
     MediaBrowserModule,
-    ColorPickerModule
+    ColorPickerModule,
+    VideoFormModule
   ]
 })
 export class NicheShackEditorModule { }

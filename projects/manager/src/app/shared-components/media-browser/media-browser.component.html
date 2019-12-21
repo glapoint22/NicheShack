@@ -1,15 +1,19 @@
+<!-- ----------------------Tab Title-------------- -->
+<div class="tab-title">Video</div>
+
 
 <!-- Search bar & filter menu -->
 <div class="position-relative">
+
     <!-- Search bar -->
     <div class="search-bar">
         <div><i class="fas fa-search"></i></div>
-        <input>
-        <div></div>
+        <input [ngClass]="{'border-oval-right': mediaType == 'video'}">
+        <div *ngIf="mediaType == 'image'"></div>
     </div>
 
     <!-- Filter menu -->
-    <div class="filter-menu">
+    <div *ngIf="false" class="filter-menu">
         <label>
             <input type="radio" name="media-filter">
             <i class="fas fa-check"></i>
@@ -25,41 +29,27 @@
 </div>
 
 
-
-
-
-
-
-<div class="display-flex justify-content-between margin-top-3">
-    <!-- Tabs -->
-    <div class="tabs-container width-100">
-        <div class="tab selected-tab">Images</div>
-        <div class="tab" style="left: 114px">Videos</div>
-    </div>
-
+<!-- Icons -->
+<div class="icon-bar">
     <!-- File explorer -->
-    <div class="icon-container">
+    <div class="icon-container" title="File Explorer">
         <i class="fas fa-folder-open"></i>
     </div>
-</div>
 
-
-
-
-<!-- Panel -->
-<div class="panel-light">
-    <div class="media-container justify-content-center justify-content-start-lg">
-        <ng-container *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12]">
-            <div>
-                <img src="images/68010370e5514c82b1e5b138143d0862.png">
-            </div>
-        </ng-container>
-
+    <!-- Delete -->
+    <div class="icon-container" title="Delete">
+        <i class="fas fa-trash-alt"></i>
     </div>
 </div>
 
-<!-- Button Container -->
-<div class="form-button-container">
-    <button>Ok</button>
-    <button>Close</button>
+<!-- Media -->
+<div class="media-container">
+    <div class="width-100 display-flex flex-wrap overflow-auto">
+        <ng-container *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11]">
+            <div class="media" [ngClass]="{'video-height': mediaType == 'video', 'img-height': mediaType == 'image'}">
+                <img src="images/68010370e5514c82b1e5b138143d0862.png"
+                    [ngClass]="{'video-max-height': mediaType == 'video', 'img-max-height': mediaType == 'image'}">
+            </div>
+        </ng-container>
+    </div>
 </div>
