@@ -8,6 +8,7 @@ import { DialogBoxModule } from '../../shared-components/dialog-box/dialog-box.m
 import { LinkFormModule } from '../../shared-components/link-form/link-form.module';
 import { ButtonFormModule } from '../../shared-components/button-form/button-form.module';
 import { VideoFormModule } from '../../shared-components/video-form/video-form.module';
+import { TextFormModule } from '../../shared-components/text-form/text-form.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { VideoFormModule } from '../../shared-components/video-form/video-form.m
     DialogBoxModule,
     LinkFormModule,
     ButtonFormModule,
-    VideoFormModule
+    VideoFormModule,
+    TextFormModule
   ]
 })
 export class PageBuilderModule { }

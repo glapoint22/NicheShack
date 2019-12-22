@@ -1,0 +1,44 @@
+@import "../../../scss/variables";
+
+.icon-container {
+    width: 26px;
+    height: 26px;
+    margin-left: 5px;
+    border-radius: 2px;
+
+    &:hover:not(.selected) {
+        background-color: $hover-fill-color;
+    }
+}
+
+.selected {
+    background: $selected-fill-color;
+    border: 1px solid $selected-border-color;
+    color: #d2e5ff;
+}
+
+.font-size-input-container {
+    position: absolute; 
+}
+
+
+.font-size-input-container input {
+    width: 35px;
+    height: 24px;
+    padding: 5px;
+    border-right: none;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.alignment-container {
+    display:flex;
+    width: 100%;
+    margin-left: 30px;
+    //padding-top: 10px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
