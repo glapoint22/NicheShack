@@ -1,23 +1,29 @@
 @import '../../../scss/variables';
 @import '../../../scss/mixins.scss';
 
-$video-height: 28.40909090909091px;
-$img-height: 50px;
-
+$img-size: 100px;
 
 .media-container {
-    height: 190px;
+    position: absolute;
+    top: 130px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+}
+
+.panel-dark {
     overflow: overlay;
-    border: 2px groove #404040;
-    background: #272727;
+    position: absolute;
+    bottom: 0;
+    top: 0;
 }
 
 .media {
     position: relative;
-    width: 50px;
+    width: 100%;
+    max-width: $img-size;
     background: #363636;
     border: 1px solid #404040;
-    padding: 5px;
     box-sizing: content-box;
     display: flex;
     justify-content: center;
@@ -29,7 +35,8 @@ $img-height: 50px;
     }
     
     img {
-        max-width: 50px;
+        max-width: $img-size;
+        max-height: $img-size;
         user-select: none;
     }
 }
@@ -40,24 +47,8 @@ $img-height: 50px;
     }
 }
 
-.img-height {
-    height: $img-height;
-}
-.img-max-height {
-    max-height: $img-height;
-}
-
-.video-height {
-    height: $video-height;
-}
-
-.video-max-height {
-    max-height: $video-height;
-}
-
 .icon-bar {
     margin: 10px 0;
-    border-top: 1px solid #4c4c4c;
-    border-bottom: 1px solid #4c4c4c;
+    border-bottom: 2px groove $border-color;
     padding: 5px 0;
 }

@@ -1,0 +1,98 @@
+<div class="display-flex">
+
+    <!-- Vertical Tabs -->
+    <div class="vertical-tabs-container">
+
+        <!-- Banners -->
+        <div title="Banners" class="vertical-tab selected-vertical-tab">
+            <i class="fas fa-flag"></i>
+        </div>
+
+        <!-- Image -->
+        <div title="Image" class="vertical-tab">
+            <i class="far fa-image"></i>
+        </div>
+
+        <!-- Link -->
+        <div title="Link" class="vertical-tab">
+            <i class="fas fa-link"></i>
+        </div>
+
+    </div>
+
+    <!-- Panel Light -->
+    <div class="panel-light">
+
+        <!-- Banners -->
+        <ng-container *ngIf="false">
+            <div class="tab-title">Banners</div>
+
+            <div class="icon-bar">
+                <div class="icon-container" title="Add Banner">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+
+                <div class="icon-container" title="Remove Banner">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+            </div>
+
+
+
+            <div class="panel-dark">
+                <div>
+                    <img src="images/Banner1.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner2.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner1.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner2.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner1.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner2.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner1.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner2.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner1.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner2.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner1.jpg">
+                </div>
+                <div>
+                    <img src="images/Banner2.jpg">
+                </div>
+            </div>
+        </ng-container>
+
+
+        <!-- Media Browser -->
+        <media-browser *ngIf="true" [mediaType]="'image'"></media-browser>
+
+
+        <!-- Link -->
+        <links *ngIf="false"></links>
+
+        
+    </div>
+</div>
+
+<!-- Buttons -->
+<div class="form-button-container">
+    <button>Ok</button>
+    <button>Cancel</button>
+</div>

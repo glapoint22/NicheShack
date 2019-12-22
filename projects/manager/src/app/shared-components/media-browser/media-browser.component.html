@@ -1,32 +1,11 @@
 <!-- ----------------------Tab Title-------------- -->
-<div class="tab-title">Video</div>
-
-
-<!-- Search bar & filter menu -->
-<div class="position-relative">
+<div class="tab-title">{{mediaType == 'image' ? 'Image' : 'Video'}}</div>
 
     <!-- Search bar -->
     <div class="search-bar">
         <div><i class="fas fa-search"></i></div>
-        <input [ngClass]="{'border-oval-right': mediaType == 'video'}">
-        <div *ngIf="mediaType == 'image'"></div>
+        <input class="border-oval-right">
     </div>
-
-    <!-- Filter menu -->
-    <div *ngIf="false" class="filter-menu">
-        <label>
-            <input type="radio" name="media-filter">
-            <i class="fas fa-check"></i>
-            Filter by Category
-        </label>
-
-        <label>
-            <input type="radio" name="media-filter" checked>
-            <i class="fas fa-check"></i>
-            Filter by Products
-        </label>
-    </div>
-</div>
 
 
 <!-- Icons -->
@@ -44,12 +23,24 @@
 
 <!-- Media -->
 <div class="media-container">
-    <div class="width-100 display-flex flex-wrap overflow-auto">
-        <ng-container *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11]">
-            <div class="media" [ngClass]="{'video-height': mediaType == 'video', 'img-height': mediaType == 'image'}">
-                <img src="images/68010370e5514c82b1e5b138143d0862.png"
-                    [ngClass]="{'video-max-height': mediaType == 'video', 'img-max-height': mediaType == 'image'}">
-            </div>
-        </ng-container>
+    <div class="panel-dark">
+        <div class="width-100 display-flex flex-wrap overflow-auto">
+            <ng-container *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11]">
+                <div class="media">
+                    <img src="images/6c048ea442b646b59970f907a4d3ce61.jpg">
+                </div>
+                <div class="media">
+                    <img src="images/0aada12f8b21471ea96aebe9a503977b.png">
+                </div>
+
+                <div class="media">
+                    <img src="images/68010370e5514c82b1e5b138143d0862.png">
+                </div>
+
+                <div class="media">
+                    <img src="images/Banner1.jpg">
+                </div>
+            </ng-container>
+        </div>
     </div>
 </div>

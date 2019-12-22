@@ -1,0 +1,40 @@
+@import '../../../scss/variables';
+@import '../../../scss/mixins.scss';
+
+.panel-light {
+    height: 450px;
+}
+
+.icon-bar {
+    margin-bottom: 10px;
+    border-bottom: 2px groove $border-color;
+    padding: 5px 0;
+}
+
+.panel-dark {
+    height: 353px;
+    overflow: auto;
+    div {
+        border: 1px solid $border-color;
+        position: relative;
+        cursor: pointer;
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+        
+        img {
+            width: 100%;
+        }
+        &:hover:not(.selected):after {
+            @include overlay($hover-fill-color, $selected-border-color);
+        }
+    }
+    
+
+}
+
+.selected {
+    &:after {
+        @include overlay($selected-fill-color, $selected-border-color);
+    }
+}
