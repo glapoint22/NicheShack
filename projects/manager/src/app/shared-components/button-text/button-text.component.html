@@ -1,0 +1,116 @@
+<!-- ----------------------Tab Title-------------- -->
+<div class="tab-title">Text</div>
+
+
+<!-- -------------------Name------------------------ -->
+<div class="property-row">
+
+    <!-- Name -->
+    <div style="user-select: none; margin-right: 5px;">Caption:</div> 
+
+    <!-- Value -->
+    <div class="display-flex">
+        <!-- Text Box --> <input type="text" style="width: 100%; max-width: 150px; background-color: #252525;border: 1px solid #6c6c6c"> 
+         
+    </div>
+</div>
+
+
+
+
+
+<!-- -------------------Color------------------- -->
+<div class="property-row" style="padding-top: 8px; padding-bottom: 8px;">
+
+    <!-- Name -->
+    <div style="user-select: none;">Color:</div>
+
+    <!-- Color Swatch -->
+    <div class="color-swatch-outer-border">
+        <div class="color-swatch-innter-border">
+            <div class="color-swatch-background">
+                <div class="color-swatch-color" style="background-color: rgba(0, 255, 0, 0.3);"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- -------------------Font------------------------ -->
+<div class="property-row" style="padding-top: 8px; padding-bottom: 8px;">
+
+    <!-- Name -->
+    <div style="user-select: none; margin-right: 5px;">Font:</div> 
+
+    <!-- Value -->
+    <div class="display-flex">
+
+        <!-- Dropdown -->
+        <select style="width: 100%; max-width: 150px;">
+            <option value="Arial">Arial</option>
+            <option value="New Times Roman">New Times Roman</option>
+        </select>
+
+    </div>
+</div>
+
+
+<!-- -------------------Font Size------------------------ -->
+<div class="property-row" style="padding-top: 8px; padding-bottom: 8px;">
+
+    <!-- Name -->
+    <div style="user-select: none;">Font Size:</div> 
+
+    <!-- Value -->
+    <div class="display-flex">
+       
+        <!-- Dropdown -->
+        <select onchange="this.nextElementSibling.children[0].value=this.value" style="width:55px; position:relative;">
+            <option value="6">6</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="14">14</option>
+            <option value="18">18</option>
+            <option value="24">24</option>
+            <option value="30">30</option>
+            <option value="36">36</option>
+            <option value="48">48</option>
+            <option value="60">60</option>
+            <option value="72">72</option>
+        </select>
+
+        <!-- Input text overlaying dropdown for input ability -->
+        <div class="font-size-input-container">
+            <input type="text">
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- -------------------Style------------------------ -->
+<div class="property-row" style="border-bottom: 1px solid #363636; padding-top: 7px; padding-bottom: 7px;">
+
+    <!-- Name -->
+    <div style="user-select: none;">Style:</div> 
+
+    <!-- Value -->
+    <div class="display-flex">
+        
+        <!-- Bold -->
+        <div class="icon-container selected" title="Bold (Ctrl+B)">
+            <i class="fas fa-bold"></i>
+        </div>
+
+        <!-- Italic -->
+        <div class="icon-container" title="Italic (Ctrl+I)">
+            <i class="fas fa-italic"></i>
+        </div>
+
+    </div>
+</div>

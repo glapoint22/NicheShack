@@ -1,0 +1,16 @@
+input, select {
+    background-color: #252525;
+    border: 1px solid #6c6c6c;
+}
+
+.radio-buttons-container {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.radio-button-option-container {
+    display:flex;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 4px;
+}

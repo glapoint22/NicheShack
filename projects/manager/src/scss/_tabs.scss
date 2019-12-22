@@ -52,7 +52,8 @@
     max-width: 35px;
     width: 100%;
 
-    .vertical-tab {
+
+    .vertical-tab-lighter {
         margin-left: 4px;
         width: 30px;
         height: 40px;
@@ -69,7 +70,7 @@
         color: #5d5d5d;
         cursor: pointer;
         user-select: none;
-        &:hover:not(.selected-vertical-tab) {
+        &:hover:not(.selected-vertical-tab-Lighter) {
             background: lighten(#383838, 3%);
             color: lighten(#5d5d5d, 10%);
             border-top-color: lighten(#424242, 6%);
@@ -78,7 +79,37 @@
         }
     }
 
-    .selected-vertical-tab {
+    
+
+    .vertical-tab {
+        margin-left: 4px;
+        width: 30px;
+        height: 40px;
+        font-size: 16px;
+        background: #2b2b2b;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid #333333;
+        border-bottom: 1px solid #1d1d1d;
+        border-left: 1px solid #383838;
+        border-top-left-radius: 7px;
+        border-bottom-left-radius: 7px;
+        color: #444444;
+        cursor: pointer;
+        user-select: none;
+        &:hover:not(.selected-vertical-tab) {
+            background: lighten(#2b2b2b, 3%);
+            color: lighten(#444444, 10%);
+            border-top-color: lighten(#333333, 6%);
+            border-bottom-color: lighten(#1d1d1d, 6%);
+            border-left-color: lighten(#383838, 6%);
+        }
+    }
+
+
+
+    .selected-vertical-tab-Lighter {
         margin-left: 0px;
         width: 35px;
         background: #414141;
@@ -88,4 +119,17 @@
         color: #c4c4c4;
         cursor: default;
     }
+
+
+    .selected-vertical-tab {
+        margin-left: 0px;
+        width: 35px;
+        background: #303030;
+        border-left: 1px solid #4a4a4a;
+        border-top: 1px solid #414141;
+        border-bottom: 1px solid #202020;
+        color: #999999;
+        cursor: default;
+    }
 }
+

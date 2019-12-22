@@ -9,48 +9,105 @@
 <!-- Panel Light -->
 <div class="panel-light display-flex">
 
-    
-    <!-- Vertical Tabs -->
-    <div class="vertical-tabs-container">
+    <ng-container *ngIf="true">
 
-        <!-- Fill -->
-        <div title="Fill" class="vertical-tab"> <i class="fas fa-fill-drip"></i> </div>
+        <!-- Vertical Tabs -->
+        <div class="vertical-tabs-container">
 
-        <!-- Border -->
-        <div title="Border" class="vertical-tab"> <i class="far fa-square"></i> </div>
+            <!-- Fill -->
+            <div title="Fill" class="vertical-tab-lighter selected-vertical-tab-Lighter"> <i class="fas fa-fill-drip"></i> </div>
 
-        <!-- Corners -->
-        <div title="Corners" class="vertical-tab"> <i class="fas fa-expand"></i> </div>
+            <!-- Border -->
+            <div title="Border" class="vertical-tab-lighter"> <i class="far fa-square"></i> </div>
 
-        <!-- Text -->
-        <div title="Text" class="vertical-tab" style="font-family: 'Times New Roman', Times, serif; font-size: 22px;">T</div>
+            <!-- Corners -->
+            <div title="Corners" class="vertical-tab-lighter"> <i class="fas fa-expand"></i> </div>
 
-        <!-- Shadow -->
-        <div title="Shadow" class="vertical-tab selected-vertical-tab"> <i class="fas fa-clone" style="transform: scaleX(-1);"> </i> </div>
+            <!-- Text -->
+            <div title="Text" class="vertical-tab-lighter" style="font-family: 'Times New Roman', Times, serif; font-size: 22px;">T</div>
 
-        <!-- Link -->
-        <div title="Link" class="vertical-tab"> <i class="fas fa-link"></i> </div>
+            <!-- Shadow -->
+            <div title="Shadow" class="vertical-tab-lighter"> <i class="fas fa-clone" style="transform: scaleX(-1);"> </i> </div>
 
-        <!-- Margins -->
-        <div title="Margins" class="vertical-tab" style="margin-bottom: 10px;"> <i class="fas fa-arrow-left" style="display: flex; align-items: center;"> <span style="font-size: 20px; font-family: Arial">I</span> </i> </div>
-    </div>
+            <!-- Link -->
+            <div title="Link" class="vertical-tab-lighter"> <i class="fas fa-link"></i> </div>
+
+            <!-- Margins -->
+            <div title="Margins" class="vertical-tab-lighter"> <i class="fas fa-arrow-left" style="display: flex; align-items: center;"> <span style="font-size: 20px; font-family: Arial">I</span> </i> </div>
+        </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="false">
+
+        <!-- Vertical Tabs -->
+        <div class="vertical-tabs-container">
+
+            <!-- Fill -->
+            <div title="Fill" class="vertical-tab-lighter selected-vertical-tab-Lighter"> <i class="fas fa-fill-drip"></i> </div>
+
+            <!-- Border -->
+            <div title="Border" class="vertical-tab-lighter"> <i class="far fa-square"></i> </div>
+
+            <!-- Text -->
+            <div title="Text" class="vertical-tab-lighter" style="font-family: 'Times New Roman', Times, serif; font-size: 22px;">T</div>
+
+        </div>
+
+    </ng-container>
 
 
     <!-- Panel Lighter -->
-    <div class="panel-lighter" style="border-radius: 10px;">
+    <div class="panel-lighter" style="height: 300px;">
     
-        <!-- <fill></fill> -->
-
-        <!-- <shadow></shadow> -->
-
-        <!-- <margins></margins> -->
+        <fill></fill>
 
         <!-- <border></border> -->
 
         <!-- <corners></corners> -->
 
-       <links></links>
+        <!-- <button-text></button-text> -->
 
+        <!-- <shadow></shadow> -->
+
+        <!-- <links></links> -->
+
+        <!-- <margins></margins> -->
+
+
+        <!-- --------------Border (Hover)-------------- -->
+        <!-- <div class="tab-title">Border</div>
+
+        <div class="property-row" style="padding-top: 9px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
+
+            <div style="user-select: none;">Color:</div>
+
+            <div class="color-swatch-outer-border">
+                <div class="color-swatch-innter-border">
+                    <div class="color-swatch-background">
+                        <div style="width: 100%; height: 100%; background-color: rgba(0, 255, 0, 0.3);"></div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+
+         <!-- ---------------Text (Hover)-------------- -->
+         <!-- <div class="tab-title">Text</div>
+
+         <div class="property-row" style="padding-top: 9px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
+ 
+             <div style="user-select: none;">Color:</div>
+ 
+             <div class="color-swatch-outer-border">
+                 <div class="color-swatch-innter-border">
+                     <div class="color-swatch-background">
+                         <div style="width: 100%; height: 100%; background-color: rgba(0, 255, 0, 0.3);"></div>
+                     </div>
+                 </div>
+             </div>
+         </div> -->
 
     </div>
 </div>
