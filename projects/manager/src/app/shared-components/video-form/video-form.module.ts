@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VideoFormComponent } from './video-form.component';
 import { MarginsModule } from '../margins/margins.module';
+import { MediaBrowserModule } from '../media-browser/media-browser.module';
 
 
 
@@ -9,7 +10,8 @@ import { MarginsModule } from '../margins/margins.module';
   declarations: [VideoFormComponent],
   imports: [
     CommonModule,
-    MarginsModule
+    MarginsModule,
+    MediaBrowserModule
   ],
   
   exports: [VideoFormComponent]
