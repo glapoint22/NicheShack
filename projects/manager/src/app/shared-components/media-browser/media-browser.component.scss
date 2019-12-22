@@ -16,14 +16,16 @@ $img-size: 100px;
     position: absolute;
     bottom: 0;
     top: 0;
+    &::-webkit-scrollbar {
+        width: 0;
+      }
 }
 
 .media {
     position: relative;
-    width: 100%;
-    max-width: $img-size;
-    background: #363636;
-    border: 1px solid #404040;
+    width: $img-size;
+    height: $img-size;
+    border: 1px solid #303030;
     box-sizing: content-box;
     display: flex;
     justify-content: center;
