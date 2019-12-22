@@ -15,6 +15,8 @@ import { ProductDescriptionComponent } from './product-description/product-descr
 import { HierarchyMenuComponent } from './hierarchy-menu/hierarchy-menu.component';
 import { ColorPickerModule } from '../../shared-components/color-picker/color-picker.module';
 import { VideoFormModule } from '../../shared-components/video-form/video-form.module';
+import { CarouselFormModule } from '../../shared-components/carousel-form/carousel-form.module';
+import { ImageFormModule } from '../../shared-components/image-form/image-form.module';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { VideoFormModule } from '../../shared-components/video-form/video-form.m
     MenuBarModule,
     MediaBrowserModule,
     ColorPickerModule,
-    VideoFormModule
+    VideoFormModule,
+    CarouselFormModule,
+    ImageFormModule
   ]
 })
 export class NicheShackEditorModule { }
