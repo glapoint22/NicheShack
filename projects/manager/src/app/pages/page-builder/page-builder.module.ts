@@ -9,6 +9,7 @@ import { LinkFormModule } from '../../shared-components/link-form/link-form.modu
 import { ButtonFormModule } from '../../shared-components/button-form/button-form.module';
 import { VideoFormModule } from '../../shared-components/video-form/video-form.module';
 import { TextFormModule } from '../../shared-components/text-form/text-form.module';
+import { ContainerFormModule } from '../../shared-components/container-form/container-form.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { TextFormModule } from '../../shared-components/text-form/text-form.modu
     LinkFormModule,
     ButtonFormModule,
     VideoFormModule,
-    TextFormModule
+    TextFormModule,
+    ContainerFormModule
   ]
 })
 export class PageBuilderModule { }
