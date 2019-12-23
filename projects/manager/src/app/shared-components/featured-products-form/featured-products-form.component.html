@@ -1,0 +1,71 @@
+<div class="display-flex">
+
+    <!-- Vertical Tabs -->
+    <div class="vertical-tabs-container">
+
+        <!-- Caption -->
+        <div title="Caption" class="vertical-tab selected-vertical-tab"
+            style="font-family: 'Times New Roman', Times, serif; font-size: 22px;">
+            T
+        </div>
+
+        <!-- Products -->
+        <div title="Products" class="vertical-tab">
+            <i class="fas fa-th"></i>
+        </div>
+    </div>
+
+    <!-- Panel Light -->
+    <div class="panel-light-rounded">
+        <!-- Caption -->
+        <ng-container *ngIf="false">
+            <div class="tab-title">Caption</div>
+            <input class="width-100">
+        </ng-container>
+
+
+        <!-- Products -->
+        <ng-container *ngIf="true">
+            <div class="tab-title">Products</div>
+
+            <div class="filter-dropdown margin-bottom-2">
+                <input>
+
+                <!-- Dropdown -->
+                <div *ngIf="false">
+                    <div>How to be a <span> Gumpy</span></div>
+                    <div>How Many <span> Gumpy</span>s does it take to screw in a light bulb</div>
+                    <div>To Be or Not To Be a <span> Gumpy</span></div>
+                    <div><span>Gumpy</span>'s - Flavor of the week</div>
+                    <div>The <span> Gumpy</span> Way</div>
+                    <div>How to be a <span> Gumpy</span></div>
+                    <div>How Many <span> Gumpy</span>s does it take to screw in a light bulb</div>
+                    <div>To Be or Not To Be a <span> Gumpy</span></div>
+                    <div><span>Gumpy</span>'s - Flavor of the week</div>
+                    <div>The <span> Gumpy</span> Way</div>
+                </div>
+            </div>
+
+
+            <!-- Icons -->
+            <div class="icon-bar">
+                <div class="icon-container">
+                    <i class="fas fa-trash-alt" title="Remove Product"></i>
+                </div>
+            </div>
+
+            <!-- Featured products -->
+            <select class="panel-dark" multiple>
+                <option>1 Hour Belly Blast Diet</option>
+                <option>14 Day Rapid Fat Loss Plan</option>
+                <option>7 Day Blood Presure Solution</option>
+            </select>
+        </ng-container>
+    </div>
+</div>
+
+<!-- Buttons -->
+<div class="form-button-container">
+    <button>Ok</button>
+    <button>Cancel</button>
+</div>
