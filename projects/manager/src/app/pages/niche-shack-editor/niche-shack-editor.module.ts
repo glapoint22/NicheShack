@@ -17,6 +17,9 @@ import { ColorPickerModule } from '../../shared-components/color-picker/color-pi
 import { VideoFormModule } from '../../shared-components/video-form/video-form.module';
 import { CarouselFormModule } from '../../shared-components/carousel-form/carousel-form.module';
 import { ImageFormModule } from '../../shared-components/image-form/image-form.module';
+import { LineFormModule } from '../../shared-components/line-form/line-form.module';
+import { FeaturedProductsFormModule } from '../../shared-components/featured-products-form/featured-products-form.module';
+import { CategoriesFormModule } from '../../shared-components/categories-form/categories-form.module';
 
 
 @NgModule({
@@ -39,7 +42,10 @@ import { ImageFormModule } from '../../shared-components/image-form/image-form.m
     ColorPickerModule,
     VideoFormModule,
     CarouselFormModule,
-    ImageFormModule
+    ImageFormModule,
+    LineFormModule,
+    FeaturedProductsFormModule,
+    CategoriesFormModule
   ]
 })
 export class NicheShackEditorModule { }

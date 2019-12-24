@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MenuBarComponent } from './menu-bar.component';
 import { MessageFormComponent } from './message-form/message-form.component';
 import { ProductReportFormComponent } from './product-report-form/product-report-form.component';
-import { FeaturedProductsFormComponent } from './featured-products-form/featured-products-form.component';
 import { ReviewComplaintFormComponent } from './review-complaint-form/review-complaint-form.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
@@ -15,7 +14,6 @@ import { NavigationMenuComponent } from './navigation-menu/navigation-menu.compo
     MenuBarComponent,
     MessageFormComponent,
     ProductReportFormComponent,
-    FeaturedProductsFormComponent,
     ReviewComplaintFormComponent,
     NotificationsComponent,
     NavigationMenuComponent
@@ -27,7 +25,6 @@ import { NavigationMenuComponent } from './navigation-menu/navigation-menu.compo
     MenuBarComponent,
     MessageFormComponent,
     ProductReportFormComponent,
-    FeaturedProductsFormComponent,
     ReviewComplaintFormComponent,
     NotificationsComponent,
     NavigationMenuComponent
