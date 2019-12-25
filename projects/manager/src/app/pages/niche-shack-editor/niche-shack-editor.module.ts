@@ -20,6 +20,7 @@ import { ImageFormModule } from '../../shared-components/image-form/image-form.m
 import { LineFormModule } from '../../shared-components/line-form/line-form.module';
 import { FeaturedProductsFormModule } from '../../shared-components/featured-products-form/featured-products-form.module';
 import { CategoriesFormModule } from '../../shared-components/categories-form/categories-form.module';
+import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CategoriesFormModule } from '../../shared-components/categories-form/ca
     ImageFormModule,
     LineFormModule,
     FeaturedProductsFormModule,
-    CategoriesFormModule
+    CategoriesFormModule,
+    WidgetsModule
   ]
 })
 export class NicheShackEditorModule { }

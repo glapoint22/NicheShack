@@ -1,0 +1,15 @@
+@import '../../../../scss/variables';
+
+.widget {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    background: white;
+}
+
+svg {
+    width: 50%;
+    height: 50%;
+    fill: $selected-border-color;
+}
