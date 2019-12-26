@@ -1,27 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContainerFormComponent } from './container-form.component';
+import { RowFormComponent } from './row-form.component';
 import { FillModule } from '../fill/fill.module';
 import { BorderModule } from '../border/border.module';
 import { CornersModule } from '../corners/corners.module';
 import { ShadowModule } from '../shadow/shadow.module';
-import { MarginsModule } from '../margins/margins.module';
 import { PaddingModule } from '../padding/padding.module';
+import { AlignmentModule } from '../alignment/alignment.module';
 
 
 
 @NgModule({
-  declarations: [ContainerFormComponent],
+  declarations: [
+    RowFormComponent],
   imports: [
     CommonModule,
     FillModule,
     BorderModule,
     CornersModule,
     ShadowModule,
-    MarginsModule,
-    PaddingModule
+    PaddingModule,
+    AlignmentModule
   ],
 
-  exports: [ContainerFormComponent]
+  exports: [RowFormComponent]
 })
-export class ContainerFormModule { }
+export class RowFormModule { }

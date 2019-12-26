@@ -11,6 +11,7 @@ import { VideoFormModule } from '../../shared-components/video-form/video-form.m
 import { TextFormModule } from '../../shared-components/text-form/text-form.module';
 import { ContainerFormModule } from '../../shared-components/container-form/container-form.module';
 import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
+import { RowFormModule } from '../../shared-components/row-form/row-form.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
     VideoFormModule,
     TextFormModule,
     ContainerFormModule,
-    WidgetsModule
+    WidgetsModule,
+    RowFormModule
   ]
 })
 export class PageBuilderModule { }
