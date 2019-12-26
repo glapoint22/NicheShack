@@ -12,6 +12,7 @@ import { TextFormModule } from '../../shared-components/text-form/text-form.modu
 import { ContainerFormModule } from '../../shared-components/container-form/container-form.module';
 import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
 import { RowFormModule } from '../../shared-components/row-form/row-form.module';
+import { DesignerModule } from '../../shared-components/designer/designer.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { RowFormModule } from '../../shared-components/row-form/row-form.module'
     TextFormModule,
     ContainerFormModule,
     WidgetsModule,
-    RowFormModule
+    RowFormModule,
+    DesignerModule
   ]
 })
 export class PageBuilderModule { }

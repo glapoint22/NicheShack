@@ -21,6 +21,8 @@ import { LineFormModule } from '../../shared-components/line-form/line-form.modu
 import { FeaturedProductsFormModule } from '../../shared-components/featured-products-form/featured-products-form.module';
 import { CategoriesFormModule } from '../../shared-components/categories-form/categories-form.module';
 import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
+import { NicheFormComponent } from './niche-form/niche-form.component';
+import { DesignerModule } from '../../shared-components/designer/designer.module';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
     HierarchyComponent,
     ProductEditorComponent,
     ProductDescriptionComponent,
-    HierarchyMenuComponent
+    HierarchyMenuComponent,
+    NicheFormComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +50,8 @@ import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
     LineFormModule,
     FeaturedProductsFormModule,
     CategoriesFormModule,
-    WidgetsModule
+    WidgetsModule,
+    DesignerModule
   ]
 })
 export class NicheShackEditorModule { }

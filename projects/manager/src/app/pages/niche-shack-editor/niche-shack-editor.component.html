@@ -1,4 +1,4 @@
-<!-- <menu-bar></menu-bar> -->
+<menu-bar></menu-bar>
 
 <!-- <dialog-box [dialogBoxName]="'Message'">
     <message-form></message-form>
@@ -26,17 +26,23 @@
     <media-browser></media-browser>
 </dialog-box> -->
 
-<!-- <div class="content">
-
+<div class="content">
+    <!-- Hierarchy -->
     <hierarchy-container class="show-md">
         <hierarchy></hierarchy>
     </hierarchy-container>
 
-
-    <div class="width-100">
+    <!-- Product Form -->
+    <div *ngIf="true" class="width-100">
         <product-form></product-form>
     </div>
-</div> -->
+    
+    <!-- Niche Form -->
+    <div *ngIf="false" class="niche-form-container">
+        <niche-form></niche-form>
+    </div>
+    
+</div>
 
 
 
@@ -69,35 +75,3 @@
 <!-- <dialog-box [dialogBoxName]="'Categories'" [width]="400">
     <categories-form></categories-form>
 </dialog-box> -->
-
-<div class="grid" style="max-width: 1496px; margin-top: 50px;">
-    <div class="row" style="align-items: flex-start;">
-        <div class="col-2">
-            <text-widget></text-widget>
-        </div>
-
-        <div class="col-2">
-            <button-widget></button-widget>
-        </div>
-
-        <div class="col-2">
-            <image-widget></image-widget>
-        </div>
-
-        <div class="col-2">
-            <video-widget></video-widget>
-        </div>
-
-        <div class="col-2">
-            <container-widget></container-widget>
-        </div>
-
-        <div class="col-2">
-            <line-widget></line-widget>
-        </div>
-
-
-
-
-    </div>
-</div>

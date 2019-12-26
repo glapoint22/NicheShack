@@ -1,27 +1,27 @@
 .form {
-    width: initial;
     height: 100%;
     position: relative;
 }
 
 .tabs-container {
-    margin-top: 1rem;
-    margin-left: 1rem;
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 .panel-light {
     position: absolute;
     overflow: auto;
-    top: 73px;
-    left: 1rem;
-    right: 1rem;
+    top: 67px;
+    left: 10px;
+    right: 10px;
     width: initial;
-    bottom: 55px;
+    bottom: 10px;
 }
 
-.buttons-container {
+.designer-container {
     position: absolute;
-    bottom: 16px;
-    left: 0;
-    right: 0;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
 }

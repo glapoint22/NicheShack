@@ -14,16 +14,13 @@
     </div>
 
     <div class="panel-light">
-        <product-editor></product-editor>
-    </div>
-
-    <!-- Button Container -->
-    <div class="buttons-container">
-        <div class="form-button-container">
-            <button>Publish</button>
-            <button>Close</button>
+        <!-- Product -->
+        <product-editor *ngIf="true"></product-editor>
+        
+        <!-- Email -->
+        <div *ngIf="false" class="designer-container">
+            <designer></designer>
         </div>
+
     </div>
-
-
 </div>
