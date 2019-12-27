@@ -1,29 +1,6 @@
 <!-- Page Builder Container -->
 <div class="page-builder-container">
 
-    <!-- Top Bar -->
-    <div class="top-bar">
-
-        <!-- Left Section -->
-        <div></div>
-
-        <!-- Middle Section -->
-        <div>
-            <!-- Width / Height Display -->
-            <div>
-                <input type="text">
-                <span>x</span>
-                <input type="text">
-            </div>
-        </div>
-
-        <!-- Right Section -->
-        <div>
-            <button>Publish</button>
-            <button>Preview</button>
-        </div>
-    </div>
-
     <!-- Bottom Section -->
     <div class="bottom-section">
 
@@ -58,10 +35,13 @@
 
             <!-- Page Select Bar -->
             <div class="page-select-bar">
+
+                <!-- Page Menu Dropdown -->
                 <div class="page-menu">
                     <div>Home</div>
                     <i class="fas fa-chevron-down"></i>
                 </div>
+
 
                 <!-- Page Dropdown -->
                 <div *ngIf="false" class="page-dropdown">
@@ -112,6 +92,35 @@
                         </div>
                     </div>
                 </div>
+
+
+
+                <!-- Width / Height Display Container -->
+                <div class="width-height-display-container">
+
+                    <!-- Width / Height Display -->
+                   <div class="width-height-display">
+                       <input type="text">
+                       <span>x</span>
+                       <input type="text">
+                   </div>
+               </div>
+
+               <!-- Publish Dropdown Container -->
+               <div class="publish-dropdown-container">
+
+                   <!-- Publish Dropdown -->
+                   <div class="publish-dropdown">
+                       <i class="fas fa-chevron-down"></i>
+                   </div>
+               </div>
+
+              
+               <!-- Publish Dropdown Menu -->
+               <div *ngIf="false" class="publish-dropdown-menu">
+                   <div class="publish-dropdown-option">Preview</div>
+                   <div class="publish-dropdown-option">Publish</div>
+               </div>
             </div>
 
             <!-- Design Area Background -->
@@ -133,11 +142,11 @@
                         <!-- Row -->
                         <div class="row">
 
-                            <!-- <div class="col-12">
+                            <div class="col-12">
 
-                                <button-widget></button-widget>
+                                <!-- <button-widget></button-widget> -->
 
-                            </div> -->
+                            </div>
 
                             <!-- Edit -->
                             <div class="row-edit">Edit</div>
@@ -146,11 +155,10 @@
                             <div class="row-move"><i class="fas fa-arrows-alt-v"></i></div>
 
 
-
                             <!-- Drop Indicators -->
-                            <!-- <div class="drop-indicator-vertical"></div>
-                            <div class="drop-indicator-vertical"></div>
-                            <div class="drop-indicator-vertical"></div> -->
+                            <!-- <div class="drop-indicator"></div>
+                            <div class="drop-indicator"></div>
+                            <div class="drop-indicator"></div> -->
 
                         </div>
                     </div>
