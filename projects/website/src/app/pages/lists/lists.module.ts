@@ -9,10 +9,10 @@ import { DropdownButtonModule } from '../../shared-components/dropdown-button/dr
 import { FormsModule } from '@angular/forms';
 import { CreateListModule } from '../../shared-components/create-list/create-list.module';
 import { ManageCollaboratorsComponent } from './manage-collaborators/manage-collaborators.component';
-import { ShowHideModule } from '../../directives/show-hide/show-hide.module';
 import { DeleteListComponent } from './delete-list/delete-list.component';
 import { EditListComponent } from './edit-list/edit-list.component';
 import { ShareListComponent } from './share-list/share-list.component';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 
 
 @NgModule({
