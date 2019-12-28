@@ -2,11 +2,10 @@
     position: relative;
     top: 1px;
     height: 27px;
-    margin-right: 1rem;
-    overflow: auto;
+    margin-right: 10px;
+    display: flex;
     .tab {
-        position: absolute;
-        top: 4px;
+        margin-top: 4px;
         height: 22px;
         background: #2d2d2d;
         display: flex;
@@ -28,10 +27,14 @@
             border-right-color: lighten(#222222, 10%);
             border-left-color: lighten(#353535, 10%);
         }
+
+        &:nth-child(n + 2) {
+            margin-left: -1px;
+        }
     }
 
     .selected-tab {
-        top: 0;
+        margin-top: 0;
         height: 27px;
         background: #303030;
         border-left: 1px solid #414141;
@@ -43,6 +46,26 @@
 }
 
 
+%vertical-tab {
+    margin-left: 4px;
+    width: 30px;
+    height: 40px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    cursor: pointer;
+    user-select: none;
+}
+
+%selected-vertical-tab {
+    margin-left: 0px;
+    width: 35px;
+    cursor: default;
+}
+
 .vertical-tabs-container {
     position: relative;
     margin-top: 10px; 
@@ -53,51 +76,13 @@
     width: 100%;
     z-index: 1;
 
-    .vertical-tab-lighter {
-        margin-left: 4px;
-        width: 30px;
-        height: 40px;
-        font-size: 16px;
-        background: #383838;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-top: 1px solid #424242;
-        border-bottom: 1px solid #282828;
-        border-left: 1px solid #464646;
-        border-top-left-radius: 7px;
-        border-bottom-left-radius: 7px;
-        color: #5d5d5d;
-        cursor: pointer;
-        user-select: none;
-        &:hover:not(.selected-vertical-tab-Lighter) {
-            background: lighten(#383838, 3%);
-            color: lighten(#5d5d5d, 10%);
-            border-top-color: lighten(#424242, 6%);
-            border-bottom-color: lighten(#282828, 6%);
-            border-left-color: lighten(#464646, 6%);
-        }
-    }
-
-    
-
     .vertical-tab {
-        margin-left: 4px;
-        width: 30px;
-        height: 40px;
-        font-size: 16px;
+        @extend %vertical-tab;
         background: #2b2b2b;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         border-top: 1px solid #333333;
         border-bottom: 1px solid #1d1d1d;
         border-left: 1px solid #383838;
-        border-top-left-radius: 7px;
-        border-bottom-left-radius: 7px;
         color: #444444;
-        cursor: pointer;
-        user-select: none;
         &:hover:not(.selected-vertical-tab) {
             background: lighten(#2b2b2b, 3%);
             color: lighten(#444444, 10%);
@@ -107,29 +92,38 @@
         }
     }
 
-
-
-    .selected-vertical-tab-Lighter {
-        margin-left: 0px;
-        width: 35px;
-        background: #414141;
-        border-left: 1px solid #626262;
-        border-top: 1px solid #595959;
-        border-bottom: 1px solid #2e2e2e;
-        color: #c4c4c4;
-        cursor: default;
+    .vertical-tab-lighter {
+        @extend %vertical-tab;
+        background: #383838;
+        border-top: 1px solid #424242;
+        border-bottom: 1px solid #282828;
+        border-left: 1px solid #464646;
+        color: #5d5d5d;
+        &:hover:not(.selected-vertical-tab-Lighter) {
+            background: lighten(#383838, 3%);
+            color: lighten(#5d5d5d, 10%);
+            border-top-color: lighten(#424242, 6%);
+            border-bottom-color: lighten(#282828, 6%);
+            border-left-color: lighten(#464646, 6%);
+        }
     }
 
-
     .selected-vertical-tab {
-        margin-left: 0px;
-        width: 35px;
+        @extend %selected-vertical-tab;
         background: #303030;
         border-left: 1px solid #4a4a4a;
         border-top: 1px solid #414141;
         border-bottom: 1px solid #202020;
         color: #999999;
-        cursor: default;
+        
+    }
+
+    .selected-vertical-tab-Lighter {
+        @extend %selected-vertical-tab;
+        background: #414141;
+        border-left: 1px solid #626262;
+        border-top: 1px solid #595959;
+        border-bottom: 1px solid #2e2e2e;
+        color: #c4c4c4;
     }
 }
-

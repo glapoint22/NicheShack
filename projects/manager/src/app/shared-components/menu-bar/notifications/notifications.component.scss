@@ -7,6 +7,9 @@
     width: 100%; 
     max-width: 432px;
     margin-top: 9px;
+    z-index: 10;
+    outline: 0;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.75);
 }
 
 .bar {
@@ -31,7 +34,7 @@
         border-bottom: 15px solid #4f4f4f;
         position: absolute;
         top: -14px;
-        right: 69px;
+        right: 64px;
    }
    &:after {
         content: '';
@@ -41,7 +44,7 @@
         border-right: 13px solid transparent;
         border-bottom: 13px solid #2a2a2a;
         position: absolute;
-        right: 71px;
+        right: 66px;
         top: -12px;
    }
 }

@@ -1,8 +1,8 @@
 <div class="menu-bar">
-    <div class="icon-container" (mousedown)="menu.show = !menu.show">
+    <div class="icon-container" (mousedown)="navigationMenu.show = !navigationMenu.show">
         <div class="arrow-down"></div>
     </div>
-    <div class="icon-container position-relative">
+    <div class="icon-container position-relative" (mousedown)="notificationsMenu.show = !notificationsMenu.show">
         <i class="fas fa-bell font-size-4"></i>
         <div class="notification-circle">
             <div>3</div>
@@ -10,4 +10,5 @@
     </div>
     <div class="margin-right-4 font-size-2" style="color: white">Welcome, Gabe</div>
 </div>
-<navigation-menu #menu></navigation-menu>
+<navigation-menu #navigationMenu></navigation-menu>
+<notifications #notificationsMenu></notifications>

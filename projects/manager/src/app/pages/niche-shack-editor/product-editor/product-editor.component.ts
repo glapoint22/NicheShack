@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-editor.component.scss']
 })
 export class ProductEditorComponent implements OnInit {
+  public showMenu: boolean;
 
   constructor() { }
 

@@ -1,8 +1,22 @@
+
 <div class="grid">
 
-    <!-- Publish Button -->
-    <div class="publish-button">
-        <div> Publish</div>
+    <!-- Dropdown -->
+    <div class="dropdown-container">
+        <div class="icon-container" (mousedown)="showMenu = true">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+
+    <!-- Publish menu -->
+    <div *show="showMenu" class="fade-start menu-base" transitionClass="fade-end" tabindex="0"
+        (onHide)="showMenu = false" (blur)="showMenu = false">
+
+        <div (mousedown)="$event.stopPropagation()">
+            <div class="menu-option">
+                <div>Publish</div>
+            </div>
+        </div>
     </div>
 
 
