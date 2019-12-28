@@ -1,5 +1,5 @@
 <div class="menu-bar">
-    <div class="icon-container">
+    <div class="icon-container" (mousedown)="menu.show = !menu.show">
         <div class="arrow-down"></div>
     </div>
     <div class="icon-container position-relative">
@@ -10,4 +10,4 @@
     </div>
     <div class="margin-right-4 font-size-2" style="color: white">Welcome, Gabe</div>
 </div>
-<!-- <navigation-menu></navigation-menu> -->
+<navigation-menu #menu></navigation-menu>
