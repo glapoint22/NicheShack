@@ -23,6 +23,7 @@ import { CategoriesFormModule } from '../../shared-components/categories-form/ca
 import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
 import { NicheFormComponent } from './niche-form/niche-form.component';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { DesignerModule } from '../../shared-components/designer/designer.module
     FeaturedProductsFormModule,
     CategoriesFormModule,
     WidgetsModule,
-    DesignerModule
+    DesignerModule,
+    ShowHideModule,
   ]
 })
 export class NicheShackEditorModule { }

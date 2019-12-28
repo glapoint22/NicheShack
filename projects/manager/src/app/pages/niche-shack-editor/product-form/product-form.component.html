@@ -9,16 +9,16 @@
 
     <!-- Tabs -->
     <div class="tabs-container">
-        <div class="tab selected-tab">Product</div>
-        <div class="tab" style="left: 114px">Email</div>
+        <div class="tab" [ngClass]="{'selected-tab': showProduct}" (click)="showProduct = true">Product</div>
+        <div class="tab" [ngClass]="{'selected-tab': !showProduct}" (click)="showProduct = false">Email</div>
     </div>
 
     <div class="panel-light">
         <!-- Product -->
-        <product-editor *ngIf="true"></product-editor>
+        <product-editor *ngIf="showProduct"></product-editor>
         
         <!-- Email -->
-        <div *ngIf="false" class="designer-container">
+        <div *ngIf="!showProduct" class="designer-container">
             <designer></designer>
         </div>
 

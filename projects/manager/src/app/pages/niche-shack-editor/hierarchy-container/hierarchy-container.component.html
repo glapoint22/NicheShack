@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="base">
+    <div class="base" *ngIf="!isCollapsed">
 
         <!-- Search bar & filter menu -->
         <div class="position-relative">
@@ -7,29 +7,33 @@
             <div class="search-bar">
                 <div><i class="fas fa-search"></i></div>
                 <input>
-                <div></div>
+                <div (mousedown)="showMenu = true"></div>
             </div>
 
 
             <!-- Filter menu -->
-            <div *ngIf="false" class="filter-menu">
-                <label>
-                    <input type="radio" name="filter">
-                    <i class="fas fa-check"></i>
-                    Filter by Category
-                </label>
+            <div *show="showMenu" class="fade-start filter-menu" transitionClass="fade-end" tabindex="0"
+                (onHide)="showMenu = false" (blur)="showMenu = false">
 
-                <label>
-                    <input type="radio" name="filter">
-                    <i class="fas fa-check"></i>
-                    Filter by Niches
-                </label>
+                <div (mousedown)="$event.stopPropagation()">
+                    <label>
+                        <input type="radio" name="filter">
+                        <i class="fas fa-check"></i>
+                        Filter by Category
+                    </label>
 
-                <label>
-                    <input type="radio" name="filter" checked>
-                    <i class="fas fa-check"></i>
-                    Filter by Products
-                </label>
+                    <label>
+                        <input type="radio" name="filter">
+                        <i class="fas fa-check"></i>
+                        Filter by Niches
+                    </label>
+
+                    <label>
+                        <input type="radio" name="filter" checked>
+                        <i class="fas fa-check"></i>
+                        Filter by Products
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -41,14 +45,29 @@
                 <i class="fas fa-minus-square"></i>
             </div>
 
-            <!-- Trash -->
-            <div class="icon-container" title="Delete">
-                <i class="fas fa-trash-alt"></i>
-            </div>
-
             <!-- Add -->
             <div class="icon-container" title="Add">
                 <i class="fas fa-plus-circle"></i>
+            </div>
+
+            <!-- Rename -->
+            <div class="icon-container" title="Rename">
+                <i class="fas fa-pencil-alt"></i>
+            </div>
+
+            <!-- Copy -->
+            <div class="icon-container" title="Copy">
+                <i class="fas fa-copy"></i>
+            </div>
+
+            <!-- Duplicate -->
+            <div class="icon-container" title="Duplicate">
+                <i class="fas fa-clone"></i>
+            </div>
+
+            <!-- Delete -->
+            <div class="icon-container" title="Delete">
+                <i class="fas fa-trash-alt"></i>
             </div>
 
         </div>
@@ -72,6 +91,6 @@
 
 
     <!-- Expand / collapse bar -->
-    <div class="expand-collapse-bar"></div>
+    <div class="expand-collapse-bar" (click)="isCollapsed = !isCollapsed"></div>
 
 </div>

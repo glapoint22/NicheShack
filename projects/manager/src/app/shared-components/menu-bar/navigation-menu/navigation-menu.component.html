@@ -1,26 +1,26 @@
 <div *show="show" class="fade-start menu-base" transitionClass="fade-end" tabindex="0" (onHide)="show = false"
     (blur)="show = false">
     <div (mousedown)="$event.stopPropagation()">
-        <div class="menu-option">
-            <div routerLink="/">Niche Shack Editor</div>
+        <div  routerLink="/" class="menu-option">
+            <div>Niche Shack Editor</div>
         </div>
 
-        <div class="menu-option">
-            <div routerLink="/page-builder">Page Builder</div>
+        <div routerLink="/page-builder" class="menu-option">
+            <div>Page Builder</div>
         </div>
 
         <div class="menu-divider"></div>
 
-        <div class="menu-option">
-            <div routerLink="/change-name">Change Name</div>
+        <div routerLink="/change-name" class="menu-option">
+            <div>Change Name</div>
         </div>
 
-        <div class="menu-option">
-            <div routerLink="/change-email">Change Email</div>
+        <div routerLink="/change-email" class="menu-option">
+            <div>Change Email</div>
         </div>
 
-        <div class="menu-option">
-            <div routerLink="/change-password">Change Password</div>
+        <div routerLink="/change-password" class="menu-option">
+            <div>Change Password</div>
         </div>
 
         <div class="menu-divider"></div>

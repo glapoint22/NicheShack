@@ -48,46 +48,6 @@
 }
 
 
-// Filter Menu
-.filter-menu {
-    width: 135px;
-    background: #2a2a2a;
-    position: absolute;
-    right: 0;
-    border-top: 1px solid #454545;
-    border-right: 1px solid #141414;
-    border-bottom: 1px solid #0c0c0c;
-    border-left: 1px solid #3d3d3d;
-    box-shadow: 4px 4px 12px 0px rgba(0, 0, 0, 0.5);
-    z-index: 1;
-    label {
-        cursor: pointer;
-        width: 100%;
-        padding-left: 5px;
-        font-size: 13px;
-        &:not(:last-child){
-            margin-bottom: 5px;
-        }
-
-        &:hover {
-            background: $hover-fill-color;
-        } 
-    }
-
-    i {
-        visibility: hidden;
-        margin-right: 5px;
-        font-size: 11px;
-    }
-
-    input {
-        display: none;
-        &:checked ~ i {
-            visibility: visible;
-        }
-    }
-}
-
 .filter-dropdown {
     width: 100%;
     position: relative;
