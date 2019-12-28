@@ -22,11 +22,19 @@
             <!-- Carousel -->
             <img title="Carousel" src="/assets/Carousel.png" class="carousel">
             <!-- Product Groups -->
-            <div class="product-groups icon-container"> <i title="Product Groups" class="fas fa-layer-group"></i>
+
+
+
+
+            <div (mousedown)="menu.showProductGroupMenu = !menu.showProductGroupMenu" class="product-groups icon-container"> <i title="Product Groups" class="fas fa-layer-group"></i>
                 <div class="arrow-up"></div>
             </div>
             <!-- Categories -->
             <i title="Categories" class="fas fa-th icon-container"></i>
+
+
+
+            <product-group-menu #menu></product-group-menu>
         </div>
 
 
@@ -37,58 +45,73 @@
             <div class="page-select-bar">
 
                 <!-- Page Menu Dropdown -->
-                <div class="page-menu">
+                <!-- <div class="page-menu"> -->
+
+                <div class="page-menu" (mousedown)="showPageMenu = !showPageMenu">
+
+
+
                     <div>Home</div>
                     <i class="fas fa-chevron-down"></i>
                 </div>
 
 
                 <!-- Page Dropdown -->
-                <div *ngIf="false" class="page-dropdown">
-                    <input placeholder="Filter">
+                <div *show="showPageMenu" class="fade-start page-dropdown" transitionClass="fade-end" tabindex="0" (onHide)="showPageMenu = false" (blur)="showPageMenu = false">
 
-                    <div class="icon-bar">
+                    <div (mousedown)="$event.stopPropagation()">
 
-                        <!-- Add -->
-                        <div class="icon-container" title="Add Page">
-                            <i class="fas fa-plus-circle"></i>
+                        <div>
+
+                            <input placeholder="Filter" >
+
+
+                        </div>
+                        
+
+                        <div class="icon-bar">
+
+                            <!-- Add -->
+                            <div class="icon-container" title="Add Page">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+
+                            <!-- Rename -->
+                            <div class="icon-container" title="Rename Page">
+                                <i class="fas fa-pencil-alt"></i>
+                            </div>
+
+                            <!-- Copy -->
+                            <div class="icon-container" title="Copy Page">
+                                <i class="fas fa-copy"></i>
+                            </div>
+
+                            <!-- Duplicate -->
+                            <div class="icon-container" title="Duplicate Page">
+                                <i class="fas fa-clone"></i>
+                            </div>
+
+                            <!-- Color -->
+                            <div class="icon-container" title=" Page Background Color">
+                                <i class="fas fa-tint"></i>
+                            </div>
+
+                            <!-- Image -->
+                            <div class="icon-container" title=" Page Background Image">
+                                <i class="fas fa-image"></i>
+                            </div>
+
+                            <!-- Delete -->
+                            <div class="icon-container" title="Delete Page">
+                                <i class="fas fa-trash-alt"></i>
+                            </div>
                         </div>
 
-                        <!-- Rename -->
-                        <div class="icon-container" title="Rename Page">
-                            <i class="fas fa-pencil-alt"></i>
-                        </div>
-
-                        <!-- Copy -->
-                        <div class="icon-container" title="Copy Page">
-                            <i class="fas fa-copy"></i>
-                        </div>
-
-                        <!-- Duplicate -->
-                        <div class="icon-container" title="Duplicate Page">
-                            <i class="fas fa-clone"></i>
-                        </div>
-
-                        <!-- Color -->
-                        <div class="icon-container" title=" Page Background Color">
-                            <i class="fas fa-tint"></i>
-                        </div>
-
-                        <!-- Image -->
-                        <div class="icon-container" title=" Page Background Image">
-                            <i class="fas fa-image"></i>
-                        </div>
-
-                        <!-- Delete -->
-                        <div class="icon-container" title="Delete Page">
-                            <i class="fas fa-trash-alt"></i>
-                        </div>
-                    </div>
-
-                    <!-- Pages -->
-                    <div class="pages-container">
-                        <div class="page">
-                            Home
+                        <!-- Pages -->
+                        <div class="pages-container">
+                            <div class="page">
+                                Home
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -106,21 +129,28 @@
                    </div>
                </div>
 
+
+
+
+
+
                <!-- Publish Dropdown Container -->
                <div class="publish-dropdown-container">
 
                    <!-- Publish Dropdown -->
-                   <div class="publish-dropdown">
+                   <div class="publish-dropdown" (mousedown)="showPublishMenu = !showPublishMenu">
                        <i class="fas fa-chevron-down"></i>
                    </div>
                </div>
 
-              
-               <!-- Publish Dropdown Menu -->
-               <div *ngIf="false" class="publish-dropdown-menu">
-                   <div class="publish-dropdown-option">Preview</div>
-                   <div class="publish-dropdown-option">Publish</div>
-               </div>
+                <!-- Publish Dropdown Menu -->
+                <div *show="showPublishMenu" class="fade-start publish-dropdown-menu" transitionClass="fade-end" tabindex="0" (onHide)="showPublishMenu = false" (blur)="showPublishMenu = false">
+                
+                    <div (mousedown)="$event.stopPropagation()">
+                        <div class="publish-dropdown-option">Preview</div>
+                        <div class="publish-dropdown-option">Publish</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Design Area Background -->

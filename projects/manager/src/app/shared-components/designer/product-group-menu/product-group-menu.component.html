@@ -1,0 +1,32 @@
+<div *show="showProductGroupMenu" class="fade-start menu-base" transitionClass="fade-end" tabindex="0" (onHide)="showProductGroupMenu = false" (blur)="showProductGroupMenu = false">
+
+    <div (mousedown)="$event.stopPropagation()">
+        <div class="menu-option">
+            <div>Featured Products</div>
+        </div>
+
+        <div class="menu-option">
+            <div>Browsed Products</div>
+        </div>
+
+        <div class="menu-option">
+            <div>Related Browsed Products</div>
+        </div>
+
+        <div class="menu-option">
+            <div>Related Bought Products</div>
+        </div>
+
+        <div class="menu-option">
+            <div>Related Wishlist Products</div>
+        </div>
+
+        <div class="menu-option">
+            <div>Related Subscribed Products</div>
+        </div>
+
+        <div class="menu-option">
+            <div>Related Browsed Niche Products</div>
+        </div>
+    </div>
+</div>

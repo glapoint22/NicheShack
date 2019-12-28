@@ -141,10 +141,10 @@
     right: 5px;
     background: #303030;
     z-index: 10;
-    border-radius: 5px;
     border: 1px solid #4e4e4e;
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
     padding: 1px;
+    outline: 0;
 }
 
 .publish-dropdown-option {
@@ -325,6 +325,7 @@
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
     padding: 10px;
     border: 1px solid #4e4e4e;
+    outline: 0;
 
     input {
         width: 100%;
