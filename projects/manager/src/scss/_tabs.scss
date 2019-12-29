@@ -12,7 +12,7 @@
         justify-content: center;
         align-items: center;
         width: 115px;
-        border-top: 1px solid #353535;
+        border-top: 1px solid #3a3a3a;
         border-right: 1px solid #222222;
         border-left: 1px solid #353535;
         border-top-left-radius: 7px;
@@ -21,11 +21,11 @@
         cursor: pointer;
         user-select: none;
         &:hover:not(.selected-tab) {
-            background: lighten(#2d2d2d, 5%);
-            color: lighten(#8a8989, 10%);
-            border-top-color: lighten(#353535, 10%);
-            border-right-color: lighten(#222222, 10%);
-            border-left-color: lighten(#353535, 10%);
+            background: lighten(#2d2d2d, 2%);
+            color: lighten(#8a8989, 12%);
+            border-top-color: lighten(#353535, 8%);
+            border-right-color: lighten(#222222, 8%);
+            border-left-color: lighten(#353535, 8%);
         }
 
         &:nth-child(n + 2) {

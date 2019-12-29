@@ -24,8 +24,23 @@
 
 .icon-container {
     margin: 0 3px;
+    border-radius: 2px;
+
+    &:hover:not(.selected) {
+        background-color: $hover-fill-color;
+    }
 }
 
 textarea {
     height: 266px;
+}
+
+
+
+
+
+.selected {
+    background: $selected-fill-color;
+    border: 1px solid $selected-border-color;
+    color: #d2e5ff;
 }
