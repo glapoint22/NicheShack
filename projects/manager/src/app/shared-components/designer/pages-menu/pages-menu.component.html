@@ -1,0 +1,52 @@
+<div *show="show" class="fade-start page-dropdown" transitionClass="fade-end" tabindex="0" (onHide)="show = false"
+    (blur)="onBlur()">
+
+    <div (mousedown)="$event.stopPropagation()">
+        <input id="filter" placeholder="Filter" (blur)="onBlur()">
+
+        <div class="icon-bar">
+
+            <!-- Add -->
+            <div class="icon-container" title="Add Page">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+
+            <!-- Rename -->
+            <div class="icon-container" title="Rename Page">
+                <i class="fas fa-pencil-alt"></i>
+            </div>
+
+            <!-- Copy -->
+            <div class="icon-container" title="Copy Page">
+                <i class="fas fa-copy"></i>
+            </div>
+
+            <!-- Duplicate -->
+            <div class="icon-container" title="Duplicate Page">
+                <i class="fas fa-clone"></i>
+            </div>
+
+            <!-- Color -->
+            <div class="icon-container" title=" Page Background Color">
+                <i class="fas fa-tint"></i>
+            </div>
+
+            <!-- Image -->
+            <div class="icon-container" title=" Page Background Image">
+                <i class="fas fa-image"></i>
+            </div>
+
+            <!-- Delete -->
+            <div class="icon-container" title="Delete Page">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+        </div>
+
+        <!-- Pages -->
+        <div class="pages-container">
+            <div class="page">
+                Home
+            </div>
+        </div>
+    </div>
+</div>

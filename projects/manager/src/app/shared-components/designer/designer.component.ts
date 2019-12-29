@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class DesignerComponent implements OnInit {
 
   public showPublishMenu: boolean;
-  public showPageMenu: boolean;
 
   constructor() { }
 
