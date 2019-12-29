@@ -17,7 +17,7 @@ export class PagesMenuComponent implements OnInit {
     // This will make sure the menu will not hide when an input gets the focus
     window.setTimeout(() => {
       let element = document.activeElement;
-      if (element.id != 'show-hide' && element.nodeName != 'INPUT') this.show = false;
+      if (element.id != 'show-hide' && element.id != 'pages-menu-input') this.show = false;
     })
   }
 }
