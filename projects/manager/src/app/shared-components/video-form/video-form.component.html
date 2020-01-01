@@ -2,24 +2,19 @@
 
     <!-- Vertical Tabs -->
     <div class="vertical-tabs-container">
-
         <!-- Video -->
-        <div title="Video" class="vertical-tab selected-vertical-tab">
-            <i class="fas fa-film"></i>
-        </div>
-
+        <div title="Video" class="vertical-tab" [ngClass]="{'selected-vertical-tab': showVideo}" (click)="showVideo = true"> <i class="fas fa-film"></i> </div>
         <!-- Margins -->
-        <div title="Margins" class="vertical-tab">
-            <i class="fas fa-arrow-left"></i>
-        </div>
-
+        <div title="Margins" class="vertical-tab" [ngClass]="{'selected-vertical-tab': !showVideo}" (click)="showVideo = false"> <i class="fas fa-arrow-left"></i> </div>
     </div>
 
-    <!-- Panel Light -->
-    <div class="panel-light-rounded">
 
-        <!-- <margins></margins> -->
-        <media-browser [mediaType]="'video'"></media-browser>
+    <!-- Properties -->
+    <div class="panel-light-rounded">
+        <!-- Video -->
+        <media-browser *ngIf="showVideo" [mediaType]="'video'"></media-browser>
+        <!-- Margins -->
+        <margins *ngIf="!showVideo"></margins>
     </div>
 </div>
 
