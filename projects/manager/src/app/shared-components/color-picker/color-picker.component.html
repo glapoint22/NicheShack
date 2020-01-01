@@ -1,68 +1,77 @@
-<div style="display: flex;">
-    <div class="color-container" [style.background]="'hsl(' + hue + ', 100%, 50%)'">
-        <div class="saturation"></div>
-        <div class="lightness"></div>
-        <div class="picker" style="top: 100%; left: 100%;"></div>
+<div class="panel-light">
+
+    <div style="display: flex;">
+        <div class="color-container" [style.background]="'hsl(' + hue + ', 100%, 50%)'">
+            <div class="saturation"></div>
+            <div class="lightness"></div>
+            <div class="picker" style="top: 100%; left: 100%;"></div>
+        </div>
+
+        <!-- Hue -->
+        <div class="color-strip hue">
+            <div class="slider fas" style="top: 0;"></div>
+        </div>
+
+        <!-- Alpha -->
+        <div class="color-strip checkered-pattern">
+            <div class="position-absolute-identity" style="background: linear-gradient(red, transparent)"></div>
+            <div class="slider fas" style="top: 0;"></div>
+        </div>
+
     </div>
 
-    <!-- Hue -->
-    <div class="color-strip hue">
-        <div class="slider fas" style="top: 0;"></div>
-    </div>
-
-    <!-- Alpha -->
-    <div class="color-strip checkered-pattern">
-        <div class="position-absolute-identity" style="background: linear-gradient(red, transparent)"></div>
-        <div class="slider fas" style="top: 0;"></div>
-    </div>
-
-</div>
 
 
+    <!-- Color properties -->
+    <div class="display-flex margin-top-2 flex-wrap flex-nowrap-xxs justify-content-center justify-content-between-xxs">
+        <div class="color-properties">
+            <div class="display-flex">
+                <div>
+                    <div>R</div>
+                    <input maxlength="3">
+                </div>
 
-<!-- Color properties -->
-<div class="display-flex margin-top-2 flex-wrap flex-nowrap-xxs justify-content-center justify-content-between-xxs">
-    <div class="color-properties">
-        <div class="display-flex">
-            <div>
-                <div>R</div>
-                <input maxlength="3">
+
+                <div>
+                    <div>G</div>
+                    <input maxlength="3">
+                </div>
+
+
+                <div>
+                    <div>B</div>
+                    <input maxlength="3">
+                </div>
+
+
+                <div>
+                    <div>A</div>
+                    <input maxlength="3">
+                </div>
             </div>
 
-
-            <div>
-                <div>G</div>
-                <input maxlength="3">
-            </div>
-
-
-            <div>
-                <div>B</div>
-                <input maxlength="3">
-            </div>
-
-
-            <div>
-                <div>A</div>
-                <input maxlength="3">
+            <div style="margin: 10px 0 0">
+                <div>Hex</div>
+                <input style="width: 100%;">
             </div>
         </div>
 
-        <div style="margin: 10px 0 0">
-            <div>Hex</div>
-            <input style="width: 100%;">
-        </div>
-    </div>
 
-
-    <!-- New / Current -->
-    <div style="font-size: 11px;" class="margin-top-3 margin-top-0-xxs text-center">
-        <div style="margin-bottom: 2px;">New</div>
-        <div class="new-current-display">
-            <div style="background: red;"></div>
-            <div style="background: blue;"></div>
+        <!-- New / Current -->
+        <div style="font-size: 11px; width: 100%; max-width: 100px;" class="margin-top-3 margin-top-0-xxs text-center">
+            <div style="margin-bottom: 2px;">New</div>
+            <div class="new-current-display">
+                <div style="background: red;"></div>
+                <div style="background: blue;"></div>
+            </div>
+            <div style="margin-top: 2px">Current</div>
         </div>
-        <div style="margin-top: 2px">Current</div>
+        
     </div>
-    
+</div>  
+
+<!-- Button Container -->
+<div class="form-button-container">
+    <button>Cancel</button>
+    <button >OK</button>
 </div>
