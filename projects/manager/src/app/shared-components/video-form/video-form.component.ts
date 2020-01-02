@@ -5,11 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './video-form.component.html',
   styleUrls: ['./video-form.component.scss']
 })
-export class VideoFormComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class VideoFormComponent {
+  public showVideo: boolean = true;
 }

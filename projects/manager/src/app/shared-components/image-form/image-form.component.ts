@@ -5,11 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './image-form.component.html',
   styleUrls: ['./image-form.component.scss']
 })
-export class ImageFormComponent implements OnInit {
+export class ImageFormComponent {
+  public showVerticalTab: boolean[] = [true, false, false, false, false, false];
 
-  constructor() { }
-
-  ngOnInit() {
+  selectVerticalTab(index: number) {
+    for(var i = 0; i < 6; i++) {
+      this.showVerticalTab[i] = false;
+    }
+    this.showVerticalTab[index] = true;
   }
-
 }

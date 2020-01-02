@@ -5,11 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './text-form.component.html',
   styleUrls: ['./text-form.component.scss']
 })
-export class TextFormComponent implements OnInit {
+export class TextFormComponent {
+  public showVerticalTab: boolean[] = [true, false, false];
 
-  constructor() { }
-
-  ngOnInit() {
+  selectVerticalTab(index: number) {
+    for(var i = 0; i < 3; i++) {
+      this.showVerticalTab[i] = false;
+    }
+    this.showVerticalTab[index] = true;
   }
-
 }

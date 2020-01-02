@@ -5,11 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './line-form.component.html',
   styleUrls: ['./line-form.component.scss']
 })
-export class LineFormComponent implements OnInit {
+export class LineFormComponent {
+  public showVerticalTab: boolean[] = [true, false, false];
 
-  constructor() { }
-
-  ngOnInit() {
+  selectVerticalTab(index: number) {
+    for(var i = 0; i < 3; i++) {
+      this.showVerticalTab[i] = false;
+    }
+    this.showVerticalTab[index] = true;
   }
-
 }

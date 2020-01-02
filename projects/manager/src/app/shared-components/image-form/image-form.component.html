@@ -1,42 +1,36 @@
 <div class="display-flex">
+
     <!-- Vertical Tabs -->
     <div class="vertical-tabs-container">
         <!-- Image -->
-        <div title="Image" class="vertical-tab"> <i class="fas fa-image"></i> </div>
-
+        <div title="Image" class="vertical-tab" [ngClass]="{'selected-vertical-tab': showVerticalTab[0]}" (click)="selectVerticalTab(0)"> <i class="fas fa-image"></i> </div>
         <!-- Border -->
-        <div title="Border" class="vertical-tab"> <i class="far fa-square"></i> </div>
-
+        <div title="Border" class="vertical-tab" [ngClass]="{'selected-vertical-tab': showVerticalTab[1]}" (click)="selectVerticalTab(1)"> <i class="far fa-square"></i> </div>
         <!-- Corners -->
-        <div title="Corners" class="vertical-tab selected-vertical-tab"> <i class="fas fa-expand"></i> </div>
-
+        <div title="Corners" class="vertical-tab" [ngClass]="{'selected-vertical-tab': showVerticalTab[2]}" (click)="selectVerticalTab(2)"> <i class="fas fa-expand"></i> </div>
         <!-- Shadow -->
-        <div title="Shadow" class="vertical-tab"> <i class="fas fa-clone" style="transform: scaleX(-1);"> </i>
-        </div>
-
+        <div title="Shadow" class="vertical-tab" [ngClass]="{'selected-vertical-tab': showVerticalTab[3]}" (click)="selectVerticalTab(3)"> <i class="fas fa-clone" style="transform: scaleX(-1);"> </i></div>
         <!-- Link -->
-        <div title="Link" class="vertical-tab"> <i class="fas fa-link"></i> </div>
-
+        <div title="Link" class="vertical-tab" [ngClass]="{'selected-vertical-tab': showVerticalTab[4]}" (click)="selectVerticalTab(4)"> <i class="fas fa-link"></i> </div>
         <!-- Margins -->
-        <div title="Margins" class="vertical-tab"> <i class="fas fa-arrow-left"
-                style="display: flex; align-items: center;"> <span style="font-size: 20px; font-family: Arial">I</span>
-            </i>
-        </div>
+        <div title="Margins" class="vertical-tab" [ngClass]="{'selected-vertical-tab': showVerticalTab[5]}" (click)="selectVerticalTab(5)"> <i class="fas fa-arrow-left" style="display: flex; align-items: center;"> <span style="font-size: 20px; font-family: Arial">I</span> </i> </div>
     </div>
 
-    <!-- Panel Light -->
+    
+    <!-- Properties -->
     <div class="panel-light-rounded" style="height: 450px;">
-        <!-- <media-browser [mediaType]="'image'"></media-browser> -->
-
-        <border></border>
-
-        <!-- <corners></corners> -->
-
-        <!-- <shadow></shadow> -->
-
-        <!-- <links></links> -->
-
-        <!-- <margins></margins> -->
+        <!-- Image -->
+        <media-browser *ngIf="showVerticalTab[0]" [mediaType]="'image'"></media-browser>
+        <!-- Border -->
+        <border *ngIf="showVerticalTab[1]"></border>
+        <!-- Corners -->
+        <corners *ngIf="showVerticalTab[2]"></corners>
+        <!-- Shadow -->
+        <shadow *ngIf="showVerticalTab[3]"></shadow>
+        <!-- Link -->
+        <links *ngIf="showVerticalTab[4]"></links>
+        <!-- Margins -->
+        <margins *ngIf="showVerticalTab[5]"></margins>
     </div>
 </div>
 

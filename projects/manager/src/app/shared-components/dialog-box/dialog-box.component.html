@@ -1,8 +1,8 @@
 <!-- Main Container -->
-<div class="container" [style.maxWidth.px]="width">
+<div #container [style.left.px]="x" [style.top.px]="y"  class="container" [style.maxWidth.px]="width">
 
     <!-- Bar -->
-    <div class="form-bar">
+    <div class="form-bar" (mousedown)="formMoveBegin($event)">
         {{dialogBoxName}}
         <!-- X Button -->
         <div class="form-x-button">X</div>
