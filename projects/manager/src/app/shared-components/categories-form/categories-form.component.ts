@@ -5,11 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './categories-form.component.html',
   styleUrls: ['./categories-form.component.scss']
 })
-export class CategoriesFormComponent implements OnInit {
+export class CategoriesFormComponent {
+  public showVerticalTab: boolean[] = [true, false, false];
 
-  constructor() { }
-
-  ngOnInit() {
+  selectVerticalTab(index: number) {
+    for(var i = 0; i < 3; i++) {
+      this.showVerticalTab[i] = false;
+    }
+    this.showVerticalTab[index] = true;
   }
-
 }
