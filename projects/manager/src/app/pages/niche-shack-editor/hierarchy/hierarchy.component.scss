@@ -1,10 +1,27 @@
 @import '../../../../scss/variables';
 
+.container {
+    position: absolute;
+    top: 90px;
+    left: 5px;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    padding: 5px;
+}
+
 .item {
     width: 100%;
     cursor: pointer;
     user-select: none;
-    &:hover {
+    padding-left: 3px;
+    &:hover:not(.selected) {
         background: $hover-fill-color;
     }
+}
+
+.selected {
+    background: $selected-fill-color;
+    outline: 1px solid $selected-border-color;
+    color: white;
 }

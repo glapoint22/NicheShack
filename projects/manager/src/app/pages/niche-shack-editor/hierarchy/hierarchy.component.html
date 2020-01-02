@@ -1,33 +1,47 @@
-<ng-container *ngIf="true; else searchResults">
-    <!-- Category -->
-    <div class="arrow-button-container">
-        <input type="checkbox" [id]="'Health & Fitness'">
-        <label class="arrow-button" [for]="'Health & Fitness'"></label>
-        <div class="item">Health & Fitness</div>
-    </div>
+<div class="container">
+    <ng-container *ngIf="true; else searchResults">
+        <!-- Categories -->
+        <div *ngFor="let category of categories">
+            <div class="arrow-button-container">
+                <input #categoryInput type="checkbox" [id]="category.name">
+                <label class="arrow-button" [for]="category.name"
+                    (click)="getNiches(category.id, categoryInput);"></label>
+                <div class="item" (click)="selectedItem = category" [ngClass]="{'selected': selectedItem == category}">
+                    {{category.name}}
+                    <i class="fa fa-spinner fa-pulse margin-left-2 fade-start" *show="category.loadingNiches" transitionClass="fade-end"></i>
+                </div>
+            </div>
 
-    <!-- Content -->
-    <div class="padding-left-5">
+            
 
-        <!-- Niche -->
-        <div class="arrow-button-container">
-            <input type="checkbox" [id]="'Diets & Weight Loss'">
-            <label class="arrow-button" [for]="'Diets & Weight Loss'"></label>
-            <div class="item">Diets & Weight Loss</div>
+            <!-- Niches -->
+            <ng-container *ngFor="let niche of category.niches">
+                <div class="arrow-button-content">
+                    <div class="arrow-button-container" [ngClass]="{'expand-arrow-button': category.expanded}">
+                        <input #nicheInput type="checkbox" [id]="niche.name" [checked]="niche.expanded">
+                        <label class="arrow-button" [for]="niche.name"
+                            (click)="getProducts(category.id, niche.id, nicheInput)"></label>
+                        <div class="item" (click)="selectedItem = niche" [ngClass]="{'selected': selectedItem == niche}">
+                            {{niche.name}}
+                            <i class="fa fa-spinner fa-pulse margin-left-2 fade-start" *show="niche.loadingProducts" transitionClass="fade-end"></i>
+                        </div>
+                    </div>
+
+                    <!-- Products -->
+                    <ng-container *ngFor="let product of niche.products">
+                        <div class="arrow-button-content">
+                            <div class="item" (click)="selectedItem = product" [ngClass]="{'expand-arrow-button': niche.expanded, 'selected': selectedItem == product}">{{product.name}}</div>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
         </div>
+    </ng-container>
 
-        <!-- Content -->
-        <div class="padding-left-5">
-            <!-- Products -->
-            <div class="item">1 Hour Belly Blast Diet</div>
-            <div class="item">14 Day Rapid Fat Loss Plan</div>
-            <div class="item">7 Day Blood Pressure Solution</div>
-        </div>
-    </div>
-</ng-container>
-
-<!-- Search results -->
-<ng-template #searchResults>
-    <div>How to be a <span style="color: white; font-weight: bold;">Gump</span>y</div>
-    <div>Once a <span style="color: white; font-weight: bold;">Gump</span>y always a <span style="color: white; font-weight: bold;">Gump</span>y</div>
-</ng-template>
+    <!-- Search results -->
+    <ng-template #searchResults>
+        <div>How to be a <span style="color: white; font-weight: bold;">Gump</span>y</div>
+        <div>Once a <span style="color: white; font-weight: bold;">Gump</span>y always a <span
+                style="color: white; font-weight: bold;">Gump</span>y</div>
+    </ng-template>
+</div>

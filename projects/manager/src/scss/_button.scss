@@ -22,7 +22,7 @@ button {
 .arrow-button-container {
     display: flex;
     align-items: center;
-
+    margin-bottom: 2px;
     .arrow-button {
         width: 22px;
         height: 22px;
@@ -31,7 +31,7 @@ button {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: 5px;
+        margin-right: 2px;
         cursor: pointer;
         transform: rotate(0);
         transition: transform 0.25s ease-in-out;
@@ -56,4 +56,23 @@ button {
             transform: rotate(90deg);
         }
     }
+}
+
+.arrow-button-content {
+    padding-left: 48px;
+}
+
+.arrow-button-content > *:not(.arrow-button-content) {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.2s, opacity 0.2s;
+}
+
+.arrow-button-content .arrow-button-container:not(.expand-arrow-button) {
+    margin-bottom: 0;
+}
+
+.expand-arrow-button {
+    max-height: 22px !important;
+    opacity: 1 !important;
 }
