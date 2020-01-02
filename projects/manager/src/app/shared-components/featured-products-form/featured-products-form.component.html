@@ -2,30 +2,23 @@
 
     <!-- Vertical Tabs -->
     <div class="vertical-tabs-container">
-
         <!-- Caption -->
-        <div title="Caption" class="vertical-tab selected-vertical-tab"
-            style="font-family: 'Times New Roman', Times, serif; font-size: 22px;">
-            T
-        </div>
-
+        <div title="Caption" class="vertical-tab" [ngClass]="{'selected-vertical-tab': showCaption}" (click)="showCaption = true" style="font-family: 'Times New Roman', Times, serif; font-size: 22px;">T</div>
         <!-- Products -->
-        <div title="Products" class="vertical-tab">
-            <i class="fas fa-th"></i>
-        </div>
+        <div title="Products" class="vertical-tab" [ngClass]="{'selected-vertical-tab': !showCaption}" (click)="showCaption = false"> <i class="fas fa-th"></i> </div>
     </div>
 
-    <!-- Panel Light -->
+    <!-- Properties -->
     <div class="panel-light-rounded">
         <!-- Caption -->
-        <ng-container *ngIf="false">
+        <ng-container *ngIf="showCaption">
             <div class="tab-title">Caption</div>
             <input class="width-100">
         </ng-container>
 
 
         <!-- Products -->
-        <ng-container *ngIf="true">
+        <ng-container *ngIf="!showCaption">
             <div class="tab-title">Products</div>
 
             <div class="filter-dropdown margin-bottom-2">
