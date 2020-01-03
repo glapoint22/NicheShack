@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
@@ -8,6 +8,7 @@ import { delay } from 'rxjs/operators';
   styleUrls: ['./hierarchy.component.scss']
 })
 export class HierarchyComponent implements OnInit {
+  @Output() showForm: EventEmitter<any> = new EventEmitter();
   public categories: Array<any>;
   public selectedItem: any;
   public isCollapsed: boolean;

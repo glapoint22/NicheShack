@@ -111,7 +111,7 @@
                                 <input #nicheInput type="checkbox" [id]="niche.name" [checked]="niche.expanded">
                                 <label class="arrow-button" [for]="niche.name"
                                     (click)="getProducts(category.id, niche.id, nicheInput)" (transitionend)="$event.stopPropagation()"></label>
-                                <div class="item" (click)="selectedItem = niche"
+                                <div class="item" (click)="selectedItem = niche" (dblclick)="showForm.emit({item: niche, type: 'niche'})"
                                     [ngClass]="{'selected': selectedItem == niche}">
                                     {{niche.name}}
                                     <i class="fa fa-spinner fa-pulse margin-left-2 fade-start" (transitionend)="$event.stopPropagation()"
@@ -122,7 +122,7 @@
                             <!-- Products -->
                             <ng-container *ngFor="let product of niche.products">
                                 <div class="arrow-button-content">
-                                    <div class="item" (click)="selectedItem = product"
+                                    <div class="item" (click)="selectedItem = product" (dblclick)="showForm.emit({item: product, type: 'product'})"
                                         [ngClass]="{'expand-arrow-button': niche.expanded, 'selected': selectedItem == product}" (transitionend)="transitionend($event)">
                                         {{product.name}}</div>
                                 </div>

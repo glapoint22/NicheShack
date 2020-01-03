@@ -28,16 +28,16 @@
 
 <div class="content">
     <!-- Hierarchy -->
-    <hierarchy></hierarchy>
+    <hierarchy (showForm)="showForm($event)"></hierarchy>
 
     <!-- Product Form -->
-    <div *ngIf="true" class="width-100">
-        <product-form></product-form>
+    <div *ngIf="showProductForm" class="width-100">
+        <product-form [productInput]="item" (onClose)="showProductForm = false"></product-form>
     </div>
     
     <!-- Niche Form -->
-    <div *ngIf="false" class="niche-form-container">
-        <niche-form></niche-form>
+    <div *ngIf="showNicheForm" class="niche-form-container">
+        <niche-form [nicheInput]="item" (onClose)="showNicheForm = false"></niche-form>
     </div>
 </div>
 
