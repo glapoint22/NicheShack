@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
@@ -10,6 +10,8 @@ import { delay } from 'rxjs/operators';
 export class HierarchyComponent implements OnInit {
   public categories: Array<any>;
   public selectedItem: any;
+  public isCollapsed: boolean;
+  public showMenu: boolean;
 
 
 
@@ -182,6 +184,38 @@ export class HierarchyComponent implements OnInit {
       window.setTimeout(() => {
         niche.expanded = input.checked;
       });
+    }
+  }
+
+
+  collapse() {
+    this.selectedItem = null;
+
+    this.categories.forEach(category => {
+      category.expanded = false;
+
+      if (category.niches) {
+        category.niches.forEach(niche => {
+          niche.expanded = false;
+        });
+      }
+
+    });
+  }
+
+
+  @HostListener('document:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent) {
+    if (event.code === 'Escape' || event.keyCode === 27) {
+      this.selectedItem = null;
+    }
+  }
+
+  transitionend(event) {
+    if (event.target.classList.contains('expand-arrow-button')) {
+      event.target.style = "";
+    } else {
+      event.target.style = "visibility: hidden";
     }
   }
 }

@@ -6,9 +6,13 @@
     align-items: center;
     cursor: pointer;
     color: $icon-color;
-    &:hover {
+    &:hover:not(.icon-disabled) {
         color: lighten($icon-color, 20%);
     }
+}
+
+.icon-disabled {
+    color: #525252;
 }
 
 .icon-bar {

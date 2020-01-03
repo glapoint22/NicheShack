@@ -1,47 +1,148 @@
 <div class="container">
-    <ng-container *ngIf="true; else searchResults">
-        <!-- Categories -->
-        <div *ngFor="let category of categories">
-            <div class="arrow-button-container">
-                <input #categoryInput type="checkbox" [id]="category.name">
-                <label class="arrow-button" [for]="category.name"
-                    (click)="getNiches(category.id, categoryInput);"></label>
-                <div class="item" (click)="selectedItem = category" [ngClass]="{'selected': selectedItem == category}">
-                    {{category.name}}
-                    <i class="fa fa-spinner fa-pulse margin-left-2 fade-start" *show="category.loadingNiches" transitionClass="fade-end"></i>
-                </div>
+    <div class="base" *ngIf="!isCollapsed">
+
+        <!-- Search bar & filter menu -->
+        <div class="position-relative">
+            <!-- Search bar -->
+            <div class="search-bar">
+                <div><i class="fas fa-search"></i></div>
+                <input>
+                <div (mousedown)="showMenu = true"></div>
             </div>
 
-            
 
-            <!-- Niches -->
-            <ng-container *ngFor="let niche of category.niches">
-                <div class="arrow-button-content">
-                    <div class="arrow-button-container" [ngClass]="{'expand-arrow-button': category.expanded}">
-                        <input #nicheInput type="checkbox" [id]="niche.name" [checked]="niche.expanded">
-                        <label class="arrow-button" [for]="niche.name"
-                            (click)="getProducts(category.id, niche.id, nicheInput)"></label>
-                        <div class="item" (click)="selectedItem = niche" [ngClass]="{'selected': selectedItem == niche}">
-                            {{niche.name}}
-                            <i class="fa fa-spinner fa-pulse margin-left-2 fade-start" *show="niche.loadingProducts" transitionClass="fade-end"></i>
+            <!-- Filter menu -->
+            <div *show="showMenu" class="fade-start filter-menu" transitionClass="fade-end" tabindex="0"
+                (onHide)="showMenu = false" (blur)="showMenu = false">
+
+                <div (mousedown)="$event.stopPropagation()">
+                    <label>
+                        <input type="radio" name="filter">
+                        <i class="fas fa-check"></i>
+                        Filter by Category
+                    </label>
+
+                    <label>
+                        <input type="radio" name="filter">
+                        <i class="fas fa-check"></i>
+                        Filter by Niches
+                    </label>
+
+                    <label>
+                        <input type="radio" name="filter" checked>
+                        <i class="fas fa-check"></i>
+                        Filter by Products
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Icons -->
+        <div class="icon-bar" *ngIf="true; else sort">
+            <!-- Collapse -->
+            <div class="icon-container" title="Collapse" (click)="collapse()">
+                <i class="fas fa-minus-square"></i>
+            </div>
+
+            <!-- Add -->
+            <div class="icon-container" title="Add" [ngClass]="{'icon-disabled': !selectedItem}">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+
+            <!-- Rename -->
+            <div class="icon-container" title="Rename" [ngClass]="{'icon-disabled': !selectedItem}">
+                <i class="fas fa-pencil-alt"></i>
+            </div>
+
+            <!-- Copy -->
+            <div class="icon-container" title="Copy" [ngClass]="{'icon-disabled': !selectedItem}">
+                <i class="fas fa-copy"></i>
+            </div>
+
+            <!-- Duplicate -->
+            <div class="icon-container" title="Duplicate" [ngClass]="{'icon-disabled': !selectedItem}">
+                <i class="fas fa-clone"></i>
+            </div>
+
+            <!-- Delete -->
+            <div class="icon-container" title="Delete" [ngClass]="{'icon-disabled': !selectedItem}">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+
+        </div>
+
+        <ng-template #sort>
+            <div class="sort-container">
+                <div class="margin-right-2">sort by:</div>
+                <div class="flex-fill">
+                    <select>
+                        <option>Price: low to high</option>
+                    </select>
+                </div>
+
+                <div class="close">x</div>
+            </div>
+        </ng-template>
+
+        <!-- Content -->
+        <div class="hierarchy-content">
+            <ng-container *ngIf="true; else searchResults">
+                <!-- Categories -->
+                <div *ngFor="let category of categories">
+                    <div class="arrow-button-container">
+                        <input #categoryInput type="checkbox" [id]="category.name" [checked]="category.expanded">
+                        <label class="arrow-button" [for]="category.name"
+                            (click)="getNiches(category.id, categoryInput);"></label>
+                        <div class="item" (click)="selectedItem = category"
+                            [ngClass]="{'selected': selectedItem == category}">
+                            {{category.name}}
+                            <i class="fa fa-spinner fa-pulse margin-left-2 fade-start" *show="category.loadingNiches"
+                                transitionClass="fade-end"></i>
                         </div>
                     </div>
 
-                    <!-- Products -->
-                    <ng-container *ngFor="let product of niche.products">
+
+
+                    <!-- Niches -->
+                    <ng-container *ngFor="let niche of category.niches">
                         <div class="arrow-button-content">
-                            <div class="item" (click)="selectedItem = product" [ngClass]="{'expand-arrow-button': niche.expanded, 'selected': selectedItem == product}">{{product.name}}</div>
+                            <div class="arrow-button-container" [ngClass]="{'expand-arrow-button': category.expanded}" (transitionend)="transitionend($event)">
+                                <input #nicheInput type="checkbox" [id]="niche.name" [checked]="niche.expanded">
+                                <label class="arrow-button" [for]="niche.name"
+                                    (click)="getProducts(category.id, niche.id, nicheInput)" (transitionend)="$event.stopPropagation()"></label>
+                                <div class="item" (click)="selectedItem = niche"
+                                    [ngClass]="{'selected': selectedItem == niche}">
+                                    {{niche.name}}
+                                    <i class="fa fa-spinner fa-pulse margin-left-2 fade-start" (transitionend)="$event.stopPropagation()"
+                                        *show="niche.loadingProducts" transitionClass="fade-end"></i>
+                                </div>
+                            </div>
+
+                            <!-- Products -->
+                            <ng-container *ngFor="let product of niche.products">
+                                <div class="arrow-button-content">
+                                    <div class="item" (click)="selectedItem = product"
+                                        [ngClass]="{'expand-arrow-button': niche.expanded, 'selected': selectedItem == product}" (transitionend)="transitionend($event)">
+                                        {{product.name}}</div>
+                                </div>
+                            </ng-container>
                         </div>
                     </ng-container>
                 </div>
             </ng-container>
-        </div>
-    </ng-container>
 
-    <!-- Search results -->
-    <ng-template #searchResults>
-        <div>How to be a <span style="color: white; font-weight: bold;">Gump</span>y</div>
-        <div>Once a <span style="color: white; font-weight: bold;">Gump</span>y always a <span
-                style="color: white; font-weight: bold;">Gump</span>y</div>
-    </ng-template>
+            <!-- Search results -->
+            <ng-template #searchResults>
+                <div>How to be a <span style="color: white; font-weight: bold;">Gump</span>y</div>
+                <div>Once a <span style="color: white; font-weight: bold;">Gump</span>y always a <span
+                        style="color: white; font-weight: bold;">Gump</span>y</div>
+            </ng-template>
+        </div>
+    </div>
+
+
+    <!-- Expand / collapse bar -->
+    <div class="expand-collapse-bar" (click)="isCollapsed = !isCollapsed"></div>
+
 </div>
