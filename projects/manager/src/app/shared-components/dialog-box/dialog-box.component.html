@@ -1,11 +1,11 @@
 <!-- Main Container -->
-<div #container [style.left.px]="x" [style.top.px]="y"  class="container" [style.maxWidth.px]="width">
+<div #container [style.left.px]="x" [style.top.px]="y"  class="container" [style.maxWidth.px]="width" [ngClass]="{'position-absolute': !isModal}">
 
     <!-- Bar -->
     <div class="form-bar" (mousedown)="formMoveBegin($event)">
         {{dialogBoxName}}
         <!-- X Button -->
-        <div class="form-x-button">X</div>
+        <div class="form-x-button" (click)="onClose.emit()">X</div>
     </div>
 
     <!-- Base -->

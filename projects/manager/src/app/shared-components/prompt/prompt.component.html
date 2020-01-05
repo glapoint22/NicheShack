@@ -1,0 +1,15 @@
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start">
+    <dialog-box [dialogBoxName]="promptName" [isModal]="true" (onClose)="show = false">
+
+        <!-- Message -->
+        <div style="margin: 0 30px;">
+            {{message}}
+        </div>
+
+        <!-- Button Container -->
+        <div class="form-button-container">
+            <button (click)="onYes.emit(); show = false">Yes</button>
+            <button (click)="show = false">No</button>
+        </div>
+    </dialog-box>
+</div>

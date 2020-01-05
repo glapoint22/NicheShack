@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HierarchyContainerComponent } from './hierarchy-container.component';
+import { PromptComponent } from './prompt.component';
 
-describe('HierarchyContainerComponent', () => {
-  let component: HierarchyContainerComponent;
-  let fixture: ComponentFixture<HierarchyContainerComponent>;
+describe('PromptComponent', () => {
+  let component: PromptComponent;
+  let fixture: ComponentFixture<PromptComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HierarchyContainerComponent ]
+      declarations: [ PromptComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HierarchyContainerComponent);
+    fixture = TestBed.createComponent(PromptComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

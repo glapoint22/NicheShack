@@ -8,7 +8,6 @@ import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module'
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ContentTypeFormComponent } from './content-type-form/content-type-form.component';
 import { MediaBrowserModule } from '../../shared-components/media-browser/media-browser.module';
-import { HierarchyContainerComponent } from './hierarchy-container/hierarchy-container.component';
 import { HierarchyComponent } from './hierarchy/hierarchy.component';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
 import { ProductDescriptionComponent } from './product-description/product-description.component';
@@ -24,6 +23,7 @@ import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
 import { NicheFormComponent } from './niche-form/niche-form.component';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
+import { PromptModule } from '../../shared-components/prompt/prompt.module';
 
 
 @NgModule({
@@ -31,7 +31,6 @@ import { ShowHideModule } from 'directives/show-hide/show-hide.module';
     NicheShackEditorComponent,
     ProductFormComponent,
     ContentTypeFormComponent,
-    HierarchyContainerComponent,
     HierarchyComponent,
     ProductEditorComponent,
     ProductDescriptionComponent,
@@ -54,6 +53,7 @@ import { ShowHideModule } from 'directives/show-hide/show-hide.module';
     WidgetsModule,
     DesignerModule,
     ShowHideModule,
+    PromptModule
   ]
 })
 export class NicheShackEditorModule { }

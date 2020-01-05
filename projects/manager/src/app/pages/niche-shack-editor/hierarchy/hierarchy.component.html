@@ -1,33 +1,175 @@
-<ng-container *ngIf="true; else searchResults">
-    <!-- Category -->
-    <div class="arrow-button-container">
-        <input type="checkbox" [id]="'Health & Fitness'">
-        <label class="arrow-button" [for]="'Health & Fitness'"></label>
-        <div class="item">Health & Fitness</div>
-    </div>
+<div class="container">
+    <div class="base" *ngIf="!isCollapsed">
 
-    <!-- Content -->
-    <div class="padding-left-5">
+        <!-- Search bar & filter menu -->
+        <div class="position-relative">
+            <!-- Search bar -->
+            <div class="search-bar">
+                <div><i class="fas fa-search"></i></div>
+                <input>
+                <div (mousedown)="showMenu = true"></div>
+            </div>
 
-        <!-- Niche -->
-        <div class="arrow-button-container">
-            <input type="checkbox" [id]="'Diets & Weight Loss'">
-            <label class="arrow-button" [for]="'Diets & Weight Loss'"></label>
-            <div class="item">Diets & Weight Loss</div>
+
+            <!-- Filter menu -->
+            <div *show="showMenu" class="fade-start filter-menu" transitionClass="fade-end" tabindex="0"
+                (onHide)="showMenu = false" (blur)="showMenu = false">
+
+                <div (mousedown)="$event.stopPropagation()">
+                    <label>
+                        <input type="radio" name="filter">
+                        <i class="fas fa-check"></i>
+                        Filter by Category
+                    </label>
+
+                    <label>
+                        <input type="radio" name="filter">
+                        <i class="fas fa-check"></i>
+                        Filter by Niches
+                    </label>
+
+                    <label>
+                        <input type="radio" name="filter" checked>
+                        <i class="fas fa-check"></i>
+                        Filter by Products
+                    </label>
+                </div>
+            </div>
         </div>
+
+
+        <!-- Icons -->
+        <div class="icon-bar" *ngIf="true; else sort">
+            <!-- Collapse -->
+            <div class="icon-container" title="Collapse" (click)="collapse()"
+                [ngClass]="{'icon-disabled': isCollapseButtonDisabled()}">
+                <i class="fas fa-minus-square"></i>
+            </div>
+
+            <!-- Add -->
+            <div class="icon-container" [title]="getAddButtonTitle()"
+                [ngClass]="{'icon-disabled': selectedItem.type == 'Product'}" (click)="onAddItemButtonClick()">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+
+            <!-- Rename -->
+            <div class="icon-container" [title]="selectedItem.item ? 'Rename ' + selectedItem.type : 'Rename'"
+                [ngClass]="{'icon-disabled': !selectedItem.item}" (click)="editItem()">
+                <i class="fas fa-pencil-alt"></i>
+            </div>
+
+
+            <!-- Delete -->
+            <div class="icon-container" [title]="selectedItem.item ? 'Delete ' + selectedItem.type : 'Delete'"
+                [ngClass]="{'icon-disabled': !selectedItem.item}"
+                (click)="selectedItem.item ? prompt.show = true: null">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+
+        </div>
+
+        <ng-template #sort>
+            <div class="sort-container">
+                <div class="margin-right-2">sort by:</div>
+                <div class="flex-fill">
+                    <select>
+                        <option>Price: low to high</option>
+                    </select>
+                </div>
+
+                <div class="close">x</div>
+            </div>
+        </ng-template>
 
         <!-- Content -->
-        <div class="padding-left-5">
-            <!-- Products -->
-            <div class="item">1 Hour Belly Blast Diet</div>
-            <div class="item">14 Day Rapid Fat Loss Plan</div>
-            <div class="item">7 Day Blood Pressure Solution</div>
+        <div class="hierarchy-content">
+            <ng-container *ngIf="true; else searchResults">
+                <!-- Categories -->
+                <ng-container *ngFor="let category of categories">
+                    <div class="arrow-button-container">
+
+                        <!-- Arrow button -->
+                        <input #categoryInput type="checkbox" [id]="category.name" [checked]="category.expanded">
+                        <label class="arrow-button" [for]="category.name"
+                            (click)="onCategoryButtonClick(category.id, categoryInput, categoryItemElement)"></label>
+
+                        <!-- category item -->
+                        <div [id]="'Category-' + category.id" #categoryItemElement class="item"
+                            (click)="selectedItem = {item: category, type: 'Category', element: categoryItemElement}"
+                            [ngClass]="{'selected': selectedItem.item == category}">
+                            {{category.name}}
+                        </div>
+
+                        <!-- Loading spinner -->
+                        <i class="fa fa-spinner fa-pulse fade-start" *show="category.loadingChildren"
+                            transitionClass="fade-end"></i>
+                    </div>
+
+
+
+                    <!-- Niches -->
+                    <ng-container *ngFor="let niche of category.niches">
+                        <div class="arrow-button-content">
+
+                            <!-- Arrow button container -->
+                            <div class="arrow-button-container"
+                                [ngClass]="{'expand-arrow-button': category.expanded}"
+                                (transitionend)="transitionend($event)">
+
+                                <!-- Arrow button -->
+                                <input #nicheInput type="checkbox" [id]="niche.name" [checked]="niche.expanded">
+                                <label class="arrow-button" [for]="niche.name"
+                                    (click)="onProductButtonClick(category.id, niche.id, nicheInput, nicheItemElement)"
+                                    (transitionend)="$event.stopPropagation()"></label>
+
+                                <!-- Niche item -->
+                                <div [id]="'Niche-' + niche.id" #nicheItemElement class="item"
+                                    (click)="selectedItem = {item: niche, type: 'Niche', element: nicheItemElement}"
+                                    (dblclick)="showForm.emit({item: niche, type: 'niche'})"
+                                    [ngClass]="{'selected': selectedItem.item == niche}">
+                                    {{niche.name}}
+                                </div>
+
+                                <!-- Loading spinner -->
+                                <i class="fa fa-spinner fa-pulse fade-start" (transitionend)="$event.stopPropagation()"
+                                    *show="niche.loadingChildren" transitionClass="fade-end"></i>
+
+                            </div>
+
+                            <!-- Products -->
+                            <ng-container *ngFor="let product of niche.products">
+                                <div class="arrow-button-content">
+
+                                    <!-- Product item -->
+                                    <div [id]="'Product-' + product.id" #productItemElement
+                                        class="item"
+                                        (click)="selectedItem = {item: product, type: 'Product', element: productItemElement}"
+                                        (dblclick)="showForm.emit({item: product, type: 'product'})"
+                                        [ngClass]="{'expand-arrow-button': niche.expanded, 'selected': selectedItem.item == product}"
+                                        (transitionend)="transitionend($event)">
+                                        {{product.name}}</div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+
+            <!-- Search results -->
+            <ng-template #searchResults>
+                <div>How to be a <span style="color: white; font-weight: bold;">Gump</span>y</div>
+                <div>Once a <span style="color: white; font-weight: bold;">Gump</span>y always a <span
+                        style="color: white; font-weight: bold;">Gump</span>y</div>
+            </ng-template>
         </div>
     </div>
-</ng-container>
 
-<!-- Search results -->
-<ng-template #searchResults>
-    <div>How to be a <span style="color: white; font-weight: bold;">Gump</span>y</div>
-    <div>Once a <span style="color: white; font-weight: bold;">Gump</span>y always a <span style="color: white; font-weight: bold;">Gump</span>y</div>
-</ng-template>
+
+    <!-- Expand / collapse bar -->
+    <div class="expand-collapse-bar" (click)="isCollapsed = !isCollapsed"></div>
+
+</div>
+
+<prompt #prompt [promptName]="'Delete ' + (selectedItem.item ? selectedItem.type : '')"
+    [message]="'Are you sure you want to delete ' + (selectedItem.item ? selectedItem.item.name : '') + '?'"
+    (onYes)="deleteItem()"></prompt>
