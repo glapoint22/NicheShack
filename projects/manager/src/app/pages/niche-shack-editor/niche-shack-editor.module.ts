@@ -23,6 +23,7 @@ import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
 import { NicheFormComponent } from './niche-form/niche-form.component';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
+import { PromptModule } from '../../shared-components/prompt/prompt.module';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { ShowHideModule } from 'directives/show-hide/show-hide.module';
     WidgetsModule,
     DesignerModule,
     ShowHideModule,
+    PromptModule
   ]
 })
 export class NicheShackEditorModule { }

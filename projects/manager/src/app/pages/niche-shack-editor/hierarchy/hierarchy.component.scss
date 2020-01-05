@@ -147,8 +147,19 @@
     }
 }
 
-.selected {
+.selected:not([contenteditable="true"]) {
     background: $selected-fill-color;
     outline: 1px solid $selected-border-color;
     color: white;
+}
+
+
+[contenteditable="true"].item {
+    outline: 1px solid #326796;
+    cursor: initial;
+}
+
+.fa-spinner {
+    position: absolute;
+    right: 10px;
 }

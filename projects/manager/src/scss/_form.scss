@@ -43,6 +43,11 @@
 
     &:hover {
         color: white;
+        background-color: #585858;
+    }
+
+    &:active {
+        outline: 1px solid $selected-border-color;
     }
 }
 
