@@ -36,7 +36,7 @@ export class DialogBoxComponent {
 
       // Add event listeners that will listen for a mousemove to move the form and a mouseup to stop moving the form
       window.addEventListener("mousemove", formMove);
-      window.addEventListener("mouseup", formMoveEnd)
+      window.addEventListener("mouseup", formMoveEnd);
     }
 
   }

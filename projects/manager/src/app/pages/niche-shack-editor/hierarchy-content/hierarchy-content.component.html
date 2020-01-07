@@ -1,0 +1,25 @@
+<ng-container *ngFor="let item of items">
+
+    <div [ngClass]="{'child': item.parent, 'show-child': item.parent ? item.parent.showChildren: null}" (transitionend)="transitionend($event)">
+        <div class="arrow-button-container" (transitionend)="$event.stopPropagation()">
+
+            <!-- Arrow button -->
+            <div *ngIf="item.type != 'Product'">
+                <input #input type="checkbox" [id]="item.name" [checked]="item.showChildren">
+                <label class="arrow-button" [for]="item.name" (click)="onItemButtonClick(item, input)"></label>
+            </div>
+
+
+            <!-- Item -->
+            <div [id]="item.type + '-' + item.id" class="item" (click)="hierarchy.selectedItem = item"
+                [ngClass]="{'selected': hierarchy.selectedItem == item}">
+                {{item.name}}
+            </div>
+
+            <!-- Loading spinner -->
+            <i class="fa fa-spinner fa-pulse fade-start" *show="item.loadingChildren" transitionClass="fade-end"></i>
+        </div>
+
+        <hierarchy-content [items]="item.children" [hierarchy]="hierarchy"></hierarchy-content>
+    </div>
+</ng-container>

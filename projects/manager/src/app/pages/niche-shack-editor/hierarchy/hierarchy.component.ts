@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { HierarchyItem } from '../../../classes/hierarchy-item';
 
 @Component({
   selector: 'hierarchy',
@@ -9,16 +10,14 @@ import { delay } from 'rxjs/operators';
 })
 export class HierarchyComponent implements OnInit {
   @Output() showForm: EventEmitter<any> = new EventEmitter();
-  public categories: Array<any>;
-  public selectedItem: any = {};
+  public items: Array<HierarchyItem>;
+  public selectedItem: HierarchyItem;
   public isCollapsed: boolean;
   public showMenu: boolean;
 
-
-
   // ---------------------Temp-----------------------------
   public getTempItems(type: string): Observable<any> {
-    if (type == 'niches') {
+    if (type == 'Category') {
       return new Observable(subscriber => {
         subscriber.next([
           {
@@ -63,176 +62,86 @@ export class HierarchyComponent implements OnInit {
 
       }).pipe(delay(1000))
     }
-
   }
+  // ------------------------------------------------------
 
   ngOnInit() {
-    this.categories = [
+    this.items = [
       {
         id: 0,
-        name: 'Health & Fitness'
+        name: 'Health & Fitness',
+        type: 'Category',
+        showChildren: false,
+        loadingChildren: false,
+        children: [],
+        parent: null
       },
       {
         id: 1,
-        name: 'Self-Help'
+        name: 'Self-Help',
+        type: 'Category',
+        showChildren: false,
+        loadingChildren: false,
+        children: [],
+        parent: null
       },
       {
         id: 2,
-        name: 'E-business & E-marketing'
+        name: 'E-business & E-marketing',
+        type: 'Category',
+        showChildren: false,
+        loadingChildren: false,
+        children: [],
+        parent: null
       }
     ]
   }
 
 
-  onCategoryButtonClick(categoryId: number, input: HTMLInputElement, itemElement: HTMLLIElement) {
-    // Get the category from the categories array based on the passed in category id
-    let category = this.categories.find(x => x.id == categoryId);
-
-    // Mark this category as the selected item
-    this.selectedItem = { item: category, type: 'Category', element: itemElement };
-
-    // If the category has not retrieved its niches
-    if (!category.niches) {
-      // Prevent the arrow button from rotating while loading the niches
-      window.setTimeout(() => {
-        input.checked = false;
-      });
-
-      // Get niches
-      this.loadChildren(category, 'niches')
-        .subscribe(() => {
-          // This will rotate the arrow button
-          input.checked = true;
-        });
+  
 
 
-    } else {
-      window.setTimeout(() => {
-        // Expand or collapse
-        category.expanded = input.checked;
+  onCollapseButtonClick() {
+    if (!this.items.some(x => x.showChildren)) return;
 
-        // Collapse each niche if the category is not checked
-        if (!input.checked) {
-          category.niches.forEach(niche => {
-            niche.expanded = false;
-          });
-        }
-      });
-    }
-  }
+    if (this.selectedItem && this.selectedItem.parent) this.selectedItem = null;
 
+    this.items.forEach(item => {
+      item.showChildren = false;
 
-  onProductButtonClick(categoryId: number, nicheId: number, input: HTMLInputElement, itemElement: HTMLLIElement) {
-    // Get the niche from the niches array based on the passed in category id and niche id
-    let category = this.categories.find(x => x.id == categoryId);
-    let niche = category.niches.find(x => x.id == nicheId);
-
-    // Mark this niche as the selected item
-    this.selectedItem = { item: niche, type: 'Niche', element: itemElement };;
-
-    // If the niche has not retrieved its products
-    if (!niche.products) {
-
-      // Prevent the arrow button from rotating while loading the products
-      window.setTimeout(() => {
-        input.checked = false;
-      });
-
-
-      // Get products
-      this.loadChildren(niche, 'products')
-        .subscribe(() => {
-          // This will rotate the arrow button
-          input.checked = true;
-        });
-    } else {
-      window.setTimeout(() => {
-        niche.expanded = input.checked;
-      });
-    }
-  }
-
-
-
-
-  loadChildren(parentItem: any, childrenType: string): Observable<Array<any>> {
-    return new Observable(subscriber => {
-      // If already in the process of loading children, return
-      if (parentItem.loadingChildren) return;
-
-      // Flag that we are loading children
-      parentItem.loadingChildren = true;
-
-      this.getTempItems(childrenType) // <- Replace with this.dataService.get(...)
-        .subscribe(items => {
-          items.map(x => x.parentItem = parentItem)
-
-          // Assign the items and flag loading has completed
-          parentItem[childrenType] = items;
-          parentItem.loadingChildren = false;
-
-          // Return the items
-          subscriber.next(parentItem[childrenType]);
-
-          // flag that we are expanding
-          window.setTimeout(() => {
-            parentItem.expanded = true;
-          }, 100);
-        });
-    });
-  }
-
-
-
-
-
-
-  collapse() {
-    if (!this.categories.some(x => x.expanded)) return;
-
-    if (this.selectedItem.type != 'Category') this.selectedItem = {};
-
-    this.categories.forEach(category => {
-      category.expanded = false;
-
-      if (category.niches) {
-        category.niches.forEach(niche => {
-          niche.expanded = false;
+      if (item.children) {
+        item.children.forEach(item => {
+          item.showChildren = false;
         });
       }
-
     });
   }
 
   isCollapseButtonDisabled() {
-    return !this.categories.some(x => x.expanded);
+    return !this.items.some(x => x.showChildren);
   }
 
 
   @HostListener('document:keydown', ['$event'])
   onKeydown(event: KeyboardEvent) {
-    if (event.keyCode == 27) {
-      if (this.selectedItem.element && this.selectedItem.element.contentEditable == 'true') {
-        this.selectedItem.element.contentEditable = 'false';
-      } else {
-        this.selectedItem = {};
+    if (event.keyCode == 27 && !document.getElementById('prompt')) {
+      if (this.selectedItem) {
+        let el: HTMLElement = this.getItemElement();
+
+        if (el.contentEditable == 'true') {
+          el.contentEditable = 'false';
+        } else {
+          this.selectedItem = null;
+        }
       }
-
     }
   }
 
-  transitionend(event) {
-    if (event.target.classList.contains('expand-arrow-button')) {
-      event.target.style = "";
-    } else {
-      event.target.style = "visibility: hidden";
-    }
-  }
 
   getAddButtonTitle() {
     let title: string;
 
-    switch (this.selectedItem.type) {
+    switch (this.selectedItem && this.selectedItem.type) {
       case 'Category':
         title = 'Add Niche'
         break;
@@ -254,73 +163,97 @@ export class HierarchyComponent implements OnInit {
   }
 
 
+  loadChildren(parent: HierarchyItem): Observable<Array<HierarchyItem>> {
+    return new Observable(subscriber => {
+      // If already in the process of loading children, return
+      if (parent.loadingChildren) return;
+
+      // Flag that we are loading children
+      parent.loadingChildren = true;
+
+      this.getTempItems(parent.type) // <- Replace with this.dataService.get(...)
+        .subscribe((items: Array<HierarchyItem>) => {
+
+          // Set the item's properties
+          items.map(x => {
+            x.type = (parent.type == 'Category' ? 'Niche' : 'Product');
+            x.parent = parent;
+            x.children = [];
+          });
+
+          // Assign the items and flag loading has completed
+          parent.children = items;
+          parent.loadingChildren = false;
+
+          // Return the items
+          subscriber.next(parent.children);
+
+          // flag that we are showing children
+          window.setTimeout(() => {
+            parent.showChildren = true;
+          }, 100);
+        });
+    });
+  }
+
+
   onAddItemButtonClick() {
-    switch (this.selectedItem.type) {
-      case 'Category':
-        // If the selected category does not contain niches, get the niches and then add the new niche
-        if (!this.selectedItem.item.niches) {
-          this.loadChildren(this.selectedItem.item, 'niches')
-            .subscribe(niches => {
-              this.addItem('Niche', niches);
-            });
-        } else {
-          // The selected category already contains niches, add the new niche
-          this.addItem('Niche', this.selectedItem.item.niches);
-        }
-        break;
-      case 'Niche':
-        // If the selected Niche does not contain products, get the products and then add the new product
-        if (!this.selectedItem.item.products) {
-          this.loadChildren(this.selectedItem.item, 'products')
-            .subscribe(products => {
-              this.addItem('Product', products);
-            });
-        } else {
-          // The selected niche already contains products, add the new product
-          this.addItem('Product', this.selectedItem.item.products);
-        }
-        break;
+    if (this.selectedItem && this.selectedItem.type == 'Product') return;
 
-      case 'Product':
-        return;
-
-      default:
-        this.addItem('Category', this.categories);
-        break;
+    if (!this.selectedItem) {
+      this.addItem(this.items);
+    } else {
+      if (this.selectedItem.children.length == 0) {
+        this.loadChildren(this.selectedItem)
+          .subscribe((children: Array<HierarchyItem>) => {
+            this.addItem(children);
+          });
+      } else {
+        this.selectedItem.showChildren = true;
+        this.addItem(this.selectedItem.children);
+      }
     }
   }
 
 
-  addItem(type: string, collection: Array<any>) {
-    let id: number | string;
 
-    if (type == 'Product') {
-      id = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
+
+  addItem(children: Array<HierarchyItem>) {
+    let type: string;
+
+    if (!this.selectedItem) {
+      type = 'Category';
+    } else if (this.selectedItem.type == 'Category') {
+      type = 'Niche';
     } else {
-      id = Math.max(...collection.map(x => x.id)) + 1;
+      type = 'Product';
     }
 
-    let item = {
-      id: id,
+
+    let newItem: HierarchyItem = {
+      id: Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase(),
       name: 'New ' + type,
-      parentItem: type != 'Category' ? this.selectedItem.item : null
+      type: type,
+      showChildren: false,
+      loadingChildren: false,
+      children: [],
+      parent: this.selectedItem
     }
 
-    collection.unshift(item);
+    children.unshift(newItem);
 
     window.setTimeout(() => {
-      let el = document.getElementById(type + '-' + id);
-      this.selectedItem = { item: item, type: type, element: el }
+      this.selectedItem = newItem;
       this.editItem();
     });
   }
 
 
   editItem() {
-    if (!this.selectedItem.item) return;
+    if (!this.selectedItem) return;
 
     // Get the element
-    let el: HTMLElement = this.selectedItem.element;
+    let el: HTMLElement = this.getItemElement();
 
     // Set the element to be editable
     el.contentEditable = 'true';
@@ -347,10 +280,10 @@ export class HierarchyComponent implements OnInit {
     let onKeydown = (event: KeyboardEvent) => {
       if (event.keyCode == 13 || event.keyCode == 27) {
         if (event.keyCode == 27) {
-          el.innerText = this.selectedItem.item.name;
+          el.innerText = this.selectedItem.name;
         } else {
           event.preventDefault();
-          this.selectedItem.item.name = el.innerText;
+          this.selectedItem.name = el.innerText;
           el.contentEditable = 'false';
           // Save
         }
@@ -365,7 +298,7 @@ export class HierarchyComponent implements OnInit {
     // On Blur
     let onBlur = () => {
       el.contentEditable = 'false';
-      el.innerText = this.selectedItem.item.name;
+      el.innerText = this.selectedItem.name;
       removeBlurListener();
       removeKeydownListener();
     }
@@ -377,12 +310,27 @@ export class HierarchyComponent implements OnInit {
   }
 
   deleteItem() {
-    if (this.selectedItem.type == 'Category') {
-      this.categories.splice(this.categories.findIndex(x => x == this.selectedItem.item), 1);
+    let items: Array<HierarchyItem>;
+
+    if (!this.selectedItem.parent) {
+      items = this.items;
     } else {
-      this.selectedItem.item.parentItem[this.selectedItem.type.toLowerCase() + 's'].splice(this.selectedItem.item.parentItem[this.selectedItem.type.toLowerCase() + 's'].findIndex(x => x == this.selectedItem.item), 1);
+      items = this.selectedItem.parent.children;
     }
 
-    this.selectedItem = {};
+    items.splice(items.findIndex(x => x == this.selectedItem), 1);
+
+    this.selectedItem = null;
+
+  }
+
+  getItemElement() {
+    return document.getElementById(this.selectedItem.type + '-' + this.selectedItem.id);
+  }
+
+  onOpenFormButtonClick() {
+    if(!this.selectedItem || this.selectedItem.type == 'Category') return;
+
+    this.showForm.emit(this.selectedItem);
   }
 }

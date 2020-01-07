@@ -57,23 +57,3 @@ button {
         }
     }
 }
-
-.arrow-button-content {
-    padding-left: 48px;
-}
-
-.arrow-button-content > *:not(.arrow-button-content) {
-    max-height: 0;
-    opacity: 0;
-    transition: max-height 0.2s, opacity 0.2s;
-}
-
-.arrow-button-content .arrow-button-container:not(.expand-arrow-button) {
-    margin-bottom: 0;
-}
-
-.expand-arrow-button {
-    max-height: 22px !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
