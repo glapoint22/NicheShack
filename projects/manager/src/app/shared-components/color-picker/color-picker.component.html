@@ -1,72 +1,111 @@
 <div class="panel-light">
 
-    <div style="display: flex;">
-        <div class="color-container" [style.background]="'hsl(' + hue + ', 100%, 50%)'">
+    <!-- Container Left -->
+    <div class="container-left">
+
+        <!-- Color Container -->
+        <div #colorContainer class="color-container" [style.background]="'hsl(' + hue + ', 100%, 50%)'" (mousedown)="colorDown($event)">
             <div class="saturation"></div>
             <div class="lightness"></div>
-            <div class="picker" style="top: 100%; left: 100%;"></div>
+            <!-- Ring -->
+            <div [style.left.%]="ringX" [style.top.%]="ringY" class="ring" [ngClass]="{'ring-dark': ringDark}" style="top: 50%; left: 50%;"></div>
         </div>
 
-        <!-- Hue -->
-        <div class="color-strip hue">
-            <div class="slider fas" style="top: 0;"></div>
-        </div>
+        <!-- Color Property Container -->
+        <div class="color-property-container">
+        
+            <!-- Red -->
+            <div class="color-property-row">
+                <div class="color-property">Red:</div>
+                <input #redInput (input)="onInputChange()" maxlength="3">
+            </div>
 
-        <!-- Alpha -->
-        <div class="color-strip checkered-pattern">
-            <div class="position-absolute-identity" style="background: linear-gradient(red, transparent)"></div>
-            <div class="slider fas" style="top: 0;"></div>
-        </div>
+            <!-- Green -->
+            <div class="color-property-row">
+                <div class="color-property">Green:</div>
+                <input #greenInput (input)="onInputChange()" maxlength="3">
+            </div>
 
+            <!-- Blue -->
+            <div class="color-property-row">
+                <div class="color-property">Blue:</div>
+                <input #blueInput (input)="onInputChange()" maxlength="3">
+            </div>
+
+            <!-- Alpha -->
+            <div class="color-property-row">
+                <div class="color-property">Alpha:</div>
+                <input #alphaInput (input)="onInputChange()" maxlength="4">
+            </div>
+
+            <!-- Hex -->
+            <div class="hex-row">
+                <div class="hex">Hex:</div>
+                <div class="hex-input-text-container">
+                    <div class="hex-hashtag">#</div>
+                    <input #hexInput (input)="onInputChange()" maxlength="6">
+                </div>
+            </div>
+        </div>
     </div>
 
+    
+    <!-- Container Right -->
+    <div class="container-right">
+    
+        <!-- Sliders Container -->
+        <div class="sliders-container">
 
 
-    <!-- Color properties -->
-    <div class="display-flex margin-top-2 flex-wrap flex-nowrap-xxs justify-content-center justify-content-between-xxs">
-        <div class="color-properties">
-            <div class="display-flex">
-                <div>
-                    <div>R</div>
-                    <input maxlength="3">
-                </div>
+            <!-- Hue Slider -->
+            <div #hueContainer class="hue-slider-container" (mousedown)="hueDown($event)">
 
+                <!-- Hue Slider Base -->
+                <div class="slider-base hue" ></div>
 
-                <div>
-                    <div>G</div>
-                    <input maxlength="3">
-                </div>
-
-
-                <div>
-                    <div>B</div>
-                    <input maxlength="3">
-                </div>
-
-
-                <div>
-                    <div>A</div>
-                    <input maxlength="3">
+                <!-- Hue Slider Handle -->
+                <div [style.top.px]="hueSliderY" class="slider-handle">
+                    <!-- Left Arrow -->
+                    <div class="left-arrow"></div>
+                    <!-- Right Arrow -->
+                    <div class="right-arrow"></div>
                 </div>
             </div>
 
-            <div style="margin: 10px 0 0">
-                <div>Hex</div>
-                <input style="width: 100%;">
+
+            <!-- Alpha Slider -->
+            <div #alphaContainer class="alpha-slider-container" (mousedown)="alphaDown($event)">
+
+                <!-- Alpha Slider Base -->
+                <div class="slider-base checkered-pattern" >
+                    <!-- Color Overlay -->
+                    <div [style.background]="'linear-gradient(#' + hexInput.value + ', transparent)'" class="alpha-color-overlay"></div>
+                </div>
+
+                <!-- Alpha Slider Handle -->
+                <div [style.top.px]="alphaSliderY" class="slider-handle">
+                    <!-- Left Arrow -->
+                    <div class="left-arrow"></div>
+                    <!-- Right Arrow -->
+                    <div class="right-arrow"></div>
+                </div>
             </div>
         </div>
 
-
-        <!-- New / Current -->
-        <div style="font-size: 11px; width: 100%; max-width: 100px;" class="margin-top-3 margin-top-0-xxs text-center">
-            <div style="margin-bottom: 2px;">New</div>
-            <div class="new-current-display">
-                <div style="background: red;"></div>
-                <div style="background: blue;"></div>
-            </div>
-            <div style="margin-top: 2px">Current</div>
-        </div>
         
+        
+        <!-- New / Current -->
+        <div class="new-current-container text-center">
+            <!-- New Label -->
+            <div class="new-label">New</div>
+            <!-- Display -->
+            <div class="new-current-display checkered-pattern">
+                <div [style.background]="'rgba(' + redInput.value + ',' + greenInput.value + ',' + blueInput.value + ',' + alphaInput.value + ')'"></div>
+                <div [style.background]="currentColor"></div>
+            </div>
+            <!-- Current Label -->
+            <div class="current-label">Current</div>
+        </div>
     </div>
 </div>  
 
