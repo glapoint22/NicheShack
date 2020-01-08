@@ -5,9 +5,8 @@
         <div class="position-relative">
             <!-- Search bar -->
             <div class="search-bar">
-                <div><i class="fas fa-search"></i></div>
-                <input>
-                <div (mousedown)="showMenu = true"></div>
+                <input #searchInput id="search-input" class="border-oval-left">
+                <div (mousedown)="showMenu = true">{{filterType}}</div>
             </div>
 
 
@@ -17,21 +16,24 @@
 
                 <div (mousedown)="$event.stopPropagation()">
                     <label>
-                        <input type="radio" name="filter">
+                        <input type="radio" name="filter" [checked]="filterType == 'Category'"
+                            (change)="filterType = 'Category'; showMenu = false; searchInput.value = ''">
                         <i class="fas fa-check"></i>
                         Filter by Category
                     </label>
 
                     <label>
-                        <input type="radio" name="filter">
+                        <input type="radio" name="filter" [checked]="filterType == 'Niche'"
+                            (change)="filterType = 'Niche'; showMenu = false; searchInput.value = ''">
                         <i class="fas fa-check"></i>
-                        Filter by Niches
+                        Filter by Niche
                     </label>
 
                     <label>
-                        <input type="radio" name="filter" checked>
+                        <input type="radio" name="filter" [checked]="filterType == 'Product'"
+                            (change)="filterType = 'Product'; showMenu = false; searchInput.value = ''">
                         <i class="fas fa-check"></i>
-                        Filter by Products
+                        Filter by Product
                     </label>
                 </div>
             </div>
@@ -39,7 +41,7 @@
 
 
         <!-- Icons -->
-        <div class="icon-bar" *ngIf="true; else sort">
+        <div class="icon-bar">
             <!-- Collapse -->
             <div class="icon-container" title="Collapse" (click)="onCollapseButtonClick()"
                 [ngClass]="{'icon-disabled': isCollapseButtonDisabled()}">
@@ -48,7 +50,7 @@
 
             <!-- Add -->
             <div class="icon-container" [title]="getAddButtonTitle()"
-                [ngClass]="{'icon-disabled': selectedItem && selectedItem.type == 'Product'}"
+                [ngClass]="{'icon-disabled': isAddButtonDisabled()}"
                 (click)="onAddItemButtonClick()">
                 <i class="fas fa-plus-circle"></i>
             </div>
@@ -74,24 +76,17 @@
                 [ngClass]="{'icon-disabled': !selectedItem}" (click)="selectedItem ? prompt.show = true: null">
                 <i class="fas fa-trash-alt"></i>
             </div>
-
         </div>
 
-        <ng-template #sort>
-            <div class="sort-container">
-                <div class="margin-right-2">sort by:</div>
-                <div class="flex-fill">
-                    <select>
-                        <option>Price: low to high</option>
-                    </select>
-                </div>
-
-                <div class="close">x</div>
-            </div>
-        </ng-template>
 
         <!-- Content -->
         <div class="hierarchy-container">
+            <!-- Search results close button -->
+            <div class="search-results" *ngIf="searchResultsCount != null">
+                <div class="results">{{searchResultsCount}} results</div>
+                <div class="close-button" title="Clear search results" (click)="clearSearchResults()">x</div>
+            </div>
+
             <hierarchy-content [items]="items" [hierarchy]="this"></hierarchy-content>
         </div>
     </div>

@@ -40,16 +40,15 @@ export class HierarchyContentComponent {
       });
     }
   }
-
-
   
 
   transitionend(event: any) {
+    // Don't hide the item if class list contains show-child
     if (event.path[1].classList.contains('show-child')) {
       event.path[1].style = "";
     } else {
+      // Hide the item
       event.path[1].style = "visibility: hidden";
     }
   }
-
 }

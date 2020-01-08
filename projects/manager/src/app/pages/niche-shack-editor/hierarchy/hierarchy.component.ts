@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Observable, fromEvent } from 'rxjs';
+import { delay, debounceTime, switchMap, tap } from 'rxjs/operators';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
 
 @Component({
@@ -9,15 +9,52 @@ import { HierarchyItem } from '../../../classes/hierarchy-item';
   styleUrls: ['./hierarchy.component.scss']
 })
 export class HierarchyComponent implements OnInit {
-  @Output() showForm: EventEmitter<any> = new EventEmitter();
-  public items: Array<HierarchyItem>;
+  @Output() showForm: EventEmitter<HierarchyItem> = new EventEmitter();
+  public items: Array<HierarchyItem> = [];
   public selectedItem: HierarchyItem;
   public isCollapsed: boolean;
   public showMenu: boolean;
+  public filterType: string = 'Product';
+  public searchResultsCount: number;
+  private searchInput: any;
 
   // ---------------------Temp-----------------------------
   public getTempItems(type: string): Observable<any> {
     if (type == 'Category') {
+      return new Observable(subscriber => {
+        subscriber.next([
+          {
+            id: 0,
+            name: 'Health & Fitness',
+            type: 'Category',
+            showChildren: false,
+            loadingChildren: false,
+            children: [],
+            parent: null
+          },
+          {
+            id: 1,
+            name: 'Self-Help',
+            type: 'Category',
+            showChildren: false,
+            loadingChildren: false,
+            children: [],
+            parent: null
+          },
+          {
+            id: 2,
+            name: 'E-business & E-marketing',
+            type: 'Category',
+            showChildren: false,
+            loadingChildren: false,
+            children: [],
+            parent: null
+          }
+        ]);
+      }).pipe(delay(1000));
+
+
+    } else if (type == 'Niche') {
       return new Observable(subscriber => {
         subscriber.next([
           {
@@ -66,39 +103,39 @@ export class HierarchyComponent implements OnInit {
   // ------------------------------------------------------
 
   ngOnInit() {
-    this.items = [
-      {
-        id: 0,
-        name: 'Health & Fitness',
-        type: 'Category',
-        showChildren: false,
-        loadingChildren: false,
-        children: [],
-        parent: null
-      },
-      {
-        id: 1,
-        name: 'Self-Help',
-        type: 'Category',
-        showChildren: false,
-        loadingChildren: false,
-        children: [],
-        parent: null
-      },
-      {
-        id: 2,
-        name: 'E-business & E-marketing',
-        type: 'Category',
-        showChildren: false,
-        loadingChildren: false,
-        children: [],
-        parent: null
-      }
-    ]
+
+    this.getTempItems('Category')
+      .subscribe(result => {
+        this.items = result;
+      });
+
   }
 
+  ngAfterViewInit() {
+    this.searchInput = document.getElementById('search-input');
 
-  
+    fromEvent(this.searchInput, 'input')
+      .pipe(
+        debounceTime(250),
+        switchMap((event: any) => {
+
+          // Replace with this.dataService.get(...)
+          return this.getTempItems(event.target.value == '' ? 'Category' : this.filterType);
+        }),
+        tap(items => {
+          // Set the item properties
+          items.map(item => {
+            item.type = this.searchInput.value == '' ? 'Category' : this.filterType;
+            item.children = [];
+          })
+        }))
+      .subscribe((result: any) => {
+        this.items = result;
+        this.selectedItem = null;
+        this.searchResultsCount = this.searchInput.value == '' ? null : this.items.length;
+      });
+  }
+
 
 
   onCollapseButtonClick() {
@@ -124,13 +161,16 @@ export class HierarchyComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   onKeydown(event: KeyboardEvent) {
+    // If the escape key was pressed and prompt is not enabled
     if (event.keyCode == 27 && !document.getElementById('prompt')) {
       if (this.selectedItem) {
         let el: HTMLElement = this.getItemElement();
 
+        // Set editable to false
         if (el.contentEditable == 'true') {
           el.contentEditable = 'false';
         } else {
+          // Deselect the selected item
           this.selectedItem = null;
         }
       }
@@ -143,24 +183,60 @@ export class HierarchyComponent implements OnInit {
 
     switch (this.selectedItem && this.selectedItem.type) {
       case 'Category':
-        title = 'Add Niche'
+        title = 'Add Niche';
         break;
 
       case 'Niche':
-        title = 'Add Product'
+        title = 'Add Product';
         break;
 
       case 'Product':
-        title = 'Add'
+        title = 'Add (Not Available)';
         break;
 
       default:
-        title = 'Add Category'
+        if (this.searchResultsCount != null && this.items.length > 0 && this.items[0].type != 'Category') {
+          title = 'Add (Not Available)'
+        } else {
+          title = 'Add Category';
+        }
+
         break;
     }
 
     return title;
   }
+
+
+  isAddButtonDisabled() {
+    let result: boolean;
+
+    switch (this.selectedItem && this.selectedItem.type) {
+      case 'Category':
+        result = false;
+        break;
+
+      case 'Niche':
+        result = false;
+        break;
+
+      case 'Product':
+        result = true;
+        break;
+
+      default:
+        if (this.searchResultsCount != null && this.items.length > 0 && this.items[0].type != 'Category') {
+          result = true;
+        } else {
+          result = false;
+        }
+
+        break;
+    }
+
+    return result;
+  }
+
 
 
   loadChildren(parent: HierarchyItem): Observable<Array<HierarchyItem>> {
@@ -171,7 +247,7 @@ export class HierarchyComponent implements OnInit {
       // Flag that we are loading children
       parent.loadingChildren = true;
 
-      this.getTempItems(parent.type) // <- Replace with this.dataService.get(...)
+      this.getTempItems((parent.type == 'Category' ? 'Niche' : 'Product')) // <- Replace with this.dataService.get(...)
         .subscribe((items: Array<HierarchyItem>) => {
 
           // Set the item's properties
@@ -198,7 +274,7 @@ export class HierarchyComponent implements OnInit {
 
 
   onAddItemButtonClick() {
-    if (this.selectedItem && this.selectedItem.type == 'Product') return;
+    if(this.isAddButtonDisabled()) return;
 
     if (!this.selectedItem) {
       this.addItem(this.items);
@@ -329,8 +405,19 @@ export class HierarchyComponent implements OnInit {
   }
 
   onOpenFormButtonClick() {
-    if(!this.selectedItem || this.selectedItem.type == 'Category') return;
+    if (!this.selectedItem || this.selectedItem.type == 'Category') return;
 
     this.showForm.emit(this.selectedItem);
+  }
+
+  clearSearchResults() {
+    this.searchResultsCount = null;
+    this.selectedItem = null;
+    this.items = [];
+    this.searchInput.value = '';
+    this.getTempItems('Category')
+      .subscribe(result => {
+        this.items = result;
+      });
   }
 }
