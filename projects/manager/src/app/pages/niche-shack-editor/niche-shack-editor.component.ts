@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HierarchyItem } from '../../classes/hierarchy-item';
 
 @Component({
   selector: 'niche-shack-editor',
@@ -8,15 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class NicheShackEditorComponent implements OnInit {
   public showProductForm: boolean;
   public showNicheForm: boolean;
-  public item: any;
+  public item: HierarchyItem;
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  showForm(data: any) {
-    if (data.type == 'product') {
+  showForm(item: HierarchyItem) {
+    if (item.type == 'Product') {
       this.showProductForm = true;
       this.showNicheForm = false;
     } else {
@@ -24,7 +25,6 @@ export class NicheShackEditorComponent implements OnInit {
       this.showProductForm = false;
     }
 
-    this.item = data.item;
+    this.item = item;
   }
-
 }

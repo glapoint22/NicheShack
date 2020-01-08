@@ -24,6 +24,7 @@ import { NicheFormComponent } from './niche-form/niche-form.component';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { PromptModule } from '../../shared-components/prompt/prompt.module';
+import { HierarchyContentComponent } from './hierarchy-content/hierarchy-content.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { PromptModule } from '../../shared-components/prompt/prompt.module';
     ProductEditorComponent,
     ProductDescriptionComponent,
     HierarchyMenuComponent,
-    NicheFormComponent
+    NicheFormComponent,
+    HierarchyContentComponent
   ],
   imports: [
     CommonModule,

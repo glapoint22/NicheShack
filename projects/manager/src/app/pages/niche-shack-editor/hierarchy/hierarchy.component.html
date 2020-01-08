@@ -5,9 +5,8 @@
         <div class="position-relative">
             <!-- Search bar -->
             <div class="search-bar">
-                <div><i class="fas fa-search"></i></div>
-                <input>
-                <div (mousedown)="showMenu = true"></div>
+                <input #searchInput id="search-input" class="border-oval-left">
+                <div (mousedown)="showMenu = true">{{filterType}}</div>
             </div>
 
 
@@ -17,21 +16,24 @@
 
                 <div (mousedown)="$event.stopPropagation()">
                     <label>
-                        <input type="radio" name="filter">
+                        <input type="radio" name="filter" [checked]="filterType == 'Category'"
+                            (change)="filterType = 'Category'; showMenu = false; searchInput.value = ''">
                         <i class="fas fa-check"></i>
                         Filter by Category
                     </label>
 
                     <label>
-                        <input type="radio" name="filter">
+                        <input type="radio" name="filter" [checked]="filterType == 'Niche'"
+                            (change)="filterType = 'Niche'; showMenu = false; searchInput.value = ''">
                         <i class="fas fa-check"></i>
-                        Filter by Niches
+                        Filter by Niche
                     </label>
 
                     <label>
-                        <input type="radio" name="filter" checked>
+                        <input type="radio" name="filter" [checked]="filterType == 'Product'"
+                            (change)="filterType = 'Product'; showMenu = false; searchInput.value = ''">
                         <i class="fas fa-check"></i>
-                        Filter by Products
+                        Filter by Product
                     </label>
                 </div>
             </div>
@@ -39,128 +41,53 @@
 
 
         <!-- Icons -->
-        <div class="icon-bar" *ngIf="true; else sort">
+        <div class="icon-bar">
             <!-- Collapse -->
-            <div class="icon-container" title="Collapse" (click)="collapse()"
+            <div class="icon-container" title="Collapse" (click)="onCollapseButtonClick()"
                 [ngClass]="{'icon-disabled': isCollapseButtonDisabled()}">
                 <i class="fas fa-minus-square"></i>
             </div>
 
             <!-- Add -->
             <div class="icon-container" [title]="getAddButtonTitle()"
-                [ngClass]="{'icon-disabled': selectedItem.type == 'Product'}" (click)="onAddItemButtonClick()">
+                [ngClass]="{'icon-disabled': isAddButtonDisabled()}"
+                (click)="onAddItemButtonClick()">
                 <i class="fas fa-plus-circle"></i>
             </div>
 
             <!-- Rename -->
-            <div class="icon-container" [title]="selectedItem.item ? 'Rename ' + selectedItem.type : 'Rename'"
-                [ngClass]="{'icon-disabled': !selectedItem.item}" (click)="editItem()">
+            <div class="icon-container" [title]="selectedItem ? 'Rename ' + selectedItem.type : 'Rename'"
+                [ngClass]="{'icon-disabled': !selectedItem}" (click)="editItem()">
                 <i class="fas fa-pencil-alt"></i>
             </div>
 
 
+            <!-- Open Form -->
+            <div class="icon-container"
+                [title]="selectedItem && (selectedItem.type == 'Niche' || selectedItem.type == 'Product') ? 'Open ' + selectedItem.type + ' Form' : 'Open Form'"
+                [ngClass]="{'icon-disabled': !selectedItem || selectedItem.type == 'Category'}"
+                (click)="onOpenFormButtonClick()">
+                <i class="fas fa-file-invoice"></i>
+            </div>
+
+
             <!-- Delete -->
-            <div class="icon-container" [title]="selectedItem.item ? 'Delete ' + selectedItem.type : 'Delete'"
-                [ngClass]="{'icon-disabled': !selectedItem.item}"
-                (click)="selectedItem.item ? prompt.show = true: null">
+            <div class="icon-container" [title]="selectedItem ? 'Delete ' + selectedItem.type : 'Delete'"
+                [ngClass]="{'icon-disabled': !selectedItem}" (click)="selectedItem ? prompt.show = true: null">
                 <i class="fas fa-trash-alt"></i>
             </div>
-
         </div>
 
-        <ng-template #sort>
-            <div class="sort-container">
-                <div class="margin-right-2">sort by:</div>
-                <div class="flex-fill">
-                    <select>
-                        <option>Price: low to high</option>
-                    </select>
-                </div>
-
-                <div class="close">x</div>
-            </div>
-        </ng-template>
 
         <!-- Content -->
-        <div class="hierarchy-content">
-            <ng-container *ngIf="true; else searchResults">
-                <!-- Categories -->
-                <ng-container *ngFor="let category of categories">
-                    <div class="arrow-button-container">
+        <div class="hierarchy-container">
+            <!-- Search results close button -->
+            <div class="search-results" *ngIf="searchResultsCount != null">
+                <div class="results">{{searchResultsCount}} results</div>
+                <div class="close-button" title="Clear search results" (click)="clearSearchResults()">x</div>
+            </div>
 
-                        <!-- Arrow button -->
-                        <input #categoryInput type="checkbox" [id]="category.name" [checked]="category.expanded">
-                        <label class="arrow-button" [for]="category.name"
-                            (click)="onCategoryButtonClick(category.id, categoryInput, categoryItemElement)"></label>
-
-                        <!-- category item -->
-                        <div [id]="'Category-' + category.id" #categoryItemElement class="item"
-                            (click)="selectedItem = {item: category, type: 'Category', element: categoryItemElement}"
-                            [ngClass]="{'selected': selectedItem.item == category}">
-                            {{category.name}}
-                        </div>
-
-                        <!-- Loading spinner -->
-                        <i class="fa fa-spinner fa-pulse fade-start" *show="category.loadingChildren"
-                            transitionClass="fade-end"></i>
-                    </div>
-
-
-
-                    <!-- Niches -->
-                    <ng-container *ngFor="let niche of category.niches">
-                        <div class="arrow-button-content">
-
-                            <!-- Arrow button container -->
-                            <div class="arrow-button-container"
-                                [ngClass]="{'expand-arrow-button': category.expanded}"
-                                (transitionend)="transitionend($event)">
-
-                                <!-- Arrow button -->
-                                <input #nicheInput type="checkbox" [id]="niche.name" [checked]="niche.expanded">
-                                <label class="arrow-button" [for]="niche.name"
-                                    (click)="onProductButtonClick(category.id, niche.id, nicheInput, nicheItemElement)"
-                                    (transitionend)="$event.stopPropagation()"></label>
-
-                                <!-- Niche item -->
-                                <div [id]="'Niche-' + niche.id" #nicheItemElement class="item"
-                                    (click)="selectedItem = {item: niche, type: 'Niche', element: nicheItemElement}"
-                                    (dblclick)="showForm.emit({item: niche, type: 'niche'})"
-                                    [ngClass]="{'selected': selectedItem.item == niche}">
-                                    {{niche.name}}
-                                </div>
-
-                                <!-- Loading spinner -->
-                                <i class="fa fa-spinner fa-pulse fade-start" (transitionend)="$event.stopPropagation()"
-                                    *show="niche.loadingChildren" transitionClass="fade-end"></i>
-
-                            </div>
-
-                            <!-- Products -->
-                            <ng-container *ngFor="let product of niche.products">
-                                <div class="arrow-button-content">
-
-                                    <!-- Product item -->
-                                    <div [id]="'Product-' + product.id" #productItemElement
-                                        class="item"
-                                        (click)="selectedItem = {item: product, type: 'Product', element: productItemElement}"
-                                        (dblclick)="showForm.emit({item: product, type: 'product'})"
-                                        [ngClass]="{'expand-arrow-button': niche.expanded, 'selected': selectedItem.item == product}"
-                                        (transitionend)="transitionend($event)">
-                                        {{product.name}}</div>
-                                </div>
-                            </ng-container>
-                        </div>
-                    </ng-container>
-                </ng-container>
-            </ng-container>
-
-            <!-- Search results -->
-            <ng-template #searchResults>
-                <div>How to be a <span style="color: white; font-weight: bold;">Gump</span>y</div>
-                <div>Once a <span style="color: white; font-weight: bold;">Gump</span>y always a <span
-                        style="color: white; font-weight: bold;">Gump</span>y</div>
-            </ng-template>
+            <hierarchy-content [items]="items" [hierarchy]="this"></hierarchy-content>
         </div>
     </div>
 
@@ -170,6 +97,6 @@
 
 </div>
 
-<prompt #prompt [promptName]="'Delete ' + (selectedItem.item ? selectedItem.type : '')"
-    [message]="'Are you sure you want to delete ' + (selectedItem.item ? selectedItem.item.name : '') + '?'"
+<prompt #prompt [promptTitle]="'Delete ' + (selectedItem ? selectedItem.type : '')"
+    [message]="'Are you sure you want to delete ' + (selectedItem ? selectedItem.name : '') + '?'"
     (onYes)="deleteItem()"></prompt>

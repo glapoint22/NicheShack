@@ -9,18 +9,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        border: 1px solid transparent;
         border-top: 1px solid $border-color;
         border-bottom: 1px solid $border-color;
 
         &:first-child {
-            border-top-left-radius: 50%;
-            border-bottom-left-radius: 50%;
+            border-top-left-radius: 100px;
+            border-bottom-left-radius: 100px;
             border-left: 1px solid $border-color;
         }
 
         &:last-child {
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
+            border-top-right-radius: 100px;
+            border-bottom-right-radius: 100px;
             border-right: 1px solid $border-color;
             &:after {
                 content: '';
