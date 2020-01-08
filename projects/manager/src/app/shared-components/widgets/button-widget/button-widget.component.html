@@ -1,7 +1,13 @@
-<div class="widget widget-selected">
-    <div class="edit-button fas"></div>
+<div [style.background]="fillColor"
+     [style.border]="applyBorder + borderWidth + 'px ' + borderStyle + ' ' + borderColor"
+     [style.borderRadius]="borderTopLeftRadius + 'px ' + borderTopRightRadius + 'px ' + borderBottomRightRadius + 'px ' + borderBottomLeftRadius + 'px'"
+     [style.box-shadow]="'none 20px 100px 10px 10px #ff0000'"
+     [style.margin]="'10px 20px 30px 40px'"
+     
+     class="widget widget-selected">
+    <div class="edit-button fas" (click)="onEdit()"></div>
     <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div>
-    <div class="top-left-handle"></div>
+    <!-- <div class="top-left-handle"></div>
     <div class="top-center-handle"></div>
     <div class="top-right-handle"></div>
     <div class="left-handle"></div>
@@ -12,6 +18,11 @@
     <div class="left-handle-bar"></div>
     <div class="top-handle-bar"></div>
     <div class="right-handle-bar"></div>
-    <div class="bottom-handle-bar"></div>
-    <div>Button</div>
+    <div class="bottom-handle-bar"></div> -->
+    <div [style.fontFamily]="fontFamily"
+         [style.fontSize.px]="fontSize"
+         [style.fontWeight]="fontWeight"
+         [style.fontStyle]="fontStyle"
+         [style.color]="textColor"
+    >{{caption}}</div>
 </div>

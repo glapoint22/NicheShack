@@ -1,22 +1,22 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'color-picker',
   templateUrl: './color-picker.component.html',
-  styleUrls: ['./color-picker.component.scss']
+  styleUrls: ['./color-picker.component.scss'],
 })
 
 export class ColorPickerComponent {
-  public hex: string;
+  public hex: number;
   public hue: number;
-  public saturation: number;
-  public lightness: number;
   public ringX: number;
   public ringY: number;
   public ringDark: boolean;
   public hueSliderY: number = -4;
   public alphaSliderY: number = -4;
-  public currentColor: string;
+  public currentColor: any = {r: 0, g: 0, b: 0, a: 0};
+  constructor(public _FormService: FormService) {}
   @ViewChild('colorContainer', { static: false }) colorContainer: ElementRef;
   @ViewChild('hueContainer', { static: false }) hueContainer: ElementRef;
   @ViewChild('alphaContainer', { static: false }) alphaContainer: ElementRef;
@@ -25,6 +25,37 @@ export class ColorPickerComponent {
   @ViewChild('blueInput', { static: false }) blueInput: ElementRef;
   @ViewChild('alphaInput', { static: false }) alphaInput: ElementRef;
   @ViewChild('hexInput', { static: false }) hexInput: ElementRef;
+
+
+// -----------------------------( ON SHOW )------------------------------ \\
+  onShow() {
+    window.setTimeout(() => {
+      var hsl = this.RGBToHSL(this._FormService.rgba.r, this._FormService.rgba.g, this._FormService.rgba.b);
+      var hsb = this.RGBToHSB(this._FormService.rgba.r, this._FormService.rgba.g, this._FormService.rgba.b);
+
+      // Set the current color
+      this.currentColor.r = this._FormService.rgba.r;
+      this.currentColor.g = this._FormService.rgba.g;
+      this.currentColor.b = this._FormService.rgba.b;
+      this.currentColor.a = this._FormService.rgba.a;
+    
+      // Move the ring
+      this.ringX = hsb.s;
+      this.ringY = 100 - hsb.b;
+
+      // Move the hue slider   
+      this.hueSliderY = Math.round((249 - ((hsl[0] * 360) / 1.422924901185771)));
+
+      // Move the alpha slider
+      this.alphaSliderY = 249 - (((this._FormService.rgba.a * 100) / 0.3952569169960474));
+
+      // Set the rgb
+      this.setRGB(false)
+
+      // Set a
+      this.setA(false)
+    })
+  }
 
 
   // -----------------------------( COLOR DOWN )------------------------------ \\
@@ -44,13 +75,10 @@ export class ColorPickerComponent {
       if (this.ringX >= 100) this.ringX = 100;
       if (this.ringY <= 0) this.ringY = 0;
       if (this.ringY >= 100) this.ringY = 100;
-      var hsl = this.HSBToHSL(this.hue, this.ringX, 100 - this.ringY)
-      this.saturation = hsl.s;
-      this.lightness = hsl.l;
-      this.setRGB();
+      this.setRGB(false);
     }
     setColor(e);
-    // Move the ring
+    // Moving the ring
     let ringMove = (e: MouseEvent) => {
       setColor(e);
     }
@@ -72,11 +100,10 @@ export class ColorPickerComponent {
       this.hueSliderY = e.clientY - this.hueContainer.nativeElement.getBoundingClientRect().y - 5;
       if (this.hueSliderY <= -4) this.hueSliderY = -4;
       if (this.hueSliderY >= 249) this.hueSliderY = 249;
-      this.hue = Math.round((249 - this.hueSliderY) * 1.422924901185771);
-      this.setRGB();
+      this.setRGB(false);
     }
     setHue(e)
-    // Move the hue slider
+    // Moving the hue slider
     let hueSliderMove = (e: MouseEvent) => {
       setHue(e);
     }
@@ -98,10 +125,10 @@ export class ColorPickerComponent {
       this.alphaSliderY = e.clientY - this.alphaContainer.nativeElement.getBoundingClientRect().y - 5;
       if (this.alphaSliderY <= -4) this.alphaSliderY = -4;
       if (this.alphaSliderY >= 249) this.alphaSliderY = 249;
-      this.alphaInput.nativeElement.value = Math.round((((249 - this.alphaSliderY) * 0.3952569169960474) / 100) * 100) / 100;
+      this.setA(false);
     }
     setAlpha(e);
-    // Move the alpha slider
+    // Moving the alpha slider
     let alphaSliderMove = (e: MouseEvent) => {
       setAlpha(e);
     }
@@ -118,22 +145,33 @@ export class ColorPickerComponent {
 
 
   // -----------------------------( SET RGB )------------------------------ \\
-  setRGB() {
-    //RGB
-    let rgb = this.HSLToRGB(this.hue / 360, this.saturation / 100, this.lightness / 100);
-    //Hex
+  setRGB(isInput: boolean) {
+    let hsl = this.HSBToHSL((Math.round((249 - this.hueSliderY) * 1.422924901185771)), this.ringX, 100 - this.ringY)
+    let rgb = this.HSLToRGB(hsl.h / 360, hsl.s / 100, hsl.l / 100);
     let hex = this.RGBToHex(rgb[0], rgb[1], rgb[2]);
 
+    // Update the Color Palette
+    this.hue = hsl.h;
+
     //Update the input fields
-    if(this.redInput.nativeElement != document.activeElement) this.redInput.nativeElement.value = rgb[0];
-    if(this.greenInput.nativeElement != document.activeElement) this.greenInput.nativeElement.value = rgb[1];
-    if(this.blueInput.nativeElement != document.activeElement) this.blueInput.nativeElement.value = rgb[2];
-    if(this.hexInput.nativeElement != document.activeElement) this.hexInput.nativeElement.value = hex;
+    this._FormService.rgba.r = rgb[0];
+    if(!isInput) this.redInput.nativeElement.value = rgb[0];
+
+    this._FormService.rgba.g = rgb[1];
+    if(!isInput) this.greenInput.nativeElement.value = rgb[1];
+
+    this._FormService.rgba.b = rgb[2];
+    if(!isInput) this.blueInput.nativeElement.value = rgb[2];
+
+    this.hex = hex;
+    if(!isInput) this.hexInput.nativeElement.value = hex;
+
+    
 
     //Set the ring color
     if (this.ringY < 50) {
       if (this.ringX > 50) {
-        if (this.hue > 200 || this.hue < 25) {
+        if (hsl.h > 200 || hsl.h < 25) {
           this.ringDark = false;
         } else {
           this.ringDark = true;
@@ -146,13 +184,17 @@ export class ColorPickerComponent {
     }
   }
 
+  // ----------------------------------( SET A )---------------------------------- \\
+  setA(isInput: boolean) {
+    let a = Math.round((((249 - this.alphaSliderY) * 0.3952569169960474) / 100) * 100) / 100;
+
+    this._FormService.rgba.a = a;
+    if(!isInput) this.alphaInput.nativeElement.value = a;
+  }
 
 
 
-
-
-
-
+  // -----------------------------( ON INPUT CHANGE )------------------------------ \\
   onInputChange () {
 
     //If the input field is alpha
@@ -163,10 +205,10 @@ export class ColorPickerComponent {
 
       if (this.alphaInput.nativeElement.value > 1) this.alphaInput.nativeElement.value = 1;
 
-
+      // Move the alpha slider
       this.alphaSliderY = 249 - (((this.alphaInput.nativeElement.value * 100) / 0.3952569169960474));
 
-
+      this.setA(true);
 
     }else {
 
@@ -202,23 +244,24 @@ export class ColorPickerComponent {
         var hsb = this.RGBToHSB(this.redInput.nativeElement.value, this.greenInput.nativeElement.value, this.blueInput.nativeElement.value);
       }
 
-      //Update hsl
-      this.hue = hsl[0] * 360;
-      this.saturation = hsl[1] * 100;
-      this.lightness = hsl[2] * 100;
-
       // Move the ring
       this.ringX = hsb.s;
       this.ringY = 100 - hsb.b;
 
       // Move the hue slider   
-      this.hueSliderY = Math.round((249 - (this.hue / 1.422924901185771)));
+      this.hueSliderY = Math.round((249 - ((hsl[0] * 360) / 1.422924901185771)));
 
       // Set the rgb
-      this.setRGB()
+      this.setRGB(true)
     }
   }
 
+  getNewColor() {
+    let rgb = this.HexToRGB('#' + this.hex)
+    let a = Math.round((((249 - this.alphaSliderY) * 0.3952569169960474) / 100) * 100) / 100;
+
+    return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + a + ')';
+  }
 
 
   // ----------------------------------------------------( COLOR FUNCTIONS )--------------------------------------------------\\
@@ -298,9 +341,9 @@ export class ColorPickerComponent {
     }
 
     var rgb = {
-      r: +r,
-      g: +g,
-      b: +b
+      r: + r,
+      g: + g,
+      b: + b
     }
     
     return rgb;
@@ -391,4 +434,19 @@ export class ColorPickerComponent {
         b: Math.round(b * 100)
     };
   }
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+

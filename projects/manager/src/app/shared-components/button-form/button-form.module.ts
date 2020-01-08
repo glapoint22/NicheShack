@@ -9,6 +9,8 @@ import { CornersModule } from '../corners/corners.module';
 import { LinkModule } from '../link/link.module';
 import { ButtonTextModule } from '../button-text/button-text.module';
 import { TextModule } from '../text/text.module';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
+import { DialogBoxModule } from '../dialog-box/dialog-box.module';
 
 
 
@@ -27,7 +29,9 @@ import { TextModule } from '../text/text.module';
     CornersModule,
     LinkModule,
     ButtonTextModule,
-    TextModule
+    TextModule,
+    ShowHideModule,
+    DialogBoxModule
   ],
 
   exports: [ButtonFormComponent]

@@ -13,6 +13,7 @@ import { ContainerFormModule } from '../../shared-components/container-form/cont
 import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
 import { RowFormModule } from '../../shared-components/row-form/row-form.module';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
+import { ColorPickerModule } from '../../shared-components/color-picker/color-picker.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { DesignerModule } from '../../shared-components/designer/designer.module
     ContainerFormModule,
     WidgetsModule,
     RowFormModule,
-    DesignerModule
+    DesignerModule,
+    ColorPickerModule
   ]
 })
 export class PageBuilderModule { }
