@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormService } from './../../../services/form.service'
+import { FormService } from 'projects/manager/src/app/services/form.service';
 
 @Component({
   selector: 'button-widget',

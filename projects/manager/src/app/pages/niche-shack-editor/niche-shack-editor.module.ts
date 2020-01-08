@@ -19,7 +19,6 @@ import { ImageFormModule } from '../../shared-components/image-form/image-form.m
 import { LineFormModule } from '../../shared-components/line-form/line-form.module';
 import { FeaturedProductsFormModule } from '../../shared-components/featured-products-form/featured-products-form.module';
 import { CategoriesFormModule } from '../../shared-components/categories-form/categories-form.module';
-import { WidgetsModule } from '../../shared-components/widgets/widgets.module';
 import { NicheFormComponent } from './niche-form/niche-form.component';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
@@ -52,7 +51,6 @@ import { HierarchyContentComponent } from './hierarchy-content/hierarchy-content
     LineFormModule,
     FeaturedProductsFormModule,
     CategoriesFormModule,
-    WidgetsModule,
     DesignerModule,
     ShowHideModule,
     PromptModule
