@@ -27,7 +27,7 @@
     display:flex;
     align-items: center;
     flex-direction: column;
-
+    
     .icon-container {
         margin-top: 20px;
         font-size: 20px;
@@ -202,7 +202,7 @@
 }
 
 .grid {
-    max-width: 1496px;
+    position: relative;
     border-left: 1px dashed rgb(77, 77, 77);
     border-right: 1px dashed rgb(77, 77, 77);
 
@@ -308,4 +308,33 @@
         filter: brightness(1.4);
         cursor: pointer;
     }
+}
+
+.text-icon {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 22px;
+}
+
+%drag-icon {
+    border: 1px solid;
+    position: absolute;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}
+
+.drag-icon-not-allowed {
+    @extend %drag-icon;
+    background: rgba(255, 0, 0, 0.3);
+    border-color: #fb5252;
+    color: #fb5252;
+}
+
+.drag-icon-allowed {
+    @extend %drag-icon;
+    background: $selected-fill-color;
+    border-color: $selected-border-color;
+    color: $selected-border-color;
 }
