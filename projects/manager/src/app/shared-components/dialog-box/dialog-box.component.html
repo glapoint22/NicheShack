@@ -1,5 +1,5 @@
 <!-- Main Container -->
-<div #container [style.left.px]="x" [style.top.px]="y"  class="container" [style.maxWidth.px]="width" [ngClass]="{'position-absolute': !isModal}">
+<div #container [style.left.px]="x" [style.top.px]="y"  class="container" [style.maxWidth.px]="width" [ngClass]="{'position-absolute': !isModal}" style="z-index: 100;">
 
     <!-- Bar -->
     <div class="form-bar" (mousedown)="formMoveBegin($event)">

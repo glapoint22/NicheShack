@@ -7,50 +7,118 @@ import { FormService } from '../../services/form.service'
   styleUrls: ['./button-form.component.scss']
 })
 export class ButtonFormComponent {
-  public showNormal: boolean = true;
-  public showNormalVerticalTab: boolean[] = [true, false, false, false, false, false, false];
-  public showHoverVerticalTab: boolean[] = [true, false, false];
-
-  constructor(public _FormService: FormService) {
+  public normalVerticalTab: boolean[] = [true, false, false, false, false, false, false];
+  public hoverVerticalTab: boolean[] = [true, false, false];
+  constructor(public _FormService: FormService) {}
 
 
-  }
-
-  onShow() {
-    this._FormService.rgba = this._FormService.fillColor;
-  }
-
-  selectNormalVerticalTab(index: number) {
-
-    this._FormService.showColorPicker = false;
-
-    for(var i = 0; i < 7; i++) {
-      this.showNormalVerticalTab[i] = false;
-    }
-    this.showNormalVerticalTab[index] = true;
-
-    if(index == 0)  {
-      this._FormService.rgba = this._FormService.fillColor;
-    }
-
-    if(index == 1) {
-      this._FormService.rgba = this._FormService.borderColor;
-    }
-
-    if(index == 3) {
-      this._FormService.rgba = this._FormService.textColor;
-    }
-
-    if(index == 4) {
-      this._FormService.rgba = this._FormService.shadowColor;
-    }
+  // ------------------------------------------------( ON SHOW )----------------------------------------------\\
+  onFormOpen() {
+    // Set the button fill color to be the starting swatch color on form open
+    this._FormService.colorPickerColor = this._FormService.fillColor;
+    // Set the normal button to be selected on form open
+    this._FormService.buttonNormalTabSelected = true;
   }
 
 
-  selectHoverVerticalTab(index: number) {
-    for(var i = 0; i < 3; i++) {
-      this.showHoverVerticalTab[i] = false;
+  // -------------------------------------( ON NORMAL HORIZONTAL TAB SELECT )-----------------------------------\\
+  onNormalHorizontalTabSelect() {
+    // If the color Picker form is open
+    if(this._FormService.showColorPicker) {
+      // Close the the Color Picker form and reset any color changes made back to the original color
+      this._FormService.showColorPicker = false;
+      this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
+      this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
+      this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
+      this._FormService.colorPickerColor.a = this._FormService.currentcolorPickerColor.a;
     }
-    this.showHoverVerticalTab[index] = true;
+
+    // Deselect the hover horizontal tab
+    this._FormService.buttonNormalTabSelected = true;
+
+    // Get the index of the normal vertical tab that is selected
+    let selectedIndex = this.normalVerticalTab.indexOf(true);
+
+    // Then depending on which tab is selected, update its color swatch accordingly
+    if(selectedIndex == 0) this._FormService.colorPickerColor = this._FormService.fillColor;// Fill Tab
+    if(selectedIndex == 1) this._FormService.colorPickerColor = this._FormService.borderColor;// Border Tab
+    if(selectedIndex == 3) this._FormService.colorPickerColor = this._FormService.textColor;// Text Tab
+    if(selectedIndex == 4) this._FormService.colorPickerColor = this._FormService.shadowColor;// Shadow Tab
+  }
+
+
+  // -------------------------------------( ON HOVER HORIZONTAL TAB SELECT )-----------------------------------\\
+  onHoverHorizontalTabSelect() {
+    // If the color Picker form is open
+    if(this._FormService.showColorPicker) {
+      // Close the the Color Picker form and reset any color changes made back to the original color
+      this._FormService.showColorPicker = false;
+      this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
+      this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
+      this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
+      this._FormService.colorPickerColor.a = this._FormService.currentcolorPickerColor.a;
+    }
+
+    // Deselect the normal horizontal tab
+    this._FormService.buttonNormalTabSelected = false;
+
+    // Get the index of the hover vertical tab that is selected
+    let selectedIndex = this.hoverVerticalTab.indexOf(true);
+
+    // Then depending on which tab is selected, update its color swatch accordingly
+    if(selectedIndex == 0) this._FormService.colorPickerColor = this._FormService.hoverFillColor;// Fill Tab
+    if(selectedIndex == 1) this._FormService.colorPickerColor = this._FormService.hoverBorderColor;// Border Tab
+    if(selectedIndex == 2) this._FormService.colorPickerColor = this._FormService.hoverTextColor;// Text Tab
+  }
+
+
+  // -------------------------------------( ON NORMAL VERTICAL TAB SELECT )-----------------------------------\\
+  onNormalVerticalTabSelect(index: number) {
+    // If the color Picker form is open
+    if(this._FormService.showColorPicker) {
+      // Close the the Color Picker form and reset any color changes made back to the original color
+      this._FormService.showColorPicker = false;
+      this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
+      this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
+      this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
+      this._FormService.colorPickerColor.a = this._FormService.currentcolorPickerColor.a;
+    }
+
+    // Deselect the vertical tab that is currently selected
+    this.normalVerticalTab[   this.normalVerticalTab.indexOf(true)   ] = false;
+    
+    // Display the newly selected vertical tab as being selected
+    this.normalVerticalTab[index] = true;
+
+    // Then depending on which tab is selected, update its color swatch accordingly
+    if(index == 0) this._FormService.colorPickerColor = this._FormService.fillColor;// Fill Tab
+    if(index == 1) this._FormService.colorPickerColor = this._FormService.borderColor;// Border Tab
+    if(index == 3) this._FormService.colorPickerColor = this._FormService.textColor;// Text Tab
+    if(index == 4) this._FormService.colorPickerColor = this._FormService.shadowColor;// Shadow Tab
+  }
+
+
+  // -------------------------------------( ON HOVER VERTICAL TAB SELECT )-----------------------------------\\
+  onHoverVerticalTabSelect(index: number) {
+    // If the color Picker form is open
+    if(this._FormService.showColorPicker) {
+      // Close the the Color Picker form and reset any color changes made back to the original color
+      this._FormService.showColorPicker = false;
+      this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
+      this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
+      this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
+      this._FormService.colorPickerColor.a = this._FormService.currentcolorPickerColor.a;
+    }
+
+    // Deselect the vertical tab that is currently selected
+    this.hoverVerticalTab[   this.hoverVerticalTab.indexOf(true)   ] = false;
+
+    // Display the newly selected vertical tab as being selected
+    this.hoverVerticalTab[index] = true;
+
+    // Then depending on which tab is selected, update its color swatch accordingly
+    if(index == 0) this._FormService.colorPickerColor = this._FormService.hoverFillColor;// Fill Tab
+    if(index == 1) this._FormService.colorPickerColor = this._FormService.hoverBorderColor;// Border Tab
+    if(index == 2) this._FormService.colorPickerColor = this._FormService.hoverTextColor;// Text Tab
   }
 }
