@@ -13,9 +13,8 @@ export class ColorPickerComponent {
   public ringX: number;
   public ringY: number;
   public ringDark: boolean;
-  public hueSliderY: number = -4;
-  public alphaSliderY: number = -4;
-  public currentColor: any = {r: 0, g: 0, b: 0, a: 0};
+  public hueSliderY: number;
+  public alphaSliderY: number;
   constructor(public _FormService: FormService) {}
   @ViewChild('colorContainer', { static: false }) colorContainer: ElementRef;
   @ViewChild('hueContainer', { static: false }) hueContainer: ElementRef;
@@ -27,17 +26,17 @@ export class ColorPickerComponent {
   @ViewChild('hexInput', { static: false }) hexInput: ElementRef;
 
 
-// -----------------------------( ON SHOW )------------------------------ \\
-  onShow() {
+// -----------------------------( ON FORM OPEN )------------------------------ \\
+  onFormOpen() {
     window.setTimeout(() => {
-      var hsl = this.RGBToHSL(this._FormService.rgba.r, this._FormService.rgba.g, this._FormService.rgba.b);
-      var hsb = this.RGBToHSB(this._FormService.rgba.r, this._FormService.rgba.g, this._FormService.rgba.b);
+      var hsl = this.RGBToHSL(this._FormService.colorPickerColor.r, this._FormService.colorPickerColor.g, this._FormService.colorPickerColor.b);
+      var hsb = this.RGBToHSB(this._FormService.colorPickerColor.r, this._FormService.colorPickerColor.g, this._FormService.colorPickerColor.b);
 
       // Set the current color
-      this.currentColor.r = this._FormService.rgba.r;
-      this.currentColor.g = this._FormService.rgba.g;
-      this.currentColor.b = this._FormService.rgba.b;
-      this.currentColor.a = this._FormService.rgba.a;
+      this._FormService.currentcolorPickerColor.r = this._FormService.colorPickerColor.r;
+      this._FormService.currentcolorPickerColor.g = this._FormService.colorPickerColor.g;
+      this._FormService.currentcolorPickerColor.b = this._FormService.colorPickerColor.b;
+      this._FormService.currentcolorPickerColor.a = this._FormService.colorPickerColor.a;
     
       // Move the ring
       this.ringX = hsb.s;
@@ -47,7 +46,7 @@ export class ColorPickerComponent {
       this.hueSliderY = Math.round((249 - ((hsl[0] * 360) / 1.422924901185771)));
 
       // Move the alpha slider
-      this.alphaSliderY = 249 - (((this._FormService.rgba.a * 100) / 0.3952569169960474));
+      this.alphaSliderY = 249 - (((this._FormService.colorPickerColor.a * 100) / 0.3952569169960474));
 
       // Set the rgb
       this.setRGB(false)
@@ -154,19 +153,17 @@ export class ColorPickerComponent {
     this.hue = hsl.h;
 
     //Update the input fields
-    this._FormService.rgba.r = rgb[0];
+    this._FormService.colorPickerColor.r = rgb[0];
     if(!isInput) this.redInput.nativeElement.value = rgb[0];
 
-    this._FormService.rgba.g = rgb[1];
+    this._FormService.colorPickerColor.g = rgb[1];
     if(!isInput) this.greenInput.nativeElement.value = rgb[1];
 
-    this._FormService.rgba.b = rgb[2];
+    this._FormService.colorPickerColor.b = rgb[2];
     if(!isInput) this.blueInput.nativeElement.value = rgb[2];
 
     this.hex = hex;
     if(!isInput) this.hexInput.nativeElement.value = hex;
-
-    
 
     //Set the ring color
     if (this.ringY < 50) {
@@ -184,14 +181,14 @@ export class ColorPickerComponent {
     }
   }
 
+
   // ----------------------------------( SET A )---------------------------------- \\
   setA(isInput: boolean) {
     let a = Math.round((((249 - this.alphaSliderY) * 0.3952569169960474) / 100) * 100) / 100;
 
-    this._FormService.rgba.a = a;
+    this._FormService.colorPickerColor.a = a;
     if(!isInput) this.alphaInput.nativeElement.value = a;
   }
-
 
 
   // -----------------------------( ON INPUT CHANGE )------------------------------ \\
@@ -256,11 +253,22 @@ export class ColorPickerComponent {
     }
   }
 
+
+  // ------------------------------------------------( GET NEW COLOR )----------------------------------------------\\
   getNewColor() {
     let rgb = this.HexToRGB('#' + this.hex)
     let a = Math.round((((249 - this.alphaSliderY) * 0.3952569169960474) / 100) * 100) / 100;
-
     return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + a + ')';
+  }
+
+
+// ----------------------------------------------------( ON CANCEL )--------------------------------------------------\\
+  onCancel() {
+    this._FormService.showColorPicker = false;
+    this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
+    this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
+    this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
+    this._FormService.colorPickerColor.a = this._FormService.currentcolorPickerColor.a;
   }
 
 

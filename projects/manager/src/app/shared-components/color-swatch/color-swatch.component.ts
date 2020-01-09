@@ -8,7 +8,7 @@ import { FormService } from '../../services/form.service'
 })
 
 export class ColorSwatchComponent {
-  public rgba = this._FormService.rgba;
+  public rgba = this._FormService.colorPickerColor;
   constructor(public _FormService: FormService) {}
   
   onClick() {

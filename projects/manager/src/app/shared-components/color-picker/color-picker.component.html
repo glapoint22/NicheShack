@@ -1,7 +1,7 @@
-<div *show="_FormService.showColorPicker" transitionClass="fade-end" class="fade-start" (onShow)="onShow()">
+<div *show="_FormService.showColorPicker" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
     <!-- Dialog Box -->
-    <dialog-box [dialogBoxName]="'Color Picker'" [width]="400">
+    <dialog-box [dialogBoxName]="'Color Picker'" [width]="400" (onClose)="onCancel()">
 
         <!-- panel Light -->
         <div class="panel-light">
@@ -105,7 +105,7 @@
                     <!-- Display -->
                     <div class="new-current-display checkered-pattern">
                         <div [style.background]="getNewColor()"></div>
-                        <div [style.background]="'rgba(' + currentColor.r + ',' + currentColor.g + ',' + currentColor.b + ',' + currentColor.a + ')'"></div>
+                        <div [style.background]="'rgba(' + _FormService.currentcolorPickerColor.r + ',' + _FormService.currentcolorPickerColor.g + ',' + _FormService.currentcolorPickerColor.b + ',' + _FormService.currentcolorPickerColor.a + ')'"></div>
                     </div>
                     <!-- Current Label -->
                     <div class="current-label">Current</div>
@@ -115,8 +115,8 @@
 
         <!-- Button Container -->
         <div class="form-button-container">
-            <button>Cancel</button>
-            <button>OK</button>
+            <button (click)="onCancel()">Cancel</button>
+            <button (click)="_FormService.showColorPicker = false">OK</button>
         </div>
     </dialog-box>
 </div>

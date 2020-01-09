@@ -11,6 +11,7 @@ import { ButtonTextModule } from '../button-text/button-text.module';
 import { TextModule } from '../text/text.module';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { DialogBoxModule } from '../dialog-box/dialog-box.module';
+import { ColorSwatchModule } from '../color-swatch/color-swatch.module';
 
 
 
@@ -31,7 +32,8 @@ import { DialogBoxModule } from '../dialog-box/dialog-box.module';
     ButtonTextModule,
     TextModule,
     ShowHideModule,
-    DialogBoxModule
+    DialogBoxModule,
+    ColorSwatchModule
   ],
 
   exports: [ButtonFormComponent]

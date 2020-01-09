@@ -1,8 +1,10 @@
-<div [style.background]="fillColor"
-     [style.border]="applyBorder + borderWidth + 'px ' + borderStyle + ' ' + borderColor"
+<div [style.background]="getFillColor()"
+     [style.border]="applyBorder + borderWidth + 'px ' + borderStyle"
+     [style.borderColor]="getBorderColor()"
      [style.borderRadius]="borderTopLeftRadius + 'px ' + borderTopRightRadius + 'px ' + borderBottomRightRadius + 'px ' + borderBottomLeftRadius + 'px'"
-     [style.box-shadow]="'none 20px 100px 10px 10px #ff0000'"
-     [style.margin]="'10px 20px 30px 40px'"
+     [style.box-shadow]="enableShadow + ' ' + shadowX + 'px ' + shadowY + 'px ' + shadowBlur + 'px ' + shadowSize + 'px '"
+     [style.color]="'rgba(' + shadowColor.r + ',' +  shadowColor.g + ',' + shadowColor.b + ',' + shadowColor.a + ')'"
+     [style.margin]="marginTop + 'px ' + marginRight + 'px ' + marginBottom + 'px ' + marginLeft + 'px'"
      
      class="widget widget-selected">
     <div class="edit-button fas" (click)="onEdit()"></div>
@@ -23,6 +25,6 @@
          [style.fontSize.px]="fontSize"
          [style.fontWeight]="fontWeight"
          [style.fontStyle]="fontStyle"
-         [style.color]="textColor"
+         [style.color]="getTextColor()"
     >{{caption}}</div>
 </div>
