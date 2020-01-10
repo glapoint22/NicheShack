@@ -10,6 +10,7 @@ import { ImageWidgetComponent } from './widgets/image-widget/image-widget.compon
 import { LineWidgetComponent } from './widgets/line-widget/line-widget.component';
 import { TextWidgetComponent } from './widgets/text-widget/text-widget.component';
 import { VideoWidgetComponent } from './widgets/video-widget/video-widget.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [

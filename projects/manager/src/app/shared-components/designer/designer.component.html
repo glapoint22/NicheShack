@@ -1,5 +1,5 @@
-<!-- Page Builder Container -->
-<div class="page-builder-container">
+<!-- Designer Container -->
+<div class="designer-container">
 
     <!-- Bottom Section -->
     <div class="bottom-section">
@@ -69,14 +69,12 @@
 
 
 
-                <!-- Width / Height Display Container -->
-                <div class="width-height-display-container">
+                <!-- Width Display Container -->
+                <div class="width-display-container">
 
-                    <!-- Width / Height Display -->
-                    <div class="width-height-display">
-                        <input type="text">
-                        <span>x</span>
-                        <input type="text">
+                    <!-- Width Display -->
+                    <div class="width-display">
+                        <input #widthDisplay (click)="widthDisplay.select();" (keydown)="onWidthDisplayKeydown($event)">
                     </div>
                 </div>
 
@@ -108,8 +106,17 @@
             <!-- Design Area Background -->
             <div class="design-area-background">
 
+                <!-- Drag Icon -->
+                <div #dragIconElement *show="dragIcon.show" class="fade-start drag-icon-not-allowed"
+                    [style.left.px]="dragIcon.rect.x" [style.top.px]="dragIcon.rect.y"
+                    [style.width.px]="dragIcon.rect.width" [style.height.px]="dragIcon.rect.height"
+                    [style.cursor]="dragIcon.show ? 'none' : 'default'"
+                    [ngClass]="{'drag-icon-allowed': isDragIconInBounds}" transitionClass="fade-end">
+                </div>
+
+
                 <!-- Sizing Bar Left -->
-                <div class="sizing-bar">
+                <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, 1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
@@ -117,21 +124,19 @@
                     </div>
                 </div>
 
-                <div class="canvas">
+                <div #canvasElement class="canvas">
                     <!-- Content Container -->
-                    <div class="grid" [style.maxWidth.px]="gridWidth">
-                        
-                        <!-- Drag Icon -->
-                        <div #dragIconElement *show="dragIcon.show" class="fade-start drag-icon-not-allowed"
-                            [style.left.px]="dragIcon.rect.x" [style.top.px]="dragIcon.rect.y"
-                            [style.width.px]="dragIcon.rect.width" [style.height.px]="dragIcon.rect.height"
-                            [style.cursor]="dragIcon.show ? 'none' : 'default'"
-                            [ngClass]="{'drag-icon-allowed': isDragIconInBounds}" transitionClass="fade-end">
-                        </div>
+                    <div #gridElement class="grid" [style.maxWidth.px]="grid.width">
+
+
 
                         <ng-template #viewContainerRef>
                             <!-- Widgets go here -->
                         </ng-template>
+
+
+
+
 
                         <!-- Row -->
                         <!-- <div class="row"> -->
@@ -158,8 +163,10 @@
                     </div>
                 </div>
 
+
+
                 <!-- Sizing Bar Right -->
-                <div class="sizing-bar">
+                <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, -1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>

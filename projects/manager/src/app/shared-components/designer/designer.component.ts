@@ -6,6 +6,7 @@ import { LineWidgetComponent } from './widgets/line-widget/line-widget.component
 import { TextWidgetComponent } from './widgets/text-widget/text-widget.component';
 import { DragIcon } from '../../classes/drag-icon';
 import { WidgetIcon } from '../../classes/widget-icon';
+import { Rect } from '../../classes/rect';
 
 @Component({
   selector: 'designer',
@@ -16,19 +17,25 @@ import { WidgetIcon } from '../../classes/widget-icon';
 export class DesignerComponent implements OnInit {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @ViewChild('dragIconElement', { static: false }) dragIconElement: ElementRef;
+  @ViewChild('gridElement', { static: false }) gridElement: ElementRef;
+  @ViewChild('canvasElement', { static: false }) canvas: ElementRef;
+  @ViewChild('widthDisplay', { static: false }) widthDisplay: ElementRef;
+
   public widgetIcons: Array<WidgetIcon>;
   public showPublishMenu: boolean;
-  public gridWidth: number = 1496;
+  public grid = new Rect();
   public dragIcon: DragIcon = new DragIcon();
   public get isDragIconInBounds(): boolean {
-    return this.dragIcon.rect.x >= 0 &&
-      this.dragIcon.rect.x + this.dragIcon.rect.width <= this.gridWidth &&
+    return this.dragIcon.rect.x >= this.grid.x &&
+      this.dragIcon.rect.x + this.dragIcon.rect.width <= this.gridElement.nativeElement.clientWidth + this.grid.x &&
       this.dragIcon.rect.y >= 0;
   }
 
   constructor(private resolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
+    this.grid.width = 1496;
+
     this.dragIcon.rect = {
       x: 0,
       y: 0,
@@ -65,6 +72,11 @@ export class DesignerComponent implements OnInit {
     ]
   }
 
+  ngAfterViewInit() {
+    this.widthDisplay.nativeElement.value = this.canvas.nativeElement.clientWidth;
+  }
+
+
   createWidget(widgetType: Type<Component>) {
     let componentFactory = this.resolver.resolveComponentFactory(widgetType);
     this.viewContainerRef.createComponent(componentFactory);
@@ -77,6 +89,9 @@ export class DesignerComponent implements OnInit {
     // Reset the drag icon position
     this.dragIcon.rect.x = 0;
     this.dragIcon.rect.y = 0;
+
+    // Get grid x position
+    this.grid.x = this.gridElement.nativeElement.offsetLeft;
 
     window.setTimeout(() => {
       // Reset the drag icon element position
@@ -120,4 +135,45 @@ export class DesignerComponent implements OnInit {
     window.addEventListener("mousemove", onMousemove);
     window.addEventListener("mouseup", onMouseup);
   }
+
+
+
+
+  onSizingBarMousedown(e: any, direction: number) {
+    let mousePos = e.clientX;
+
+    // On Mousemove
+    let onMousemove = (e: any) => {
+      let delta = mousePos - e.clientX;
+      mousePos = e.clientX;
+
+      this.canvas.nativeElement.style.width = (this.canvas.nativeElement.clientWidth + delta * direction * 2) + 'px';
+      this.widthDisplay.nativeElement.value = this.canvas.nativeElement.clientWidth;
+    }
+
+
+    // On Mouseup
+    let onMouseup = () => {
+      window.removeEventListener("mousemove", onMousemove);
+      window.removeEventListener("mouseup", onMouseup);
+    }
+
+
+    window.addEventListener("mousemove", onMousemove);
+    window.addEventListener("mouseup", onMouseup);
+  }
+
+  onWidthDisplayKeydown(event: any) {
+    if (event.keyCode == 13) {
+      this.canvas.nativeElement.style.width = event.target.value + 'px';
+    } else if (event.keyCode == 38) {
+      event.target.value = Number.parseInt(event.target.value) + 1;
+      this.canvas.nativeElement.style.width = event.target.value + 'px';
+    } else if (event.keyCode == 40) {
+      event.target.value = Number.parseInt(event.target.value) - 1;
+      this.canvas.nativeElement.style.width = event.target.value + 'px';
+    }
+  }
+
+
 }
