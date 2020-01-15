@@ -1,11 +1,11 @@
-<div *show="_FormService.showButtonEditForm" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
+<div *show="_FormService.openButtonEditForm" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
     <dialog-box [dialogBoxName]="'Button'" [width]="336">
 
         <!-- Horizontal Tabs -->
         <div class="tabs-container width-100">
-            <div class="tab" [ngClass]="{'selected-tab': _FormService.buttonNormalTabSelected}" (click)="onNormalHorizontalTabSelect()">Normal</div>
-            <div class="tab" [ngClass]="{'selected-tab': !_FormService.buttonNormalTabSelected}" style="left: 114px" (click)="onHoverHorizontalTabSelect()">Hover</div>
+            <div class="tab" [ngClass]="{'selected-tab': _FormService.buttonEditForm.normalTabSelected}" (click)="onNormalHorizontalTabSelect()">Normal</div>
+            <div class="tab" [ngClass]="{'selected-tab': !_FormService.buttonEditForm.normalTabSelected}" style="left: 114px" (click)="onHoverHorizontalTabSelect()">Hover</div>
         </div>
 
 
@@ -15,7 +15,7 @@
             <!---------------------------------- Vertical Tabs ----------------------------------------->
 
             <!-- Normal Tabs -->
-            <div *ngIf="_FormService.buttonNormalTabSelected" class="vertical-tabs-container">
+            <div *ngIf="_FormService.buttonEditForm.normalTabSelected" class="vertical-tabs-container">
                 <!-- Fill -->
                 <div title="Fill" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': normalVerticalTab[0]}" (click)="onNormalVerticalTabSelect(0)"> <i class="fas fa-fill-drip"></i> </div>
                 <!-- Border -->
@@ -33,7 +33,7 @@
             </div>
 
             <!-- Hover Tabs-->
-            <div *ngIf="!_FormService.buttonNormalTabSelected" class="vertical-tabs-container">
+            <div *ngIf="!_FormService.buttonEditForm.normalTabSelected" class="vertical-tabs-container">
                 <!-- Fill -->
                 <div title="Fill" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': hoverVerticalTab[0]}" (click)="onHoverVerticalTabSelect(0)"> <i class="fas fa-fill-drip"></i> </div>
                 <!-- Border -->
@@ -46,7 +46,7 @@
             <!---------------------------------- Properties ----------------------------------------->
 
             <!-- Normal Properties -->
-            <div *ngIf="_FormService.buttonNormalTabSelected" class="panel-lighter" style="min-height: 300px;">
+            <div *ngIf="_FormService.buttonEditForm.normalTabSelected" class="panel-lighter" style="min-height: 300px;">
                 <!-- Fill -->
                 <fill *ngIf="normalVerticalTab[0]"></fill>
                 <!-- Border -->
@@ -64,7 +64,7 @@
             </div>
 
             <!-- Hover Properties -->
-            <div *ngIf="!_FormService.buttonNormalTabSelected" class="panel-lighter" style="min-height: 300px;"> 
+            <div *ngIf="!_FormService.buttonEditForm.normalTabSelected" class="panel-lighter" style="min-height: 300px;"> 
                 <!-- Fill -->
                 <fill *ngIf="hoverVerticalTab[0]"></fill>
                 <!-- Border -->

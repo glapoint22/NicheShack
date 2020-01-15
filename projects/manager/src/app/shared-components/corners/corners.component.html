@@ -6,63 +6,53 @@
 <div class="property-row" style="padding-top: 10px; padding-bottom: 9px;">
     <!-- Name -->
     <div style="user-select: none;">Constrain Corners:</div>
-
     <!-- Value -->
-    <input type="checkbox">
+    <input [checked]="_FormService.corners.constrainCorners" (change)="onCheckboxChange()" type="checkbox">
 </div>
 
-
-<!-- -------------------Top Left------------------------ -->
-<div class="property-row">
-
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Top-Left:</div> 
-
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100"> 
-        <!-- Label --> <div class="px">px</div> 
-    </div>
-</div>
+<range-slider *ngIf="_FormService.corners.constrainCorners" style="border-bottom: 1px solid #363636;"
+    class="property-row"
+    [rowName]="'All Corners'" [minRange]="0" [maxRange]="100" 
+    [formServiceProperty]="_FormService.corners.topLeft" 
+    (out)="_FormService.corners.topLeft = _FormService.corners.topRight = _FormService.corners.bottomRight = _FormService.corners.bottomLeft = $event">
+</range-slider>
 
 
-<!-- -------------------Top Right------------------------ -->
-<div class="property-row">
-
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Top-Right:</div> 
-
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100"> 
-        <!-- Label --> <div class="px">px</div> 
-    </div>
-</div>
 
 
-<!-- -------------------Bottom Left------------------------ -->
-<div class="property-row">
-
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Bottom-Left:</div> 
-
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100">
-        <!-- Label --> <div class="px">px</div> 
-    </div>
-</div>
+<div *ngIf="!_FormService.corners.constrainCorners">
+    <!-- -------------------Top Left------------------------ -->
+    <range-slider 
+        class="property-row"
+        [rowName]="'Top Left'" [minRange]="0" [maxRange]="100" 
+        [formServiceProperty]="_FormService.corners.topLeft" 
+        (out)="_FormService.corners.topLeft = $event">
+    </range-slider>
 
 
-<!-- -------------------Bottom Right------------------------ -->
-<div class="property-row" style="border-bottom: 1px solid #363636;">
+    <!-- -------------------Top Right------------------------ -->
+    <range-slider 
+        class="property-row"
+        [rowName]="'Top Right'" [minRange]="0" [maxRange]="100" 
+        [formServiceProperty]="_FormService.corners.topRight" 
+        (out)="_FormService.corners.topRight = $event">
+    </range-slider>
 
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Bottom-Right:</div> 
 
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100">
-        <!-- Label --> <div class="px">px</div>
-    </div>
+    <!-- -------------------Bottom Right------------------------ -->
+    <range-slider 
+        class="property-row"
+        [rowName]="'Bottom Right'" [minRange]="0" [maxRange]="100" 
+        [formServiceProperty]="_FormService.corners.bottomRight" 
+        (out)="_FormService.corners.bottomRight = $event">
+    </range-slider>
+
+
+    <!-- -------------------Bottom Left------------------------ -->
+    <range-slider 
+        class="property-row" style="border-bottom: 1px solid #363636;"
+        [rowName]="'Bottom Left'" [minRange]="0" [maxRange]="100" 
+        [formServiceProperty]="_FormService.corners.bottomLeft" 
+        (out)="_FormService.corners.bottomLeft = $event">
+    </range-slider>
 </div>

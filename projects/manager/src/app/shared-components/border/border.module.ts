@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BorderComponent } from './border.component';
 import { ColorSwatchModule } from '../color-swatch/color-swatch.module';
+import { RangeSliderModule } from '../range-slider/range-slider.module';
 
 
 
@@ -9,7 +10,8 @@ import { ColorSwatchModule } from '../color-swatch/color-swatch.module';
   declarations: [BorderComponent],
   imports: [
     CommonModule,
-    ColorSwatchModule
+    ColorSwatchModule,
+    RangeSliderModule
   ],
 
   exports: [BorderComponent]

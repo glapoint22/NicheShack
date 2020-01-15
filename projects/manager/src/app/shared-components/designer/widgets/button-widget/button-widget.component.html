@@ -1,7 +1,7 @@
 <div [style.background]="getFillColor()"
-     [style.border]="applyBorder + borderWidth + 'px ' + borderStyle"
-     [style.borderColor]="getBorderColor()"
-     [style.borderRadius]="borderTopLeftRadius + 'px ' + borderTopRightRadius + 'px ' + borderBottomRightRadius + 'px ' + borderBottomLeftRadius + 'px'"
+     [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
+     
+     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
      [style.box-shadow]="enableShadow + ' ' + shadowX + 'px ' + shadowY + 'px ' + shadowBlur + 'px ' + shadowSize + 'px '"
      [style.color]="'rgba(' + shadowColor.r + ',' +  shadowColor.g + ',' + shadowColor.b + ',' + shadowColor.a + ')'"
      [style.margin]="marginTop + 'px ' + marginRight + 'px ' + marginBottom + 'px ' + marginLeft + 'px'"

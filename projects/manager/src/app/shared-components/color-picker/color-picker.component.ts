@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef} from '@angular/core';
 import { FormService } from '../../services/form.service';
 
 @Component({
@@ -264,7 +264,7 @@ export class ColorPickerComponent {
 
 // ----------------------------------------------------( ON CANCEL )--------------------------------------------------\\
   onCancel() {
-    this._FormService.showColorPicker = false;
+    this._FormService.openColorPicker = false;
     this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
     this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
     this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;

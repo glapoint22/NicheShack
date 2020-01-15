@@ -7,17 +7,13 @@ import { FormService } from 'projects/manager/src/app/services/form.service';
   styleUrls: ['./button-widget.component.scss']
 })
 export class ButtonWidgetComponent {
+  public buttonEditForm: any = {normalTabSelected: true}
   public fillColor: any = {r: 0, g: 0, b: 255, a: 0.75};
   public hoverFillColor: any = {r: 255, g: 0, b: 0, a: 1};
-  public applyBorder: string = "";
-  public borderWidth: number = 5;
-  public borderStyle: string = "dashed";
+  public border: any = {apply: false, width: 5, style: "solid"}
+  public corners: any = {constrainCorners: true, topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0}
   public borderColor: any = {r: 255, g: 255, b: 0, a: 0.9};
   public hoverBorderColor: any = {r: 255, g: 0, b: 255, a: 1};
-  public borderTopLeftRadius: number = 10;
-  public borderTopRightRadius: number = 20;
-  public borderBottomLeftRadius: number = 30;
-  public borderBottomRightRadius: number = 40;
   public caption: string = "Button";
   public fontFamily: string = "arial";
   public fontSize: number = 30;
@@ -40,21 +36,36 @@ export class ButtonWidgetComponent {
 
   // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
   onEdit() {
+
+    this._FormService.buttonEditForm = this.buttonEditForm;
     this._FormService.fillColor = this.fillColor;
+    this._FormService.hoverFillColor = this.hoverFillColor;
+
+
+    this._FormService.border = this.border;
+    this._FormService.corners = this.corners;
+
+
+
     this._FormService.borderColor = this.borderColor;
     this._FormService.textColor = this.textColor;
     this._FormService.shadowColor = this.shadowColor;
-    this._FormService.hoverFillColor = this.hoverFillColor;
+    
     this._FormService.hoverBorderColor = this.hoverBorderColor;
     this._FormService.hoverTextColor = this.hoverTextColor;
-    this._FormService.showButtonEditForm = true;
+
+    // Open the Button Edit form
+    this._FormService.openButtonEditForm = true;
   }
+
+
+ 
 
 
   // -------------------------------------------------( GET FILL COLOR )-----------------------------------------------\\
   getFillColor() {
     // If the normal tab on the button form is selected
-    if(this._FormService.buttonNormalTabSelected) {
+    if(this.buttonEditForm.normalTabSelected) {
 
       // Style the button fill with the normal look
       var fillColor = 'rgba(' + this.fillColor.r + ',' +  this.fillColor.g + ',' + this.fillColor.b + ',' + this.fillColor.a + ')';
@@ -69,28 +80,47 @@ export class ButtonWidgetComponent {
   }
 
 
+  RGBAToHexA(r,g,b,a) {
+    r = r.toString(16);
+    g = g.toString(16);
+    b = b.toString(16);
+    a = Math.round(a * 255).toString(16);
+  
+    if (r.length == 1)
+      r = "0" + r;
+    if (g.length == 1)
+      g = "0" + g;
+    if (b.length == 1)
+      b = "0" + b;
+    if (a.length == 1)
+      a = "0" + a;
+  
+    return "#" + r + g + b + a;
+  }
+  
+
   // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
   getBorderColor() {
     // If the normal tab on the button form is selected
-    if(this._FormService.buttonNormalTabSelected) {
+    if(this.buttonEditForm.normalTabSelected) {
 
       // Style the button border with the normal look
-      var borderColor = 'rgba(' + this.borderColor.r + ',' +  this.borderColor.g + ',' + this.borderColor.b + ',' + this.borderColor.a + ')';
+      var hexA = this.RGBAToHexA(this.borderColor.r, this.borderColor.g, this.borderColor.b, this.borderColor.a);
 
     // If the hover tab on the button form is selected
     } else {
 
       // Style the button border with the hover look
-      var borderColor = 'rgba(' + this.hoverBorderColor.r + ',' +  this.hoverBorderColor.g + ',' + this.hoverBorderColor.b + ',' + this.hoverBorderColor.a + ')';
+      var hexA = this.RGBAToHexA(this.hoverBorderColor.r, this.hoverBorderColor.g, this.hoverBorderColor.b, this.hoverBorderColor.a);
     }
-    return borderColor;
+    return hexA;
   }
 
 
   // -------------------------------------------------( GET TEXT COLOR )-----------------------------------------------\\
   getTextColor() {
     // If the normal tab on the button form is selected
-    if(this._FormService.buttonNormalTabSelected) {
+    if(this.buttonEditForm.normalTabSelected) {
 
       // Style the button text with the normal look
       var textColor = 'rgba(' + this.textColor.r + ',' +  this.textColor.g + ',' + this.textColor.b + ',' + this.textColor.a + ')';
@@ -103,5 +133,4 @@ export class ButtonWidgetComponent {
     }
     return textColor;
   }
-
 }

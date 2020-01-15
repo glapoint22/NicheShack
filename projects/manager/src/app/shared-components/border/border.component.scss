@@ -1,5 +1,10 @@
 @import '../../../scss/variables';
 
+.border-width {
+    user-select: none;
+    cursor: e-resize;
+}
+
 .border-style-container {
     width: 100%;
     margin-left: 30px;

@@ -12,6 +12,6 @@ export class ColorSwatchComponent {
   constructor(public _FormService: FormService) {}
   
   onClick() {
-    this._FormService.showColorPicker = true
+    this._FormService.openColorPicker = true
   }
 }

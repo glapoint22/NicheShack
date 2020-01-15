@@ -86,23 +86,26 @@
 
 .text-box {
     max-width: 30px;
-    text-align: right;
+    text-align: center;
     padding-left: 0px;
     padding-right: 3px;
     background-color: #252525;
     border: 1px solid #6c6c6c;
 }
 
-.hide-text-box {
+.hide-text-box:not(:focus) {
     background: none;
     border: none;
     cursor: pointer;
+    text-align: right;
 }
 
 .px {
     user-select: none;
     font-size: 10px;
-    margin-top: 10px;
+    margin-top: 8px;
+    margin-left: 1px;
+    cursor: pointer;
 }
 
 .color-swatch-outer-border {

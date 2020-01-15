@@ -17,16 +17,16 @@ export class ButtonFormComponent {
     // Set the button fill color to be the starting swatch color on form open
     this._FormService.colorPickerColor = this._FormService.fillColor;
     // Set the normal button to be selected on form open
-    this._FormService.buttonNormalTabSelected = true;
+    this._FormService.buttonEditForm.normalTabSelected = true;
   }
 
 
   // -------------------------------------( ON NORMAL HORIZONTAL TAB SELECT )-----------------------------------\\
   onNormalHorizontalTabSelect() {
     // If the color Picker form is open
-    if(this._FormService.showColorPicker) {
+    if(this._FormService.openColorPicker) {
       // Close the the Color Picker form and reset any color changes made back to the original color
-      this._FormService.showColorPicker = false;
+      this._FormService.openColorPicker = false;
       this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
       this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
       this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
@@ -34,7 +34,7 @@ export class ButtonFormComponent {
     }
 
     // Deselect the hover horizontal tab
-    this._FormService.buttonNormalTabSelected = true;
+    this._FormService.buttonEditForm.normalTabSelected = true;
 
     // Get the index of the normal vertical tab that is selected
     let selectedIndex = this.normalVerticalTab.indexOf(true);
@@ -50,9 +50,9 @@ export class ButtonFormComponent {
   // -------------------------------------( ON HOVER HORIZONTAL TAB SELECT )-----------------------------------\\
   onHoverHorizontalTabSelect() {
     // If the color Picker form is open
-    if(this._FormService.showColorPicker) {
+    if(this._FormService.openColorPicker) {
       // Close the the Color Picker form and reset any color changes made back to the original color
-      this._FormService.showColorPicker = false;
+      this._FormService.openColorPicker = false;
       this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
       this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
       this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
@@ -60,7 +60,7 @@ export class ButtonFormComponent {
     }
 
     // Deselect the normal horizontal tab
-    this._FormService.buttonNormalTabSelected = false;
+    this._FormService.buttonEditForm.normalTabSelected = false;
 
     // Get the index of the hover vertical tab that is selected
     let selectedIndex = this.hoverVerticalTab.indexOf(true);
@@ -75,9 +75,9 @@ export class ButtonFormComponent {
   // -------------------------------------( ON NORMAL VERTICAL TAB SELECT )-----------------------------------\\
   onNormalVerticalTabSelect(index: number) {
     // If the color Picker form is open
-    if(this._FormService.showColorPicker) {
+    if(this._FormService.openColorPicker) {
       // Close the the Color Picker form and reset any color changes made back to the original color
-      this._FormService.showColorPicker = false;
+      this._FormService.openColorPicker = false;
       this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
       this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
       this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
@@ -101,9 +101,9 @@ export class ButtonFormComponent {
   // -------------------------------------( ON HOVER VERTICAL TAB SELECT )-----------------------------------\\
   onHoverVerticalTabSelect(index: number) {
     // If the color Picker form is open
-    if(this._FormService.showColorPicker) {
+    if(this._FormService.openColorPicker) {
       // Close the the Color Picker form and reset any color changes made back to the original color
-      this._FormService.showColorPicker = false;
+      this._FormService.openColorPicker = false;
       this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
       this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
       this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
