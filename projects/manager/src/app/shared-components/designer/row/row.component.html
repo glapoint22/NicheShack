@@ -1,0 +1,22 @@
+<div class="row" [style.top.px]="top">
+
+    <div class="col-12">
+
+        <ng-content></ng-content>
+
+    </div>
+
+    <!-- Edit -->
+    <div class="row-edit">Edit</div>
+
+    <!-- Move -->
+    <div class="row-move" (mousedown)="onRowMoveMousedown($event)">
+        <i class="fas fa-arrows-alt-v"></i>
+    </div>
+
+
+    <!-- Drop Indicators -->
+    <div class="drop-indicator"></div>
+    
+
+</div>

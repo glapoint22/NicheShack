@@ -6,7 +6,7 @@ import { LineWidgetComponent } from './widgets/line-widget/line-widget.component
 import { TextWidgetComponent } from './widgets/text-widget/text-widget.component';
 import { DragIcon } from '../../classes/drag-icon';
 import { WidgetIcon } from '../../classes/widget-icon';
-import { Rect } from '../../classes/rect';
+import { RowComponent } from './row/row.component';
 
 @Component({
   selector: 'designer',
@@ -17,31 +17,35 @@ import { Rect } from '../../classes/rect';
 export class DesignerComponent implements OnInit {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @ViewChild('dragIconElement', { static: false }) dragIconElement: ElementRef;
-  @ViewChild('gridElement', { static: false }) gridElement: ElementRef;
+  @ViewChild('content', { static: false }) content: ElementRef;
   @ViewChild('canvasElement', { static: false }) canvas: ElementRef;
   @ViewChild('widthDisplay', { static: false }) widthDisplay: ElementRef;
 
   public widgetIcons: Array<WidgetIcon>;
   public showPublishMenu: boolean;
-  public grid = new Rect();
-  public dragIcon: DragIcon = new DragIcon();
-  public get isDragIconInBounds(): boolean {
-    return this.dragIcon.rect.x >= this.grid.x &&
-      this.dragIcon.rect.x + this.dragIcon.rect.width <= this.gridElement.nativeElement.clientWidth + this.grid.x &&
-      this.dragIcon.rect.y >= 0;
-  }
+  public currentWidget: any;
+  
+  
+  
+  // public dragIcon: DragIcon = new DragIcon();
+  // public get isDragIconInBounds(): boolean {
+  //   return this.dragIcon.rect.x >= this.content.nativeElement.offsetLeft &&
+  //     this.dragIcon.rect.x + this.dragIcon.rect.width <= this.content.nativeElement.clientWidth + this.content.nativeElement.offsetLeft &&
+  //     this.dragIcon.rect.y >= this.content.nativeElement.offsetTop && 
+  //     this.dragIcon.rect.y < this.content.nativeElement.clientHeight + this.content.nativeElement.offsetTop - this.dragIcon.rect.height;
+  // }
+
+  public contentWidth: number = 1496;
 
   constructor(private resolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
-    this.grid.width = 1496;
-
-    this.dragIcon.rect = {
-      x: 0,
-      y: 0,
-      width: 40,
-      height: 40
-    };
+    // this.dragIcon.rect = {
+    //   x: 0,
+    //   y: 0,
+    //   width: 40,
+    //   height: 40
+    // };
 
     this.widgetIcons = [
       {
@@ -77,63 +81,68 @@ export class DesignerComponent implements OnInit {
   }
 
 
-  createWidget(widgetType: Type<Component>) {
-    let componentFactory = this.resolver.resolveComponentFactory(widgetType);
-    this.viewContainerRef.createComponent(componentFactory);
-  }
+  // createWidget(widgetType: Type<Component>) {
+  //   let foo = this.resolver.resolveComponentFactory(ButtonWidgetComponent);
+  //   let button = foo.create(this.viewContainerRef.injector);
+  //   button.changeDetectorRef.detectChanges();
+
+
+  //   let componentFactory = this.resolver.resolveComponentFactory(RowComponent);
+  //   this.viewContainerRef.createComponent(componentFactory, null, null, [[button.location.nativeElement]]);
+  // }
 
   onWidgetIconMousedown(e: MouseEvent, widget: any) {
-    let offsetX: number;
-    let offsetY: number;
+    this.currentWidget = widget.component;
+    // let offsetX: number;
+    // let offsetY: number;
 
-    // Reset the drag icon position
-    this.dragIcon.rect.x = 0;
-    this.dragIcon.rect.y = 0;
+    // // Reset the drag icon position
+    // this.dragIcon.rect.x = 0;
+    // this.dragIcon.rect.y = 0;
 
-    // Get grid x position
-    this.grid.x = this.gridElement.nativeElement.offsetLeft;
+    // window.setTimeout(() => {
+    //   // Reset the drag icon element position
+    //   this.dragIconElement.nativeElement.style.left = 0;
+    //   this.dragIconElement.nativeElement.style.top = 0;
 
-    window.setTimeout(() => {
-      // Reset the drag icon element position
-      this.dragIconElement.nativeElement.style.left = 0;
-      this.dragIconElement.nativeElement.style.top = 0;
+    //   this.dragIconElement.nativeElement.innerHTML = widget.html;
 
-      this.dragIconElement.nativeElement.innerHTML = widget.html;
+    //   // Set the offsets
+    //   offsetX = -this.dragIconElement.nativeElement.getBoundingClientRect().x;
+    //   offsetY = -this.dragIconElement.nativeElement.getBoundingClientRect().y;
 
-      // Set the offsets
-      offsetX = -this.dragIconElement.nativeElement.getBoundingClientRect().x;
-      offsetY = -this.dragIconElement.nativeElement.getBoundingClientRect().y;
+    //   // Calculate the drag icon position
+    //   this.dragIcon.rect.x = offsetX + e.clientX - this.dragIcon.rect.width * 0.5;
+    //   this.dragIcon.rect.y = offsetY + e.clientY - this.dragIcon.rect.height * 0.5;
+    // });
 
-      // Calculate the drag icon position
-      this.dragIcon.rect.x = offsetX + e.clientX - this.dragIcon.rect.width * 0.5;
-      this.dragIcon.rect.y = offsetY + e.clientY - this.dragIcon.rect.height * 0.5;
-    });
+    // // Show the drag icon
+    // this.dragIcon.show = true;
 
-    // Show the drag icon
-    this.dragIcon.show = true;
+    // // On Mousemove
+    // let onMousemove = (e: MouseEvent) => {
+    //   // drag icon follows the cursor
+    //   this.dragIcon.rect.x = offsetX + e.clientX - this.dragIcon.rect.width * 0.5;
+    //   this.dragIcon.rect.y = offsetY + e.clientY - this.dragIcon.rect.height * 0.5;
 
-    // On Mousemove
-    let onMousemove = (e: MouseEvent) => {
-      // drag icon follows the cursor
-      this.dragIcon.rect.x = offsetX + e.clientX - this.dragIcon.rect.width * 0.5;
-      this.dragIcon.rect.y = offsetY + e.clientY - this.dragIcon.rect.height * 0.5;
-    }
+      
+    // }
 
 
-    // On Mouseup
-    let onMouseup = () => {
-      window.removeEventListener("mousemove", onMousemove);
-      window.removeEventListener("mouseup", onMouseup);
-      this.dragIcon.show = false;
+    // // On Mouseup
+    // let onMouseup = () => {
+    //   window.removeEventListener("mousemove", onMousemove);
+    //   window.removeEventListener("mouseup", onMouseup);
+    //   this.dragIcon.show = false;
 
-      if (this.isDragIconInBounds) {
-        this.createWidget(widget.component);
-      }
-    }
+    //   if (this.isDragIconInBounds) {
+    //     // this.createWidget(widget.component);
+    //   }
+    // }
 
-    // Add event listeners that will listen for a mousemove to move the drag icon and a mouseup to create the widget
-    window.addEventListener("mousemove", onMousemove);
-    window.addEventListener("mouseup", onMouseup);
+    // // Add event listeners that will listen for a mousemove to move the drag icon and a mouseup to create the widget
+    // window.addEventListener("mousemove", onMousemove);
+    // window.addEventListener("mouseup", onMouseup);
   }
 
 
