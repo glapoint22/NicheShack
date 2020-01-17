@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'margins',
   templateUrl: './margins.component.html',
   styleUrls: ['./margins.component.scss']
 })
-export class MarginsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class MarginsComponent {
+  constructor(public _FormService: FormService) {}
 }

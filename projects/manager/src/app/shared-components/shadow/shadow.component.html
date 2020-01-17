@@ -1,84 +1,67 @@
 <!-- ----------------------Tab Title-------------- -->
 <div class="tab-title">Shadow</div>
 
-
-
 <!-- -------------------Enable Shadow------------------- -->
-<div class="property-row" style="padding-top: 10px; padding-bottom: 9px;">
-    <!-- Name -->
-    <div style="user-select: none;">Enable Shadow:</div>
-
-    <!-- Value -->
-    <input type="checkbox">
+<div class="property-row" 
+     style="padding-top: 10px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
+    <!-- Name --><div style="user-select: none;">Enable Shadow:</div>
+    <!-- Value --><input type="checkbox" [checked]="_FormService.shadow.enable" (change)="_FormService.shadow.enable = !_FormService.shadow.enable">
 </div>
 
 
-<!-- -------------------Angle------------------------ -->
-<div class="property-row">
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Shadow X:</div>
+<!-- Opacity Container -->
+<div [style.opacity]="_FormService.shadow.enable ? 1 : 0.2">
 
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100">
-        <!-- Label -->
-        <div class="px">px</div>
+    <!-- -------------------Shadow X------------------------ -->
+    <range-slider 
+        class="property-row"
+        style="border-top: none;"
+        [rowName]="'Shadow X'"
+        [minRange]="0"
+        [formServiceProperty]="_FormService.shadow.x"
+        (out)="_FormService.shadow.x = $event">
+    </range-slider>
+
+
+    <!-- -------------------Shadow Y------------------------ -->
+    <range-slider 
+        class="property-row"
+        [rowName]="'Shadow Y'"
+        [minRange]="0"
+        [formServiceProperty]="_FormService.shadow.y"
+        (out)="_FormService.shadow.y = $event">
+    </range-slider>
+
+
+    <!-- -------------------Blur------------------------ -->
+    <range-slider 
+        class="property-row"
+        [rowName]="'Blur'"
+        [minRange]="0"
+        [formServiceProperty]="_FormService.shadow.blur"
+        (out)="_FormService.shadow.blur = $event">
+    </range-slider>
+
+
+    <!-- -------------------Size------------------------ -->
+    <range-slider 
+        class="property-row"
+        [rowName]="'Size'"
+        [minRange]="0"
+        [formServiceProperty]="_FormService.shadow.size"
+        (out)="_FormService.shadow.size = $event">
+    </range-slider>
+
+
+    <!-- -------------------Color------------------- -->
+    <div class="property-row" style="padding-top: 9px;">
+        <!-- Name --><div style="user-select: none;">Color:</div>
+        <!-- Value --><color-swatch></color-swatch>
     </div>
 </div>
 
 
-<!-- -------------------Distance------------------------ -->
-<div class="property-row">
-
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Shadow Y:</div>
-
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100">
-        <!-- Label -->
-        <div class="px">px</div>
-    </div>
-</div>
-
-<!-- -------------------Blur------------------------ -->
-<div class="property-row">
-
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Blur:</div>
-
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100">
-        <!-- Label -->
-        <div class="px">px</div>
-    </div>
-</div>
-
-<!-- -------------------Size------------------------ -->
-<div class="property-row">
-
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Size:</div>
-
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100">
-        <!-- Label -->
-        <div class="px">px</div>
-    </div>
-</div>
-
-
-
-
-
-<!-- -------------------Color------------------- -->
-<div class="property-row" style="padding-top: 9px;">
-
-    <!-- Name -->
-    <div style="user-select: none;">Color:</div>
-
-    <!-- Color Swatch -->
-    <color-swatch></color-swatch>
+<!-- Disable Cover -->
+<div *ngIf="!_FormService.shadow.enable" 
+      style="position: absolute;left: 46px;top: 97px;width: 255px;height: 200px;">
 </div>

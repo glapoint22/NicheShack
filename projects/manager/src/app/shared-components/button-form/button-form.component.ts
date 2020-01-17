@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormService } from '../../services/form.service'
 
 @Component({
@@ -6,18 +6,81 @@ import { FormService } from '../../services/form.service'
   templateUrl: './button-form.component.html',
   styleUrls: ['./button-form.component.scss']
 })
+
 export class ButtonFormComponent {
-  public normalVerticalTab: boolean[] = [true, false, false, false, false, false, false];
-  public hoverVerticalTab: boolean[] = [true, false, false];
+  public selectedNormalVerticalTab: string;
+  public selectedHoverVerticalTab: string;
   constructor(public _FormService: FormService) {}
 
 
-  // ------------------------------------------------( ON SHOW )----------------------------------------------\\
+  // ----------------------------------------------( ON FORM OPEN )--------------------------------------------\\
   onFormOpen() {
-    // Set the button fill color to be the starting swatch color on form open
-    this._FormService.colorPickerColor = this._FormService.fillColor;
-    // Set the normal button to be selected on form open
-    this._FormService.buttonEditForm.normalTabSelected = true;
+    // Set the fill color to be the starting swatch color on form open
+    this._FormService.colorPickerColor = this._FormService.fill.color;
+    // Set the normal tab to be selected on form open
+    this._FormService.buttonForm.normalTabSelected = true;
+    // Set the fill tab to be the starting normal vertical tab on form open
+    this.selectedNormalVerticalTab = "fill";
+    // Set the fill tab to be the starting hover vertical tab on form open
+    this.selectedHoverVerticalTab = "fill";
+    
+
+    // Set the intial
+    this._FormService.initialFill.color.r = this._FormService.fill.color.r;
+    this._FormService.initialFill.color.g = this._FormService.fill.color.g;
+    this._FormService.initialFill.color.b = this._FormService.fill.color.b;
+    this._FormService.initialFill.color.a = this._FormService.fill.color.a;
+    this._FormService.initialFill.hoverColor.r = this._FormService.fill.hoverColor.r;
+    this._FormService.initialFill.hoverColor.g = this._FormService.fill.hoverColor.g;
+    this._FormService.initialFill.hoverColor.b = this._FormService.fill.hoverColor.b;
+    this._FormService.initialFill.hoverColor.a = this._FormService.fill.hoverColor.a;
+
+    this._FormService.initialBorder.apply = this._FormService.border.apply;
+    this._FormService.initialBorder.width = this._FormService.border.width;
+    this._FormService.initialBorder.style = this._FormService.border.style;
+    this._FormService.initialBorder.color.r = this._FormService.border.color.r;
+    this._FormService.initialBorder.color.g = this._FormService.border.color.g;
+    this._FormService.initialBorder.color.b = this._FormService.border.color.b;
+    this._FormService.initialBorder.color.a = this._FormService.border.color.a;
+    this._FormService.initialBorder.hoverColor.r = this._FormService.border.hoverColor.r;
+    this._FormService.initialBorder.hoverColor.g = this._FormService.border.hoverColor.g;
+    this._FormService.initialBorder.hoverColor.b = this._FormService.border.hoverColor.b;
+    this._FormService.initialBorder.hoverColor.a = this._FormService.border.hoverColor.a;
+
+    this._FormService.initialCorners.constrainCorners = this._FormService.corners.constrainCorners;
+    this._FormService.initialCorners.topLeft = this._FormService.corners.topLeft;
+    this._FormService.initialCorners.topRight = this._FormService.corners.topRight;
+    this._FormService.initialCorners.bottomLeft = this._FormService.corners.bottomLeft;
+    this._FormService.initialCorners.bottomRight = this._FormService.corners.bottomRight;
+
+    this._FormService.initialText.caption = this._FormService.text.caption;
+    this._FormService.initialText.fontFamily = this._FormService.text.fontFamily;
+    this._FormService.initialText.fontSize = this._FormService.text.fontSize;
+    this._FormService.initialText.fontWeight = this._FormService.text.fontWeight;
+    this._FormService.initialText.fontStyle = this._FormService.text.fontStyle;
+    this._FormService.initialText.color.r = this._FormService.text.color.r;
+    this._FormService.initialText.color.g = this._FormService.text.color.g;
+    this._FormService.initialText.color.b = this._FormService.text.color.b;
+    this._FormService.initialText.color.a = this._FormService.text.color.a;
+    this._FormService.initialText.hoverColor.r = this._FormService.text.hoverColor.r;
+    this._FormService.initialText.hoverColor.g = this._FormService.text.hoverColor.g;
+    this._FormService.initialText.hoverColor.b = this._FormService.text.hoverColor.b;
+    this._FormService.initialText.hoverColor.a = this._FormService.text.hoverColor.a;
+
+    this._FormService.initialShadow.enable = this._FormService.shadow.enable;
+    this._FormService.initialShadow.x = this._FormService.shadow.x;
+    this._FormService.initialShadow.y = this._FormService.shadow.y;
+    this._FormService.initialShadow.blur = this._FormService.shadow.blur;
+    this._FormService.initialShadow.size = this._FormService.shadow.size;
+    this._FormService.initialShadow.color.r = this._FormService.shadow.color.r;
+    this._FormService.initialShadow.color.g = this._FormService.shadow.color.g;
+    this._FormService.initialShadow.color.b = this._FormService.shadow.color.b;
+    this._FormService.initialShadow.color.a = this._FormService.shadow.color.a;
+
+    this._FormService.initialMargins.top = this._FormService.margins.top;
+    this._FormService.initialMargins.right = this._FormService.margins.right;
+    this._FormService.initialMargins.bottom = this._FormService.margins.bottom;
+    this._FormService.initialMargins.left = this._FormService.margins.left;
   }
 
 
@@ -27,23 +90,20 @@ export class ButtonFormComponent {
     if(this._FormService.openColorPicker) {
       // Close the the Color Picker form and reset any color changes made back to the original color
       this._FormService.openColorPicker = false;
-      this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
-      this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
-      this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
-      this._FormService.colorPickerColor.a = this._FormService.currentcolorPickerColor.a;
+      this._FormService.colorPickerColor.r = this._FormService.initialColorPickerColor.r;
+      this._FormService.colorPickerColor.g = this._FormService.initialColorPickerColor.g;
+      this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
+      this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
     }
 
     // Deselect the hover horizontal tab
-    this._FormService.buttonEditForm.normalTabSelected = true;
-
-    // Get the index of the normal vertical tab that is selected
-    let selectedIndex = this.normalVerticalTab.indexOf(true);
+    this._FormService.buttonForm.normalTabSelected = true;
 
     // Then depending on which tab is selected, update its color swatch accordingly
-    if(selectedIndex == 0) this._FormService.colorPickerColor = this._FormService.fillColor;// Fill Tab
-    if(selectedIndex == 1) this._FormService.colorPickerColor = this._FormService.borderColor;// Border Tab
-    if(selectedIndex == 3) this._FormService.colorPickerColor = this._FormService.textColor;// Text Tab
-    if(selectedIndex == 4) this._FormService.colorPickerColor = this._FormService.shadowColor;// Shadow Tab
+    if(this.selectedNormalVerticalTab == "fill") this._FormService.colorPickerColor = this._FormService.fill.color;// Fill Tab
+    if(this.selectedNormalVerticalTab == "border") this._FormService.colorPickerColor = this._FormService.border.color;// Border Tab
+    if(this.selectedNormalVerticalTab == "text") this._FormService.colorPickerColor = this._FormService.text.color;// Text Tab
+    if(this.selectedNormalVerticalTab == "shadow") this._FormService.colorPickerColor = this._FormService.shadow.color;// Shadow Tab
   }
 
 
@@ -53,72 +113,135 @@ export class ButtonFormComponent {
     if(this._FormService.openColorPicker) {
       // Close the the Color Picker form and reset any color changes made back to the original color
       this._FormService.openColorPicker = false;
-      this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
-      this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
-      this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
-      this._FormService.colorPickerColor.a = this._FormService.currentcolorPickerColor.a;
+      this._FormService.colorPickerColor.r = this._FormService.initialColorPickerColor.r;
+      this._FormService.colorPickerColor.g = this._FormService.initialColorPickerColor.g;
+      this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
+      this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
     }
 
     // Deselect the normal horizontal tab
-    this._FormService.buttonEditForm.normalTabSelected = false;
-
-    // Get the index of the hover vertical tab that is selected
-    let selectedIndex = this.hoverVerticalTab.indexOf(true);
+    this._FormService.buttonForm.normalTabSelected = false;
 
     // Then depending on which tab is selected, update its color swatch accordingly
-    if(selectedIndex == 0) this._FormService.colorPickerColor = this._FormService.hoverFillColor;// Fill Tab
-    if(selectedIndex == 1) this._FormService.colorPickerColor = this._FormService.hoverBorderColor;// Border Tab
-    if(selectedIndex == 2) this._FormService.colorPickerColor = this._FormService.hoverTextColor;// Text Tab
+    if(this.selectedHoverVerticalTab == "fill") this._FormService.colorPickerColor = this._FormService.fill.hoverColor;// Fill Tab
+    if(this.selectedHoverVerticalTab == "border") this._FormService.colorPickerColor = this._FormService.border.hoverColor;// Border Tab
+    if(this.selectedHoverVerticalTab == "text") this._FormService.colorPickerColor = this._FormService.text.hoverColor;// Text Tab
   }
 
 
   // -------------------------------------( ON NORMAL VERTICAL TAB SELECT )-----------------------------------\\
-  onNormalVerticalTabSelect(index: number) {
+  onNormalVerticalTabSelect(tab: string) {
     // If the color Picker form is open
     if(this._FormService.openColorPicker) {
       // Close the the Color Picker form and reset any color changes made back to the original color
       this._FormService.openColorPicker = false;
-      this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
-      this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
-      this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
-      this._FormService.colorPickerColor.a = this._FormService.currentcolorPickerColor.a;
+      this._FormService.colorPickerColor.r = this._FormService.initialColorPickerColor.r;
+      this._FormService.colorPickerColor.g = this._FormService.initialColorPickerColor.g;
+      this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
+      this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
     }
 
-    // Deselect the vertical tab that is currently selected
-    this.normalVerticalTab[   this.normalVerticalTab.indexOf(true)   ] = false;
-    
     // Display the newly selected vertical tab as being selected
-    this.normalVerticalTab[index] = true;
+    this.selectedNormalVerticalTab = tab;
 
     // Then depending on which tab is selected, update its color swatch accordingly
-    if(index == 0) this._FormService.colorPickerColor = this._FormService.fillColor;// Fill Tab
-    if(index == 1) this._FormService.colorPickerColor = this._FormService.borderColor;// Border Tab
-    if(index == 3) this._FormService.colorPickerColor = this._FormService.textColor;// Text Tab
-    if(index == 4) this._FormService.colorPickerColor = this._FormService.shadowColor;// Shadow Tab
+    if(tab == "fill") this._FormService.colorPickerColor = this._FormService.fill.color;// Fill Tab
+    if(tab == "border") this._FormService.colorPickerColor = this._FormService.border.color;// Border Tab
+    if(tab == "text") this._FormService.colorPickerColor = this._FormService.text.color;// Text Tab
+    if(tab == "shadow") this._FormService.colorPickerColor = this._FormService.shadow.color;// Shadow Tab
   }
 
 
   // -------------------------------------( ON HOVER VERTICAL TAB SELECT )-----------------------------------\\
-  onHoverVerticalTabSelect(index: number) {
+  onHoverVerticalTabSelect(tab: string) {
     // If the color Picker form is open
     if(this._FormService.openColorPicker) {
       // Close the the Color Picker form and reset any color changes made back to the original color
       this._FormService.openColorPicker = false;
-      this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
-      this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
-      this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
-      this._FormService.colorPickerColor.a = this._FormService.currentcolorPickerColor.a;
+      this._FormService.colorPickerColor.r = this._FormService.initialColorPickerColor.r;
+      this._FormService.colorPickerColor.g = this._FormService.initialColorPickerColor.g;
+      this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
+      this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
     }
 
-    // Deselect the vertical tab that is currently selected
-    this.hoverVerticalTab[   this.hoverVerticalTab.indexOf(true)   ] = false;
-
     // Display the newly selected vertical tab as being selected
-    this.hoverVerticalTab[index] = true;
+    this.selectedHoverVerticalTab = tab;
 
     // Then depending on which tab is selected, update its color swatch accordingly
-    if(index == 0) this._FormService.colorPickerColor = this._FormService.hoverFillColor;// Fill Tab
-    if(index == 1) this._FormService.colorPickerColor = this._FormService.hoverBorderColor;// Border Tab
-    if(index == 2) this._FormService.colorPickerColor = this._FormService.hoverTextColor;// Text Tab
+    if(tab == 'fill') this._FormService.colorPickerColor = this._FormService.fill.hoverColor;// Fill Tab
+    if(tab == 'border') this._FormService.colorPickerColor = this._FormService.border.hoverColor;// Border Tab
+    if(tab == 'text') this._FormService.colorPickerColor = this._FormService.text.hoverColor;// Text Tab
+  }
+
+
+  // ----------------------------------------------------( ON CANCEL )--------------------------------------------------\\
+  onCancel() {
+    this._FormService.fill.color.r = this._FormService.initialFill.color.r;
+    this._FormService.fill.color.g = this._FormService.initialFill.color.g;
+    this._FormService.fill.color.b = this._FormService.initialFill.color.b;
+    this._FormService.fill.color.a = this._FormService.initialFill.color.a;
+
+    this._FormService.fill.hoverColor.r = this._FormService.initialFill.hoverColor.r;
+    this._FormService.fill.hoverColor.g = this._FormService.initialFill.hoverColor.g;
+    this._FormService.fill.hoverColor.b = this._FormService.initialFill.hoverColor.b;
+    this._FormService.fill.hoverColor.a = this._FormService.initialFill.hoverColor.a;
+
+    this._FormService.border.apply = this._FormService.initialBorder.apply;
+    this._FormService.border.width = this._FormService.initialBorder.width;
+    this._FormService.border.style = this._FormService.initialBorder.style;
+    this._FormService.border.color.r = this._FormService.initialBorder.color.r;
+    this._FormService.border.color.g = this._FormService.initialBorder.color.g;
+    this._FormService.border.color.b = this._FormService.initialBorder.color.b;
+    this._FormService.border.color.a = this._FormService.initialBorder.color.a;
+    this._FormService.border.hoverColor.r = this._FormService.initialBorder.hoverColor.r;
+    this._FormService.border.hoverColor.g = this._FormService.initialBorder.hoverColor.g;
+    this._FormService.border.hoverColor.b = this._FormService.initialBorder.hoverColor.b;
+    this._FormService.border.hoverColor.a = this._FormService.initialBorder.hoverColor.a;
+
+    this._FormService.corners.constrainCorners = this._FormService.initialCorners.constrainCorners;
+    this._FormService.corners.topLeft = this._FormService.initialCorners.topLeft;
+    this._FormService.corners.topRight = this._FormService.initialCorners.topRight;
+    this._FormService.corners.bottomLeft = this._FormService.initialCorners.bottomLeft;
+    this._FormService.corners.bottomRight = this._FormService.initialCorners.bottomRight;
+
+    this._FormService.text.caption = this._FormService.initialText.caption;
+    this._FormService.text.fontFamily = this._FormService.initialText.fontFamily;
+    this._FormService.text.fontSize = this._FormService.initialText.fontSize;
+    this._FormService.text.fontWeight = this._FormService.initialText.fontWeight;
+    this._FormService.text.fontStyle = this._FormService.initialText.fontStyle;
+    this._FormService.text.color.r = this._FormService.initialText.color.r;
+    this._FormService.text.color.g = this._FormService.initialText.color.g;
+    this._FormService.text.color.b = this._FormService.initialText.color.b;
+    this._FormService.text.color.a = this._FormService.initialText.color.a;
+    this._FormService.text.hoverColor.r = this._FormService.initialText.hoverColor.r;
+    this._FormService.text.hoverColor.g = this._FormService.initialText.hoverColor.g;
+    this._FormService.text.hoverColor.b = this._FormService.initialText.hoverColor.b;
+    this._FormService.text.hoverColor.a = this._FormService.initialText.hoverColor.a;
+
+    this._FormService.shadow.enable = this._FormService.initialShadow.enable;
+    this._FormService.shadow.x = this._FormService.initialShadow.x;
+    this._FormService.shadow.y = this._FormService.initialShadow.y;
+    this._FormService.shadow.blur = this._FormService.initialShadow.blur;
+    this._FormService.shadow.size = this._FormService.initialShadow.size;
+    this._FormService.shadow.color.r = this._FormService.initialShadow.color.r;
+    this._FormService.shadow.color.g = this._FormService.initialShadow.color.g;
+    this._FormService.shadow.color.b = this._FormService.initialShadow.color.b;
+    this._FormService.shadow.color.a = this._FormService.initialShadow.color.a;
+
+    this._FormService.margins.top = this._FormService.initialMargins.top;
+    this._FormService.margins.right = this._FormService.initialMargins.right;
+    this._FormService.margins.bottom = this._FormService.initialMargins.bottom;
+    this._FormService.margins.left = this._FormService.initialMargins.left;
+
+
+    this._FormService.buttonForm.open = false;
+    this._FormService.buttonForm.normalTabSelected = true;
+  }
+
+
+  // ----------------------------------------------------( ON OK )--------------------------------------------------\\
+  onOk() {
+    this._FormService.buttonForm.open = false;
+    this._FormService.buttonForm.normalTabSelected = true;
   }
 }

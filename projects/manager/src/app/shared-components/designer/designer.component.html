@@ -64,7 +64,10 @@
             </div>
 
             <!-- Design Area Background -->
-            <div class="design-area-background">
+            <div >
+
+
+                <button-widget></button-widget>
 
                 <!-- Drag Icon -->
                 <!-- <div #dragIconElement *show="dragIcon.show" class="fade-start drag-icon-not-allowed"
@@ -76,33 +79,33 @@
 
 
                 <!-- Sizing Bar Left -->
-                <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, 1)">
+                <!-- <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, 1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
                         <div class="ridge"></div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Canvas -->
-                <div #canvasElement class="canvas">
+                <!-- <div #canvasElement class="canvas"> -->
 
                     <!-- Content -->
-                    <div #content class="content" [style.maxWidth.px]="contentWidth">
+                    <!-- <div #content class="content" [style.maxWidth.px]="contentWidth">
                         <container [currentWidget]="currentWidget"></container>
                     </div>
-                </div>
+                </div> -->
 
 
 
                 <!-- Sizing Bar Right -->
-                <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, -1)">
+                <!-- <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, -1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
                         <div class="ridge"></div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

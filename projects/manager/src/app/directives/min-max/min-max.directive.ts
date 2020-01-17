@@ -19,7 +19,7 @@ export class MinMaxDirective {
       // Arrow UP
       if(e.keyCode === 38) {
         el.nativeElement.value++;
-        el.nativeElement.value = Math.min(this.max, el.nativeElement.value)
+        if(this.max != null) el.nativeElement.value = Math.min(this.max, el.nativeElement.value)
         this.minMaxOut.emit(el.nativeElement.value)
       }
 

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ShadowComponent } from './shadow.component';
 import { ColorSwatchModule } from '../color-swatch/color-swatch.module';
+import { RangeSliderModule } from '../range-slider/range-slider.module';
 
 
 
@@ -9,7 +10,8 @@ import { ColorSwatchModule } from '../color-swatch/color-swatch.module';
   declarations: [ShadowComponent],
   imports: [
     CommonModule,
-    ColorSwatchModule
+    ColorSwatchModule,
+    RangeSliderModule
   ],
 
   exports: [ShadowComponent]

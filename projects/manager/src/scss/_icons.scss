@@ -7,7 +7,7 @@
     cursor: pointer;
     color: $icon-color;
     user-select: none;
-    &:hover:not(.icon-disabled) {
+    &:hover:not(.icon-disabled .selected) {
         color: lighten($icon-color, 20%);
     }
 }

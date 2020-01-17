@@ -4,22 +4,27 @@
 
 
 <!-- -------------------Apply Border------------------- -->
-<div class="property-row" style="padding-top: 10px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
-    <!-- Name -->
-    <div style="user-select: none;">Apply Border:</div>
-
-    <!-- Value -->
-    <input [checked]="_FormService.border.apply" (change)="_FormService.border.apply = !_FormService.border.apply"
-        type="checkbox">
+<div class="property-row" 
+     style="padding-top: 10px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
+    <!-- Name --><div style="user-select: none;">Apply Border:</div>
+    <!-- Value --><input type="checkbox" [checked]="_FormService.border.apply" (change)="_FormService.border.apply = !_FormService.border.apply">
 </div>
 
 
+<!-- Opacity Container -->
 <div [style.opacity]="_FormService.border.apply ? 1 : 0.2">
 
     <!-- -------------------Width------------------------ -->
-    <range-slider class="property-row" style="border-top: none;" [rowName]="'Width'" [minRange]="1" [maxRange]="15"
-        [formServiceProperty]="_FormService.border.width" (out)="_FormService.border.width = $event">
+    <range-slider 
+        class="property-row"
+        style="border-top: none;"
+        [rowName]="'Width'"
+        [minRange]="1"
+        [maxRange]="15"
+        [formServiceProperty]="_FormService.border.width"
+        (out)="_FormService.border.width = $event">
     </range-slider>
+
 
     <!-- -------------------Style------------------------ -->
     <div class="property-row">
@@ -34,19 +39,26 @@
             <div class="border-style-row">
 
                 <!-- Solid -->
-                <div title="Solid" class="border-styles" [ngClass]="{'border-style-selected': _FormService.border.style == 'solid'}"
+                <div title="Solid" class="border-styles"
+                    [ngClass]="{'border-style-selected': _FormService.border.style == 'solid'}"
                     (click)="onBorderStyleSelect(0)" style="border-style: solid; margin: 5px;margin-bottom: 15px;">
                 </div>
+
                 <!-- Dotted -->
-                <div title="Dotted" class="border-styles" [ngClass]="{'border-style-selected': _FormService.border.style == 'dotted'}"
+                <div title="Dotted" class="border-styles"
+                    [ngClass]="{'border-style-selected': _FormService.border.style == 'dotted'}"
                     (click)="onBorderStyleSelect(1)" style="border-style: dotted; margin: 5px;margin-bottom: 15px;">
                 </div>
+
                 <!-- Dashed -->
-                <div title="Dashed" class="border-styles" [ngClass]="{'border-style-selected': _FormService.border.style == 'dashed'}"
+                <div title="Dashed" class="border-styles"
+                    [ngClass]="{'border-style-selected': _FormService.border.style == 'dashed'}"
                     (click)="onBorderStyleSelect(2)" style="border-style: dashed; margin: 5px;margin-bottom: 15px;">
                 </div>
+
                 <!-- Double -->
-                <div title="Double" class="border-styles" [ngClass]="{'border-style-selected': _FormService.border.style == 'double'}"
+                <div title="Double" class="border-styles"
+                    [ngClass]="{'border-style-selected': _FormService.border.style == 'double'}"
                     (click)="onBorderStyleSelect(3)"
                     style="border-width: 3px; border-style: double; margin: 5px; margin-bottom: 15px;"></div>
             </div>
@@ -56,41 +68,49 @@
 
                 <!-- Groove -->
                 <div title="Groove" class="border-groove-dark" style="margin-bottom: 15px;">
-                    <div class="border-styles border-groove-light" [ngClass]="{'border-style-selected': _FormService.border.style == 'groove'}"
-                        (click)="onBorderStyleSelect(4)"></div>
+                    <div class="border-styles border-groove-light"
+                        [ngClass]="{'border-style-selected': _FormService.border.style == 'groove'}"
+                        (click)="onBorderStyleSelect(4)">
+                    </div>
                 </div>
+
                 <!-- Ridge -->
                 <div title="Ridge" class="border-styles border-ridge-light"
-                    [ngClass]="{'border-style-selected': _FormService.border.style == 'ridge'}" (click)="onBorderStyleSelect(5)"
-                    style="margin-bottom: 15px;">
+                    [ngClass]="{'border-style-selected': _FormService.border.style == 'ridge'}"
+                    (click)="onBorderStyleSelect(5)" style="margin-bottom: 15px;">
                     <div class="border-ridge-dark"></div>
                 </div>
+
                 <!-- Inset -->
                 <div title="Inset" class="border-inset-top-left" style="margin-bottom: 15px;">
                     <div class="border-styles border-inset-bottom-right"
-                        [ngClass]="{'border-style-selected': _FormService.border.style == 'inset'}" (click)="onBorderStyleSelect(6)"></div>
+                        [ngClass]="{'border-style-selected': _FormService.border.style == 'inset'}"
+                        (click)="onBorderStyleSelect(6)">
+                    </div>
                 </div>
+
                 <!-- Outset -->
                 <div title="Outset" class="border-outset-right-bottom" style="margin-bottom: 15px;">
                     <div class="border-styles border-outset-top-left"
-                        [ngClass]="{'border-style-selected': _FormService.border.style == 'outset'}" (click)="onBorderStyleSelect(7)"></div>
+                        [ngClass]="{'border-style-selected': _FormService.border.style == 'outset'}"
+                        (click)="onBorderStyleSelect(7)">
+                    </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 
     <!-- -------------------Color------------------- -->
     <div class="property-row" style="padding-top: 9px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
-
         <!-- Name -->
         <div style="user-select: none;">Color:</div>
-
         <!-- Color Swatch -->
         <color-swatch></color-swatch>
     </div>
 </div>
 
-<div *ngIf="!_FormService.border.apply" style="position: absolute;left: 46px;top: 97px;width: 255px;height: 189px;">
+
+<!-- Disable Cover -->
+<div *ngIf="!_FormService.border.apply" 
+      style="position: absolute;left: 46px;top: 97px;width: 255px;height: 189px;">
 </div>

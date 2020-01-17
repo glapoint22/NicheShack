@@ -9,6 +9,7 @@ import { Component, Input, ViewChild, ElementRef, Output, EventEmitter } from '@
 export class DialogBoxComponent {
   public x: number;
   public y: number;
+  public isDraggable: boolean = true;
   private initialCursorPosX: number;
   private initialCursorPosY: number;
   @Input() width: number = 330;
@@ -19,7 +20,7 @@ export class DialogBoxComponent {
 
 
   formMoveBegin(e: MouseEvent) {
-    if (!this.isModal) {
+    if (!this.isModal && this.isDraggable) {
       // Get the initial x and y position of the cursor on mousedown of the bar
       this.initialCursorPosX = (e.clientX - this.x);
       this.initialCursorPosY = (e.clientY - this.y);

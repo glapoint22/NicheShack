@@ -33,10 +33,10 @@ export class ColorPickerComponent {
       var hsb = this.RGBToHSB(this._FormService.colorPickerColor.r, this._FormService.colorPickerColor.g, this._FormService.colorPickerColor.b);
 
       // Set the current color
-      this._FormService.currentcolorPickerColor.r = this._FormService.colorPickerColor.r;
-      this._FormService.currentcolorPickerColor.g = this._FormService.colorPickerColor.g;
-      this._FormService.currentcolorPickerColor.b = this._FormService.colorPickerColor.b;
-      this._FormService.currentcolorPickerColor.a = this._FormService.colorPickerColor.a;
+      this._FormService.initialColorPickerColor.r = this._FormService.colorPickerColor.r;
+      this._FormService.initialColorPickerColor.g = this._FormService.colorPickerColor.g;
+      this._FormService.initialColorPickerColor.b = this._FormService.colorPickerColor.b;
+      this._FormService.initialColorPickerColor.a = this._FormService.colorPickerColor.a;
     
       // Move the ring
       this.ringX = hsb.s;
@@ -265,10 +265,10 @@ export class ColorPickerComponent {
 // ----------------------------------------------------( ON CANCEL )--------------------------------------------------\\
   onCancel() {
     this._FormService.openColorPicker = false;
-    this._FormService.colorPickerColor.r = this._FormService.currentcolorPickerColor.r;
-    this._FormService.colorPickerColor.g = this._FormService.currentcolorPickerColor.g;
-    this._FormService.colorPickerColor.b = this._FormService.currentcolorPickerColor.b;
-    this._FormService.colorPickerColor.a = this._FormService.currentcolorPickerColor.a;
+    this._FormService.colorPickerColor.r = this._FormService.initialColorPickerColor.r;
+    this._FormService.colorPickerColor.g = this._FormService.initialColorPickerColor.g;
+    this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
+    this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
   }
 
 

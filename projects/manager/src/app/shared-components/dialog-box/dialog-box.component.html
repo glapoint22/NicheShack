@@ -5,7 +5,7 @@
     <div class="form-bar" (mousedown)="formMoveBegin($event)">
         {{dialogBoxName}}
         <!-- X Button -->
-        <div class="form-x-button" (click)="onClose.emit()">X</div>
+        <div class="form-x-button" (click)="onClose.emit()" (mouseover)="isDraggable=false" (mouseout)="isDraggable=true">X</div>
     </div>
 
     <!-- Base -->

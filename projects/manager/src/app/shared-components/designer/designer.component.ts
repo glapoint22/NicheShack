@@ -77,7 +77,7 @@ export class DesignerComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.widthDisplay.nativeElement.value = this.canvas.nativeElement.clientWidth;
+    // this.widthDisplay.nativeElement.value = this.canvas.nativeElement.clientWidth;
   }
 
 
