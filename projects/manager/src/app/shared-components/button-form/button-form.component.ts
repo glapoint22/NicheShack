@@ -15,8 +15,6 @@ export class ButtonFormComponent {
 
   // ----------------------------------------------( ON FORM OPEN )--------------------------------------------\\
   onFormOpen() {
-    // Set the fill color to be the starting swatch color on form open
-    this._FormService.colorPickerColor = this._FormService.fill.color;
     // Set the normal tab to be selected on form open
     this._FormService.buttonForm.normalTabSelected = true;
     // Set the fill tab to be the starting normal vertical tab on form open
@@ -95,15 +93,8 @@ export class ButtonFormComponent {
       this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
       this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
     }
-
-    // Deselect the hover horizontal tab
+    // Display the newly selected horizontal tab as being selected
     this._FormService.buttonForm.normalTabSelected = true;
-
-    // Then depending on which tab is selected, update its color swatch accordingly
-    if(this.selectedNormalVerticalTab == "fill") this._FormService.colorPickerColor = this._FormService.fill.color;// Fill Tab
-    if(this.selectedNormalVerticalTab == "border") this._FormService.colorPickerColor = this._FormService.border.color;// Border Tab
-    if(this.selectedNormalVerticalTab == "text") this._FormService.colorPickerColor = this._FormService.text.color;// Text Tab
-    if(this.selectedNormalVerticalTab == "shadow") this._FormService.colorPickerColor = this._FormService.shadow.color;// Shadow Tab
   }
 
 
@@ -118,14 +109,8 @@ export class ButtonFormComponent {
       this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
       this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
     }
-
-    // Deselect the normal horizontal tab
+    // Display the newly selected horizontal tab as being selected
     this._FormService.buttonForm.normalTabSelected = false;
-
-    // Then depending on which tab is selected, update its color swatch accordingly
-    if(this.selectedHoverVerticalTab == "fill") this._FormService.colorPickerColor = this._FormService.fill.hoverColor;// Fill Tab
-    if(this.selectedHoverVerticalTab == "border") this._FormService.colorPickerColor = this._FormService.border.hoverColor;// Border Tab
-    if(this.selectedHoverVerticalTab == "text") this._FormService.colorPickerColor = this._FormService.text.hoverColor;// Text Tab
   }
 
 
@@ -140,15 +125,8 @@ export class ButtonFormComponent {
       this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
       this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
     }
-
     // Display the newly selected vertical tab as being selected
     this.selectedNormalVerticalTab = tab;
-
-    // Then depending on which tab is selected, update its color swatch accordingly
-    if(tab == "fill") this._FormService.colorPickerColor = this._FormService.fill.color;// Fill Tab
-    if(tab == "border") this._FormService.colorPickerColor = this._FormService.border.color;// Border Tab
-    if(tab == "text") this._FormService.colorPickerColor = this._FormService.text.color;// Text Tab
-    if(tab == "shadow") this._FormService.colorPickerColor = this._FormService.shadow.color;// Shadow Tab
   }
 
 
@@ -163,14 +141,8 @@ export class ButtonFormComponent {
       this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
       this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
     }
-
     // Display the newly selected vertical tab as being selected
     this.selectedHoverVerticalTab = tab;
-
-    // Then depending on which tab is selected, update its color swatch accordingly
-    if(tab == 'fill') this._FormService.colorPickerColor = this._FormService.fill.hoverColor;// Fill Tab
-    if(tab == 'border') this._FormService.colorPickerColor = this._FormService.border.hoverColor;// Border Tab
-    if(tab == 'text') this._FormService.colorPickerColor = this._FormService.text.hoverColor;// Text Tab
   }
 
 
@@ -180,7 +152,6 @@ export class ButtonFormComponent {
     this._FormService.fill.color.g = this._FormService.initialFill.color.g;
     this._FormService.fill.color.b = this._FormService.initialFill.color.b;
     this._FormService.fill.color.a = this._FormService.initialFill.color.a;
-
     this._FormService.fill.hoverColor.r = this._FormService.initialFill.hoverColor.r;
     this._FormService.fill.hoverColor.g = this._FormService.initialFill.hoverColor.g;
     this._FormService.fill.hoverColor.b = this._FormService.initialFill.hoverColor.b;

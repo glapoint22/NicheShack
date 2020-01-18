@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormService } from 'projects/manager/src/app/services/form.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class ButtonWidgetComponent {
                         hoverColor: {r: 255, g: 0, b: 255, a: 1}};
 
 
-  // -------------------------Corders------------------------ \\
+  // -------------------------Corners------------------------ \\
   public corners: any = {constrainCorners: true, 
                          topLeft: 0, 
                          topRight: 0, 
@@ -74,7 +74,7 @@ export class ButtonWidgetComponent {
     this._FormService.margins = this.margins;
 
     
-    // Open the Button Edit form
+    // Open the Button form
     this.buttonForm.open = true;
   }
 

@@ -20,7 +20,6 @@
         style="border-top: none;"
         [rowName]="'Width'"
         [minRange]="1"
-        [maxRange]="15"
         [formServiceProperty]="_FormService.border.width"
         (out)="_FormService.border.width = $event">
     </range-slider>
@@ -105,7 +104,7 @@
         <!-- Name -->
         <div style="user-select: none;">Color:</div>
         <!-- Color Swatch -->
-        <color-swatch></color-swatch>
+        <color-swatch [color]="_FormService.border.color"></color-swatch>
     </div>
 </div>
 

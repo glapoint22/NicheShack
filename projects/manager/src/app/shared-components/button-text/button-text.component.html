@@ -43,7 +43,6 @@
             <option value="'Trebuchet MS', Helvetica, sans-serif">Trebuchet MS</option>
             <option value="Verdana, Geneva, sans-serif">Verdana</option>
         </select>
-
     </div>
 </div>
 
@@ -81,7 +80,6 @@
         <div class="font-size-input-container" (keydown.arrowUp)="onFontSizeInputArrowUp($event)" (keydown.arrowDown)="onFontSizeInputArrowDown($event)">
             <input [(ngModel)]="_FormService.text.fontSize">
         </div>
-
     </div>
 </div>
 
@@ -118,7 +116,7 @@
     <div style="user-select: none;">Color:</div>
 
     <!-- Color Swatch -->
-    <color-swatch></color-swatch>
+    <color-swatch [color]="_FormService.text.color"></color-swatch>
 </div>
 
 

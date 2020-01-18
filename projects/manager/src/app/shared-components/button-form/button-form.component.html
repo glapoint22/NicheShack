@@ -65,8 +65,18 @@
 
             <!-- Hover Properties -->
             <div *ngIf="!_FormService.buttonForm.normalTabSelected" class="panel-lighter" style="min-height: 300px;"> 
+
                 <!-- Fill -->
-                <fill *ngIf="selectedHoverVerticalTab == 'fill'"></fill>
+                <ng-container *ngIf="selectedHoverVerticalTab == 'fill'">
+                    <div class="tab-title">Fill</div>
+                    <div class="property-row" style="padding-top: 9px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
+
+                        <div style="user-select: none;">Color:</div>
+
+                        <!-- Color Swatch -->
+                        <color-swatch [color]="_FormService.fill.hoverColor"></color-swatch>
+                    </div>
+                </ng-container>
 
                 <!-- Border -->
                 <ng-container *ngIf="selectedHoverVerticalTab == 'border'">
@@ -76,9 +86,10 @@
                         <div style="user-select: none;">Color:</div>
 
                         <!-- Color Swatch -->
-                        <color-swatch></color-swatch>
+                        <color-swatch [color]="_FormService.border.hoverColor"></color-swatch>
                     </div>
                 </ng-container>
+
                 <!-- Text -->
                 <ng-container *ngIf="selectedHoverVerticalTab == 'text'">
                     <div class="tab-title">Text</div>
@@ -88,7 +99,7 @@
                         <div style="user-select: none;">Color:</div>
             
                         <!-- Color Swatch -->
-                        <color-swatch></color-swatch>
+                        <color-swatch [color]="_FormService.text.hoverColor"></color-swatch>
                     </div>
                 </ng-container>
             </div>

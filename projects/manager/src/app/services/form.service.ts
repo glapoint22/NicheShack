@@ -11,6 +11,8 @@ export class FormService {
   
 
   public buttonForm: any;
+  public textForm: any;
+  public imageForm: any;
   
 
   public initialFill: any = { color: {r: 0, g: 0, b: 0, a: 0}, hoverColor: {r: 0, g: 0, b: 0, a: 0}};
