@@ -1,13 +1,9 @@
-<div 
-
-
-[style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
-[style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
-[style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
-[style.margin]="margins.top + 'px ' + margins.right + 'px ' + margins.bottom + 'px ' + margins.left + 'px'"
-
-
-class="widget widget-selected">
+<div class="widget widget-selected"
+     [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
+     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
+     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
+     [style.margin]="margins.top + 'px ' + margins.right + 'px ' + margins.bottom + 'px ' + margins.left + 'px'">
+     
     <div class="edit-button fas" (click)="onEdit()"></div>
     <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div>
     <div class="top-left-handle"></div>

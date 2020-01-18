@@ -7,14 +7,12 @@ import { FormService } from 'projects/manager/src/app/services/form.service';
   styleUrls: ['./image-widget.component.scss']
 })
 export class ImageWidgetComponent {
-
   constructor(public _FormService: FormService) {}
-
   public imageForm: any = {open: false}
 
 
   // --------------------------Border----------------------- \\ 
-  public border: any = {apply: true, 
+  public border: any = {apply: false, 
                         width: 5, 
                         style: "solid", 
                         color: {r: 255, g: 255, b: 0, a: 0.9}};
@@ -42,9 +40,10 @@ export class ImageWidgetComponent {
                          bottom: 0, 
                          left: 0};
 
+
+  // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
   onEdit() {
     this._FormService.imageForm = this.imageForm;
-
     this._FormService.border = this.border;
     this._FormService.corners = this.corners;
     this._FormService.shadow = this.shadow;
@@ -54,33 +53,15 @@ export class ImageWidgetComponent {
     this.imageForm.open = true;
   }
 
-  RGBAToHexA(r,g,b,a) {
-    r = r.toString(16);
-    g = g.toString(16);
-    b = b.toString(16);
-    a = Math.round(a * 255).toString(16);
   
-    if (r.length == 1)
-      r = "0" + r;
-    if (g.length == 1)
-      g = "0" + g;
-    if (b.length == 1)
-      b = "0" + b;
-    if (a.length == 1)
-      a = "0" + a;
-  
-    return "#" + r + g + b + a;
-  }
-  
-
   // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
   getBorderColor() {
-    return this.RGBAToHexA(this.border.color.r, this.border.color.g, this.border.color.b, this.border.color.a);
+    return this._FormService.RGBAToHexA(this.border.color.r, this.border.color.g, this.border.color.b, this.border.color.a);
   }
 
+  
   // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
   getShadowColor() {
-    return this.RGBAToHexA(this.shadow.color.r, this.shadow.color.g, this.shadow.color.b, this.shadow.color.a);
+    return this._FormService.RGBAToHexA(this.shadow.color.r, this.shadow.color.g, this.shadow.color.b, this.shadow.color.a);
   }
-
 }

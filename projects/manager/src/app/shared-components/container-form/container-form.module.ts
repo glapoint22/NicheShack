@@ -7,6 +7,8 @@ import { CornersModule } from '../corners/corners.module';
 import { ShadowModule } from '../shadow/shadow.module';
 import { MarginsModule } from '../margins/margins.module';
 import { PaddingModule } from '../padding/padding.module';
+import { DialogBoxModule } from '../dialog-box/dialog-box.module';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 
 
 
@@ -19,7 +21,9 @@ import { PaddingModule } from '../padding/padding.module';
     CornersModule,
     ShadowModule,
     MarginsModule,
-    PaddingModule
+    PaddingModule,
+    DialogBoxModule,
+    ShowHideModule
   ],
 
   exports: [ContainerFormComponent]

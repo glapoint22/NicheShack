@@ -8,7 +8,6 @@ import { FormService } from 'projects/manager/src/app/services/form.service';
 })
 export class ButtonWidgetComponent {
   constructor(public _FormService: FormService) {}
-
   public buttonForm: any = {open: false, normalTabSelected: true}
 
   // ---------------------------Fill------------------------ \\
@@ -61,25 +60,17 @@ export class ButtonWidgetComponent {
 
   // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
   onEdit() {
-
     this._FormService.buttonForm = this.buttonForm;
-    
-
-
     this._FormService.fill = this.fill;
     this._FormService.border = this.border;
     this._FormService.corners = this.corners;
     this._FormService.text = this.text;
     this._FormService.shadow = this.shadow;
     this._FormService.margins = this.margins;
-
     
     // Open the Button form
     this.buttonForm.open = true;
   }
-
-
- 
 
 
   // -------------------------------------------------( GET FILL COLOR )-----------------------------------------------\\
@@ -100,38 +91,19 @@ export class ButtonWidgetComponent {
   }
 
 
-  RGBAToHexA(r,g,b,a) {
-    r = r.toString(16);
-    g = g.toString(16);
-    b = b.toString(16);
-    a = Math.round(a * 255).toString(16);
-  
-    if (r.length == 1)
-      r = "0" + r;
-    if (g.length == 1)
-      g = "0" + g;
-    if (b.length == 1)
-      b = "0" + b;
-    if (a.length == 1)
-      a = "0" + a;
-  
-    return "#" + r + g + b + a;
-  }
-  
-
   // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
   getBorderColor() {
     // If the normal tab on the button form is selected
     if(this.buttonForm.normalTabSelected) {
 
       // Style the button border with the normal look
-      var hexA = this.RGBAToHexA(this.border.color.r, this.border.color.g, this.border.color.b, this.border.color.a);
+      var hexA = this._FormService.RGBAToHexA(this.border.color.r, this.border.color.g, this.border.color.b, this.border.color.a);
 
     // If the hover tab on the button form is selected
     } else {
 
       // Style the button border with the hover look
-      var hexA = this.RGBAToHexA(this.border.hoverColor.r, this.border.hoverColor.g, this.border.hoverColor.b, this.border.hoverColor.a);
+      var hexA = this._FormService.RGBAToHexA(this.border.hoverColor.r, this.border.hoverColor.g, this.border.hoverColor.b, this.border.hoverColor.a);
     }
     return hexA;
   }
@@ -157,6 +129,6 @@ export class ButtonWidgetComponent {
 
   // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
   getShadowColor() {
-    return this.RGBAToHexA(this.shadow.color.r, this.shadow.color.g, this.shadow.color.b, this.shadow.color.a);
+    return this._FormService.RGBAToHexA(this.shadow.color.r, this.shadow.color.g, this.shadow.color.b, this.shadow.color.a);
   }
 }

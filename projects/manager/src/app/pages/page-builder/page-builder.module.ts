@@ -14,6 +14,7 @@ import { RowFormModule } from '../../shared-components/row-form/row-form.module'
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { ColorPickerModule } from '../../shared-components/color-picker/color-picker.module';
 import { ImageFormModule } from '../../shared-components/image-form/image-form.module';
+import { LineFormModule } from '../../shared-components/line-form/line-form.module';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ImageFormModule } from '../../shared-components/image-form/image-form.m
     RowFormModule,
     DesignerModule,
     ColorPickerModule,
-    ImageFormModule
+    ImageFormModule,
+    LineFormModule
   ]
 })
 export class PageBuilderModule { }

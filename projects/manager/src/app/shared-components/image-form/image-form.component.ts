@@ -57,7 +57,6 @@ export class ImageFormComponent {
       this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
       this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
     }
-
     // Display the newly selected tab as being selected
     this.selectedTab = tab;
   }
