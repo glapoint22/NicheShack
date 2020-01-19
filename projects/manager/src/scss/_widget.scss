@@ -33,12 +33,13 @@
 
 .widget {
     position: relative;
+}
+
+body:not(#widget-cursor) .widget {
     cursor: move;
 }
 
 .widget-selected {
-    // border: 1px solid $selected-border-color;
-
     // Top Left Handle
     .top-left-handle {
         @extend %handle;
@@ -193,4 +194,35 @@
 
 .fa-eye, .fa-eye-slash {
     visibility: hidden;
+}
+
+#column:hover .drop-indicator {
+    visibility: visible;
+}
+
+.drop-widget {
+    .drop-indicator {
+        visibility: hidden;
+        position: absolute;
+        left: 0;
+        top: 0px;
+        width: 60px;
+        height: 100%;
+        background-color: rgba(0, 106, 255, 0.2);
+        background-image: linear-gradient(45deg, rgba(82, 173, 251, 0.3) 25%, transparent 25%, transparent 75%, rgba(82, 173, 251, 0.3) 75%, rgba(82, 173, 251, 0.3)), 
+                          linear-gradient(45deg, rgba(82, 173, 251, 0.3) 25%, transparent 25%, transparent 75%, rgba(82, 173, 251, 0.3) 75%, rgba(82, 173, 251, 0.3));
+        background-size: 8px 8px;
+        background-position: 0 0, 4px 4px;
+    
+        &:last-child {
+            right: 0;
+            left: initial;
+        }
+    
+        &:hover {
+            background-color: rgba(0, 106, 255, 0.4);
+            background-image: linear-gradient(45deg, rgba(82, 173, 251, 0.5) 25%, transparent 25%, transparent 75%, rgba(82, 173, 251, 0.5) 75%, rgba(82, 173, 251, 0.5)), 
+                              linear-gradient(45deg, rgba(82, 173, 251, 0.5) 25%, transparent 25%, transparent 75%, rgba(82, 173, 251, 0.5) 75%, rgba(82, 173, 251, 0.5));
+        }
+    }
 }

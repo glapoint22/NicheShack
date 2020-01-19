@@ -40,6 +40,10 @@ body {
     }
 }
 
+body#widget-cursor input {
+    pointer-events: none;
+}
+
 @media (max-width: 600px) {
     body {
         background-size: contain;

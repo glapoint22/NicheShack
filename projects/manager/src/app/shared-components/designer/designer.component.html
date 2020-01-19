@@ -7,9 +7,9 @@
         <!-- Widget Bar -->
         <div class="widget-bar">
 
-            <ng-container *ngFor="let widgetIcon of widgetIcons">
-                <div class="icon-container" [title]="widgetIcon.title" [innerHTML]="widgetIcon.html"
-                    (mousedown)="onWidgetIconMousedown($event, widgetIcon)"></div>
+            <ng-container *ngFor="let widget of widgets">
+                <div class="icon-container" [title]="widget.title" [innerHTML]="widget.icon"
+                    (mousedown)="onWidgetIconMousedown($event, widget)"></div>
             </ng-container>
         </div>
 
@@ -66,15 +66,6 @@
             <!-- Design Area Background -->
             <div class="design-area-background">
 
-                <!-- Drag Icon -->
-                <!-- <div #dragIconElement *show="dragIcon.show" class="fade-start drag-icon-not-allowed"
-                    [style.left.px]="dragIcon.rect.x" [style.top.px]="dragIcon.rect.y"
-                    [style.width.px]="dragIcon.rect.width" [style.height.px]="dragIcon.rect.height"
-                    [style.cursor]="dragIcon.show ? 'none' : 'default'"
-                    [ngClass]="{'drag-icon-allowed': isDragIconInBounds}" transitionClass="fade-end">
-                </div> -->
-
-
                 <!-- Sizing Bar Left -->
                 <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, 1)">
                     <div class="ridge-container">
@@ -88,8 +79,8 @@
                 <div #canvasElement class="canvas">
 
                     <!-- Content -->
-                    <div #content class="content" [style.maxWidth.px]="contentWidth">
-                        <container [currentWidget]="currentWidget"></container>
+                    <div #content class="content" [style.maxWidth.px]="contentWidth" (mousemove)="setCursor(true)" (mouseleave)="setCursor()">
+                        <container></container>
                     </div>
                 </div>
 

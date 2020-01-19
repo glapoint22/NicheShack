@@ -18,15 +18,8 @@
         border-top-left-radius: 7px;
         border-top-right-radius: 7px;
         color: #8a8989;
-        cursor: pointer;
         user-select: none;
-        &:hover:not(.selected-tab) {
-            background: lighten(#2d2d2d, 2%);
-            color: lighten(#8a8989, 12%);
-            border-top-color: lighten(#353535, 8%);
-            border-right-color: lighten(#222222, 8%);
-            border-left-color: lighten(#353535, 8%);
-        }
+        
 
         &:nth-child(n + 2) {
             margin-left: -1px;
@@ -41,10 +34,24 @@
         border-top: 1px solid #4a4a4a;
         color: #b2b2b2;
         z-index: 10;
-        cursor: default;
+        
     }
 }
 
+body:not(#widget-cursor) .tab {
+    cursor: pointer;
+    &:hover:not(.selected-tab) {
+        background: lighten(#2d2d2d, 2%);
+        color: lighten(#8a8989, 12%);
+        border-top-color: lighten(#353535, 8%);
+        border-right-color: lighten(#222222, 8%);
+        border-left-color: lighten(#353535, 8%);
+    }
+}
+
+body:not(#widget-cursor) .selected-tab {
+    cursor: default;
+}
 
 %vertical-tab {
     margin-left: 4px;

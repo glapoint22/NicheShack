@@ -4,11 +4,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     color: $icon-color;
     user-select: none;
+    
+}
+
+body:not(#widget-cursor) .icon-container {
     &:hover:not(.icon-disabled) {
         color: lighten($icon-color, 20%);
+        cursor: pointer;
     }
 }
 

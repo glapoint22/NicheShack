@@ -1,42 +1,36 @@
-import { Component, OnInit, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, Input } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory } from '@angular/core';
 import { RowComponent } from '../row/row.component';
+import { WidgetService } from '../../../services/widget.service';
 
 @Component({
   selector: 'container',
   templateUrl: './container.component.html',
   styleUrls: ['./container.component.scss']
 })
-export class ContainerComponent implements OnInit {
+export class ContainerComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-  @Input() currentWidget: any;
   private rows: Array<ComponentRef<RowComponent>> = new Array<ComponentRef<RowComponent>>();
 
-  constructor(private resolver: ComponentFactoryResolver) { }
+  constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }
 
-  ngOnInit() {
+  onMouseup(event) {
+    if (this.widgetService.currentWidget) this.addRow(event.y - event.target.getBoundingClientRect().y);
   }
 
-
-  createRow(event) {
-    if(!this.currentWidget) return;
-
-    let widgetComponentFactory = this.resolver.resolveComponentFactory(this.currentWidget);
-    let widget = widgetComponentFactory.create(this.viewContainerRef.injector);
-    widget.changeDetectorRef.detectChanges();
-
-
+  addRow(position: number) {
     // Add the row to the viewContainerRef and rows array
     let rowComponentFactory: ComponentFactory<RowComponent> = this.resolver.resolveComponentFactory(RowComponent);
-    let row: ComponentRef<RowComponent> = this.viewContainerRef.createComponent(rowComponentFactory, null, null, [[widget.location.nativeElement]]);
+    let row: ComponentRef<RowComponent> = this.viewContainerRef.createComponent(rowComponentFactory);
     let selectedRowIndex: number;
     this.rows.push(row);
 
-    this.currentWidget = null;
-
 
     // Set the position of the row
-    row.instance.top = event.y - event.target.getBoundingClientRect().y;
+    row.instance.top = position;
 
+    // Add the widget
+    row.hostView.detectChanges();
+    row.instance.addWidget(row.location.nativeElement.firstElementChild.lastElementChild);
 
     // Sort the rows by position (top to bottom)
     this.sortRows();
@@ -44,7 +38,7 @@ export class ContainerComponent implements OnInit {
     // Shift any row that is below the new row
     this.shiftRowsDown(this.rows.findIndex(x => x == row));
 
-    // Get the selected row
+    // Get the selected row index
     row.instance.onRowSelected.subscribe((row: RowComponent) => {
       selectedRowIndex = this.rows.findIndex(x => x.instance == row);
     });
@@ -89,7 +83,7 @@ export class ContainerComponent implements OnInit {
       if (this.rows[i].instance.top < this.rows[i - 1].instance.top + this.rows[i - 1].location.nativeElement.firstElementChild.clientHeight) {
         this.rows[i - 1].instance.top = this.rows[i].instance.top - this.rows[i - 1].location.nativeElement.firstElementChild.clientHeight;
 
-        // Make sure we can't shift the rows past zero
+        // Make sure we can't shift the rows below zero
         if (this.rows[0].instance.top < 0) {
           let diff = -this.rows[0].instance.top;
           for (let j = 0; j < startingIndex + 1; j++) {
