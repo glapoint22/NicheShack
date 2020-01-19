@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'range-slider',
@@ -27,33 +26,19 @@ export class RangeSliderComponent {
       this.txt.nativeElement.value = this.minRange;
     }
 
-    // If the value of the textbox is higher than the specified max range
-    if(this.txt.nativeElement.value > this.maxRange) {
-      // Set the textbox value as the max range
-      this.txt.nativeElement.value = this.maxRange;
+    if(this.maxRange != null) {
+      // If the value of the textbox is higher than the specified max range
+      if(this.txt.nativeElement.value > this.maxRange) {
+        // Set the textbox value as the max range
+        this.txt.nativeElement.value = this.maxRange;
+      }
     }
 
     // Output the textbox value
     this.out.emit(this.txt.nativeElement.value);
   }
 
-
-  // -----------------------------( ARROW UP )------------------------------ \\
-  onArrowUp(e) {
-    e.target.value++;
-    e.target.value = Math.min(this.maxRange, e.target.value)
-    this.out.emit(e.target.value);
-  }
-
-
-  // -----------------------------( ARROW DOWN )------------------------------ \\
-  onArrowDown(e) {
-    e.target.value--;
-    e.target.value = Math.max(this.minRange, e.target.value)
-    this.out.emit(e.target.value);
-  }
-
-
+  
   // ------------------------( ON RANGE SLIDER DOWN )------------------------- \\
   onRangeSliderDown(e: MouseEvent) {
     var initialCursorPosX = e.clientX;
@@ -74,10 +59,12 @@ export class RangeSliderComponent {
         this.txt.nativeElement.value = this.minRange;
       }
 
-      // If the value of the textbox is higher than the specified max range
-      if(this.txt.nativeElement.value > this.maxRange) {
-        // Set the textbox value as the max range
-        this.txt.nativeElement.value = this.maxRange;
+      if(this.maxRange != null) {
+        // If the value of the textbox is higher than the specified max range
+        if(this.txt.nativeElement.value > this.maxRange) {
+          // Set the textbox value as the max range
+          this.txt.nativeElement.value = this.maxRange;
+        }
       }
       
       // Output the textbox value

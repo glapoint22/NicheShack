@@ -7,6 +7,8 @@ import { CornersModule } from '../corners/corners.module';
 import { ShadowModule } from '../shadow/shadow.module';
 import { LinkModule } from '../link/link.module';
 import { MarginsModule } from '../margins/margins.module';
+import { DialogBoxModule } from '../dialog-box/dialog-box.module';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 
 
 
@@ -19,7 +21,9 @@ import { MarginsModule } from '../margins/margins.module';
     CornersModule,
     ShadowModule,
     LinkModule,
-    MarginsModule
+    MarginsModule,
+    DialogBoxModule,
+    ShowHideModule
   ],
   exports: [ImageFormComponent]
 })

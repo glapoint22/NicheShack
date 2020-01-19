@@ -1,11 +1,11 @@
-<div *show="_FormService.openButtonEditForm" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
+<div *show="_FormService.buttonForm != null ? _FormService.buttonForm.open : false" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
-    <dialog-box [dialogBoxName]="'Button'" [width]="336">
+    <dialog-box [dialogBoxName]="'Button'" [width]="336" (onClose)="onCancel()">
 
         <!-- Horizontal Tabs -->
         <div class="tabs-container width-100">
-            <div class="tab" [ngClass]="{'selected-tab': _FormService.buttonEditForm.normalTabSelected}" (click)="onNormalHorizontalTabSelect()">Normal</div>
-            <div class="tab" [ngClass]="{'selected-tab': !_FormService.buttonEditForm.normalTabSelected}" style="left: 114px" (click)="onHoverHorizontalTabSelect()">Hover</div>
+            <div class="tab" [ngClass]="{'selected-tab': _FormService.buttonForm.normalTabSelected}" (click)="onNormalHorizontalTabSelect()">Normal</div>
+            <div class="tab" [ngClass]="{'selected-tab': !_FormService.buttonForm.normalTabSelected}" style="left: 114px" (click)="onHoverHorizontalTabSelect()">Hover</div>
         </div>
 
 
@@ -15,71 +15,83 @@
             <!---------------------------------- Vertical Tabs ----------------------------------------->
 
             <!-- Normal Tabs -->
-            <div *ngIf="_FormService.buttonEditForm.normalTabSelected" class="vertical-tabs-container">
+            <div *ngIf="_FormService.buttonForm.normalTabSelected" class="vertical-tabs-container">
                 <!-- Fill -->
-                <div title="Fill" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': normalVerticalTab[0]}" (click)="onNormalVerticalTabSelect(0)"> <i class="fas fa-fill-drip"></i> </div>
+                <div title="Fill" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': selectedNormalVerticalTab == 'fill'}" (click)="onNormalVerticalTabSelect('fill')"> <i class="fas fa-fill-drip"></i> </div>
                 <!-- Border -->
-                <div title="Border" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': normalVerticalTab[1]}" (click)="onNormalVerticalTabSelect(1)"> <i class="far fa-square"></i> </div>
+                <div title="Border" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': selectedNormalVerticalTab == 'border'}" (click)="onNormalVerticalTabSelect('border')"> <i class="far fa-square"></i> </div>
                 <!-- Corners -->
-                <div title="Corners" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': normalVerticalTab[2]}" (click)="onNormalVerticalTabSelect(2)"> <i class="fas fa-expand"></i> </div>
+                <div title="Corners" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': selectedNormalVerticalTab == 'corners'}" (click)="onNormalVerticalTabSelect('corners')"> <i class="fas fa-expand"></i> </div>
                 <!-- Text -->
-                <div title="Text" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': normalVerticalTab[3]}" (click)="onNormalVerticalTabSelect(3)" style="font-family: 'Times New Roman', Times, serif; font-size: 22px;">T</div>
+                <div title="Text" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': selectedNormalVerticalTab == 'text'}" (click)="onNormalVerticalTabSelect('text')" style="font-family: 'Times New Roman', Times, serif; font-size: 22px;">T</div>
                 <!-- Shadow -->
-                <div title="Shadow" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': normalVerticalTab[4]}" (click)="onNormalVerticalTabSelect(4)"> <i class="fas fa-clone" style="transform: scaleX(-1);"> </i> </div>
+                <div title="Shadow" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': selectedNormalVerticalTab == 'shadow'}" (click)="onNormalVerticalTabSelect('shadow')"> <i class="fas fa-clone" style="transform: scaleX(-1);"> </i> </div>
                 <!-- Link -->
-                <div title="Link" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': normalVerticalTab[5]}" (click)="onNormalVerticalTabSelect(5)"> <i class="fas fa-link"></i> </div>
+                <div title="Link" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': selectedNormalVerticalTab == 'link'}" (click)="onNormalVerticalTabSelect('link')"> <i class="fas fa-link"></i> </div>
                 <!-- Margins -->
-                <div title="Margins" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': normalVerticalTab[6]}" (click)="onNormalVerticalTabSelect(6)"> <i class="fas fa-arrow-left" style="display: flex; align-items: center;"> <span style="font-size: 20px; font-family: Arial">I</span> </i> </div>
+                <div title="Margins" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': selectedNormalVerticalTab == 'margins'}" (click)="onNormalVerticalTabSelect('margins')"> <i class="fas fa-arrow-left" style="display: flex; align-items: center;"> <span style="font-size: 20px; font-family: Arial">I</span> </i> </div>
             </div>
 
             <!-- Hover Tabs-->
-            <div *ngIf="!_FormService.buttonEditForm.normalTabSelected" class="vertical-tabs-container">
+            <div *ngIf="!_FormService.buttonForm.normalTabSelected" class="vertical-tabs-container">
                 <!-- Fill -->
-                <div title="Fill" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': hoverVerticalTab[0]}" (click)="onHoverVerticalTabSelect(0)"> <i class="fas fa-fill-drip"></i> </div>
+                <div title="Fill" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': selectedHoverVerticalTab == 'fill'}" (click)="onHoverVerticalTabSelect('fill')"> <i class="fas fa-fill-drip"></i> </div>
                 <!-- Border -->
-                <div title="Border" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': hoverVerticalTab[1]}" (click)="onHoverVerticalTabSelect(1)"> <i class="far fa-square"></i> </div>
+                <div title="Border" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': selectedHoverVerticalTab == 'border'}" (click)="onHoverVerticalTabSelect('border')"> <i class="far fa-square"></i> </div>
                 <!-- Text -->
-                <div title="Text" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': hoverVerticalTab[2]}" (click)="onHoverVerticalTabSelect(2)" style="font-family: 'Times New Roman', Times, serif; font-size: 22px;">T</div>
+                <div title="Text" class="vertical-tab-lighter" [ngClass]="{'selected-vertical-tab-Lighter': selectedHoverVerticalTab == 'text'}" (click)="onHoverVerticalTabSelect('text')" style="font-family: 'Times New Roman', Times, serif; font-size: 22px;">T</div>
             </div>
 
 
             <!---------------------------------- Properties ----------------------------------------->
 
             <!-- Normal Properties -->
-            <div *ngIf="_FormService.buttonEditForm.normalTabSelected" class="panel-lighter" style="min-height: 300px;">
+            <div *ngIf="_FormService.buttonForm.normalTabSelected" class="panel-lighter" style="min-height: 300px;">
                 <!-- Fill -->
-                <fill *ngIf="normalVerticalTab[0]"></fill>
+                <fill *ngIf="selectedNormalVerticalTab == 'fill'"></fill>
                 <!-- Border -->
-                <border *ngIf="normalVerticalTab[1]"></border>
+                <border *ngIf="selectedNormalVerticalTab == 'border'"></border>
                 <!-- Corners -->
-                <corners *ngIf="normalVerticalTab[2]"></corners>
+                <corners *ngIf="selectedNormalVerticalTab == 'corners'"></corners>
                 <!-- Text -->
-                <button-text *ngIf="normalVerticalTab[3]"></button-text>
+                <button-text *ngIf="selectedNormalVerticalTab == 'text'"></button-text>
                 <!-- Shadow -->
-                <shadow *ngIf="normalVerticalTab[4]"></shadow>
+                <shadow *ngIf="selectedNormalVerticalTab == 'shadow'"></shadow>
                 <!-- Link -->
-                <links *ngIf="normalVerticalTab[5]"></links>
+                <links *ngIf="selectedNormalVerticalTab == 'link'"></links>
                 <!-- Margins -->
-                <margins *ngIf="normalVerticalTab[6]"></margins>
+                <margins *ngIf="selectedNormalVerticalTab == 'margins'"></margins>
             </div>
 
             <!-- Hover Properties -->
-            <div *ngIf="!_FormService.buttonEditForm.normalTabSelected" class="panel-lighter" style="min-height: 300px;"> 
+            <div *ngIf="!_FormService.buttonForm.normalTabSelected" class="panel-lighter" style="min-height: 300px;"> 
+
                 <!-- Fill -->
-                <fill *ngIf="hoverVerticalTab[0]"></fill>
+                <ng-container *ngIf="selectedHoverVerticalTab == 'fill'">
+                    <div class="tab-title">Fill</div>
+                    <div class="property-row" style="padding-top: 9px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
+
+                        <div style="user-select: none;">Color:</div>
+
+                        <!-- Color Swatch -->
+                        <color-swatch [color]="_FormService.fill.hoverColor"></color-swatch>
+                    </div>
+                </ng-container>
+
                 <!-- Border -->
-                <ng-container *ngIf="hoverVerticalTab[1]">
+                <ng-container *ngIf="selectedHoverVerticalTab == 'border'">
                     <div class="tab-title">Border</div>
                     <div class="property-row" style="padding-top: 9px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
 
                         <div style="user-select: none;">Color:</div>
 
                         <!-- Color Swatch -->
-                        <color-swatch></color-swatch>
+                        <color-swatch [color]="_FormService.border.hoverColor"></color-swatch>
                     </div>
                 </ng-container>
+
                 <!-- Text -->
-                <ng-container *ngIf="hoverVerticalTab[2]">
+                <ng-container *ngIf="selectedHoverVerticalTab == 'text'">
                     <div class="tab-title">Text</div>
 
                     <div class="property-row" style="padding-top: 9px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
@@ -87,7 +99,7 @@
                         <div style="user-select: none;">Color:</div>
             
                         <!-- Color Swatch -->
-                        <color-swatch></color-swatch>
+                        <color-swatch [color]="_FormService.text.hoverColor"></color-swatch>
                     </div>
                 </ng-container>
             </div>
@@ -95,8 +107,8 @@
 
         <!-- Buttons -->
         <div class="form-button-container">
-            <button>Ok</button>
-            <button>Cancel</button>
+            <button (click)="onCancel()">Cancel</button>
+            <button (click)="onOk()">OK</button>
         </div>
     </dialog-box>
 </div>

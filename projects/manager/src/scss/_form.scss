@@ -29,6 +29,12 @@
     &:hover .form-x-button:not(:hover) {
         color: #dddddd;
     }
+
+    &:active {
+        background: linear-gradient(#4b4e53, #2e3138);
+        border-color: #163768;
+        color: #dddddd;
+    }
 }
 
 .form-x-button {
@@ -40,14 +46,19 @@
     color: #7d7d7d;
     cursor: pointer;
     user-select: none;
+    background: linear-gradient(transparent, transparent);
 
     &:hover {
-        color: white;
-        background-color: #585858;
+         color: white;
+        background: linear-gradient(#666b72, #3c4048);
     }
 
     &:active {
+        color: white;
         outline: 1px solid $selected-border-color;
+        background: linear-gradient(#666b72, #3c4048);
+
+        
     }
 }
 

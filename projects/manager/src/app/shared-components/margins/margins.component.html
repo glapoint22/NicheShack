@@ -2,57 +2,42 @@
 <div class="tab-title">Margins</div>
 
 
-<!-- -------------------Left------------------------ -->
-<div class="property-row">
-
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Left:</div> 
-
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100"> 
-        <!-- Label --> <div class="px">px</div> 
-    </div>
-</div>
-
-
 <!-- -------------------Top------------------------ -->
-<div class="property-row">
-
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Top:</div> 
-
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100"> 
-        <!-- Label --> <div class="px">px</div> 
-    </div>
-</div>
+<range-slider 
+    class="property-row"
+    [rowName]="'Top'"
+    [minRange]="0"
+    [formServiceProperty]="_FormService.margins.top"
+    (out)="_FormService.margins.top = $event">
+</range-slider>
 
 
 <!-- -------------------Right------------------------ -->
-<div class="property-row">
-
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Right:</div> 
-
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100">
-        <!-- Label --> <div class="px">px</div> 
-    </div>
-</div>
+<range-slider 
+    class="property-row"
+    [rowName]="'Right'"
+    [minRange]="0"
+    [formServiceProperty]="_FormService.margins.right"
+    (out)="_FormService.margins.right = $event">
+</range-slider>
 
 
 <!-- -------------------Bottom------------------------ -->
-<div class="property-row" style="border-bottom: 1px solid #363636;">
+<range-slider 
+    class="property-row"
+    [rowName]="'Bottom'"
+    [minRange]="0"
+    [formServiceProperty]="_FormService.margins.bottom"
+    (out)="_FormService.margins.bottom = $event">
+</range-slider>
 
-    <!-- Name -->
-    <div style="user-select: none; cursor: e-resize;">Bottom:</div> 
 
-    <!-- Value -->
-    <div class="display-flex">
-        <!-- Text Box --> <input type="text" class="text-box hide-text-box" value="100">
-        <!-- Label --> <div class="px">px</div>
-    </div>
-</div>
+<!-- -------------------Left------------------------ -->
+<range-slider 
+    class="property-row"
+    style="border-bottom: 1px solid #363636;"
+    [rowName]="'Left'"
+    [minRange]="0"
+    [formServiceProperty]="_FormService.margins.left"
+    (out)="_FormService.margins.left = $event">
+</range-slider>

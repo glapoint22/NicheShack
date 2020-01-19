@@ -64,36 +64,39 @@
             </div>
 
             <!-- Design Area Background -->
-            <div class="design-area-background">
+            <div >
+
+
+                <container-widget></container-widget>
 
                 <!-- Sizing Bar Left -->
-                <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, 1)">
+                <!-- <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, 1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
                         <div class="ridge"></div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Canvas -->
-                <div #canvasElement class="canvas">
+                <!-- <div #canvasElement class="canvas"> -->
 
                     <!-- Content -->
                     <div #content class="content" [style.maxWidth.px]="contentWidth" (mousemove)="setCursor(true)" (mouseleave)="setCursor()">
                         <container></container>
                     </div>
-                </div>
+                </div> -->
 
 
 
                 <!-- Sizing Bar Right -->
-                <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, -1)">
+                <!-- <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, -1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
                         <div class="ridge"></div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

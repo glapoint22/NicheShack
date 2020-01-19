@@ -4,6 +4,8 @@ import { TextFormComponent } from './text-form.component';
 import { MarginsModule } from '../margins/margins.module';
 import { LinkModule } from '../link/link.module';
 import { TextModule } from '../text/text.module';
+import { DialogBoxModule } from '../dialog-box/dialog-box.module';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 
 
 
@@ -13,7 +15,9 @@ import { TextModule } from '../text/text.module';
     CommonModule,
     TextModule,
     LinkModule,
-    MarginsModule
+    MarginsModule,
+    DialogBoxModule,
+    ShowHideModule
   ],
 
   exports: [TextFormComponent]

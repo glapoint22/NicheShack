@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'text-form',
@@ -6,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./text-form.component.scss']
 })
 export class TextFormComponent {
+  constructor(public _FormService: FormService) {}
   public showVerticalTab: boolean[] = [true, false, false];
+
+  onFormOpen() {
+
+  }
 
   selectVerticalTab(index: number) {
     for(var i = 0; i < 3; i++) {

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonTextComponent } from './button-text.component';
 import { ColorSwatchModule } from '../color-swatch/color-swatch.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -9,7 +10,8 @@ import { ColorSwatchModule } from '../color-swatch/color-swatch.module';
   declarations: [ButtonTextComponent],
   imports: [
     CommonModule,
-    ColorSwatchModule
+    ColorSwatchModule,
+    FormsModule
   ],
 
   exports: [ButtonTextComponent]

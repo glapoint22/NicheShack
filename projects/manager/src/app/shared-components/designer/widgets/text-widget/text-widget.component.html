@@ -1,5 +1,14 @@
-<div class="widget widget-selected">
-    <div class="edit-button fas"></div>
+<div 
+     [style.margin]="margins.top + 'px ' + margins.right + 'px ' + margins.bottom + 'px ' + margins.left + 'px'"
+
+
+
+
+
+
+
+    class="widget widget-selected">
+    <div class="edit-button fas" (click)="onEdit()"></div>
     <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div>
     <div class="left-handle"></div>
     <div class="bottom-center-handle"></div>
@@ -7,5 +16,16 @@
     <div class="left-handle-bar"></div>
     <div class="right-handle-bar"></div>
     <div class="bottom-handle-bar"></div>
-    <div>I'm a paragraph. Click here to add your own text and edit me. It's easy.</div>
+
+
+    <div [style.fontFamily]="text.fontFamily"
+         [style.fontSize.px]="text.fontSize"
+         [style.fontWeight]="text.fontWeight"
+         [style.fontStyle]="text.fontStyle"
+         [style.color]="'rgba(' + this.text.color.r + ',' +  this.text.color.g + ',' + this.text.color.b + ',' + this.text.color.a + ')'"
+         [style.backgroundColor]="'rgba(' + this.text.highlightColor.r + ',' +  this.text.highlightColor.g + ',' + this.text.highlightColor.b + ',' + this.text.highlightColor.a + ')'"
+    >I'm a paragraph. Click here to add your own text and edit me. It's easy.</div>
+
+
+    
 </div>
