@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { VideoFormComponent } from './video-form.component';
 import { MarginsModule } from '../margins/margins.module';
 import { MediaBrowserModule } from '../media-browser/media-browser.module';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
+import { DialogBoxModule } from '../dialog-box/dialog-box.module';
 
 
 
@@ -11,7 +13,9 @@ import { MediaBrowserModule } from '../media-browser/media-browser.module';
   imports: [
     CommonModule,
     MarginsModule,
-    MediaBrowserModule
+    MediaBrowserModule,
+    DialogBoxModule,
+    ShowHideModule
   ],
   
   exports: [VideoFormComponent]

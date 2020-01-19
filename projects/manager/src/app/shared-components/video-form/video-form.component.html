@@ -1,25 +1,31 @@
-<div class="display-flex">
+<div *show="_FormService.videoForm != null ? _FormService.videoForm.open : false" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
-    <!-- Vertical Tabs -->
-    <div class="vertical-tabs-container">
-        <!-- Video -->
-        <div title="Video" class="vertical-tab" [ngClass]="{'selected-vertical-tab': showVideo}" (click)="showVideo = true"> <i class="fas fa-film"></i> </div>
-        <!-- Margins -->
-        <div title="Margins" class="vertical-tab" [ngClass]="{'selected-vertical-tab': !showVideo}" (click)="showVideo = false"> <i class="fas fa-arrow-left"></i> </div>
-    </div>
+    <dialog-box [dialogBoxName]="'Video'" [width]="336" (onClose)="onCancel()">
+
+        <div class="display-flex">
+
+            <!-- Vertical Tabs -->
+            <div class="vertical-tabs-container">
+                <!-- Video -->
+                <div title="Video" class="vertical-tab" [ngClass]="{'selected-vertical-tab': selectedTab == 'video'}" (click)="onTabSelect('video')"> <i class="fas fa-film"></i> </div>
+                <!-- Margins -->
+                <div title="Margins" class="vertical-tab" [ngClass]="{'selected-vertical-tab': selectedTab == 'margins'}" (click)="onTabSelect('margins')"> <i class="fas fa-arrow-left"></i> </div>
+            </div>
 
 
-    <!-- Properties -->
-    <div class="panel-light-rounded">
-        <!-- Video -->
-        <media-browser *ngIf="showVideo" [mediaType]="'video'"></media-browser>
-        <!-- Margins -->
-        <margins *ngIf="!showVideo"></margins>
-    </div>
-</div>
+            <!-- Properties -->
+            <div class="panel-light-rounded">
+                <!-- Video -->
+                <media-browser *ngIf="selectedTab == 'video'" [mediaType]="'video'"></media-browser>
+                <!-- Margins -->
+                <margins *ngIf="selectedTab == 'margins'"></margins>
+            </div>
+        </div>
 
-<!-- Buttons -->
-<div class="form-button-container">
-    <button>Ok</button>
-    <button>Cancel</button>
+        <!-- Buttons -->
+        <div class="form-button-container">
+            <button (click)="onCancel()">Cancel</button>
+            <button (click)="_FormService.videoForm.open = false">Ok</button>
+        </div>
+    </dialog-box>
 </div>
