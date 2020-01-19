@@ -85,13 +85,13 @@ export class ButtonFormComponent {
   // -------------------------------------( ON NORMAL HORIZONTAL TAB SELECT )-----------------------------------\\
   onNormalHorizontalTabSelect() {
     // If the color Picker form is open
-    if(this._FormService.openColorPicker) {
+    if(this._FormService.colorPicker.open) {
       // Close the the Color Picker form and reset any color changes made back to the original color
-      this._FormService.openColorPicker = false;
-      this._FormService.colorPickerColor.r = this._FormService.initialColorPickerColor.r;
-      this._FormService.colorPickerColor.g = this._FormService.initialColorPickerColor.g;
-      this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
-      this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
+      this._FormService.colorPicker.open = false;
+      this._FormService.colorPicker.color.r = this._FormService.initialColorPickerColor.r;
+      this._FormService.colorPicker.color.g = this._FormService.initialColorPickerColor.g;
+      this._FormService.colorPicker.color.b = this._FormService.initialColorPickerColor.b;
+      this._FormService.colorPicker.color.a = this._FormService.initialColorPickerColor.a;
     }
     // Display the newly selected horizontal tab as being selected
     this._FormService.buttonForm.normalTabSelected = true;
@@ -101,13 +101,13 @@ export class ButtonFormComponent {
   // -------------------------------------( ON HOVER HORIZONTAL TAB SELECT )-----------------------------------\\
   onHoverHorizontalTabSelect() {
     // If the color Picker form is open
-    if(this._FormService.openColorPicker) {
+    if(this._FormService.colorPicker.open) {
       // Close the the Color Picker form and reset any color changes made back to the original color
-      this._FormService.openColorPicker = false;
-      this._FormService.colorPickerColor.r = this._FormService.initialColorPickerColor.r;
-      this._FormService.colorPickerColor.g = this._FormService.initialColorPickerColor.g;
-      this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
-      this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
+      this._FormService.colorPicker.open = false;
+      this._FormService.colorPicker.color.r = this._FormService.initialColorPickerColor.r;
+      this._FormService.colorPicker.color.g = this._FormService.initialColorPickerColor.g;
+      this._FormService.colorPicker.color.b = this._FormService.initialColorPickerColor.b;
+      this._FormService.colorPicker.color.a = this._FormService.initialColorPickerColor.a;
     }
     // Display the newly selected horizontal tab as being selected
     this._FormService.buttonForm.normalTabSelected = false;
@@ -117,13 +117,13 @@ export class ButtonFormComponent {
   // -------------------------------------( ON NORMAL VERTICAL TAB SELECT )-----------------------------------\\
   onNormalVerticalTabSelect(tab: string) {
     // If the color Picker form is open
-    if(this._FormService.openColorPicker) {
+    if(this._FormService.colorPicker.open) {
       // Close the the Color Picker form and reset any color changes made back to the original color
-      this._FormService.openColorPicker = false;
-      this._FormService.colorPickerColor.r = this._FormService.initialColorPickerColor.r;
-      this._FormService.colorPickerColor.g = this._FormService.initialColorPickerColor.g;
-      this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
-      this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
+      this._FormService.colorPicker.open = false;
+      this._FormService.colorPicker.color.r = this._FormService.initialColorPickerColor.r;
+      this._FormService.colorPicker.color.g = this._FormService.initialColorPickerColor.g;
+      this._FormService.colorPicker.color.b = this._FormService.initialColorPickerColor.b;
+      this._FormService.colorPicker.color.a = this._FormService.initialColorPickerColor.a;
     }
     // Display the newly selected vertical tab as being selected
     this.selectedNormalVerticalTab = tab;
@@ -133,13 +133,13 @@ export class ButtonFormComponent {
   // -------------------------------------( ON HOVER VERTICAL TAB SELECT )-----------------------------------\\
   onHoverVerticalTabSelect(tab: string) {
     // If the color Picker form is open
-    if(this._FormService.openColorPicker) {
+    if(this._FormService.colorPicker.open) {
       // Close the the Color Picker form and reset any color changes made back to the original color
-      this._FormService.openColorPicker = false;
-      this._FormService.colorPickerColor.r = this._FormService.initialColorPickerColor.r;
-      this._FormService.colorPickerColor.g = this._FormService.initialColorPickerColor.g;
-      this._FormService.colorPickerColor.b = this._FormService.initialColorPickerColor.b;
-      this._FormService.colorPickerColor.a = this._FormService.initialColorPickerColor.a;
+      this._FormService.colorPicker.open = false;
+      this._FormService.colorPicker.color.r = this._FormService.initialColorPickerColor.r;
+      this._FormService.colorPicker.color.g = this._FormService.initialColorPickerColor.g;
+      this._FormService.colorPicker.color.b = this._FormService.initialColorPickerColor.b;
+      this._FormService.colorPicker.color.a = this._FormService.initialColorPickerColor.a;
     }
     // Display the newly selected vertical tab as being selected
     this.selectedHoverVerticalTab = tab;

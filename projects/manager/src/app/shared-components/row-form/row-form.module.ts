@@ -7,6 +7,8 @@ import { CornersModule } from '../corners/corners.module';
 import { ShadowModule } from '../shadow/shadow.module';
 import { PaddingModule } from '../padding/padding.module';
 import { AlignmentModule } from '../alignment/alignment.module';
+import { DialogBoxModule } from '../dialog-box/dialog-box.module';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 
 
 
@@ -20,7 +22,9 @@ import { AlignmentModule } from '../alignment/alignment.module';
     CornersModule,
     ShadowModule,
     PaddingModule,
-    AlignmentModule
+    AlignmentModule,
+    DialogBoxModule,
+    ShowHideModule
   ],
 
   exports: [RowFormComponent]

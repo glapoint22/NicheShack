@@ -1,54 +1,47 @@
-<!-- Panel Light -->
-<div class="display-flex">
+<div *show="_FormService.rowForm != null ? _FormService.rowForm.open : false" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
-    <!-- Vertical Tabs -->
-    <div class="vertical-tabs-container">
+    <dialog-box [dialogBoxName]="'Row'" [width]="336" (onClose)="onCancel()">
 
-         <!-- Fill -->
-         <div title="Fill" class="vertical-tab selected-vertical-tab"> <i class="fas fa-fill-drip"></i> </div>
+        <!-- Panel Light -->
+        <div class="display-flex">
 
-         <!-- Border -->
-         <div title="Border" class="vertical-tab"> <i class="far fa-square"></i> </div>
+            <!-- Vertical Tabs -->
+            <div class="vertical-tabs-container">
+                <!-- Fill -->
+                <div title="Fill" class="vertical-tab" [ngClass]="{'selected-vertical-tab': selectedTab == 'fill'}" (click)="onTabSelect('fill')"> <i class="fas fa-fill-drip"></i> </div>
+                <!-- Border -->
+                <div title="Border" class="vertical-tab" [ngClass]="{'selected-vertical-tab': selectedTab == 'border'}" (click)="onTabSelect('border')"> <i class="far fa-square"></i> </div>
+                <!-- Corners -->
+                <div title="Corners" class="vertical-tab" [ngClass]="{'selected-vertical-tab': selectedTab == 'corners'}" (click)="onTabSelect('corners')"> <i class="fas fa-expand"></i> </div>
+                <!-- Shadow -->
+                <div title="Shadow" class="vertical-tab" [ngClass]="{'selected-vertical-tab': selectedTab == 'shadow'}" (click)="onTabSelect('shadow')"> <i class="fas fa-clone" style="transform: scaleX(-1);"> </i> </div>
+                <!-- Padding -->
+                <div title="Padding" class="vertical-tab" [ngClass]="{'selected-vertical-tab': selectedTab == 'padding'}" (click)="onTabSelect('padding')"> <i class="fas fa-th-large"></i> </div>
+                <!-- Alignment -->
+                <div title="Alignment" class="vertical-tab" [ngClass]="{'selected-vertical-tab': selectedTab == 'alignment'}" (click)="onTabSelect('alignment')"> <i class="fas fa-align-right"></i> </div>
+            </div>
 
-         <!-- Corners -->
-         <div title="Corners" class="vertical-tab"> <i class="fas fa-expand"></i> </div>
+            <!-- Properties -->
+            <div class="panel-light-rounded" style="min-height: 300px;">
+                <!-- Fill -->
+                <fill *ngIf="selectedTab == 'fill'"></fill>
+                <!-- Border -->
+                <border *ngIf="selectedTab == 'border'"></border>
+                <!-- Corners -->
+                <corners *ngIf="selectedTab == 'corners'"></corners>
+                <!-- Shadow -->
+                <shadow *ngIf="selectedTab == 'shadow'"></shadow>
+                <!-- Padding -->
+                <padding *ngIf="selectedTab == 'padding'"></padding>
+                <!-- Alignment -->
+                <alignment *ngIf="selectedTab == 'alignment'"></alignment>
+            </div>
+        </div>
 
-         <!-- Shadow -->
-         <div title="Shadow" class="vertical-tab"> <i class="fas fa-clone" style="transform: scaleX(-1);"> </i> </div>
-
-         <!-- Padding -->
-         <div title="Padding" class="vertical-tab"> <i class="fas fa-th-large"></i> </div>
-
-        <!-- Alignment -->
-        <div title="Alignment" class="vertical-tab"> <i class="fas fa-align-right"></i> </div>
-
-
-        <!-- Margins -->
-        <!-- <div title="Margins" class="vertical-tab"> <i class="fas fa-arrow-left" style="display: flex; align-items: center;"> <span style="font-size: 20px; font-family: Arial">I</span> </i> </div> -->
-        
-
-    </div>
-
-    <!-- Panel Light -->
-    <div class="panel-light-rounded" style="min-height: 300px;">
-
-         <!-- <fill></fill> -->
-
-        <border></border>
-
-        <!-- <corners></corners> -->
-
-        <!-- <shadow></shadow> -->
-
-        <!-- <padding></padding> -->
-        
-        <!-- <alignment></alignment> -->
-        
-    </div>
-</div>
-
-<!-- Buttons -->
-<div class="form-button-container">
-    <button>Ok</button>
-    <button>Cancel</button>
+        <!-- Buttons -->
+        <div class="form-button-container">
+            <button (click)="onCancel()">Cancel</button>
+            <button (click)="_FormService.rowForm.open = false">Ok</button>
+        </div>
+    </dialog-box>
 </div>

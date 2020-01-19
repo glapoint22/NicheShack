@@ -1,5 +1,7 @@
 <div *show="_FormService.containerForm != null ? _FormService.containerForm.open : false" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
+
     <dialog-box [dialogBoxName]="'Container'" [width]="336" (onClose)="onCancel()">
+        
         <!-- Panel Light -->
         <div class="display-flex">
 
