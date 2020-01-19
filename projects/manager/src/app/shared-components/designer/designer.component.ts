@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, ViewEncapsulation, ElementRef, Type } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ViewEncapsulation, ElementRef } from '@angular/core';
 import { ButtonWidgetComponent } from './widgets/button-widget/button-widget.component';
 import { ContainerWidgetComponent } from './widgets/container-widget/container-widget.component';
 import { ImageWidgetComponent } from './widgets/image-widget/image-widget.component';
 import { LineWidgetComponent } from './widgets/line-widget/line-widget.component';
 import { TextWidgetComponent } from './widgets/text-widget/text-widget.component';
-import { DragIcon } from '../../classes/drag-icon';
-import { WidgetIcon } from '../../classes/widget-icon';
-import { RowComponent } from './row/row.component';
+import { Widget } from '../../classes/widget';
+import { WidgetService } from '../../services/widget.service';
 
 @Component({
   selector: 'designer',
@@ -16,136 +15,75 @@ import { RowComponent } from './row/row.component';
 })
 export class DesignerComponent implements OnInit {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-  @ViewChild('dragIconElement', { static: false }) dragIconElement: ElementRef;
   @ViewChild('content', { static: false }) content: ElementRef;
   @ViewChild('canvasElement', { static: false }) canvas: ElementRef;
   @ViewChild('widthDisplay', { static: false }) widthDisplay: ElementRef;
 
-  public widgetIcons: Array<WidgetIcon>;
+  public widgets: Array<Widget>;
   public showPublishMenu: boolean;
-  public currentWidget: any;
-  
-  
-  
-  // public dragIcon: DragIcon = new DragIcon();
-  // public get isDragIconInBounds(): boolean {
-  //   return this.dragIcon.rect.x >= this.content.nativeElement.offsetLeft &&
-  //     this.dragIcon.rect.x + this.dragIcon.rect.width <= this.content.nativeElement.clientWidth + this.content.nativeElement.offsetLeft &&
-  //     this.dragIcon.rect.y >= this.content.nativeElement.offsetTop && 
-  //     this.dragIcon.rect.y < this.content.nativeElement.clientHeight + this.content.nativeElement.offsetTop - this.dragIcon.rect.height;
-  // }
-
   public contentWidth: number = 1496;
 
-  constructor(private resolver: ComponentFactoryResolver) { }
+  constructor(private widgetService: WidgetService) { }
 
   ngOnInit() {
-    // this.dragIcon.rect = {
-    //   x: 0,
-    //   y: 0,
-    //   width: 40,
-    //   height: 40
-    // };
-
-    this.widgetIcons = [
+    this.widgets = [
       {
         title: 'Button',
         component: ButtonWidgetComponent,
-        html: '<i class="fab fa-bootstrap"></i>'
+        icon: '<i class="fab fa-bootstrap"></i>',
+        allowedCursor: 'button-widget-allowed.png',
+        notAllowedCursor: 'button-widget-not-allowed.png'
       },
       {
         title: 'Text',
         component: TextWidgetComponent,
-        html: '<div class="text-icon">T</div>'
+        icon: '<div class="text-icon">T</div>',
+        allowedCursor: 'text-widget-allowed.png',
+        notAllowedCursor: 'text-widget-not-allowed.png'
       },
       {
         title: 'Image',
         component: ImageWidgetComponent,
-        html: '<i class="fas fa-image"></i>'
+        icon: '<i class="fas fa-image"></i>',
+        allowedCursor: 'image-widget-allowed.png',
+        notAllowedCursor: 'image-widget-not-allowed.png'
       },
       {
         title: 'Container',
         component: ContainerWidgetComponent,
-        html: '<i class="fas fa-box-open"></i>'
+        icon: '<i class="fas fa-box-open"></i>',
+        allowedCursor: 'container-widget-allowed.png',
+        notAllowedCursor: 'container-widget-not-allowed.png'
       },
       {
         title: 'Line',
         component: LineWidgetComponent,
-        html: '<i class="fas fa-slash"></i>'
+        icon: '<i class="fas fa-slash"></i>',
+        allowedCursor: 'line-widget-allowed.png',
+        notAllowedCursor: 'line-widget-not-allowed.png'
       }
     ]
   }
 
   ngAfterViewInit() {
-    // this.widthDisplay.nativeElement.value = this.canvas.nativeElement.clientWidth;
+    this.widthDisplay.nativeElement.value = this.canvas.nativeElement.clientWidth;
   }
 
+  onWidgetIconMousedown(e: MouseEvent, widget: Widget) {
+    this.widgetService.currentWidget = widget;
+    document.body.style.cursor = 'url("assets/' + widget.notAllowedCursor + '"), auto';
+    document.body.id = 'widget-cursor';
 
-  // createWidget(widgetType: Type<Component>) {
-  //   let foo = this.resolver.resolveComponentFactory(ButtonWidgetComponent);
-  //   let button = foo.create(this.viewContainerRef.injector);
-  //   button.changeDetectorRef.detectChanges();
+    // On Mouseup
+    let onMouseup = () => {
+      window.removeEventListener("mouseup", onMouseup);
+      this.widgetService.currentWidget = null;
+      document.body.removeAttribute('style');
+      document.body.removeAttribute('id');
+    }
 
-
-  //   let componentFactory = this.resolver.resolveComponentFactory(RowComponent);
-  //   this.viewContainerRef.createComponent(componentFactory, null, null, [[button.location.nativeElement]]);
-  // }
-
-  onWidgetIconMousedown(e: MouseEvent, widget: any) {
-    this.currentWidget = widget.component;
-    // let offsetX: number;
-    // let offsetY: number;
-
-    // // Reset the drag icon position
-    // this.dragIcon.rect.x = 0;
-    // this.dragIcon.rect.y = 0;
-
-    // window.setTimeout(() => {
-    //   // Reset the drag icon element position
-    //   this.dragIconElement.nativeElement.style.left = 0;
-    //   this.dragIconElement.nativeElement.style.top = 0;
-
-    //   this.dragIconElement.nativeElement.innerHTML = widget.html;
-
-    //   // Set the offsets
-    //   offsetX = -this.dragIconElement.nativeElement.getBoundingClientRect().x;
-    //   offsetY = -this.dragIconElement.nativeElement.getBoundingClientRect().y;
-
-    //   // Calculate the drag icon position
-    //   this.dragIcon.rect.x = offsetX + e.clientX - this.dragIcon.rect.width * 0.5;
-    //   this.dragIcon.rect.y = offsetY + e.clientY - this.dragIcon.rect.height * 0.5;
-    // });
-
-    // // Show the drag icon
-    // this.dragIcon.show = true;
-
-    // // On Mousemove
-    // let onMousemove = (e: MouseEvent) => {
-    //   // drag icon follows the cursor
-    //   this.dragIcon.rect.x = offsetX + e.clientX - this.dragIcon.rect.width * 0.5;
-    //   this.dragIcon.rect.y = offsetY + e.clientY - this.dragIcon.rect.height * 0.5;
-
-      
-    // }
-
-
-    // // On Mouseup
-    // let onMouseup = () => {
-    //   window.removeEventListener("mousemove", onMousemove);
-    //   window.removeEventListener("mouseup", onMouseup);
-    //   this.dragIcon.show = false;
-
-    //   if (this.isDragIconInBounds) {
-    //     // this.createWidget(widget.component);
-    //   }
-    // }
-
-    // // Add event listeners that will listen for a mousemove to move the drag icon and a mouseup to create the widget
-    // window.addEventListener("mousemove", onMousemove);
-    // window.addEventListener("mouseup", onMouseup);
+    window.addEventListener("mouseup", onMouseup);
   }
-
-
 
 
   onSizingBarMousedown(e: any, direction: number) {
@@ -184,5 +122,13 @@ export class DesignerComponent implements OnInit {
     }
   }
 
-
+  setCursor(allowed: boolean) {
+    if (this.widgetService.currentWidget) {
+      if (allowed) {
+        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidget.allowedCursor + '"), auto';
+      } else {
+        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidget.notAllowedCursor + '"), auto';
+      }
+    }
+  }
 }

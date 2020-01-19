@@ -1,22 +1,16 @@
-<div class="row" [style.top.px]="top">
+<div class="row" [style.top.px]="top"
+    [ngClass]="{'drop-widget': widgetService.currentWidget, 'flex-10': columns.length == 5}"
+    (mousemove)="widgetService.currentWidget ? $event.stopPropagation(): null">
 
-    <div class="col-12">
+    <ng-template #viewContainerRef></ng-template>
 
-        <ng-content></ng-content>
+    <div>
+        <!-- Edit -->
+        <div class="row-edit" *ngIf="!widgetService.currentWidget">Edit</div>
 
+        <!-- Move -->
+        <div class="row-move" (mousedown)="onRowMoveMousedown($event)" *ngIf="!widgetService.currentWidget">
+            <i class="fas fa-arrows-alt-v"></i>
+        </div>
     </div>
-
-    <!-- Edit -->
-    <div class="row-edit">Edit</div>
-
-    <!-- Move -->
-    <div class="row-move" (mousedown)="onRowMoveMousedown($event)">
-        <i class="fas fa-arrows-alt-v"></i>
-    </div>
-
-
-    <!-- Drop Indicators -->
-    <div class="drop-indicator"></div>
-    
-
 </div>
