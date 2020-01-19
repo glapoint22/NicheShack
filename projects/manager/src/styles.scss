@@ -44,6 +44,16 @@ body#widget-cursor input {
     pointer-events: none;
 }
 
+body#widget-cursor .hierarchy-container {
+    pointer-events: none;
+}
+
+body:not(.over-row)#widget-cursor .grid:hover {
+    .row-indicator {
+        visibility: visible;
+    }
+}
+
 @media (max-width: 600px) {
     body {
         background-size: contain;

@@ -1,7 +1,7 @@
 @import '../../../../scss/variables';
 @import '../../../../../../../scss/arrows';
 
-.container {
+.hierarchy-container {
     display: flex;
     height: 100%;
     margin-right: 3px;
@@ -114,7 +114,7 @@
 }
 
 
-.hierarchy-container {
+.hierarchy-content {
     position: absolute;
     top: 90px;
     left: 5px;

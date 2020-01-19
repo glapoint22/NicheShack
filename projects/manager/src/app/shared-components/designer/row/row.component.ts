@@ -9,7 +9,7 @@ import { WidgetService } from '../../../services/widget.service';
 export class RowComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @Output() onRowSelected: EventEmitter<RowComponent> = new EventEmitter();
-  @Output() onRowMove: EventEmitter<number> = new EventEmitter();
+  @Output() shiftRows: EventEmitter<number> = new EventEmitter();
   public top: number;
   private columns: Array<HTMLElement> = new Array<HTMLElement>();
 
@@ -20,7 +20,7 @@ export class RowComponent {
     let offset = event.clientY - this.top;
     let currentPos = this.top;
 
-    // Emit that the row has been selected
+    // Emit that this row has been selected
     this.onRowSelected.emit(this);
 
     // Mousemove
@@ -29,7 +29,9 @@ export class RowComponent {
 
       let delta = this.top - currentPos;
       currentPos = this.top;
-      this.onRowMove.emit(Math.sign(delta));
+
+      // Shift neighboring rows up or down if this rows collides with them
+      this.shiftRows.emit(Math.sign(delta));
     }
 
     // Mouseup
@@ -114,7 +116,15 @@ export class RowComponent {
     column.addEventListener('mouseenter', () => {
       if (this.widgetService.currentWidget) {
         document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidget.notAllowedCursor + '"), auto';
+        document.body.classList.add('over-row');
       }
     });
+
+
+    // Emit that this row has been selected
+    this.onRowSelected.emit(this);
+
+    // Shift rows down if this row collides with its neighboring rows
+    this.shiftRows.emit(1);
   }
 }
