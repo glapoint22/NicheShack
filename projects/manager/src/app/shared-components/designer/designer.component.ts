@@ -126,6 +126,7 @@ export class DesignerComponent implements OnInit {
     if (this.widgetService.currentWidget) {
       if (allowed) {
         document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidget.allowedCursor + '"), auto';
+        document.body.removeAttribute('class');
       } else {
         document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidget.notAllowedCursor + '"), auto';
       }

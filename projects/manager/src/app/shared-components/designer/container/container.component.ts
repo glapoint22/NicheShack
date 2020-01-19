@@ -14,7 +14,7 @@ export class ContainerComponent {
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }
 
   onMouseup(event) {
-    if (this.widgetService.currentWidget) this.addRow(event.y - event.target.getBoundingClientRect().y);
+    if (this.widgetService.currentWidget) this.addRow(event.y - event.currentTarget.getBoundingClientRect().y);
   }
 
   addRow(position: number) {
@@ -31,6 +31,7 @@ export class ContainerComponent {
     // Add the widget
     row.hostView.detectChanges();
     row.instance.addWidget(row.location.nativeElement.firstElementChild.lastElementChild);
+    row.hostView.detectChanges();
 
     // Sort the rows by position (top to bottom)
     this.sortRows();
@@ -43,8 +44,8 @@ export class ContainerComponent {
       selectedRowIndex = this.rows.findIndex(x => x.instance == row);
     });
 
-    // Check collision when a row moves
-    row.instance.onRowMove.subscribe((direction: number) => {
+    // Shift rows either up or down based on the direction passed in if the selected row collides with its neighboring rows
+    row.instance.shiftRows.subscribe((direction: number) => {
       if (direction == 1) {
         this.shiftRowsDown(selectedRowIndex);
       } else {

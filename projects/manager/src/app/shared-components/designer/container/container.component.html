@@ -1,4 +1,6 @@
-<div class="grid" (mouseup)="onMouseup($event)">
+<div #grid class="grid" (mouseup)="onMouseup($event)"
+    (mousemove)="widgetService.currentWidget ? rowIndicator.style.top = ($event.clientY - grid.getBoundingClientRect().y) + 'px' : null">
+    <div #rowIndicator class="row-indicator"></div>
     <ng-template #viewContainerRef>
         <!-- Rows go here -->
     </ng-template>
