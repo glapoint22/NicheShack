@@ -10,7 +10,7 @@
 }
 
 body:not(#widget-cursor) .icon-container {
-    &:hover:not(.icon-disabled .selected) {
+    &:hover:not(.icon-disabled) {
         color: lighten($icon-color, 20%);
         cursor: pointer;
     }
