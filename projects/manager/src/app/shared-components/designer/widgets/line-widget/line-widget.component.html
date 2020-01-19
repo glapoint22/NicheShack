@@ -1,9 +1,27 @@
-<div class="widget widget-selected">
-    <div class="edit-button fas"></div>
+<div class="widget widget-selected"
+
+[style.margin]="margins.top + 'px ' + margins.right + 'px ' + margins.bottom + 'px ' + margins.left + 'px'"
+
+
+>
+     
+    <div class="edit-button fas" (click)="onEdit()"></div>
+
+    
     <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div>
+
+
     <div class="left-handle"></div>
     <div class="right-handle"></div>
     <div class="left-handle-bar"></div>
     <div class="right-handle-bar"></div>
-    <div style=" height: 1px; border-top: 1px solid #808080; width: 100%;"></div>
+
+    
+    <div style=" width: 100%;" 
+    
+    [style.borderBottom]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
+    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
+     
+    
+    ></div>
 </div>

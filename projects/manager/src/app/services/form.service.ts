@@ -14,6 +14,7 @@ export class FormService {
   public imageForm: any;
   public containerForm: any;
   public lineForm: any;
+  public videoForm: any;
   
   public initialColorPickerColor: any = {r: 0, g: 0, b: 0, a: 0};
   public initialFill: any = { color: {r: 0, g: 0, b: 0, a: 0}, hoverColor: {r: 0, g: 0, b: 0, a: 0}};
