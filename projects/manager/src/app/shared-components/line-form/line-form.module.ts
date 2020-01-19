@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LineFormComponent } from './line-form.component';
-import { BorderModule } from '../border/border.module';
 import { ShadowModule } from '../shadow/shadow.module';
 import { MarginsModule } from '../margins/margins.module';
+import { DialogBoxModule } from '../dialog-box/dialog-box.module';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
+import { FillModule } from '../fill/fill.module';
+import { LineBorderModule } from '../line-border/line-border.module';
 
 
 
@@ -11,9 +14,12 @@ import { MarginsModule } from '../margins/margins.module';
   declarations: [LineFormComponent],
   imports: [
     CommonModule,
-    BorderModule,
+    FillModule,
     ShadowModule,
-    MarginsModule
+    MarginsModule,
+    DialogBoxModule,
+    ShowHideModule,
+    LineBorderModule
   ],
   exports: [LineFormComponent]
 })

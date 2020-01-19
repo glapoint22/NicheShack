@@ -1,0 +1,51 @@
+<!-- ----------------------Tab Title-------------- -->
+<div class="tab-title">Border</div>
+
+<!-- -------------------Width------------------------ -->
+<range-slider 
+    class="property-row"
+    [rowName]="'Width'"
+    [minRange]="1"
+    [formServiceProperty]="_FormService.border.width"
+    (out)="_FormService.border.width = $event">
+</range-slider>
+
+
+<!-- -------------------Style------------------------ -->
+<div class="property-row" style="padding-top: 9px; padding-bottom: 9px; border-bottom: 1px solid #363636;">
+
+    <!-- Name -->
+    <div style="user-select: none;">Style:</div>
+
+    <!-- Border Styles Container -->
+    <div class="border-style-container">
+
+        <!-- Border Style Row -->
+        <div class="border-style-row">
+
+            <!-- Solid -->
+            <div title="Solid" class="border-styles"
+                [ngClass]="{'border-style-selected': _FormService.border.style == 'solid'}"
+                (click)="onBorderStyleSelect(0)" style="border-top-style: solid; margin: 5px;margin-bottom: 15px;">
+            </div>
+
+            <!-- Dotted -->
+            <div title="Dotted" class="border-styles"
+                [ngClass]="{'border-style-selected': _FormService.border.style == 'dotted'}"
+                (click)="onBorderStyleSelect(1)" style="border-top-style: dotted; margin: 5px;margin-bottom: 15px;">
+            </div>
+
+            <!-- Dashed -->
+            <div title="Dashed" class="border-styles"
+                [ngClass]="{'border-style-selected': _FormService.border.style == 'dashed'}"
+                (click)="onBorderStyleSelect(2)" style="border-top-style: dashed; margin: 5px;margin-bottom: 15px;">
+            </div>
+
+            <!-- Double -->
+            <div title="Double" class="border-styles"
+                [ngClass]="{'border-style-selected': _FormService.border.style == 'double'}"
+                (click)="onBorderStyleSelect(3)"
+                style="border-width: 3px; border-top-style: double; margin: 5px; margin-bottom: 15px;"></div>
+        </div>
+    </div>
+</div>
