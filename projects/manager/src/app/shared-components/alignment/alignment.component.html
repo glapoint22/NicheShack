@@ -1,37 +1,6 @@
 <!-- ----------------------Tab Title-------------- -->
 <div class="tab-title">Alignment</div>
 
-
-
-
-<!-- -------------------Horizontal Alignment------------------------ -->
-<div class="property-row" style="padding-top: 7px; padding-bottom: 7px;">
-
-    <!-- Name -->
-    <div style="user-select: none;">Horizontal Alignment:</div> 
-
-    <!-- Value -->
-    <div class="display-flex">
-        
-        <!-- Bold -->
-        <div class="icon-container selected" title="Align Left">
-            <i class="fas fa-align-left"></i>
-        </div>
-
-        <!-- Italic -->
-        <div class="icon-container" title="Align Center">
-            <i class="fas fa-align-center"></i>
-        </div>
-
-        <!-- Underline -->
-        <div class="icon-container" title="Align Right">
-            <i class="fas fa-align-right"></i>
-        </div>
-
-    </div>
-</div>
-
-
 <!-- -------------------Vertical Alignment------------------------ -->
 <div class="property-row" style="padding-top: 7px; padding-bottom: 7px; border-bottom: 1px solid #363636;">
 
@@ -41,58 +10,20 @@
     <!-- Value -->
     <div class="display-flex">
         
-        <!-- Bold -->
-        <div class="icon-container selected" title="Align Top">
+        <!-- Top -->
+        <div class="icon-container" (click)="_FormService.verticalAlign.align = 'flex-start'" [ngClass]="{'selected': _FormService.verticalAlign.align == 'flex-start'}" title="Align Top">
             <i class="fas fa-align-left" style="transform: rotate(90deg);"></i>
         </div>
 
-        <!-- Italic -->
-        <div class="icon-container" title="Align Middle">
+        <!-- Middle -->
+        <div class="icon-container" (click)="_FormService.verticalAlign.align = 'center'" [ngClass]="{'selected': _FormService.verticalAlign.align == 'center'}" title="Align Middle">
             <i class="fas fa-align-center" style="transform: rotate(90deg);"></i>
         </div>
 
-        <!-- Underline -->
-        <div class="icon-container" title="Align Bottom">
+        <!-- Bottom -->
+        <div class="icon-container" (click)="_FormService.verticalAlign.align = 'flex-end'" [ngClass]="{'selected': _FormService.verticalAlign.align == 'flex-end'}" title="Align Bottom">
             <i class="fas fa-align-right" style="transform: rotate(90deg);"></i>
         </div>
 
     </div>
 </div>
-
-
-
-
-
-
-
-<!-- -------------------Alignment------------------------ -->
-<!-- <div class="property-row" style="padding-top: 7px; padding-bottom: 7px;">
-
-    
-    <div style="user-select: none;">Alignment:</div> 
-
-    
-    <div class="alignment-container">
-        
-        
-        <div class="icon-container selected" title="Left align (Ctrl+Shift+L)">
-            <i class="fas fa-align-left"></i>
-        </div>
-
-
-
-       
-        <div class="icon-container" title="Center align (Ctrl+Shift+E)">
-            <i class="fas fa-align-center"></i>
-        </div>
-
-
-       
-        <div class="icon-container" title="Right align (Ctrl+Shift+R)">
-            <i class="fas fa-align-right"></i>
-        </div>
-
-
-        
-    </div>
-</div> -->

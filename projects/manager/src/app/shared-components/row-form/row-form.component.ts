@@ -14,7 +14,7 @@ export class RowFormComponent {
   // -------------------------------------( ON FORM OPEN )-----------------------------------\\
   onFormOpen() {
     // Set the fill tab to be the starting tab on form open
-    this.selectedTab = "alignment";
+    this.selectedTab = "fill";
 
     this._FormService.initialFill.color.r = this._FormService.fill.color.r;
     this._FormService.initialFill.color.g = this._FormService.fill.color.g;
@@ -49,20 +49,15 @@ export class RowFormComponent {
     this._FormService.initialPadding.right = this._FormService.padding.right;
     this._FormService.initialPadding.bottom = this._FormService.padding.bottom;
     this._FormService.initialPadding.left = this._FormService.padding.left;
+
+    this._FormService.initialVerticalAlign.align = this._FormService.verticalAlign.align;
   }
 
 
   // -------------------------------------( ON TAB SELECT )-----------------------------------\\
   onTabSelect(tab: string) {
-    // If the color Picker form is open
-    if(this._FormService.colorPicker.open) {
-      // Close the the Color Picker form and reset any color changes made back to the original color
-      this._FormService.colorPicker.open = false;
-      this._FormService.colorPicker.color.r = this._FormService.initialColorPickerColor.r;
-      this._FormService.colorPicker.color.g = this._FormService.initialColorPickerColor.g;
-      this._FormService.colorPicker.color.b = this._FormService.initialColorPickerColor.b;
-      this._FormService.colorPicker.color.a = this._FormService.initialColorPickerColor.a;
-    }
+    // Close the color picker form if it is open
+    this._FormService.closeColorPicker();
     // Display the newly selected tab as being selected
     this.selectedTab = tab;
   }
@@ -103,6 +98,8 @@ export class RowFormComponent {
     this._FormService.padding.right = this._FormService.initialPadding.right;
     this._FormService.padding.bottom = this._FormService.initialPadding.bottom;
     this._FormService.padding.left = this._FormService.initialPadding.left;
+
+    this._FormService.verticalAlign.align = this._FormService.initialVerticalAlign.align;
 
     this._FormService.rowForm.open = false;
   }

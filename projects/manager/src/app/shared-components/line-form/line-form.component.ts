@@ -42,15 +42,8 @@ export class LineFormComponent {
 
   // -------------------------------------( ON TAB SELECT )-----------------------------------\\
   onTabSelect(tab: string) {
-    // If the color Picker form is open
-    if(this._FormService.colorPicker.open) {
-      // Close the the Color Picker form and reset any color changes made back to the original color
-      this._FormService.colorPicker.open = false;
-      this._FormService.colorPicker.color.r = this._FormService.initialColorPickerColor.r;
-      this._FormService.colorPicker.color.g = this._FormService.initialColorPickerColor.g;
-      this._FormService.colorPicker.color.b = this._FormService.initialColorPickerColor.b;
-      this._FormService.colorPicker.color.a = this._FormService.initialColorPickerColor.a;
-    }
+    // Close the color picker form if it is open
+    this._FormService.closeColorPicker();
     // Display the newly selected tab as being selected
     this.selectedTab = tab;
   }

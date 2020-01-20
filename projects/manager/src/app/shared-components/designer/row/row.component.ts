@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef, Type } from '@angular/core';
 import { WidgetService } from '../../../services/widget.service';
+import { FormService } from '../../../services/form.service';
 
 @Component({
   selector: 'row',
@@ -13,7 +14,73 @@ export class RowComponent {
   public top: number;
   private columns: Array<HTMLElement> = new Array<HTMLElement>();
 
-  constructor(private resolver: ComponentFactoryResolver, private widgetService: WidgetService) { }
+  constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService, public _FormService: FormService) { }
+  public rowForm: any = {open: false}
+
+  // ---------------------------Fill------------------------ \\
+  public fill: any = { color: {r: 0, g: 0, b: 255, a: 0.75}};
+
+
+  // --------------------------Border----------------------- \\ 
+  public border: any = {apply: false, 
+                        width: 5, 
+                        style: "solid", 
+                        color: {r: 255, g: 255, b: 0, a: 0.9}};
+
+
+// -------------------------Corners------------------------ \\
+public corners: any = {constrainCorners: true, 
+                       topLeft: 0, 
+                       topRight: 0, 
+                       bottomLeft: 0, 
+                       bottomRight: 0};
+
+// --------------------------Shadow--------------------------- \\
+public shadow: any = {enable: false, 
+                      x: 20, 
+                      y: 100, 
+                      blur: 20, 
+                      size: 5, 
+                      color: {r: 0, g: 0, b: 0, a: 0.75}};
+
+
+// --------------------------Padding--------------------------- \\
+public padding: any = {top: 0, 
+                       right: 0, 
+                       bottom: 0, 
+                       left: 0};
+
+
+// --------------------------Vertical Align--------------------------- \\
+public verticalAlign: any = {align: "flex-start"};
+
+
+   // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
+  onEdit() {
+    this._FormService.rowForm = this.rowForm;
+    this._FormService.fill = this.fill;
+    this._FormService.border = this.border;
+    this._FormService.corners = this.corners;
+    this._FormService.shadow = this.shadow;
+    this._FormService.padding = this.padding;
+    this._FormService.verticalAlign = this.verticalAlign;
+
+    // Open the container form
+    this.rowForm.open = true;
+  }
+  
+  
+  // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
+  getBorderColor() {
+    return this._FormService.RGBAToHexA(this.border.color.r, this.border.color.g, this.border.color.b, this.border.color.a);
+  }
+
+  
+  // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
+  getShadowColor() {
+    return this._FormService.RGBAToHexA(this.shadow.color.r, this.shadow.color.g, this.shadow.color.b, this.shadow.color.a);
+  }
+
 
 
   onRowMoveMousedown(event) {
@@ -68,6 +135,7 @@ export class RowComponent {
     // Append the widget within the column
     column.appendChild(componentRef.location.nativeElement);
     this.viewContainerRef.element.nativeElement.parentElement.insertBefore(column, element);
+    
 
     // Add the drop indicators
     for (let i = 0; i < 2; i++) {

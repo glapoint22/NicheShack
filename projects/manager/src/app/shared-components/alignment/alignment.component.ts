@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'alignment',
   templateUrl: './alignment.component.html',
   styleUrls: ['./alignment.component.scss']
 })
-export class AlignmentComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class AlignmentComponent {
+  constructor(public _FormService: FormService) { }
 }
