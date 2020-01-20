@@ -16,6 +16,7 @@ export class ContainerFormComponent {
     // Set the fill tab to be the starting tab on form open
     this.selectedTab = "fill";
 
+    this._FormService.initialFill.apply = this._FormService.fill.apply;
     this._FormService.initialFill.color.r = this._FormService.fill.color.r;
     this._FormService.initialFill.color.g = this._FormService.fill.color.g;
     this._FormService.initialFill.color.b = this._FormService.fill.color.b;
@@ -68,6 +69,7 @@ export class ContainerFormComponent {
 
   // --------------------------------------( ON CANCEL )-------------------------------------\\
   onCancel() {
+    this._FormService.fill.apply = this._FormService.initialFill.apply;
     this._FormService.fill.color.r = this._FormService.initialFill.color.r;
     this._FormService.fill.color.g = this._FormService.initialFill.color.g;
     this._FormService.fill.color.b = this._FormService.initialFill.color.b;

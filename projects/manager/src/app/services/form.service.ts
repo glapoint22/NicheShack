@@ -17,7 +17,7 @@ export class FormService {
   public shadow: Shadow;
   public margins: Margins;
   public padding: any;
-  public verticalAlign: any;
+  public align: any;
 
   public buttonForm: any;
   public textForm: any;
@@ -35,7 +35,7 @@ export class FormService {
   public initialShadow: Shadow = new Shadow();
   public initialMargins: Margins = new Margins();
   public initialPadding: any = {top: 0, right: 0, bottom: 0, left: 0};
-  public initialVerticalAlign: any = {align: ""};
+  public initialAlign: any = {horizontal: "", vertical: ""};
   public initialColorPickerColor: any = {r: 0, g: 0, b: 0, a: 0};
 
   // ----------------------------------------------------( RGBA TO HEXA )--------------------------------------------------\\
