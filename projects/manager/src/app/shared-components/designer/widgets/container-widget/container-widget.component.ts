@@ -12,7 +12,7 @@ export class ContainerWidgetComponent {
 
 
   // ---------------------------Fill------------------------ \\
-  public fill: any = { color: {r: 0, g: 0, b: 255, a: 0.75}};
+  public fill: any = {apply: false, color: {r: 0, g: 0, b: 255, a: 0.75}};
 
 
   // --------------------------Border----------------------- \\ 

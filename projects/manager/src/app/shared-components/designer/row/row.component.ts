@@ -18,7 +18,7 @@ export class RowComponent {
   public rowForm: any = {open: false}
 
   // ---------------------------Fill------------------------ \\
-  public fill: any = { color: {r: 0, g: 0, b: 255, a: 0.75}};
+  public fill: any = {apply: false, color: {r: 0, g: 0, b: 255, a: 0.75}};
 
 
   // --------------------------Border----------------------- \\ 
@@ -52,7 +52,7 @@ public padding: any = {top: 0,
 
 
 // --------------------------Vertical Align--------------------------- \\
-public verticalAlign: any = {align: "flex-start"};
+public align: any = {horizontal: "flex-start", vertical: "flex-start"};
 
 
    // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
@@ -63,7 +63,7 @@ public verticalAlign: any = {align: "flex-start"};
     this._FormService.corners = this.corners;
     this._FormService.shadow = this.shadow;
     this._FormService.padding = this.padding;
-    this._FormService.verticalAlign = this.verticalAlign;
+    this._FormService.align = this.align;
 
     // Open the container form
     this.rowForm.open = true;

@@ -16,6 +16,7 @@ export class RowFormComponent {
     // Set the fill tab to be the starting tab on form open
     this.selectedTab = "fill";
 
+    this._FormService.initialFill.apply = this._FormService.fill.apply;
     this._FormService.initialFill.color.r = this._FormService.fill.color.r;
     this._FormService.initialFill.color.g = this._FormService.fill.color.g;
     this._FormService.initialFill.color.b = this._FormService.fill.color.b;
@@ -50,7 +51,8 @@ export class RowFormComponent {
     this._FormService.initialPadding.bottom = this._FormService.padding.bottom;
     this._FormService.initialPadding.left = this._FormService.padding.left;
 
-    this._FormService.initialVerticalAlign.align = this._FormService.verticalAlign.align;
+    this._FormService.initialAlign.horizontal = this._FormService.align.horizontal;
+    this._FormService.initialAlign.vertical = this._FormService.align.vertical;
   }
 
 
@@ -65,6 +67,7 @@ export class RowFormComponent {
 
   // --------------------------------------( ON CANCEL )-------------------------------------\\
   onCancel() {
+    this._FormService.fill.apply = this._FormService.initialFill.apply;
     this._FormService.fill.color.r = this._FormService.initialFill.color.r;
     this._FormService.fill.color.g = this._FormService.initialFill.color.g;
     this._FormService.fill.color.b = this._FormService.initialFill.color.b;
@@ -99,8 +102,9 @@ export class RowFormComponent {
     this._FormService.padding.bottom = this._FormService.initialPadding.bottom;
     this._FormService.padding.left = this._FormService.initialPadding.left;
 
-    this._FormService.verticalAlign.align = this._FormService.initialVerticalAlign.align;
-
+    this._FormService.align.horizontal = this._FormService.initialAlign.horizontal;
+    this._FormService.align.vertical = this._FormService.initialAlign.vertical;
+      
     this._FormService.rowForm.open = false;
   }
 }
