@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
+import { FillColor } from '../classes/fill-color';
+import { Border } from '../classes/border';
+import { Corners } from '../classes/corners';
+import { ButtonText } from '../classes/button-text';
+import { Shadow } from '../classes/shadow';
+import { Margins } from '../classes/margins';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormService {
-  public fill: any;
-  public border: any;
-  public corners: any;
-  public text: any;
-  public shadow: any;
-  public margins: any;
+  public fill: FillColor;
+  public border: Border;
+  public corners: Corners;
+  public buttonText: ButtonText;
+  public shadow: Shadow;
+  public margins: Margins;
   public padding: any;
   public verticalAlign: any;
 
@@ -22,12 +28,12 @@ export class FormService {
   public rowForm: any;
   public colorPicker: any;
   
-  public initialFill: any = { color: {r: 0, g: 0, b: 0, a: 0}, hoverColor: {r: 0, g: 0, b: 0, a: 0}};
-  public initialBorder: any = {apply: false, width: 0, style: "", color: {r: 0, g: 0, b: 0, a: 0}, hoverColor: {r: 0, g: 0, b: 0, a: 0}};
-  public initialCorners: any = {constrainCorners: true, topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0};
-  public initialText: any = {caption: "", fontFamily: "", fontSize: 0, fontWeight: "", fontStyle: "", color: {r: 0, g: 0, b: 0, a: 0}, hoverColor: {r: 0, g: 0, b: 0, a: 0}};
-  public initialShadow: any = {enable: false, x: 0, y: 0, blur: 0, size: 0, color: {r: 0, g: 0, b: 0, a: 0}};
-  public initialMargins: any = {top: 0, right: 0, bottom: 0, left: 0};
+  public initialFill: FillColor = new FillColor();
+  public initialBorder: Border = new Border();
+  public initialCorners: Corners = new Corners();
+  public initialButtonText: ButtonText = new ButtonText();
+  public initialShadow: Shadow = new Shadow();
+  public initialMargins: Margins = new Margins();
   public initialPadding: any = {top: 0, right: 0, bottom: 0, left: 0};
   public initialVerticalAlign: any = {align: ""};
   public initialColorPickerColor: any = {r: 0, g: 0, b: 0, a: 0};

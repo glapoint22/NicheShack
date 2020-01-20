@@ -11,7 +11,7 @@
     <!-- Value -->
     <div class="display-flex">
         <!-- Text Box --> 
-        <input [(ngModel)]="_FormService.text.caption" class="caption-input"> 
+        <input [(ngModel)]="_FormService.buttonText.caption" class="caption-input"> 
     </div>
 </div>
 
@@ -27,7 +27,7 @@
     <div class="display-flex">
 
         <!-- Dropdown -->
-        <select style="width: 100%; max-width: 150px;" [value]="_FormService.text.fontFamily" (change)="_FormService.text.fontFamily = $event.target.value">
+        <select style="width: 100%; max-width: 150px;" [value]="_FormService.buttonText.fontFamily" (change)="_FormService.buttonText.fontFamily = $event.target.value">
             <option value="Arial, Helvetica, sans-serif">Arial</option>
             <option value="'Arial Black', Gadget, sans-serif">Arial Black</option>
             <option value="'Book Antiqua', 'Palatino Linotype', Palatino, serif">Book Antiqua</option>
@@ -78,7 +78,7 @@
 
         <!-- Input text overlaying dropdown for input ability -->
         <div class="font-size-input-container" (keydown.arrowUp)="onFontSizeInputArrowUp($event)" (keydown.arrowDown)="onFontSizeInputArrowDown($event)">
-            <input [(ngModel)]="_FormService.text.fontSize">
+            <input [(ngModel)]="_FormService.buttonText.fontSize">
         </div>
     </div>
 </div>
@@ -95,12 +95,12 @@
     <div class="display-flex">
         
         <!-- Bold -->
-        <div class="icon-container" (click)="onBoldClick()" [ngClass]="{'selected': _FormService.text.fontWeight == 'bold'}" title="Bold (Ctrl+B)">
+        <div class="icon-container" (click)="onBoldClick()" [ngClass]="{'selected': _FormService.buttonText.fontWeight == 'bold'}" title="Bold (Ctrl+B)">
             <i class="fas fa-bold"></i>
         </div>
 
         <!-- Italic -->
-        <div class="icon-container" (click)="onItalicClick()" [ngClass]="{'selected': _FormService.text.fontStyle == 'italic'}" title="Italic (Ctrl+I)">
+        <div class="icon-container" (click)="onItalicClick()" [ngClass]="{'selected': _FormService.buttonText.fontStyle == 'italic'}" title="Italic (Ctrl+I)">
             <i class="fas fa-italic"></i>
         </div>
 
@@ -116,7 +116,7 @@
     <div style="user-select: none;">Color:</div>
 
     <!-- Color Swatch -->
-    <color-swatch [color]="_FormService.text.color"></color-swatch>
+    <color-swatch [color]="_FormService.buttonText.color"></color-swatch>
 </div>
 
 

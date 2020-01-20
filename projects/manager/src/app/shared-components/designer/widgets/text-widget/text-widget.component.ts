@@ -31,7 +31,8 @@ export class TextWidgetComponent {
   onEdit() {
     this._FormService.textForm = this.textForm;
 
-    this._FormService.text = this.text;
+    // Fix this!!! Son of a Bitch!
+    // this._FormService.buttonText = this.text;
 
     this._FormService.margins = this.margins;
     

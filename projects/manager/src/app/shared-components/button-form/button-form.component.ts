@@ -51,19 +51,19 @@ export class ButtonFormComponent {
     this._FormService.initialCorners.bottomLeft = this._FormService.corners.bottomLeft;
     this._FormService.initialCorners.bottomRight = this._FormService.corners.bottomRight;
 
-    this._FormService.initialText.caption = this._FormService.text.caption;
-    this._FormService.initialText.fontFamily = this._FormService.text.fontFamily;
-    this._FormService.initialText.fontSize = this._FormService.text.fontSize;
-    this._FormService.initialText.fontWeight = this._FormService.text.fontWeight;
-    this._FormService.initialText.fontStyle = this._FormService.text.fontStyle;
-    this._FormService.initialText.color.r = this._FormService.text.color.r;
-    this._FormService.initialText.color.g = this._FormService.text.color.g;
-    this._FormService.initialText.color.b = this._FormService.text.color.b;
-    this._FormService.initialText.color.a = this._FormService.text.color.a;
-    this._FormService.initialText.hoverColor.r = this._FormService.text.hoverColor.r;
-    this._FormService.initialText.hoverColor.g = this._FormService.text.hoverColor.g;
-    this._FormService.initialText.hoverColor.b = this._FormService.text.hoverColor.b;
-    this._FormService.initialText.hoverColor.a = this._FormService.text.hoverColor.a;
+    this._FormService.initialButtonText.caption = this._FormService.buttonText.caption;
+    this._FormService.initialButtonText.fontFamily = this._FormService.buttonText.fontFamily;
+    this._FormService.initialButtonText.fontSize = this._FormService.buttonText.fontSize;
+    this._FormService.initialButtonText.fontWeight = this._FormService.buttonText.fontWeight;
+    this._FormService.initialButtonText.fontStyle = this._FormService.buttonText.fontStyle;
+    this._FormService.initialButtonText.color.r = this._FormService.buttonText.color.r;
+    this._FormService.initialButtonText.color.g = this._FormService.buttonText.color.g;
+    this._FormService.initialButtonText.color.b = this._FormService.buttonText.color.b;
+    this._FormService.initialButtonText.color.a = this._FormService.buttonText.color.a;
+    this._FormService.initialButtonText.hoverColor.r = this._FormService.buttonText.hoverColor.r;
+    this._FormService.initialButtonText.hoverColor.g = this._FormService.buttonText.hoverColor.g;
+    this._FormService.initialButtonText.hoverColor.b = this._FormService.buttonText.hoverColor.b;
+    this._FormService.initialButtonText.hoverColor.a = this._FormService.buttonText.hoverColor.a;
 
     this._FormService.initialShadow.enable = this._FormService.shadow.enable;
     this._FormService.initialShadow.x = this._FormService.shadow.x;
@@ -147,19 +147,19 @@ export class ButtonFormComponent {
     this._FormService.corners.bottomLeft = this._FormService.initialCorners.bottomLeft;
     this._FormService.corners.bottomRight = this._FormService.initialCorners.bottomRight;
 
-    this._FormService.text.caption = this._FormService.initialText.caption;
-    this._FormService.text.fontFamily = this._FormService.initialText.fontFamily;
-    this._FormService.text.fontSize = this._FormService.initialText.fontSize;
-    this._FormService.text.fontWeight = this._FormService.initialText.fontWeight;
-    this._FormService.text.fontStyle = this._FormService.initialText.fontStyle;
-    this._FormService.text.color.r = this._FormService.initialText.color.r;
-    this._FormService.text.color.g = this._FormService.initialText.color.g;
-    this._FormService.text.color.b = this._FormService.initialText.color.b;
-    this._FormService.text.color.a = this._FormService.initialText.color.a;
-    this._FormService.text.hoverColor.r = this._FormService.initialText.hoverColor.r;
-    this._FormService.text.hoverColor.g = this._FormService.initialText.hoverColor.g;
-    this._FormService.text.hoverColor.b = this._FormService.initialText.hoverColor.b;
-    this._FormService.text.hoverColor.a = this._FormService.initialText.hoverColor.a;
+    this._FormService.buttonText.caption = this._FormService.initialButtonText.caption;
+    this._FormService.buttonText.fontFamily = this._FormService.initialButtonText.fontFamily;
+    this._FormService.buttonText.fontSize = this._FormService.initialButtonText.fontSize;
+    this._FormService.buttonText.fontWeight = this._FormService.initialButtonText.fontWeight;
+    this._FormService.buttonText.fontStyle = this._FormService.initialButtonText.fontStyle;
+    this._FormService.buttonText.color.r = this._FormService.initialButtonText.color.r;
+    this._FormService.buttonText.color.g = this._FormService.initialButtonText.color.g;
+    this._FormService.buttonText.color.b = this._FormService.initialButtonText.color.b;
+    this._FormService.buttonText.color.a = this._FormService.initialButtonText.color.a;
+    this._FormService.buttonText.hoverColor.r = this._FormService.initialButtonText.hoverColor.r;
+    this._FormService.buttonText.hoverColor.g = this._FormService.initialButtonText.hoverColor.g;
+    this._FormService.buttonText.hoverColor.b = this._FormService.initialButtonText.hoverColor.b;
+    this._FormService.buttonText.hoverColor.a = this._FormService.initialButtonText.hoverColor.a;
 
     this._FormService.shadow.enable = this._FormService.initialShadow.enable;
     this._FormService.shadow.x = this._FormService.initialShadow.x;

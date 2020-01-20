@@ -15,7 +15,7 @@ export class ButtonTextComponent {
     // Update the value of the input text when a change is made with the dropdown
     e.target.nextElementSibling.children[0].value = e.target.value;
     // Update formservice font size
-    this._FormService.text.fontSize = e.target.value;
+    this._FormService.buttonText.fontSize = e.target.value;
   }
 
 
@@ -49,7 +49,7 @@ export class ButtonTextComponent {
   // ------------------------( ON FONT SIZE INPUT ARROW UP )------------------------- \\
   onFontSizeInputArrowUp(e) {
     e.target.value++;
-    this._FormService.text.fontSize = e.target.value;
+    this._FormService.buttonText.fontSize = e.target.value;
   }
 
 
@@ -57,26 +57,26 @@ export class ButtonTextComponent {
   onFontSizeInputArrowDown(e) {
     e.target.value--;
     e.target.value = Math.max(1, e.target.value);
-    this._FormService.text.fontSize = e.target.value;
+    this._FormService.buttonText.fontSize = e.target.value;
   }
 
 
   // ------------------------( ON BOLD CLICK )------------------------- \\
   onBoldClick() {
-    if(this._FormService.text.fontWeight == "bold") {
-      this._FormService.text.fontWeight = "normal";
+    if(this._FormService.buttonText.fontWeight == "bold") {
+      this._FormService.buttonText.fontWeight = "normal";
     }else {
-      this._FormService.text.fontWeight = "bold";
+      this._FormService.buttonText.fontWeight = "bold";
     }
   }
 
 
   // ------------------------( ON ITALIC CLICK )------------------------- \\
   onItalicClick() {
-    if(this._FormService.text.fontStyle == "italic") {
-      this._FormService.text.fontStyle = "normal";
+    if(this._FormService.buttonText.fontStyle == "italic") {
+      this._FormService.buttonText.fontStyle = "normal";
     }else {
-      this._FormService.text.fontStyle = "italic";
+      this._FormService.buttonText.fontStyle = "italic";
     }
   }
 }
