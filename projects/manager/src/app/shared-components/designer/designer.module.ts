@@ -12,6 +12,7 @@ import { TextWidgetComponent } from './widgets/text-widget/text-widget.component
 import { VideoWidgetComponent } from './widgets/video-widget/video-widget.component';
 import { RowComponent } from './row/row.component';
 import { ContainerComponent } from './container/container.component';
+import { WidgetComponent } from './widgets/widget/widget.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ContainerComponent } from './container/container.component';
     TextWidgetComponent,
     VideoWidgetComponent,
     RowComponent,
-    ContainerComponent
+    ContainerComponent,
+    WidgetComponent
   ],
   imports: [
     CommonModule,

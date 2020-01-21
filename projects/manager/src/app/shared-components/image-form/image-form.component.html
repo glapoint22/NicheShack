@@ -1,4 +1,4 @@
-<div *show="_FormService.imageForm != null ? _FormService.imageForm.open : false" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
+<div *show="_FormService.showImageForm" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
     <dialog-box [dialogBoxName]="'Image'" [width]="400" (onClose)="onCancel()">
         
@@ -40,7 +40,7 @@
         <!-- Buttons -->
         <div class="form-button-container">
             <button (click)="onCancel()">Cancel</button>
-            <button (click)="_FormService.imageForm.open = false">Ok</button>
+            <button (click)="_FormService.showImageForm = false">Ok</button>
         </div>
     </dialog-box>
 </div>

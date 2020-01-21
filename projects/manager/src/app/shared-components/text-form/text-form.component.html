@@ -1,4 +1,4 @@
-<div *show="_FormService.textForm != null ? _FormService.textForm.open : false" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
+<div *show="_FormService.showTextForm" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
     <dialog-box [dialogBoxName]="'Text'" [width]="345">
         
         <div class="display-flex">

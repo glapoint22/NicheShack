@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormService } from '../../services/form.service'
+import { Color } from '../../classes/color';
 
 @Component({
   selector: 'color-swatch',
@@ -8,14 +9,15 @@ import { FormService } from '../../services/form.service'
 })
 
 export class ColorSwatchComponent {
+  @Input() color: Color;
+  public colorPicker: Color = new Color();
+
   constructor(public _FormService: FormService) {}
-  public colorPicker: any = {open: false, color: null}
-  @Input()
-  color: any;
+  
   
   onClick() {
+    this.colorPicker = this.color;
     this._FormService.colorPicker = this.colorPicker;
-    this.colorPicker.color = this.color;
-    this.colorPicker.open = true;
+    this._FormService.showColorPicker = true;
   }
 }

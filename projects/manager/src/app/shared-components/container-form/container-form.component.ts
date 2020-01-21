@@ -109,6 +109,6 @@ export class ContainerFormComponent {
     this._FormService.padding.bottom = this._FormService.initialPadding.bottom;
     this._FormService.padding.left = this._FormService.initialPadding.left;
 
-    this._FormService.containerForm.open = false;
+    this._FormService.showContainerForm = false;
   }
 }

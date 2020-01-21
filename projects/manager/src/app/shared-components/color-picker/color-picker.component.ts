@@ -29,14 +29,14 @@ export class ColorPickerComponent {
 // -----------------------------( ON FORM OPEN )------------------------------ \\
   onFormOpen() {
     window.setTimeout(() => {
-      var hsl = this.RGBToHSL(this._FormService.colorPicker.color.r, this._FormService.colorPicker.color.g, this._FormService.colorPicker.color.b);
-      var hsb = this.RGBToHSB(this._FormService.colorPicker.color.r, this._FormService.colorPicker.color.g, this._FormService.colorPicker.color.b);
+      var hsl = this.RGBToHSL(this._FormService.colorPicker.r, this._FormService.colorPicker.g, this._FormService.colorPicker.b);
+      var hsb = this.RGBToHSB(this._FormService.colorPicker.r, this._FormService.colorPicker.g, this._FormService.colorPicker.b);
 
       // Set the current color
-      this._FormService.initialColorPickerColor.r = this._FormService.colorPicker.color.r;
-      this._FormService.initialColorPickerColor.g = this._FormService.colorPicker.color.g;
-      this._FormService.initialColorPickerColor.b = this._FormService.colorPicker.color.b;
-      this._FormService.initialColorPickerColor.a = this._FormService.colorPicker.color.a;
+      this._FormService.initialColorPickerColor.r = this._FormService.colorPicker.r;
+      this._FormService.initialColorPickerColor.g = this._FormService.colorPicker.g;
+      this._FormService.initialColorPickerColor.b = this._FormService.colorPicker.b;
+      this._FormService.initialColorPickerColor.a = this._FormService.colorPicker.a;
     
       // Move the ring
       this.ringX = hsb.s;
@@ -46,7 +46,7 @@ export class ColorPickerComponent {
       this.hueSliderY = Math.round((249 - ((hsl[0] * 360) / 1.422924901185771)));
 
       // Move the alpha slider
-      this.alphaSliderY = 249 - (((this._FormService.colorPicker.color.a * 100) / 0.3952569169960474));
+      this.alphaSliderY = 249 - (((this._FormService.colorPicker.a * 100) / 0.3952569169960474));
 
       // Set the rgb
       this.setRGB(false)
@@ -153,13 +153,13 @@ export class ColorPickerComponent {
     this.hue = hsl.h;
 
     //Update the input fields
-    this._FormService.colorPicker.color.r = rgb[0];
+    this._FormService.colorPicker.r = rgb[0];
     if(!isInput) this.redInput.nativeElement.value = rgb[0];
 
-    this._FormService.colorPicker.color.g = rgb[1];
+    this._FormService.colorPicker.g = rgb[1];
     if(!isInput) this.greenInput.nativeElement.value = rgb[1];
 
-    this._FormService.colorPicker.color.b = rgb[2];
+    this._FormService.colorPicker.b = rgb[2];
     if(!isInput) this.blueInput.nativeElement.value = rgb[2];
 
     this.hex = hex;
@@ -186,7 +186,7 @@ export class ColorPickerComponent {
   setA(isInput: boolean) {
     let a = Math.round((((249 - this.alphaSliderY) * 0.3952569169960474) / 100) * 100) / 100;
 
-    this._FormService.colorPicker.color.a = a;
+    this._FormService.colorPicker.a = a;
     if(!isInput) this.alphaInput.nativeElement.value = a;
   }
 
@@ -264,11 +264,11 @@ export class ColorPickerComponent {
 
 // ----------------------------------------------------( ON CANCEL )--------------------------------------------------\\
   onCancel() {
-    this._FormService.colorPicker.color.r = this._FormService.initialColorPickerColor.r;
-    this._FormService.colorPicker.color.g = this._FormService.initialColorPickerColor.g;
-    this._FormService.colorPicker.color.b = this._FormService.initialColorPickerColor.b;
-    this._FormService.colorPicker.color.a = this._FormService.initialColorPickerColor.a;
-    this._FormService.colorPicker.open = false;
+    this._FormService.colorPicker.r = this._FormService.initialColorPickerColor.r;
+    this._FormService.colorPicker.g = this._FormService.initialColorPickerColor.g;
+    this._FormService.colorPicker.b = this._FormService.initialColorPickerColor.b;
+    this._FormService.colorPicker.a = this._FormService.initialColorPickerColor.a;
+    this._FormService.showColorPicker = false;
   }
 
 

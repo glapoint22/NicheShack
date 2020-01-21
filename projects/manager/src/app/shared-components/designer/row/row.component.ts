@@ -1,6 +1,12 @@
-import { Component, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef, Type } from '@angular/core';
+import { Component, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 import { WidgetService } from '../../../services/widget.service';
 import { FormService } from '../../../services/form.service';
+import { FillColor } from '../../../classes/fill-color';
+import { Border } from '../../../classes/border';
+import { Corners } from '../../../classes/corners';
+import { Shadow } from '../../../classes/shadow';
+import { Spacing } from '../../../classes/spacing';
+import { Align } from '../../../classes/align';
 
 @Component({
   selector: 'row',
@@ -13,51 +19,18 @@ export class RowComponent {
   @Output() shiftRows: EventEmitter<number> = new EventEmitter();
   public top: number;
   private columns: Array<HTMLElement> = new Array<HTMLElement>();
+  public fill: FillColor = new FillColor();
+  public border: Border = new Border();
+  public corners: Corners = new Corners();
+  public shadow: Shadow = new Shadow();
+  public padding: Spacing = new Spacing();
+  public align: Align = new Align();
 
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService, public _FormService: FormService) { }
-  public rowForm: any = {open: false}
-
-  // ---------------------------Fill------------------------ \\
-  public fill: any = {apply: false, color: {r: 0, g: 0, b: 255, a: 0.75}};
 
 
-  // --------------------------Border----------------------- \\ 
-  public border: any = {apply: false, 
-                        width: 5, 
-                        style: "solid", 
-                        color: {r: 255, g: 255, b: 0, a: 0.9}};
-
-
-// -------------------------Corners------------------------ \\
-public corners: any = {constrainCorners: true, 
-                       topLeft: 0, 
-                       topRight: 0, 
-                       bottomLeft: 0, 
-                       bottomRight: 0};
-
-// --------------------------Shadow--------------------------- \\
-public shadow: any = {enable: false, 
-                      x: 20, 
-                      y: 100, 
-                      blur: 20, 
-                      size: 5, 
-                      color: {r: 0, g: 0, b: 0, a: 0.75}};
-
-
-// --------------------------Padding--------------------------- \\
-public padding: any = {top: 0, 
-                       right: 0, 
-                       bottom: 0, 
-                       left: 0};
-
-
-// --------------------------Vertical Align--------------------------- \\
-public align: any = {horizontal: "flex-start", vertical: "flex-start"};
-
-
-   // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
+  // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
   onEdit() {
-    this._FormService.rowForm = this.rowForm;
     this._FormService.fill = this.fill;
     this._FormService.border = this.border;
     this._FormService.corners = this.corners;
@@ -66,16 +39,16 @@ public align: any = {horizontal: "flex-start", vertical: "flex-start"};
     this._FormService.align = this.align;
 
     // Open the container form
-    this.rowForm.open = true;
+    this._FormService.showRowForm = true;
   }
-  
-  
+
+
   // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
   getBorderColor() {
     return this._FormService.RGBAToHexA(this.border.color.r, this.border.color.g, this.border.color.b, this.border.color.a);
   }
 
-  
+
   // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
   getShadowColor() {
     return this._FormService.RGBAToHexA(this.shadow.color.r, this.shadow.color.g, this.shadow.color.b, this.shadow.color.a);
@@ -135,7 +108,7 @@ public align: any = {horizontal: "flex-start", vertical: "flex-start"};
     // Append the widget within the column
     column.appendChild(componentRef.location.nativeElement);
     this.viewContainerRef.element.nativeElement.parentElement.insertBefore(column, element);
-    
+
 
     // Add the drop indicators
     for (let i = 0; i < 2; i++) {

@@ -4,7 +4,10 @@ import { Border } from '../classes/border';
 import { Corners } from '../classes/corners';
 import { ButtonText } from '../classes/button-text';
 import { Shadow } from '../classes/shadow';
-import { Margins } from '../classes/margins';
+import { Spacing } from '../classes/spacing';
+import { HoverTab } from '../classes/hover-tab';
+import { Color } from '../classes/color';
+import { Align } from '../classes/align';
 
 @Injectable({
   providedIn: 'root'
@@ -15,28 +18,30 @@ export class FormService {
   public corners: Corners;
   public buttonText: ButtonText;
   public shadow: Shadow;
-  public margins: Margins;
-  public padding: any;
-  public align: any;
+  public margins: Spacing;
+  public padding: Spacing;
+  public align: Align;
 
-  public buttonForm: any;
-  public textForm: any;
-  public imageForm: any;
-  public containerForm: any;
-  public lineForm: any;
-  public videoForm: any;
-  public rowForm: any;
-  public colorPicker: any;
+  public showColorPicker: boolean;
+  public colorPicker: Color;
+  public showButtonForm: boolean;
+  public buttonFormHoverTab: HoverTab;
+  public showTextForm: boolean;
+  public showImageForm: boolean;
+  public showContainerForm: boolean;
+  public showLineForm: boolean;
+  public showVideoForm: boolean;
+  public showRowForm: boolean;
   
   public initialFill: FillColor = new FillColor();
   public initialBorder: Border = new Border();
   public initialCorners: Corners = new Corners();
   public initialButtonText: ButtonText = new ButtonText();
   public initialShadow: Shadow = new Shadow();
-  public initialMargins: Margins = new Margins();
-  public initialPadding: any = {top: 0, right: 0, bottom: 0, left: 0};
-  public initialAlign: any = {horizontal: "", vertical: ""};
-  public initialColorPickerColor: any = {r: 0, g: 0, b: 0, a: 0};
+  public initialMargins: Spacing = new Spacing();
+  public initialPadding: Spacing = new Spacing();
+  public initialAlign: Align = new Align();
+  public initialColorPickerColor: Color = new Color();
 
   // ----------------------------------------------------( RGBA TO HEXA )--------------------------------------------------\\
   RGBAToHexA(r,g,b,a) {
@@ -61,13 +66,13 @@ export class FormService {
     // As long as the color picker has been established
     if(this.colorPicker != null) {
       // If the color Picker form is open
-      if(this.colorPicker.open) {
+      if(this.showColorPicker) {
         // Close the the Color Picker form and reset any color changes made back to the original color
-        this.colorPicker.open = false;
-        this.colorPicker.color.r = this.initialColorPickerColor.r;
-        this.colorPicker.color.g = this.initialColorPickerColor.g;
-        this.colorPicker.color.b = this.initialColorPickerColor.b;
-        this.colorPicker.color.a = this.initialColorPickerColor.a;
+        this.showColorPicker = false;
+        this.colorPicker.r = this.initialColorPickerColor.r;
+        this.colorPicker.g = this.initialColorPickerColor.g;
+        this.colorPicker.b = this.initialColorPickerColor.b;
+        this.colorPicker.a = this.initialColorPickerColor.a;
       }
     }
   }

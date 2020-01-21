@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormService } from 'projects/manager/src/app/services/form.service';
+import { Spacing } from 'projects/manager/src/app/classes/spacing';
 
 @Component({
   selector: 'video-widget',
@@ -7,22 +8,15 @@ import { FormService } from 'projects/manager/src/app/services/form.service';
   styleUrls: ['./video-widget.component.scss']
 })
 export class VideoWidgetComponent {
-  constructor(public _FormService: FormService) {}
-  public videoForm: any = {open: false}
+  public margins: Spacing = new Spacing();
 
-
-  // --------------------------Margins--------------------------- \\
-  public margins: any = {top: 30, 
-                         right: 0, 
-                         bottom: 0, 
-                         left: 0};
+  constructor(public _FormService: FormService) { }
 
   // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
   onEdit() {
-    this._FormService.videoForm = this.videoForm;
     this._FormService.margins = this.margins;
 
     // Open the image form
-    this.videoForm.open = true;
+    this._FormService.showVideoForm = true;
   }
 }

@@ -105,6 +105,6 @@ export class RowFormComponent {
     this._FormService.align.horizontal = this._FormService.initialAlign.horizontal;
     this._FormService.align.vertical = this._FormService.initialAlign.vertical;
       
-    this._FormService.rowForm.open = false;
+    this._FormService.showRowForm = false;
   }
 }

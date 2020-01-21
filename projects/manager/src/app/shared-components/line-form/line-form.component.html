@@ -1,4 +1,4 @@
-<div *show="_FormService.lineForm != null ? _FormService.lineForm.open : false" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
+<div *show="_FormService.showLineForm" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
     <dialog-box [dialogBoxName]="'Line'" [width]="336" (onClose)="onCancel()">
 
@@ -34,7 +34,7 @@
         <!-- Buttons -->
         <div class="form-button-container">
             <button (click)="onCancel()">Cancel</button>
-            <button (click)="_FormService.lineForm.open = false">Ok</button>
+            <button (click)="_FormService.showLineForm = false">Ok</button>
         </div>
     </dialog-box>
 </div>

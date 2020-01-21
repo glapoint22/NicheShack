@@ -16,7 +16,7 @@ export class ButtonFormComponent {
   // ----------------------------------------------( ON FORM OPEN )--------------------------------------------\\
   onFormOpen() {
     // Set the normal tab to be selected on form open
-    this._FormService.buttonForm.normalTabSelected = true;
+    this._FormService.buttonFormHoverTab.selected = false;
     // Set the fill tab to be the starting normal vertical tab on form open
     this.selectedNormalVerticalTab = "fill";
     // Set the fill tab to be the starting hover vertical tab on form open
@@ -87,7 +87,7 @@ export class ButtonFormComponent {
     // Close the color picker form if it is open
     this._FormService.closeColorPicker();
     // Display the newly selected horizontal tab as being selected
-    this._FormService.buttonForm.normalTabSelected = true;
+    this._FormService.buttonFormHoverTab.selected = false;
   }
 
 
@@ -96,7 +96,7 @@ export class ButtonFormComponent {
     // Close the color picker form if it is open
     this._FormService.closeColorPicker();
     // Display the newly selected horizontal tab as being selected
-    this._FormService.buttonForm.normalTabSelected = false;
+    this._FormService.buttonFormHoverTab.selected = true;
   }
 
 
@@ -177,14 +177,14 @@ export class ButtonFormComponent {
     this._FormService.margins.left = this._FormService.initialMargins.left;
 
 
-    this._FormService.buttonForm.open = false;
-    this._FormService.buttonForm.normalTabSelected = true;
+    this._FormService.showButtonForm = false;
+    this._FormService.buttonFormHoverTab.selected = false;
   }
 
 
   // ----------------------------------------------------( ON OK )--------------------------------------------------\\
   onOk() {
-    this._FormService.buttonForm.open = false;
-    this._FormService.buttonForm.normalTabSelected = true;
+    this._FormService.showButtonForm = false;
+    this._FormService.buttonFormHoverTab.selected = false;
   }
 }

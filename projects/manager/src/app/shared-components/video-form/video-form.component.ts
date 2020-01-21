@@ -36,6 +36,6 @@ export class VideoFormComponent {
     this._FormService.margins.bottom = this._FormService.initialMargins.bottom;
     this._FormService.margins.left = this._FormService.initialMargins.left;
 
-    this._FormService.videoForm.open = false;
+    this._FormService.showVideoForm = false;
   }
 }

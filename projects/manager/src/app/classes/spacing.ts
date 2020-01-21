@@ -1,4 +1,4 @@
-export class Margins {
+export class Spacing {
     top: number = 0;
     right: number = 0;
     bottom: number = 0;

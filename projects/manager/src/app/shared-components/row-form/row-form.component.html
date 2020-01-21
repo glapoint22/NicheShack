@@ -1,4 +1,4 @@
-<div *show="_FormService.rowForm != null ? _FormService.rowForm.open : false" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
+<div *show="_FormService.showRowForm" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
     <dialog-box [dialogBoxName]="'Row'" [width]="336" (onClose)="onCancel()">
 
@@ -41,7 +41,7 @@
         <!-- Buttons -->
         <div class="form-button-container">
             <button (click)="onCancel()">Cancel</button>
-            <button (click)="_FormService.rowForm.open = false">Ok</button>
+            <button (click)="_FormService.showRowForm = false">Ok</button>
         </div>
     </dialog-box>
 </div>

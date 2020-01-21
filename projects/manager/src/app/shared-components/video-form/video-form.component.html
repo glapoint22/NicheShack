@@ -1,4 +1,4 @@
-<div *show="_FormService.videoForm != null ? _FormService.videoForm.open : false" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
+<div *show="_FormService.showVideoForm" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
     <dialog-box [dialogBoxName]="'Video'" [width]="336" (onClose)="onCancel()">
 
@@ -25,7 +25,7 @@
         <!-- Buttons -->
         <div class="form-button-container">
             <button (click)="onCancel()">Cancel</button>
-            <button (click)="_FormService.videoForm.open = false">Ok</button>
+            <button (click)="_FormService.showVideoForm = false">Ok</button>
         </div>
     </dialog-box>
 </div>

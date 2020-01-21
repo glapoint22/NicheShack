@@ -1,4 +1,4 @@
-<div *show="_FormService.containerForm != null ? _FormService.containerForm.open : false" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
+<div *show="_FormService.showContainerForm" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
     <dialog-box [dialogBoxName]="'Container'" [width]="336" (onClose)="onCancel()">
         
@@ -41,7 +41,7 @@
         <!-- Buttons -->
         <div class="form-button-container">
             <button (click)="onCancel()">Cancel</button>
-            <button (click)="_FormService.containerForm.open = false">Ok</button>
+            <button (click)="_FormService.showContainerForm = false">Ok</button>
         </div>
     </dialog-box>
 </div>

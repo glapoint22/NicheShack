@@ -86,6 +86,6 @@ export class ImageFormComponent {
     this._FormService.margins.bottom = this._FormService.initialMargins.bottom;
     this._FormService.margins.left = this._FormService.initialMargins.left;
 
-    this._FormService.imageForm.open = false;
+    this._FormService.showImageForm = false;
   }
 }
