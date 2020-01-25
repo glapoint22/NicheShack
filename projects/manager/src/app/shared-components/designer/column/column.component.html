@@ -1,0 +1,13 @@
+<ng-template #viewContainerRef>
+    <!-- Widgets go here -->
+</ng-template>
+
+<div *ngIf="widgetService.selectedWidget != widget" (mousedown)="onResizeButtonMousedown($event)" class="resize-button">
+    <i class="fas fa-arrows-alt-h"></i>
+</div>
+
+<!-- Drop indicators -->
+<div #leftIndicator class="drop-indicator" (mouseenter)="onDropIndicatorEnter()" (mouseleave)="onDropIndicatorLeave()"
+    (mouseup)="onDropIndicatorMouseup(leftIndicator.parentElement.previousElementSibling)"></div>
+<div #rightIndicator class="drop-indicator" (mouseenter)="onDropIndicatorEnter()" (mouseleave)="onDropIndicatorLeave()"
+    (mouseup)="onDropIndicatorMouseup(rightIndicator.parentElement)"></div>

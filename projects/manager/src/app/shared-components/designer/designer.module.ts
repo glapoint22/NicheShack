@@ -13,6 +13,7 @@ import { VideoWidgetComponent } from './widgets/video-widget/video-widget.compon
 import { RowComponent } from './row/row.component';
 import { ContainerComponent } from './container/container.component';
 import { WidgetComponent } from './widgets/widget/widget.component';
+import { ColumnComponent } from './column/column.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { WidgetComponent } from './widgets/widget/widget.component';
     VideoWidgetComponent,
     RowComponent,
     ContainerComponent,
-    WidgetComponent
+    WidgetComponent,
+    ColumnComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { WidgetComponent } from './widgets/widget/widget.component';
     LineWidgetComponent,
     TextWidgetComponent,
     VideoWidgetComponent,
-    RowComponent
+    RowComponent,
+    ColumnComponent
   ]
 })
 export class DesignerModule { }

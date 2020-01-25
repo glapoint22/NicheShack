@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Widget } from '../classes/widget';
+import { WidgetCursor } from '../classes/widget-cursor';
+import { WidgetComponent } from '../shared-components/designer/widgets/widget/widget.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WidgetService {
-  public currentWidget: Widget;
+  public currentWidgetCursor: WidgetCursor;
+  public selectedWidget: WidgetComponent;
 
   constructor() { }
 }

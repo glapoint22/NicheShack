@@ -1,29 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormService } from 'projects/manager/src/app/services/form.service';
 import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { ButtonText } from 'projects/manager/src/app/classes/button-text';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
-import { Spacing } from 'projects/manager/src/app/classes/spacing';
 import { WidgetComponent } from '../widget/widget.component';
 import { HoverTab } from 'projects/manager/src/app/classes/hover-tab';
+import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 
 @Component({
   selector: 'button-widget',
   templateUrl: './button-widget.component.html',
   styleUrls: ['./button-widget.component.scss']
 })
-export class ButtonWidgetComponent extends WidgetComponent {
+export class ButtonWidgetComponent extends WidgetComponent implements OnInit {
   public hoverTab: HoverTab = new HoverTab();
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public text: ButtonText = new ButtonText();
   public shadow: Shadow = new Shadow();
-  public margins: Spacing = new Spacing();
 
-  constructor(public _FormService: FormService) { super() }
+  constructor(widgetService: WidgetService, public _FormService: FormService) { super(widgetService) }
+
+
+  ngOnInit() {
+    this.height = 40;
+    super.ngOnInit();
+  }
+
 
   // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
   onEdit() {
@@ -47,7 +53,7 @@ export class ButtonWidgetComponent extends WidgetComponent {
 
     // If the hover tab on the button form is selected
     if (this.hoverTab.selected) {
-      
+
       // Style the button fill with the hover look
       fillColor = 'rgba(' + this.fill.hoverColor.r + ',' + this.fill.hoverColor.g + ',' + this.fill.hoverColor.b + ',' + this.fill.hoverColor.a + ')';
 

@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { FormService } from 'projects/manager/src/app/services/form.service';
+import { WidgetComponent } from '../widget/widget.component';
+import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 
 @Component({
   selector: 'text-widget',
   templateUrl: './text-widget.component.html',
   styleUrls: ['./text-widget.component.scss']
 })
-export class TextWidgetComponent {
-  constructor(public _FormService: FormService) {}
+export class TextWidgetComponent extends WidgetComponent {
+  constructor(widgetService: WidgetService, public _FormService: FormService) { super(widgetService)}
 
   public textForm: any = {open: false}
 
@@ -29,7 +31,7 @@ export class TextWidgetComponent {
 
   
   onEdit() {
-    this._FormService.textForm = this.textForm;
+    // this._FormService.textForm = this.textForm;
 
     // Fix this!!! Son of a Bitch!
     // this._FormService.buttonText = this.text;

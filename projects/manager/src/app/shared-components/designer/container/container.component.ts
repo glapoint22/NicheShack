@@ -14,38 +14,38 @@ export class ContainerComponent {
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }
 
   onMouseup(event) {
-    if (this.widgetService.currentWidget) this.addRow(event.y - event.currentTarget.getBoundingClientRect().y);
+    if (this.widgetService.currentWidgetCursor) this.addRow(event.y - event.currentTarget.getBoundingClientRect().y);
   }
 
   addRow(position: number) {
-    // Add the row to the viewContainerRef and rows array
     let rowComponentFactory: ComponentFactory<RowComponent> = this.resolver.resolveComponentFactory(RowComponent);
-    let row: ComponentRef<RowComponent> = this.viewContainerRef.createComponent(rowComponentFactory);
+    let rowComponentRef: ComponentRef<RowComponent> = this.viewContainerRef.createComponent(rowComponentFactory);
     let selectedRowIndex: number;
-    this.rows.push(row);
+    this.rows.push(rowComponentRef);
 
 
     // Set the position of the row
-    row.instance.top = position;
+    rowComponentRef.instance.top = position;
 
-    // Add the widget
-    row.hostView.detectChanges();
-    row.instance.addWidget(row.location.nativeElement.firstElementChild.lastElementChild);
-    row.hostView.detectChanges();
+    rowComponentRef.instance.container = this;
+
+    // Add the column
+    rowComponentRef.hostView.detectChanges();
+    rowComponentRef.instance.addColumn();
 
     // Sort the rows by position (top to bottom)
     this.sortRows();
 
     // Shift any row that is below the new row
-    this.shiftRowsDown(this.rows.findIndex(x => x == row));
+    this.shiftRowsDown(this.rows.findIndex(x => x == rowComponentRef));
 
     // Get the selected row index
-    row.instance.onRowSelected.subscribe((row: RowComponent) => {
+    rowComponentRef.instance.onRowSelected.subscribe((row: RowComponent) => {
       selectedRowIndex = this.rows.findIndex(x => x.instance == row);
     });
 
     // Shift rows either up or down based on the direction passed in if the selected row collides with its neighboring rows
-    row.instance.shiftRows.subscribe((direction: number) => {
+    rowComponentRef.instance.shiftRows.subscribe((direction: number) => {
       if (direction == 1) {
         this.shiftRowsDown(selectedRowIndex);
       } else {

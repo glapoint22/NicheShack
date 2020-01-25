@@ -4,19 +4,21 @@ import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { Spacing } from 'projects/manager/src/app/classes/spacing';
+import { WidgetComponent } from '../widget/widget.component';
+import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 
 @Component({
   selector: 'line-widget',
   templateUrl: './line-widget.component.html',
   styleUrls: ['./line-widget.component.scss']
 })
-export class LineWidgetComponent {
+export class LineWidgetComponent extends WidgetComponent {
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public shadow: Shadow = new Shadow();
   public margins: Spacing = new Spacing();
 
-  constructor(public _FormService: FormService) { }
+  constructor(widgetService: WidgetService, public _FormService: FormService) { super(widgetService) }
 
   // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
   onEdit() {

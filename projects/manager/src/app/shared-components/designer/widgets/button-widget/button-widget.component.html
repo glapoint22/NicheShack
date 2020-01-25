@@ -1,31 +1,30 @@
-<div class="widget widget-selected"
-     [style.background]="getFillColor()"
-     [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
-     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
-     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
-     [style.margin]="margins.top + 'px ' + margins.right + 'px ' + margins.bottom + 'px ' + margins.left + 'px'"
-     [style.height.px]="40">
-     
-    <div class="edit-button fas" (click)="onEdit()"></div>
-    <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div>
-    <div class="top-left-handle"></div>
-    <div class="top-center-handle"></div>
-    <div class="top-right-handle"></div>
-    <div class="left-handle"></div>
-    <div class="bottom-left-handle"></div>
-    <div class="bottom-center-handle"></div>
-    <div class="bottom-right-handle"></div>
-    <div class="right-handle"></div>
-    <div class="left-handle-bar"></div>
-    <div class="top-handle-bar"></div>
-    <div class="right-handle-bar"></div>
-    <div class="bottom-handle-bar"></div>
+<div #widget class="widget text-break" (click)="widgetService.selectedWidget = this"
+    [ngClass]="{'widget-selected': widgetService.selectedWidget == this}" [style.background]="getFillColor()"
+    [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
+    [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
+    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
+    [style.marginTop.px]="margins.top" [style.marginRight]="margins.right + (margins.right == 'auto' ? '' : 'px')"
+    [style.marginBottom.px]="margins.bottom" [style.marginLeft]="margins.left + (margins.left == 'auto' ? '' : 'px')"
+    [style.maxWidth.px]="width ? width : null" [style.minHeight.px]="height">
 
-    <div [style.fontFamily]="text.fontFamily"
-         [style.fontSize.px]="text.fontSize"
-         [style.fontWeight]="text.fontWeight"
-         [style.fontStyle]="text.fontStyle"
-         [style.color]="getTextColor()">
-            {{text.caption}}
+    <!-- <div class="edit-button fas" (click)="onEdit()"></div>
+    <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div> -->
+
+    <div class="top-left-handle" (mousedown)="onMousedown('top left')"></div>
+    <div class="top-center-handle"></div>
+    <div class="top-right-handle" (mousedown)="onMousedown('top right')"></div>
+    <div class="left-handle"></div>
+    <div class="bottom-left-handle" (mousedown)="onMousedown('bottom left')"></div>
+    <div class="bottom-center-handle"></div>
+    <div class="bottom-right-handle" (mousedown)="onMousedown('bottom right')"></div>
+    <div class="right-handle"></div>
+    <div class="left-handle-bar" (mousedown)="onMousedown('left')"></div>
+    <div class="top-handle-bar" (mousedown)="onMousedown('top')"></div>
+    <div class="right-handle-bar" (mousedown)="onMousedown('right')"></div>
+    <div class="bottom-handle-bar" (mousedown)="onMousedown('bottom')"></div>
+
+    <div [style.fontFamily]="text.fontFamily" [style.fontSize.px]="text.fontSize" [style.fontWeight]="text.fontWeight"
+        [style.fontStyle]="text.fontStyle" [style.color]="getTextColor()">
+        {{text.caption}}
     </div>
 </div>

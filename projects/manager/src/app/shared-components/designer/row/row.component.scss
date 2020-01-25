@@ -5,17 +5,24 @@
     width: 100%;
     outline: none;
 
-    &:hover {
+    &:hover,&:active {
         outline: 1px dashed $selected-border-color;
+        outline-offset: 2px;
+    }
+    
+    &:not(:active) {
+        
+    
+        &:hover .row-edit {
+            visibility: visible;
+        }
+    
+        &:hover .row-move {
+            visibility: visible;
+        }
     }
 
-    &:hover .row-edit {
-        visibility: visible;
-    }
-
-    &:hover .row-move {
-        visibility: visible;
-    }
+    
 
     .row-edit {
         position: absolute;
@@ -30,6 +37,7 @@
         user-select: none;
         cursor: pointer;
         visibility: hidden;
+        z-index: 3;
 
         &:hover {
             background: $selected-border-color;
@@ -52,6 +60,7 @@
         cursor: pointer;
         visibility: hidden;
         user-select: none;
+        z-index: 3;
 
         &:hover {
             background: $selected-border-color;
