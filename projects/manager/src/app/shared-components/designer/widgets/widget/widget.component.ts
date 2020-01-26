@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { Spacing } from 'projects/manager/src/app/classes/spacing';
 import { ColumnComponent } from '../../column/column.component';
@@ -8,7 +8,6 @@ import { ColumnComponent } from '../../column/column.component';
 })
 export class WidgetComponent implements OnInit {
   @ViewChild('widget', { static: false }) widget: ElementRef;
-  @Output() onHeightChangeTop: EventEmitter<number> = new EventEmitter();
   public width: number;
   public height: number;
   public margins: Spacing = new Spacing();
@@ -19,6 +18,12 @@ export class WidgetComponent implements OnInit {
   ngOnInit() {
     this.margins.left = 'auto';
     this.margins.right = 'auto';
+  }
+
+
+  onClick() {
+    this.widgetService.selectedWidget = this;
+    this.column.row.container.selectedRow = this.column.row;
   }
 
 
@@ -117,14 +122,33 @@ export class WidgetComponent implements OnInit {
     let widgetElementRect: any = widgetElement.getBoundingClientRect();
     let widgetElementPos: number;
     let widgetElementHeight: number = widgetElementRect.height;
-    let widgetHeight = widgetElementRect.height;
-    let deltaHeight = widgetHeight;
+    let widgetHeight: number = widgetElementRect.height;
+    let deltaHeight: number = widgetHeight;
+    let topCollisionElementPos: number;
+    let children: Array<Element> = Array.from(widgetElement.children);
+    let minHeight: number = Math.max(...children.map((x: any) => x.offsetHeight));
 
 
     // Set the height
     this.height = widgetHeight;
 
     if (handle == 'top') {
+      topCollisionElementPos = this.column.row.container.containerElement.nativeElement.getBoundingClientRect().top;
+
+
+
+      for (let i = 0; i < this.column.row.container.rows.length; i++) {
+        let currentRow = this.column.row.container.rows[i];
+
+        if (!this.column.row.rowElement.nativeElement.isEqualNode(currentRow.location.nativeElement.firstElementChild)) {
+          topCollisionElementPos += currentRow.location.nativeElement.firstElementChild.getBoundingClientRect().height;
+        } else {
+          break;
+        }
+      }
+
+
+
       widgetElementPos = widgetElementRect.top + widgetElementHeight;
     } else {
       widgetElementPos = widgetElementRect.top;
@@ -137,12 +161,23 @@ export class WidgetComponent implements OnInit {
       this.height = widgetHeight * percent;
       let delta = this.height - deltaHeight;
 
-      
 
-      if(handle == 'top') {
-        if(widgetElementPos - this.height < 105) this.height = widgetElementPos - 105;
 
-        this.onHeightChangeTop.emit(delta);
+
+      if (handle == 'top') {
+        if (widgetElementPos - this.height < topCollisionElementPos) this.height = widgetElementPos - topCollisionElementPos;
+
+        if (this.height < minHeight) {
+          this.height = minHeight;
+
+          delta = minHeight - deltaHeight;
+        }
+
+
+        this.column.row.top -= delta;
+
+        if (delta > 0) this.column.row.container.shiftRowsUp();
+
         deltaHeight = this.height;
       }
     }

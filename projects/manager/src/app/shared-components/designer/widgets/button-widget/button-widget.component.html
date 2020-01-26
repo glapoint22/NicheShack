@@ -1,4 +1,4 @@
-<div #widget class="widget text-break" (click)="widgetService.selectedWidget = this"
+<div #widget class="widget text-break" (click)="onClick()"
     [ngClass]="{'widget-selected': widgetService.selectedWidget == this}" [style.background]="getFillColor()"
     [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
 import { WidgetService } from '../../../services/widget.service';
 import { FormService } from '../../../services/form.service';
 import { FillColor } from '../../../classes/fill-color';
@@ -17,8 +17,7 @@ import { ContainerComponent } from '../container/container.component';
 })
 export class RowComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-  @Output() onRowSelected: EventEmitter<RowComponent> = new EventEmitter();
-  @Output() shiftRows: EventEmitter<number> = new EventEmitter();
+  @ViewChild('row', { static: false }) rowElement: ElementRef;
   public top: number;
   public columns: Array<HTMLElement> = new Array<HTMLElement>();
   public fill: FillColor = new FillColor();
@@ -63,8 +62,8 @@ export class RowComponent {
     let offset = event.clientY - this.top;
     let currentPos = this.top;
 
-    // Emit that this row has been selected
-    this.onRowSelected.emit(this);
+    // flag that this row has been selected
+    this.container.selectedRow = this;
 
     document.body.style.cursor = 'move';
 
@@ -76,7 +75,7 @@ export class RowComponent {
       currentPos = this.top;
 
       // Shift neighboring rows up or down if this rows collides with them
-      this.shiftRows.emit(Math.sign(delta));
+      this.container.shiftRows(Math.sign(delta));
     }
 
     // Mouseup
@@ -120,11 +119,11 @@ export class RowComponent {
     columnComponentRef.location.nativeElement.addEventListener('mouseenter', columnComponentRef.instance.onMouseenter.bind(this));
     columnComponentRef.location.nativeElement.addEventListener('mouseup', () => { this.widgetService.currentWidgetCursor = null; });
 
-    // Emit that this row has been selected
-    this.onRowSelected.emit(this);
+    // flag that this row has been selected
+    this.container.selectedRow = this;
 
     // Shift rows down if this row collides with its neighboring rows
-    this.shiftRows.emit(1);
+    this.container.shiftRowsDown();
   }
 
 

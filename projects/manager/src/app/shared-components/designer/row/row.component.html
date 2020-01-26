@@ -1,4 +1,4 @@
-<div class="row" 
+<div #row class="row" 
      [ngClass]="{'drop-widget': widgetService.currentWidgetCursor, 'flex-10': columns.length == 5}"
      (mousemove)="widgetService.currentWidgetCursor ? $event.stopPropagation(): null"
      [style.top.px]="top"

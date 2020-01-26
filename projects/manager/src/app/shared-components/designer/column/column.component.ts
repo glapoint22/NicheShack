@@ -22,12 +22,7 @@ export class ColumnComponent {
     // Set this component as the selected component
     this.widgetService.selectedWidget = this.widget = componentRef.instance;
 
-    this.widget.onHeightChangeTop.subscribe((delta: number) => {
-      this.row.top -= delta;
-      this.row.onRowSelected.emit(this.row);
-      this.row.shiftRows.emit(-1);
-    });
-
+    // Set the widget's column as this column
     this.widget.column = this;
   }
 
