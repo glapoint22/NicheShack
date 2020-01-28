@@ -7,7 +7,7 @@ import { Shadow } from '../classes/shadow';
 import { Spacing } from '../classes/spacing';
 import { HoverTab } from '../classes/hover-tab';
 import { Color } from '../classes/color';
-import { Align } from '../classes/align';
+import { Alignment } from '../classes/alignment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class FormService {
   public shadow: Shadow;
   public margins: Spacing;
   public padding: Spacing;
-  public align: Align;
+  public alignment: Alignment
 
   public showColorPicker: boolean;
   public colorPicker: Color;
@@ -40,7 +40,7 @@ export class FormService {
   public initialShadow: Shadow = new Shadow();
   public initialMargins: Spacing = new Spacing();
   public initialPadding: Spacing = new Spacing();
-  public initialAlign: Align = new Align();
+  public initialAlignment: Alignment = new Alignment();
   public initialColorPickerColor: Color = new Color();
 
   // ----------------------------------------------------( RGBA TO HEXA )--------------------------------------------------\\

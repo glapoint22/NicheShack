@@ -6,9 +6,10 @@ import { Border } from '../../../classes/border';
 import { Corners } from '../../../classes/corners';
 import { Shadow } from '../../../classes/shadow';
 import { Spacing } from '../../../classes/spacing';
-import { Align } from '../../../classes/align';
+// import { Align } from '../../../classes/align';
 import { ColumnComponent } from '../column/column.component';
 import { ContainerComponent } from '../container/container.component';
+import { Alignment } from '../../../classes/alignment';
 
 @Component({
   selector: 'row',
@@ -25,7 +26,7 @@ export class RowComponent {
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
   public padding: Spacing = new Spacing();
-  public align: Align = new Align();
+  public alignment: Alignment = new Alignment();
   public container: ContainerComponent;
 
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService, public _FormService: FormService) { }
@@ -38,7 +39,7 @@ export class RowComponent {
     this._FormService.corners = this.corners;
     this._FormService.shadow = this.shadow;
     this._FormService.padding = this.padding;
-    this._FormService.align = this.align;
+    this._FormService.alignment = this.alignment;
 
     // Open the container form
     this._FormService.showRowForm = true;
@@ -74,8 +75,12 @@ export class RowComponent {
       let delta = this.top - currentPos;
       currentPos = this.top;
 
-      // Shift neighboring rows up or down if this rows collides with them
-      this.container.shiftRows(Math.sign(delta));
+      // Check for collision
+      if (delta > 0) {
+        this.container.collisionDown();
+      } else {
+        this.container.collisionUp();
+      }
     }
 
     // Mouseup
@@ -123,7 +128,7 @@ export class RowComponent {
     this.container.selectedRow = this;
 
     // Shift rows down if this row collides with its neighboring rows
-    this.container.shiftRowsDown();
+    this.container.collisionDown();
   }
 
 

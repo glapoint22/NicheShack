@@ -7,8 +7,7 @@
      [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
      [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
      [style.padding]="padding.top + 'px ' + padding.right + 'px ' + padding.bottom + 'px ' + padding.left + 'px'"
-     [style.justifyContent]="align.horizontal"
-     [style.alignItems]="align.vertical">
+     [style.alignItems]="alignment.value">
 
     <ng-template  #viewContainerRef>
         <!-- Columns go here -->

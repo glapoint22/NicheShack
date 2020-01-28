@@ -34,34 +34,26 @@ export class ContainerComponent {
 
     rowComponentRef.instance.container = this;
 
+    // Sort the rows by position (top to bottom)
+    this.sortRows();
+
     // Add the column
     rowComponentRef.hostView.detectChanges();
     rowComponentRef.instance.addColumn();
 
-    // Sort the rows by position (top to bottom)
-    this.sortRows();
+    
 
     // Set the selected row as this row
     this.selectedRow = rowComponentRef.instance;
-
-    // Shift any row that is below the new row
-    this.shiftRowsDown();
   }
 
 
-  shiftRows(direction: number) {
-    if (direction == 1) {
-      this.shiftRowsDown();
-    } else {
-      this.shiftRowsUp();
-    }
-
-
+  setSelectedRowMinTop() {
     if (this.selectedRowIndex == 0) {
       // Set min position at zero when the selected row is the first row
       this.rows[0].instance.top = Math.max(0, this.rows[0].instance.top);
     } else {
-      // Set the selected row min position at the previous row's extents
+      // Set the selected row min position at the previous row's bottom
       this.rows[this.selectedRowIndex].instance.top = Math.max(this.rows[this.selectedRowIndex - 1].instance.top +
         this.rows[this.selectedRowIndex - 1].location.nativeElement.firstElementChild.clientHeight, this.rows[this.selectedRowIndex].instance.top);
     }
@@ -74,15 +66,17 @@ export class ContainerComponent {
     });
   }
 
-  shiftRowsDown() {
+  collisionDown() {
     for (let i = this.selectedRowIndex; i < this.rows.length - 1; i++) {
       if (this.rows[i].instance.top + this.rows[i].location.nativeElement.firstElementChild.clientHeight > this.rows[i + 1].instance.top) {
         this.rows[i + 1].instance.top = this.rows[i].instance.top + this.rows[i].location.nativeElement.firstElementChild.clientHeight;
       }
     }
+
+    this.setSelectedRowMinTop();
   }
 
-  shiftRowsUp() {
+  collisionUp() {
     for (let i = this.selectedRowIndex; i > 0; i--) {
       if (this.rows[i].instance.top < this.rows[i - 1].instance.top + this.rows[i - 1].location.nativeElement.firstElementChild.clientHeight) {
         this.rows[i - 1].instance.top = this.rows[i].instance.top - this.rows[i - 1].location.nativeElement.firstElementChild.clientHeight;
@@ -96,5 +90,7 @@ export class ContainerComponent {
         }
       }
     }
+
+    this.setSelectedRowMinTop();
   }
 }

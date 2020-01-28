@@ -51,8 +51,7 @@ export class RowFormComponent {
     this._FormService.initialPadding.bottom = this._FormService.padding.bottom;
     this._FormService.initialPadding.left = this._FormService.padding.left;
 
-    this._FormService.initialAlign.horizontal = this._FormService.align.horizontal;
-    this._FormService.initialAlign.vertical = this._FormService.align.vertical;
+    this._FormService.initialAlignment.value = this._FormService.alignment.value;
   }
 
 
@@ -102,8 +101,7 @@ export class RowFormComponent {
     this._FormService.padding.bottom = this._FormService.initialPadding.bottom;
     this._FormService.padding.left = this._FormService.initialPadding.left;
 
-    this._FormService.align.horizontal = this._FormService.initialAlign.horizontal;
-    this._FormService.align.vertical = this._FormService.initialAlign.vertical;
+    this._FormService.alignment.value = this._FormService.initialAlignment.value;
       
     this._FormService.showRowForm = false;
   }
