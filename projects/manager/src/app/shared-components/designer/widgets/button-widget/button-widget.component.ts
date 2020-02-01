@@ -5,16 +5,16 @@ import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { ButtonText } from 'projects/manager/src/app/classes/button-text';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
-import { WidgetComponent } from '../widget/widget.component';
 import { HoverTab } from 'projects/manager/src/app/classes/hover-tab';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
+import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 
 @Component({
   selector: 'button-widget',
   templateUrl: './button-widget.component.html',
   styleUrls: ['./button-widget.component.scss']
 })
-export class ButtonWidgetComponent extends WidgetComponent implements OnInit {
+export class ButtonWidgetComponent extends FreeformWidgetComponent implements OnInit {
   public hoverTab: HoverTab = new HoverTab();
   public fill: FillColor = new FillColor();
   public border: Border = new Border();

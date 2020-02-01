@@ -4,21 +4,23 @@ import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { Spacing } from 'projects/manager/src/app/classes/spacing';
-import { WidgetComponent } from '../widget/widget.component';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
+import { ProportionalWidgetComponent } from '../proportional-widget/proportional-widget.component';
 
 @Component({
   selector: 'image-widget',
   templateUrl: './image-widget.component.html',
   styleUrls: ['./image-widget.component.scss']
 })
-export class ImageWidgetComponent extends WidgetComponent {
+export class ImageWidgetComponent extends ProportionalWidgetComponent {
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
   public margins: Spacing = new Spacing();
 
   constructor(widgetService: WidgetService, public _FormService: FormService) { super(widgetService) }
+
+  
 
 
   // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\

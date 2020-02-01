@@ -1,4 +1,4 @@
-<div #widget class="widget text-break" (click)="onClick()"
+<div #widget class="widget text-break" (mousedown)="onMousedown()"
     [ngClass]="{'widget-selected': widgetService.selectedWidget == this}" [style.background]="getFillColor()"
     [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
@@ -10,18 +10,20 @@
     <!-- <div class="edit-button fas" (click)="onEdit()"></div>
     <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div> -->
 
-    <div class="top-left-handle" (mousedown)="onMousedown('top left')"></div>
+    <!-- Handles -->
     <div class="top-center-handle"></div>
-    <div class="top-right-handle" (mousedown)="onMousedown('top right')"></div>
     <div class="left-handle"></div>
-    <div class="bottom-left-handle" (mousedown)="onMousedown('bottom left')"></div>
     <div class="bottom-center-handle"></div>
-    <div class="bottom-right-handle" (mousedown)="onMousedown('bottom right')"></div>
     <div class="right-handle"></div>
-    <div class="left-handle-bar" (mousedown)="onMousedown('left')"></div>
-    <div class="top-handle-bar" (mousedown)="onMousedown('top')"></div>
-    <div class="right-handle-bar" (mousedown)="onMousedown('right')"></div>
-    <div class="bottom-handle-bar" (mousedown)="onMousedown('bottom')"></div>
+    <div class="top-left-handle" (mousedown)="onHandleMove('top-left')"></div>
+    <div class="top-handle-bar" (mousedown)="onHandleMove('top')"></div>
+    <div class="top-right-handle" (mousedown)="onHandleMove('top-right')"></div>
+    <div class="right-handle-bar" (mousedown)="onHandleMove('right')"></div>
+    <div class="bottom-right-handle" (mousedown)="onHandleMove('bottom-right')"></div>
+    <div class="bottom-handle-bar" (mousedown)="onHandleMove('bottom')"></div>
+    <div class="bottom-left-handle" (mousedown)="onHandleMove('bottom-left')"></div>
+    <div class="left-handle-bar" (mousedown)="onHandleMove('left')"></div>
+    
 
     <div [style.fontFamily]="text.fontFamily" [style.fontSize.px]="text.fontSize" [style.fontWeight]="text.fontWeight"
         [style.fontStyle]="text.fontStyle" [style.color]="getTextColor()">

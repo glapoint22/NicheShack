@@ -14,6 +14,8 @@ import { RowComponent } from './row/row.component';
 import { ContainerComponent } from './container/container.component';
 import { WidgetComponent } from './widgets/widget/widget.component';
 import { ColumnComponent } from './column/column.component';
+import { ProportionalWidgetComponent } from './widgets/proportional-widget/proportional-widget.component';
+import { FreeformWidgetComponent } from './widgets/freeform-widget/freeform-widget.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ColumnComponent } from './column/column.component';
     RowComponent,
     ContainerComponent,
     WidgetComponent,
-    ColumnComponent
+    ColumnComponent,
+    ProportionalWidgetComponent,
+    FreeformWidgetComponent
   ],
   imports: [
     CommonModule,
