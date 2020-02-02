@@ -150,6 +150,11 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
         // Align Bottom
       } else if (this.column.row.alignment.value == 'flex-end') {
+        if (this.height < minHeight) {
+          this.height = minHeight;
+
+          delta = minHeight - tempHeight;
+        }
 
         if (this.height > maxRowHeight) {
           this.column.row.top -= delta;

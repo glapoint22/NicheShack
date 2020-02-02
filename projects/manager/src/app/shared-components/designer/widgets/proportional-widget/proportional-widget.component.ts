@@ -7,117 +7,124 @@ import { Vector } from 'projects/manager/src/app/classes/vector';
   template: '',
 })
 export class ProportionalWidgetComponent extends WidgetComponent {
+  public minHeight: number = 40;
 
   constructor(widgetService: WidgetService) { super(widgetService) }
 
 
-  mousedown(event: any, verticalHandle: string, horizontalHandle: string) {
-    let widgetElement: HTMLElement = this.widget.nativeElement;
-    let widgetElementRect: any = widgetElement.getBoundingClientRect();
-    let widgetElementPosX: number;
-    let widgetElementWidth: number = widgetElementRect.width * (this.margins.left == 'auto' && this.margins.right == 'auto' ? 0.5 : 1);
-    let widgetWidth = widgetElementRect.width;
+  onHandleMove(verticalHandle: string, horizontalHandle: string, event: MouseEvent) {
+    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.margins.left == 'auto' && this.margins.right == 'auto' ? 0.5 : 1);
+    let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left +
+      (horizontalHandle == 'left' || (this.margins.left == 'auto' && this.margins.right == 'auto') ? anchorWidth : 0);
+    let startWidth: number = this.widget.nativeElement.clientWidth;
+    let heightWidthRatio: number = this.widget.nativeElement.clientHeight / this.widget.nativeElement.clientWidth;
+    let widthHeightRatio = this.widget.nativeElement.clientWidth / this.widget.nativeElement.clientHeight;
     let widgetHeight: number;
-    let columnWidth = this.widget.nativeElement.parentElement.parentElement.getBoundingClientRect().width;
-    let mouseX = event.clientX;
-    let mouseY = event.clientY;
-    let initialMouseX = mouseX;
-    let ratio = widgetElementRect.height / widgetElementRect.width;
-    let maxHeight: number = 0;
-    let widgetTop = widgetElementRect.top;
+    let columnWidth: number = this.widget.nativeElement.parentElement.parentElement.clientWidth;
+    let mouse: Vector = new Vector(event.clientX, event.clientY);
+    let mouseX: number = mouse.x;
+    let widgetTop: number = this.widget.nativeElement.getBoundingClientRect().top;
+    let topCollisionPoint: number = this.getTopCollisionPoint();
+    let maxRowHeight: number = this.getMaxRowHeight();
+    let tempHeight = startWidth * heightWidthRatio;
 
-    if (this.column.row.columns.length > 1) {
-      for (let i = 0; i < this.column.row.columns.length; i++) {
-        if (!this.column.row.columns[i].isEqualNode(this.column.viewContainerRef.element.nativeElement.parentElement)) {
-          maxHeight = Math.max(maxHeight, this.column.row.columns[i].clientHeight);
-        }
-      }
+
+    // Set the cursor
+    switch (verticalHandle + '-' + horizontalHandle) {
+      case 'top-left':
+        document.body.style.cursor = 'nw-resize';
+        break;
+      case 'top-right':
+        document.body.style.cursor = 'ne-resize';
+        break;
+      case 'bottom-right':
+        document.body.style.cursor = 'se-resize';
+        break;
+      case 'bottom-left':
+        document.body.style.cursor = 'sw-resize';
+        break;
     }
 
-    // Set the width
-    this.width = widgetWidth;
-
-
-    if (horizontalHandle == 'left' || (this.margins.left == 'auto' && this.margins.right == 'auto')) {
-      widgetElementPosX = widgetElementRect.left + widgetElementWidth;
-    } else {
-      widgetElementPosX = widgetElementRect.left;
-    }
 
 
     let onMousemove = (e: MouseEvent) => {
-      let delta: Vector = new Vector(e.clientX - mouseX, (e.clientY - mouseY) *
+      let delta: Vector = new Vector(e.clientX - mouse.x, (e.clientY - mouse.y) *
         ((verticalHandle == 'top' && horizontalHandle == 'left') ||
           (verticalHandle == 'bottom' && horizontalHandle == 'right') ? 1 : -1));
 
+      // Normalize the delta vector
       let normalizedDelta = delta.normalize();
 
-
+      // Clamping will ensure when adding the X and Y components, the sum will not be greater than 1
       normalizedDelta.clamp();
+
+      // Multiply the original delta with the normalized delta
       delta.multiply(normalizedDelta);
 
+      // We add the X and Y together to get the delta of both X and Y
+      // Incrementing mouseX with deltaSum gives us the distance the mouse has moved
       let deltaSum = delta.x + delta.y;
+      mouseX += deltaSum;
 
+      // Calculate the width of the widget
+      let mousePos = (anchorPoint - mouseX) * (horizontalHandle == 'left' ? 1 : -1);
+      let percent = mousePos / anchorWidth;
+      this.width = startWidth * percent;
 
-      // Re-assign the variables
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-
-
-      initialMouseX += deltaSum;
-      let mouseWidgetOffsetX = (initialMouseX - widgetElementPosX) * (horizontalHandle == 'left' ? -1 : 1);
-      let percent = mouseWidgetOffsetX / widgetElementWidth;
-
-      this.width = Math.max(widgetWidth * percent, 10);
-      widgetHeight = this.width * ratio;
-
-
-
-      if (this.width > columnWidth) this.width = null;
-
-      if (this.column.row.alignment.value == 'flex-start') {
-        this.column.row.container.collisionDown();
+      // Make sure the width doesn't go below the min width
+      if (this.width < this.minHeight) {
+        this.width = this.minHeight;
+        mouseX -= deltaSum;
       }
 
 
+      // Calculte the height of the widget
+      widgetHeight = this.width * heightWidthRatio;
+      let deltaHeight = tempHeight - widgetHeight;
 
-      // Align Center or Align Bottom
-      if (this.column.row.alignment.value == 'center' || this.column.row.alignment.value == 'flex-end') {
+
+      // If the width is greater than the column width, mark it as null
+      if (this.width > columnWidth) this.width = null;
+
+
+      // Align Top
+      if (this.column.row.alignment.value == 'flex-start') {
+        this.column.row.container.collisionDown();
+
+
+        // Align Center or Align Bottom
+      } else if ((this.column.row.alignment.value == 'center' || this.column.row.alignment.value == 'flex-end') && this.width) {
 
 
         // If the height of the widget is greater or equal to the row height, move the row
-        if (widgetHeight >= maxHeight && this.width) {
-          this.column.row.top += (deltaSum * (this.column.row.alignment.value == 'center' ? 0.5 : 1)) * (horizontalHandle == 'left' ? 1 : -1);
+        if (widgetHeight >= maxRowHeight) {
+          this.column.row.top += (deltaHeight * (this.column.row.alignment.value == 'center' ? 0.5 : 1));
         }
 
 
-        widgetTop += (deltaSum * 0.5);
-        if (widgetTop < 105) {
-          this.width += (deltaSum * 2);
-          initialMouseX -= deltaSum;
+        // This will prevent the widget from sizing when colliding with a row above it or the top of the container
+        widgetTop += (deltaHeight * (this.column.row.alignment.value == 'center' ? 0.5 : 1));
+        if (widgetTop < topCollisionPoint) {
+          this.width += ((widgetTop - topCollisionPoint) * widthHeightRatio * (this.column.row.alignment.value == 'center' ? 2 : 1));
+          mouseX -= deltaSum;
+          widgetTop = topCollisionPoint;
         }
 
 
+        // Collision
         this.column.row.container.collisionUp();
-
         if (this.column.row.alignment.value == 'center') this.column.row.container.collisionDown();
 
+        // Re-assign
+        tempHeight = this.width * heightWidthRatio;
       }
-
-
-
+      mouse = new Vector(e.clientX, e.clientY);
     }
 
-    // Mouseup
     let onMouseup = () => {
-      window.removeEventListener("mousemove", onMousemove);
-      window.removeEventListener("mouseup", onMouseup);
-      document.body.removeAttribute('style');
+      this.mouseUp(onMousemove, onMouseup);
     }
 
-    // Add the listeners
-    window.addEventListener("mousemove", onMousemove);
-    window.addEventListener("mouseup", onMouseup);
+    this.addEventListeners(onMousemove, onMouseup);
   }
-
 }
