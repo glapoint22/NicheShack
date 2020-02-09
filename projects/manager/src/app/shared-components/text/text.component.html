@@ -12,7 +12,8 @@
     <div class="display-flex">
 
         <!-- Dropdown -->
-        <select style="width: 100%; max-width: 150px;" [value]="_FormService.text.fontFamily" (change)="_FormService.text.fontFamily = $event.target.value">
+        <!-- <select style="width: 100%; max-width: 150px;" [value]="_FormService.text.fontFamily" (change)="_FormService.text.fontFamily = $event.target.value"> -->
+        <select style="width: 100%; max-width: 150px;">
             <option value="Arial, Helvetica, sans-serif">Arial</option>
             <option value="'Arial Black', Gadget, sans-serif">Arial Black</option>
             <option value="'Book Antiqua', 'Palatino Linotype', Palatino, serif">Book Antiqua</option>
@@ -79,7 +80,7 @@
     <div class="display-flex">
         
         <!-- Bold -->
-        <div class="icon-container selected" title="Bold (Ctrl+B)">
+        <div class="icon-container" title="Bold (Ctrl+B)" (click)="onBoldClick()" [ngClass]="{'selected': _FormService.text.styleApplied}">
             <i class="fas fa-bold"></i>
         </div>
 
@@ -186,7 +187,7 @@
     <div class="display-flex">
         
         <!-- Numbered list -->
-        <div class="icon-container selected" title="Numbered list (Ctrl+Shift+7)">
+        <div class="icon-container selected" title="Numbered list (Ctrl+Shift+7)" (click)="onNumberedListClick()">
             <i class="fas fa-list-ol"></i>
         </div>
 

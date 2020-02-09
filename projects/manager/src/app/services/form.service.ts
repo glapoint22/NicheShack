@@ -21,6 +21,7 @@ export class FormService {
   public margins: Spacing;
   public padding: Spacing;
   public align: Align;
+  public text: any;
 
   public showColorPicker: boolean;
   public colorPicker: Color;
