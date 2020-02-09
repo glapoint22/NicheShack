@@ -4,7 +4,7 @@ import { ContainerWidgetComponent } from './widgets/container-widget/container-w
 import { ImageWidgetComponent } from './widgets/image-widget/image-widget.component';
 import { LineWidgetComponent } from './widgets/line-widget/line-widget.component';
 import { TextWidgetComponent } from './widgets/text-widget/text-widget.component';
-import { Widget } from '../../classes/widget';
+import { WidgetCursor } from '../../classes/widget-cursor';
 import { WidgetService } from '../../services/widget.service';
 
 @Component({
@@ -19,48 +19,48 @@ export class DesignerComponent implements OnInit {
   @ViewChild('canvasElement', { static: false }) canvas: ElementRef;
   @ViewChild('widthDisplay', { static: false }) widthDisplay: ElementRef;
 
-  public widgets: Array<Widget>;
+  public widgetCursors: Array<WidgetCursor>;
   public showPublishMenu: boolean;
   public contentWidth: number = 1496;
 
   constructor(private widgetService: WidgetService) { }
 
   ngOnInit() {
-    this.widgets = [
+    this.widgetCursors = [
       {
         title: 'Button',
         component: ButtonWidgetComponent,
         icon: '<i class="fab fa-bootstrap"></i>',
-        allowedCursor: 'button-widget-allowed.png',
-        notAllowedCursor: 'button-widget-not-allowed.png'
+        allowed: 'button-widget-allowed.png',
+        notAllowed: 'button-widget-not-allowed.png'
       },
       {
         title: 'Text',
         component: TextWidgetComponent,
         icon: '<div class="text-icon">T</div>',
-        allowedCursor: 'text-widget-allowed.png',
-        notAllowedCursor: 'text-widget-not-allowed.png'
+        allowed: 'text-widget-allowed.png',
+        notAllowed: 'text-widget-not-allowed.png'
       },
       {
         title: 'Image',
         component: ImageWidgetComponent,
         icon: '<i class="fas fa-image"></i>',
-        allowedCursor: 'image-widget-allowed.png',
-        notAllowedCursor: 'image-widget-not-allowed.png'
+        allowed: 'image-widget-allowed.png',
+        notAllowed: 'image-widget-not-allowed.png'
       },
       {
         title: 'Container',
         component: ContainerWidgetComponent,
         icon: '<i class="fas fa-box-open"></i>',
-        allowedCursor: 'container-widget-allowed.png',
-        notAllowedCursor: 'container-widget-not-allowed.png'
+        allowed: 'container-widget-allowed.png',
+        notAllowed: 'container-widget-not-allowed.png'
       },
       {
         title: 'Line',
         component: LineWidgetComponent,
         icon: '<i class="fas fa-slash"></i>',
-        allowedCursor: 'line-widget-allowed.png',
-        notAllowedCursor: 'line-widget-not-allowed.png'
+        allowed: 'line-widget-allowed.png',
+        notAllowed: 'line-widget-not-allowed.png'
       }
     ]
   }
@@ -69,17 +69,18 @@ export class DesignerComponent implements OnInit {
     this.widthDisplay.nativeElement.value = this.canvas.nativeElement.clientWidth;
   }
 
-  onWidgetIconMousedown(e: MouseEvent, widget: Widget) {
-    this.widgetService.currentWidget = widget;
-    document.body.style.cursor = 'url("assets/' + widget.notAllowedCursor + '"), auto';
+  onWidgetIconMousedown(e: MouseEvent, widgetCursor: WidgetCursor) {
+    this.widgetService.currentWidgetCursor = widgetCursor;
+    document.body.style.cursor = 'url("assets/' + widgetCursor.notAllowed + '"), auto';
     document.body.id = 'widget-cursor';
 
     // On Mouseup
     let onMouseup = () => {
       window.removeEventListener("mouseup", onMouseup);
-      this.widgetService.currentWidget = null;
+      this.widgetService.currentWidgetCursor = null;
       document.body.removeAttribute('style');
       document.body.removeAttribute('id');
+      document.body.removeAttribute('class');
     }
 
     window.addEventListener("mouseup", onMouseup);
@@ -123,12 +124,12 @@ export class DesignerComponent implements OnInit {
   }
 
   setCursor(allowed: boolean) {
-    if (this.widgetService.currentWidget) {
+    if (this.widgetService.currentWidgetCursor) {
       if (allowed) {
-        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidget.allowedCursor + '"), auto';
+        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.allowed + '"), auto';
         document.body.removeAttribute('class');
       } else {
-        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidget.notAllowedCursor + '"), auto';
+        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.notAllowed + '"), auto';
       }
     }
   }

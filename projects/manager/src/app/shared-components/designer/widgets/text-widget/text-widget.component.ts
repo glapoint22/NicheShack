@@ -1,13 +1,15 @@
 import { Component, ViewChild, ElementRef, ApplicationRef } from '@angular/core';
 import { FormService } from 'projects/manager/src/app/services/form.service';
+import { WidgetComponent } from '../widget/widget.component';
+import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 
 @Component({
   selector: 'text-widget',
   templateUrl: './text-widget.component.html',
   styleUrls: ['./text-widget.component.scss']
 })
-export class TextWidgetComponent {
-  constructor(public _FormService: FormService, private app: ApplicationRef) { }
+export class TextWidgetComponent extends WidgetComponent {
+  constructor(widgetService: WidgetService, public _FormService: FormService) { super(widgetService)}
 
   // iframe
   @ViewChild('iframe', { static: false }) iframe: ElementRef;

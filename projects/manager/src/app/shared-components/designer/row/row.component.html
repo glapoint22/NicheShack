@@ -1,24 +1,25 @@
-<div class="row" 
-     [ngClass]="{'drop-widget': widgetService.currentWidget, 'flex-10': columns.length == 5}"
-     (mousemove)="widgetService.currentWidget ? $event.stopPropagation(): null"
+<div #row class="row" 
+     [ngClass]="{'drop-widget': widgetService.currentWidgetCursor, 'flex-10': columns.length == 5}"
+     (mousemove)="widgetService.currentWidgetCursor ? $event.stopPropagation(): null"
      [style.top.px]="top"
      [style.background]="fill.apply ? 'rgba(' + fill.color.r + ',' +  fill.color.g + ',' + fill.color.b + ',' + fill.color.a + ')' : 'transparent'"
      [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
      [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
      [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
      [style.padding]="padding.top + 'px ' + padding.right + 'px ' + padding.bottom + 'px ' + padding.left + 'px'"
-     [style.justifyContent]="align.horizontal"
-     [style.alignItems]="align.vertical">
+     [style.alignItems]="alignment.value">
 
-    <ng-template  #viewContainerRef></ng-template>
+    <ng-template  #viewContainerRef>
+        <!-- Columns go here -->
+    </ng-template>
 
-    <div>
+    <span>
         <!-- Edit -->
-        <div class="row-edit" *ngIf="!widgetService.currentWidget" (click)="onEdit()">Edit</div>
+        <div class="row-edit" *ngIf="!widgetService.currentWidgetCursor" (mousedown)="onEdit()">Edit</div>
 
         <!-- Move -->
-        <div class="row-move" (mousedown)="onRowMoveMousedown($event)" *ngIf="!widgetService.currentWidget">
+        <div class="row-move" (mousedown)="onRowMoveMousedown($event)" *ngIf="!widgetService.currentWidgetCursor">
             <i class="fas fa-arrows-alt-v"></i>
         </div>
-    </div>
+    </span>
 </div>

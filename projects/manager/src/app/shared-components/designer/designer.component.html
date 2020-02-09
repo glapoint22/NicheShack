@@ -7,9 +7,9 @@
         <!-- Widget Bar -->
         <div class="widget-bar">
 
-            <ng-container *ngFor="let widget of widgets">
-                <div class="icon-container" [title]="widget.title" [innerHTML]="widget.icon"
-                    (mousedown)="onWidgetIconMousedown($event, widget)"></div>
+            <ng-container *ngFor="let widgetCursor of widgetCursors">
+                <div class="icon-container" [title]="widgetCursor.title" [innerHTML]="widgetCursor.icon"
+                    (mousedown)="onWidgetIconMousedown($event, widgetCursor)"></div>
             </ng-container>
         </div>
 

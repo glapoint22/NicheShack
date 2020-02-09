@@ -1,27 +1,19 @@
-<div class="widget widget-selected"
+<div #widget class="widget" (click)="onClick()" [ngClass]="{'widget-selected': widgetService.selectedWidget == this}"
+    [style.marginTop.px]="margins.top" [style.marginRight]="margins.right + (margins.right == 'auto' ? '' : 'px')"
+    [style.marginBottom.px]="margins.bottom" [style.marginLeft]="margins.left + (margins.left == 'auto' ? '' : 'px')"
+    [style.maxWidth.px]="width ? width : null">
 
-[style.margin]="margins.top + 'px ' + margins.right + 'px ' + margins.bottom + 'px ' + margins.left + 'px'"
+    <!-- <div class="edit-button fas" (click)="onEdit()"></div>
+    <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div> -->
 
-
->
-     
-    <div class="edit-button fas" (click)="onEdit()"></div>
-
-    
-    <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div>
-
-
+    <!-- Handles -->
     <div class="left-handle"></div>
     <div class="right-handle"></div>
-    <div class="left-handle-bar"></div>
-    <div class="right-handle-bar"></div>
+    <div class="left-handle-bar" (mousedown)="onMousedown('left')"></div>
+    <div class="right-handle-bar" (mousedown)="onMousedown('right')"></div>
 
-    
-    <div style=" width: 100%;" 
-    
-    [style.borderBottom]="border.width + 'px ' + border.style + ' ' + getBorderColor()"
-    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
-     
-    
-    ></div>
+
+    <div style=" width: 100%;" [style.borderBottom]="border.width + 'px ' + border.style + ' ' + getBorderColor()"
+        [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'">
+    </div>
 </div>
