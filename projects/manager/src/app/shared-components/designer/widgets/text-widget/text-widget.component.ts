@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, ApplicationRef } from '@angular/core'
 import { FormService } from 'projects/manager/src/app/services/form.service';
 import { WidgetComponent } from '../widget/widget.component';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
+import { Spacing } from 'projects/manager/src/app/classes/spacing';
 
 @Component({
   selector: 'text-widget',
@@ -9,7 +10,7 @@ import { WidgetService } from 'projects/manager/src/app/services/widget.service'
   styleUrls: ['./text-widget.component.scss']
 })
 export class TextWidgetComponent extends WidgetComponent {
-  constructor(widgetService: WidgetService, public _FormService: FormService) { super(widgetService)}
+  constructor(widgetService: WidgetService, private app: ApplicationRef, public _FormService: FormService) { super(widgetService)}
 
   // iframe
   @ViewChild('iframe', { static: false }) iframe: ElementRef;
@@ -23,8 +24,8 @@ export class TextWidgetComponent extends WidgetComponent {
   };
 
   // --------------------------Margins--------------------------- \\
-  public margins: any = {
-    top: 0,
+  public margins: Spacing = {
+    top: 0, 
     right: 0,
     bottom: 0,
     left: 0

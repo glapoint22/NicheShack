@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormService } from '../../services/form.service';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'texts',
@@ -86,18 +85,19 @@ export class TextComponent {
         // If the style is being applied on just one line
         if (this.selectedRange.commonAncestorContainer != this._FormService.text.iframe.nativeElement.contentDocument.firstChild.children[1].firstChild) {
 
-          this.removeStyle(this.selectedRange)
+          this.removeStyle(this.selectedRange);
+
 
           // If the style is being applied on multiple lines
         } else {
 
 
-          let start = this.getParentNode(this.selectedRange.startContainer)
-          let startRange = document.createRange()
-          startRange.setStart(this.selectedRange.startContainer, this.selectedRange.startOffset)
-          let lastChild = this.getLastTextChild(start.lastChild)
+          let start = this.getParentNode(this.selectedRange.startContainer);
+          let startRange = document.createRange();
+          startRange.setStart(this.selectedRange.startContainer, this.selectedRange.startOffset);
+          let lastChild = this.getLastTextChild(start.lastChild);
           startRange.setEnd(lastChild, lastChild.length);
-          this.removeStyle(startRange)
+          this.removeStyle(startRange);
 
 
 
@@ -128,7 +128,6 @@ export class TextComponent {
 
           this.selectedRange.setStart(startRange.startContainer, startRange.startOffset);
           this.selectedRange.setEnd(endRange.endContainer, endRange.endOffset);
-
         }
 
 
@@ -139,20 +138,19 @@ export class TextComponent {
   }
 
 
-  removeStyle(range) {
-
-    let rangeStart = document.createRange();
-    rangeStart.setStart(this.getStyleParent(range.startContainer).parentElement, 0);
-    rangeStart.setEnd(range.startContainer, range.startOffset);
-
-
-    let rangeEnd = document.createRange();
-    rangeEnd.setStart(range.endContainer, range.endOffset);
-    rangeEnd.setEndAfter(this.getStyleParent(range.endContainer).parentElement);
+  removeStyle(range: Range) {
+    let startRange: Range = document.createRange();
+    startRange.setStart(this.getStyleParent(range.startContainer).parentElement, 0);
+    startRange.setEnd(range.startContainer, range.startOffset);
 
 
-    rangeStart.insertNode(rangeStart.extractContents());
-    rangeEnd.insertNode(rangeEnd.extractContents());
+    let endRange: Range = document.createRange();
+    endRange.setStart(range.endContainer, range.endOffset);
+    endRange.setEndAfter(this.getStyleParent(range.endContainer).parentElement);
+
+
+    startRange.insertNode(startRange.extractContents());
+    endRange.insertNode(endRange.extractContents());
 
 
     // Update the selected range to include all parent nodes that contain the styles of the selection, but not the parent that contains the style we are removing
@@ -162,56 +160,46 @@ export class TextComponent {
     // Extract the contents from the selected range
     let selectedContents = range.extractContents();
 
-    this.cleanUp(this._FormService.text.iframe.nativeElement.contentDocument.firstChild.children[1].firstChild.children[0]);
-
     // The count of selected contents is used to update the selected range
     let selectedContentsCount = selectedContents.childNodes.length;
 
     // Extract the contents from the selected range and place it before the End Range
-    rangeEnd.insertNode(selectedContents);
+    endRange.insertNode(selectedContents);
+
+    // Remove any residual elements
+    this.cleanUp(this.getParentNode(range.startContainer));
 
     // Update the selection
-    range.setStart(this.getFirstTextChild(rangeEnd.startContainer.childNodes[rangeEnd.startOffset]), 0);
-    let child = this.getLastTextChild(rangeEnd.startContainer.childNodes[rangeEnd.startOffset + selectedContentsCount - 1]);
+    range.setStart(this.getFirstTextChild(endRange.startContainer.childNodes[endRange.startOffset]), 0);
+    let child = this.getLastTextChild(endRange.startContainer.childNodes[endRange.startOffset + selectedContentsCount - 1]);
     range.setEnd(child, child.length);
   }
 
 
 
   cleanUp(node) {
-    
+    let removed: boolean;
 
-    for(let i = 0; i < node.children.length; i++) {
+    for (let i = 0; i < node.children.length; i++) {
 
-      if(node.children[i].getBoundingClientRect().width == 0) {
-        let index = i;
+      if (node.children[i].getBoundingClientRect().width == 0) {
         node.children[i].remove();
         i--;
+        removed = true;
       }
 
-      this.cleanUp(node.children[i]);
+      if (!removed) this.cleanUp(node.children[i]);
+      removed = false;
     }
-
-    // let var1 = node.getBoundingClientRect().width;
-    // let var2 = node.firstElementChild;
-    
-    // if(var1 != 0) this.cleanUp(node.firstElementChild);
-    
   }
 
 
   getParentNode(node) {
-    let startNode = node;
-
-    for (let i = 0; i < this.selectedRange.commonAncestorContainer.children.length; i++) {
-      let currentElement = this.selectedRange.commonAncestorContainer.children[i];
-      while (node.parentElement != this.selectedRange.commonAncestorContainer) {
-        if (node.parentElement == currentElement) return node.parentElement;
-        node = node.parentElement;
-      }
-
-      node = startNode;
+    while (node.parentElement != this._FormService.text.iframe.nativeElement.contentDocument.firstChild.children[1].firstChild) {
+      node = node.parentElement;
     }
+
+    return node;
   }
 
 
