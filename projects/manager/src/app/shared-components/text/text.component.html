@@ -6,28 +6,16 @@
 <div class="property-row" style="padding-top: 8px; padding-bottom: 8px;">
 
     <!-- Name -->
-    <div style="user-select: none; margin-right: 5px;">Font:</div> 
+    <div style="user-select: none; margin-right: 5px;">Font:</div>
 
     <!-- Value -->
     <div class="display-flex">
 
         <!-- Dropdown -->
-        <!-- <select style="width: 100%; max-width: 150px;" [value]="_FormService.text.fontFamily" (change)="_FormService.text.fontFamily = $event.target.value"> -->
-        <select style="width: 100%; max-width: 150px;">
-            <option value="Arial, Helvetica, sans-serif">Arial</option>
-            <option value="'Arial Black', Gadget, sans-serif">Arial Black</option>
-            <option value="'Book Antiqua', 'Palatino Linotype', Palatino, serif">Book Antiqua</option>
-            <option value="'Comic Sans MS', cursive, sans-serif">Comic Sans MS</option>
-            <option value="'Courier New', Courier, monospace">Courier New</option>
-            <option value="Georgia, serif">Georgia</option>
-            <option value="Impact, Charcoal, sans-serif">Impact</option>
-            <option value="'Lucida Console', Monaco, monospace">Lucida Console</option>
-            <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif">Lucida Sans Unicode</option>
-            <option value="'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino Linotype</option>
-            <option value="Tahoma, Geneva, sans-serif">Tahoma</option>
-            <option value="'Times New Roman', Times, serif">Times New Roman</option>
-            <option value="'Trebuchet MS', Helvetica, sans-serif">Trebuchet MS</option>
-            <option value="Verdana, Geneva, sans-serif">Verdana</option>
+        <select style="width: 100%; max-width: 150px;" [selectedIndex]="_FormService.textBox.font.selectedIndex"
+            (change)="_FormService.textBox.font.setStyleValue($event.target.value)">
+            <option *ngFor="let option of _FormService.textBox.font.options" [value]="option.value">{{option.key}}
+            </option>
         </select>
     </div>
 </div>
@@ -37,11 +25,11 @@
 <div class="property-row" style="padding-top: 8px; padding-bottom: 8px;">
 
     <!-- Name -->
-    <div style="user-select: none;">Font Size:</div> 
+    <div style="user-select: none;">Font Size:</div>
 
     <!-- Value -->
     <div class="display-flex">
-       
+
         <!-- Dropdown -->
         <select onchange="this.nextElementSibling.children[0].value=this.value" style="width:55px; position:relative;">
             <option value="6">6</option>
@@ -74,23 +62,26 @@
 <div class="property-row" style="padding-top: 7px; padding-bottom: 7px;">
 
     <!-- Name -->
-    <div style="user-select: none;">Style:</div> 
+    <div style="user-select: none;">Style:</div>
 
     <!-- Value -->
     <div class="display-flex">
-        
+
         <!-- Bold -->
-        <div class="icon-container" title="Bold (Ctrl+B)" (click)="onBoldClick()" [ngClass]="{'selected': _FormService.text.styleApplied}">
+        <div class="icon-container" title="Bold (Ctrl+B)" (click)="_FormService.textBox.bold.applyStyle()"
+            [ngClass]="{'selected': _FormService.textBox.bold.isSelected}">
             <i class="fas fa-bold"></i>
         </div>
 
         <!-- Italic -->
-        <div class="icon-container" title="Italic (Ctrl+I)">
+        <div class="icon-container" title="Italic (Ctrl+I)" (click)="_FormService.textBox.italic.applyStyle()"
+            [ngClass]="{'selected': _FormService.textBox.italic.isSelected}">
             <i class="fas fa-italic"></i>
         </div>
 
         <!-- Underline -->
-        <div class="icon-container" title="Underline (Ctrl+U)">
+        <div class="icon-container" title="Underline (Ctrl+U)" (click)="_FormService.textBox.underline.applyStyle()"
+            [ngClass]="{'selected': _FormService.textBox.underline.isSelected}">
             <i class="fas fa-underline"></i>
         </div>
 
@@ -141,11 +132,11 @@
 <div class="property-row" style="padding-top: 7px; padding-bottom: 7px;">
 
     <!-- Name -->
-    <div style="user-select: none;">Alignment:</div> 
+    <div style="user-select: none;">Alignment:</div>
 
     <!-- Value -->
     <div class="alignment-container">
-        
+
         <!-- Left align -->
         <div class="icon-container selected" title="Left align (Ctrl+Shift+L)">
             <i class="fas fa-align-left"></i>
@@ -181,11 +172,11 @@
 <div class="property-row" style="padding-top: 7px; padding-bottom: 7px;">
 
     <!-- Name -->
-    <div style="user-select: none;">Bullets:</div> 
+    <div style="user-select: none;">Bullets:</div>
 
     <!-- Value -->
     <div class="display-flex">
-        
+
         <!-- Numbered list -->
         <div class="icon-container selected" title="Numbered list (Ctrl+Shift+7)" (click)="onNumberedListClick()">
             <i class="fas fa-list-ol"></i>
@@ -208,11 +199,11 @@
 <div class="property-row" style="padding-top: 7px; padding-bottom: 7px;">
 
     <!-- Name -->
-    <div style="user-select: none;">Indent:</div> 
+    <div style="user-select: none;">Indent:</div>
 
     <!-- Value -->
     <div class="display-flex">
-        
+
         <!-- Decrease indent -->
         <div class="icon-container selected" title="Decrease indent (ctrl+[)">
             <i class="fas fa-outdent"></i>
@@ -226,4 +217,3 @@
 
     </div>
 </div>
-

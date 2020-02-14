@@ -8,6 +8,7 @@ import { Spacing } from '../classes/spacing';
 import { HoverTab } from '../classes/hover-tab';
 import { Color } from '../classes/color';
 import { Alignment } from '../classes/alignment';
+import { TextBox } from '../classes/text-box';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,7 @@ export class FormService {
   public margins: Spacing;
   public padding: Spacing;
   
-// public align: Align;
-  public text: any;
+  public textBox: TextBox;
   public alignment: Alignment
 
   public showColorPicker: boolean;
