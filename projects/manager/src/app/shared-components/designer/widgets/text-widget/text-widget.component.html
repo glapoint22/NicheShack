@@ -1,15 +1,25 @@
-<div class="widget" (dblclick)="onEdit()"
-     [style.margin]="margins.top + 'px ' + margins.right + 'px ' + margins.bottom + 'px ' + margins.left + 'px'">
- 
-    <div class="edit-button fas" ></div>
-    <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div>
-    <div class="left-handle"></div>
-    <div class="bottom-center-handle"></div>
-    <div class="right-handle"></div>
-    <div class="left-handle-bar"></div>
-    <div class="right-handle-bar"></div>
-    <div class="bottom-handle-bar"></div>
- 
-    <iframe  #iframe width="100%" height="100%" style="background: white;">
-    </iframe>
+<div #widget class="widget" [ngClass]="{'widget-selected': widgetService.selectedWidget == this}"
+    (mousedown)="onMousedown()" [style.marginTop.px]="margins.top"
+    [style.marginRight]="margins.right + (margins.right == 'auto' ? '' : 'px')" [style.marginBottom.px]="margins.bottom"
+    [style.marginLeft]="margins.left + (margins.left == 'auto' ? '' : 'px')" [style.maxWidth.px]="width ? width : null"
+    [style.minHeight.px]="height">
+
+    <!-- <div class="edit-button fas" ></div>
+    <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div> -->
+
+    <!-- Handles -->
+    <ng-container *ngIf="!inEditMode">
+        <div class="left-handle"></div>
+        <div class="bottom-center-handle"></div>
+        <div class="right-handle"></div>
+        <div class="left-handle-bar" (mousedown)="onHandleMove('left')"></div>
+        <div class="right-handle-bar" (mousedown)="onHandleMove('right')"></div>
+        <div class="bottom-handle-bar" (mousedown)="onHandleMove('bottom')"></div>
+    </ng-container>
+
+    <!-- Contents -->
+    <iframe #iframe width="100%" height="100%" style="background: white;"></iframe>
+
+    <!-- Cover -->
+    <div class="position-absolute-identity" (dblclick)="onEdit()" [style.display]="inEditMode ? 'none' : 'block'"></div>
 </div>
