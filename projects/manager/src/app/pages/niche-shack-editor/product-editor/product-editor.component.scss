@@ -26,106 +26,6 @@ input[type="checkbox"] {
     margin-right: 5px;
 }
 
-table {
-    min-width: 200px;
-
-    tr:first-child > td, tr > td:first-child {
-        background: #414141;
-    }
-
-    tr:nth-child(2) > td:nth-child(n+2) {
-        background: #3a3a3a;
-    }
-
-    tr:nth-child(2) > td:nth-child(3) {
-        width: 80px;
-        user-select: none;
-    }
-
-
-    tr:nth-child(n+3) > td:nth-child(2) {
-        cursor: pointer;
-    }
-
-
-    tr:nth-child(n+3) > td:nth-child(n+4) {
-        cursor: pointer;
-    }
-
-
-    tr:nth-child(n+3):nth-child(odd) > td:nth-child(n+2) {
-        background: #272727;
-    }
-
-    tr:nth-child(n+3):nth-child(even) > td:nth-child(n+2) {
-        background: #313030;
-    }
-
-    tr > td:first-child {
-        width: 22px;
-    }
-
-    tr > td:nth-child(2) {
-        width: 32px;
-    }
-
-    td {
-        border: 1px solid $border-color;
-        text-align: center;
-        padding: 5px;
-        height: 22px;
-        max-width: 150px;
-    }
-
-    .selected-row > td {
-        position: relative;
-        &::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background: $selected-fill-color;
-            border-top: 1px solid $selected-border-color;
-            border-bottom: 1px solid $selected-border-color;
-        }
-
-        &:first-child {
-            border-left: 1px solid $selected-border-color;
-        }
-
-        &:last-child {
-            border-right: 1px solid $selected-border-color;
-        }
-    }
-
-
-    @for $i from 1 through 20 {
-        &.selected-column-#{$i} * td:nth-child(#{$i}) {
-            position: relative;
-            &::after {
-                content: '';
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                bottom: 0;
-                background: $selected-fill-color;
-                border-left: 1px solid $selected-border-color;
-                border-right: 1px solid $selected-border-color;
-            }
-        }
-    
-        &.selected-column-#{$i} > tr:first-child > td:nth-child(#{$i}) {
-            border-top: 1px solid $selected-border-color;
-        }
-    
-        &.selected-column-#{$i} > tr:last-child > td:nth-child(#{$i}) {
-            border-bottom: 1px solid $selected-border-color;
-        }
-    }
-}
 
 .dropdown-container {
     width: 100%;
@@ -145,5 +45,382 @@ table {
     max-width: 60px;
     .menu-option {
         padding-left: 10px;
+    }
+}
+
+
+
+
+// -----------------------------( CONTENT )------------------------------ \\
+
+table {
+
+    // Table style
+    td {
+        border: 1px solid $border-color;
+        text-align: center;
+        padding: 5px;
+        height: 22px;
+        min-width: 50px;
+    }
+
+     // Row selector width
+     tr > td:first-child {
+        min-width: 22px;
+    }
+
+
+    // Content type section width
+    tr > td:nth-child(2) {
+        min-width: 32px;
+    }
+
+    
+    // Non selectors
+    tr:first-child > td:nth-child(-n+3), tr:nth-child(2) > td:first-child{
+        background: #454545;
+        border-left-color: transparent;
+        border-left-style: double;
+        border-top-color: transparent;
+        border-top-style: double;
+    }
+
+
+    tr:nth-child(2) > td:nth-child(2) {
+        background: #3c3c3c;
+        border-right-color: transparent;
+        border-left-color:#606060;
+        border-left-style: double;
+        border-top-color: #606060;
+        border-top-style: double;
+        border-bottom-color: #606060;
+    }
+    
+
+    // Items cell
+    tr:nth-child(2) > td:nth-child(3) {
+        background: #3c3c3c;
+        user-select: none;
+        font-size: 15px;
+        color: white;
+        border-right-color: #606060;
+        border-bottom-color: #606060;
+        border-top-color: #606060;
+        border-top-style: double;
+        
+    }
+    
+    
+
+
+
+
+    // Column Selectors
+    tr:first-child > td:nth-child(n+4) {
+        background: #565656;
+        border-color: #757575;
+        border-left-color: #757575;
+        border-left-style: double;
+        cursor: pointer;
+
+        &:hover:not(.selected-cells) {
+            background: lighten(#565656, 5%);
+            border-color: lighten(#757575, 12%);
+            border-style: double;
+        }
+        &.selected-cells {
+            cursor: default;
+            background: #3c6080;
+            border-left-color: #52adfb;
+            border-left-style: double;
+            border-top-color: #52adfb;
+            border-top-style: double;
+            border-right-color: #52adfb;
+            border-right-style: double;
+        }
+    }
+
+
+    // Row Selectors
+    tr:nth-child(n+3) > td:first-child {
+        background: #565656;
+        border-color: #757575;
+        border-top-color: #757575;
+        border-top-style: double;
+        cursor: pointer;
+
+        &:hover:not(.selected-cells) {
+            background: lighten(#565656, 5%);
+            border-color: lighten(#757575, 12%);
+            border-style: double;
+        }
+        &.selected-cells {
+            cursor: default;
+            background: #3c6080;
+            border-left-color: #52adfb;
+            border-left-style: double;
+            border-top-color: #52adfb;
+            border-top-style: double;
+            border-bottom-color: #52adfb;
+            border-bottom-style: double;
+        }
+    }
+
+   
+    // Content types (Odd)
+    tr:nth-child(n+3):nth-child(odd) > td:nth-child(2) {
+        background: #272727;
+        cursor: pointer;
+        &:hover:not(.selected-cells) {
+            background: lighten(#272727, 7%);
+            border-color: lighten(#4f4f4f, 20%);
+            border-style: double;
+        }
+        &.selected-content-type {
+            background: #1b3f5f;
+            border-color: #52adfb;
+            border-style: double;
+        }
+        &.selected-cells {
+            background: #1b3f5f;
+            border-top-color: #52adfb;
+            border-top-style: double;
+            border-bottom-color: #52adfb;
+            border-bottom-style: double;
+            &:hover {
+                background: lighten(#1b3f5f, 8%);
+                border-color: lighten(#52adfb, 8%);
+                border-style: double;
+            }
+        }
+    }
+
+
+    // Content types (Even)
+    tr:nth-child(n+3):nth-child(even) > td:nth-child(2) {
+        background: #313030;
+        cursor: pointer;
+        &:hover:not(.selected-cells) {
+            background: lighten(#313030, 7%);
+            border-color: lighten(#4f4f4f, 20%);
+            border-style: double;
+        }
+        &.selected-content-type {
+            background: #224565;
+            border-color: #52adfb;
+            border-style: double;
+        }
+        &.selected-cells {
+            background: #224565;
+            border-top-color: #52adfb;
+            border-top-style: double;
+            border-bottom-color: #52adfb;
+            border-bottom-style: double;
+            &:hover {
+                background: lighten(#224565, 8%);
+                border-color: lighten(#52adfb, 8%);
+                border-style: double;
+            }
+        }
+    }
+    
+
+
+    // Item Description (Odd)
+    tr:nth-child(n+3):nth-child(odd) > td:nth-child(3) {
+        background: #272727;
+        font-size: 12px;
+        text-align: left;
+        
+        &.selected-cells {
+            color: white;
+            background: #1b3f5f;
+            border-top-color: #52adfb;
+            border-top-style: double;
+            border-bottom-color: #52adfb;
+            border-bottom-style: double;
+        }
+        &:focus {
+            background: #1b3f5f;
+            color: white;
+            outline: none;
+            border-color: #52adfb;
+            border-style: double;
+        }
+    }
+
+
+    // Item Description (Even)
+    tr:nth-child(n+3):nth-child(even) > td:nth-child(3) {
+        background: #313030;
+        font-size: 12px;
+        text-align: left;
+        
+        &.selected-cells {
+            color: white;
+            background: #224565;
+            border-top-color: #52adfb;
+            border-top-style: double;
+            border-bottom-color: #52adfb;
+            border-bottom-style: double;
+        }
+        &:focus {
+            background: #224565;
+            color: white;
+            outline: none;
+            border-color: #52adfb;
+            border-style: double;
+        }
+    }
+
+
+    
+
+
+    // Price Points
+    tr:nth-child(2) > td:nth-child(n+4) {
+        background: #3c3c3c;
+        border-color: #606060;
+        color: white;
+        font-size: 12px;
+        padding-left: 15px;
+        padding-right: 15px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+        &.selected-cells {
+            background: #2a4e6e;
+            border-left-color: #52adfb;
+            border-left-style: double;
+            border-right-color: #52adfb;
+            border-right-style: double;
+        }
+        &:focus {
+            background: #2a4e6e;
+            outline: none;
+            border-color: #52adfb;
+            border-style: double;
+        }
+    }
+
+    
+
+
+    
+
+
+    // Price Point Options (Odd)
+    tr:nth-child(n+3):nth-child(odd) > td:nth-child(n+4) {
+        background: #272727;
+        cursor: pointer;
+
+        &:hover:not(.selected-price-point-option) {
+            background: lighten(#272727, 5%);
+            border-color: lighten(#4f4f4f, 15%);
+            border-style: double;
+        }
+        &.selected-price-point-option {
+            background: #1b3f5f;
+            border-color: #52adfb;
+            border-style: double;
+        }
+        &.selected-cells {
+            background: #1b3f5f;
+        }
+        &.selected-column {
+            border-left-color: #52adfb;
+            border-left-style: double;
+            border-right-color: #52adfb;
+            border-right-style: double;
+            &:hover {
+                background: lighten(#1b3f5f, 5%);
+                border-color: lighten(#52adfb, 10%);
+                border-style: double;
+            }
+        }
+        &.selected-row {
+            border-top-color: #52adfb;
+            border-top-style: double;
+            border-bottom-color: #52adfb;
+            border-bottom-style: double;
+            &:hover {
+                background: lighten(#1b3f5f, 5%);
+                border-color: lighten(#52adfb, 10%);
+                border-style: double;
+            }
+        }
+    }
+
+
+
+    // Price Point Options (Even)
+    tr:nth-child(n+3):nth-child(even) > td:nth-child(n+4) {
+        background: #313030;
+        cursor: pointer;
+
+        &:hover:not(.selected-price-point-option) {
+            background: lighten(#313030, 5%);
+            border-color: lighten(#4f4f4f, 15%);
+            border-style: double;
+        }
+        &.selected-price-point-option {
+            background: #1b3f5f;
+            border-color: #52adfb;
+            border-style: double;
+        }
+        &.selected-cells {
+            background: #224565;
+        }
+        &.selected-column {
+            border-left-color: #52adfb;
+            border-left-style: double;
+            border-right-color: #52adfb;
+            border-right-style: double;
+            &:hover {
+                background: lighten(#224565, 5%);
+                border-color: lighten(#52adfb, 10%);
+                border-style: double;
+            }
+        }
+        &.selected-row {
+            border-top-color: #52adfb;
+            border-top-style: double;
+            border-bottom-color: #52adfb;
+            border-bottom-style: double;
+            &:hover {
+                background: lighten(#224565, 5%);
+                border-color: lighten(#52adfb, 10%);
+                border-style: double;
+            }
+        }
+    }
+
+
+    // Price Point Options Last Child (Column)
+    tr:last-child > td:nth-child(n+4) {
+        &.selected-column {
+            border-bottom-color: #52adfb;
+            border-bottom-style: double;
+        }
+    }
+
+    // Price Point Options Last Child (Row-Odd)
+    tr:nth-child(n+3):nth-child(odd) > td:last-child {
+        &.selected-row {
+            border-right-color: #52adfb;
+            border-right-style: double;
+        }
+    }
+
+    // Price Point Options Last Child (Row-Even)
+    tr:nth-child(n+3):nth-child(even) > td:last-child {
+        &.selected-row {
+            border-right-color: #52adfb;
+            border-right-style: double;
+        }
+    }
+
+    // Price points check symbol
+    .fa-check {
+        color: rgb(0, 255, 0);
     }
 }

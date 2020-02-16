@@ -17,9 +17,9 @@
 </dialog-box> -->
 
 
-<!-- <dialog-box [dialogBoxName]="'Content Types'">
-    <content-type-form></content-type-form>
-</dialog-box> -->
+
+<content-type-form></content-type-form>
+
 
 
 <!-- <dialog-box [dialogBoxName]="'Media Browser'" [width]="916">
@@ -31,8 +31,8 @@
     <hierarchy (showForm)="showForm($event)"></hierarchy>
 
     <!-- Product Form -->
-    <div *ngIf="showProductForm" class="width-100">
-        <product-form [productInput]="item" (onClose)="showProductForm = false"></product-form>
+    <div class="width-100"><!-- *ngIf="showProductForm" -->
+        <product-form  (onClose)="showProductForm = false"></product-form><!-- [productInput]="item" -->
     </div>
     
     <!-- Niche Form -->
