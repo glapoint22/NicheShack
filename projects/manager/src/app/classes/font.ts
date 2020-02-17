@@ -1,9 +1,6 @@
-import { KeyValue } from '@angular/common';
-import { PersistentStyle } from './persistent-style';
+import { DropdownStyle } from './dropdown-style';
 
-export class Font extends PersistentStyle {
-    public options: Array<KeyValue<string, string>>;
-    public selectedIndex: number;
+export class Font extends DropdownStyle {
 
     constructor(contentDocument: HTMLDocument) {
         super(contentDocument);
@@ -68,27 +65,5 @@ export class Font extends PersistentStyle {
         ]
 
         this.style = 'fontFamily';
-        this.styleValue = this.options[0].value;
-    }
-
-    setStyleValue(value: string) {
-        this.styleValue = value;
-        this.applyStyle();
-    }
-
-    checkSelection() {
-        this.styleValue = window.getComputedStyle(this.selectedRange.startContainer.parentElement)[this.style];
-        
-
-        if(this.selectionHasStyle()) {
-            this.selectedIndex = this.options.findIndex(x => x.value == this.styleValue);
-        } else {
-            this.selectedIndex = -1;
-        }
-    }
-
-    applyStyle() {
-        super.applyStyle();
-        this.selectedIndex = this.options.findIndex(x => x.value == this.styleValue);
     }
 }

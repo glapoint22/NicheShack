@@ -31,27 +31,16 @@
     <div class="display-flex">
 
         <!-- Dropdown -->
-        <select onchange="this.nextElementSibling.children[0].value=this.value" style="width:55px; position:relative;">
-            <option value="6">6</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="14">14</option>
-            <option value="18">18</option>
-            <option value="24">24</option>
-            <option value="30">30</option>
-            <option value="36">36</option>
-            <option value="48">48</option>
-            <option value="60">60</option>
-            <option value="72">72</option>
+        <select style="width:55px; position:relative;" [selectedIndex]="_FormService.textBox.fontSize.selectedIndex"
+            (change)="_FormService.textBox.fontSize.setStyleValue($event.target.value)">
+            <option *ngFor="let option of _FormService.textBox.fontSize.options" [value]="option.value">{{option.key}}
+            </option>
         </select>
 
         <!-- Input text overlaying dropdown for input ability -->
-        <div class="font-size-input-container">
+        <!-- <div class="font-size-input-container">
             <input type="text">
-        </div>
+        </div> -->
 
     </div>
 </div>

@@ -17,7 +17,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
   constructor(widgetService: WidgetService, private applicationRef: ApplicationRef, public _FormService: FormService) { super(widgetService) }
 
   ngOnInit() {
-    this.height = 40;
+    this.height = 80;
     super.ngOnInit();
   }
 

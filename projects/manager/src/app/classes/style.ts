@@ -15,7 +15,6 @@ export class Style {
 
 
     createStyle(range: Range) {
-        // Create the span element
         let span = document.createElement("span");
 
         // Apply the style
@@ -23,19 +22,15 @@ export class Style {
 
         // Insert the contents at the start of the range
         span.appendChild(range.extractContents());
+        this.removeDuplicateStyle(span);
         range.insertNode(span);
 
-        // // Remove any residual elements
-        // this.cleanUp(this.getParent(range.startContainer));
+        this.removeEmptyNodes(this.getParent(range.startContainer));
 
-        // this.removeDuplicateStyle(span);
-
-        // this.mergeTextNodes(span);
-
-        // // Update the selection
-        // range.setStart(this.getFirstTextChild(span), 0);
-        // let lastTextChild = this.getLastTextChild(span);
-        // range.setEnd(lastTextChild, lastTextChild.length);
+        // Update the selection
+        range.setStart(this.getFirstTextChild(span), 0);
+        let lastTextChild = this.getLastTextChild(span);
+        range.setEnd(lastTextChild, lastTextChild.length);
     }
 
 
@@ -44,7 +39,7 @@ export class Style {
         while (node.parentElement != this.contentDocument.body.firstElementChild) {
             node = node.parentElement;
         }
-        return node as HTMLElement;
+        return <HTMLElement>node;
     }
 
 
@@ -58,7 +53,8 @@ export class Style {
             let startRangeParent: HTMLElement = this.getParent(this.selectedRange.startContainer);
             let startRange: Range = document.createRange();
             startRange.setStart(this.selectedRange.startContainer, this.selectedRange.startOffset);
-            startRange.setEndAfter(startRangeParent.lastChild);
+            let lastChild = this.getLastTextChild(startRangeParent.lastChild);
+            startRange.setEnd(lastChild, lastChild.length);
 
             // Create the style for the start range
             this.createStyle(startRange);
@@ -67,7 +63,7 @@ export class Style {
             // Create the end range
             let endRangeParent: HTMLElement = this.getParent(this.selectedRange.endContainer);
             let endRange: Range = document.createRange();
-            endRange.setStart(endRangeParent, 0);
+            endRange.setStart(this.getFirstTextChild(endRangeParent.firstChild), 0);
             endRange.setEnd(this.selectedRange.endContainer, this.selectedRange.endOffset);
 
             // Create the style for the end range
@@ -87,8 +83,9 @@ export class Style {
 
                     // Create the mid range
                     let midRange: Range = document.createRange();
-                    midRange.setStart(childNode, 0);
-                    midRange.setEndAfter(childNode.lastChild);
+                    midRange.setStart(this.getFirstTextChild(childNode.firstChild), 0);
+                    let lastChild = this.getLastTextChild(childNode.lastChild);
+                    midRange.setEnd(lastChild, lastChild.length);
 
                     // Create the style for the mid range
                     this.createStyle(midRange);
@@ -125,81 +122,82 @@ export class Style {
     }
 
 
-    cleanUp(parent: HTMLElement) {
-        let removed: boolean;
 
-        for (let i = 0; i < parent.children.length; i++) {
 
-            if (parent.children[i].getBoundingClientRect().width == 0) {
-                parent.children[i].remove();
-                i--;
-                removed = true;
-            }
 
-            if (!removed) this.cleanUp(parent.children[i] as HTMLElement);
-            removed = false;
-        }
-    }
 
     getStyleParent(node: Node): HTMLElement {
-        let parent = this.getParent(node);
         while (node.parentElement.style[this.style] == '') {
             node = node.parentElement;
-            if (node == parent) {
-                node = null;
-                break;
-            }
         }
-        return node as HTMLElement;
+        return node.parentElement;
     }
 
 
-    removeStyle(range: Range) {
-        let startRange: Range = document.createRange();
-        startRange.setStart(this.getStyleParent(range.startContainer).parentElement, 0);
-        startRange.setEnd(range.startContainer, range.startOffset);
 
 
-        let endRange: Range = document.createRange();
-        endRange.setStart(range.endContainer, range.endOffset);
-        endRange.setEndAfter(this.getStyleParent(range.endContainer).parentElement);
+    removeStyle(selectedRange: Range) {
+        let styleParent: HTMLElement = this.getStyleParent(selectedRange.startContainer);
+        let whole: boolean = selectedRange.startOffset == 0 && selectedRange.endOffset == (<Text>selectedRange.endContainer).length;
+        let mid: boolean = selectedRange.startOffset > 0 && selectedRange.endOffset < (<Text>selectedRange.endContainer).length;
+        let end: boolean = selectedRange.startOffset > 0 && selectedRange.endOffset == (<Text>selectedRange.endContainer).length;
 
+        // If middle or end of the container is selected
+        if (mid || end) {
+            let startRange: Range = document.createRange();
 
-        startRange.insertNode(startRange.extractContents());
-        endRange.insertNode(endRange.extractContents());
+            // Insert the contents that is before the selected range into a start range
+            startRange.setStartBefore(styleParent);
+            startRange.setEnd(selectedRange.startContainer, selectedRange.startOffset);
+            startRange.insertNode(startRange.extractContents());
+        }
 
+        // Insert the selected range contents before the style parent
+        selectedRange.setStart(styleParent, 0);
+        let selectedContents: DocumentFragment = selectedRange.extractContents();
+        let selectedContentsCount: number = selectedContents.childNodes.length;
+        styleParent.parentElement.insertBefore(selectedContents, styleParent);
 
-        // Update the selected range to include all parent nodes that contain the styles of the selection, but not the parent that contains the style we are removing
-        range.setStartBefore(this.getStyleParent(range.startContainer));
+        // Update the selection
+        let index = Array.from(styleParent.parentElement.childNodes).indexOf(styleParent);
+        let lastTextChild: Text = this.getLastTextChild(styleParent.previousSibling);
 
+        selectedRange.setStart(this.getFirstTextChild(styleParent.parentElement.childNodes[index - selectedContentsCount]), 0);
+        selectedRange.setEnd(lastTextChild, lastTextChild.length);
 
-        // Extract the contents from the selected range
-        let selectedContents: DocumentFragment = range.extractContents();
-
-        // The count of selected contents is used to update the selected range
-        // let selectedContentsCount: number = selectedContents.childNodes.length;
-
-        // Extract the contents from the selected range and place it before the End Range
-        endRange.insertNode(selectedContents);
-
-        // Remove any residual elements
-        // this.cleanUp(this.getParent(range.startContainer));
-
-        // // Update the selection
-        // range.setStart(this.getFirstTextChild(endRange.startContainer.childNodes[endRange.startOffset]), 0);
-        // let child: Text = this.getLastTextChild(endRange.startContainer.childNodes[endRange.startOffset + selectedContentsCount - 1]);
-        // range.setEnd(child, child.length);
+        // Remove the style parent contents
+        if (whole || end) styleParent.remove();
     }
+
+
+
+
+
+
+    removeEmptyNodes(parent: HTMLElement) {
+        for (let i = 0; i < parent.childNodes.length; i++) {
+            let childNode: ChildNode = parent.childNodes[i];
+
+            if ((childNode.nodeType == 1 && (<HTMLElement>childNode).getBoundingClientRect().width == 0) || (childNode.nodeType == 3 && childNode.nodeValue.length == 0)) {
+                childNode.remove();
+                i--;
+                continue;
+            }
+
+            this.removeEmptyNodes(<HTMLElement>childNode);
+        }
+    }
+
 
 
     removeDuplicateStyle(element: HTMLElement) {
         for (let i = 0; i < element.childElementCount; i++) {
-            let child = element.children[i] as HTMLElement;
+            let child: HTMLElement = <HTMLElement>element.children[i];
 
             // If there is a child that contains the parent style
             if (child.style[this.style] != '') {
                 let range: Range = document.createRange();
-                let lastTextChild = this.getLastTextChild(child);
+                let lastTextChild: Text = this.getLastTextChild(child);
 
                 // Set the range start and end
                 range.setStart(this.getFirstTextChild(child), 0);
@@ -214,21 +212,6 @@ export class Style {
     }
 
 
-
-    mergeTextNodes(element: HTMLElement) {
-        for (let i = 0; i < element.childNodes.length - 1; i++) {
-            let child: ChildNode = element.childNodes[i];
-
-            if (child.nodeType == 3 && child.nextSibling.nodeType == 3) {
-                let text: Text = child as Text;
-                let textSibling: Text = child.nextSibling as Text;
-
-                text.appendData(textSibling.data);
-                textSibling.remove();
-                i--;
-            }
-        }
-    }
 
 
     selectionHasStyle(): boolean {
@@ -245,7 +228,7 @@ export class Style {
         for (let i = 0; i < node.childNodes.length; i++) {
             let childNode = node.childNodes[i];
 
-            if (childNode.nodeType == 3 && !childNode.nodeValue.match(/^\s+$/)) {
+            if (childNode.nodeType == 3) {
                 if (childNode == this.selectedRange.startContainer || (this.selectedRange.intersectsNode(childNode))) {
                     if (!this.nodeHasStyle(childNode.parentElement)) return false;
                     if (childNode == this.selectedRange.endContainer) return true;

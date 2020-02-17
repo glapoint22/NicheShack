@@ -4,12 +4,14 @@ import { ApplicationRef } from '@angular/core';
 import { Style } from './style';
 import { Underline } from './underline';
 import { Font } from './font';
+import { FontSize } from './font-size';
 
 export class TextBox {
     public bold: Bold;
     public italic: Italic;
     public underline: Underline;
     public font: Font;
+    public fontSize: FontSize;
 
     constructor(private contentDocument: HTMLDocument, applicationRef: ApplicationRef) {
         // Styles
@@ -17,6 +19,7 @@ export class TextBox {
         this.italic = new Italic(contentDocument);
         this.underline = new Underline(contentDocument);
         this.font = new Font(contentDocument);
+        this.fontSize = new FontSize(contentDocument);
 
         // Process change detection
         contentDocument.addEventListener("mouseup", () => applicationRef.tick());
@@ -31,6 +34,7 @@ export class TextBox {
         content.style.left = '0';
         content.style.outline = "none";
         content.style.fontFamily = 'Arial, Helvetica, sans-serif';
+        content.style.fontSize = '14px';
         content.innerHTML = '<div>This is a temporary paragraph. Click here to add your own text.</div>';
     }
 

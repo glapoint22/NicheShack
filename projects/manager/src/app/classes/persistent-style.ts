@@ -3,18 +3,25 @@ import { Style } from './style';
 export class PersistentStyle extends Style {
 
     applyStyle() {
-        let endContainer: Text = this.selectedRange.endContainer as Text;
+        let styleParent: HTMLElement = this.getStyleParent(this.selectedRange.startContainer);
 
-        if(this.selectedRange.startOffset == 0 && this.selectedRange.endOffset == endContainer.length) {
-            let styleParent = this.getStyleParent(this.selectedRange.startContainer);
+        if (styleParent != this.contentDocument.body.firstElementChild &&
+            this.selectedRange.startOffset == 0 &&
+            this.selectedRange.endOffset == (<Text>this.selectedRange.endContainer).length &&
+            this.getFirstTextChild(styleParent) == this.selectedRange.startContainer &&
+            this.getLastTextChild(styleParent) == this.selectedRange.endContainer) {
 
-            if(styleParent) {
-                styleParent.parentElement.style[this.style] = this.styleValue;
-            } else {
-                super.applyStyle();
-            }
+            styleParent.style[this.style] = this.styleValue;
+
+            this.removeDuplicateStyle(styleParent);
+
         } else {
             super.applyStyle();
         }
+    }
+
+    setStyleValue(value: string) {
+        this.styleValue = value;
+        this.applyStyle();
     }
 }
