@@ -24,7 +24,7 @@ export class FormService {
   
   public textBox: TextBox;
   public alignment: Alignment
-
+  public showContentTypeForm: boolean;
   public showColorPicker: boolean;
   public colorPicker: Color;
   public showButtonForm: boolean;
@@ -35,7 +35,7 @@ export class FormService {
   public showLineForm: boolean;
   public showVideoForm: boolean;
   public showRowForm: boolean;
-  
+  public contentType;
   public initialFill: FillColor = new FillColor();
   public initialBorder: Border = new Border();
   public initialCorners: Corners = new Corners();
