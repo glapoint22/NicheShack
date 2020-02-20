@@ -5,6 +5,8 @@ import { Style } from './style';
 import { Underline } from './underline';
 import { Font } from './font';
 import { FontSize } from './font-size';
+import { FontColor } from './font-color';
+import { HighlightColor } from './highlight-color';
 
 export class TextBox {
     public bold: Bold;
@@ -12,6 +14,8 @@ export class TextBox {
     public underline: Underline;
     public font: Font;
     public fontSize: FontSize;
+    public fontColor: FontColor;
+    public highlightColor: HighlightColor;
 
     constructor(private contentDocument: HTMLDocument, applicationRef: ApplicationRef) {
         // Styles
@@ -20,6 +24,8 @@ export class TextBox {
         this.underline = new Underline(contentDocument);
         this.font = new Font(contentDocument);
         this.fontSize = new FontSize(contentDocument);
+        this.fontColor = new FontColor(contentDocument);
+        this.highlightColor = new HighlightColor(contentDocument);
 
         // Process change detection
         contentDocument.addEventListener("mouseup", () => applicationRef.tick());
@@ -35,7 +41,7 @@ export class TextBox {
         content.style.outline = "none";
         content.style.fontFamily = 'Arial, Helvetica, sans-serif';
         content.style.fontSize = '14px';
-        content.innerHTML = '<div>This is a temporary paragraph. Click here to add your own text.</div>';
+        content.innerHTML = '<div>This is a temporary paragraph. Double click to edit this text.</div>';
     }
 
     selectContents() {
@@ -44,6 +50,7 @@ export class TextBox {
         let lastTextChild = style.getLastTextChild(this.contentDocument.body.lastChild);
         let sel = this.contentDocument.getSelection();
         let range = document.createRange();
+        let content: HTMLElement = this.contentDocument.body.firstElementChild as HTMLElement;
 
         // Set the start and end of the range
         range.setStart(firstTextChild, 0);
@@ -54,7 +61,7 @@ export class TextBox {
         sel.addRange(range);
 
         // Give focus
-        this.contentDocument.body.focus();
+        content.focus();
 
         // Check to see if each style is applied in the selection
         let keys = Object.keys(this);

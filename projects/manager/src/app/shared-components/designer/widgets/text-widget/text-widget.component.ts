@@ -23,7 +23,9 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
 
   ngAfterViewInit() {
     this.iframe.nativeElement.srcdoc = document.createElement('div').outerHTML;
-    this.iframe.nativeElement.onload = (event) => this.textBox = new TextBox(event.currentTarget.contentDocument, this.applicationRef);
+    this.iframe.nativeElement.onload = (event) => {
+      this.textBox = new TextBox(event.currentTarget.contentDocument, this.applicationRef);
+    }
   }
 
 

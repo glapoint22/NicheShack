@@ -5,9 +5,9 @@ export class PersistentStyle extends Style {
     applyStyle() {
         let styleParent: HTMLElement = this.getStyleParent(this.selectedRange.startContainer);
 
-        if (styleParent != this.contentDocument.body.firstElementChild &&
+        if (styleParent && styleParent != this.contentDocument.body.firstElementChild &&
             this.selectedRange.startOffset == 0 &&
-            this.selectedRange.endOffset == (<Text>this.selectedRange.endContainer).length &&
+            this.selectedRange.endOffset == (this.selectedRange.endContainer as Text).length &&
             this.getFirstTextChild(styleParent) == this.selectedRange.startContainer &&
             this.getLastTextChild(styleParent) == this.selectedRange.endContainer) {
 

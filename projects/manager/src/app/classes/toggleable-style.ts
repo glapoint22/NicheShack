@@ -78,5 +78,7 @@ export class ToggleableStyle extends Style {
             // Flag that this style is NOT selected
             this.isSelected = false;
         }
+
+        this.setFocus();
     }
 }

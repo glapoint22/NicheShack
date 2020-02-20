@@ -6,6 +6,7 @@ import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { Spacing } from 'projects/manager/src/app/classes/spacing';
 import { WidgetComponent } from '../widget/widget.component';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
+import { Color } from 'projects/manager/src/app/classes/color';
 
 @Component({
   selector: 'line-widget',
@@ -34,12 +35,12 @@ export class LineWidgetComponent extends WidgetComponent {
 
   // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
   getBorderColor() {
-    return this._FormService.RGBAToHexA(this.fill.color.r, this.fill.color.g, this.fill.color.b, this.fill.color.a);
+    return Color.RGBAToHexA(this.fill.color);
   }
 
 
   // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
   getShadowColor() {
-    return this._FormService.RGBAToHexA(this.shadow.color.r, this.shadow.color.g, this.shadow.color.b, this.shadow.color.a);
+    return Color.RGBAToHexA(this.shadow.color);
   }
 }

@@ -8,6 +8,7 @@ import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { HoverTab } from 'projects/manager/src/app/classes/hover-tab';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
+import { Color } from 'projects/manager/src/app/classes/color';
 
 @Component({
   selector: 'button-widget',
@@ -76,14 +77,14 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     if (this.hoverTab.selected) {
 
       // Style the button border with the hover look
-      hexA = this._FormService.RGBAToHexA(this.border.hoverColor.r, this.border.hoverColor.g, this.border.hoverColor.b, this.border.hoverColor.a);
+      hexA = Color.RGBAToHexA(this.border.hoverColor);
 
 
       // If the normal tab on the button form is selected
     } else {
 
       // Style the button border with the normal look
-      hexA = this._FormService.RGBAToHexA(this.border.color.r, this.border.color.g, this.border.color.b, this.border.color.a);
+      hexA = Color.RGBAToHexA(this.border.color);
     }
     return hexA;
   }
@@ -113,6 +114,6 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
   // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
   getShadowColor() {
-    return this._FormService.RGBAToHexA(this.shadow.color.r, this.shadow.color.g, this.shadow.color.b, this.shadow.color.a);
+    return Color.RGBAToHexA(this.shadow.color);
   }
 }

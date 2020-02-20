@@ -20,11 +20,16 @@ export class Style {
         // Apply the style
         span.style[this.style] = this.styleValue;
 
-        // Insert the contents at the start of the range
+        // Place the contents inside the span
         span.appendChild(range.extractContents());
+
+        // Remove any duplicate styles within the contents
         this.removeDuplicateStyle(span);
+
+        // Insert the contents at the start of the range
         range.insertNode(span);
 
+        // Remove any empty or blank text nodes that may have been generated
         this.removeEmptyNodes(this.getParent(range.startContainer));
 
         // Update the selection
@@ -39,7 +44,7 @@ export class Style {
         while (node.parentElement != this.contentDocument.body.firstElementChild) {
             node = node.parentElement;
         }
-        return <HTMLElement>node;
+        return node as HTMLElement;
     }
 
 
@@ -127,7 +132,7 @@ export class Style {
 
 
     getStyleParent(node: Node): HTMLElement {
-        while (node.parentElement.style[this.style] == '') {
+        while (node.parentElement != null && node.parentElement.style[this.style] == '') {
             node = node.parentElement;
         }
         return node.parentElement;
@@ -138,9 +143,12 @@ export class Style {
 
     removeStyle(selectedRange: Range) {
         let styleParent: HTMLElement = this.getStyleParent(selectedRange.startContainer);
-        let whole: boolean = selectedRange.startOffset == 0 && selectedRange.endOffset == (<Text>selectedRange.endContainer).length;
-        let mid: boolean = selectedRange.startOffset > 0 && selectedRange.endOffset < (<Text>selectedRange.endContainer).length;
-        let end: boolean = selectedRange.startOffset > 0 && selectedRange.endOffset == (<Text>selectedRange.endContainer).length;
+        let startText = this.getFirstTextChild(styleParent);
+        let endText = this.getLastTextChild(styleParent);
+
+        let whole: boolean = selectedRange.comparePoint(startText, 0) == 0 && selectedRange.comparePoint(endText, endText.length) == 0;
+        let mid: boolean = selectedRange.comparePoint(startText, 0) == -1 && selectedRange.comparePoint(endText, endText.length) == 1;
+        let end: boolean = selectedRange.comparePoint(startText, 0) == -1 && selectedRange.comparePoint(endText, endText.length) == 0;
 
         // If middle or end of the container is selected
         if (mid || end) {
@@ -178,13 +186,15 @@ export class Style {
         for (let i = 0; i < parent.childNodes.length; i++) {
             let childNode: ChildNode = parent.childNodes[i];
 
-            if ((childNode.nodeType == 1 && (<HTMLElement>childNode).getBoundingClientRect().width == 0) || (childNode.nodeType == 3 && childNode.nodeValue.length == 0)) {
+            if ((childNode.nodeType == 1 &&
+                (childNode as HTMLElement).getBoundingClientRect().width == 0) ||
+                (childNode.nodeType == 3 && childNode.nodeValue.length == 0)) {
                 childNode.remove();
                 i--;
                 continue;
             }
 
-            this.removeEmptyNodes(<HTMLElement>childNode);
+            this.removeEmptyNodes(childNode as HTMLElement);
         }
     }
 
@@ -192,7 +202,7 @@ export class Style {
 
     removeDuplicateStyle(element: HTMLElement) {
         for (let i = 0; i < element.childElementCount; i++) {
-            let child: HTMLElement = <HTMLElement>element.children[i];
+            let child: HTMLElement = element.children[i] as HTMLElement;
 
             // If there is a child that contains the parent style
             if (child.style[this.style] != '') {
@@ -244,5 +254,29 @@ export class Style {
 
     nodeHasStyle(node: HTMLElement): boolean {
         return window.getComputedStyle(node)[this.style] == this.styleValue;
+    }
+
+    nodeHasStyleAlt(node: HTMLElement): boolean {
+        // This method is used when nodeHasStyle cannot be used (style is not inherited eg. background color and underline)
+        while (node != this.contentDocument.body.firstElementChild) {
+            
+            // If this style is applied
+            if(node.style[this.style] != '') {
+                // If the style value applied does not equal this style value, return false
+                if(node.style[this.style] != this.styleValue) return false;
+
+                return true;
+            } 
+
+            node = node.parentElement;
+        }
+
+        return false;
+    }
+
+    setFocus() {
+        let content: HTMLElement = this.contentDocument.body.firstElementChild as HTMLElement;
+        
+        content.focus();
     }
 }

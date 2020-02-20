@@ -6,5 +6,5 @@ export class Shadow {
     y: number = 5;
     blur: number = 5;
     size: number = 5;
-    color: Color = { r: 0, g: 0, b: 0, a: 0.75 };
+    color: Color = new Color(0, 0, 0, 0.75);
 }

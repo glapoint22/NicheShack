@@ -61,7 +61,8 @@ export class ContainerFormComponent {
   // -------------------------------------( ON TAB SELECT )-----------------------------------\\
   onTabSelect(tab: string) {
     // Close the color picker form if it is open
-    this._FormService.closeColorPicker();
+    this._FormService.showColorPicker = false;
+    
     // Display the newly selected tab as being selected
     this.selectedTab = tab;
   }

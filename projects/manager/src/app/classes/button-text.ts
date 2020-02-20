@@ -6,16 +6,6 @@ export class ButtonText {
     fontSize: number = 15;
     fontWeight: string = 'normal';
     fontStyle: string = 'normal';
-    color: Color = {
-        r: 200,
-        g: 200,
-        b: 200,
-        a: 1
-    };
-    hoverColor: Color = {
-        r: 255,
-        g: 255,
-        b: 255,
-        a: 1
-    };
+    color: Color = new Color(200, 200, 200, 1);
+    hoverColor: Color = new Color(255, 255, 255, 1);
 }

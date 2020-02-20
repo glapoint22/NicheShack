@@ -1,7 +1,7 @@
 <div *show="_FormService.showColorPicker" transitionClass="fade-end" class="fade-start" (onShow)="onFormOpen()">
 
     <!-- Dialog Box -->
-    <dialog-box [dialogBoxName]="'Color Picker'" [width]="400" (onClose)="onCancel()">
+    <dialog-box [dialogBoxName]="'Color Picker'" [width]="400" (onClose)="_FormService.showColorPicker = false">
 
         <!-- panel Light -->
         <div class="panel-light">
@@ -115,8 +115,8 @@
 
         <!-- Button Container -->
         <div class="form-button-container">
-            <button (click)="onCancel()">Cancel</button>
-            <button (click)="_FormService.showColorPicker = false">OK</button>
+            <button (click)="_FormService.showColorPicker = false">Cancel</button>
+            <button (click)="colorPicked = true; _FormService.showColorPicker = false">OK</button>
         </div>
     </dialog-box>
 </div>

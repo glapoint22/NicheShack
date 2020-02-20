@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormService } from '../../services/form.service'
 import { Color } from '../../classes/color';
 
@@ -10,6 +10,7 @@ import { Color } from '../../classes/color';
 
 export class ColorSwatchComponent {
   @Input() color: Color;
+  @Output() onShowColorPicker: EventEmitter<void> = new EventEmitter();
   public colorPicker: Color = new Color();
 
   constructor(public _FormService: FormService) {}
@@ -19,5 +20,6 @@ export class ColorSwatchComponent {
     this.colorPicker = this.color;
     this._FormService.colorPicker = this.colorPicker;
     this._FormService.showColorPicker = true;
+    this.onShowColorPicker.emit();
   }
 }

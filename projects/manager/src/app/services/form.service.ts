@@ -9,6 +9,7 @@ import { HoverTab } from '../classes/hover-tab';
 import { Color } from '../classes/color';
 import { Alignment } from '../classes/alignment';
 import { TextBox } from '../classes/text-box';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,25 @@ export class FormService {
   public shadow: Shadow;
   public margins: Spacing;
   public padding: Spacing;
-  
   public textBox: TextBox;
   public alignment: Alignment
   public showContentTypeForm: boolean;
-  public showColorPicker: boolean;
+
+  // Color Picker
+  public onColorPickerClose = new Subject<void>();
+  private _showColorPicker : boolean;
+  
+  
+  public get showColorPicker() : boolean {
+    return this._showColorPicker;
+  }
+  public set showColorPicker(v : boolean) {
+    if(!v) this.onColorPickerClose.next();
+    this._showColorPicker = v;
+  }
+
+
+  
   public colorPicker: Color;
   public showButtonForm: boolean;
   public buttonFormHoverTab: HoverTab;
@@ -45,38 +60,4 @@ export class FormService {
   public initialPadding: Spacing = new Spacing();
   public initialAlignment: Alignment = new Alignment();
   public initialColorPickerColor: Color = new Color();
-
-  // ----------------------------------------------------( RGBA TO HEXA )--------------------------------------------------\\
-  RGBAToHexA(r,g,b,a) {
-    r = r.toString(16);
-    g = g.toString(16);
-    b = b.toString(16);
-    a = Math.round(a * 255).toString(16);
-  
-    if (r.length == 1)
-      r = "0" + r;
-    if (g.length == 1)
-      g = "0" + g;
-    if (b.length == 1)
-      b = "0" + b;
-    if (a.length == 1)
-      a = "0" + a;
-  
-    return "#" + r + g + b + a;
-  }
-
-  closeColorPicker() {
-    // As long as the color picker has been established
-    if(this.colorPicker != null) {
-      // If the color Picker form is open
-      if(this.showColorPicker) {
-        // Close the the Color Picker form and reset any color changes made back to the original color
-        this.showColorPicker = false;
-        this.colorPicker.r = this.initialColorPickerColor.r;
-        this.colorPicker.g = this.initialColorPickerColor.g;
-        this.colorPicker.b = this.initialColorPickerColor.b;
-        this.colorPicker.a = this.initialColorPickerColor.a;
-      }
-    }
-  }
 }
