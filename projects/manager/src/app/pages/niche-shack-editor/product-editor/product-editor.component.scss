@@ -42,16 +42,30 @@ input[type="checkbox"] {
 .menu-base {
     top: 30px;
     right: 10px;
-    max-width: 60px;
-    .menu-option {
-        padding-left: 10px;
-    }
+    max-width: 250px;
+    
 }
 
 
 
 
 // -----------------------------( CONTENT )------------------------------ \\
+
+
+.arrow-right {
+    border-top-width: 0.25rem;
+    border-bottom-width: 0.25rem;
+}
+
+#pasteSpecial {
+    &.paste-special-hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+    &.paste-special-active {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+}
 
 table {
 
@@ -77,11 +91,28 @@ table {
 
     
     // Non selectors
-    tr:first-child > td:nth-child(-n+3), tr:nth-child(2) > td:first-child{
+    tr:nth-child(1) > td:first-child {
         background: #454545;
-        border-left-color: transparent;
-        border-left-style: double;
-        border-top-color: transparent;
+        border-left-color: #1b1b1b;
+        border-top-color: #1b1b1b;
+        border-top-style: double;
+        // border-right-color: #656565;
+        // border-right-width: 2px;
+        // border-right-style: inset;
+    }
+
+    tr:nth-child(2) > td:first-child {
+        background: #454545;
+        border-left-color: #1b1b1b;
+        // border-top-color: #656565;
+        // border-top-width: 2px;
+        // border-top-style: inset;
+    }
+
+    tr:first-child > td:nth-child(n+2):nth-child(-n+3) {
+        background: #454545;
+        border-right-color: transparent;
+        border-top-color: #1b1b1b;
         border-top-style: double;
     }
 
@@ -121,7 +152,6 @@ table {
         border-color: #757575;
         border-left-color: #757575;
         border-left-style: double;
-        cursor: pointer;
 
         &:hover:not(.selected-cells) {
             background: lighten(#565656, 5%);
@@ -129,7 +159,6 @@ table {
             border-style: double;
         }
         &.selected-cells {
-            cursor: default;
             background: #3c6080;
             border-left-color: #52adfb;
             border-left-style: double;
@@ -147,7 +176,6 @@ table {
         border-color: #757575;
         border-top-color: #757575;
         border-top-style: double;
-        cursor: pointer;
 
         &:hover:not(.selected-cells) {
             background: lighten(#565656, 5%);
@@ -155,7 +183,6 @@ table {
             border-style: double;
         }
         &.selected-cells {
-            cursor: default;
             background: #3c6080;
             border-left-color: #52adfb;
             border-left-style: double;
@@ -170,8 +197,9 @@ table {
     // Content types (Odd)
     tr:nth-child(n+3):nth-child(odd) > td:nth-child(2) {
         background: #272727;
+        padding: 0;
         cursor: pointer;
-        &:hover:not(.selected-cells) {
+        &:hover {
             background: lighten(#272727, 7%);
             border-color: lighten(#4f4f4f, 20%);
             border-style: double;
@@ -199,8 +227,9 @@ table {
     // Content types (Even)
     tr:nth-child(n+3):nth-child(even) > td:nth-child(2) {
         background: #313030;
+        padding: 0;
         cursor: pointer;
-        &:hover:not(.selected-cells) {
+        &:hover {
             background: lighten(#313030, 7%);
             border-color: lighten(#4f4f4f, 20%);
             border-style: double;
@@ -231,6 +260,15 @@ table {
         background: #272727;
         font-size: 12px;
         text-align: left;
+        white-space: nowrap;
+        width: 165px;
+
+        &.item-description-placeholder {
+            background-image: url("/assets/product-item-description-placeholder.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-position-x: left;
+        }
         
         &.selected-cells {
             color: white;
@@ -239,6 +277,13 @@ table {
             border-top-style: double;
             border-bottom-color: #52adfb;
             border-bottom-style: double;
+
+            &.item-description-placeholder {
+                background-image: url("/assets/product-item-description-placeholder.png");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position-x: left;
+            }
         }
         &:focus {
             background: #1b3f5f;
@@ -246,6 +291,13 @@ table {
             outline: none;
             border-color: #52adfb;
             border-style: double;
+
+            &.item-description-placeholder {
+                background-image: url("/assets/product-item-description-placeholder.png");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position-x: left;
+            }
         }
     }
 
@@ -255,6 +307,15 @@ table {
         background: #313030;
         font-size: 12px;
         text-align: left;
+        white-space: nowrap;
+        width: 165px;
+
+        &.item-description-placeholder {
+            background-image: url("/assets/product-item-description-placeholder.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-position-x: left;
+        }
         
         &.selected-cells {
             color: white;
@@ -263,6 +324,13 @@ table {
             border-top-style: double;
             border-bottom-color: #52adfb;
             border-bottom-style: double;
+
+            &.item-description-placeholder {
+                background-image: url("/assets/product-item-description-placeholder.png");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position-x: left;
+            }
         }
         &:focus {
             background: #224565;
@@ -270,6 +338,13 @@ table {
             outline: none;
             border-color: #52adfb;
             border-style: double;
+
+            &.item-description-placeholder {
+                background-image: url("/assets/product-item-description-placeholder.png");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position-x: left;
+            }
         }
     }
 
@@ -286,6 +361,7 @@ table {
         padding-left: 15px;
         padding-right: 15px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
+        white-space: nowrap;
 
         &.selected-cells {
             background: #2a4e6e;
@@ -313,7 +389,7 @@ table {
         background: #272727;
         cursor: pointer;
 
-        &:hover:not(.selected-price-point-option) {
+        &:hover {
             background: lighten(#272727, 5%);
             border-color: lighten(#4f4f4f, 15%);
             border-style: double;
@@ -322,6 +398,11 @@ table {
             background: #1b3f5f;
             border-color: #52adfb;
             border-style: double;
+            &:hover {
+                background: lighten(#1b3f5f, 5%);
+                border-color: lighten(#52adfb, 10%);
+                border-style: double;
+            }
         }
         &.selected-cells {
             background: #1b3f5f;
@@ -357,7 +438,7 @@ table {
         background: #313030;
         cursor: pointer;
 
-        &:hover:not(.selected-price-point-option) {
+        &:hover {
             background: lighten(#313030, 5%);
             border-color: lighten(#4f4f4f, 15%);
             border-style: double;
@@ -366,6 +447,11 @@ table {
             background: #1b3f5f;
             border-color: #52adfb;
             border-style: double;
+            &:hover {
+                background: lighten(#224565, 5%);
+                border-color: lighten(#52adfb, 10%);
+                border-style: double;
+            }
         }
         &.selected-cells {
             background: #224565;
