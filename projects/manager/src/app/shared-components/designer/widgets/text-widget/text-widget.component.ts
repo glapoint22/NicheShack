@@ -17,13 +17,15 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
   constructor(widgetService: WidgetService, private applicationRef: ApplicationRef, public _FormService: FormService) { super(widgetService) }
 
   ngOnInit() {
-    this.height = 40;
+    this.height = 80;
     super.ngOnInit();
   }
 
   ngAfterViewInit() {
     this.iframe.nativeElement.srcdoc = document.createElement('div').outerHTML;
-    this.iframe.nativeElement.onload = (event) => this.textBox = new TextBox(event.currentTarget.contentDocument, this.applicationRef);
+    this.iframe.nativeElement.onload = (event) => {
+      this.textBox = new TextBox(event.currentTarget.contentDocument, this.applicationRef);
+    }
   }
 
 

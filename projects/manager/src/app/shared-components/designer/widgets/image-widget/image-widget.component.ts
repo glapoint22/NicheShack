@@ -6,6 +6,7 @@ import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { Spacing } from 'projects/manager/src/app/classes/spacing';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { ProportionalWidgetComponent } from '../proportional-widget/proportional-widget.component';
+import { Color } from 'projects/manager/src/app/classes/color';
 
 @Component({
   selector: 'image-widget',
@@ -37,12 +38,12 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent {
 
   // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
   getBorderColor() {
-    return this._FormService.RGBAToHexA(this.border.color.r, this.border.color.g, this.border.color.b, this.border.color.a);
+    return Color.RGBAToHexA(this.border.color);
   }
 
 
   // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
   getShadowColor() {
-    return this._FormService.RGBAToHexA(this.shadow.color.r, this.shadow.color.g, this.shadow.color.b, this.shadow.color.a);
+    return Color.RGBAToHexA(this.shadow.color);
   }
 }

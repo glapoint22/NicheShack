@@ -7,6 +7,6 @@ import { FormService } from '../../services/form.service';
   styleUrls: ['./text.component.scss']
 })
 export class TextComponent {
-  
+
   constructor(public _FormService: FormService) { }
 }

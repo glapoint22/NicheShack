@@ -10,6 +10,7 @@ import { Spacing } from '../../../classes/spacing';
 import { ColumnComponent } from '../column/column.component';
 import { ContainerComponent } from '../container/container.component';
 import { Alignment } from '../../../classes/alignment';
+import { Color } from '../../../classes/color';
 
 @Component({
   selector: 'row',
@@ -48,13 +49,13 @@ export class RowComponent {
 
   // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
   getBorderColor() {
-    return this._FormService.RGBAToHexA(this.border.color.r, this.border.color.g, this.border.color.b, this.border.color.a);
+    return Color.RGBAToHexA(this.border.color);
   }
 
 
   // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
   getShadowColor() {
-    return this._FormService.RGBAToHexA(this.shadow.color.r, this.shadow.color.g, this.shadow.color.b, this.shadow.color.a);
+    return Color.RGBAToHexA(this.shadow.color);
   }
 
 
