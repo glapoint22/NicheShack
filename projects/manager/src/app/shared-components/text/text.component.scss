@@ -9,6 +9,9 @@
     &:hover:not(.selected) {
         background-color: $hover-fill-color;
     }
+    &:active:not(.selected) {
+        background-color: lighten($hover-fill-color, 25);
+    }
 }
 
 .selected {
@@ -37,7 +40,6 @@
     display:flex;
     width: 100%;
     margin-left: 30px;
-    //padding-top: 10px;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;

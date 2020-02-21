@@ -5,7 +5,9 @@ export class DropdownStyle extends PersistentStyle {
     public options: Array<KeyValue<string, string>>;
     public selectedIndex: number;
 
-    checkSelection() {
+    onSelectionChange(range: Range) {
+        super.onSelectionChange(range);
+
         this.styleValue = window.getComputedStyle(this.selectedRange.startContainer.parentElement)[this.style];
         
 

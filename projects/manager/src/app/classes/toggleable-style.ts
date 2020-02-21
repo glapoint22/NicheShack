@@ -4,7 +4,9 @@ export class ToggleableStyle extends Style {
     public isSelected: boolean;
 
 
-    checkSelection() {
+    onSelectionChange(range: Range) {
+        super.onSelectionChange(range);
+
         this.isSelected = this.selectionHasStyle();
     }
 

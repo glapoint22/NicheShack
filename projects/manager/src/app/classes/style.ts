@@ -4,14 +4,11 @@ export class Style {
     public styleValue: string;
     public selectedRange: Range;
 
-    constructor(public contentDocument: HTMLDocument) {
-        contentDocument.addEventListener("mouseup", () => {
-            this.selectedRange = contentDocument.getSelection().getRangeAt(0);
-            this.checkSelection();
-        });
-    }
+    constructor(public contentDocument: HTMLDocument) { }
 
-    checkSelection() { }
+    onSelectionChange(range: Range) {
+        this.selectedRange = range;
+    }
 
 
     createStyle(range: Range) {
@@ -259,14 +256,14 @@ export class Style {
     nodeHasStyleAlt(node: HTMLElement): boolean {
         // This method is used when nodeHasStyle cannot be used (style is not inherited eg. background color and underline)
         while (node != this.contentDocument.body.firstElementChild) {
-            
+
             // If this style is applied
-            if(node.style[this.style] != '') {
+            if (node.style[this.style] != '') {
                 // If the style value applied does not equal this style value, return false
-                if(node.style[this.style] != this.styleValue) return false;
+                if (node.style[this.style] != this.styleValue) return false;
 
                 return true;
-            } 
+            }
 
             node = node.parentElement;
         }
@@ -276,7 +273,7 @@ export class Style {
 
     setFocus() {
         let content: HTMLElement = this.contentDocument.body.firstElementChild as HTMLElement;
-        
+
         content.focus();
     }
 }
