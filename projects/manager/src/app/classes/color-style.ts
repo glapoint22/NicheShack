@@ -71,7 +71,9 @@ export class ColorStyle extends PersistentStyle {
 
 
 
-    checkSelection() {
+    onSelectionChange(range: Range) {
+        super.onSelectionChange(range);
+
         this.styleValue = this.getComputedColor();
 
         if (this.selectionHasStyle()) {

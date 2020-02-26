@@ -119,26 +119,42 @@
     <div class="alignment-container">
 
         <!-- Left align -->
-        <div class="icon-container selected" title="Left align (Ctrl+Shift+L)">
+        <div class="icon-container" title="Left align (Ctrl+Shift+L)"
+            [ngClass]="{'selected': _FormService.textBox.alignLeft.isSelected}" (click)="_FormService.textBox.alignLeft.applyStyle();
+            _FormService.textBox.alignCenter.isSelected = false;
+            _FormService.textBox.alignRight.isSelected = false;
+            _FormService.textBox.alignJustify.isSelected = false">
             <i class="fas fa-align-left"></i>
         </div>
 
 
 
         <!-- Center align -->
-        <div class="icon-container" title="Center align (Ctrl+Shift+E)">
+        <div class="icon-container" title="Center align (Ctrl+Shift+E)"
+            [ngClass]="{'selected': _FormService.textBox.alignCenter.isSelected}" (click)="_FormService.textBox.alignCenter.applyStyle(); 
+            _FormService.textBox.alignLeft.isSelected = false;
+            _FormService.textBox.alignRight.isSelected = false; 
+            _FormService.textBox.alignJustify.isSelected = false">
             <i class="fas fa-align-center"></i>
         </div>
 
 
         <!-- Right align -->
-        <div class="icon-container" title="Right align (Ctrl+Shift+R)">
+        <div class="icon-container" title="Right align (Ctrl+Shift+R)"
+            [ngClass]="{'selected': _FormService.textBox.alignRight.isSelected}" (click)="_FormService.textBox.alignRight.applyStyle();
+            _FormService.textBox.alignLeft.isSelected = false;
+            _FormService.textBox.alignJustify.isSelected = false;
+            _FormService.textBox.alignCenter.isSelected = false">
             <i class="fas fa-align-right"></i>
         </div>
 
 
         <!-- Justify -->
-        <div class="icon-container" title="Justify (Ctrl+Shift+J)">
+        <div class="icon-container" title="Justify (Ctrl+Shift+J)"
+            [ngClass]="{'selected': _FormService.textBox.alignJustify.isSelected}" (click)="_FormService.textBox.alignJustify.applyStyle();
+            _FormService.textBox.alignLeft.isSelected = false;
+            _FormService.textBox.alignCenter.isSelected = false;
+            _FormService.textBox.alignRight.isSelected = false">
             <i class="fas fa-align-justify"></i>
         </div>
 
@@ -159,13 +175,17 @@
     <div class="display-flex">
 
         <!-- Numbered list -->
-        <div class="icon-container selected" title="Numbered list (Ctrl+Shift+7)" (click)="onNumberedListClick()">
+        <div class="icon-container" title="Numbered list (Ctrl+Shift+7)"
+            [ngClass]="{'selected': _FormService.textBox.orderedList.isSelected}"
+            (click)="_FormService.textBox.orderedList.applyStyle()">
             <i class="fas fa-list-ol"></i>
         </div>
 
 
         <!-- Bulleted list -->
-        <div class="icon-container" title="Bulleted list (Ctrl+Shift+8)">
+        <div class="icon-container" title="Bulleted list (Ctrl+Shift+8)"
+            [ngClass]="{'selected': _FormService.textBox.unorderedList.isSelected}"
+            (click)="_FormService.textBox.unorderedList.applyStyle()">
             <i class="fas fa-list-ul"></i>
         </div>
 
@@ -186,13 +206,15 @@
     <div class="display-flex">
 
         <!-- Decrease indent -->
-        <div class="icon-container selected" title="Decrease indent (ctrl+[)">
+        <div class="icon-container" title="Decrease indent (ctrl+[)"
+            (click)="_FormService.textBox.decreaseIndent.applyStyle()">
             <i class="fas fa-outdent"></i>
         </div>
 
 
         <!-- Increase indent -->
-        <div class="icon-container" title="Increase indent (ctrl+])">
+        <div class="icon-container" title="Increase indent (ctrl+])"
+            (click)="_FormService.textBox.increaseIndent.applyStyle()">
             <i class="fas fa-indent"></i>
         </div>
 
