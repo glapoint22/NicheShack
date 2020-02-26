@@ -17,21 +17,25 @@
     height: 26px; 
     font-family: Arial; 
     font-size: 13px; 
-    color: #aaaaaa; 
+    color: #b0b0b0; 
     padding-left: 20px; 
     padding-right: 20px; 
     display: flex; 
     align-items: center; 
-    user-select: none; 
+    user-select: none;
     justify-content: space-between;
     position: relative;
 
-    &:hover {
+    &:hover:not(.disabled-option) {
         background-color: rgba(255, 255, 255, 0.1);
         color: white;
     }
-    &:active {
+    &:active:not(.disabled-option) {
         background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    &.disabled-option {
+        color: rgba(176, 176, 176, 0.3);
     }
 }
 

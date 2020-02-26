@@ -26,47 +26,46 @@
 
 
     <!-- Content Menu -->
-    <div [style.left.px]="contentMenuLeft" [style.top.px]="contentMenuTop" style="max-width: 212px;"
+    <div #contentMenu [style.left.px]="contentMenuLeft" [style.top.px]="contentMenuTop" style="max-width: 212px;"
         *show="showContentMenu" class="fade-start menu-base" transitionClass="fade-end" tabindex="0"
-        (onHide)="showContentMenu = false">
+        (onHide)="showContentMenu = false" (focus)="onContentMenuFocus()" (blur)="onContentMenuBlur()">
 
         <div (mousedown)="$event.stopPropagation()">
-            <div class="menu-option">
+            <div (mouseover)="removeContentSubMenu()" class="menu-option" [ngClass]="{'disabled-option': !deleteEnabled}" (click)="deleteEnabled ? cut() : false">
                 <div>Cut</div>
                 <div>Ctrl+X</div>
             </div>
-            <div class="menu-option">
+            <div (mouseover)="removeContentSubMenu()" class="menu-option" (click)="copy()">
                 <div>Copy</div>
                 <div>Ctrl+C</div>
             </div>
-            <div class="menu-option">
+            <div (mouseover)="removeContentSubMenu()" class="menu-option" [ngClass]="{'disabled-option': !pasteEnabled}" (click)="pasteEnabled ? paste() : false">
                 <div>Paste</div>
                 <div>Ctrl+V</div>
             </div>
             
-            <div id="pasteSpecial" class="menu-option" [ngClass]="{'paste-special-hover': pasteSpecialOver}">
+            <div id="pasteSpecial" class="menu-option" [ngClass]="{'paste-special-hover': pasteSpecialOver, 'disabled-option': !pasteEnabled}">
                 <div>Paste Special</div>
                 <div class="arrow-right"></div>
             </div>
 
-            <div (mouseover)="pasteSpecialOptionOver()" (mouseout)="pasteSpecialOptionOut()" style="left: 0px; width: 100%; height: 26px; position: absolute; top: 83px;"></div>
+            <div *ngIf="pasteEnabled" (mouseover)="onPasteSpecialOptionOver()" (mouseout)="onPasteSpecialOptionOut()" style="left: 0px; width: 100%; height: 26px; position: absolute; top: 83px;"></div>
             
 
-            <div class="menu-divider"></div>
+            <div (mouseover)="removeContentSubMenu()" class="menu-divider"></div>
 
-            <div class="menu-option" (click)="insert(direction1)">
+            <div (mouseover)="removeContentSubMenu()" class="menu-option" (click)="insert(direction1)">
                 <div>Insert {{direction1}}</div>
             </div>
-            <div class="menu-option" (click)="insert(direction2)">
+            <div (mouseover)="removeContentSubMenu()" class="menu-option" (click)="insert(direction2)">
                 <div>Insert {{direction2}}</div>
             </div>
-            <div class="menu-option" (click)="delete()">
-                <div>Delete {{selectorType}}</div>
+            <div (mouseover)="removeContentSubMenu()" class="menu-option" (click)="clearValues()">
+                <div>Clear {{selectedColumnIndex != null ? "Price Point" : "Item"}} Values</div>
             </div>
-            <div class="menu-option" (click)="clearValues()">
-                <div>Clear {{selectorType}} Values</div>
+            <div (mouseover)="removeContentSubMenu()" class="menu-option" [ngClass]="{'disabled-option': !deleteEnabled}" (click)="deleteEnabled ? delete() : false">
+                <div>Delete {{selectedColumnIndex != null ? "Price Point" : "Item"}}</div>
             </div>
-
         </div>
     </div>
 
@@ -83,17 +82,14 @@
     <!-- Content Sub Menu -->
     <div [style.left.px]="contentMenuLeft + 209" [style.top.px]="contentMenuTop + 78" [style.maxWidth.px]="contentSubMenuWidth"
         *show="showContentSubMenu" class="fade-start menu-base" transitionClass="fade-end" tabindex="0"
-        (onHide)="showContentSubMenu = false" (blur)="showContentSubMenu = false"  (mouseover)="fuckyou()">
+        (onHide)="showContentSubMenu = false" (mouseover)="onContentSubMenuOver()" (focus)="onContentSubMenuFocus()">
 
         <div (mousedown)="$event.stopPropagation()">
-            <div class="menu-option">
-                <div>Paste {{selectorType}} Values Only</div>
+            <div class="menu-option" (click)="pasteSpecial(direction1)">
+                <div>Paste New {{selectedColumnIndex != null ? "Price Point" : "Item"}} {{direction1}}</div>
             </div>
-            <div class="menu-option">
-                <div>Paste {{direction1}}</div>
-            </div>
-            <div class="menu-option">
-                <div>Paste {{direction2}}</div>
+            <div class="menu-option" (click)="pasteSpecial(direction2)">
+                <div>Paste New {{selectedColumnIndex != null ? "Price Point" : "Item"}} {{direction2}}</div>
             </div>
         </div>
     </div>
@@ -252,7 +248,7 @@
                                 (contextmenu)="$event.preventDefault()"
                                 [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex}"
                                 (mousedown)="onColumnSelectorDown(columnIndex)"
-                                (mouseup)="setContentMenu($event, 'Price Point')">
+                                (mouseup)="setContentMenu($event)">
                             </td>
                         </tr>
 
@@ -265,11 +261,8 @@
 
                             <!-- Price points -->
                             <td *ngFor="let pricePoint of product.pricePoints; let columnIndex = index"
-                                #pricePoint
-                                (keydown.escape)="pricePoint.blur()" 
-                                contenteditable="true"
-                                [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex}"
-                                (focus)="removeFocus()">
+                                (mousedown)="onPricePointDown(columnIndex)"
+                                [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex, 'selected-price-point': selectedPricePointIndex == columnIndex}">
                                 {{product.pricePoints[columnIndex]}}
                             </td>
                         </tr>
@@ -278,17 +271,17 @@
                         <!---------- (Item Rows) ---------->
                         <tr *ngFor="let item of product.items; let rowIndex = index">
 
-                            <!-- Row selctors -->
+                            <!-- Row selectors -->
                             <td (contextmenu)="$event.preventDefault()"
                                 [ngClass]="{'selected-cells': selectedRowIndex == rowIndex}"
                                 (mousedown)="onRowSelectorDown(rowIndex)" 
-                                (mouseup)="setContentMenu($event, 'Item')">
+                                (mouseup)="setContentMenu($event)">
                             </td>
 
                             <!-- Content types -->
                             <td (mousedown)="onContentTypeDown(rowIndex)" 
                                 (click)="onContentTypeClick(rowIndex)"
-                                [ngClass]="{'selected-content-type': contentType.selected[rowIndex],'selected-cells': selectedRowIndex == rowIndex}">
+                                [ngClass]="{'selected-content-type': contentType.selectedIndex == rowIndex,'selected-cells': selectedRowIndex == rowIndex}">
                                 <img [src]="product.items[rowIndex].type" draggable="false">
                             </td>
 
@@ -296,7 +289,7 @@
                             <td #itemDesc
                                 contenteditable="true"
                                 (input)="setPlaceholder(rowIndex, itemDesc)"
-                                [ngClass]="{'selected-cells': selectedRowIndex == rowIndex, 'item-description-placeholder': product.items[rowIndex].showPlaceholder}" 
+                                [ngClass]="{'selected-cells': selectedRowIndex == rowIndex, 'item-description-placeholder': product.items[rowIndex].showPlaceholder, 'selected-item-description': selectedItemDescriptionIndex == rowIndex}" 
                                 (focus)="removeFocus()"
                                 (keydown.escape)="itemDesc.blur()" >
                                 {{product.items[rowIndex].description}}
@@ -305,7 +298,7 @@
                             <!-- Price point options -->
                             <td *ngFor="let pricePointOption of product.pricePoints; let columnIndex = index"
                                 (mousedown)="onPricePointOptionDown(columnIndex, rowIndex)"
-                                (click)="onPricePointOptionClick(columnIndex, rowIndex)"
+                                (click)="onPricePointOptionClick()"
                                 [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex || selectedRowIndex == rowIndex, 
                                             'selected-column': selectedColumnIndex == columnIndex, 
                                             'selected-row': selectedRowIndex == rowIndex, 

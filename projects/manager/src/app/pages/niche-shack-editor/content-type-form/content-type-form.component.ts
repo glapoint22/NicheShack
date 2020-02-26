@@ -17,7 +17,7 @@ export class ContentTypeFormComponent {
     window.setTimeout(() => {
 
       for(let i = 0; i < this.list.nativeElement.options.length; i++) {
-        if(this.list.nativeElement.options[i].value == this._FormService.contentType.product.items[this._FormService.contentType.index].type) {
+        if(this.list.nativeElement.options[i].value == this._FormService.contentType.product.items[this._FormService.contentType.selectedIndex].type) {
           this.list.nativeElement.selectedIndex = i;
           this.list.nativeElement.focus();
           this.contentType = this.list.nativeElement.options[i].value;
@@ -32,13 +32,13 @@ export class ContentTypeFormComponent {
 
   onOk() {
     this._FormService.showContentTypeForm = false;
-    this._FormService.contentType.selected[this._FormService.contentType.index] = false;
-    this._FormService.contentType.product.items[this._FormService.contentType.index].type = this.contentType;
+    this._FormService.contentType.product.items[this._FormService.contentType.selectedIndex].type = this.contentType;
+    this._FormService.contentType.selectedIndex = null;
   }
 
   onCancel() {
     this._FormService.showContentTypeForm = false;
-    this._FormService.contentType.selected[this._FormService.contentType.index] = false;
+    this._FormService.contentType.selectedIndex = null;
   }
 
   onSelect(e) {

@@ -299,6 +299,20 @@ table {
                 background-position-x: left;
             }
         }
+        &.selected-item-description {
+            background: #1b3f5f;
+            color: white;
+            outline: none;
+            border-color: #52adfb;
+            border-style: double;
+
+            &.item-description-placeholder {
+                background-image: url("/assets/product-item-description-placeholder.png");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position-x: left;
+            } 
+        }
     }
 
 
@@ -346,10 +360,22 @@ table {
                 background-position-x: left;
             }
         }
+        &.selected-item-description {
+            background: #224565;
+            color: white;
+            outline: none;
+            border-color: #52adfb;
+            border-style: double;
+
+            &.item-description-placeholder {
+                background-image: url("/assets/product-item-description-placeholder.png");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position-x: left;
+            }
+        }
     }
 
-
-    
 
 
     // Price Points
@@ -362,6 +388,19 @@ table {
         padding-right: 15px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         white-space: nowrap;
+        cursor: pointer;
+
+        &:hover {
+            background: lighten(#3c3c3c, 7%);
+            border-color: lighten(#4f4f4f, 20%);
+            border-style: double;
+        }
+
+        &.selected-price-point {
+            background: #2a4e6e;
+            border-color: #52adfb;
+            border-style: double;
+        }
 
         &.selected-cells {
             background: #2a4e6e;
@@ -369,12 +408,11 @@ table {
             border-left-style: double;
             border-right-color: #52adfb;
             border-right-style: double;
-        }
-        &:focus {
-            background: #2a4e6e;
-            outline: none;
-            border-color: #52adfb;
-            border-style: double;
+            &:hover {
+                background: lighten(#2a4e6e, 8%);
+                border-color: lighten(#52adfb, 8%);
+                border-style: double;
+            }
         }
     }
 
