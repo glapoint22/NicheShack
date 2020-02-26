@@ -3,6 +3,13 @@ export class Style {
     public style: string;
     public styleValue: string;
     public selectedRange: Range;
+    public get isSingleLineSelection(): boolean {
+        return this.selectedRange.commonAncestorContainer != this.contentDocument.body.firstElementChild &&
+            (this.selectedRange.commonAncestorContainer as HTMLElement).tagName != 'OL' &&
+            (this.selectedRange.commonAncestorContainer as HTMLElement).tagName != 'UL';
+    }
+
+
 
     constructor(public contentDocument: HTMLDocument) { }
 
@@ -11,7 +18,7 @@ export class Style {
     }
 
 
-    createStyle(range: Range) {
+    setStyle(range: Range) {
         let span = document.createElement("span");
 
         // Apply the style
@@ -38,7 +45,7 @@ export class Style {
 
 
     getParent(node: Node): HTMLElement {
-        while (node.parentElement != this.contentDocument.body.firstElementChild) {
+        while (node.parentElement != this.contentDocument.body.firstElementChild && node.parentElement.tagName != 'LI') {
             node = node.parentElement;
         }
         return node as HTMLElement;
@@ -47,57 +54,64 @@ export class Style {
 
 
     applyStyle() {
-        // If the style is being applied on just one line
-        if (this.selectedRange.commonAncestorContainer != this.contentDocument.body.firstElementChild) {
-            this.createStyle(this.selectedRange);
+        // If the style is being applied on a single line
+        if (this.isSingleLineSelection) {
+            this.setStyle(this.selectedRange);
         } else {
-            // Create the start range
-            let startRangeParent: HTMLElement = this.getParent(this.selectedRange.startContainer);
-            let startRange: Range = document.createRange();
-            startRange.setStart(this.selectedRange.startContainer, this.selectedRange.startOffset);
-            let lastChild = this.getLastTextChild(startRangeParent.lastChild);
-            startRange.setEnd(lastChild, lastChild.length);
-
-            // Create the style for the start range
-            this.createStyle(startRange);
-
-
-            // Create the end range
-            let endRangeParent: HTMLElement = this.getParent(this.selectedRange.endContainer);
-            let endRange: Range = document.createRange();
-            endRange.setStart(this.getFirstTextChild(endRangeParent.firstChild), 0);
-            endRange.setEnd(this.selectedRange.endContainer, this.selectedRange.endOffset);
-
-            // Create the style for the end range
-            this.createStyle(endRange);
-
-
-            // Style all nodes between start & end range
-            for (let i = 0; i < this.selectedRange.commonAncestorContainer.childNodes.length; i++) {
-                let childNode = this.selectedRange.commonAncestorContainer.childNodes[i];
-
-                // Make sure node is not start or end and is not a text node
-                if (this.selectedRange.intersectsNode(childNode) &&
-                    childNode != startRangeParent &&
-                    childNode != endRangeParent &&
-                    childNode.nodeType != 3) {
-
-
-                    // Create the mid range
-                    let midRange: Range = document.createRange();
-                    midRange.setStart(this.getFirstTextChild(childNode.firstChild), 0);
-                    let lastChild = this.getLastTextChild(childNode.lastChild);
-                    midRange.setEnd(lastChild, lastChild.length);
-
-                    // Create the style for the mid range
-                    this.createStyle(midRange);
-                }
-            }
-
-            // Update the selection
-            this.selectedRange.setStart(startRange.startContainer, startRange.startOffset);
-            this.selectedRange.setEnd(endRange.endContainer, endRange.endOffset);
+            this.setMultilineStyle();
         }
+    }
+
+
+    setMultilineStyle() {
+        // Create the start range
+        let startRangeParent: HTMLElement = this.getParent(this.selectedRange.startContainer);
+        let startRange: Range = document.createRange();
+        startRange.setStart(this.selectedRange.startContainer, this.selectedRange.startOffset);
+        let lastChild = this.getLastTextChild(startRangeParent.lastChild);
+        startRange.setEnd(lastChild, lastChild.length);
+
+        // set the style for the start range
+        this.setStyle(startRange);
+
+
+        // Create the end range
+        let endRangeParent: HTMLElement = this.getParent(this.selectedRange.endContainer);
+        let endRange: Range = document.createRange();
+        endRange.setStart(this.getFirstTextChild(endRangeParent.firstChild), 0);
+        endRange.setEnd(this.selectedRange.endContainer, this.selectedRange.endOffset);
+
+        // set the style for the end range
+        this.setStyle(endRange);
+
+
+        // Style all nodes between start & end range
+        for (let i = 0; i < this.selectedRange.commonAncestorContainer.childNodes.length; i++) {
+            let childNode = this.selectedRange.commonAncestorContainer.childNodes[i];
+
+            // Make sure node is not start or end and is not a text node
+            if (this.selectedRange.intersectsNode(childNode) &&
+                childNode != startRangeParent &&
+                childNode != startRangeParent.parentElement &&
+                childNode != endRangeParent &&
+                childNode != endRangeParent.parentElement &&
+                childNode.nodeType != 3) {
+
+
+                // Create the mid range
+                let midRange: Range = document.createRange();
+                midRange.setStart(this.getFirstTextChild(childNode.firstChild), 0);
+                let lastChild = this.getLastTextChild(childNode.lastChild);
+                midRange.setEnd(lastChild, lastChild.length);
+
+                // set the style for the mid range
+                this.setStyle(midRange);
+            }
+        }
+
+        // Update the selection
+        this.selectedRange.setStart(startRange.startContainer, startRange.startOffset);
+        this.selectedRange.setEnd(endRange.endContainer, endRange.endOffset);
     }
 
 

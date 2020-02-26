@@ -175,13 +175,17 @@
     <div class="display-flex">
 
         <!-- Numbered list -->
-        <div class="icon-container selected" title="Numbered list (Ctrl+Shift+7)" (click)="onNumberedListClick()">
+        <div class="icon-container" title="Numbered list (Ctrl+Shift+7)"
+            [ngClass]="{'selected': _FormService.textBox.orderedList.isSelected}"
+            (click)="_FormService.textBox.orderedList.applyStyle()">
             <i class="fas fa-list-ol"></i>
         </div>
 
 
         <!-- Bulleted list -->
-        <div class="icon-container" title="Bulleted list (Ctrl+Shift+8)">
+        <div class="icon-container" title="Bulleted list (Ctrl+Shift+8)"
+            [ngClass]="{'selected': _FormService.textBox.unorderedList.isSelected}"
+            (click)="_FormService.textBox.unorderedList.applyStyle()">
             <i class="fas fa-list-ul"></i>
         </div>
 

@@ -13,8 +13,8 @@ import { AlignRight } from './align-right';
 import { AlignJustify } from './align-justify';
 import { IncreaseIndent } from './increase-indent';
 import { DecreaseIndent } from './decrease-indent';
-import { fromEvent, merge, concat, combineLatest } from 'rxjs';
-import { concatMap, switchMap } from 'rxjs/operators';
+import { OrderedList } from './ordered-list';
+import { UnorderedList } from './unordered-list';
 
 export class TextBox {
     public bold: Bold;
@@ -30,6 +30,8 @@ export class TextBox {
     public alignJustify: AlignJustify;
     public increaseIndent: IncreaseIndent;
     public decreaseIndent: DecreaseIndent;
+    public orderedList: OrderedList;
+    public unorderedList: UnorderedList;
 
     constructor(private contentDocument: HTMLDocument, applicationRef: ApplicationRef) {
         // Styles
@@ -46,7 +48,31 @@ export class TextBox {
         this.alignJustify = new AlignJustify(contentDocument);
         this.increaseIndent = new IncreaseIndent(contentDocument);
         this.decreaseIndent = new DecreaseIndent(contentDocument);
+        this.orderedList = new OrderedList(contentDocument);
+        this.unorderedList = new UnorderedList(contentDocument);
 
+
+        let styleTag = document.createElement('style');
+        let styles = document.createTextNode(
+            `body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 14px;
+                text-align: left;
+            }
+            ul, ol {
+                margin-top: 0;
+                margin-bottom: 0;
+                list-style-position: inside;
+            }
+            li div {
+                display: inline;
+            }
+            `
+        );
+
+        styleTag.appendChild(styles);
+
+        contentDocument.head.appendChild(styleTag);
 
 
         // Content
@@ -59,9 +85,6 @@ export class TextBox {
         content.style.bottom = '0';
         content.style.left = '0';
         content.style.outline = "none";
-        content.style.fontFamily = 'Arial, Helvetica, sans-serif';
-        content.style.fontSize = '14px';
-        content.style.textAlign = 'left';
         content.innerHTML = '<div>This is a temporary paragraph. Double click to edit this text.</div>';
 
 
@@ -84,8 +107,12 @@ export class TextBox {
         // Take care of selection change only when mouse is not down
         contentDocument.addEventListener("selectionchange", () => {
             if (!mousedown) {
-                this.onSelectionChange(contentDocument.getSelection().getRangeAt(0));
-                applicationRef.tick();
+                let selection: Selection = contentDocument.getSelection();
+
+                if (selection.anchorNode) {
+                    this.onSelectionChange(selection.getRangeAt(0));
+                    applicationRef.tick();
+                }
             }
         });
     }

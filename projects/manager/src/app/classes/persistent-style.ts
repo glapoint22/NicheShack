@@ -3,22 +3,31 @@ import { Style } from './style';
 export class PersistentStyle extends Style {
 
     applyStyle() {
-        let styleParent: HTMLElement = this.getStyleParent(this.selectedRange.startContainer);
+        if (this.isSingleLineSelection) {
+            this.setStyle(this.selectedRange);
+        } else {
+            this.setMultilineStyle();
+        }
+    }
+
+    setStyle(range: Range) {
+        let styleParent: HTMLElement = this.getStyleParent(range.startContainer);
 
         if (styleParent && styleParent != this.contentDocument.body.firstElementChild &&
-            this.selectedRange.startOffset == 0 &&
-            this.selectedRange.endOffset == (this.selectedRange.endContainer as Text).length &&
-            this.getFirstTextChild(styleParent) == this.selectedRange.startContainer &&
-            this.getLastTextChild(styleParent) == this.selectedRange.endContainer) {
+            range.startOffset == 0 &&
+            range.endOffset == (range.endContainer as Text).length &&
+            this.getFirstTextChild(styleParent) == range.startContainer &&
+            this.getLastTextChild(styleParent) == range.endContainer) {
 
             styleParent.style[this.style] = this.styleValue;
 
             this.removeDuplicateStyle(styleParent);
 
         } else {
-            super.applyStyle();
+            super.setStyle(range);
         }
     }
+
 
     setStyleValue(value: string) {
         this.styleValue = value;
