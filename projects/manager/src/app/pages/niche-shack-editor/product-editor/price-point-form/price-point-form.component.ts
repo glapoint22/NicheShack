@@ -98,7 +98,7 @@ export class PricePointFormComponent {
   }
 
 
-  // -----------------------------( ENTER )------------------------------ \\
+  // -----------------------------( BLUR INPUT )------------------------------ \\
   blurInput() {
     let txtInput = this.txtInput.toArray();
     for (let i = 0; i < txtInput.length; i++) {
