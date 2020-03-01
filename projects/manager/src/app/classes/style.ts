@@ -198,7 +198,7 @@ export class Style {
             let childNode: ChildNode = parent.childNodes[i];
 
             if ((childNode.nodeType == 1 &&
-                (childNode as HTMLElement).getBoundingClientRect().width == 0) ||
+                ((childNode as HTMLElement).getBoundingClientRect().width == 0 || (childNode as HTMLElement).getBoundingClientRect().height == 0)) ||
                 (childNode.nodeType == 3 && childNode.nodeValue.length == 0)) {
                 childNode.remove();
                 i--;
