@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { NicheShackEditorRoutingModule } from './niche-shack-editor-routing.module';
 import { NicheShackEditorComponent } from './niche-shack-editor.component';
 import { DialogBoxModule } from '../../shared-components/dialog-box/dialog-box.module';
 import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module';
 import { ProductFormComponent } from './product-form/product-form.component';
-import { ContentTypeFormComponent } from './content-type-form/content-type-form.component';
+import { MediaFormComponent } from './product-editor/media-form/media-form.component';
 import { MediaBrowserModule } from '../../shared-components/media-browser/media-browser.module';
 import { HierarchyComponent } from './hierarchy/hierarchy.component';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
@@ -24,13 +23,16 @@ import { DesignerModule } from '../../shared-components/designer/designer.module
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { PromptModule } from '../../shared-components/prompt/prompt.module';
 import { HierarchyContentComponent } from './hierarchy-content/hierarchy-content.component';
+import { PricePointFormComponent } from './product-editor/price-point-form/price-point-form.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     NicheShackEditorComponent,
     ProductFormComponent,
-    ContentTypeFormComponent,
+    MediaFormComponent,
+    PricePointFormComponent,
     HierarchyComponent,
     ProductEditorComponent,
     ProductDescriptionComponent,
@@ -53,7 +55,8 @@ import { HierarchyContentComponent } from './hierarchy-content/hierarchy-content
     CategoriesFormModule,
     DesignerModule,
     ShowHideModule,
-    PromptModule
+    PromptModule,
+    FormsModule
   ]
 })
 export class NicheShackEditorModule { }

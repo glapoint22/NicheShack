@@ -1,20 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MediaFormComponent } from './media-form.component';
 
-import { ContentTypeFormComponent } from './content-type-form.component';
-
-describe('ContentTypeFormComponent', () => {
-  let component: ContentTypeFormComponent;
-  let fixture: ComponentFixture<ContentTypeFormComponent>;
+describe('MediaFormComponent', () => {
+  let component: MediaFormComponent;
+  let fixture: ComponentFixture<MediaFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContentTypeFormComponent ]
+      declarations: [ MediaFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ContentTypeFormComponent);
+    fixture = TestBed.createComponent(MediaFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

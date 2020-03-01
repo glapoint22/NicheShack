@@ -96,17 +96,11 @@ table {
         border-left-color: #1b1b1b;
         border-top-color: #1b1b1b;
         border-top-style: double;
-        // border-right-color: #656565;
-        // border-right-width: 2px;
-        // border-right-style: inset;
     }
 
     tr:nth-child(2) > td:first-child {
         background: #454545;
         border-left-color: #1b1b1b;
-        // border-top-color: #656565;
-        // border-top-width: 2px;
-        // border-top-style: inset;
     }
 
     tr:first-child > td:nth-child(n+2):nth-child(-n+3) {
@@ -138,7 +132,6 @@ table {
         border-bottom-color: #606060;
         border-top-color: #606060;
         border-top-style: double;
-        
     }
     
     
@@ -208,6 +201,11 @@ table {
             background: #1b3f5f;
             border-color: #52adfb;
             border-style: double;
+            &:hover {
+                background: lighten(#1b3f5f, 8%);
+                border-color: lighten(#52adfb, 8%);
+                border-style: double;
+            }
         }
         &.selected-cells {
             background: #1b3f5f;
@@ -238,6 +236,11 @@ table {
             background: #224565;
             border-color: #52adfb;
             border-style: double;
+            &:hover {
+                background: lighten(#224565, 8%);
+                border-color: lighten(#52adfb, 8%);
+                border-style: double;
+            }
         }
         &.selected-cells {
             background: #224565;
@@ -263,6 +266,11 @@ table {
         white-space: nowrap;
         width: 165px;
 
+        &::selection {
+            color: #1b3f5f;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
         &.item-description-placeholder {
             background-image: url("/assets/product-item-description-placeholder.png");
             background-repeat: no-repeat;
@@ -277,20 +285,6 @@ table {
             border-top-style: double;
             border-bottom-color: #52adfb;
             border-bottom-style: double;
-
-            &.item-description-placeholder {
-                background-image: url("/assets/product-item-description-placeholder.png");
-                background-repeat: no-repeat;
-                background-position: center;
-                background-position-x: left;
-            }
-        }
-        &:focus {
-            background: #1b3f5f;
-            color: white;
-            outline: none;
-            border-color: #52adfb;
-            border-style: double;
 
             &.item-description-placeholder {
                 background-image: url("/assets/product-item-description-placeholder.png");
@@ -324,6 +318,11 @@ table {
         white-space: nowrap;
         width: 165px;
 
+        &::selection {
+            color: #224565;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
         &.item-description-placeholder {
             background-image: url("/assets/product-item-description-placeholder.png");
             background-repeat: no-repeat;
@@ -338,20 +337,6 @@ table {
             border-top-style: double;
             border-bottom-color: #52adfb;
             border-bottom-style: double;
-
-            &.item-description-placeholder {
-                background-image: url("/assets/product-item-description-placeholder.png");
-                background-repeat: no-repeat;
-                background-position: center;
-                background-position-x: left;
-            }
-        }
-        &:focus {
-            background: #224565;
-            color: white;
-            outline: none;
-            border-color: #52adfb;
-            border-style: double;
 
             &.item-description-placeholder {
                 background-image: url("/assets/product-item-description-placeholder.png");
@@ -400,6 +385,11 @@ table {
             background: #2a4e6e;
             border-color: #52adfb;
             border-style: double;
+            &:hover {
+                background: lighten(#2a4e6e, 8%);
+                border-color: lighten(#52adfb, 8%);
+                border-style: double;
+            }
         }
 
         &.selected-cells {
