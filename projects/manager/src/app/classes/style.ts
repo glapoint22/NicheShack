@@ -33,9 +33,6 @@ export class Style {
         // Insert the contents at the start of the range
         range.insertNode(span);
 
-        // Remove any empty or blank text nodes that may have been generated
-        this.removeEmptyNodes(this.getParent(range.startContainer));
-
         // Update the selection
         range.setStart(this.getFirstTextChild(span), 0);
         let lastTextChild = this.getLastTextChild(span);
@@ -44,7 +41,7 @@ export class Style {
 
 
 
-    getParent(node: Node): HTMLElement {
+    getSelectionParent(node: Node): HTMLElement {
         while (node.parentElement != this.contentDocument.body.firstElementChild && node.parentElement.tagName != 'LI') {
             node = node.parentElement;
         }
@@ -60,12 +57,15 @@ export class Style {
         } else {
             this.setMultilineStyle();
         }
+
+        // Remove any empty or blank text nodes that may have been generated
+        this.removeEmptyNodes(this.contentDocument.body.firstElementChild as HTMLElement);
     }
 
 
     setMultilineStyle() {
         // Create the start range
-        let startRangeParent: HTMLElement = this.getParent(this.selectedRange.startContainer);
+        let startRangeParent: HTMLElement = this.getSelectionParent(this.selectedRange.startContainer);
         let startRange: Range = document.createRange();
         startRange.setStart(this.selectedRange.startContainer, this.selectedRange.startOffset);
         let lastChild = this.getLastTextChild(startRangeParent.lastChild);
@@ -76,7 +76,7 @@ export class Style {
 
 
         // Create the end range
-        let endRangeParent: HTMLElement = this.getParent(this.selectedRange.endContainer);
+        let endRangeParent: HTMLElement = this.getSelectionParent(this.selectedRange.endContainer);
         let endRange: Range = document.createRange();
         endRange.setStart(this.getFirstTextChild(endRangeParent.firstChild), 0);
         endRange.setEnd(this.selectedRange.endContainer, this.selectedRange.endOffset);
@@ -123,6 +123,7 @@ export class Style {
             child = this.getFirstTextChild(node.childNodes[i]);
         }
 
+        if (child.nodeType != 3) return null;
 
         return child as Text;
     }
@@ -133,6 +134,8 @@ export class Style {
         for (let i = 0; i < node.childNodes.length; i++) {
             child = this.getLastTextChild(node.childNodes[i])
         }
+
+        if (child.nodeType != 3) return null;
 
         return child as Text;
     }
@@ -206,6 +209,11 @@ export class Style {
             }
 
             this.removeEmptyNodes(childNode as HTMLElement);
+
+            if(childNode.nodeType == 1 && childNode.childNodes.length == 0) {
+                childNode.remove();
+                i--;
+            }
         }
     }
 
@@ -236,7 +244,7 @@ export class Style {
 
 
     selectionHasStyle(): boolean {
-        if (this.selectedRange.startContainer === this.selectedRange.endContainer) {
+        if (this.selectedRange.startContainer == this.selectedRange.endContainer) {
             // Single container is selected
             return this.nodeHasStyle(this.selectedRange.startContainer.parentElement);
         } else {

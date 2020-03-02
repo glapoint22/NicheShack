@@ -8,6 +8,8 @@ export class PersistentStyle extends Style {
         } else {
             this.setMultilineStyle();
         }
+
+        this.removeEmptyNodes(this.contentDocument.body.firstElementChild as HTMLElement);
     }
 
     setStyle(range: Range) {
