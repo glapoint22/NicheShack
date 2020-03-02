@@ -10,6 +10,7 @@ import { Color } from '../classes/color';
 import { Alignment } from '../classes/alignment';
 import { TextBox } from '../classes/text-box';
 import { Subject } from 'rxjs';
+import { ProductContent } from '../classes/product-content';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +25,30 @@ export class FormService {
   public padding: Spacing;
   public textBox: TextBox;
   public alignment: Alignment
-  public showContentTypeForm: boolean;
+  public productContent: ProductContent;
+  public showMediaForm: boolean;
+  public showPricePointForm: boolean;
+  public showButtonForm: boolean;
+  public buttonFormHoverTab: HoverTab;
+  public showTextForm: boolean;
+  public showImageForm: boolean;
+  public showContainerForm: boolean;
+  public showLineForm: boolean;
+  public showVideoForm: boolean;
+  public showRowForm: boolean;
+  public initialFill: FillColor = new FillColor();
+  public initialBorder: Border = new Border();
+  public initialCorners: Corners = new Corners();
+  public initialButtonText: ButtonText = new ButtonText();
+  public initialShadow: Shadow = new Shadow();
+  public initialMargins: Spacing = new Spacing();
+  public initialPadding: Spacing = new Spacing();
+  public initialAlignment: Alignment = new Alignment();
+  public initialColorPickerColor: Color = new Color();
+
 
   // Color Picker
+  public colorPicker: Color;
   public onColorPickerClose = new Subject<void>();
   private _showColorPicker : boolean;
   
@@ -38,26 +60,4 @@ export class FormService {
     if(!v) this.onColorPickerClose.next();
     this._showColorPicker = v;
   }
-
-
-  
-  public colorPicker: Color;
-  public showButtonForm: boolean;
-  public buttonFormHoverTab: HoverTab;
-  public showTextForm: boolean;
-  public showImageForm: boolean;
-  public showContainerForm: boolean;
-  public showLineForm: boolean;
-  public showVideoForm: boolean;
-  public showRowForm: boolean;
-  public contentType;
-  public initialFill: FillColor = new FillColor();
-  public initialBorder: Border = new Border();
-  public initialCorners: Corners = new Corners();
-  public initialButtonText: ButtonText = new ButtonText();
-  public initialShadow: Shadow = new Shadow();
-  public initialMargins: Spacing = new Spacing();
-  public initialPadding: Spacing = new Spacing();
-  public initialAlignment: Alignment = new Alignment();
-  public initialColorPickerColor: Color = new Color();
 }

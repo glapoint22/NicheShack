@@ -24,183 +24,26 @@
     </div>
 
 
-
-    <!-- Content Menu -->
-    <div #contentMenu [style.left.px]="contentMenuLeft" [style.top.px]="contentMenuTop" style="max-width: 212px;"
-        *show="showContentMenu" class="fade-start menu-base" transitionClass="fade-end" tabindex="0"
-        (onHide)="showContentMenu = false" (focus)="onContentMenuFocus()" (blur)="onContentMenuBlur()">
-
-        <div (mousedown)="$event.stopPropagation()">
-            <div (mouseover)="removeContentSubMenu()" class="menu-option" [ngClass]="{'disabled-option': !deleteEnabled}" (click)="deleteEnabled ? cut() : false">
-                <div>Cut</div>
-                <div>Ctrl+X</div>
-            </div>
-            <div (mouseover)="removeContentSubMenu()" class="menu-option" (click)="copy()">
-                <div>Copy</div>
-                <div>Ctrl+C</div>
-            </div>
-            <div (mouseover)="removeContentSubMenu()" class="menu-option" [ngClass]="{'disabled-option': !pasteEnabled}" (click)="pasteEnabled ? paste() : false">
-                <div>Paste</div>
-                <div>Ctrl+V</div>
-            </div>
-            
-            <div id="pasteSpecial" class="menu-option" [ngClass]="{'paste-special-hover': pasteSpecialOver, 'disabled-option': !pasteEnabled}">
-                <div>Paste Special</div>
-                <div class="arrow-right"></div>
-            </div>
-
-            <div *ngIf="pasteEnabled" (mouseover)="onPasteSpecialOptionOver()" (mouseout)="onPasteSpecialOptionOut()" style="left: 0px; width: 100%; height: 26px; position: absolute; top: 83px;"></div>
-            
-
-            <div (mouseover)="removeContentSubMenu()" class="menu-divider"></div>
-
-            <div (mouseover)="removeContentSubMenu()" class="menu-option" (click)="insert(direction1)">
-                <div>Insert {{direction1}}</div>
-            </div>
-            <div (mouseover)="removeContentSubMenu()" class="menu-option" (click)="insert(direction2)">
-                <div>Insert {{direction2}}</div>
-            </div>
-            <div (mouseover)="removeContentSubMenu()" class="menu-option" (click)="clearValues()">
-                <div>Clear {{selectedColumnIndex != null ? "Price Point" : "Item"}} Values</div>
-            </div>
-            <div (mouseover)="removeContentSubMenu()" class="menu-option" [ngClass]="{'disabled-option': !deleteEnabled}" (click)="deleteEnabled ? delete() : false">
-                <div>Delete {{selectedColumnIndex != null ? "Price Point" : "Item"}}</div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Content Sub Menu -->
-    <div [style.left.px]="contentMenuLeft + 209" [style.top.px]="contentMenuTop + 78" [style.maxWidth.px]="contentSubMenuWidth"
-        *show="showContentSubMenu" class="fade-start menu-base" transitionClass="fade-end" tabindex="0"
-        (onHide)="showContentSubMenu = false" (mouseover)="onContentSubMenuOver()" (focus)="onContentSubMenuFocus()">
-
-        <div (mousedown)="$event.stopPropagation()">
-            <div class="menu-option" (click)="pasteSpecial(direction1)">
-                <div>Paste New {{selectedColumnIndex != null ? "Price Point" : "Item"}} {{direction1}}</div>
-            </div>
-            <div class="menu-option" (click)="pasteSpecial(direction2)">
-                <div>Paste New {{selectedColumnIndex != null ? "Price Point" : "Item"}} {{direction2}}</div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- Hoplink -->
-    <fieldset>
-        <legend>Hoplink</legend>
-        <input type="text">
-    </fieldset>
+    <product-hoplink></product-hoplink>
 
     <div class="row" style="margin-bottom: 12px;">
 
         <!-- Description -->
         <div class="col-6-xl">
-            <fieldset class="margin-right-3-xl">
-                <legend>Description</legend>
-                <product-description></product-description>
-            </fieldset>
+            <product-description></product-description>
         </div>
+
 
         <!-- Image -->
         <div class="col-3-xl col-6-lg">
-            <fieldset class="margin-right-3-lg">
-                <legend>Image</legend>
-                <div class="icon-bar">
-                    <div class="icon-container" title="Image">
-                        <i class="fas fa-image"></i>
-                    </div>
-                </div>
-
-                <div class="background display-flex justify-content-center align-items-center" style="height: 270px;">
-                    <img src="images/68010370e5514c82b1e5b138143d0862.png" style="max-width: 75%; max-height: 75%;">
-                </div>
-
-            </fieldset>
+            <product-image></product-image>
         </div>
 
 
         <!-- Filters -->
         <div class="col-3-xl col-6-lg">
-            <fieldset>
-                <legend>Filters</legend>
-
-                <div class="icon-bar">
-                    <!-- Collapse -->
-                    <div class="icon-container" title="Collapse">
-                        <i class="fas fa-minus-square"></i>
-                    </div>
-
-                    <!-- Trash -->
-                    <div class="icon-container" title="Delete">
-                        <i class="fas fa-trash-alt"></i>
-                    </div>
-
-                    <!-- Add -->
-                    <div class="icon-container" title="Add filter">
-                        <i class="fas fa-plus-circle"></i>
-                    </div>
-                </div>
-
-                <div class="background" style="height: 270px;">
-
-                    <div class="arrow-button-container">
-                        <input type="checkbox" [id]="'Billing Type'">
-                        <label class="arrow-button" [for]="'Billing Type'"></label>
-                        <div>Billing Type</div>
-                    </div>
-
-                    <!-- Content -->
-                    <div style="padding-left: 28px;">
-                        <div class="display-flex align-items-center">
-                            <input type="checkbox">
-                            <div>Single Payment</div>
-                        </div>
-
-                        <div class="display-flex align-items-center">
-                            <input type="checkbox">
-                            <div>Trial</div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="arrow-button-container">
-                        <input type="checkbox" [id]="'Gender'">
-                        <label class="arrow-button" [for]="'Gender'"></label>
-                        <div>Gender</div>
-                    </div>
-
-                </div>
-
-            </fieldset>
+            <product-filters></product-filters>
         </div>
     </div>
 
@@ -208,190 +51,22 @@
 
     <div class="row">
 
+
         <!-- Content -->
         <div class="col-8-xxl">
-
-            <fieldset class="margin-right-3-xxl" style="height: 293px; position: relative;">
-                <legend>Content</legend>
-                <div class="icon-bar">
-                    <!-- Trash -->
-                    <div class="icon-container" title="Delete">
-                        <i class="fas fa-trash-alt"></i>
-                    </div>
-
-                    <!-- Add -->
-                    <div class="icon-container" title="Add">
-                        <i class="fas fa-plus-circle"></i>
-                    </div>
-                </div>
-
-
-                <div class="background"
-                    style="height: 214px; position: absolute; top: 60px; left: 15px; right: 15px; bottom: 0">
-
-
-
-
-
-
-
-                    <table (mouseover)="overTable = true" (mouseout)="overTable=false">
-
-                        <!---------- (1st Row) ---------->
-                        <tr>
-                            <td (mousedown)="removeFocus()"></td>
-                            <td (mousedown)="removeFocus()"></td>
-                            <td (mousedown)="removeFocus()"></td>
-
-                            <!-- column selectors -->
-                            <td *ngFor="let pricePoint of product.pricePoints; let columnIndex = index"
-                                (contextmenu)="$event.preventDefault()"
-                                [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex}"
-                                (mousedown)="onColumnSelectorDown(columnIndex)"
-                                (mouseup)="setContentMenu($event)">
-                            </td>
-                        </tr>
-
-
-                        <!---------- (2nd Row) ---------->
-                        <tr>
-                            <td (mousedown)="removeFocus()"></td>
-                            <td (mousedown)="removeFocus()"></td>
-                            <td (mousedown)="removeFocus()">Items</td>
-
-                            <!-- Price points -->
-                            <td *ngFor="let pricePoint of product.pricePoints; let columnIndex = index"
-                                (mousedown)="onPricePointDown(columnIndex)"
-                                [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex, 'selected-price-point': selectedPricePointIndex == columnIndex}">
-                                {{product.pricePoints[columnIndex]}}
-                            </td>
-                        </tr>
-
-
-                        <!---------- (Item Rows) ---------->
-                        <tr *ngFor="let item of product.items; let rowIndex = index">
-
-                            <!-- Row selectors -->
-                            <td (contextmenu)="$event.preventDefault()"
-                                [ngClass]="{'selected-cells': selectedRowIndex == rowIndex}"
-                                (mousedown)="onRowSelectorDown(rowIndex)" 
-                                (mouseup)="setContentMenu($event)">
-                            </td>
-
-                            <!-- Content types -->
-                            <td (mousedown)="onContentTypeDown(rowIndex)" 
-                                (click)="onContentTypeClick(rowIndex)"
-                                [ngClass]="{'selected-content-type': contentType.selectedIndex == rowIndex,'selected-cells': selectedRowIndex == rowIndex}">
-                                <img [src]="product.items[rowIndex].type" draggable="false">
-                            </td>
-
-                            <!-- Item descriptions -->
-                            <td #itemDesc
-                                contenteditable="true"
-                                (input)="setPlaceholder(rowIndex, itemDesc)"
-                                [ngClass]="{'selected-cells': selectedRowIndex == rowIndex, 'item-description-placeholder': product.items[rowIndex].showPlaceholder, 'selected-item-description': selectedItemDescriptionIndex == rowIndex}" 
-                                (focus)="removeFocus()"
-                                (keydown.escape)="itemDesc.blur()" >
-                                {{product.items[rowIndex].description}}
-                            </td>
-
-                            <!-- Price point options -->
-                            <td *ngFor="let pricePointOption of product.pricePoints; let columnIndex = index"
-                                (mousedown)="onPricePointOptionDown(columnIndex, rowIndex)"
-                                (click)="onPricePointOptionClick()"
-                                [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex || selectedRowIndex == rowIndex, 
-                                            'selected-column': selectedColumnIndex == columnIndex, 
-                                            'selected-row': selectedRowIndex == rowIndex, 
-                                            'selected-price-point-option': selectedPricePointOptionColumnIndex == columnIndex && selectedPricePointOptionRowIndex == rowIndex}">
-                                <i [ngClass]="{'fas fa-check': product.items[rowIndex].pricePointOptions[columnIndex]}"></i>
-                            </td>
-                        </tr>
-                    </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </div>
-            </fieldset>
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <product-content></product-content>
         </div>
 
 
         <!-- Media -->
         <div class="col-2-xxl col-6-md">
-            <fieldset class="margin-right-3-md">
-                <legend>Media</legend>
-                <div class="icon-bar">
-                    <!-- Trash -->
-                    <div class="icon-container" title="Delete">
-                        <i class="fas fa-trash-alt"></i>
-                    </div>
-
-                    <!-- Add -->
-                    <div class="icon-container" title="Add">
-                        <i class="fas fa-plus-circle"></i>
-                    </div>
-
-                    <div class="icon-container" title="Play video">
-                        <i class="fas fa-play-circle"></i>
-                    </div>
-                </div>
-
-                <div class="background" style="height: 214px;">
-                    <div class="margin-bottom-2 display-flex justify-content-center align-items-center"
-                        style="width: 88px; height: 50px; background: red; cursor: pointer;">
-                        <i class="far fa-play-circle font-size-6"></i>
-                    </div>
-
-                </div>
-            </fieldset>
+            <product-media></product-media>
         </div>
 
 
         <!-- Keywords -->
         <div class="col-2-xxl col-6-md">
-            <fieldset>
-                <legend>Keywords</legend>
-                <div class="icon-bar">
-                    <!-- Trash -->
-                    <div class="icon-container" title="Delete Keyword(s)">
-                        <i class="fas fa-trash-alt"></i>
-                    </div>
-
-                    <!-- Add -->
-                    <div class="icon-container" title="Add keyword">
-                        <i class="fas fa-plus-circle"></i>
-                    </div>
-                </div>
-
-                <div class="background" style="height: 214px;">
-                    <div>Gumpy</div>
-                    <div>Ice Cream</div>
-                </div>
-            </fieldset>
+            <product-keywords></product-keywords>
         </div>
-
     </div>
 </div>

@@ -1,0 +1,17 @@
+<div *show="_FormService.showMediaForm" transitionClass="fade-end" class="modal-background fade-start">
+
+    <!-- Dialog Box -->
+    <dialog-box [dialogBoxName]="'Media Browser'" [width]="365" (onClose)="onCancel()">
+
+        <!-- Media Browser -->
+        <div class="panel-light-rounded" style="height: 450px;">
+            <media-browser [mediaType]="'image'"></media-browser>
+        </div>
+
+        <!-- Buttons -->
+        <div class="form-button-container">
+            <button (click)="onCancel()">Cancel</button>
+            <button (click)="onOk()">Ok</button>
+        </div>
+    </dialog-box>
+</div> 

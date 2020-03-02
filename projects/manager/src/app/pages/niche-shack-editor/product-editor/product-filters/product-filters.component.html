@@ -1,0 +1,52 @@
+<fieldset>
+    <legend>Filters</legend>
+
+    <div class="icon-bar">
+        <!-- Collapse -->
+        <div class="icon-container" title="Collapse">
+            <i class="fas fa-minus-square"></i>
+        </div>
+
+        <!-- Trash -->
+        <div class="icon-container" title="Delete">
+            <i class="fas fa-trash-alt"></i>
+        </div>
+
+        <!-- Add -->
+        <div class="icon-container" title="Add filter">
+            <i class="fas fa-plus-circle"></i>
+        </div>
+    </div>
+
+    <div class="background" style="height: 270px;">
+
+        <div class="arrow-button-container">
+            <input type="checkbox" [id]="'Billing Type'">
+            <label class="arrow-button" [for]="'Billing Type'"></label>
+            <div>Billing Type</div>
+        </div>
+
+        <!-- Content -->
+        <div style="padding-left: 28px;">
+            <div class="display-flex align-items-center">
+                <input type="checkbox">
+                <div>Single Payment</div>
+            </div>
+
+            <div class="display-flex align-items-center">
+                <input type="checkbox">
+                <div>Trial</div>
+            </div>
+        </div>
+
+
+
+        <div class="arrow-button-container">
+            <input type="checkbox" [id]="'Gender'">
+            <label class="arrow-button" [for]="'Gender'"></label>
+            <div>Gender</div>
+        </div>
+
+    </div>
+
+</fieldset>

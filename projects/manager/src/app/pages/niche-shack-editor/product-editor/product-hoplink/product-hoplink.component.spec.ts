@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContentTypeFormComponent } from './content-type-form.component';
+import { ProductHoplinkComponent } from './product-hoplink.component';
 
-describe('ContentTypeFormComponent', () => {
-  let component: ContentTypeFormComponent;
-  let fixture: ComponentFixture<ContentTypeFormComponent>;
+describe('ProductHoplinkComponent', () => {
+  let component: ProductHoplinkComponent;
+  let fixture: ComponentFixture<ProductHoplinkComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContentTypeFormComponent ]
+      declarations: [ ProductHoplinkComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ContentTypeFormComponent);
+    fixture = TestBed.createComponent(ProductHoplinkComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

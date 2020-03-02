@@ -13,6 +13,7 @@ export class ShortcutKeysService {
   public ctrl_X = [17, 88];
   public ctrl_C = [17, 67];
   public ctrl_V = [17, 86];
+  public shift_Tab = [16, 9];
 
 
 

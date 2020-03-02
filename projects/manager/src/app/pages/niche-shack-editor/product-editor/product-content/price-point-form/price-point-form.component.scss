@@ -1,0 +1,58 @@
+.panel-light {
+    display: flex;
+}
+
+.label-container {
+    min-width: 108px;
+    width: 100%;
+    max-width: 113px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    user-select: none;
+}
+
+.input-text-container {
+    width: 100%;
+}
+
+.text-before-input {
+    width: 100%;
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+}
+
+.dollar-sign {
+    padding: 3px;
+    user-select: none;
+}
+
+.whole-number-input {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 100%;
+    text-align:right;
+    padding-right: 5px;
+}
+
+.decimal-point {
+    font-size: 24px;
+    user-select: none;
+}
+
+.decimal-input {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 27px;
+    text-align: center;
+    padding: 0;
+}
+
+.text-after-input {
+    width: 100%;
+}
