@@ -9,7 +9,7 @@ import { MediaFormComponent } from './product-editor/media-form/media-form.compo
 import { MediaBrowserModule } from '../../shared-components/media-browser/media-browser.module';
 import { HierarchyComponent } from './hierarchy/hierarchy.component';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
-import { ProductDescriptionComponent } from './product-description/product-description.component';
+import { ProductDescriptionComponent } from './product-editor/product-description/product-description.component';
 import { HierarchyMenuComponent } from './hierarchy-menu/hierarchy-menu.component';
 import { ColorPickerModule } from '../../shared-components/color-picker/color-picker.module';
 import { VideoFormModule } from '../../shared-components/video-form/video-form.module';
@@ -23,8 +23,14 @@ import { DesignerModule } from '../../shared-components/designer/designer.module
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { PromptModule } from '../../shared-components/prompt/prompt.module';
 import { HierarchyContentComponent } from './hierarchy-content/hierarchy-content.component';
-import { PricePointFormComponent } from './product-editor/price-point-form/price-point-form.component';
+import { PricePointFormComponent } from './product-editor/product-content/price-point-form/price-point-form.component';
 import { FormsModule } from '@angular/forms';
+import { ProductContentComponent } from './product-editor/product-content/product-content.component';
+import { ProductImageComponent } from './product-editor/product-image/product-image.component';
+import { ProductFiltersComponent } from './product-editor/product-filters/product-filters.component';
+import { ProductMediaComponent } from './product-editor/product-media/product-media.component';
+import { ProductKeywordsComponent } from './product-editor/product-keywords/product-keywords.component';
+import { ProductHoplinkComponent } from './product-editor/product-hoplink/product-hoplink.component';
 
 
 @NgModule({
@@ -38,7 +44,13 @@ import { FormsModule } from '@angular/forms';
     ProductDescriptionComponent,
     HierarchyMenuComponent,
     NicheFormComponent,
-    HierarchyContentComponent
+    HierarchyContentComponent,
+    ProductContentComponent,
+    ProductImageComponent,
+    ProductFiltersComponent,
+    ProductMediaComponent,
+    ProductKeywordsComponent,
+    ProductHoplinkComponent
   ],
   imports: [
     CommonModule,
