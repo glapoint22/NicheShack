@@ -9,19 +9,19 @@ export class LineStyle extends ToggleableStyle {
 
         // If the style is being applied on a single line
         if (this.isSingleLineSelection) {
-            let parent = this.getParent(this.selectedRange.startContainer);
+            let parent = this.getSelectionParent(this.selectedRange.startContainer);
 
             if (parent.parentElement.tagName == 'LI') {
-                selection = this.getSelection(parent, parent);
+                selection = this.getSelection();
             }
 
             this.setLineStyle(parent);
         } else {
-            let startRangeParent = this.getParent(this.selectedRange.startContainer);
-            let endRangeParent = this.getParent(this.selectedRange.endContainer);
+            let startRangeParent = this.getSelectionParent(this.selectedRange.startContainer);
+            let endRangeParent = this.getSelectionParent(this.selectedRange.endContainer);
 
             if (startRangeParent.parentElement.tagName == 'LI') {
-                selection = this.getSelection(startRangeParent, endRangeParent);
+                selection = this.getSelection();
             }
 
 
@@ -32,7 +32,7 @@ export class LineStyle extends ToggleableStyle {
 
             // Style all nodes between start & end range
             for (let i = 0; i < this.selectedRange.commonAncestorContainer.childNodes.length; i++) {
-                let parentNode = this.getParent(this.getFirstTextChild(this.selectedRange.commonAncestorContainer.childNodes[i]));
+                let parentNode = this.getSelectionParent(this.getFirstTextChild(this.selectedRange.commonAncestorContainer.childNodes[i]));
 
                 // Make sure the parent node is not start or end parent
                 if (this.selectedRange.intersectsNode(parentNode) &&
@@ -62,9 +62,11 @@ export class LineStyle extends ToggleableStyle {
         parent.style[this.style] = this.styleValue;
     }
 
-    getSelection(startParent: HTMLElement, endParent: HTMLElement): Selection {
+    getSelection(): Selection {
         let selection = new Selection();
         let range = this.selectedRange.cloneRange();
+        let startParent: HTMLElement = this.getSelectionParent(this.selectedRange.startContainer);
+        let endParent: HTMLElement = this.getSelectionParent(this.selectedRange.endContainer);
 
         // Get the start and end of the range
         selection.startOffset = this.selectedRange.startOffset;
@@ -84,45 +86,56 @@ export class LineStyle extends ToggleableStyle {
         }
 
 
+        // Set the start and end markers
+        startParent.setAttribute('start', '');
+        endParent.setAttribute('end', '');
+
+
         return selection;
     }
 
     setSelection(selection: Selection) {
-        let text: Text;
+        // let text: Text;
         let parent: HTMLElement;
 
-        if (this.selectedRange.endContainer.nodeType != 3) {
-            // Getting the last text child and then it's parent marks the starting point from which we will navigate to find the end of the selection
-            text = this.getLastTextChild(this.selectedRange.endContainer.childNodes[this.selectedRange.endOffset]);
-            parent = this.getParent(text);
+        parent = this.getSelectionNode(this.contentDocument.body.firstElementChild as HTMLElement, 'end');
 
-            // Set the end of the range
-            this.selectedRange.setEnd(parent, 0);
+        // Set the end of the range
+        this.selectedRange.setEnd(parent, 0);
 
-            // Loop through the array of end offsets to get to the end node
-            for (let i = 0; i < selection.endOffsets.length; i++) {
-                this.selectedRange.setEnd(this.selectedRange.endContainer.childNodes[selection.endOffsets[i]], 0);
-            }
-
-            this.selectedRange.setEnd(this.selectedRange.endContainer, selection.endOffset);
+        // Loop through the array of end offsets to get to the end node
+        for (let i = 0; i < selection.endOffsets.length; i++) {
+            this.selectedRange.setEnd(this.selectedRange.endContainer.childNodes[selection.endOffsets[i]], 0);
         }
 
+        this.selectedRange.setEnd(this.selectedRange.endContainer, selection.endOffset);
+        parent = this.getSelectionNode(this.contentDocument.body.firstElementChild as HTMLElement, 'start');
 
-        if (this.selectedRange.startContainer.nodeType != 3) {
-            // Getting the first text child and then it's parent marks the starting point from which we will navigate to find the start of the selection
-            text = this.getFirstTextChild(this.selectedRange.startContainer.childNodes[this.selectedRange.startOffset]);
-            parent = this.getParent(text);
-
-            // Set the start of the range
-            this.selectedRange.setStart(parent, 0);
+        // Set the start of the range
+        this.selectedRange.setStart(parent, 0);
 
 
-            // Loop through the array of start offsets to get to the start node
-            for (let i = 0; i < selection.startOffsets.length; i++) {
-                this.selectedRange.setStart(this.selectedRange.startContainer.childNodes[selection.startOffsets[i]], 0);
+        // Loop through the array of start offsets to get to the start node
+        for (let i = 0; i < selection.startOffsets.length; i++) {
+            this.selectedRange.setStart(this.selectedRange.startContainer.childNodes[selection.startOffsets[i]], 0);
+        }
+
+        this.selectedRange.setStart(this.selectedRange.startContainer, selection.startOffset);
+    }
+
+    getSelectionNode(node: HTMLElement, attribute: string) {
+        for (let i = 0; i < node.childElementCount; i++) {
+            let childNode = node.children[i] as HTMLElement;
+
+            if (childNode.attributes[attribute] != null) {
+                childNode.removeAttribute(attribute);
+                return childNode;
             }
 
-            this.selectedRange.setStart(this.selectedRange.startContainer, selection.startOffset);
+            let result = this.getSelectionNode(childNode, attribute);
+
+            if (result) return result;
+
         }
     }
 }
