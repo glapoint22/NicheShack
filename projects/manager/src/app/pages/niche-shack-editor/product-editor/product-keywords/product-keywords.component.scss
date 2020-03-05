@@ -14,3 +14,91 @@
     margin-top: 5px;
     background-color: #2d2d2d;
 }
+
+.keywordList {
+    user-select: none;
+    text-indent: 3px;
+    height: 21px;
+
+    &:hover:not(.selected-keyword):not(.transparent-keyword):not(.edited-keyword):not(.selected-keyword-top):not(.selected-keyword-middle):not(.selected-keyword-bottom):not(.selected-keyword-whole) {
+        background: $hover-fill-color;
+    }
+    &.selected-keyword:not(.transparent-keyword):not(.edited-keyword) {
+        background: $selected-fill-color;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $selected-border-color;
+        color: white;
+    }
+    &.edited-keyword {
+        background: #2b2b2b;
+        outline-width: 1px;
+        outline-style: solid;
+        outline-color: #114262;
+        color: #cccccc;
+    }
+    &.transparent-keyword {
+        color: rgba(170, 170, 170, 0.2)
+    }
+
+    &.selected-keyword-top {
+        background: $selected-fill-color;
+        color: white;
+
+        border-top-width: 1px;
+        border-top-style: solid;
+        border-top-color: $selected-border-color;
+        
+
+        border-left-width: 1px;
+        border-left-style: solid;
+        border-left-color: $selected-border-color;
+
+        border-right-width: 1px;
+        border-right-style: solid;
+        border-right-color: $selected-border-color;
+    }
+
+    &.selected-keyword-middle {
+        background: $selected-fill-color;
+        color: white;
+
+        border-left-width: 1px;
+        border-left-style: solid;
+        border-left-color: $selected-border-color;
+
+        border-right-width: 1px;
+        border-right-style: solid;
+        border-right-color: $selected-border-color;
+    }
+
+    &.selected-keyword-bottom {
+        background: $selected-fill-color;
+        color: white;
+
+        border-left-width: 1px;
+        border-left-style: solid;
+        border-left-color: $selected-border-color;
+
+        border-right-width: 1px;
+        border-right-style: solid;
+        border-right-color: $selected-border-color;
+
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: $selected-border-color;
+    }
+
+    &.selected-keyword-whole {
+        background: $selected-fill-color;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $selected-border-color;
+        color: white;
+    }
+}
+
+
+.icon-disabled {
+    cursor: default;
+}

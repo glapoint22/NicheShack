@@ -269,10 +269,324 @@ export class ProductContentComponent implements OnInit {
   }
 
 
+  // -----------------------------( INSERT )------------------------------ \\
+  insert(direction: string) {
+
+    // If we're inserting a new Price Point
+    if (this.selectedColumnIndex != null) {
+      this.selectedColumnIndex = this.selectedColumnIndex + (direction == "Left" ? 0 : 1);
+
+      // Add the new Price Point either to the left or right of the selected price point
+      this.productContent.pricePoints.splice(this.selectedColumnIndex, 0, { textBefore: "", wholeNumber: "0", decimal: "00", textAfter: "" });
+      // Add the price point options to the new Price Point
+      for (let i = 0; i < this.productContent.items.length; i++) {
+        this.productContent.items[i].pricePointOptions.splice(this.selectedColumnIndex, 0, false);
+      }
+
+      // If we're inserting a new Item
+    } else if (this.selectedRowIndex != null) {
+      let pricePointOptionsCount = this.productContent.items[this.selectedRowIndex].pricePointOptions.length;
+      this.selectedRowIndex = this.selectedRowIndex + (direction == "Above" ? 0 : 1);
+
+      // Add the new Item either above or below the selected item
+      this.productContent.items.splice(this.selectedRowIndex, 0, { type: "assets/no-content-type.png", description: "", showPlaceholder: true, pricePointOptions: [] });
+      // Add the price point options to the new item
+      for (let i = 0; i < pricePointOptionsCount; i++) {
+        this.productContent.items[this.selectedRowIndex].pricePointOptions.push(false);
+      }
+    }
+    this.showContentMenu = false;
+  }
+
+
+  // -----------------------------( CLEAR VALUES )------------------------------ \\
+  clearValues() {
+    // If we're clearing a Price Point's values
+    if (this.selectedColumnIndex != null) {
+
+      // Set the price back to default
+      this.productContent.pricePoints[this.selectedColumnIndex] = { textBefore: "", wholeNumber: "0", decimal: "00", textAfter: "" };
+
+      // Set all the price point option values as being unchecked
+      for (let i = 0; i < this.productContent.items.length; i++) {
+        this.productContent.items[i].pricePointOptions[this.selectedColumnIndex] = false;
+      }
+
+      // If we're clearing an Item's values
+    } else if (this.selectedRowIndex != null) {
+
+      // Set the item's values back to the original default settings
+      this.productContent.items[this.selectedRowIndex].type = "assets/no-content-type.png";
+      this.productContent.items[this.selectedRowIndex].description = "";
+      this.productContent.items[this.selectedRowIndex].showPlaceholder = true;
+
+      // Set all the price point option values to false
+      for (let i = 0; i < this.productContent.items[this.selectedRowIndex].pricePointOptions.length; i++) {
+        this.productContent.items[this.selectedRowIndex].pricePointOptions[i] = false;
+      }
+    }
+    this.showContentMenu = false;
+  }
+
+
+  // -----------------------------( ENTER )------------------------------ \\
+  enter() {
+    if (this.productContent.selectedItemTypeIndex != null) this.onItemTypeClick();
+    if (this.selectedPricePointOptionRowIndex != null) this.onPricePointOptionClick();
+    if (this.productContent.selectedPricePointIndex != null) this.onPricePointClick();
+    if (this.selectedItemDescriptionIndex != null) {
+      event.preventDefault();
+      let item = this.itemDesc.find((item, index) => index == this.selectedItemDescriptionIndex);
+      item.nativeElement.focus();
+      let range = document.createRange();
+      range.selectNodeContents(item.nativeElement);
+      let sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }
+
+
+  // -----------------------------( DELETE )------------------------------ \\
+  delete() {
+    // If we're deleting a Price Point
+    if (this.selectedColumnIndex != null && this.productContent.items[0].pricePointOptions.length > 1) {
+
+      // Delete the Price Point at the specified index
+      this.productContent.pricePoints.splice(this.selectedColumnIndex, 1);
+      // And delete all the price point options from the deleted Price Point as well
+      for (let i = 0; i < this.productContent.items.length; i++) {
+        this.productContent.items[i].pricePointOptions.splice(this.selectedColumnIndex, 1);
+      }
+
+      // If we're deleting an Item
+    } else if (this.selectedRowIndex != null && this.productContent.items.length > 1) {
+
+      // Delete the item at the specified index
+      this.productContent.items.splice(this.selectedRowIndex, 1);
+    }
+    this.showContentMenu = false;
+  }
+
+
+  // -----------------------------( ESCAPE )------------------------------ \\
+  escape() {
+    // If an item description is selected
+    if (this.selectedItemDescriptionIndex != null
+      // and the inner text is selected
+      && document.activeElement == this.itemDesc.find((item, index) => index == this.selectedItemDescriptionIndex).nativeElement) {
+
+      // Remove the text selection
+      window.getSelection().removeAllRanges();
+      // Remove the focus from the cell
+      this.itemDesc.find((item, index) => index == this.selectedItemDescriptionIndex).nativeElement.blur();;
+
+      // For everything else
+    } else {
+
+      // Just remove the outer selection
+      this.unsetEventListeners();
+    }
+  }
+
+
+  // -----------------------------( ARROW UP )------------------------------ \\
+  arrowUp() {
+    // If we're on a row selector
+    if (this.selectedRowIndex != null) {
+      if (this.selectedRowIndex > 0) {
+        this.selectedRowIndex--;
+      }
+    }
+
+    // If we're on a content type
+    if (this.productContent.selectedItemTypeIndex != null) {
+      if (this.productContent.selectedItemTypeIndex > 0) {
+        this.productContent.selectedItemTypeIndex--;
+      }
+    }
+
+    // If we're on an item description
+    if (this.selectedItemDescriptionIndex != null) {
+      if (this.selectedItemDescriptionIndex > 0) {
+        this.selectedItemDescriptionIndex--;
+      }
+    }
+
+    // If we're on a price point option
+    if (this.selectedPricePointOptionRowIndex != null) {
+      if (this.selectedPricePointOptionRowIndex > 0) {
+        this.selectedPricePointOptionRowIndex--;
+        return
+      }
+    }
+
+    // If we're leaving a price point option and entering a price point
+    if (this.selectedPricePointOptionRowIndex == 0) {
+      this.productContent.selectedPricePointIndex = this.selectedPricePointOptionColumnIndex;
+      this.selectedPricePointOptionRowIndex = null;
+      return
+    }
+
+    // If we're leaving a price point and entering a column selector
+    if (this.productContent.selectedPricePointIndex != null) {
+      this.selectedColumnIndex = this.productContent.selectedPricePointIndex;
+      this.productContent.selectedPricePointIndex = null;
+    }
+  }
+
+
+  // -----------------------------( ARROW DOWN )------------------------------ \\
+  arrowDown() {
+    // If we're on a row selector
+    if (this.selectedRowIndex != null) {
+      if (this.selectedRowIndex < this.productContent.items.length - 1) {
+        this.selectedRowIndex++;
+      }
+    }
+
+    // If we're on a content type
+    if (this.productContent.selectedItemTypeIndex != null) {
+      if (this.productContent.selectedItemTypeIndex < this.productContent.items.length - 1) {
+        this.productContent.selectedItemTypeIndex++;
+      }
+    }
+
+    // If we're on an item description
+    if (this.selectedItemDescriptionIndex != null) {
+      if (this.selectedItemDescriptionIndex < this.productContent.items.length - 1) {
+        this.selectedItemDescriptionIndex++;
+      }
+    }
+
+    // If we're leaving a column selector and entering a price point
+    if (this.selectedColumnIndex != null) {
+      this.productContent.selectedPricePointIndex = this.selectedColumnIndex;
+      this.selectedColumnIndex = null;
+      return
+    }
+
+    // If we're leaving a price point and entering a price point option
+    if (this.productContent.selectedPricePointIndex != null) {
+      this.selectedPricePointOptionColumnIndex = this.productContent.selectedPricePointIndex;
+      this.productContent.selectedPricePointIndex = null;
+      this.selectedPricePointOptionRowIndex = 0;
+      return
+    }
+
+    // If we're on a price point option
+    if (this.selectedPricePointOptionRowIndex != null) {
+      if (this.selectedPricePointOptionRowIndex < this.productContent.items.length - 1) {
+        this.selectedPricePointOptionRowIndex++;
+      }
+    }
+  }
+
+
+  // -----------------------------( ARROW LEFT )------------------------------ \\
+  arrowLeft() {
+    // If we're on a column selector
+    if (this.selectedColumnIndex != null) {
+      if (this.selectedColumnIndex > 0) {
+        this.selectedColumnIndex--;
+      }
+    }
+
+    // If we're on a price point
+    if (this.productContent.selectedPricePointIndex != null) {
+      if (this.productContent.selectedPricePointIndex > 0) {
+        this.productContent.selectedPricePointIndex--;
+      }
+    }
+
+    // If we're on a price point option
+    if (this.selectedPricePointOptionColumnIndex != null) {
+      if (this.selectedPricePointOptionColumnIndex > 0) {
+        this.selectedPricePointOptionColumnIndex--;
+        return
+      }
+    }
+
+    // If we're leaving a price point option and entering an item description
+    if (this.selectedPricePointOptionColumnIndex == 0) {
+      this.selectedItemDescriptionIndex = this.selectedPricePointOptionRowIndex;
+      this.selectedPricePointOptionColumnIndex = null;
+      return
+    }
+
+    // If we're leaving an item description and entering a content type
+    if (this.selectedItemDescriptionIndex != null) {
+      this.productContent.selectedItemTypeIndex = this.selectedItemDescriptionIndex;
+      this.selectedItemDescriptionIndex = null;
+      return
+    }
+
+    // If we're leaving a content type and entering a row selector
+    if (this.productContent.selectedItemTypeIndex != null) {
+      this.selectedRowIndex = this.productContent.selectedItemTypeIndex;
+      this.productContent.selectedItemTypeIndex = null;
+    }
+  }
+
+
+  // -----------------------------( ARROW RIGHT )------------------------------ \\
+  arrowRight() {
+    // If we're on a column selector
+    if (this.selectedColumnIndex != null) {
+      if (this.selectedColumnIndex < this.productContent.pricePoints.length - 1) {
+        this.selectedColumnIndex++;
+      }
+    }
+
+    // If we're on a price point
+    if (this.productContent.selectedPricePointIndex != null) {
+      if (this.productContent.selectedPricePointIndex < this.productContent.pricePoints.length - 1) {
+        this.productContent.selectedPricePointIndex++;
+      }
+    }
+
+    // If we're leaving a row selector and entering a content type
+    if (this.selectedRowIndex != null) {
+      this.productContent.selectedItemTypeIndex = this.selectedRowIndex;
+      this.selectedRowIndex = null;
+      return
+    }
+
+    // If we're leaving a content type and entering an item description
+    if (this.productContent.selectedItemTypeIndex != null) {
+      this.selectedItemDescriptionIndex = this.productContent.selectedItemTypeIndex;
+      this.productContent.selectedItemTypeIndex = null;
+      return
+    }
+
+    // If we're leaving an item description and entering a price point option
+    if (this.selectedItemDescriptionIndex != null) {
+      this.selectedPricePointOptionRowIndex = this.selectedItemDescriptionIndex;
+      this.selectedItemDescriptionIndex = null;
+      this.selectedPricePointOptionColumnIndex = 0;
+      return
+    }
+
+    // If we're on a price point option
+    if (this.selectedPricePointOptionColumnIndex != null) {
+      if (this.selectedPricePointOptionColumnIndex < this.productContent.pricePoints.length - 1) {
+        this.selectedPricePointOptionColumnIndex++;
+      }
+    }
+  }
+  
+
   // -----------------------------( CUT )------------------------------ \\
   cut() {
     this.copy();
     this.delete();
+  }
+
+
+  // -----------------------------( TAB )------------------------------ \\
+  tab() {
+    this.arrowRight();
+    event.preventDefault();
   }
 
 
@@ -360,324 +674,9 @@ export class ProductContentComponent implements OnInit {
   }
 
 
-  // -----------------------------( INSERT )------------------------------ \\
-  insert(direction: string) {
-
-    // If we're inserting a new Price Point
-    if (this.selectedColumnIndex != null) {
-      this.selectedColumnIndex = this.selectedColumnIndex + (direction == "Left" ? 0 : 1);
-
-      // Add the new Price Point either to the left or right of the selected price point
-      this.productContent.pricePoints.splice(this.selectedColumnIndex, 0, { textBefore: "", wholeNumber: "0", decimal: "00", textAfter: "" });
-      // Add the price point options to the new Price Point
-      for (let i = 0; i < this.productContent.items.length; i++) {
-        this.productContent.items[i].pricePointOptions.splice(this.selectedColumnIndex, 0, false);
-      }
-
-      // If we're inserting a new Item
-    } else if (this.selectedRowIndex != null) {
-      let pricePointOptionsCount = this.productContent.items[this.selectedRowIndex].pricePointOptions.length;
-      this.selectedRowIndex = this.selectedRowIndex + (direction == "Above" ? 0 : 1);
-
-      // Add the new Item either above or below the selected item
-      this.productContent.items.splice(this.selectedRowIndex, 0, { type: "assets/no-content-type.png", description: "", showPlaceholder: true, pricePointOptions: [] });
-      // Add the price point options to the new item
-      for (let i = 0; i < pricePointOptionsCount; i++) {
-        this.productContent.items[this.selectedRowIndex].pricePointOptions.push(false);
-      }
-    }
-    this.showContentMenu = false;
-  }
-
-
-  // -----------------------------( DELETE )------------------------------ \\
-  delete() {
-    // If we're deleting a Price Point
-    if (this.selectedColumnIndex != null && this.productContent.items[0].pricePointOptions.length > 1) {
-
-      // Delete the Price Point at the specified index
-      this.productContent.pricePoints.splice(this.selectedColumnIndex, 1);
-      // And delete all the price point options from the deleted Price Point as well
-      for (let i = 0; i < this.productContent.items.length; i++) {
-        this.productContent.items[i].pricePointOptions.splice(this.selectedColumnIndex, 1);
-      }
-
-      // If we're deleting an Item
-    } else if (this.selectedRowIndex != null && this.productContent.items.length > 1) {
-
-      // Delete the item at the specified index
-      this.productContent.items.splice(this.selectedRowIndex, 1);
-    }
-    this.showContentMenu = false;
-  }
-
-
-  // -----------------------------( CLEAR VALUES )------------------------------ \\
-  clearValues() {
-    // If we're clearing a Price Point's values
-    if (this.selectedColumnIndex != null) {
-
-      // Set the price back to default
-      this.productContent.pricePoints[this.selectedColumnIndex] = { textBefore: "", wholeNumber: "0", decimal: "00", textAfter: "" };
-
-      // Set all the price point option values as being unchecked
-      for (let i = 0; i < this.productContent.items.length; i++) {
-        this.productContent.items[i].pricePointOptions[this.selectedColumnIndex] = false;
-      }
-
-      // If we're clearing an Item's values
-    } else if (this.selectedRowIndex != null) {
-
-      // Set the item's values back to the original default settings
-      this.productContent.items[this.selectedRowIndex].type = "assets/no-content-type.png";
-      this.productContent.items[this.selectedRowIndex].description = "";
-      this.productContent.items[this.selectedRowIndex].showPlaceholder = true;
-
-      // Set all the price point option values to false
-      for (let i = 0; i < this.productContent.items[this.selectedRowIndex].pricePointOptions.length; i++) {
-        this.productContent.items[this.selectedRowIndex].pricePointOptions[i] = false;
-      }
-    }
-    this.showContentMenu = false;
-  }
-
-
-  // -----------------------------( ENTER )------------------------------ \\
-  enter() {
-    if (this.productContent.selectedItemTypeIndex != null) this.onItemTypeClick();
-    if (this.selectedPricePointOptionRowIndex != null) this.onPricePointOptionClick();
-    if (this.productContent.selectedPricePointIndex != null) this.onPricePointClick();
-    if (this.selectedItemDescriptionIndex != null) {
-      event.preventDefault();
-      let item = this.itemDesc.find((item, index) => index == this.selectedItemDescriptionIndex);
-      item.nativeElement.focus();
-      let range = document.createRange();
-      range.selectNodeContents(item.nativeElement);
-      let sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }
-  }
-
-
-  // -----------------------------( ESCAPE )------------------------------ \\
-  escape() {
-    // If an item description is selected
-    if (this.selectedItemDescriptionIndex != null
-      // and the inner text is selected
-      && document.activeElement == this.itemDesc.find((item, index) => index == this.selectedItemDescriptionIndex).nativeElement) {
-
-      // Remove the text selection
-      window.getSelection().removeAllRanges();
-      // Remove the focus from the cell
-      this.itemDesc.find((item, index) => index == this.selectedItemDescriptionIndex).nativeElement.blur();;
-
-      // For everything else
-    } else {
-
-      // Just remove the cell selection
-      this.unsetEventListeners();
-    }
-  }
-
-
-  // -----------------------------( TAB )------------------------------ \\
-  tab() {
-    this.arrowRight();
-    event.preventDefault();
-  }
-
-
   // -----------------------------( SHIFT TAB )------------------------------ \\
   shiftTab() {
     this.arrowLeft();
     event.preventDefault();
   }
-
-
-  // -----------------------------( ARROW LEFT )------------------------------ \\
-  arrowLeft() {
-    // If we're on a column selector
-    if (this.selectedColumnIndex != null) {
-      if (this.selectedColumnIndex > 0) {
-        this.selectedColumnIndex--;
-      }
-    }
-
-    // If we're on a price point
-    if (this.productContent.selectedPricePointIndex != null) {
-      if (this.productContent.selectedPricePointIndex > 0) {
-        this.productContent.selectedPricePointIndex--;
-      }
-    }
-
-    // If we're on a price point option
-    if (this.selectedPricePointOptionColumnIndex != null) {
-      if (this.selectedPricePointOptionColumnIndex > 0) {
-        this.selectedPricePointOptionColumnIndex--;
-        return
-      }
-    }
-
-    // If we're leaving a price point option and entering an item description
-    if (this.selectedPricePointOptionColumnIndex == 0) {
-      this.selectedItemDescriptionIndex = this.selectedPricePointOptionRowIndex;
-      this.selectedPricePointOptionColumnIndex = null;
-      return
-    }
-
-    // If we're leaving an item description and entering a content type
-    if (this.selectedItemDescriptionIndex != null) {
-      this.productContent.selectedItemTypeIndex = this.selectedItemDescriptionIndex;
-      this.selectedItemDescriptionIndex = null;
-      return
-    }
-
-    // If we're leaving a content type and entering a row selector
-    if (this.productContent.selectedItemTypeIndex != null) {
-      this.selectedRowIndex = this.productContent.selectedItemTypeIndex;
-      this.productContent.selectedItemTypeIndex = null;
-    }
-  }
-
-
-  // -----------------------------( ARROW UP )------------------------------ \\
-  arrowUp() {
-    // If we're on a row selector
-    if (this.selectedRowIndex != null) {
-      if (this.selectedRowIndex > 0) {
-        this.selectedRowIndex--;
-      }
-    }
-
-    // If we're on a content type
-    if (this.productContent.selectedItemTypeIndex != null) {
-      if (this.productContent.selectedItemTypeIndex > 0) {
-        this.productContent.selectedItemTypeIndex--;
-      }
-    }
-
-    // If we're on an item description
-    if (this.selectedItemDescriptionIndex != null) {
-      if (this.selectedItemDescriptionIndex > 0) {
-        this.selectedItemDescriptionIndex--;
-      }
-    }
-
-    // If we're on a price point option
-    if (this.selectedPricePointOptionRowIndex != null) {
-      if (this.selectedPricePointOptionRowIndex > 0) {
-        this.selectedPricePointOptionRowIndex--;
-        return
-      }
-    }
-
-    // If we're leaving a price point option and entering a price point
-    if (this.selectedPricePointOptionRowIndex == 0) {
-      this.productContent.selectedPricePointIndex = this.selectedPricePointOptionColumnIndex;
-      this.selectedPricePointOptionRowIndex = null;
-      return
-    }
-
-    // If we're leaving a price point and entering a column selector
-    if (this.productContent.selectedPricePointIndex != null) {
-      this.selectedColumnIndex = this.productContent.selectedPricePointIndex;
-      this.productContent.selectedPricePointIndex = null;
-    }
-  }
-
-
-  // -----------------------------( ARROW RIGHT )------------------------------ \\
-  arrowRight() {
-    // If we're on a column selector
-    if (this.selectedColumnIndex != null) {
-      if (this.selectedColumnIndex < this.productContent.pricePoints.length - 1) {
-        this.selectedColumnIndex++;
-      }
-    }
-
-    // If we're on a price point
-    if (this.productContent.selectedPricePointIndex != null) {
-      if (this.productContent.selectedPricePointIndex < this.productContent.pricePoints.length - 1) {
-        this.productContent.selectedPricePointIndex++;
-      }
-    }
-
-    // If we're leaving a row selector and entering a content type
-    if (this.selectedRowIndex != null) {
-      this.productContent.selectedItemTypeIndex = this.selectedRowIndex;
-      this.selectedRowIndex = null;
-      return
-    }
-
-    // If we're leaving a content type and entering an item description
-    if (this.productContent.selectedItemTypeIndex != null) {
-      this.selectedItemDescriptionIndex = this.productContent.selectedItemTypeIndex;
-      this.productContent.selectedItemTypeIndex = null;
-      return
-    }
-
-    // If we're leaving an item description and entering a price point option
-    if (this.selectedItemDescriptionIndex != null) {
-      this.selectedPricePointOptionRowIndex = this.selectedItemDescriptionIndex;
-      this.selectedItemDescriptionIndex = null;
-      this.selectedPricePointOptionColumnIndex = 0;
-      return
-    }
-
-    // If we're on a price point option
-    if (this.selectedPricePointOptionColumnIndex != null) {
-      if (this.selectedPricePointOptionColumnIndex < this.productContent.pricePoints.length - 1) {
-        this.selectedPricePointOptionColumnIndex++;
-      }
-    }
-  }
-
-
-  // -----------------------------( ARROW DOWN )------------------------------ \\
-  arrowDown() {
-    // If we're on a row selector
-    if (this.selectedRowIndex != null) {
-      if (this.selectedRowIndex < this.productContent.items.length - 1) {
-        this.selectedRowIndex++;
-      }
-    }
-
-    // If we're on a content type
-    if (this.productContent.selectedItemTypeIndex != null) {
-      if (this.productContent.selectedItemTypeIndex < this.productContent.items.length - 1) {
-        this.productContent.selectedItemTypeIndex++;
-      }
-    }
-
-    // If we're on an item description
-    if (this.selectedItemDescriptionIndex != null) {
-      if (this.selectedItemDescriptionIndex < this.productContent.items.length - 1) {
-        this.selectedItemDescriptionIndex++;
-      }
-    }
-
-    // If we're leaving a column selector and entering a price point
-    if (this.selectedColumnIndex != null) {
-      this.productContent.selectedPricePointIndex = this.selectedColumnIndex;
-      this.selectedColumnIndex = null;
-      return
-    }
-
-    // If we're leaving a price point and entering a price point option
-    if (this.productContent.selectedPricePointIndex != null) {
-      this.selectedPricePointOptionColumnIndex = this.productContent.selectedPricePointIndex;
-      this.productContent.selectedPricePointIndex = null;
-      this.selectedPricePointOptionRowIndex = 0;
-      return
-    }
-
-    // If we're on a price point option
-    if (this.selectedPricePointOptionRowIndex != null) {
-      if (this.selectedPricePointOptionRowIndex < this.productContent.items.length - 1) {
-        this.selectedPricePointOptionRowIndex++;
-      }
-    }
-  }
-
 }
