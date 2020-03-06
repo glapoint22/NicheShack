@@ -33,7 +33,35 @@
     </div>
 
     <div class="background" style="height: 214px;">
-        <div *ngFor="let keyword of keywords; let keywordIndex = index"
+
+
+
+    <table>
+        <tr *ngFor="let keyword of keywords; let keywordIndex = index" >
+            <td #keyword
+                class="keywordList"
+                [contentEditable]="editedKeywordIndex == keywordIndex"
+                [textContent]="keywords[keywordIndex].name"
+                (mouseover)="preventMousedown=true"
+                (mouseout)="preventMousedown=false"
+                (mousedown)="onKeywordDown(keywordIndex)"
+                (dblclick)="onKeywordDoubleClick(keywordIndex)"
+                [ngClass]="{
+                            'selected-keyword': selectedKeywordIndex == keywordIndex,
+                            'edited-keyword': editedKeywordIndex == keywordIndex,
+                            'selected-keyword-top': keywords[keywordIndex].selectType == 'top',
+                            'selected-keyword-middle': keywords[keywordIndex].selectType == 'middle',
+                            'selected-keyword-bottom': keywords[keywordIndex].selectType == 'bottom',
+                            'selected-keyword-whole': keywords[keywordIndex].selectType == 'whole',
+                            'transparent-keyword': editedKeywordIndex != null && editedKeywordIndex != keywordIndex}">
+            </td>
+        </tr>
+    </table>
+
+
+
+
+        <!-- <div *ngFor="let keyword of keywords; let keywordIndex = index"
              #keyword
              class="keywordList"
              [contentEditable]="editedKeywordIndex == keywordIndex"
@@ -49,6 +77,6 @@
                          'selected-keyword-bottom': keywords[keywordIndex].selectType == 'bottom',
                          'selected-keyword-whole': keywords[keywordIndex].selectType == 'whole',
                          'transparent-keyword': editedKeywordIndex != null && editedKeywordIndex != keywordIndex}">
-        </div>
+        </div> -->
     </div>
 </fieldset>
