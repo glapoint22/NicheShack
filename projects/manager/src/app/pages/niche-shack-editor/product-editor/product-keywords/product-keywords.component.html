@@ -2,18 +2,53 @@
     <legend>Keywords</legend>
     <div class="icon-bar">
         <!-- Trash -->
-        <div class="icon-container" title="Delete Keyword(s)">
+        <div [attr.title]="!disableDelete ? 'Delete Keyword' : ''"
+             class="icon-container"
+             [ngClass]="{'icon-disabled': disableDelete}"
+             (mouseover)="preventMousedown=true"
+             (mouseout)="preventMousedown=false"
+             (click)="delete()">
             <i class="fas fa-trash-alt"></i>
         </div>
 
+        <!-- Edit -->
+        <div [attr.title]="!disableEdit ? 'Edit Keyword' : ''" 
+             class="icon-container"
+             [ngClass]="{'icon-disabled': disableEdit}"
+             (mouseover)="preventMousedown=true"
+             (mouseout)="preventMousedown=false"
+             (click)="editKeyword()">
+            <i class="fas fa-edit"></i>
+        </div>
+
         <!-- Add -->
-        <div class="icon-container" title="Add keyword">
+        <div [attr.title]="!disableAdd ? 'Add Keyword' : ''" 
+             class="icon-container"
+             [ngClass]="{'icon-disabled': disableAdd}"
+             (mouseover)="preventMousedown=true"
+             (mouseout)="preventMousedown=false"
+             (click)="addKeyword()">
             <i class="fas fa-plus-circle"></i>
         </div>
     </div>
 
     <div class="background" style="height: 214px;">
-        <div>Gumpy</div>
-        <div>Ice Cream</div>
+        <div *ngFor="let keyword of keywords; let keywordIndex = index"
+             #keyword
+             class="keywordList"
+             [contentEditable]="editedKeywordIndex == keywordIndex"
+             [textContent]="keywords[keywordIndex].name"
+             (mouseover)="preventMousedown=true"
+             (mouseout)="preventMousedown=false"
+             (mousedown)="onKeywordDown(keywordIndex)"
+             (dblclick)="onKeywordDoubleClick(keywordIndex)"
+             [ngClass]="{'edited-keyword': editedKeywordIndex == keywordIndex,
+                         
+                         'selected-keyword-top': keywords[keywordIndex].selectType == 'top',
+                         'selected-keyword-middle': keywords[keywordIndex].selectType == 'middle',
+                         'selected-keyword-bottom': keywords[keywordIndex].selectType == 'bottom',
+                         'selected-keyword-whole': keywords[keywordIndex].selectType == 'whole',
+                         'transparent-keyword': editedKeywordIndex != null && editedKeywordIndex != keywordIndex}">
+        </div>
     </div>
 </fieldset>
