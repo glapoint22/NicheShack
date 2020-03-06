@@ -31,7 +31,6 @@ export class ColorStyle extends PersistentStyle {
         this._value = v;
     }
 
-
     onShowColorPicker(onColorPickerClose: Subject<void>) {
         // Flag that the color picker is open
         this.colorPickerOpen = true;
@@ -40,7 +39,7 @@ export class ColorStyle extends PersistentStyle {
         this.contentDocument.getSelection().removeAllRanges();
 
         // If the color value is zero, assign the default color
-        if(this.value.isEqual(Color.zero)) {
+        if (this.value.isEqual(Color.zero)) {
             this.value.copy(this.defaultColor);
         }
 
@@ -53,22 +52,34 @@ export class ColorStyle extends PersistentStyle {
             // Restore the selection
             this.contentDocument.getSelection().addRange(this.selectedRange);
 
-            // If there was no change, remove the style
-            if (this.initialColor.isEqual(this.value)) {
-                this.removeStyle(this.selectedRange);
-            }
-
-            // Set the focus back to the text
-            this.setFocus();
 
             // Flag that the color picker is closed
             this.colorPickerOpen = false;
 
+            // If there was no change, remove the style
+            if (this.initialColor.isEqual(this.value)) {
+                this.applyStyle();
+            } else {
+                this.setFocus();
+            }
 
             subscription.unsubscribe();
         });
     }
 
+
+    setStyle(range: Range) {
+        if (this.colorPickerOpen) {
+            super.setStyle(range);
+        } else {
+            this.removeStyle(range);
+        }
+    }
+
+
+    setFocus() {
+        if (!this.colorPickerOpen) super.setFocus();
+    }
 
 
     onSelectionChange(range: Range) {

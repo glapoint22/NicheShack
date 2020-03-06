@@ -119,8 +119,8 @@ export class TextBox {
 
     selectContents() {
         let style = new Style(this.contentDocument);
-        let firstTextChild = style.getFirstTextChild(this.contentDocument.body.firstChild);
-        let lastTextChild = style.getLastTextChild(this.contentDocument.body.lastChild);
+        let firstTextChild = style.getFirstTextChild(this.contentDocument.body.firstElementChild);
+        let lastTextChild = style.getLastTextChild(this.contentDocument.body.lastElementChild);
         let sel = this.contentDocument.getSelection();
         let range = document.createRange();
         let content: HTMLElement = this.contentDocument.body.firstElementChild as HTMLElement;

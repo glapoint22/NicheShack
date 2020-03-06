@@ -21,6 +21,5 @@ export class DropdownStyle extends PersistentStyle {
     applyStyle() {
         super.applyStyle();
         this.selectedIndex = this.options.findIndex(x => x.value == this.styleValue);
-        this.setFocus();
     }
 }

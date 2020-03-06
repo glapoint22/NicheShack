@@ -1,17 +1,18 @@
 export class Style {
-
     public style: string;
     public styleValue: string;
     public selectedRange: Range;
     public get isSingleLineSelection(): boolean {
-        return this.selectedRange.commonAncestorContainer != this.contentDocument.body.firstElementChild &&
+        return this.selectedRange.commonAncestorContainer != this.contentParentNode &&
             (this.selectedRange.commonAncestorContainer as HTMLElement).tagName != 'OL' &&
             (this.selectedRange.commonAncestorContainer as HTMLElement).tagName != 'UL';
     }
+    public contentParentNode: HTMLElement;
 
 
-
-    constructor(public contentDocument: HTMLDocument) { }
+    constructor(public contentDocument: HTMLDocument) { 
+        this.contentParentNode = contentDocument.body.firstElementChild as HTMLElement;
+    }
 
     onSelectionChange(range: Range) {
         this.selectedRange = range;
@@ -19,6 +20,8 @@ export class Style {
 
 
     setStyle(range: Range) {
+        let isStartContainer: boolean = range.startContainer == this.selectedRange.startContainer;
+        let isEndContainer: boolean = range.endContainer == this.selectedRange.endContainer;
         let span = document.createElement("span");
 
         // Apply the style
@@ -33,16 +36,22 @@ export class Style {
         // Insert the contents at the start of the range
         range.insertNode(span);
 
-        // Update the selection
-        range.setStart(this.getFirstTextChild(span), 0);
-        let lastTextChild = this.getLastTextChild(span);
-        range.setEnd(lastTextChild, lastTextChild.length);
+        // Update the selection if we are at the start of the range
+        if (isStartContainer) {
+            this.selectedRange.setStart(this.getFirstTextChild(span), 0);
+        }
+
+        // Update the selection if we are at the end of the range
+        if (isEndContainer) {
+            let lastTextChild = this.getLastTextChild(span);
+            this.selectedRange.setEnd(lastTextChild, lastTextChild.length);
+        }
     }
 
 
 
     getSelectionParent(node: Node): HTMLElement {
-        while (node.parentElement != this.contentDocument.body.firstElementChild && node.parentElement.tagName != 'LI') {
+        while (node.parentElement != this.contentParentNode && node.parentElement.tagName != 'LI') {
             node = node.parentElement;
         }
         return node as HTMLElement;
@@ -55,63 +64,76 @@ export class Style {
         if (this.isSingleLineSelection) {
             this.setStyle(this.selectedRange);
         } else {
-            this.setMultilineStyle();
+            this.setMultilineStyle(this.selectedRange.commonAncestorContainer as HTMLElement);
         }
 
-        // Remove any empty or blank text nodes that may have been generated
-        this.removeEmptyNodes(this.contentDocument.body.firstElementChild as HTMLElement);
+        this.cleanUpStyle();
     }
 
 
-    setMultilineStyle() {
-        // Create the start range
-        let startRangeParent: HTMLElement = this.getSelectionParent(this.selectedRange.startContainer);
-        let startRange: Range = document.createRange();
-        startRange.setStart(this.selectedRange.startContainer, this.selectedRange.startOffset);
-        let lastChild = this.getLastTextChild(startRangeParent.lastChild);
-        startRange.setEnd(lastChild, lastChild.length);
+    cleanUpStyle () {
+        // Remove any empty or blank text nodes that may have been generated
+        this.removeEmptyNodes(this.contentParentNode as HTMLElement);
 
-        // set the style for the start range
-        this.setStyle(startRange);
+        // Set the focus back to the text
+        this.setFocus();
+    }
 
 
-        // Create the end range
-        let endRangeParent: HTMLElement = this.getSelectionParent(this.selectedRange.endContainer);
-        let endRange: Range = document.createRange();
-        endRange.setStart(this.getFirstTextChild(endRangeParent.firstChild), 0);
-        endRange.setEnd(this.selectedRange.endContainer, this.selectedRange.endOffset);
+    setMultilineStyle(parent: HTMLElement) {
+        let childNodes = Array.from(parent.childNodes);
 
-        // set the style for the end range
-        this.setStyle(endRange);
+        childNodes.forEach((currentNode: HTMLElement) => {
 
+            // Test to see if the current node is in the selected range
+            if (this.selectedRange.intersectsNode(currentNode)) {
 
-        // Style all nodes between start & end range
-        for (let i = 0; i < this.selectedRange.commonAncestorContainer.childNodes.length; i++) {
-            let childNode = this.selectedRange.commonAncestorContainer.childNodes[i];
+                if (currentNode.tagName == 'UL' || currentNode.tagName == 'OL') {
+                    this.setMultilineStyle(currentNode);
+                } else {
+                    // Set the style for the current node
+                    this.setStyle(this.createRange(currentNode));
+                }
 
-            // Make sure node is not start or end and is not a text node
-            if (this.selectedRange.intersectsNode(childNode) &&
-                childNode != startRangeParent &&
-                childNode != startRangeParent.parentElement &&
-                childNode != endRangeParent &&
-                childNode != endRangeParent.parentElement &&
-                childNode.nodeType != 3) {
-
-
-                // Create the mid range
-                let midRange: Range = document.createRange();
-                midRange.setStart(this.getFirstTextChild(childNode.firstChild), 0);
-                let lastChild = this.getLastTextChild(childNode.lastChild);
-                midRange.setEnd(lastChild, lastChild.length);
-
-                // set the style for the mid range
-                this.setStyle(midRange);
+                // If the current node is beyond the selected range, return
             }
+            else if (this.selectedRange.comparePoint(currentNode, 0) == 1) {
+                return;
+            }
+        });
+    }
+
+
+    createRange(node: HTMLElement): Range {
+        let range: Range = document.createRange();
+        let startNode: Node;
+        let startOffset: number;
+        let endNode: Node;
+        let endOffset: number;
+
+        if (node.tagName == 'LI') node = node.firstElementChild as HTMLElement;
+
+        if (node == this.getSelectionParent(this.selectedRange.startContainer)) {
+            startNode = this.selectedRange.startContainer;
+            startOffset = this.selectedRange.startOffset;
+            endNode = this.getLastTextChild(node.lastChild);
+            endOffset = (endNode as Text).length;
+        } else if (node == this.getSelectionParent(this.selectedRange.endContainer)) {
+            startNode = this.getFirstTextChild(node.firstChild)
+            startOffset = 0;
+            endNode = this.selectedRange.endContainer;
+            endOffset = this.selectedRange.endOffset;
+        } else {
+            startNode = this.getFirstTextChild(node.firstChild);
+            startOffset = 0
+            endNode = this.getLastTextChild(node.lastChild);
+            endOffset = (endNode as Text).length;
         }
 
-        // Update the selection
-        this.selectedRange.setStart(startRange.startContainer, startRange.startOffset);
-        this.selectedRange.setEnd(endRange.endContainer, endRange.endOffset);
+        range.setStart(startNode, startOffset);
+        range.setEnd(endNode, endOffset);
+
+        return range;
     }
 
 
@@ -155,14 +177,16 @@ export class Style {
 
 
 
-    removeStyle(selectedRange: Range) {
-        let styleParent: HTMLElement = this.getStyleParent(selectedRange.startContainer);
+    removeStyle(range: Range) {
+        let isStartContainer: boolean = range.startContainer == this.selectedRange.startContainer;
+        let isEndContainer: boolean = range.endContainer == this.selectedRange.endContainer;
+        let styleParent: HTMLElement = this.getStyleParent(range.startContainer);
         let startText = this.getFirstTextChild(styleParent);
         let endText = this.getLastTextChild(styleParent);
 
-        let whole: boolean = selectedRange.comparePoint(startText, 0) == 0 && selectedRange.comparePoint(endText, endText.length) == 0;
-        let mid: boolean = selectedRange.comparePoint(startText, 0) == -1 && selectedRange.comparePoint(endText, endText.length) == 1;
-        let end: boolean = selectedRange.comparePoint(startText, 0) == -1 && selectedRange.comparePoint(endText, endText.length) == 0;
+        let whole: boolean = range.comparePoint(startText, 0) == 0 && range.comparePoint(endText, endText.length) == 0;
+        let mid: boolean = range.comparePoint(startText, 0) == -1 && range.comparePoint(endText, endText.length) == 1;
+        let end: boolean = range.comparePoint(startText, 0) == -1 && range.comparePoint(endText, endText.length) == 0;
 
         // If middle or end of the container is selected
         if (mid || end) {
@@ -170,22 +194,28 @@ export class Style {
 
             // Insert the contents that is before the selected range into a start range
             startRange.setStartBefore(styleParent);
-            startRange.setEnd(selectedRange.startContainer, selectedRange.startOffset);
+            startRange.setEnd(range.startContainer, range.startOffset);
             startRange.insertNode(startRange.extractContents());
         }
 
         // Insert the selected range contents before the style parent
-        selectedRange.setStart(styleParent, 0);
-        let selectedContents: DocumentFragment = selectedRange.extractContents();
+        range.setStart(styleParent, 0);
+        let selectedContents: DocumentFragment = range.extractContents();
         let selectedContentsCount: number = selectedContents.childNodes.length;
         styleParent.parentElement.insertBefore(selectedContents, styleParent);
 
-        // Update the selection
-        let index = Array.from(styleParent.parentElement.childNodes).indexOf(styleParent);
-        let lastTextChild: Text = this.getLastTextChild(styleParent.previousSibling);
+        // Update the selection if we are at the start of the range
+        if (isStartContainer) {
+            let index = Array.from(styleParent.parentElement.childNodes).indexOf(styleParent);
+            this.selectedRange.setStart(this.getFirstTextChild(styleParent.parentElement.childNodes[index - selectedContentsCount]), 0);
+        }
 
-        selectedRange.setStart(this.getFirstTextChild(styleParent.parentElement.childNodes[index - selectedContentsCount]), 0);
-        selectedRange.setEnd(lastTextChild, lastTextChild.length);
+        // Update the selection if we are at the end of the range
+        if (isEndContainer) {
+            let lastTextChild: Text = this.getLastTextChild(styleParent.previousSibling);
+            this.selectedRange.setEnd(lastTextChild, lastTextChild.length);
+        }
+
 
         // Remove the style parent contents
         if (whole || end) styleParent.remove();
@@ -210,7 +240,7 @@ export class Style {
 
             this.removeEmptyNodes(childNode as HTMLElement);
 
-            if(childNode.nodeType == 1 && childNode.childNodes.length == 0) {
+            if (childNode.nodeType == 1 && childNode.childNodes.length == 0) {
                 childNode.remove();
                 i--;
             }
@@ -249,7 +279,7 @@ export class Style {
             return this.nodeHasStyle(this.selectedRange.startContainer.parentElement);
         } else {
             // Multiple containers are selected
-            return this.multipleNodesHasStyle(this.contentDocument.body.firstElementChild);
+            return this.multipleNodesHasStyle(this.contentParentNode);
         }
     }
 
@@ -277,7 +307,7 @@ export class Style {
 
     nodeHasStyleAlt(node: HTMLElement): boolean {
         // This method is used when nodeHasStyle cannot be used (style is not inherited eg. background color and underline)
-        while (node != this.contentDocument.body.firstElementChild) {
+        while (node != this.contentParentNode) {
 
             // If this style is applied
             if (node.style[this.style] != '') {
@@ -293,9 +323,9 @@ export class Style {
         return false;
     }
 
-    setFocus() {
-        let content: HTMLElement = this.contentDocument.body.firstElementChild as HTMLElement;
 
+    setFocus() {
+        let content: HTMLElement = this.contentParentNode as HTMLElement;
         content.focus();
     }
 }

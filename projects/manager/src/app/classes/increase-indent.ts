@@ -9,22 +9,16 @@ export class IncreaseIndent extends Indent {
     }
 
 
-    setLineStyle(parent: HTMLElement) {
-        // if we are indenting a list item
-        if (parent.parentElement.tagName == 'LI') {
-            let listTag = document.createElement(parent.parentElement.parentElement.tagName);
-            let contentParent = parent.parentElement.parentElement;
-            let refChild = parent.parentElement.nextSibling;
+    assignStyle(parent: HTMLElement) {
+        if (parent.tagName == 'LI') {
+            let refChild = parent.nextSibling;
+            let listParent = parent.parentElement;
+            let listTag = document.createElement(listParent.tagName);
 
-            // Indent the list item by appending it inside a list tag (UL or OL)
-            listTag.appendChild(parent.parentElement);
-            contentParent.insertBefore(listTag, refChild);
-
-            // We are not indenting a list item
+            listTag.appendChild(parent);
+            listParent.insertBefore(listTag, refChild);
         } else {
-            super.setLineStyle(parent);
+            super.assignStyle(parent);
         }
-
     }
-
 }
