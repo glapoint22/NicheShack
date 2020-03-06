@@ -8,13 +8,14 @@ export class DecreaseIndent extends Indent {
         this.indentDirection = -1;
     }
 
-    setLineStyle(parent: HTMLElement) {
-        if (parent.parentElement.tagName == 'LI') {
-            let listItem = parent.parentElement;
-            let listParent: HTMLElement = listItem.parentElement;
-            let contentParent: HTMLElement = listParent.parentElement;
 
-            if (contentParent != this.contentDocument.body.firstChild) {
+    assignStyle(parent: HTMLElement) {
+        if (parent.tagName == 'LI') {
+            let listItem = parent;
+            let listParent: HTMLElement = listItem.parentElement;
+            let container: HTMLElement = listParent.parentElement;
+
+            if (container != this.contentParentNode) {
                 let docFrag: DocumentFragment = document.createDocumentFragment();
 
                 // Used for inserting the list item before this node
@@ -43,14 +44,14 @@ export class DecreaseIndent extends Indent {
 
                 // Insert the list item before the reference child
                 docFrag.appendChild(listItem);
-                contentParent.insertBefore(docFrag, refChild);
+                container.insertBefore(docFrag, refChild);
 
 
                 // Remove the list parent if there are no more children
                 if (listParent.childElementCount == 0) listParent.remove();
             }
         } else {
-            super.setLineStyle(parent);
+            super.assignStyle(parent);
         }
     }
 }

@@ -1,65 +1,21 @@
-import { ToggleableStyle } from './toggleable-style';
+import { PersistentStyle } from './persistent-style';
 import { Selection } from './selection';
 
-export class LineStyle extends ToggleableStyle {
+export class LineStyle extends PersistentStyle {
+    public isSelected: boolean;
 
+    setStyle(range: Range) {
+        let parent = this.getSelectionParent(range.startContainer);
 
-    applyStyle() {
-        let selection: Selection;
-
-        // If the style is being applied on a single line
-        if (this.isSingleLineSelection) {
-            let parent = this.getSelectionParent(this.selectedRange.startContainer);
-
-            if (parent.parentElement.tagName == 'LI') {
-                selection = this.getSelection();
-            }
-
-            this.setLineStyle(parent);
-        } else {
-            let startRangeParent = this.getSelectionParent(this.selectedRange.startContainer);
-            let endRangeParent = this.getSelectionParent(this.selectedRange.endContainer);
-
-            if (startRangeParent.parentElement.tagName == 'LI') {
-                selection = this.getSelection();
-            }
-
-
-            this.setLineStyle(startRangeParent);
-
-
-            let childCount = this.selectedRange.commonAncestorContainer.childNodes.length;
-
-            // Style all nodes between start & end range
-            for (let i = 0; i < this.selectedRange.commonAncestorContainer.childNodes.length; i++) {
-                let parentNode = this.getSelectionParent(this.getFirstTextChild(this.selectedRange.commonAncestorContainer.childNodes[i]));
-
-                // Make sure the parent node is not start or end parent
-                if (this.selectedRange.intersectsNode(parentNode) &&
-                    parentNode != startRangeParent &&
-                    parentNode != endRangeParent) {
-
-                    this.setLineStyle(parentNode);
-
-                    if (this.selectedRange.commonAncestorContainer.childNodes.length < childCount) i--;
-                }
-            }
-
-            this.setLineStyle(endRangeParent);
-        }
+        if (parent.parentElement.tagName == 'LI') parent = parent.parentElement;
+        this.assignStyle(parent);
         this.isSelected = true;
-
-        // Reset the selection
-        if (selection) {
-            this.setSelection(selection);
-        }
-
-        this.setFocus();
     }
 
-    setLineStyle(parent: HTMLElement) {
-        if (parent.parentElement.tagName == 'LI') parent = parent.parentElement;
-        parent.style[this.style] = this.styleValue;
+    onSelectionChange(range: Range) {
+        super.onSelectionChange(range);
+
+        this.isSelected = this.selectionHasStyle();
     }
 
     getSelection(): Selection {
@@ -98,7 +54,7 @@ export class LineStyle extends ToggleableStyle {
         // let text: Text;
         let parent: HTMLElement;
 
-        parent = this.getSelectionNode(this.contentDocument.body.firstElementChild as HTMLElement, 'end');
+        parent = this.getSelectionNode(this.contentParentNode as HTMLElement, 'end');
 
         // Set the end of the range
         this.selectedRange.setEnd(parent, 0);
@@ -109,7 +65,7 @@ export class LineStyle extends ToggleableStyle {
         }
 
         this.selectedRange.setEnd(this.selectedRange.endContainer, selection.endOffset);
-        parent = this.getSelectionNode(this.contentDocument.body.firstElementChild as HTMLElement, 'start');
+        parent = this.getSelectionNode(this.contentParentNode as HTMLElement, 'start');
 
         // Set the start of the range
         this.selectedRange.setStart(parent, 0);
@@ -135,7 +91,6 @@ export class LineStyle extends ToggleableStyle {
             let result = this.getSelectionNode(childNode, attribute);
 
             if (result) return result;
-
         }
     }
 }

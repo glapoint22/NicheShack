@@ -1,5 +1,5 @@
-import { LineStyle } from './line-style';
 import { Selection } from './selection';
+import { LineStyle } from './line-style';
 
 export class ListStyle extends LineStyle {
     applyStyle() {
@@ -10,7 +10,7 @@ export class ListStyle extends LineStyle {
         // Here we need to determine if the list style we are applying is over the alternate list style
         // If so, we need to switch the selected list style to the current list style
         this.style = this.style == 'UL' ? 'OL' : 'UL';
-        let selectionHasListStyle = this.selectionHasListStyle(this.contentDocument.body.firstElementChild);
+        let selectionHasListStyle = this.selectionHasListStyle(this.contentParentNode);
         this.style = this.style == 'UL' ? 'OL' : 'UL';
 
         if (selectionHasListStyle) {
@@ -37,15 +37,15 @@ export class ListStyle extends LineStyle {
         let refChild: Node;
 
         // Get the start parent from where to start the switch and the reference child from where to insert the contents
-        if (startElement == this.contentDocument.body.firstElementChild || topParent.firstElementChild == startElement) {
+        if (startElement == this.contentParentNode || topParent.firstElementChild == startElement) {
             refChild = topParent.previousSibling;
-            startParent = this.contentDocument.body.firstElementChild as HTMLElement;
+            startParent = this.contentParentNode as HTMLElement;
         } else {
             range.setStartBefore(topParent);
             range.setEndBefore(startElement);
             range.insertNode(range.extractContents());
             refChild = topParent.previousSibling;
-            startParent = this.selectedRange.commonAncestorContainer == this.contentDocument.body.firstElementChild ? this.contentDocument.body.firstElementChild as HTMLElement : topParent;
+            startParent = this.selectedRange.commonAncestorContainer == this.contentParentNode ? this.contentParentNode as HTMLElement : topParent;
         }
 
 
@@ -53,10 +53,10 @@ export class ListStyle extends LineStyle {
         this.appendChildrenIntoContainer(container, startParent);
 
         // Insert the new container before the reference child
-        this.contentDocument.body.firstElementChild.insertBefore(container, refChild ? refChild.nextSibling : this.contentDocument.body.firstElementChild.firstElementChild);
+        this.contentParentNode.insertBefore(container, refChild ? refChild.nextSibling : this.contentParentNode.firstElementChild);
 
         // Remove any empty nodes
-        this.removeEmptyNodes(this.contentDocument.body.firstElementChild as HTMLElement);
+        this.removeEmptyNodes(this.contentParentNode as HTMLElement);
     }
 
 
@@ -64,13 +64,9 @@ export class ListStyle extends LineStyle {
     appendChildrenIntoContainer(container: HTMLElement | DocumentFragment, parent: HTMLElement) {
         for (let i = 0; i < parent.childNodes.length; i++) {
             let currentNode = parent.childNodes[i] as HTMLElement;
-            let text = this.getFirstTextChild(currentNode);
-
-            // If the current node does not have text, continue with the loop
-            if (!text) continue;
 
             // Test to see if the current node is in the selected range
-            if (this.selectedRange.comparePoint(text, this.selectedRange.startOffset) == 0 || text == this.selectedRange.endContainer) {
+            if (this.selectedRange.intersectsNode(currentNode)) {
 
                 // Test to see if the current node is a list element
                 if (currentNode.tagName == 'UL' || currentNode.tagName == 'OL') {
@@ -78,7 +74,7 @@ export class ListStyle extends LineStyle {
 
                     // If we are on the first level of containers, create a document fragment
                     // Else, create a list container
-                    if (parent == this.contentDocument.body.firstElementChild) {
+                    if (parent == this.contentParentNode) {
                         childContainer = document.createDocumentFragment();
                     } else {
                         childContainer = document.createElement(this.style);
@@ -109,76 +105,75 @@ export class ListStyle extends LineStyle {
                 i--;
 
                 // If the current node is beyond the selected range, return
-            } else if (this.selectedRange.comparePoint(text, this.selectedRange.startOffset) == 1) {
+            } else if (this.selectedRange.comparePoint(currentNode, 0) == 1) {
                 return;
             }
 
         }
 
         // If the parent is not the content node and has no children, remove it
-        if (parent != this.contentDocument.body.firstElementChild && parent.childElementCount == 0) parent.remove();
+        if (parent != this.contentParentNode && parent.childElementCount == 0) parent.remove();
     }
+
 
 
     createList() {
-        let startParent = this.getListParent(this.selectedRange.startContainer);
-        let endParent = this.getListParent(this.selectedRange.endContainer);
-        let refChild = endParent.nextElementSibling;
-        let listTag = document.createElement(this.style);
-        let singleLineSelection = this.isSingleLineSelection;
+        let refChild: Node = this.getListParent(this.selectedRange.endContainer).nextSibling;
+        let listTag: HTMLElement = document.createElement(this.style);
 
-        // Create the list item
-        listTag.appendChild(this.createListItem(startParent));
-
-
-        // If multiple lines are selected
-        if (!singleLineSelection) {
-            for (let i = 0; i < this.selectedRange.commonAncestorContainer.childNodes.length; i++) {
-                let currentNode = this.selectedRange.commonAncestorContainer.childNodes[i] as HTMLElement;
-
-                if (this.selectedRange.intersectsNode(currentNode) &&
-                    currentNode != startParent &&
-                    currentNode != endParent) {
-
-                    // Create the list item
-                    let listItem = this.createListItem(currentNode);
-                    listTag.appendChild(listItem);
-                    i--;
-                }
-            }
-
-            // Create the list item
-            listTag.appendChild(this.createListItem(endParent));
+        if (this.isSingleLineSelection) {
+            listTag.appendChild(this.createListItem(this.getListParent(this.selectedRange.startContainer)));
+        } else {
+            this.createMultilineLists(listTag);
         }
 
-        this.contentDocument.body.firstElementChild.insertBefore(listTag, refChild);
+        this.contentParentNode.insertBefore(listTag, refChild);
     }
 
 
-    removeList() {
-        let startParent = this.getSelectionParent(this.selectedRange.startContainer);
-        let endParent = this.getSelectionParent(this.selectedRange.endContainer);
-        let singleLineSelection = this.isSingleLineSelection;
 
-        this.removeListItem(startParent);
+    createMultilineLists(listTag: HTMLElement) {
+        for (let i = 0; i < this.selectedRange.commonAncestorContainer.childNodes.length; i++) {
+            let currentNode = this.selectedRange.commonAncestorContainer.childNodes[i] as HTMLElement;
 
-        // If multiple lines are selected
-        if (!singleLineSelection) {
-            for (let i = 0; i < this.selectedRange.commonAncestorContainer.childNodes.length; i++) {
-                let currentNode = this.selectedRange.commonAncestorContainer.childNodes[i] as HTMLElement;
-                let parentNode = this.getSelectionParent(this.getFirstTextChild(currentNode));
+            // Test to see if the current node is in the selected range
+            if (this.selectedRange.intersectsNode(currentNode)) {
+                listTag.appendChild(this.createListItem(currentNode));
+                i--;
 
-                if (this.selectedRange.comparePoint(currentNode, 0) == 0 &&
-                    parentNode != startParent &&
-                    parentNode != endParent &&
-                    (currentNode.tagName == 'UL' || currentNode.tagName == 'OL' || currentNode.tagName == 'LI')) {
-
-                    this.removeListItem(parentNode);
-                    i--;
-                }
+                // If the current node is beyond the selected range, return
+            } else if (this.selectedRange.comparePoint(currentNode, 0) == 1) {
+                return;
             }
+        }
+    }
 
-            this.removeListItem(endParent);
+
+    
+
+    removeList() {
+        if (this.isSingleLineSelection) {
+            this.removeListItem(this.getSelectionParent(this.selectedRange.startContainer));
+        } else {
+            this.removeMultilineLists();
+        }
+    }
+
+
+    removeMultilineLists() {
+        for (let i = 0; i < this.selectedRange.commonAncestorContainer.childNodes.length; i++) {
+            let currentNode = this.selectedRange.commonAncestorContainer.childNodes[i] as HTMLElement;
+            let parentNode = this.getSelectionParent(this.getFirstTextChild(currentNode));
+
+            // Test to see if the current node is in the selected range
+            if (this.selectedRange.intersectsNode(currentNode)) {
+                this.removeListItem(parentNode);
+                i--;
+
+                // If the current node is beyond the selected range, return
+            } else if (this.selectedRange.comparePoint(currentNode, 0) == 1) {
+                return;
+            }
         }
     }
 
@@ -266,12 +261,12 @@ export class ListStyle extends LineStyle {
         listItem.remove();
 
         // Remove all empty nodes
-        this.removeEmptyNodes(this.contentDocument.body.firstElementChild as HTMLElement);
+        this.removeEmptyNodes(this.contentParentNode as HTMLElement);
     }
 
 
     nodeHasStyle(node: HTMLElement): boolean {
-        while (node != this.contentDocument.body.firstElementChild) {
+        while (node != this.contentParentNode) {
             if (node.tagName == this.style) return true;
 
             node = node.parentElement;
@@ -282,7 +277,7 @@ export class ListStyle extends LineStyle {
 
 
     getTopParent(node: Node): HTMLElement {
-        while (node.parentElement != this.contentDocument.body.firstElementChild) {
+        while (node.parentElement != this.contentParentNode) {
             node = node.parentElement;
         }
         return node as HTMLElement;

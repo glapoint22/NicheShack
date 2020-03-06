@@ -15,7 +15,7 @@ export class HighlightColor extends ColorStyle {
         let node: HTMLElement = this.selectedRange.startContainer as HTMLElement;
         let colorValue: string;
 
-        while (node.parentElement != this.contentDocument.body.firstElementChild) {
+        while (node.parentElement != this.contentParentNode) {
             colorValue = window.getComputedStyle(node.parentElement)[this.style];
 
             if (colorValue != 'rgba(0, 0, 0, 0)') break;
