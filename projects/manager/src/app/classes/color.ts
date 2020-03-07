@@ -20,6 +20,10 @@ export class Color {
             this.a == color.a
     }
 
+    toString(): string {
+        return 'rgba(' + this.r + ', ' + this.g + ', ' + this.b + ', ' + this.a + ')';
+    }
+
 
     static HSLToRGB(h, s, l): Color {
         let r: number;

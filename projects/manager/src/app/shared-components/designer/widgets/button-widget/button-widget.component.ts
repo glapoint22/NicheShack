@@ -56,13 +56,13 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     if (this.hoverTab.selected) {
 
       // Style the button fill with the hover look
-      fillColor = 'rgba(' + this.fill.hoverColor.r + ',' + this.fill.hoverColor.g + ',' + this.fill.hoverColor.b + ',' + this.fill.hoverColor.a + ')';
+      fillColor = this.fill.hoverColor.toString();
 
       // If the normal tab on the button form is selected
     } else {
 
       // Style the button fill with the normal look
-      fillColor = 'rgba(' + this.fill.color.r + ',' + this.fill.color.g + ',' + this.fill.color.b + ',' + this.fill.color.a + ')';
+      fillColor = this.fill.color.toString();
     }
     return fillColor;
   }
@@ -99,14 +99,14 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     if (this.hoverTab.selected) {
 
       // Style the button text with the hover look
-      textColor = 'rgba(' + this.text.hoverColor.r + ',' + this.text.hoverColor.g + ',' + this.text.hoverColor.b + ',' + this.text.hoverColor.a + ')';
+      textColor = this.text.hoverColor.toString();
 
 
       // If the normal tab on the button form is selected
     } else {
 
       // Style the button text with the normal look
-      textColor = 'rgba(' + this.text.color.r + ',' + this.text.color.g + ',' + this.text.color.b + ',' + this.text.color.a + ')';
+      textColor = this.text.color.toString();
     }
     return textColor;
   }

@@ -1,11 +1,13 @@
 import { Color } from './color';
 import { PersistentStyle } from './persistent-style';
 import { Subject, Subscription } from 'rxjs';
+import { Selection } from './selection';
 
 export class ColorStyle extends PersistentStyle {
     public defaultColor: Color;
     private colorPickerOpen: boolean;
     private initialColor: Color = new Color();
+    
 
     // This is the color value
     private _value: Color = new Color();
@@ -15,10 +17,10 @@ export class ColorStyle extends PersistentStyle {
         if (this.colorPickerOpen) {
 
             // Only if the color has changed
-            if (this.styleValue != 'rgb(' + this._value.r + ', ' + this._value.g + ', ' + this._value.b + ', ' + this._value.a + ')') {
+            if (this.styleValue != this._value.toString()) {
 
                 // Set the style value as the new color via the color picker and apply it
-                this.styleValue = 'rgb(' + this._value.r + ', ' + this._value.g + ', ' + this._value.b + ', ' + this._value.a + ')';
+                this.styleValue = this._value.toString();
                 this.applyStyle();
             }
         }
@@ -32,8 +34,13 @@ export class ColorStyle extends PersistentStyle {
     }
 
     onShowColorPicker(onColorPickerClose: Subject<void>) {
-        // Flag that the color picker is open
-        this.colorPickerOpen = true;
+        // Get the current selection
+        let selection: Selection = this.getSelection();
+
+        // Get a snapshot of all the contents
+        // this will be used if the user does not commit to the changes
+        let template = document.createElement('template');
+        template.innerHTML = this.contentParentNode.innerHTML;
 
         // Clear the selection from the text
         this.contentDocument.getSelection().removeAllRanges();
@@ -41,10 +48,15 @@ export class ColorStyle extends PersistentStyle {
         // If the color value is zero, assign the default color
         if (this.value.isEqual(Color.zero)) {
             this.value.copy(this.defaultColor);
+            this.styleValue = this._value.toString();
         }
 
         // Get the initial color
         this.initialColor.copy(this.value);
+
+
+        // Flag that the color picker is open
+        this.colorPickerOpen = true;
 
 
         // Subscribe for when the color picker closes
@@ -58,23 +70,24 @@ export class ColorStyle extends PersistentStyle {
 
             // If there was no change, remove the style
             if (this.initialColor.isEqual(this.value)) {
-                this.applyStyle();
+                // Remove all contents
+                this.contentParentNode.innerHTML = '';
+
+                // Replace the contents with the previous contents
+                this.contentParentNode.appendChild(template.content);
+                this.setSelection(selection);
             } else {
-                this.setFocus();
+                // Remove the start and end attributes
+                this.removeAttribute(this.contentParentNode as HTMLElement, 'start');
+                this.removeAttribute(this.contentParentNode as HTMLElement, 'end');
             }
+
+            this.setFocus();
 
             subscription.unsubscribe();
         });
     }
 
-
-    setStyle(range: Range) {
-        if (this.colorPickerOpen) {
-            super.setStyle(range);
-        } else {
-            this.removeStyle(range);
-        }
-    }
 
 
     setFocus() {
@@ -94,7 +107,7 @@ export class ColorStyle extends PersistentStyle {
             if (result)
                 this.value = new Color(Number.parseInt(result[1]), Number.parseInt(result[2]), Number.parseInt(result[3]), result[4] ? Number.parseFloat(result[4]) : 1);
         } else {
-            this.value = new Color(255, 255, 255, 1);
+            this.value = new Color(0, 0, 0, 0);
         }
     }
 
