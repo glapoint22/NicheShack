@@ -46,8 +46,8 @@
                 (mouseout)="preventMousedown=false"
                 (mousedown)="onKeywordDown(keywordIndex)"
                 (dblclick)="onKeywordDoubleClick(keywordIndex)"
-                [ngClass]="{
-                            'selected-keyword': selectedKeywordIndex == keywordIndex,
+                [ngClass]="{'selected-keyword': selectedKeywordIndex == keywordIndex,
+                            'unselected-keyword': unselectedKeywordIndex == keywordIndex,
                             'edited-keyword': editedKeywordIndex == keywordIndex,
                             'selected-keyword-top': keywords[keywordIndex].selectType == 'top',
                             'selected-keyword-middle': keywords[keywordIndex].selectType == 'middle',

@@ -34,6 +34,20 @@ table {
 
         &:hover:not(.selected-keyword):not(.transparent-keyword):not(.edited-keyword):not(.selected-keyword-top):not(.selected-keyword-middle):not(.selected-keyword-bottom):not(.selected-keyword-whole) {
             background: $hover-fill-color;
+            color: #dddddd;
+        }
+
+        &.selected-keyword:not(.transparent-keyword):not(.edited-keyword) {
+            background: $selected-fill-color;
+            border-style: double;
+            border-color: $selected-border-color;
+            color: white;
+        }
+
+        &.unselected-keyword:not(.transparent-keyword):not(.edited-keyword) {
+            border-style: double;
+            border-color: $selected-border-color;
+            color: #aaaaaa;
         }
 
         &.selected-keyword-top {
@@ -45,6 +59,10 @@ table {
             border-left-color: #0055a0;
             border-right-style: double;
             border-right-color: #0055a0;
+            &:hover{
+                background: rgba(0, 119, 224, 0.3);
+                color: white;
+            }
         }
 
         &.selected-keyword-middle {
@@ -54,6 +72,10 @@ table {
             border-left-color: #0055a0;
             border-right-style: double;
             border-right-color: #0055a0;
+            &:hover{
+                background: rgba(0, 119, 224, 0.3);
+                color: white;
+            }
         }
 
         &.selected-keyword-bottom {
@@ -65,20 +87,22 @@ table {
             border-right-color: #0055a0;
             border-bottom-style: double;
             border-bottom-color: #0055a0;
+            &:hover{
+                background: rgba(0, 119, 224, 0.3);
+                color: white;
+            }
         }
 
-        &.selected-keyword:not(.transparent-keyword):not(.edited-keyword) {
-            background: $selected-fill-color;
-            border-style: double;
-            border-color: $selected-border-color;
-            color: white;
-        }
-
+        
         &.selected-keyword-whole {
             background: rgba(0, 119, 224, 0.15);
             border-style: double;
             border-color: #0055a0;
             color: #cfcfcf;
+            &:hover{
+                background: rgba(0, 119, 224, 0.3);
+                color: white;
+            }
         }
 
         &.edited-keyword {
