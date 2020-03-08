@@ -8,7 +8,7 @@ export class HighlightColor extends ColorStyle {
         super(contentDocument);
 
         this.style = 'backgroundColor';
-        this.defaultColor = new Color(255, 255, 255, 1);
+        this.defaultColor = new Color(255, 255, 0, 1);
     }
 
     getComputedColor(): string {

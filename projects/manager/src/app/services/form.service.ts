@@ -49,15 +49,11 @@ export class FormService {
 
   // Color Picker
   public colorPicker: Color;
-  public onColorPickerClose = new Subject<void>();
-  private _showColorPicker : boolean;
-  
-  
-  public get showColorPicker() : boolean {
-    return this._showColorPicker;
-  }
-  public set showColorPicker(v : boolean) {
-    if(!v) this.onColorPickerClose.next();
-    this._showColorPicker = v;
+  public showColorPicker: boolean;
+  public onColorPickerClose = new Subject<boolean>();
+
+  public closeColorPicker(canceled?: boolean) {
+    this.showColorPicker = false;
+    this.onColorPickerClose.next(canceled);
   }
 }

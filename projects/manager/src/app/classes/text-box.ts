@@ -15,6 +15,7 @@ import { IncreaseIndent } from './increase-indent';
 import { DecreaseIndent } from './decrease-indent';
 import { OrderedList } from './ordered-list';
 import { UnorderedList } from './unordered-list';
+import { Color } from './color';
 
 export class TextBox {
     public bold: Bold;
@@ -33,14 +34,14 @@ export class TextBox {
     public orderedList: OrderedList;
     public unorderedList: UnorderedList;
 
-    constructor(private contentDocument: HTMLDocument, applicationRef: ApplicationRef) {
+    constructor(private contentDocument: HTMLDocument, applicationRef: ApplicationRef, defaultFontColor: Color) {
         // Styles
         this.bold = new Bold(contentDocument);
         this.italic = new Italic(contentDocument);
         this.underline = new Underline(contentDocument);
         this.font = new Font(contentDocument);
         this.fontSize = new FontSize(contentDocument);
-        this.fontColor = new FontColor(contentDocument);
+        this.fontColor = new FontColor(contentDocument, defaultFontColor);
         this.highlightColor = new HighlightColor(contentDocument);
         this.alignLeft = new AlignLeft(contentDocument);
         this.alignCenter = new AlignCenter(contentDocument);
@@ -58,6 +59,7 @@ export class TextBox {
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 14px;
                 text-align: left;
+                color: ` + defaultFontColor.toRGBAString() + `
             }
             ul, ol {
                 margin-top: 0;
@@ -85,7 +87,7 @@ export class TextBox {
         content.style.bottom = '0';
         content.style.left = '0';
         content.style.outline = "none";
-        content.innerHTML = '<div>This is a temporary paragraph. Double click to edit this text.</div>';
+        content.innerHTML = '<div><br></div>';
 
 
 
@@ -119,24 +121,29 @@ export class TextBox {
 
     selectContents() {
         let style = new Style(this.contentDocument);
-        let firstTextChild = style.getFirstTextChild(this.contentDocument.body.firstElementChild);
-        let lastTextChild = style.getLastTextChild(this.contentDocument.body.lastElementChild);
-        let sel = this.contentDocument.getSelection();
-        let range = document.createRange();
         let content: HTMLElement = this.contentDocument.body.firstElementChild as HTMLElement;
+        let firstTextChild = style.getFirstTextChild(this.contentDocument.body.firstElementChild);
 
-        // Set the start and end of the range
-        range.setStart(firstTextChild, 0);
-        range.setEnd(lastTextChild, lastTextChild.length);
+        if (firstTextChild) {
+            let lastTextChild = style.getLastTextChild(this.contentDocument.body.lastElementChild);
+            let sel = this.contentDocument.getSelection();
+            let range = document.createRange();
 
-        // Select the range
-        sel.removeAllRanges();
-        sel.addRange(range);
+
+            // Set the start and end of the range
+            range.setStart(firstTextChild, 0);
+            range.setEnd(lastTextChild, lastTextChild.length);
+
+            // Select the range
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            this.onSelectionChange(range);
+        }
+
 
         // Give focus
         content.focus();
-
-        this.onSelectionChange(range);
     }
 
 

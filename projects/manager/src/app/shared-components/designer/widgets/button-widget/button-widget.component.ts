@@ -56,13 +56,13 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     if (this.hoverTab.selected) {
 
       // Style the button fill with the hover look
-      fillColor = this.fill.hoverColor.toString();
+      fillColor = this.fill.hoverColor.toRGBAString();
 
       // If the normal tab on the button form is selected
     } else {
 
       // Style the button fill with the normal look
-      fillColor = this.fill.color.toString();
+      fillColor = this.fill.color.toRGBAString();
     }
     return fillColor;
   }
@@ -99,14 +99,14 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     if (this.hoverTab.selected) {
 
       // Style the button text with the hover look
-      textColor = this.text.hoverColor.toString();
+      textColor = this.text.hoverColor.toRGBAString();
 
 
       // If the normal tab on the button form is selected
     } else {
 
       // Style the button text with the normal look
-      textColor = this.text.color.toString();
+      textColor = this.text.color.toRGBAString();
     }
     return textColor;
   }

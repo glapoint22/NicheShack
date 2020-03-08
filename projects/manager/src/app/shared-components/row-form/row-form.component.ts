@@ -58,7 +58,7 @@ export class RowFormComponent {
   // -------------------------------------( ON TAB SELECT )-----------------------------------\\
   onTabSelect(tab: string) {
     // Close the color picker form if it is open
-    this._FormService.showColorPicker = false;
+    this._FormService.closeColorPicker();
     
     // Display the newly selected tab as being selected
     this.selectedTab = tab;

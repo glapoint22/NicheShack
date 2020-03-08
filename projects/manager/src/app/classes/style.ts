@@ -10,7 +10,7 @@ export class Style {
     public contentParentNode: HTMLElement;
 
 
-    constructor(public contentDocument: HTMLDocument) { 
+    constructor(public contentDocument: HTMLDocument) {
         this.contentParentNode = contentDocument.body.firstElementChild as HTMLElement;
     }
 
@@ -71,7 +71,7 @@ export class Style {
     }
 
 
-    cleanUpStyle () {
+    cleanUpStyle() {
         // Remove any empty or blank text nodes that may have been generated
         this.removeEmptyNodes(this.contentParentNode as HTMLElement);
 
@@ -138,28 +138,28 @@ export class Style {
 
 
     getFirstTextChild(node: Node): Text {
-        let child = node;
+        let text: Text;
 
         for (let i = 0; i < node.childNodes.length; i++) {
+            let child: ChildNode = node.childNodes[i];
+
             if (child.nodeType == 3) return child as Text;
-            child = this.getFirstTextChild(node.childNodes[i]);
+            text = this.getFirstTextChild(child);
+            if (text && text.nodeType == 3) return text;
         }
 
-        if (child.nodeType != 3) return null;
-
-        return child as Text;
+        return text;
     }
 
-    getLastTextChild(node: Node): Text {
-        let child = node;
-
+    getLastTextChild(node: Node, text?: Text | ChildNode): Text {
         for (let i = 0; i < node.childNodes.length; i++) {
-            child = this.getLastTextChild(node.childNodes[i])
+            let child: ChildNode = node.childNodes[i];
+
+            if (child.nodeType == 3) text = child;
+            text = this.getLastTextChild(child, text);
         }
 
-        if (child.nodeType != 3) return null;
-
-        return child as Text;
+        return text as Text;
     }
 
 

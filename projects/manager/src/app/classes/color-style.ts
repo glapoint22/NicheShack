@@ -6,7 +6,6 @@ import { Selection } from './selection';
 export class ColorStyle extends PersistentStyle {
     public defaultColor: Color;
     private colorPickerOpen: boolean;
-    private initialColor: Color = new Color();
     
 
     // This is the color value
@@ -17,10 +16,10 @@ export class ColorStyle extends PersistentStyle {
         if (this.colorPickerOpen) {
 
             // Only if the color has changed
-            if (this.styleValue != this._value.toString()) {
+            if (this.styleValue != this._value.toRGBAString() && this.styleValue != this._value.toRGBString()) {
 
                 // Set the style value as the new color via the color picker and apply it
-                this.styleValue = this._value.toString();
+                this.styleValue = this._value.toRGBAString();
                 this.applyStyle();
             }
         }
@@ -33,7 +32,7 @@ export class ColorStyle extends PersistentStyle {
         this._value = v;
     }
 
-    onShowColorPicker(onColorPickerClose: Subject<void>) {
+    onShowColorPicker(onColorPickerClose: Subject<boolean>) {
         // Get the current selection
         let selection: Selection = this.getSelection();
 
@@ -48,11 +47,7 @@ export class ColorStyle extends PersistentStyle {
         // If the color value is zero, assign the default color
         if (this.value.isEqual(Color.zero)) {
             this.value.copy(this.defaultColor);
-            this.styleValue = this._value.toString();
         }
-
-        // Get the initial color
-        this.initialColor.copy(this.value);
 
 
         // Flag that the color picker is open
@@ -60,7 +55,7 @@ export class ColorStyle extends PersistentStyle {
 
 
         // Subscribe for when the color picker closes
-        let subscription: Subscription = onColorPickerClose.subscribe(() => {
+        let subscription: Subscription = onColorPickerClose.subscribe((canceled: boolean) => {
             // Restore the selection
             this.contentDocument.getSelection().addRange(this.selectedRange);
 
@@ -69,7 +64,7 @@ export class ColorStyle extends PersistentStyle {
             this.colorPickerOpen = false;
 
             // If there was no change, remove the style
-            if (this.initialColor.isEqual(this.value)) {
+            if (canceled) {
                 // Remove all contents
                 this.contentParentNode.innerHTML = '';
 

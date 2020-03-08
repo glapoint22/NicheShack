@@ -31,6 +31,7 @@ import { ProductFiltersComponent } from './product-editor/product-filters/produc
 import { ProductMediaComponent } from './product-editor/product-media/product-media.component';
 import { ProductKeywordsComponent } from './product-editor/product-keywords/product-keywords.component';
 import { ProductHoplinkComponent } from './product-editor/product-hoplink/product-hoplink.component';
+import { ColorIconModule } from '../../shared-components/color-icon/color-icon.module';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { ProductHoplinkComponent } from './product-editor/product-hoplink/produc
     DesignerModule,
     ShowHideModule,
     PromptModule,
-    FormsModule
+    FormsModule,
+    ColorIconModule
   ]
 })
 export class NicheShackEditorModule { }

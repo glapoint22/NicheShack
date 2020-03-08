@@ -1,7 +1,7 @@
 <fieldset class="margin-right-3-xl">
     <legend>Description</legend>
 
-    <div class="icon-bar">
+    <div class="icon-bar" *ngIf="description">
         <div>
             <!-- Lower case -->
             <div class="icon-container" title="Lower case (Ctrl+Down Arrow)">
@@ -15,21 +15,21 @@
             </div>
         </div>
 
-
+        <!-- Font -->
         <div>
-            <!-- Font -->
-            <select title="Font">
-                <option>Times New Roman</option>
-                <option>Arial</option>
+            <select title="Font" [selectedIndex]="description.font.selectedIndex"
+                (change)="description.font.setStyleValue($event.target.value)">
+                <option *ngFor="let option of description.font.options" [value]="option.value">{{option.key}}</option>
             </select>
         </div>
 
 
-
+        <!-- Font size -->
         <div>
-            <!-- Font size -->
-            <select title="Font size">
-                <option>11</option>
+            <select title="Font size" [selectedIndex]="description.fontSize.selectedIndex"
+                (change)="description.fontSize.setStyleValue($event.target.value)">
+                <option *ngFor="let option of description.fontSize.options" [value]="option.value">{{option.key}}
+                </option>
             </select>
         </div>
 
@@ -37,37 +37,42 @@
 
         <div>
             <!-- Bold -->
-            <div class="icon-container selected" title="Bold (Ctrl+B)">
+            <div class="icon-container" title="Bold (Ctrl+B)" (click)="description.bold.applyStyle()"
+                [ngClass]="{'selected': description.bold.isSelected}">
                 <i class="fas fa-bold"></i>
             </div>
 
 
 
             <!-- Italic -->
-            <div class="icon-container" title="Italic (Ctrl+I)">
+            <div class="icon-container" title="Italic (Ctrl+I)" (click)="description.italic.applyStyle()"
+                [ngClass]="{'selected': description.italic.isSelected}">
                 <i class="fas fa-italic"></i>
             </div>
 
 
             <!-- Underline -->
-            <div class="icon-container" title="Underline (Ctrl+U)">
+            <div class="icon-container" title="Underline (Ctrl+U)" (click)="description.underline.applyStyle()"
+                [ngClass]="{'selected': description.underline.isSelected}">
                 <i class="fas fa-underline"></i>
             </div>
 
 
 
             <!-- Text color -->
-            <div class="icon-container" style="border-bottom: 4px solid red;" title="Text color">
-                <i class="fas fa-font"></i>
-            </div>
+            <color-icon [color]="description.fontColor.value" [icon]="'fa-font'" [title]="'Text color'"
+                (onShowColorPicker)="description.fontColor.onShowColorPicker(_FormService.onColorPickerClose)">
+            </color-icon>
 
 
 
 
             <!-- Highlight color -->
-            <div class="icon-container" style="border-bottom: 4px solid green;" title="Highlight color">
-                <i class="fas fa-highlighter"></i>
-            </div>
+            <color-icon [color]="description.highlightColor.value" [icon]="'fa-highlighter'" [title]="'Highlight color'"
+                [removable]="true"
+                (onShowColorPicker)="description.highlightColor.onShowColorPicker(_FormService.onColorPickerClose)"
+                (onRemoveColor)="description.highlightColor.removeColor()">
+            </color-icon>
 
         </div>
 
@@ -87,26 +92,42 @@
 
         <div>
             <!-- Left align -->
-            <div class="icon-container" title="Left align (Ctrl+Shift+L)">
+            <div class="icon-container" title="Left align (Ctrl+Shift+L)"
+                [ngClass]="{'selected':description.alignLeft.isSelected}" (click)="description.alignLeft.applyStyle();
+           description.alignCenter.isSelected = false;
+           description.alignRight.isSelected = false;
+           description.alignJustify.isSelected = false">
                 <i class="fas fa-align-left"></i>
             </div>
 
 
 
             <!-- Center align -->
-            <div class="icon-container" title="Center align (Ctrl+Shift+E)">
+            <div class="icon-container" title="Center align (Ctrl+Shift+E)"
+                [ngClass]="{'selected': description.alignCenter.isSelected}" (click)="description.alignCenter.applyStyle(); 
+            description.alignLeft.isSelected = false;
+            description.alignRight.isSelected = false; 
+            description.alignJustify.isSelected = false">
                 <i class="fas fa-align-center"></i>
             </div>
 
 
             <!-- Right align -->
-            <div class="icon-container" title="Right align (Ctrl+Shift+R)">
+            <div class="icon-container" title="Right align (Ctrl+Shift+R)"
+                [ngClass]="{'selected': description.alignRight.isSelected}" (click)="description.alignRight.applyStyle();
+            description.alignLeft.isSelected = false;
+            description.alignJustify.isSelected = false;
+            description.alignCenter.isSelected = false">
                 <i class="fas fa-align-right"></i>
             </div>
 
 
             <!-- Justify -->
-            <div class="icon-container" title="Justify (Ctrl+Shift+J)">
+            <div class="icon-container" title="Justify (Ctrl+Shift+J)"
+                [ngClass]="{'selected': description.alignJustify.isSelected}" (click)="description.alignJustify.applyStyle();
+            description.alignLeft.isSelected = false;
+            description.alignCenter.isSelected = false;
+            description.alignRight.isSelected = false">
                 <i class="fas fa-align-justify"></i>
             </div>
         </div>
@@ -117,30 +138,36 @@
 
         <div>
             <!-- Numbered list -->
-            <div class="icon-container" title="Numbered list (Ctrl+Shift+7)">
+            <div class="icon-container" title="Numbered list (Ctrl+Shift+7)"
+                [ngClass]="{'selected': description.orderedList.isSelected}"
+                (click)="description.orderedList.applyStyle()">
                 <i class="fas fa-list-ol"></i>
             </div>
 
 
             <!-- Bulleted list -->
-            <div class="icon-container" title="Bulleted list (Ctrl+Shift+8)">
+            <div class="icon-container" title="Bulleted list (Ctrl+Shift+8)"
+                [ngClass]="{'selected': description.unorderedList.isSelected}"
+                (click)="description.unorderedList.applyStyle()">
                 <i class="fas fa-list-ul"></i>
             </div>
 
 
             <!-- Decrease indent -->
-            <div class="icon-container" title="Decrease indent (ctrl+[)">
+            <div class="icon-container" title="Decrease indent (ctrl+[)"
+                (click)="description.decreaseIndent.applyStyle()">
                 <i class="fas fa-outdent"></i>
             </div>
 
 
             <!-- Increase indent -->
-            <div class="icon-container" title="Increase indent (ctrl+])">
+            <div class="icon-container" title="Increase indent (ctrl+])"
+                (click)="description.increaseIndent.applyStyle()">
                 <i class="fas fa-indent"></i>
             </div>
         </div>
     </div>
 
     <!-- Description -->
-    <textarea></textarea>
+    <iframe #iframe width="100%" height="100%"></iframe>
 </fieldset>

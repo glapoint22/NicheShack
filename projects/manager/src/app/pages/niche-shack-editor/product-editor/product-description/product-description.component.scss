@@ -32,16 +32,20 @@
     }
 }
 
-textarea {
+iframe {
     height: 266px;
+    border: 1px solid $border-color;
+    user-select: none;
+    background: #1b1b1b;
 }
-
-
-
 
 
 .selected {
     background: $selected-fill-color;
     border: 1px solid $selected-border-color;
     color: #d2e5ff;
+}
+
+select {
+    max-width: 140px;
 }
