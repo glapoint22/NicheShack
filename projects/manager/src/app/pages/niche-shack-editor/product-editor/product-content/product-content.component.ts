@@ -16,11 +16,11 @@ export class ProductContentComponent implements OnInit {
   public selectedPricePointOptionColumnIndex: number = null;
   public selectedPricePointOptionRowIndex: number = null;
   public overTable: boolean = false;
-  public contentMenuLeft: number;
-  public contentMenuTop: number;
-  public showContentMenu: boolean = false;
-  public showContentSubMenu: boolean = false;
-  public contentSubMenuWidth: number;
+  public contextMenuLeft: number;
+  public contextMenuTop: number;
+  public showContextMenu: boolean = false;
+  public showContextSubMenu: boolean = false;
+  public contextSubMenuWidth: number;
   public direction1: string;
   public direction2: string;
   public pasteSpecialOver: boolean = false;
@@ -30,14 +30,15 @@ export class ProductContentComponent implements OnInit {
   private copied: string = "";
   private pasteSpecialOptionOverTimeout: number;
   private pasteSpecialOptionOutTimeout: number;
-  private contentMenuBlurTimeout: number;
+  private contextMenuBlurTimeout: number;
   private pricePointClipboard: any = { pricePoint: {}, pricePointOptions: [] };
   private itemClipboard: any = { type: "", description: "", showPlaceholder: false, pricePointOptions: [] };
-  @ViewChild('content', { static: false }) content: ElementRef;
-  @ViewChild('contentMenu', { static: false }) contentMenu: ElementRef;
   @ViewChildren('itemDesc') itemDesc: QueryList<ElementRef>;
+  @ViewChild('contextMenu', { static: false }) contextMenu: ElementRef;
+  @ViewChild('contextMenuOffset', { static: false }) contextMenuOffset: ElementRef;
 
 
+  
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     this.productContent.items.push({ type: "assets/no-content-type.png", description: "", showPlaceholder: true, pricePointOptions: [true] });
@@ -173,7 +174,7 @@ export class ProductContentComponent implements OnInit {
   removeFocus() {
     this.selectedRowIndex = null;
     this.selectedColumnIndex = null;
-    this.showContentSubMenu = false;
+    this.showContextSubMenu = false;
     this.selectedItemDescriptionIndex = null;
     this.selectedPricePointOptionRowIndex = null;
     this.selectedPricePointOptionColumnIndex = null;
@@ -182,56 +183,52 @@ export class ProductContentComponent implements OnInit {
   }
 
 
-  // -----------------------------( SET CONTENT MENU )------------------------------ \\
-  setContentMenu(e: MouseEvent) {
+  // -----------------------------( SET CONTEXT MENU )------------------------------ \\
+  setContextMenu(e: MouseEvent) {
     if (e.which == 3) {
-      let selectorType: string;
+      // Define which selector we are clicking on
+      let selectorType: string = this.selectedColumnIndex != null ? "Price Point" : this.selectedRowIndex != null ? "Item" : null;
 
-      if (this.selectedColumnIndex != null) {
-        selectorType = "Price Point";
-      } else if (this.selectedRowIndex != null) {
-        selectorType = "Item";
-      }
-
-      this.contentMenuLeft = ((e.clientX - this.content.nativeElement.getBoundingClientRect().x) + 25);
-      this.contentMenuTop = (e.clientY - this.content.nativeElement.getBoundingClientRect().y) - (selectorType == "Price Point" ? 20 : 230);
+      // Then name the menu options accordingly
+      this.showContextMenu = true;
       this.direction1 = selectorType == "Price Point" ? "Left" : "Above";
       this.direction2 = selectorType == "Price Point" ? "Right" : "Below";
+      this.contextMenuLeft = ((e.clientX - this.contextMenuOffset.nativeElement.getBoundingClientRect().x) + 25);
+      this.contextMenuTop = (e.clientY - this.contextMenuOffset.nativeElement.getBoundingClientRect().y) - (selectorType == "Price Point" ? 20 : 230);
       this.pasteEnabled = (selectorType == 'Price Point' && this.copied == 'Price Point') || (selectorType == 'Item' && this.copied == 'Item') ? true : false;
       this.deleteEnabled = (selectorType == 'Price Point' && this.productContent.items[0].pricePointOptions.length > 1) || (selectorType == 'Item' && this.productContent.items.length > 1) ? true : false;
-      this.showContentMenu = true;
     }
   }
 
 
-  // -----------------------------( ON CONTENT MENU FOCUS )------------------------------ \\
-  onContentMenuFocus() {
-    clearTimeout(this.contentMenuBlurTimeout);
+  // -----------------------------( ON CONTEXT MENU FOCUS )------------------------------ \\
+  onContextMenuFocus() {
+    clearTimeout(this.contextMenuBlurTimeout);
   }
 
 
-  // -----------------------------( ON CONTENT MENU BLUR )------------------------------ \\
-  onContentMenuBlur() {
-    this.showContentMenu = false;
+  // -----------------------------( ON CONTEXT MENU BLUR )------------------------------ \\
+  onContextMenuBlur() {
+    this.showContextMenu = false;
 
-    this.contentMenuBlurTimeout = window.setTimeout(() => {
-      this.showContentSubMenu = false;
+    this.contextMenuBlurTimeout = window.setTimeout(() => {
+      this.showContextSubMenu = false;
       this.pasteSpecialOver = false;
     });
   }
 
 
-  // -----------------------------( ON CONTENT MENU BLUR )------------------------------ \\
+  // -----------------------------( ON CONTEXT MENU BLUR )------------------------------ \\
   onPasteSpecialOptionOver() {
     this.pasteSpecialOver = true;
 
     this.pasteSpecialOptionOverTimeout = window.setTimeout(() => {
       if (this.selectedColumnIndex != null) {
-        this.contentSubMenuWidth = 212;
+        this.contextSubMenuWidth = 212;
       } else if (this.selectedRowIndex != null) {
-        this.contentSubMenuWidth = 180;
+        this.contextSubMenuWidth = 180;
       }
-      this.showContentSubMenu = true;
+      this.showContextSubMenu = true;
     }, 300)
   }
 
@@ -242,29 +239,29 @@ export class ProductContentComponent implements OnInit {
     clearTimeout(this.pasteSpecialOptionOverTimeout);
 
     this.pasteSpecialOptionOutTimeout = window.setTimeout(() => {
-      this.showContentSubMenu = false;
+      this.showContextSubMenu = false;
     }, 250)
   }
 
 
-  // -----------------------------( ON CONTENT SUB MENU OVER )------------------------------ \\
-  onContentSubMenuOver() {
+  // -----------------------------( ON CONTEXT SUB MENU OVER )------------------------------ \\
+  onContextSubMenuOver() {
     this.pasteSpecialOver = true;
     clearTimeout(this.pasteSpecialOptionOutTimeout);
   }
 
 
-  // -----------------------------( ON CONTENT SUB MENU FOCUS )------------------------------ \\
-  onContentSubMenuFocus() {
-    // Give focus back to the content menu
-    this.showContentMenu = true;
-    this.contentMenu.nativeElement.focus();
+  // -----------------------------( ON CONTEXT SUB MENU FOCUS )------------------------------ \\
+  onContextSubMenuFocus() {
+    // Give focus back to the context menu
+    this.showContextMenu = true;
+    this.contextMenu.nativeElement.focus();
   }
 
 
-  // -----------------------------( REMOVE CONTENT SUB MENU )------------------------------ \\
-  removeContentSubMenu() {
-    this.showContentSubMenu = false;
+  // -----------------------------( REMOVE CONTEXT SUB MENU )------------------------------ \\
+  removeContextSubMenu() {
+    this.showContextSubMenu = false;
     this.pasteSpecialOver = false;
   }
 
@@ -295,7 +292,7 @@ export class ProductContentComponent implements OnInit {
         this.productContent.items[this.selectedRowIndex].pricePointOptions.push(false);
       }
     }
-    this.showContentMenu = false;
+    this.showContextMenu = false;
   }
 
 
@@ -325,7 +322,7 @@ export class ProductContentComponent implements OnInit {
         this.productContent.items[this.selectedRowIndex].pricePointOptions[i] = false;
       }
     }
-    this.showContentMenu = false;
+    this.showContextMenu = false;
   }
 
 
@@ -365,7 +362,7 @@ export class ProductContentComponent implements OnInit {
       // Delete the item at the specified index
       this.productContent.items.splice(this.selectedRowIndex, 1);
     }
-    this.showContentMenu = false;
+    this.showContextMenu = false;
   }
 
 
@@ -399,7 +396,7 @@ export class ProductContentComponent implements OnInit {
       }
     }
 
-    // If we're on a content type
+    // If we're on an item type
     if (this.productContent.selectedItemTypeIndex != null) {
       if (this.productContent.selectedItemTypeIndex > 0) {
         this.productContent.selectedItemTypeIndex--;
@@ -445,7 +442,7 @@ export class ProductContentComponent implements OnInit {
       }
     }
 
-    // If we're on a content type
+    // If we're on an item type
     if (this.productContent.selectedItemTypeIndex != null) {
       if (this.productContent.selectedItemTypeIndex < this.productContent.items.length - 1) {
         this.productContent.selectedItemTypeIndex++;
@@ -514,14 +511,14 @@ export class ProductContentComponent implements OnInit {
       return
     }
 
-    // If we're leaving an item description and entering a content type
+    // If we're leaving an item description and entering an item type
     if (this.selectedItemDescriptionIndex != null) {
       this.productContent.selectedItemTypeIndex = this.selectedItemDescriptionIndex;
       this.selectedItemDescriptionIndex = null;
       return
     }
 
-    // If we're leaving a content type and entering a row selector
+    // If we're leaving an item type and entering a row selector
     if (this.productContent.selectedItemTypeIndex != null) {
       this.selectedRowIndex = this.productContent.selectedItemTypeIndex;
       this.productContent.selectedItemTypeIndex = null;
@@ -545,14 +542,14 @@ export class ProductContentComponent implements OnInit {
       }
     }
 
-    // If we're leaving a row selector and entering a content type
+    // If we're leaving a row selector and entering an item type
     if (this.selectedRowIndex != null) {
       this.productContent.selectedItemTypeIndex = this.selectedRowIndex;
       this.selectedRowIndex = null;
       return
     }
 
-    // If we're leaving a content type and entering an item description
+    // If we're leaving an item type and entering an item description
     if (this.productContent.selectedItemTypeIndex != null) {
       this.selectedItemDescriptionIndex = this.productContent.selectedItemTypeIndex;
       this.productContent.selectedItemTypeIndex = null;
@@ -626,7 +623,7 @@ export class ProductContentComponent implements OnInit {
       }
       this.copied = "Item";
     }
-    this.showContentMenu = false;
+    this.showContextMenu = false;
   }
 
 
@@ -663,7 +660,7 @@ export class ProductContentComponent implements OnInit {
         this.productContent.items[this.selectedRowIndex].pricePointOptions[i] = this.itemClipboard.pricePointOptions[i];
       }
     }
-    this.showContentMenu = false;
+    this.showContextMenu = false;
   }
 
 

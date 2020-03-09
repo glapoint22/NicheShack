@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ElementRef, QueryList, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, ElementRef, QueryList } from '@angular/core';
 
 @Component({
   selector: 'product-keywords',
@@ -16,11 +16,16 @@ export class ProductKeywordsComponent implements OnInit {
   public disableAdd: boolean = false;
   public disableEdit: boolean = true;
   public disableDelete: boolean = true;
+  public contextMenuLeft: number;
+  public contextMenuTop: number;
+  public showContextMenu: boolean = false;
   private shiftDown: boolean = false;
   private ctrlDown: boolean = false;
   private newKeyword: boolean = false;
-  private pivotIndex: number;
+  private pivotIndex: number = null;
   @ViewChildren('keyword') keyword: QueryList<ElementRef>;
+  @ViewChild('contextMenu', { static: false }) contextMenu: ElementRef;
+  @ViewChild('contextMenuOffset', { static: false }) contextMenuOffset: ElementRef;
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
@@ -34,7 +39,8 @@ export class ProductKeywordsComponent implements OnInit {
       { name: "Sundae", selected: false, selectType: null },
       { name: "Ice Cream Cone", selected: false, selectType: null },
       { name: "Mint Chocolate Chip", selected: false, selectType: null },
-      { name: "Flavor of the Day", selected: false, selectType: null }]
+      // { name: "Flavor of the Day", selected: false, selectType: null }
+    ]
   }
 
 
@@ -61,29 +67,13 @@ export class ProductKeywordsComponent implements OnInit {
   private onMouseDown = () => {
     if (!this.preventMousedown) {
 
+      // If a keyword is being edited
       if (this.editedKeywordIndex != null) {
-        let keyword = this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement;
+        this.commitEdit();
 
-        if ((/^[^.\s]/).test(keyword.textContent) && keyword.textContent.length > 0) {
-
-          // this.keywords[this.editedKeywordIndex].selected = true;
-          // this.keywords[this.editedKeywordIndex].selectType = "whole";
-
-
-          this.selectedKeywordIndex = this.editedKeywordIndex;
-          this.keywords[this.editedKeywordIndex].name = keyword.textContent;
-          this.editedKeywordIndex = null;
-          this.disableAdd = false;
-          this.disableEdit = false;
-          this.disableDelete = false;
-          this.newKeyword = false;
-        }
-
+        // If a keyword is NOT being edited
       } else {
-
         this.unsetEventListeners();
-        this.disableEdit = true;
-        this.disableDelete = true;
       }
     }
   };
@@ -112,136 +102,201 @@ export class ProductKeywordsComponent implements OnInit {
 
   // -----------------------------( ON KEYWORD DOWN )------------------------------ \\
   onKeywordDown(index: number) {
-
     // If a keyword is NOT being edited
     if (this.editedKeywordIndex == null) {
-      this.setEventListeners();
-      this.disableDelete = false;
-      this.disableEdit = false;
-      this.selectedKeywordIndex = index;
-      this.unselectedKeywordIndex = null;
-
-      // ---Define what keyword is selected--- \\
-
-      // If the shift key is down
-      if (this.shiftDown) {
-
-
-        for (let i = 0; i < this.keywords.length; i++) {
-          this.keywords[i].selected = false;
-        }
-
-
-
-        if (this.selectedKeywordIndex > this.pivotIndex) {
-
-          for (let i = this.pivotIndex; i <= this.selectedKeywordIndex; i++) {
-            this.keywords[i].selected = true;
-          }
-
-
-
-        } else {
-
-          for (let i = this.pivotIndex; i >= this.selectedKeywordIndex; i--) {
-            this.keywords[i].selected = true;
-          }
-
-        }
-
-
-        // If the ctrl key is down 
-      } else if (this.ctrlDown) {
-
-
-
-        if (this.keywords[index].selected) {
-          this.keywords[index].selected = false;
-          this.unselectedKeywordIndex = index;
-          this.selectedKeywordIndex = null;
-        } else {
-          this.keywords[index].selected = true;
-          this.unselectedKeywordIndex = null;
-          this.selectedKeywordIndex = index;
-        }
-
-        this.pivotIndex = index;
-
-        // If NO modifier key is down
-      } else {
-        // Clear all the selected
-        for (let i = 0; i < this.keywords.length; i++) this.keywords[i].selected = false;
-        // Set the selected
-        this.keywords[index].selected = true;
-
-        this.pivotIndex = index;
-      }
-
-      this.disableEdit = false;
-      let selectCount: number = 0;
-      for (let i = 0; i < this.keywords.length; i++) {
-        if (this.keywords[i].selected) selectCount++;
-        if (selectCount > 1) {
-          this.disableEdit = true;
-          break;
-        }
-      }
-
-      // ---Set the select type---\\
-
-      // If there is only one keyword in the list
-      if (this.keywords.length == 1) {
-        this.keywords[0].selectType = "whole";
-
-        // If there is more than one keyword
-      } else {
-
-        // First keyword
-        this.keywords[0].selectType = this.keywords[0].selected ? this.keywords[1].selected ? "top" : this.unselectedKeywordIndex == 1 ? "top" : "whole" : null;
-
-        // Every keyword in between
-        for (let i = 1; i < this.keywords.length - 1; i++) this.keywords[i].selectType =
-          this.keywords[i].selected
-            ? !this.keywords[i - 1].selected && this.keywords[i + 1].selected ? "top"
-              : this.keywords[i - 1].selected && !this.keywords[i + 1].selected ? i + 1 == this.unselectedKeywordIndex ? "middle" : "bottom"
-                : !this.keywords[i - 1].selected && !this.keywords[i + 1].selected ? i + 1 == this.unselectedKeywordIndex ? "top" : "whole" : "middle"
-            : null;
-
-        // Last keyword
-        this.keywords[this.keywords.length - 1].selectType = this.keywords[this.keywords.length - 1].selected ? this.keywords[this.keywords.length - 2].selected ? "bottom" : "whole" : null;
-      }
-
-
-
+      // Set the selection
+      this.setKeywordSelection(index)
 
       // If a keyword is being edited and a keyword that is NOT being edited is selected
     } else if (index != this.editedKeywordIndex) {
-      let keyword = this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement;
+      this.commitEdit();
+    }
+  }
 
-      // As long as the edited keyword has text and has no spaces in the begining
-      if ((/^[^.\s]/).test(keyword.textContent) && keyword.textContent.length > 0) {
-        // Undo edit mode
-        this.newKeyword = false;
-        this.disableAdd = false;
-        this.disableEdit = false;
-        this.disableDelete = false;
-        this.editedKeywordIndex = null;
 
-        this.selectedKeywordIndex = this.editedKeywordIndex;
+  // -----------------------------( SET KEYWORD SELECTION )------------------------------ \\
+  setKeywordSelection(index: number) {
+    this.setEventListeners();
+    this.disableEdit = false;
+    this.disableDelete = false;
+    this.selectedKeywordIndex = index;
+    this.unselectedKeywordIndex = null;
+    // Define what keywords are selected
+    this.setKeywordSelected(index);
+    // Then define what the selection type is for each keyword
+    this.setKeywordSelectType();
+  }
 
-        // this.keywords[this.editedKeywordIndex].selected = true;
-        // this.keywords[this.editedKeywordIndex].selectType = "whole";
-        this.keywords[this.editedKeywordIndex].name = keyword.textContent;
+
+  // -----------------------------( SET KEYWORD SELECTED )------------------------------ \\ 
+  setKeywordSelected(index: number) {
+    // If the shift key is down
+    if (this.shiftDown) {
+      this.setKeywordSelectedShiftKey();
+
+      // If the ctrl key is down 
+    } else if (this.ctrlDown) {
+      this.setKeywordSelectedCtrlKey(index);
+
+      // If NO modifier key is down
+    } else {
+      this.keywordDownNoModifierKey(index);
+    }
+    // Set edit on or off
+    this.disableEdit = this.keywords.map(e => e.selected).indexOf(true) == this.keywords.map(e => e.selected).lastIndexOf(true) && this.unselectedKeywordIndex == null ? false : true;
+  }
+
+
+  // -----------------------------( SET KEYWORD SELECT TYPE )------------------------------ \\ 
+  setKeywordSelectType() {
+    // If there is only one keyword in the list
+    if (this.keywords.length == 1) {
+      // Set the type to whole
+      this.keywords[0].selectType = "whole";
+
+      // If there is more than one keyword
+    } else {
+
+      // First keyword
+      this.keywords[0].selectType = this.keywords[0].selected ? this.keywords[1].selected ? "top" : this.unselectedKeywordIndex == 1 ? "top" : "whole" : null;
+
+      // Every keyword in between
+      for (let i = 1; i < this.keywords.length - 1; i++) {
+        // Set the select type based on the following:
+        this.keywords[i].selectType =
+
+          // If a keyword is marked as selected
+          this.keywords[i].selected ?
+
+            // If the keyword before is NOT selected and the keyword after IS selected
+            !this.keywords[i - 1].selected && this.keywords[i + 1].selected ?
+              "top" :
+
+              // If the keyword before IS selected and the keyword after is NOT selected
+              this.keywords[i - 1].selected && !this.keywords[i + 1].selected ?
+
+                // And that keyword after is unselected with the unselect
+                i + 1 == this.unselectedKeywordIndex ?
+                  "middle" :
+
+                  // But if its just NOT selected
+                  "bottom" :
+
+                // If the keyword before is NOT selected and the keyword after is also NOT selected
+                !this.keywords[i - 1].selected && !this.keywords[i + 1].selected ?
+
+                  // And that keyword after is unselected with the unselect
+                  i + 1 == this.unselectedKeywordIndex ?
+                    "top" :
+
+                    // But if its just NOT selected
+                    "whole" :
+
+                  // If the keyword before IS selected and the keyword after is also selected
+                  "middle" :
+
+            // If a keyword is NOT selected
+            null;
       }
+
+      // Last keyword
+      this.keywords[this.keywords.length - 1].selectType = this.keywords[this.keywords.length - 1].selected ? this.keywords[this.keywords.length - 2].selected ? "bottom" : "whole" : null;
+    }
+  }
+
+
+  // -----------------------------( SET KEYWORD SELECTED SHIFT KEY )------------------------------ \\
+  setKeywordSelectedShiftKey() {
+    // Clear the selection from all keywords
+    for (let i = 0; i < this.keywords.length; i++) {
+      this.keywords[i].selected = false;
+    }
+
+    // If the selection is after the pivot
+    if (this.selectedKeywordIndex > this.pivotIndex) {
+
+      // Select all the keywords from the pivot down to the selection
+      for (let i = this.pivotIndex; i <= this.selectedKeywordIndex; i++) {
+        this.keywords[i].selected = true;
+      }
+
+      // If the selection is before the pivot 
+    } else {
+
+      // Select all the keywords from the pivot up to the selection
+      for (let i = this.pivotIndex; i >= this.selectedKeywordIndex; i--) {
+        this.keywords[i].selected = true;
+      }
+    }
+  }
+
+
+  // -----------------------------( SET KEYWORD SELECTED CTRL KEY )------------------------------ \\
+  setKeywordSelectedCtrlKey(index: number) {
+    // If the keyword we are pressing down on is already selected
+    if (this.keywords[index].selected) {
+
+      // Unselect that keyword
+      this.keywords[index].selected = false;
+      this.unselectedKeywordIndex = index;
+      this.selectedKeywordIndex = null;
+      // If no other keyword is selected
+      if (this.keywords.map(e => e.selected).indexOf(true) == -1) {
+        // Then there is nothing to delete, so disable the ability to delete
+        this.disableDelete = true;
+
+        // But if there is still a keyword that is selected
+      } else {
+        // Then enable the ability to delete a keyword
+        this.disableDelete = false;
+      }
+
+      // If the keyword we are pressing down on is NOT yet selected
+    } else {
+
+      // Select that keyword
+      this.keywords[index].selected = true;
+      this.unselectedKeywordIndex = null;
+      this.selectedKeywordIndex = index;
+    }
+    // Define the pivot index
+    this.pivotIndex = index;
+  }
+
+
+  // -----------------------------( KEYWORD DOWN NO MODIFIER KEY )------------------------------ \\
+  keywordDownNoModifierKey(index: number) {
+    // Clear all the selected
+    for (let i = 0; i < this.keywords.length; i++) this.keywords[i].selected = false;
+    // Set the selected
+    this.keywords[index].selected = true;
+    // Define the pivot index
+    this.pivotIndex = index;
+  }
+
+
+  // -----------------------------( COMMIT EDIT )------------------------------ \\
+  commitEdit() {
+    let keyword = this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement;
+
+    // As long as the edited keyword has text and has no spaces in the begining
+    if ((/^[^.\s]/).test(keyword.textContent) && keyword.textContent.length > 0) {
+      this.pivotIndex = this.editedKeywordIndex;
+      this.selectedKeywordIndex = this.editedKeywordIndex;
+      this.keywords[this.editedKeywordIndex].name = keyword.textContent;
+      this.newKeyword = false;
+      this.disableAdd = false;
+      this.disableEdit = false;
+      this.disableDelete = false;
+      this.editedKeywordIndex = null;
+      this.unselectedKeywordIndex = null;
     }
   }
 
 
   // -----------------------------( ON KEYWORD DOUBLE CLICK )------------------------------ \\
   onKeywordDoubleClick() {
-
     if (!this.shiftDown && !this.ctrlDown) {
-
       if (this.editedKeywordIndex == null) {
         this.editKeyword()
       }
@@ -251,7 +306,12 @@ export class ProductKeywordsComponent implements OnInit {
 
   // -----------------------------( REMOVE FOCUS )------------------------------ \\
   removeFocus() {
+    this.pivotIndex = null;
+    this.disableEdit = true;
+    this.disableDelete = true;
     this.editedKeywordIndex = null;
+    this.selectedKeywordIndex = null;
+    this.unselectedKeywordIndex = null;
 
     for (let i = 0; i < this.keywords.length; i++) {
       this.keywords[i].selected = false;
@@ -260,27 +320,22 @@ export class ProductKeywordsComponent implements OnInit {
   }
 
 
-
-
-
   // -----------------------------( ADD KEYWORD )------------------------------ \\
   addKeyword() {
     if (!this.disableAdd) {
+      this.setEventListeners();
       this.newKeyword = true;
       this.disableAdd = true;
-      this.setEventListeners();
-      this.keywords.push({ name: "", selected: false, selectType: null });
-      this.selectedKeywordIndex = null;
-
-      // for (let i = 0; i < this.keywords.length; i++) {
-      //   this.keywords[i].selected = false;
-      //   this.keywords[i].selectType = null;
-      // }
-
-
-      this.editedKeywordIndex = this.keywords.length - 1;
       this.disableEdit = true;
       this.disableDelete = true;
+      this.editedKeywordIndex = 0;
+      this.selectedKeywordIndex = null;
+      this.keywords.unshift({ name: "", selected: false, selectType: null });
+
+      for (let i = 0; i < this.keywords.length; i++) {
+        this.keywords[i].selected = false;
+        this.keywords[i].selectType = null;
+      }
 
       window.setTimeout(() => {
         this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement.focus();
@@ -292,22 +347,16 @@ export class ProductKeywordsComponent implements OnInit {
   // -----------------------------( EDIT KEYWORD )------------------------------ \\
   editKeyword() {
     if (!this.disableEdit) {
-
-
-
-
-
-
-      this.disableEdit = true;
       this.disableAdd = true;
+      this.disableEdit = true;
       this.disableDelete = true;
-
       this.editedKeywordIndex = this.selectedKeywordIndex;
-
-      // this.editedKeywordIndex = this.keywords.map(e => e.selected).indexOf(true);
-      // this.keywords[this.editedKeywordIndex].selected = false;
-      // this.keywords[this.editedKeywordIndex].selectType = null;
       this.selectedKeywordIndex = null;
+
+      for (let i = 0; i < this.keywords.length; i++) {
+        this.keywords[i].selected = false;
+        this.keywords[i].selectType = null;
+      }
 
       window.setTimeout(() => {
         let keyword = this.keyword.find((item, index) => index == this.editedKeywordIndex);
@@ -321,29 +370,25 @@ export class ProductKeywordsComponent implements OnInit {
     }
   }
 
+  // -----------------------------( SET CONTEXT MENU )------------------------------ \\
+  setContextMenu(e: MouseEvent) {
+    if (e.which == 3) {
+      this.showContextMenu = true;
+
+      
+
+      this.contextMenuLeft = (e.clientX - this.contextMenuOffset.nativeElement.getBoundingClientRect().x - 250);
+      this.contextMenuTop = (e.clientY - this.contextMenuOffset.nativeElement.getBoundingClientRect().y) - 100;
+    }
+  }
+
 
   // -----------------------------( ENTER )------------------------------ \\
   enter() {
     event.preventDefault();
+    // If a keyword is being edited
     if (this.editedKeywordIndex != null) {
-      let keyword = this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement;
-
-      if ((/^[^.\s]/).test(keyword.textContent) && keyword.textContent.length > 0) {
-
-
-        this.selectedKeywordIndex = this.editedKeywordIndex;
-
-
-        // this.keywords[this.editedKeywordIndex].selected = true;
-        // this.keywords[this.editedKeywordIndex].selectType = "whole";
-
-
-        this.editedKeywordIndex = null;
-        this.disableAdd = false;
-        this.disableEdit = false;
-        this.disableDelete = false;
-        this.newKeyword = false;
-      }
+      this.commitEdit();
     }
   }
 
@@ -352,103 +397,128 @@ export class ProductKeywordsComponent implements OnInit {
   delete() {
     if (!this.disableDelete) {
       let deletedKeywordIndex: number;
-      
-      // let lastKeywords: number = (this.keywords.length - 1) - this.keywords.map(e => e.selected).lastIndexOf(true);
+      let keywordCopy: any;
+
+      // If a keyword is selected
+      if (this.selectedKeywordIndex != null) {
+        // Loop through the list of keywords starting with the selected keyword
+        for (let i = this.selectedKeywordIndex + 1; i < this.keywords.length; i++) {
+          // If we come across a keyword that is NOT selected
+          if (!this.keywords[i].selected) {
+            // Make a copy of that keyword so it can be used as the newly selected keyword when all the other keywords are deleted
+            keywordCopy = this.keywords[i];
+            break;
+          }
+        }
+      }
+
+      // But if a keyword is unselected
+      if (this.unselectedKeywordIndex != null) {
+        // Make a copy of that keyword so it can remain as the unselected keyword when all the other keywords are deleted
+        keywordCopy = this.keywords[this.unselectedKeywordIndex];
+      }
 
 
-
+      // Now delete all the selected keywords
       do {
         // Find a keyword in the list that is marked as selected
         deletedKeywordIndex = this.keywords.map(e => e.selected).indexOf(true);
         // As long as a keyword that is marked as selected is found
         if (deletedKeywordIndex != -1) {
-          // Remove the keyword
+          // Remove that keyword
           this.keywords.splice(deletedKeywordIndex, 1);
         }
       }
-      // Loop until no more keywords are marked as selected
+      // Loop until all the keywords marked as selected are deleted
       while (deletedKeywordIndex != -1);
 
 
+      // Now get the new index by finding what index the coppied keyword resides at
+      let newSelectedKeywordIndex = this.keywords.indexOf(keywordCopy);
 
-      // let newSelectedKeywordIndex = this.keywords.length - lastKeywords;
+      // If a keyword was selected
+      if (this.selectedKeywordIndex != null) {
+        // And there is a next available keyword that can be selected
+        if (newSelectedKeywordIndex != -1) {
+          // Select that keyword
+          this.selectedKeywordIndex = newSelectedKeywordIndex;
+          this.keywords[this.selectedKeywordIndex].selected = true;
+          // Re-establish the pivot index
+          this.pivotIndex = this.selectedKeywordIndex;
 
-      if(this.selectedKeywordIndex < this.keywords.length && this.selectedKeywordIndex != null) {
-        this.keywords[this.selectedKeywordIndex].selected = true;
-      }else {
-        this.selectedKeywordIndex = null;
+          // If there is NOT a next available keyword that can be selected
+        } else {
+          // Make no keyword marked as selected
+          this.selectedKeywordIndex = null;
+          this.disableDelete = true;
+          this.pivotIndex = null;
+        }
       }
 
-      // if (newSelectedKeywordIndex < this.keywords.length) {
-
-      //   if(this.unselectedKeywordIndex == null) {
-      //     this.selectedKeywordIndex = newSelectedKeywordIndex;
-      //     this.keywords[newSelectedKeywordIndex].selected = true;
-      //   }
-      // }
-      // this.unselectedKeywordIndex = null;
+      // If a keyword was unselected
+      if (this.unselectedKeywordIndex != null) {
+        // Unselect that keyword again
+        this.unselectedKeywordIndex = newSelectedKeywordIndex;
+        this.disableDelete = true;
+        // Re-establish the pivot index
+        this.pivotIndex = this.unselectedKeywordIndex;
+      }
     }
   }
 
 
   // -----------------------------( ESCAPE )------------------------------ \\
   escape() {
+    // If a keyword is being edited
     if (this.editedKeywordIndex != null) {
 
-
+      // If we were adding a keyword
       if (this.newKeyword) {
-
+        // Remove that keyword
+        this.newKeyword = false;
+        this.unselectedKeywordIndex = null;
         this.keywords.splice(this.editedKeywordIndex, 1);
-        this.editedKeywordIndex = null;
-        this.disableAdd = false;
 
+
+        // If we're just escaping from an edit
       } else {
 
-
-
-
-
-        this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement.textContent = this.keywords[this.editedKeywordIndex].name;
-
-        this.selectedKeywordIndex = this.editedKeywordIndex;
-
-        // this.keywords[this.editedKeywordIndex].selected = true;
-        // this.keywords[this.editedKeywordIndex].selectType = "whole";
-
-        this.editedKeywordIndex = null;
-        this.disableAdd = false;
+        // Reset the keyword back to the way it was before the edit
         this.disableEdit = false;
         this.disableDelete = false;
-
-
-
-
-
-
-
-
+        this.selectedKeywordIndex = this.editedKeywordIndex;
+        this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement.textContent = this.keywords[this.editedKeywordIndex].name;
       }
+      this.disableAdd = false;
+      this.editedKeywordIndex = null;
 
-
-
-
+      // If a keyword is NOT being edited
     } else {
 
+      // Clear any list selections
       this.unsetEventListeners();
-      this.disableEdit = true;
-      this.disableDelete = true;
     }
   }
 
 
   // -----------------------------( ARROW UP )------------------------------ \\
   arrowUp() {
-    if (this.selectedKeywordIndex > 0) this.selectedKeywordIndex--;
+    let index = this.selectedKeywordIndex != null ? this.selectedKeywordIndex : this.unselectedKeywordIndex;
+
+    if (index > 0) {
+      index--;
+      this.setKeywordSelection(index);
+    }
   }
 
 
   // -----------------------------( ARROW DOWN )------------------------------ \\
   arrowDown() {
-    if (this.selectedKeywordIndex < this.keywords.length - 1) this.selectedKeywordIndex++;
+    let index = this.selectedKeywordIndex != null ? this.selectedKeywordIndex : this.unselectedKeywordIndex;
+
+    if (index < this.keywords.length - 1) {
+      index++;
+      this.setKeywordSelection(index);
+    }
   }
 }
