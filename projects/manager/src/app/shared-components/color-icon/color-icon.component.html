@@ -1,0 +1,23 @@
+<div style="position: relative;">
+    <!-- Icon -->
+    <div class="icon-container" [title]="title" (click)="onClick()">
+        <i [class]="'fas ' + icon"></i>
+    </div>
+
+    <!-- Color bar -->
+    <div class="color-bar"
+        [style.backgroundColor]="'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')'"></div>
+
+
+    <!-- Remove/change container -->
+    <div *show="showRemoveChange" class="fade-start remove-change-container" transitionClass="fade-end" tabindex="0"
+        (onHide)="showRemoveChange = false" (blur)="showRemoveChange = false">
+        <div class="option" (click)="onOptionClick(false)" title="Remove Color">
+            <i class="fas fa-ban"></i>
+        </div>
+        <div class="option" (click)="onOptionClick(true)" title="Change Color">
+            <i class="fas fa-tint"
+                [style.color]="'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', ' + color.a + ')'"></i>
+        </div>
+    </div>
+</div>

@@ -36,12 +36,6 @@
             <option *ngFor="let option of _FormService.textBox.fontSize.options" [value]="option.value">{{option.key}}
             </option>
         </select>
-
-        <!-- Input text overlaying dropdown for input ability -->
-        <!-- <div class="font-size-input-container">
-            <input type="text">
-        </div> -->
-
     </div>
 </div>
 
@@ -73,7 +67,6 @@
             [ngClass]="{'selected': _FormService.textBox.underline.isSelected}">
             <i class="fas fa-underline"></i>
         </div>
-
     </div>
 </div>
 
@@ -85,10 +78,9 @@
     <!-- Name -->
     <div style="user-select: none;">Color:</div>
 
-    <!-- Color Swatch -->
-    <color-swatch [color]="_FormService.textBox.fontColor.value"
+    <color-icon [color]="_FormService.textBox.fontColor.value" [icon]="'fa-font'" [title]="'Text color'"
         (onShowColorPicker)="_FormService.textBox.fontColor.onShowColorPicker(_FormService.onColorPickerClose)">
-    </color-swatch>
+    </color-icon>
 </div>
 
 
@@ -101,10 +93,11 @@
     <!-- Name -->
     <div style="user-select: none;">Highlight Color:</div>
 
-    <!-- Color Swatch -->
-    <color-swatch [color]="_FormService.textBox.highlightColor.value"
-        (onShowColorPicker)="_FormService.textBox.highlightColor.onShowColorPicker(_FormService.onColorPickerClose)">
-    </color-swatch>
+    <color-icon [color]="_FormService.textBox.highlightColor.value" [icon]="'fa-highlighter'"
+        [title]="'Highlight color'" [removable]="true"
+        (onShowColorPicker)="_FormService.textBox.highlightColor.onShowColorPicker(_FormService.onColorPickerClose)"
+        (onRemoveColor)="_FormService.textBox.highlightColor.removeColor()">
+    </color-icon>
 </div>
 
 
@@ -157,7 +150,6 @@
             _FormService.textBox.alignRight.isSelected = false">
             <i class="fas fa-align-justify"></i>
         </div>
-
     </div>
 </div>
 
@@ -188,7 +180,6 @@
             (click)="_FormService.textBox.unorderedList.applyStyle()">
             <i class="fas fa-list-ul"></i>
         </div>
-
     </div>
 </div>
 
@@ -198,7 +189,6 @@
 
 <!-- -------------------Indent------------------------ -->
 <div class="property-row" style="padding-top: 7px; padding-bottom: 7px;">
-
     <!-- Name -->
     <div style="user-select: none;">Indent:</div>
 
@@ -211,12 +201,10 @@
             <i class="fas fa-outdent"></i>
         </div>
 
-
         <!-- Increase indent -->
         <div class="icon-container" title="Increase indent (ctrl+])"
             (click)="_FormService.textBox.increaseIndent.applyStyle()">
             <i class="fas fa-indent"></i>
         </div>
-
     </div>
 </div>

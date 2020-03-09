@@ -2,13 +2,13 @@ import { ColorStyle } from './color-style';
 import { Color } from './color';
 
 export class HighlightColor extends ColorStyle {
+    private isRemoveColor: boolean;
 
     constructor(contentDocument: HTMLDocument) {
         super(contentDocument);
 
         this.style = 'backgroundColor';
-
-        this.defaultColor = new Color(255, 255, 255, 1);
+        this.defaultColor = new Color(255, 255, 0, 1);
     }
 
     getComputedColor(): string {
@@ -28,5 +28,19 @@ export class HighlightColor extends ColorStyle {
 
     nodeHasStyle(node: HTMLElement): boolean {
         return this.nodeHasStyleAlt(node);
+    }
+
+    setStyle(range: Range) {
+        if(this.isRemoveColor) {
+            this.removeStyle(range);
+        } else {
+            super.setStyle(range);
+        }
+    }
+
+    removeColor() {
+        this.isRemoveColor = true;
+        this.applyStyle();
+        this.isRemoveColor = false;
     }
 }

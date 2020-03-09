@@ -85,7 +85,7 @@ export class ButtonFormComponent {
   // -------------------------------------( ON NORMAL HORIZONTAL TAB SELECT )-----------------------------------\\
   onNormalHorizontalTabSelect() {
     // Close the color picker form if it is open
-    this._FormService.showColorPicker = false;
+    this._FormService.closeColorPicker();
 
     // Display the newly selected horizontal tab as being selected
     this._FormService.buttonFormHoverTab.selected = false;
@@ -95,7 +95,7 @@ export class ButtonFormComponent {
   // -------------------------------------( ON HOVER HORIZONTAL TAB SELECT )-----------------------------------\\
   onHoverHorizontalTabSelect() {
     // Close the color picker form if it is open
-    this._FormService.showColorPicker = false;
+    this._FormService.closeColorPicker();
 
     // Display the newly selected horizontal tab as being selected
     this._FormService.buttonFormHoverTab.selected = true;
@@ -105,7 +105,7 @@ export class ButtonFormComponent {
   // -------------------------------------( ON NORMAL VERTICAL TAB SELECT )-----------------------------------\\
   onNormalVerticalTabSelect(tab: string) {
     // Close the color picker form if it is open
-    this._FormService.showColorPicker = false;
+    this._FormService.closeColorPicker();
 
     // Display the newly selected vertical tab as being selected
     this.selectedNormalVerticalTab = tab;
@@ -115,7 +115,7 @@ export class ButtonFormComponent {
   // -------------------------------------( ON HOVER VERTICAL TAB SELECT )-----------------------------------\\
   onHoverVerticalTabSelect(tab: string) {
     // Close the color picker form if it is open
-    this._FormService.showColorPicker = false;
+    this._FormService.closeColorPicker();
     
     // Display the newly selected vertical tab as being selected
     this.selectedHoverVerticalTab = tab;

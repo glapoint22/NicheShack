@@ -26,15 +26,13 @@ export class ColorPickerComponent implements OnInit {
   public ringDark: boolean;
   public hueSliderY: number;
   public alphaSliderY: number;
-  public colorPicked: boolean;
 
   constructor(public _FormService: FormService) { }
 
 
   ngOnInit() {
-    this._FormService.onColorPickerClose.subscribe(() => {
-      if (!this.colorPicked) this._FormService.colorPicker.copy(this._FormService.initialColorPickerColor);
-      this.colorPicked = false;
+    this._FormService.onColorPickerClose.subscribe((canceled: boolean) => {
+      if (canceled) this._FormService.colorPicker.copy(this._FormService.initialColorPickerColor);
     });
   }
 
@@ -269,6 +267,6 @@ export class ColorPickerComponent implements OnInit {
   getNewColor() {
     let rgb: Color = Color.HexToRGB('#' + this.hex)
     let a = Math.round((((249 - this.alphaSliderY) * 0.3952569169960474) / 100) * 100) / 100;
-    return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + a + ')';
+    return rgb.toRGBAString();
   }
 }

@@ -3,10 +3,10 @@ import { Color } from './color';
 
 export class FontColor extends ColorStyle {
 
-    constructor(contentDocument: HTMLDocument) {
+    constructor(contentDocument: HTMLDocument, defaultColor: Color) {
         super(contentDocument);
 
         this.style = 'color';
-        this.defaultColor = new Color(0, 0, 0, 1);
+        this.defaultColor = defaultColor;
     }
 }
