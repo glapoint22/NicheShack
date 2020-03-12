@@ -47,12 +47,13 @@ export class ProductKeywordsComponent implements OnInit {
   // -----------------------------( ON KEY DOWN )------------------------------ \\
   private onKeyDown = (event: KeyboardEvent) => {
     if (event.keyCode === 13) this.enter();
-    if (event.keyCode === 46) this.delete();
+    if (event.keyCode === 46) this.deleteKeyword();
     if (event.keyCode === 27) this.escape();
     if (event.keyCode === 38) this.arrowUp();
     if (event.keyCode === 40) this.arrowDown();
-    if (event.shiftKey) this.shiftDown = true;
     if (event.ctrlKey) this.ctrlDown = true;
+    if (event.shiftKey) this.shiftDown = true;
+    if (event.ctrlKey && event.shiftKey && event.keyCode === 75) this.editKeyword();
   };
 
 
@@ -281,15 +282,16 @@ export class ProductKeywordsComponent implements OnInit {
 
     // As long as the edited keyword has text and has no spaces in the begining
     if ((/^[^.\s]/).test(keyword.textContent) && keyword.textContent.length > 0) {
-      this.pivotIndex = this.editedKeywordIndex;
       this.selectedKeywordIndex = this.editedKeywordIndex;
-      this.keywords[this.editedKeywordIndex].name = keyword.textContent;
       this.newKeyword = false;
       this.disableAdd = false;
       this.disableEdit = false;
       this.disableDelete = false;
       this.editedKeywordIndex = null;
       this.unselectedKeywordIndex = null;
+      this.pivotIndex = this.selectedKeywordIndex;
+      this.keywords[this.selectedKeywordIndex].selected = true;
+      this.keywords[this.selectedKeywordIndex].name = keyword.textContent;
     }
   }
 
@@ -329,6 +331,7 @@ export class ProductKeywordsComponent implements OnInit {
       this.disableEdit = true;
       this.disableDelete = true;
       this.editedKeywordIndex = 0;
+      this.showContextMenu = false;
       this.selectedKeywordIndex = null;
       this.keywords.unshift({ name: "", selected: false, selectType: null });
 
@@ -347,10 +350,11 @@ export class ProductKeywordsComponent implements OnInit {
   // -----------------------------( EDIT KEYWORD )------------------------------ \\
   editKeyword() {
     if (!this.disableEdit) {
+      this.editedKeywordIndex = this.selectedKeywordIndex;
       this.disableAdd = true;
       this.disableEdit = true;
       this.disableDelete = true;
-      this.editedKeywordIndex = this.selectedKeywordIndex;
+      this.showContextMenu = false;
       this.selectedKeywordIndex = null;
 
       for (let i = 0; i < this.keywords.length; i++) {
@@ -370,34 +374,13 @@ export class ProductKeywordsComponent implements OnInit {
     }
   }
 
-  // -----------------------------( SET CONTEXT MENU )------------------------------ \\
-  setContextMenu(e: MouseEvent) {
-    if (e.which == 3) {
-      this.showContextMenu = true;
-
-      
-
-      this.contextMenuLeft = (e.clientX - this.contextMenuOffset.nativeElement.getBoundingClientRect().x - 250);
-      this.contextMenuTop = (e.clientY - this.contextMenuOffset.nativeElement.getBoundingClientRect().y) - 100;
-    }
-  }
-
-
-  // -----------------------------( ENTER )------------------------------ \\
-  enter() {
-    event.preventDefault();
-    // If a keyword is being edited
-    if (this.editedKeywordIndex != null) {
-      this.commitEdit();
-    }
-  }
-
 
   // -----------------------------( DELETE )------------------------------ \\
-  delete() {
+  deleteKeyword() {
     if (!this.disableDelete) {
-      let deletedKeywordIndex: number;
       let keywordCopy: any;
+      this.showContextMenu = false;
+      let deletedKeywordIndex: number;
 
       // If a keyword is selected
       if (this.selectedKeywordIndex != null) {
@@ -467,6 +450,26 @@ export class ProductKeywordsComponent implements OnInit {
   }
 
 
+  // -----------------------------( SET CONTEXT MENU )------------------------------ \\
+  setContextMenu(e: MouseEvent) {
+    if (e.which == 3) {
+      this.showContextMenu = true;
+      this.contextMenuLeft = (e.clientX - this.contextMenuOffset.nativeElement.getBoundingClientRect().x - 250);
+      this.contextMenuTop = (e.clientY - this.contextMenuOffset.nativeElement.getBoundingClientRect().y) - 100;
+    }
+  }
+
+
+  // -----------------------------( ENTER )------------------------------ \\
+  enter() {
+    event.preventDefault();
+    // If a keyword is being edited
+    if (this.editedKeywordIndex != null) {
+      this.commitEdit();
+    }
+  }
+
+  
   // -----------------------------( ESCAPE )------------------------------ \\
   escape() {
     // If a keyword is being edited
@@ -479,7 +482,6 @@ export class ProductKeywordsComponent implements OnInit {
         this.unselectedKeywordIndex = null;
         this.keywords.splice(this.editedKeywordIndex, 1);
 
-
         // If we're just escaping from an edit
       } else {
 
@@ -487,6 +489,7 @@ export class ProductKeywordsComponent implements OnInit {
         this.disableEdit = false;
         this.disableDelete = false;
         this.selectedKeywordIndex = this.editedKeywordIndex;
+        this.keywords[this.selectedKeywordIndex].selected = true;
         this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement.textContent = this.keywords[this.editedKeywordIndex].name;
       }
       this.disableAdd = false;

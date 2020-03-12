@@ -32,6 +32,7 @@ import { ProductMediaComponent } from './product-editor/product-media/product-me
 import { ProductKeywordsComponent } from './product-editor/product-keywords/product-keywords.component';
 import { ProductHoplinkComponent } from './product-editor/product-hoplink/product-hoplink.component';
 import { ColorIconModule } from '../../shared-components/color-icon/color-icon.module';
+import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
 
 
 @NgModule({
@@ -51,7 +52,7 @@ import { ColorIconModule } from '../../shared-components/color-icon/color-icon.m
     ProductFiltersComponent,
     ProductMediaComponent,
     ProductKeywordsComponent,
-    ProductHoplinkComponent
+    ProductHoplinkComponent,
   ],
   imports: [
     CommonModule,
@@ -70,7 +71,8 @@ import { ColorIconModule } from '../../shared-components/color-icon/color-icon.m
     ShowHideModule,
     PromptModule,
     FormsModule,
-    ColorIconModule
-  ]
+    ColorIconModule,
+    ContextMenuModule
+    ]
 })
 export class NicheShackEditorModule { }

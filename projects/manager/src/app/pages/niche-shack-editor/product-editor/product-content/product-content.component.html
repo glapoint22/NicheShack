@@ -5,7 +5,7 @@
 
     <div (mousedown)="$event.stopPropagation()">
         <div (mouseover)="removeContextSubMenu()" class="menu-option" [ngClass]="{'disabled-option': !deleteEnabled}"
-            (click)="deleteEnabled ? cut() : false">
+            (click)="cut()">
             <div>Cut</div>
             <div>Ctrl+X</div>
         </div>
@@ -14,7 +14,7 @@
             <div>Ctrl+C</div>
         </div>
         <div (mouseover)="removeContextSubMenu()" class="menu-option" [ngClass]="{'disabled-option': !pasteEnabled}"
-            (click)="pasteEnabled ? paste() : false">
+            (click)="paste()">
             <div>Paste</div>
             <div>Ctrl+V</div>
         </div>
@@ -41,7 +41,7 @@
             <div>Clear {{selectedColumnIndex != null ? "Price Point" : "Item"}} Values</div>
         </div>
         <div (mouseover)="removeContextSubMenu()" class="menu-option" [ngClass]="{'disabled-option': !deleteEnabled}"
-            (click)="deleteEnabled ? delete() : false">
+            (click)="delete()">
             <div>Delete {{selectedColumnIndex != null ? "Price Point" : "Item"}}</div>
         </div>
     </div>
@@ -66,7 +66,15 @@
 <!-- Content -->
 <fieldset #contextMenuOffset class="margin-right-3-xxl" style="height: 294px; position: relative;">
     <legend>Content</legend>
+    <div class="icon-bar">
+        <!-- Trash -->
+        <div title="Delete"
+             class="icon-container">
+            <i class="fas fa-trash-alt"></i>
+        </div>
+    </div>
 
+        
     <div class="background">
 
         <table (mouseover)="overTable = true" (mouseout)="overTable=false">
@@ -98,10 +106,10 @@
                     (mousedown)="onPricePointDown(columnIndex)" (click)="onPricePointClick()"
                     [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex, 'selected-price-point': productContent.selectedPricePointIndex == columnIndex}">
                     {{(productContent.pricePoints[columnIndex].textBefore.length == 0 ? productContent.pricePoints[columnIndex].textBefore : productContent.pricePoints[columnIndex].textBefore + " ")
-                          + 
-                          (productContent.pricePoints[columnIndex].wholeNumber + "." + productContent.pricePoints[columnIndex].decimal | currency:"USD") 
-                          + 
-                          (productContent.pricePoints[columnIndex].textAfter.length == 0 ? productContent.pricePoints[columnIndex].textAfter : " " + productContent.pricePoints[columnIndex].textAfter) }}
+                        + 
+                        (productContent.pricePoints[columnIndex].wholeNumber + "." + productContent.pricePoints[columnIndex].decimal | currency:"USD") 
+                        + 
+                        (productContent.pricePoints[columnIndex].textAfter.length == 0 ? productContent.pricePoints[columnIndex].textAfter : " " + productContent.pricePoints[columnIndex].textAfter) }}
                 </td>
             </tr>
 
