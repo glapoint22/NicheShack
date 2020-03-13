@@ -14,7 +14,11 @@ export class ToggleableStyle extends Style {
             this.removeStyle(range);
         } else {
             super.setStyle(range);
-            this.isSelected = true;
         }
+    }
+
+    finalizeStyle() {
+        this.isSelected = !this.isSelected;
+        super.finalizeStyle();
     }
 }

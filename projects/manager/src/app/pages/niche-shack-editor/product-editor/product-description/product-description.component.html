@@ -4,13 +4,15 @@
     <div class="icon-bar" *ngIf="description">
         <div>
             <!-- Lower case -->
-            <div class="icon-container" title="Lower case (Ctrl+Down Arrow)">
+            <div class="icon-container" title="Lower case (Ctrl+Down Arrow)"
+                (click)="description.lowercaseStyle.applyStyle()">
                 <i class="fas fa-sort-alpha-down"></i>
             </div>
 
 
             <!-- Upper case -->
-            <div class="icon-container" title="Upper case (Ctrl+Up Arrow)">
+            <div class="icon-container" title="Upper case (Ctrl+Up Arrow)"
+                (click)="description.uppercaseStyle.applyStyle()">
                 <i class="fas fa-sort-alpha-up"></i>
             </div>
         </div>

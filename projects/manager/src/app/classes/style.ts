@@ -69,11 +69,11 @@ export class Style {
             this.setMultilineStyle(this.selectedRange.commonAncestorContainer as HTMLElement);
         }
 
-        this.cleanUpStyle();
+        this.finalizeStyle();
     }
 
 
-    cleanUpStyle() {
+    finalizeStyle() {
         // Remove any empty or blank text nodes that may have been generated
         this.removeEmptyNodes(this.contentParentNode as HTMLElement);
 
@@ -98,8 +98,7 @@ export class Style {
                 }
 
                 // If the current node is beyond the selected range, return
-            }
-            else if (this.selectedRange.comparePoint(currentNode, 0) == 1) {
+            } else if (this.selectedRange.comparePoint(currentNode, 0) == 1) {
                 return;
             }
         });

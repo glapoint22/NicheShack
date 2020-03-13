@@ -18,7 +18,7 @@ export class Indent extends LineStyle {
         super.applyStyle();
     }
 
-    cleanUpStyle() {
+    finalizeStyle() {
         // Consolidate lists
         this.consolidateLists(this.contentParentNode as HTMLElement);
 
