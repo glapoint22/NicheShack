@@ -169,7 +169,7 @@
         <!-- Numbered list -->
         <div class="icon-container" title="Numbered list (Ctrl+Shift+7)"
             [ngClass]="{'selected': _FormService.textBox.orderedList.isSelected}"
-            (click)="_FormService.textBox.orderedList.applyStyle()">
+            (click)="_FormService.textBox.orderedList.applyStyle(); _FormService.textBox.unorderedList.checkSelection()">
             <i class="fas fa-list-ol"></i>
         </div>
 
@@ -177,7 +177,7 @@
         <!-- Bulleted list -->
         <div class="icon-container" title="Bulleted list (Ctrl+Shift+8)"
             [ngClass]="{'selected': _FormService.textBox.unorderedList.isSelected}"
-            (click)="_FormService.textBox.unorderedList.applyStyle()">
+            (click)="_FormService.textBox.unorderedList.applyStyle(); _FormService.textBox.orderedList.checkSelection()">
             <i class="fas fa-list-ul"></i>
         </div>
     </div>

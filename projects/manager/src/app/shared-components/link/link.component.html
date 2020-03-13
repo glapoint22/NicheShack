@@ -8,37 +8,17 @@
     <!-- Radio Buttons Container -->
     <div class="radio-buttons-container">
 
-        <!-- Page -->
-        <div class="radio-button-option-container">
-            <input type="radio" name="link" style="margin-right: 5px;">
-            <div style="user-select: none;">Page</div>
+        <div class="radio-button-option-container" *ngFor="let option of options">
+            <input [id]="option" type="radio" name="link" [(ngModel)]="link.selectedOption" [value]="option"
+                [attr.disabled]="link.disabled ? true: null">
+            <label style="padding-left: 5px;" [for]="option"
+                [attr.disabled]="link.disabled ? true: null">{{option}}</label>
         </div>
-
-        <!-- Category -->
-        <div class="radio-button-option-container">
-            <input type="radio" name="link" style="margin-right: 5px;">
-            <div style="user-select: none;">Category</div>
-        </div>
-
-        <!-- Niche -->
-        <div class="radio-button-option-container">
-            <input type="radio" name="link" style="margin-right: 5px;">
-            <div style="user-select: none;">Niche</div>
-        </div>
-
-        <!-- Product -->
-        <div class="radio-button-option-container">
-            <input type="radio" name="link" style="margin-right: 5px;">
-            <div style="user-select: none;">Product</div>
-        </div>
-
-        <!-- Web Address -->
-        <div class="radio-button-option-container">
-            <input type="radio" name="link" style="margin-right: 5px;">
-            <div style="user-select: none;">Web Address</div>
-        </div>
-    </div>  
+    </div>
 </div>
 
 <!-- Input Text -->
-<input type="text">
+<input type="text" [(ngModel)]="link.url" [attr.disabled]="link.disabled ? true: null">
+
+<button (click)="applyLink()" [attr.disabled]="applyDisabled() ? true: null">Apply</button>
+<button (click)="source.removeLink()" [attr.disabled]="link.disabled || !enableRemove ? true: null">Remove</button>

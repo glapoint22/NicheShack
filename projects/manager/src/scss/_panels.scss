@@ -1,5 +1,4 @@
 .panel-light {
-    position: relative;
     background-color: #303030;
     border-left: 1px solid #414141;
     border-top: 1px solid #4a4a4a;
@@ -26,7 +25,6 @@
 }
 
 .panel-light-rounded {
-    position: relative;
     background-color: #303030;
     border-left: 1px solid #414141;
     border-top: 1px solid #4a4a4a;
@@ -61,4 +59,5 @@
 
 .panel-light, .panel-light-rounded, .panel-lighter, .panel-dark {
     width: 100%;
+    position: relative;
 }

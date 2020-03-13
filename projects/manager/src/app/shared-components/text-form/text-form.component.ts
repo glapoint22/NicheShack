@@ -10,14 +10,25 @@ export class TextFormComponent {
   constructor(public _FormService: FormService) {}
   public showVerticalTab: boolean[] = [true, false, false];
 
-  onFormOpen() {
-
-  }
-
   selectVerticalTab(index: number) {
     for(var i = 0; i < 3; i++) {
       this.showVerticalTab[i] = false;
     }
     this.showVerticalTab[index] = true;
+  }
+
+
+  onFormOpen() {
+    for(var i = 0; i < 3; i++) {
+      this.showVerticalTab[i] = false;
+    }
+
+    this.showVerticalTab[0] = true;
+  }
+
+
+  closeForm() {
+    this._FormService.showTextForm = false;
+    this._FormService.textBox.removeSelection();
   }
 }
