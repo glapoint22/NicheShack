@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LinkFormComponent } from './link-form.component';
+import { DialogBoxModule } from '../dialog-box/dialog-box.module';
+import { LinkModule } from '../link/link.module';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 
 
 
@@ -9,7 +12,10 @@ import { LinkFormComponent } from './link-form.component';
     LinkFormComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    DialogBoxModule,
+    LinkModule,
+    ShowHideModule
   ],
   exports: [
     LinkFormComponent

@@ -62,7 +62,7 @@ export class Indent extends LineStyle {
         let currentIndent: number;
 
         // Get the amount we need to indent by getting the current indent value
-        if (parent.style[this.style] != '') {
+        if (this.hasStyle(parent)) {
             currentIndent = Number.parseInt(parent.style[this.style].match(/\d+/));
         } else {
             currentIndent = 0;

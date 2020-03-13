@@ -80,8 +80,9 @@
 
 
         <div>
-            <!-- Insert link -->
-            <div class="icon-container" title="Insert link (Ctrl+K)">
+            <!-- Link -->
+            <div class="icon-container" title="Insert link (Ctrl+K)" (click)="_FormService.showLinkForm = true"
+                [ngClass]="{'selected': description.linkStyle.isSelected}">
                 <i class="fas fa-link"></i>
             </div>
         </div>
@@ -140,7 +141,7 @@
             <!-- Numbered list -->
             <div class="icon-container" title="Numbered list (Ctrl+Shift+7)"
                 [ngClass]="{'selected': description.orderedList.isSelected}"
-                (click)="description.orderedList.applyStyle()">
+                (click)="description.orderedList.applyStyle(); description.unorderedList.checkSelection()">
                 <i class="fas fa-list-ol"></i>
             </div>
 
@@ -148,7 +149,7 @@
             <!-- Bulleted list -->
             <div class="icon-container" title="Bulleted list (Ctrl+Shift+8)"
                 [ngClass]="{'selected': description.unorderedList.isSelected}"
-                (click)="description.unorderedList.applyStyle()">
+                (click)="description.unorderedList.applyStyle(); description.orderedList.checkSelection()">
                 <i class="fas fa-list-ul"></i>
             </div>
 

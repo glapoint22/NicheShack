@@ -16,6 +16,7 @@ import { DecreaseIndent } from './decrease-indent';
 import { OrderedList } from './ordered-list';
 import { UnorderedList } from './unordered-list';
 import { Color } from './color';
+import { LinkStyle } from './link-style';
 
 export class TextBox {
     public bold: Bold;
@@ -33,6 +34,7 @@ export class TextBox {
     public decreaseIndent: DecreaseIndent;
     public orderedList: OrderedList;
     public unorderedList: UnorderedList;
+    public linkStyle: LinkStyle;
 
     constructor(private contentDocument: HTMLDocument, applicationRef: ApplicationRef, defaultFontColor: Color) {
         // Styles
@@ -51,6 +53,7 @@ export class TextBox {
         this.decreaseIndent = new DecreaseIndent(contentDocument);
         this.orderedList = new OrderedList(contentDocument);
         this.unorderedList = new UnorderedList(contentDocument);
+        this.linkStyle = new LinkStyle(contentDocument);
 
 
         let styleTag = document.createElement('style');
@@ -68,6 +71,9 @@ export class TextBox {
             }
             li div {
                 display: inline;
+            }
+            a { 
+                color: inherit;
             }
             `
         );
@@ -89,33 +95,25 @@ export class TextBox {
         content.style.outline = "none";
         content.innerHTML = '<div><br></div>';
 
-
-
-        let mousedown: boolean;
-
-        // Flag that mouse is down
-        contentDocument.addEventListener("mousedown", () => mousedown = true);
-
         // Take care of selection change on mouse up
         contentDocument.addEventListener("mouseup", () => {
             window.setTimeout(() => {
                 this.onSelectionChange(contentDocument.getSelection().getRangeAt(0));
                 applicationRef.tick();
-                mousedown = false;
             });
         });
 
 
-        // Take care of selection change only when mouse is not down
-        contentDocument.addEventListener("selectionchange", () => {
-            if (!mousedown) {
+        // Take care of selection change on keydown
+        contentDocument.addEventListener("keydown", () => {
+            window.setTimeout(() => {
                 let selection: Selection = contentDocument.getSelection();
 
                 if (selection.anchorNode) {
                     this.onSelectionChange(selection.getRangeAt(0));
                     applicationRef.tick();
                 }
-            }
+            });
         });
     }
 
@@ -154,5 +152,10 @@ export class TextBox {
                 this[key].onSelectionChange(range);
             }
         });
+    }
+
+
+    removeSelection() {
+        this.contentDocument.getSelection().removeAllRanges();
     }
 }

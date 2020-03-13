@@ -1,7 +1,7 @@
 import { Selection } from './selection';
-import { LineStyle } from './line-style';
+import { NodeStyle } from './node-style';
 
-export class ListStyle extends LineStyle {
+export class ListStyle extends NodeStyle {
     applyStyle() {
         // Get the current selection
         // This is needed for when we lose the selection, we'll have to set the selection again
@@ -21,9 +21,18 @@ export class ListStyle extends LineStyle {
             this.removeList();
         }
 
+        
         // Set the selection and give back the focus to the text
         this.setSelection(selection);
+
+        this.checkSelection();
+
         this.setFocus();
+    }
+
+
+    checkSelection() {
+        this.isSelected = this.selectionHasStyle();
     }
 
 
@@ -262,17 +271,6 @@ export class ListStyle extends LineStyle {
 
         // Remove all empty nodes
         this.removeEmptyNodes(this.contentParentNode as HTMLElement);
-    }
-
-
-    nodeHasStyle(node: HTMLElement): boolean {
-        while (node != this.contentParentNode) {
-            if (node.tagName == this.style) return true;
-
-            node = node.parentElement;
-        }
-
-        return false;
     }
 
 

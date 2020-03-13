@@ -1,3 +1,5 @@
+import { Selection } from './selection';
+
 export class Style {
     public style: string;
     public styleValue: string;
@@ -140,6 +142,8 @@ export class Style {
     getFirstTextChild(node: Node): Text {
         let text: Text;
 
+        if (node.nodeType == 3) return node as Text;
+
         for (let i = 0; i < node.childNodes.length; i++) {
             let child: ChildNode = node.childNodes[i];
 
@@ -152,6 +156,8 @@ export class Style {
     }
 
     getLastTextChild(node: Node, text?: Text | ChildNode): Text {
+        if (node.nodeType == 3) return node as Text;
+
         for (let i = 0; i < node.childNodes.length; i++) {
             let child: ChildNode = node.childNodes[i];
 
@@ -254,7 +260,7 @@ export class Style {
             let child: HTMLElement = element.children[i] as HTMLElement;
 
             // If there is a child that contains the parent style
-            if (child.style[this.style] != '') {
+            if (this.hasStyle(child)) {
                 let range: Range = document.createRange();
                 let lastTextChild: Text = this.getLastTextChild(child);
 
@@ -310,7 +316,7 @@ export class Style {
         while (node != this.contentParentNode) {
 
             // If this style is applied
-            if (node.style[this.style] != '') {
+            if (this.hasStyle(node)) {
                 // If the style value applied does not equal this style value, return false
                 if (node.style[this.style] != this.styleValue) return false;
 
@@ -327,5 +333,88 @@ export class Style {
     setFocus() {
         let content: HTMLElement = this.contentParentNode as HTMLElement;
         content.focus();
+    }
+
+    hasStyle(element: HTMLElement): boolean {
+        return element.style[this.style] != '';
+    }
+
+    getSelection(): Selection {
+        let selection = new Selection();
+        let range = this.selectedRange.cloneRange();
+        let startParent: HTMLElement = this.getSelectionParent(this.selectedRange.startContainer);
+        let endParent: HTMLElement = this.getSelectionParent(this.selectedRange.endContainer);
+
+        // Get the start and end of the range
+        selection.startOffset = this.selectedRange.startOffset;
+        selection.endOffset = this.selectedRange.endOffset;
+
+
+        // Getting an array of offsets will be used to set the selection
+        while (range.startContainer != startParent) {
+            range.setStartBefore(range.startContainer);
+            selection.startOffsets.unshift(range.startOffset);
+        }
+
+
+        while (range.endContainer != endParent) {
+            range.setEndBefore(range.endContainer);
+            selection.endOffsets.unshift(range.endOffset);
+        }
+
+
+        // Set the start and end markers
+        startParent.setAttribute('start', '');
+        endParent.setAttribute('end', '');
+
+
+        return selection;
+    }
+
+    setSelection(selection: Selection) {
+        // let text: Text;
+        let parent: HTMLElement;
+
+        // Remove the end attribute and get the node the attribute was on
+        parent = this.removeSelectAttribute(this.contentParentNode as HTMLElement, 'end');
+
+        // Set the end of the range
+        this.selectedRange.setEnd(parent, 0);
+
+        // Loop through the array of end offsets to get to the end node
+        for (let i = 0; i < selection.endOffsets.length; i++) {
+            this.selectedRange.setEnd(this.selectedRange.endContainer.childNodes[selection.endOffsets[i]], 0);
+        }
+
+        this.selectedRange.setEnd(this.selectedRange.endContainer, selection.endOffset);
+
+        // Remove the start attribute and get the node the attribute was on
+        parent = this.removeSelectAttribute(this.contentParentNode as HTMLElement, 'start');
+
+        // Set the start of the range
+        this.selectedRange.setStart(parent, 0);
+
+
+        // Loop through the array of start offsets to get to the start node
+        for (let i = 0; i < selection.startOffsets.length; i++) {
+            this.selectedRange.setStart(this.selectedRange.startContainer.childNodes[selection.startOffsets[i]], 0);
+        }
+
+        this.selectedRange.setStart(this.selectedRange.startContainer, selection.startOffset);
+    }
+
+    removeSelectAttribute(node: HTMLElement, attribute: string) {
+        for (let i = 0; i < node.childElementCount; i++) {
+            let childNode = node.children[i] as HTMLElement;
+
+            if (childNode.attributes[attribute] != null) {
+                childNode.removeAttribute(attribute);
+                return childNode;
+            }
+
+            let result = this.removeSelectAttribute(childNode, attribute);
+
+            if (result) return result;
+        }
     }
 }

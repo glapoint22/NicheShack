@@ -12,7 +12,6 @@ import { Color } from 'projects/manager/src/app/classes/color';
 })
 export class TextWidgetComponent extends FreeformWidgetComponent {
   @ViewChild('iframe', { static: false }) iframe: ElementRef;
-  public inEditMode: boolean;
   private textBox: TextBox;
 
   constructor(widgetService: WidgetService, private applicationRef: ApplicationRef, public _FormService: FormService) { super(widgetService) }
@@ -37,7 +36,6 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
 
     // Open the text form
     this._FormService.showTextForm = true;
-    this.inEditMode = true;
     this.textBox.selectContents();
   }
 }

@@ -73,8 +73,8 @@ export class ColorStyle extends PersistentStyle {
                 this.setSelection(selection);
             } else {
                 // Remove the start and end attributes
-                this.removeAttribute(this.contentParentNode as HTMLElement, 'start');
-                this.removeAttribute(this.contentParentNode as HTMLElement, 'end');
+                this.removeSelectAttribute(this.contentParentNode as HTMLElement, 'start');
+                this.removeSelectAttribute(this.contentParentNode as HTMLElement, 'end');
             }
 
             this.setFocus();

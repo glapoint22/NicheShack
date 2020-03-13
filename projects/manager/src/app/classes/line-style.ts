@@ -1,9 +1,7 @@
-import { PersistentStyle } from './persistent-style';
+import { ToggleableStyle } from './toggleable-style';
 
 
-export class LineStyle extends PersistentStyle {
-    public isSelected: boolean;
-
+export class LineStyle extends ToggleableStyle {
     setStyle(range: Range) {
         let parent = this.getSelectionParent(range.startContainer);
 
@@ -16,5 +14,9 @@ export class LineStyle extends PersistentStyle {
         super.onSelectionChange(range);
 
         this.isSelected = this.selectionHasStyle();
+    }
+
+    assignStyle(parent: HTMLElement) {
+        parent.style[this.style] = this.styleValue;
     }
 }

@@ -11,6 +11,8 @@ import { Alignment } from '../classes/alignment';
 import { TextBox } from '../classes/text-box';
 import { Subject } from 'rxjs';
 import { ProductContent } from '../classes/product-content';
+import { Link } from '../classes/link';
+import { Description } from '../classes/description';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,7 @@ export class FormService {
   public margins: Spacing;
   public padding: Spacing;
   public textBox: TextBox;
+  public description: Description;
   public alignment: Alignment
   public productContent: ProductContent;
   public showMediaForm: boolean;
@@ -36,6 +39,7 @@ export class FormService {
   public showLineForm: boolean;
   public showVideoForm: boolean;
   public showRowForm: boolean;
+  public showLinkForm: boolean;
   public initialFill: FillColor = new FillColor();
   public initialBorder: Border = new Border();
   public initialCorners: Corners = new Corners();
