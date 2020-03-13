@@ -1,11 +1,17 @@
 @import '../../../../../scss/variables';
 
 .background {
+    position: absolute;
     background: $input-background-color;
     border: 1px solid $border-color;
     padding: 0.5rem;
     overflow: auto;
+    top: 61px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
 }
+
 
 .icon-bar {
     border: 1px solid $border-color;
@@ -31,6 +37,7 @@ table {
         padding: 0px;
         padding-top: 1px;
         padding-bottom: 1px;
+        white-space: nowrap;
 
         &:hover:not(.selected-keyword):not(.transparent-keyword):not(.edited-keyword):not(.selected-keyword-top):not(.selected-keyword-middle):not(.selected-keyword-bottom):not(.selected-keyword-whole) {
             background: $hover-fill-color;

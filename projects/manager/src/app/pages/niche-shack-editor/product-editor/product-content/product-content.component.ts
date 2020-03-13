@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ViewChildren, ElementRef, QueryList } from '@angular/core';
 import { FormService } from 'projects/manager/src/app/services/form.service';
 import { ProductContent } from 'projects/manager/src/app/classes/product-content';
+import { MenuService } from 'projects/manager/src/app/services/menu.service';
 
 @Component({
   selector: 'product-content',
@@ -8,7 +9,7 @@ import { ProductContent } from 'projects/manager/src/app/classes/product-content
   styleUrls: ['./product-content.component.scss']
 })
 export class ProductContentComponent implements OnInit {
-  constructor(public _FormService: FormService) {}
+  constructor(public _FormService: FormService, public menuService: MenuService) {}
   public productContent: ProductContent = new ProductContent();
   public selectedColumnIndex: number = null;
   public selectedRowIndex: number = null;
@@ -16,11 +17,11 @@ export class ProductContentComponent implements OnInit {
   public selectedPricePointOptionColumnIndex: number = null;
   public selectedPricePointOptionRowIndex: number = null;
   public overTable: boolean = false;
-  public contentMenuLeft: number;
-  public contentMenuTop: number;
-  public showContentMenu: boolean = false;
-  public showContentSubMenu: boolean = false;
-  public contentSubMenuWidth: number;
+  public contextMenuLeft: number;
+  public contextMenuTop: number;
+  public showContextMenu: boolean = false;
+  public showContextSubMenu: boolean = false;
+  public contextSubMenuWidth: number;
   public direction1: string;
   public direction2: string;
   public pasteSpecialOver: boolean = false;
@@ -30,14 +31,15 @@ export class ProductContentComponent implements OnInit {
   private copied: string = "";
   private pasteSpecialOptionOverTimeout: number;
   private pasteSpecialOptionOutTimeout: number;
-  private contentMenuBlurTimeout: number;
+  private contextMenuBlurTimeout: number;
   private pricePointClipboard: any = { pricePoint: {}, pricePointOptions: [] };
   private itemClipboard: any = { type: "", description: "", showPlaceholder: false, pricePointOptions: [] };
-  @ViewChild('content', { static: false }) content: ElementRef;
-  @ViewChild('contentMenu', { static: false }) contentMenu: ElementRef;
   @ViewChildren('itemDesc') itemDesc: QueryList<ElementRef>;
+  @ViewChild('contextMenu', { static: false }) contextMenu: ElementRef;
+  @ViewChild('contextMenuOffset', { static: false }) contextMenuOffset: ElementRef;
 
 
+  
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     this.productContent.items.push({ type: "assets/no-content-type.png", description: "", showPlaceholder: true, pricePointOptions: [true] });
@@ -70,6 +72,8 @@ export class ProductContentComponent implements OnInit {
       this.unsetEventListeners();
     }
   };
+
+  
 
 
   // -----------------------------( SET EVENT LISTENERS )------------------------------ \\
@@ -173,7 +177,7 @@ export class ProductContentComponent implements OnInit {
   removeFocus() {
     this.selectedRowIndex = null;
     this.selectedColumnIndex = null;
-    this.showContentSubMenu = false;
+    this.showContextSubMenu = false;
     this.selectedItemDescriptionIndex = null;
     this.selectedPricePointOptionRowIndex = null;
     this.selectedPricePointOptionColumnIndex = null;
@@ -181,57 +185,105 @@ export class ProductContentComponent implements OnInit {
     this.productContent.selectedPricePointIndex = null;
   }
 
+  subMenu(width: number, name: string, ...options: any) {
+    return {type: "sub menu", width: width, name: name, options: options}
+  }
 
-  // -----------------------------( SET CONTENT MENU )------------------------------ \\
-  setContentMenu(e: MouseEvent) {
+  option(name: string, shortcutKeys?: string) {
+    return {type: "option", name: name, shortcutKeys: shortcutKeys}
+  }
+
+  divider() {
+    return {type: "divider"}
+  }
+
+  // -----------------------------( SET CONTEXT MENU )------------------------------ \\
+  setContextMenu(e: MouseEvent) {
     if (e.which == 3) {
-      let selectorType: string;
 
-      if (this.selectedColumnIndex != null) {
-        selectorType = "Price Point";
-      } else if (this.selectedRowIndex != null) {
-        selectorType = "Item";
-      }
 
-      this.contentMenuLeft = ((e.clientX - this.content.nativeElement.getBoundingClientRect().x) + 25);
-      this.contentMenuTop = (e.clientY - this.content.nativeElement.getBoundingClientRect().y) - (selectorType == "Price Point" ? 20 : 230);
-      this.direction1 = selectorType == "Price Point" ? "Left" : "Above";
-      this.direction2 = selectorType == "Price Point" ? "Right" : "Below";
-      this.pasteEnabled = (selectorType == 'Price Point' && this.copied == 'Price Point') || (selectorType == 'Item' && this.copied == 'Item') ? true : false;
-      this.deleteEnabled = (selectorType == 'Price Point' && this.productContent.items[0].pricePointOptions.length > 1) || (selectorType == 'Item' && this.productContent.items.length > 1) ? true : false;
-      this.showContentMenu = true;
+
+      this.menuService.buildMenu(100, 100, 300, this.option("Alita", "Ctrl+A"), 
+                                                this.divider(),
+                                                this.subMenu(100, "Sub Menu 1", this.option("Option A", "Ctrl+Shift+A"),
+                                                                                this.option("Option B", "Ctrl+Shift+B"),
+                                                                                this.subMenu(200, "Sub Menu 2", this.option("Option 2A", "Ctrl+Shift+2A"),
+                                                                                                                this.option("Option 2B", "Ctrl+Shift+2B"),
+                                                                                                                this.divider(),
+                                                                                                                this.option("Option 2C", "Ctrl+Shift+2C")),
+                                                                                this.option("Option C", "Ctrl+Shift+C"),
+                                                                                this.option("Option D", "Ctrl+Shift+D"),
+                                                                                this.divider(),
+                                                                                this.subMenu(300, "Sub Menu 3", this.option("Option 3A", "Ctrl+Shift+3A"),
+                                                                                                                this.option("Option 3B", "Ctrl+Shift+3B"),
+                                                                                                                this.divider(),
+
+
+
+                                                                                                                this.subMenu(400, "Sub Menu 4", this.option("Option 4A", "Ctrl+Shift+4A"),
+                                                                                                                                                this.option("Option 4B", "Ctrl+Shift+4B")),
+                                                                                                                this.option("Option 3C", "Ctrl+Shift+3C")),
+                                                                                this.option("Option E", "Ctrl+Shift+E"),
+                                                                                this.option("Option F", "Ctrl+Shift+F"),                           
+                                                                                ),
+                                                this.option("Battle", "Ctrl+B"),
+                                                this.option("Angel")
+      
+      );
+
+
+
+
+      
+
+
+
+
+
+      
+      // // Define which selector we are clicking on
+      // let selectorType: string = this.selectedColumnIndex != null ? "Price Point" : this.selectedRowIndex != null ? "Item" : null;
+
+      // // Then name the menu options accordingly
+      // this.showContextMenu = true;
+      // this.direction1 = selectorType == "Price Point" ? "Left" : "Above";
+      // this.direction2 = selectorType == "Price Point" ? "Right" : "Below";
+      // this.contextMenuLeft = ((e.clientX - this.contextMenuOffset.nativeElement.getBoundingClientRect().x) + 25);
+      // this.contextMenuTop = (e.clientY - this.contextMenuOffset.nativeElement.getBoundingClientRect().y) - (selectorType == "Price Point" ? 20 : 230);
+      // this.pasteEnabled = (selectorType == 'Price Point' && this.copied == 'Price Point') || (selectorType == 'Item' && this.copied == 'Item') ? true : false;
+      // this.deleteEnabled = (selectorType == 'Price Point' && this.productContent.items[0].pricePointOptions.length > 1) || (selectorType == 'Item' && this.productContent.items.length > 1) ? true : false;
     }
   }
 
 
-  // -----------------------------( ON CONTENT MENU FOCUS )------------------------------ \\
-  onContentMenuFocus() {
-    clearTimeout(this.contentMenuBlurTimeout);
+  // -----------------------------( ON CONTEXT MENU FOCUS )------------------------------ \\
+  onContextMenuFocus() {
+    clearTimeout(this.contextMenuBlurTimeout);
   }
 
 
-  // -----------------------------( ON CONTENT MENU BLUR )------------------------------ \\
-  onContentMenuBlur() {
-    this.showContentMenu = false;
+  // -----------------------------( ON CONTEXT MENU BLUR )------------------------------ \\
+  onContextMenuBlur() {
+    this.showContextMenu = false;
 
-    this.contentMenuBlurTimeout = window.setTimeout(() => {
-      this.showContentSubMenu = false;
+    this.contextMenuBlurTimeout = window.setTimeout(() => {
+      this.showContextSubMenu = false;
       this.pasteSpecialOver = false;
     });
   }
 
 
-  // -----------------------------( ON CONTENT MENU BLUR )------------------------------ \\
+  // -----------------------------( ON CONTEXT MENU BLUR )------------------------------ \\
   onPasteSpecialOptionOver() {
     this.pasteSpecialOver = true;
 
     this.pasteSpecialOptionOverTimeout = window.setTimeout(() => {
       if (this.selectedColumnIndex != null) {
-        this.contentSubMenuWidth = 212;
+        this.contextSubMenuWidth = 212;
       } else if (this.selectedRowIndex != null) {
-        this.contentSubMenuWidth = 180;
+        this.contextSubMenuWidth = 180;
       }
-      this.showContentSubMenu = true;
+      this.showContextSubMenu = true;
     }, 300)
   }
 
@@ -242,29 +294,29 @@ export class ProductContentComponent implements OnInit {
     clearTimeout(this.pasteSpecialOptionOverTimeout);
 
     this.pasteSpecialOptionOutTimeout = window.setTimeout(() => {
-      this.showContentSubMenu = false;
+      this.showContextSubMenu = false;
     }, 250)
   }
 
 
-  // -----------------------------( ON CONTENT SUB MENU OVER )------------------------------ \\
-  onContentSubMenuOver() {
+  // -----------------------------( ON CONTEXT SUB MENU OVER )------------------------------ \\
+  onContextSubMenuOver() {
     this.pasteSpecialOver = true;
     clearTimeout(this.pasteSpecialOptionOutTimeout);
   }
 
 
-  // -----------------------------( ON CONTENT SUB MENU FOCUS )------------------------------ \\
-  onContentSubMenuFocus() {
-    // Give focus back to the content menu
-    this.showContentMenu = true;
-    this.contentMenu.nativeElement.focus();
+  // -----------------------------( ON CONTEXT SUB MENU FOCUS )------------------------------ \\
+  onContextSubMenuFocus() {
+    // Give focus back to the context menu
+    this.showContextMenu = true;
+    this.contextMenu.nativeElement.focus();
   }
 
 
-  // -----------------------------( REMOVE CONTENT SUB MENU )------------------------------ \\
-  removeContentSubMenu() {
-    this.showContentSubMenu = false;
+  // -----------------------------( REMOVE CONTEXT SUB MENU )------------------------------ \\
+  removeContextSubMenu() {
+    this.showContextSubMenu = false;
     this.pasteSpecialOver = false;
   }
 
@@ -295,7 +347,7 @@ export class ProductContentComponent implements OnInit {
         this.productContent.items[this.selectedRowIndex].pricePointOptions.push(false);
       }
     }
-    this.showContentMenu = false;
+    this.showContextMenu = false;
   }
 
 
@@ -325,7 +377,7 @@ export class ProductContentComponent implements OnInit {
         this.productContent.items[this.selectedRowIndex].pricePointOptions[i] = false;
       }
     }
-    this.showContentMenu = false;
+    this.showContextMenu = false;
   }
 
 
@@ -349,23 +401,27 @@ export class ProductContentComponent implements OnInit {
 
   // -----------------------------( DELETE )------------------------------ \\
   delete() {
-    // If we're deleting a Price Point
-    if (this.selectedColumnIndex != null && this.productContent.items[0].pricePointOptions.length > 1) {
 
-      // Delete the Price Point at the specified index
-      this.productContent.pricePoints.splice(this.selectedColumnIndex, 1);
-      // And delete all the price point options from the deleted Price Point as well
-      for (let i = 0; i < this.productContent.items.length; i++) {
-        this.productContent.items[i].pricePointOptions.splice(this.selectedColumnIndex, 1);
+    if(this.deleteEnabled) {
+
+      // If we're deleting a Price Point
+      if (this.selectedColumnIndex != null && this.productContent.items[0].pricePointOptions.length > 1) {
+
+        // Delete the Price Point at the specified index
+        this.productContent.pricePoints.splice(this.selectedColumnIndex, 1);
+        // And delete all the price point options from the deleted Price Point as well
+        for (let i = 0; i < this.productContent.items.length; i++) {
+          this.productContent.items[i].pricePointOptions.splice(this.selectedColumnIndex, 1);
+        }
+
+        // If we're deleting an Item
+      } else if (this.selectedRowIndex != null && this.productContent.items.length > 1) {
+
+        // Delete the item at the specified index
+        this.productContent.items.splice(this.selectedRowIndex, 1);
       }
-
-      // If we're deleting an Item
-    } else if (this.selectedRowIndex != null && this.productContent.items.length > 1) {
-
-      // Delete the item at the specified index
-      this.productContent.items.splice(this.selectedRowIndex, 1);
+      this.showContextMenu = false;
     }
-    this.showContentMenu = false;
   }
 
 
@@ -399,7 +455,7 @@ export class ProductContentComponent implements OnInit {
       }
     }
 
-    // If we're on a content type
+    // If we're on an item type
     if (this.productContent.selectedItemTypeIndex != null) {
       if (this.productContent.selectedItemTypeIndex > 0) {
         this.productContent.selectedItemTypeIndex--;
@@ -445,7 +501,7 @@ export class ProductContentComponent implements OnInit {
       }
     }
 
-    // If we're on a content type
+    // If we're on an item type
     if (this.productContent.selectedItemTypeIndex != null) {
       if (this.productContent.selectedItemTypeIndex < this.productContent.items.length - 1) {
         this.productContent.selectedItemTypeIndex++;
@@ -514,14 +570,14 @@ export class ProductContentComponent implements OnInit {
       return
     }
 
-    // If we're leaving an item description and entering a content type
+    // If we're leaving an item description and entering an item type
     if (this.selectedItemDescriptionIndex != null) {
       this.productContent.selectedItemTypeIndex = this.selectedItemDescriptionIndex;
       this.selectedItemDescriptionIndex = null;
       return
     }
 
-    // If we're leaving a content type and entering a row selector
+    // If we're leaving an item type and entering a row selector
     if (this.productContent.selectedItemTypeIndex != null) {
       this.selectedRowIndex = this.productContent.selectedItemTypeIndex;
       this.productContent.selectedItemTypeIndex = null;
@@ -545,14 +601,14 @@ export class ProductContentComponent implements OnInit {
       }
     }
 
-    // If we're leaving a row selector and entering a content type
+    // If we're leaving a row selector and entering an item type
     if (this.selectedRowIndex != null) {
       this.productContent.selectedItemTypeIndex = this.selectedRowIndex;
       this.selectedRowIndex = null;
       return
     }
 
-    // If we're leaving a content type and entering an item description
+    // If we're leaving an item type and entering an item description
     if (this.productContent.selectedItemTypeIndex != null) {
       this.selectedItemDescriptionIndex = this.productContent.selectedItemTypeIndex;
       this.productContent.selectedItemTypeIndex = null;
@@ -578,8 +634,10 @@ export class ProductContentComponent implements OnInit {
 
   // -----------------------------( CUT )------------------------------ \\
   cut() {
-    this.copy();
-    this.delete();
+    if(this.deleteEnabled) {
+      this.copy();
+      this.delete();
+    }
   }
 
 
@@ -626,44 +684,48 @@ export class ProductContentComponent implements OnInit {
       }
       this.copied = "Item";
     }
-    this.showContentMenu = false;
+    this.showContextMenu = false;
   }
 
 
   // -----------------------------( PASTE )------------------------------ \\
   paste() {
-    // If we're pasting a price point
-    if (this.selectedColumnIndex != null && this.copied == "Price Point") {
-      // If the copied price point length is greater than the current price point length, then use the current price point length, otherwise, use the copied price point length
-      let pricePointOptionsLength = this.pricePointClipboard.pricePointOptions.length > this.productContent.items.length ? this.productContent.items.length : this.pricePointClipboard.pricePointOptions.length;
 
-      // Paste the price point value
-      this.productContent.pricePoints[this.selectedColumnIndex].textBefore = this.pricePointClipboard.pricePoint.textBefore;
-      this.productContent.pricePoints[this.selectedColumnIndex].wholeNumber = this.pricePointClipboard.pricePoint.wholeNumber;
-      this.productContent.pricePoints[this.selectedColumnIndex].decimal = this.pricePointClipboard.pricePoint.decimal;
-      this.productContent.pricePoints[this.selectedColumnIndex].textAfter = this.pricePointClipboard.pricePoint.textAfter;
+      if(this.pasteEnabled) {
 
-      // Paste all the price point option values
-      for (let i = 0; i < pricePointOptionsLength; i++) {
-        this.productContent.items[i].pricePointOptions[this.selectedColumnIndex] = this.pricePointClipboard.pricePointOptions[i];
+      // If we're pasting a price point
+      if (this.selectedColumnIndex != null && this.copied == "Price Point") {
+        // If the copied price point length is greater than the current price point length, then use the current price point length, otherwise, use the copied price point length
+        let pricePointOptionsLength = this.pricePointClipboard.pricePointOptions.length > this.productContent.items.length ? this.productContent.items.length : this.pricePointClipboard.pricePointOptions.length;
+
+        // Paste the price point value
+        this.productContent.pricePoints[this.selectedColumnIndex].textBefore = this.pricePointClipboard.pricePoint.textBefore;
+        this.productContent.pricePoints[this.selectedColumnIndex].wholeNumber = this.pricePointClipboard.pricePoint.wholeNumber;
+        this.productContent.pricePoints[this.selectedColumnIndex].decimal = this.pricePointClipboard.pricePoint.decimal;
+        this.productContent.pricePoints[this.selectedColumnIndex].textAfter = this.pricePointClipboard.pricePoint.textAfter;
+
+        // Paste all the price point option values
+        for (let i = 0; i < pricePointOptionsLength; i++) {
+          this.productContent.items[i].pricePointOptions[this.selectedColumnIndex] = this.pricePointClipboard.pricePointOptions[i];
+        }
+
+        // If we're pasting an Item
+      } else if (this.selectedRowIndex != null && this.copied == "Item") {
+
+        // If the copied price point length is greater than the current price point length, then use the current price point length, otherwise, use the copied price point length
+        let pricePointOptionsLength = this.itemClipboard.pricePointOptions.length > this.productContent.items[this.selectedRowIndex].pricePointOptions.length ? this.productContent.items[this.selectedRowIndex].pricePointOptions.length : this.itemClipboard.pricePointOptions.length;
+
+        // Paste the item's values
+        this.productContent.items[this.selectedRowIndex].type = this.itemClipboard.type;
+        this.productContent.items[this.selectedRowIndex].description = this.itemClipboard.description;
+        this.productContent.items[this.selectedRowIndex].showPlaceholder = this.itemClipboard.showPlaceholder;
+        // Paste all the price point option values
+        for (let i = 0; i < pricePointOptionsLength; i++) {
+          this.productContent.items[this.selectedRowIndex].pricePointOptions[i] = this.itemClipboard.pricePointOptions[i];
+        }
       }
-
-      // If we're pasting an Item
-    } else if (this.selectedRowIndex != null && this.copied == "Item") {
-
-      // If the copied price point length is greater than the current price point length, then use the current price point length, otherwise, use the copied price point length
-      let pricePointOptionsLength = this.itemClipboard.pricePointOptions.length > this.productContent.items[this.selectedRowIndex].pricePointOptions.length ? this.productContent.items[this.selectedRowIndex].pricePointOptions.length : this.itemClipboard.pricePointOptions.length;
-
-      // Paste the item's values
-      this.productContent.items[this.selectedRowIndex].type = this.itemClipboard.type;
-      this.productContent.items[this.selectedRowIndex].description = this.itemClipboard.description;
-      this.productContent.items[this.selectedRowIndex].showPlaceholder = this.itemClipboard.showPlaceholder;
-      // Paste all the price point option values
-      for (let i = 0; i < pricePointOptionsLength; i++) {
-        this.productContent.items[this.selectedRowIndex].pricePointOptions[i] = this.itemClipboard.pricePointOptions[i];
-      }
+      this.showContextMenu = false;
     }
-    this.showContentMenu = false;
   }
 
 

@@ -209,7 +209,7 @@ body:not(#widget-cursor) .row:not(:active) {
 
 .row:not(:active) %column {
     &:hover {
-        outline: 1px solid greenyellow;
+        // outline: 1px solid greenyellow;
         z-index: 2;
     }
 }
@@ -225,7 +225,7 @@ body:not(#widget-cursor) .row:not(:active) {
 
 %column {
     &:active {
-        outline: 1px solid greenyellow;
+        // outline: 1px solid greenyellow;
         z-index: 2;
     }
     &:hover .drop-indicator {

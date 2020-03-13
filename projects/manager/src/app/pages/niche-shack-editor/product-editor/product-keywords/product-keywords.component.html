@@ -1,18 +1,40 @@
-<fieldset>
+<!-- Context Menu -->
+<div #contextMenu [style.left.px]="contextMenuLeft" [style.top.px]="contextMenuTop"
+    *show="showContextMenu" class="fade-start menu-base" transitionClass="fade-end" tabindex="0"
+    (onHide)="showContextMenu = false" (blur)="showContextMenu = false">
+
+    <div (mousedown)="$event.stopPropagation()">
+        <div class="menu-option" [ngClass]="{'disabled-option': disableAdd}" (click)="addKeyword()">
+            <div>Add Keyword</div>
+            <div>Ctrl+Alt+K</div>
+        </div>
+        <div class="menu-option" [ngClass]="{'disabled-option': disableEdit}" (click)="editKeyword()">
+            <div>Edit Keyword</div>
+            <div>Ctrl+Shift+K</div>
+        </div>
+        <div class="menu-option" [ngClass]="{'disabled-option': disableDelete}" (click)="deleteKeyword()">
+            <div>{{disableEdit ? 'Delete Keywords' : 'Delete Keyword'}}</div>
+            <div>Delete</div>
+        </div>
+    </div>
+</div>
+
+
+<fieldset #contextMenuOffset style="height: 294px; position: relative;">
     <legend>Keywords</legend>
     <div class="icon-bar">
         <!-- Trash -->
-        <div [attr.title]="!disableDelete ? 'Delete Keyword' : ''"
+        <div [attr.title]="!disableDelete ? disableEdit ? 'Delete Keywords' : 'Delete Keyword' : ''"
              class="icon-container"
              [ngClass]="{'icon-disabled': disableDelete}"
              (mouseover)="preventMousedown=true"
              (mouseout)="preventMousedown=false"
-             (click)="delete()">
+             (click)="deleteKeyword()">
             <i class="fas fa-trash-alt"></i>
         </div>
 
         <!-- Edit -->
-        <div [attr.title]="!disableEdit ? 'Edit Keyword' : ''" 
+        <div [attr.title]="!disableEdit ? 'Edit Keyword (Ctrl+Shift+K)' : ''" 
              class="icon-container"
              [ngClass]="{'icon-disabled': disableEdit}"
              (mouseover)="preventMousedown=true"
@@ -22,7 +44,7 @@
         </div>
 
         <!-- Add -->
-        <div [attr.title]="!disableAdd ? 'Add Keyword' : ''" 
+        <div [attr.title]="!disableAdd ? 'Add Keyword (Ctrl+Alt+K)' : ''" 
              class="icon-container"
              [ngClass]="{'icon-disabled': disableAdd}"
              (mouseover)="preventMousedown=true"
@@ -32,51 +54,27 @@
         </div>
     </div>
 
-    <div class="background" style="height: 214px;">
-
-
-
-    <table>
-        <tr *ngFor="let keyword of keywords; let keywordIndex = index" >
-            <td #keyword
-                class="keywordList"
-                [contentEditable]="editedKeywordIndex == keywordIndex"
-                [textContent]="keywords[keywordIndex].name"
-                (mouseover)="preventMousedown=true"
-                (mouseout)="preventMousedown=false"
-                (mousedown)="onKeywordDown(keywordIndex)"
-                (dblclick)="onKeywordDoubleClick(keywordIndex)"
-                [ngClass]="{'selected-keyword': selectedKeywordIndex == keywordIndex,
-                            'unselected-keyword': unselectedKeywordIndex == keywordIndex,
-                            'edited-keyword': editedKeywordIndex == keywordIndex,
-                            'selected-keyword-top': keywords[keywordIndex].selectType == 'top',
-                            'selected-keyword-middle': keywords[keywordIndex].selectType == 'middle',
-                            'selected-keyword-bottom': keywords[keywordIndex].selectType == 'bottom',
-                            'selected-keyword-whole': keywords[keywordIndex].selectType == 'whole',
-                            'transparent-keyword': editedKeywordIndex != null && editedKeywordIndex != keywordIndex}">
-            </td>
-        </tr>
-    </table>
-
-
-
-
-        <!-- <div *ngFor="let keyword of keywords; let keywordIndex = index"
-             #keyword
-             class="keywordList"
-             [contentEditable]="editedKeywordIndex == keywordIndex"
-             [textContent]="keywords[keywordIndex].name"
-             (mouseover)="preventMousedown=true"
-             (mouseout)="preventMousedown=false"
-             (mousedown)="onKeywordDown(keywordIndex)"
-             (dblclick)="onKeywordDoubleClick(keywordIndex)"
-             [ngClass]="{'edited-keyword': editedKeywordIndex == keywordIndex,
-                         
-                         'selected-keyword-top': keywords[keywordIndex].selectType == 'top',
-                         'selected-keyword-middle': keywords[keywordIndex].selectType == 'middle',
-                         'selected-keyword-bottom': keywords[keywordIndex].selectType == 'bottom',
-                         'selected-keyword-whole': keywords[keywordIndex].selectType == 'whole',
-                         'transparent-keyword': editedKeywordIndex != null && editedKeywordIndex != keywordIndex}">
-        </div> -->
+    <div (contextmenu)="$event.preventDefault()" class="background" (mouseup)="setContextMenu($event)">
+        <table>
+            <tr *ngFor="let keyword of keywords; let keywordIndex = index" >
+                <td #keyword
+                    class="keywordList"
+                    [contentEditable]="editedKeywordIndex == keywordIndex"
+                    [textContent]="keywords[keywordIndex].name"
+                    (mouseover)="preventMousedown=true"
+                    (mouseout)="preventMousedown=false"
+                    (mousedown)="onKeywordDown(keywordIndex)"
+                    (dblclick)="onKeywordDoubleClick(keywordIndex)"
+                    [ngClass]="{'selected-keyword': selectedKeywordIndex == keywordIndex,
+                                'unselected-keyword': unselectedKeywordIndex == keywordIndex,
+                                'edited-keyword': editedKeywordIndex == keywordIndex,
+                                'selected-keyword-top': keywords[keywordIndex].selectType == 'top',
+                                'selected-keyword-middle': keywords[keywordIndex].selectType == 'middle',
+                                'selected-keyword-bottom': keywords[keywordIndex].selectType == 'bottom',
+                                'selected-keyword-whole': keywords[keywordIndex].selectType == 'whole',
+                                'transparent-keyword': editedKeywordIndex != null && editedKeywordIndex != keywordIndex}">
+                </td>
+            </tr>
+        </table>
     </div>
 </fieldset>

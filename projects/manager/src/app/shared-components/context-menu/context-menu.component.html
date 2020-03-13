@@ -1,0 +1,38 @@
+<!-- <ng-container *ngFor="let i of menuService.menuContent; let menuIndex = index"></ng-container>
+    <div #menuBase *ngIf="menuService.showMenu"
+        [style.left.px]="menuService.left"
+        [style.top.px]="menuService.top"
+        [style.maxWidth.px]="menuService.width"
+        class="menu-base" 
+        tabindex="0" 
+        (onShow)="menuBase.focus()"
+        >
+
+        <div (mousedown)="$event.stopPropagation()">
+
+            
+
+            
+
+                <div *ngIf="menuService.menuContent[menuIndex].type == 'option'" class="menu-option">
+                    <div>{{menuService.menuContent[menuIndex].name}}</div>
+                    <div *ngIf="menuService.menuContent[menuIndex].shortcutKeys != null">
+                        {{menuService.menuContent[menuIndex].shortcutKeys}}</div>
+                </div>
+                
+                <div *ngIf="menuService.menuContent[menuIndex].type == 'divider'" class="menu-divider"></div>
+
+                <div *ngIf="menuService.menuContent[menuIndex].type == 'sub menu'" class="menu-option">
+                    <div style="pointer-events: none;">{{menuService.menuContent[menuIndex].name}}</div>
+                    <div style="pointer-events: none;" class="arrow-right"></div>
+                </div>
+
+            
+            
+
+            
+        </div>
+    </div>
+</ng-container> -->
+
+<!-- (blur)="menuService.showMenu = false" -->
