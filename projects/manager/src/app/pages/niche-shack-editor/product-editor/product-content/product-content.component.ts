@@ -202,10 +202,23 @@ export class ProductContentComponent implements OnInit {
     if (e.which == 3) {
 
 
+      // this.menuService.buildMenu(100, 100, 300, this.option("Alita", "Ctrl+A"), 
+      //                                           this.divider(),
+      //                                           this.option("Battle", "Ctrl+B"),
+      //                                           this.option("Angel")
+      
+      // );
+
+
+
+
+
+
+
 
       this.menuService.buildMenu(100, 100, 300, this.option("Alita", "Ctrl+A"), 
                                                 this.divider(),
-                                                this.subMenu(100, "Sub Menu 1", this.option("Option A", "Ctrl+Shift+A"),
+                                                this.subMenu(200, "Sub Menu 1", this.option("Option A", "Ctrl+Shift+A"),
                                                                                 this.option("Option B", "Ctrl+Shift+B"),
                                                                                 this.subMenu(200, "Sub Menu 2", this.option("Option 2A", "Ctrl+Shift+2A"),
                                                                                                                 this.option("Option 2B", "Ctrl+Shift+2B"),
@@ -217,11 +230,9 @@ export class ProductContentComponent implements OnInit {
                                                                                 this.subMenu(300, "Sub Menu 3", this.option("Option 3A", "Ctrl+Shift+3A"),
                                                                                                                 this.option("Option 3B", "Ctrl+Shift+3B"),
                                                                                                                 this.divider(),
-
-
-
                                                                                                                 this.subMenu(400, "Sub Menu 4", this.option("Option 4A", "Ctrl+Shift+4A"),
-                                                                                                                                                this.option("Option 4B", "Ctrl+Shift+4B")),
+                                                                                                                                                this.option("Option 4B", "Ctrl+Shift+4B"),
+                                                                                                                                                this.option("Option 4C", "Ctrl+Shift+4C")),
                                                                                                                 this.option("Option 3C", "Ctrl+Shift+3C")),
                                                                                 this.option("Option E", "Ctrl+Shift+E"),
                                                                                 this.option("Option F", "Ctrl+Shift+F"),                           
