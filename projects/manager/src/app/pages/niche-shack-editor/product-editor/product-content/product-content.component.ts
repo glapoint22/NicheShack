@@ -177,7 +177,7 @@ export class ProductContentComponent implements OnInit {
   removeFocus() {
     this.selectedRowIndex = null;
     this.selectedColumnIndex = null;
-    this.showContextSubMenu = false;
+    // this.showContextSubMenu = false;
     this.selectedItemDescriptionIndex = null;
     this.selectedPricePointOptionRowIndex = null;
     this.selectedPricePointOptionColumnIndex = null;

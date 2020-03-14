@@ -1,44 +1,36 @@
 <ng-container *ngFor="let i of menuService.menus; let menuIndex = index">
-    <div #menu *ngIf="menuService.showMenu[menuIndex]"
-        [style.left.px]="menuService.menus[menuIndex].left"
-        [style.top.px]="menuService.menus[menuIndex].top"
-        [style.maxWidth.px]="menuService.menus[menuIndex].width"
-        class="menu-base" 
-        tabindex="0" 
-        (onShow)="menu.focus()"
-        (mouseover)="menuService.onSubMenuOver(menuIndex)"
-        >
+    <div #menu *ngIf="menuService.showMenu[menuIndex]" [style.left.px]="menuService.menus[menuIndex].left"
+        [style.top.px]="menuService.menus[menuIndex].top" [style.maxWidth.px]="menuService.menus[menuIndex].width"
+        class="menu-base" tabindex="0" (onShow)="menu.focus()" (mouseover)="menuService.onSubMenuOver(menuIndex)"
+        (focus)="menuService.onMenuFocus(menuIndex)" (blur)="menuService.onMenuBlur(menuIndex, menu)">
 
         <div (mousedown)="$event.stopPropagation()">
 
             <ng-container *ngFor="let j of menuService.menus[menuIndex].options; let optionIndex = index">
-            
-            
 
-                <div *ngIf="menuService.menus[menuIndex].options[optionIndex].type == 'option'" class="menu-option">
+
+
+                <div *ngIf="menuService.menus[menuIndex].options[optionIndex].type == 'option'" class="menu-option" (mouseover)="menuService.removeSubMenus(menuIndex)">
                     <div>{{menuService.menus[menuIndex].options[optionIndex].name}}</div>
                     <div *ngIf="menuService.menus[menuIndex].options[optionIndex].shortcutKeys != null">
                         {{menuService.menus[menuIndex].options[optionIndex].shortcutKeys}}</div>
                 </div>
-                
-                <div *ngIf="menuService.menus[menuIndex].options[optionIndex].type == 'divider'" class="menu-divider"></div>
 
-                <div *ngIf="menuService.menus[menuIndex].options[optionIndex].type == 'sub menu'" class="menu-option" 
-                (mouseover)="menuService.onSubMenuOptionOver(menuService.menus[menuIndex].options[optionIndex].subMenuIndex)"
-                (mouseout)="menuService.onSubMenuOptionOut(menuService.menus[menuIndex].options[optionIndex].subMenuIndex)">
+                <div *ngIf="menuService.menus[menuIndex].options[optionIndex].type == 'divider'" class="menu-divider">
+                </div>
+
+                <div *ngIf="menuService.menus[menuIndex].options[optionIndex].type == 'sub menu'" class="menu-option"
+                    (mouseover)="menuService.onSubMenuOptionOver(menuIndex, menuService.menus[menuIndex].options[optionIndex].subMenuIndex)"
+                    (mouseout)="menuService.onSubMenuOptionOut(menuService.menus[menuIndex].options[optionIndex].subMenuIndex)">
                     <div style="pointer-events: none;">{{menuService.menus[menuIndex].options[optionIndex].name}}</div>
                     <div style="pointer-events: none;" class="arrow-right"></div>
                 </div>
 
             </ng-container>
-            
 
-            
+
+
         </div>
     </div>
-    
+
 </ng-container>
-
-<!-- (blur)="menuService.showMenu = false" -->
-
-<!-- menuService.showMenu[menuIndex] -->

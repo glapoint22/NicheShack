@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 
 @Component({
@@ -6,17 +6,17 @@ import { MenuService } from '../../services/menu.service';
   templateUrl: './context-menu.component.html',
   styleUrls: ['./context-menu.component.scss']
 })
-export class ContextMenuComponent implements OnInit {
-
+export class ContextMenuComponent {
   constructor(public menuService: MenuService) { }
 
-  ngOnInit() {
-  }
-
-  over() {
-    console.log("over")
-  }
-  out() {
-    console.log("out")
+  @HostListener('keydown', ['$event'])
+  onKeydown(event: KeyboardEvent) {
+    if (event.code === 'Escape' || event.keyCode === 27) {
+      // Loop through all the menus
+      for(let i = 0; i < this.menuService.menus.length; i++) {
+        // And hide each one
+        this.menuService.showMenu[i] = false;
+      }
+    }
   }
 }
