@@ -148,7 +148,7 @@ export class TextBox {
     onSelectionChange(range: Range) {
         let keys = Object.keys(this);
         keys.forEach((key: string) => {
-            if (this[key].style) {
+            if (this[key].onSelectionChange) {
                 this[key].onSelectionChange(range);
             }
         });
