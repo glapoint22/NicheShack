@@ -7,7 +7,8 @@ export class MenuService {
   constructor() { }
   public menus: any[];
   public showMenu: boolean[];
-  private menuLeft: number;
+  public subMenuOptionHighlightOn: boolean[];
+  private mainMenuLeft: number;
   private subMenuTop: number;
   private parentIndex: number;
   private subMenuIndex: number;
@@ -16,17 +17,33 @@ export class MenuService {
   private subMenuOptionOverTimeout: number[];
 
 
-  buildMenu(left: number, top: number, width: number, ...mainMenuOptions: any) {
+  option(name: string, menuOptionFunction: Function, shortcutKeys?: string, isDisabled?: boolean) {
+    return {type: "option", name: name, shortcutKeys: shortcutKeys, isDisabled: isDisabled, menuOptionFunction: menuOptionFunction}
+  }
+
+  subMenu(name: string, isDisabled: boolean, ...options: any) {
+    return {type: "sub menu", name: name, isDisabled: isDisabled, options: options}
+  }
+
+  divider() {
+    return {type: "divider"}
+  }
+
+
+
+  buildMenu(left: number, top: number, ...mainMenuOptions: any) {
     this.menus = [];
     this.showMenu = [];
     this.subMenuTop = 0;
     this.subMenuIndex = 0;
+    this.subMenuOptionHighlightOn = [];
     this.showMenu[0] = true;
     this.subMenuOptionOutTimeout = [];
     this.subMenuOptionOverTimeout = [];
+    this.mainMenuLeft = left;
 
     // Create the main menu
-    this.menus.push({ left: left, top: top, width: width, options: [] });
+    this.menus.push({ top: top, options: [] });
 
     // Then create the contents of the main menu
     for (let i in mainMenuOptions) {
@@ -39,23 +56,22 @@ export class MenuService {
 
       // Sub Menu
       if (mainMenuOptions[i].type == "sub menu") {
-        this.menuLeft = (left + width) - 3;
+        // this.mainMenuLeft = (left + width) - 3;
         this.parentIndex = 0;
         this.subMenuIndex++;
-        this.menus[0].options.push({ type: mainMenuOptions[i].type, name: mainMenuOptions[i].name, subMenuIndex: this.subMenuIndex, subMenuTop: this.subMenuTop });
+        this.menus[0].options.push({ type: mainMenuOptions[i].type, name: mainMenuOptions[i].name, subMenuIndex: this.subMenuIndex, subMenuTop: this.subMenuTop, isDisabled: mainMenuOptions[i].isDisabled });
         this.subMenuTop += 26;
       }
 
       // Option
       if (mainMenuOptions[i].type == "option") {
         this.subMenuTop += 26;
-        this.menus[0].options.push({ type: mainMenuOptions[i].type, name: mainMenuOptions[i].name, shortcutKeys: mainMenuOptions[i].shortcutKeys });
+        this.menus[0].options.push({ type: mainMenuOptions[i].type, name: mainMenuOptions[i].name, shortcutKeys: mainMenuOptions[i].shortcutKeys, isDisabled: mainMenuOptions[i].isDisabled, menuOptionFunction: mainMenuOptions[i].menuOptionFunction });
       }
     }
     // Create all the sub menus (if any)
     this.buildSubMenus(mainMenuOptions);
   }
-
 
 
   buildSubMenus(currentMenu) {
@@ -69,13 +85,11 @@ export class MenuService {
 
         // Build that sub menu
         this.menus.push({
-          left: this.menuLeft,
           top: this.menus[this.parentIndex].top + this.menus[this.parentIndex].options[this.menus[this.parentIndex].options.map(e => e.subMenuIndex).indexOf(this.menus.length)].subMenuTop,
-          width: currentMenu[i].width,
           options: []
         });
 
-        // then create the contents of that sub menu
+        // Then create the contents of that sub menu
         for (let j in currentMenu[i].options) {
 
           // Divider
@@ -86,21 +100,46 @@ export class MenuService {
 
           // Sub Menu
           if (currentMenu[i].options[j].type == "sub menu") {
-            this.menuLeft = (this.menus[this.menus.length - 1].left + this.menus[this.menus.length - 1].width) - 3;
             this.parentIndex = this.menus.length - 1;
             this.subMenuIndex++;
-            this.menus[this.menus.length - 1].options.push({ type: currentMenu[i].options[j].type, name: currentMenu[i].options[j].name, subMenuIndex: this.subMenuIndex, subMenuTop: this.subMenuTop });
+            this.menus[this.menus.length - 1].options.push({ type: currentMenu[i].options[j].type, name: currentMenu[i].options[j].name, subMenuIndex: this.subMenuIndex, subMenuTop: this.subMenuTop, isDisabled: currentMenu[i].options[j].isDisabled });
             this.subMenuTop += 26;
           }
 
           // Option
           if (currentMenu[i].options[j].type == "option") {
             this.subMenuTop += 26;
-            this.menus[this.menus.length - 1].options.push({ type: currentMenu[i].options[j].type, name: currentMenu[i].options[j].name, shortcutKeys: currentMenu[i].options[j].shortcutKeys });
+            this.menus[this.menus.length - 1].options.push({ type: currentMenu[i].options[j].type, name: currentMenu[i].options[j].name, shortcutKeys: currentMenu[i].options[j].shortcutKeys, isDisabled: currentMenu[i].options[j].isDisabled, menuOptionFunction: currentMenu[i].options[j].menuOptionFunction });
           }
         }
         this.buildSubMenus(currentMenu[i].options)
       }
+    }
+  }
+
+
+  getMenuLeft(menuIndex: number, menu: HTMLElement) {
+    let menuLeft = menuIndex == 0 ? this.mainMenuLeft : menu.previousElementSibling.getBoundingClientRect().left + menu.previousElementSibling.getBoundingClientRect().width - 3;
+    return menuLeft;
+  }
+
+
+  onMenuOptionOver(menuIndex: number) {
+    // Loop through all the menus starting with the menu that's after the one we are on
+    for (let i = menuIndex + 1; i < this.menus.length; i++) {
+      // Hide each menu
+      this.showMenu[i] = false;
+      // Turn off each sub menu option highlight
+      this.subMenuOptionHighlightOn[i] = false;
+    }
+  }
+
+
+  onMenuOptionClick(menuIndex: number, optionIndex: number) {
+    // As long as this menu option is NOT disabled
+    if(!this.menus[menuIndex].options[optionIndex].isDisabled) {
+      // Call the function that is associated with this menu option
+      this.menus[menuIndex].options[optionIndex].menuOptionFunction();
     }
   }
 
@@ -114,6 +153,8 @@ export class MenuService {
         if(this.menus[menuIndex].options[i].subMenuIndex != subMenuIndex) {
           // Then hide that menu
           this.showMenu[this.menus[menuIndex].options[i].subMenuIndex] = false;
+          // Turn off its sub menu option highlight
+          this.subMenuOptionHighlightOn[this.menus[menuIndex].options[i].subMenuIndex] = false;
           // Now, take the menu we just hid, and loop through its menu options to see if there is a sub menu on it we need to hide
           this.hideSubMenus(this.menus[menuIndex].options[i].subMenuIndex, subMenuIndex)
         }
@@ -122,30 +163,44 @@ export class MenuService {
   }
 
 
-  onSubMenuOptionOver(menuIndex: number, subMenuIndex: number) {
-    // First, hide any sub menus that don't belong to the sub menu option we just hovered over
-    this.hideSubMenus(menuIndex, subMenuIndex)
+  onSubMenuOptionOver(menuIndex: number, optionIndex: number) {
+    // As long as this sub menu option is NOT disabled
+    if(!this.menus[menuIndex].options[optionIndex].isDisabled) {
+      let subMenuIndex = this.menus[menuIndex].options[optionIndex].subMenuIndex
 
-    // Wait, so we can see if we intend on opening the sub menu or just passing by
-    this.subMenuOptionOverTimeout[subMenuIndex] = window.setTimeout(() => {
-      // If we wait long enough, show the sub menu
-      this.showMenu[subMenuIndex] = true;
-    }, 300)
+      // First, hide any sub menus that don't belong to the sub menu option we just hovered over
+      this.hideSubMenus(menuIndex, subMenuIndex)
+
+      // Wait, so we can see if we intend on opening the sub menu or just passing by
+      this.subMenuOptionOverTimeout[subMenuIndex] = window.setTimeout(() => {
+        // If we wait long enough, show the sub menu
+        this.showMenu[subMenuIndex] = true;
+        // Turn on the sub menu option highlight
+        this.subMenuOptionHighlightOn[subMenuIndex] = true;
+      }, 300)
+    }
   }
 
-  onSubMenuOptionOut(subMenuIndex: number) {
-    // Now that we have left the sub menu option, remove the timer that was waiting to show its sub menu from a sub menu option over
-    clearTimeout(this.subMenuOptionOverTimeout[subMenuIndex]);
 
-    // Wait, so we can see if we're leaving this sub menu option to go to a sub menu.
-    this.subMenuOptionOutTimeout[subMenuIndex] = window.setTimeout(() => {
-      // If we wait long enough, and we don't go on a sub menu, then loop through all the menus starting with the the sub menu of the menu we are on
-      for (let i = subMenuIndex; i < this.menus.length; i++) {
-        // And hide each menu from that point
-        this.showMenu[i] = false;
-      }
-    }, 250)
+  onSubMenuOptionOut(menuIndex: number, optionIndex: number) {
+    // As long as this sub menu option is NOT disabled
+    if(!this.menus[menuIndex].options[optionIndex].isDisabled) {
+      let subMenuIndex = this.menus[menuIndex].options[optionIndex].subMenuIndex
+
+      // Now that we have left the sub menu option, remove the timer that was waiting to show its sub menu from a sub menu option over
+      clearTimeout(this.subMenuOptionOverTimeout[subMenuIndex]);
+
+      // Wait, so we can see if we're leaving this sub menu option to go to a sub menu.
+      this.subMenuOptionOutTimeout[subMenuIndex] = window.setTimeout(() => {
+        // If we wait long enough, and we don't go on a sub menu, then loop through all the menus starting with the the sub menu of the menu we are on
+        for (let i = subMenuIndex; i < this.menus.length; i++) {
+          // And hide each menu from that point
+          this.showMenu[i] = false;
+        }
+      }, 250)
+    }
   }
+
 
   onSubMenuOver(subMenuIndex: number) {
     // Now that we have moused over a sub menu, remove the timer that was waiting to hide the sub menus from a sub menu option out
@@ -165,8 +220,8 @@ export class MenuService {
     }
   }
 
-  onMenuBlur(menuIndex: number, menu: HTMLElement) {
 
+  onMenuBlur(menuIndex: number, menu: HTMLElement) {
     // When the main menu loses focus
     if (menuIndex == 0) {
 
@@ -188,14 +243,6 @@ export class MenuService {
           }
         }
       });
-    }
-  }
-
-  removeSubMenus(menuIndex: number) {
-    // Loop through all the menus starting with the menu that's after the one we are on
-    for (let i = menuIndex + 1; i < this.menus.length; i++) {
-      // Hide each menu
-      this.showMenu[i] = false;
     }
   }
 }

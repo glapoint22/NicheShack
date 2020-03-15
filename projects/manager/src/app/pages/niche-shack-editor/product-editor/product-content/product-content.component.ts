@@ -185,27 +185,25 @@ export class ProductContentComponent implements OnInit {
     this.productContent.selectedPricePointIndex = null;
   }
 
-  subMenu(width: number, name: string, ...options: any) {
-    return {type: "sub menu", width: width, name: name, options: options}
+
+  alita() {
+    alert("Alita")
   }
 
-  option(name: string, shortcutKeys?: string) {
-    return {type: "option", name: name, shortcutKeys: shortcutKeys}
+  battle() {
+    alert("Battle")
   }
-
-  divider() {
-    return {type: "divider"}
-  }
+  
 
   // -----------------------------( SET CONTEXT MENU )------------------------------ \\
   setContextMenu(e: MouseEvent) {
     if (e.which == 3) {
 
 
-      // this.menuService.buildMenu(100, 100, 300, this.option("Alita", "Ctrl+A"), 
-      //                                           this.divider(),
-      //                                           this.option("Battle", "Ctrl+B"),
-      //                                           this.option("Angel")
+      // this.menuService.buildMenu(100, 100, this.menuService.option("Alita", "Ctrl+A"), 
+      //                                           this.menuService.divider(),
+      //                                           this.menuService.option("Battle", "Ctrl+B"),
+      //                                           this.menuService.option("Angel")
       
       // );
 
@@ -216,29 +214,29 @@ export class ProductContentComponent implements OnInit {
 
 
 
-      this.menuService.buildMenu(100, 100, 300, this.option("Alita", "Ctrl+A"), 
-                                                this.divider(),
-                                                this.subMenu(200, "Sub Menu 1", this.option("Option A", "Ctrl+Shift+A"),
-                                                                                this.option("Option B", "Ctrl+Shift+B"),
-                                                                                this.subMenu(200, "Sub Menu 2", this.option("Option 2A", "Ctrl+Shift+2A"),
-                                                                                                                this.option("Option 2B", "Ctrl+Shift+2B"),
-                                                                                                                this.divider(),
-                                                                                                                this.option("Option 2C", "Ctrl+Shift+2C")),
-                                                                                this.option("Option C", "Ctrl+Shift+C"),
-                                                                                this.option("Option D", "Ctrl+Shift+D"),
-                                                                                this.divider(),
-                                                                                this.subMenu(300, "Sub Menu 3", this.option("Option 3A", "Ctrl+Shift+3A"),
-                                                                                                                this.option("Option 3B", "Ctrl+Shift+3B"),
-                                                                                                                this.divider(),
-                                                                                                                this.subMenu(400, "Sub Menu 4", this.option("Option 4A", "Ctrl+Shift+4A"),
-                                                                                                                                                this.option("Option 4B", "Ctrl+Shift+4B"),
-                                                                                                                                                this.option("Option 4C", "Ctrl+Shift+4C")),
-                                                                                                                this.option("Option 3C", "Ctrl+Shift+3C")),
-                                                                                this.option("Option E", "Ctrl+Shift+E"),
-                                                                                this.option("Option F", "Ctrl+Shift+F"),                           
+      this.menuService.buildMenu(100, 100, this.menuService.option("Alita", this.alita, "Ctrl+A"), 
+                                           this.menuService.divider(),
+                                           this.menuService.subMenu("Sub Menu 1", false, this.menuService.option("Option A", this.alita, "Ctrl+Shift+A"),
+                                                                                  this.menuService.option("Option B", this.alita, "Ctrl+Shift+B", true),
+                                                                                  this.menuService.subMenu("Sub Menu 2", true, this.menuService.option("Option 2A", this.alita, "Ctrl+Shift+2A"),
+                                                                                                                         this.menuService.option("Option 2B", this.alita, "Ctrl+Shift+2B"),
+                                                                                                                         this.menuService.divider(),
+                                                                                                                         this.menuService.option("Option 2C", this.alita, "Ctrl+Shift+2C")),
+                                                                                  this.menuService.option("Option C", this.battle, "Ctrl+Shift+C"),
+                                                                                  this.menuService.option("Option D", this.alita, "Ctrl+Shift+D"),
+                                                                                  this.menuService.divider(),
+                                                                                  this.menuService.subMenu("Sub Menu 3", false, this.menuService.option("Option 3A", this.alita, "Ctrl+Shift+3A"),
+                                                                                                                         this.menuService.option("Option 3B", this.alita, "Ctrl+Shift+3B"),
+                                                                                                                         this.menuService.divider(),
+                                                                                                                         this.menuService.subMenu("Sub Menu 4", false, this.menuService.option("Option 4A", this.alita, "Ctrl+Shift+4A"),
+                                                                                                                                                                this.menuService.option("Option 4B", this.alita, "Ctrl+Shift+4B"),
+                                                                                                                                                                this.menuService.option("Option 4C", this.alita, "Ctrl+Shift+4C")),
+                                                                                                                         this.menuService.option("Option 3C", this.alita, "Ctrl+Shift+3C")),
+                                                                                  this.menuService.option("Option E", this.alita, "Ctrl+Shift+E"),
+                                                                                  this.menuService.option("Option F", this.alita, "Ctrl+Shift+F"),                           
                                                                                 ),
-                                                this.option("Battle", "Ctrl+B"),
-                                                this.option("Angel")
+                                           this.menuService.option("Battle", this.alita, "Ctrl+B"),
+                                           this.menuService.option("Angel", this.alita, null, true)
       
       );
 
