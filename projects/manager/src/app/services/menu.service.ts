@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Menu } from '../classes/menu';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
   constructor() { }
-  // Public
-  public menus: any[];
-  public showMenu: boolean[];
-  public subMenuOptionHighlightOn: boolean[];
   // Private
   private thisObj: object;
-  private menuTop: number;
+  private menuTop: number[];
   private subMenuTop: number;
   private parentIndex: number;
   private subMenuIndex: number;
@@ -20,15 +17,19 @@ export class MenuService {
   private initialMenuWidth: number[];
   private subMenuOptionOutTimeout: number[];
   private subMenuOptionOverTimeout: number[];
-
+  // Public
+  public menus: Menu[];
+  public showMenu: boolean[];
+  public subMenuOptionHighlightOn: boolean[];
 
 
   // -----------------------------( BUILD MENU )------------------------------ \\
   buildMenu(thisObj: object, left: number, top: number, ...mainMenuOptions: any) {
     this.menus = [];
+    this.menuTop = [];
     this.showMenu = [];
-    this.menuTop = top;
     this.subMenuTop = 0;
+    this.menuTop[0] = top;
     this.subMenuIndex = 0;
     this.thisObj = thisObj;
     this.showMenu[0] = true;
@@ -40,7 +41,7 @@ export class MenuService {
 
 
     // Create the main menu
-    this.menus.push({ top: top, options: [] });
+    this.menus.push({ options: [] });
 
     // Then create the contents of the main menu
     for (let i in mainMenuOptions) {
@@ -94,12 +95,17 @@ export class MenuService {
 
       // If we come across an option that is labeled as a sub menu
       if (currentMenu[i].type == "sub menu") {
+        // Get the menu options of the parent of this sub menu
+        let parentMenuOptions = this.menus[this.parentIndex].options;
+        // Map out a new array from the parent's menu options that displays the values of the subMenuIndex property
+        let subMenuIndexArray = parentMenuOptions.map(x => x.subMenuIndex);
+        // Find the index within the subMenuIndexArray that has a subMenuIndex value that matches the index of this new sub menu
+        let indexOfSubMenuIndex = subMenuIndexArray.indexOf(this.menus.length);
+        // Define the top position of where this sub menu will placed in relation to its parent
+        this.menuTop[this.menus.length] = this.menus[this.parentIndex].options[indexOfSubMenuIndex].subMenuTop;
 
         // Build that sub menu
-        this.menus.push({
-          top: this.menus[this.parentIndex].options[this.menus[this.parentIndex].options.map(e => e.subMenuIndex).indexOf(this.menus.length)].subMenuTop,
-          options: []
-        });
+        this.menus.push({ options: [] });
 
         // Then create the contents of that sub menu
         for (let j in currentMenu[i].options) {
@@ -173,7 +179,7 @@ export class MenuService {
 
     // Set menu left
     this.setMenuLeft(menuIndex, menu);
-
+    // Set menu Top
     this.setMenuTop(menuIndex, menu);
   }
 
@@ -241,7 +247,7 @@ export class MenuService {
   setMenuTop(menuIndex: number, menu: HTMLElement) {
     // If it's the main menu
     if (menuIndex == 0) {
-      let menuTop = this.menus[menuIndex].top;
+      let menuTop = this.menuTop[menuIndex];
 
       // If the menu extends beyond the top of the screen
       if (menuTop < 0) {
@@ -257,7 +263,7 @@ export class MenuService {
 
       // If it's a sub menu
     } else {
-      let menuTop = this.menus[menuIndex].top + menu.previousElementSibling.getBoundingClientRect().top;
+      let menuTop = this.menuTop[menuIndex] + menu.previousElementSibling.getBoundingClientRect().top;
       let menuBottom = menuTop + menu.getBoundingClientRect().height;
       let menuOffset = menuBottom - window.innerHeight;
 

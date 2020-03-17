@@ -9,18 +9,20 @@ import { MenuService } from 'projects/manager/src/app/services/menu.service';
   styleUrls: ['./product-content.component.scss']
 })
 export class ProductContentComponent implements OnInit {
-  constructor(public _FormService: FormService, public menuService: MenuService) { }
-  public productContent: ProductContent = new ProductContent();
-  public selectedColumnIndex: number = null;
-  public selectedRowIndex: number = null;
-  public selectedItemDescriptionIndex: number;
-  public selectedPricePointOptionColumnIndex: number = null;
-  public selectedPricePointOptionRowIndex: number = null;
-  public overTable: boolean = false;
-  private eventListenersSet: boolean = false;
+  // Private
   private copied: string = "";
+  private eventListenersSet: boolean = false;
   private pricePointClipboard: any = { pricePoint: {}, pricePointOptions: [] };
   private itemClipboard: any = { type: "", description: "", showPlaceholder: false, pricePointOptions: [] };
+  // Public
+  public overTable: boolean = false;
+  public selectedRowIndex: number = null;
+  public selectedColumnIndex: number = null;
+  public selectedItemDescriptionIndex: number;
+  public selectedPricePointOptionRowIndex: number = null;
+  public selectedPricePointOptionColumnIndex: number = null;
+  public productContent: ProductContent = new ProductContent();
+  constructor(public _FormService: FormService, public menuService: MenuService) {}
   @ViewChildren('itemDesc') itemDesc: QueryList<ElementRef>;
 
 
@@ -56,8 +58,6 @@ export class ProductContentComponent implements OnInit {
       this.unsetEventListeners();
     }
   };
-
-
 
 
   // -----------------------------( SET EVENT LISTENERS )------------------------------ \\
@@ -175,17 +175,6 @@ export class ProductContentComponent implements OnInit {
     // As long as the right mouse button is being pressed
     if (e.which == 3) {
 
-      // Define the menu options based on which selector type is being right clicked
-      // let selectorType: string = this.selectedColumnIndex != null ? "Price Point" : this.selectedRowIndex != null ? "Item" : null;
-      // let direction1: string = selectorType == "Price Point" ? "Left" : "Above";
-      // let direction2: string = selectorType == "Price Point" ? "Right" : "Below";
-      // let isPasteDisabled: boolean = (selectorType == 'Price Point' && this.copied == 'Price Point') || (selectorType == 'Item' && this.copied == 'Item') ? false : true;
-      // let isDeleteDisabled: boolean = (selectorType == 'Price Point' && this.productContent.items[0].pricePointOptions.length > 1) || (selectorType == 'Item' && this.productContent.items.length > 1) ? false : true;
-      // let contextMenuLeft: number = e.clientX + (selectorType == "Price Point" ? 0 : -235);
-      // let contextMenuTop: number = e.clientY - 235;
-
-
-
 
 
 
@@ -224,31 +213,17 @@ export class ProductContentComponent implements OnInit {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      // // Define the menu options based on which selector type is being right clicked
+      // let selectorType: string = this.selectedColumnIndex != null ? "Price Point" : this.selectedRowIndex != null ? "Item" : null;
+      // let direction1: string = selectorType == "Price Point" ? "Left" : "Above";
+      // let direction2: string = selectorType == "Price Point" ? "Right" : "Below";
+      // let isPasteDisabled: boolean = (selectorType == 'Price Point' && this.copied == 'Price Point') || (selectorType == 'Item' && this.copied == 'Item') ? false : true;
+      // let isDeleteDisabled: boolean = (selectorType == 'Price Point' && this.productContent.items[0].pricePointOptions.length > 1) || (selectorType == 'Item' && this.productContent.items.length > 1) ? false : true;
+      // let contextMenuLeft: number = e.clientX + (selectorType == "Price Point" ? 0 : -235);
 
 
       // // Build the context menu
-      // this.menuService.buildMenu(this, contextMenuLeft, contextMenuTop,
+      // this.menuService.buildMenu(this, contextMenuLeft, e.clientY - 235,
       //   // Cut
       //   this.menuService.option("Cut", "Ctrl+X", isDeleteDisabled, this.cut),
       //   // Copy
