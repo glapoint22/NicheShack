@@ -20,20 +20,8 @@
     background-color: #2d2d2d;
 }
 
-.arrow-right {
-    border-top-width: 0.25rem;
-    border-bottom-width: 0.25rem;
-}
 
-#pasteSpecial {
-    &.paste-special-hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: white;
-    }
-    &.paste-special-active {
-        background-color: rgba(255, 255, 255, 0.15);
-    }
-}
+
 
 table {
 
