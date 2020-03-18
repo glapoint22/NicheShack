@@ -7,6 +7,8 @@ export class ListStyle extends NodeStyle {
         // This is needed for when we lose the selection, we'll have to set the selection again
         let selection: Selection = this.getSelection();
 
+        // this.removeBreakTags(this.contentParentNode);
+
         // Here we need to determine if the list style we are applying is over the alternate list style
         // If so, we need to switch the selected list style to the current list style
         this.style = this.style == 'UL' ? 'OL' : 'UL';
@@ -21,7 +23,9 @@ export class ListStyle extends NodeStyle {
             this.removeList();
         }
 
-        
+        this.consolidateLists(this.contentParentNode);
+
+
         // Set the selection and give back the focus to the text
         this.setSelection(selection);
 
@@ -34,6 +38,21 @@ export class ListStyle extends NodeStyle {
     checkSelection() {
         this.isSelected = this.selectionHasStyle();
     }
+
+
+    // removeBreakTags(parent: HTMLElement) {
+    //     for (let i = 0; i < parent.childNodes.length; i++) {
+    //         let currentNode: ChildNode = parent.childNodes[i];
+
+    //         if (currentNode.nodeType == 1 && (currentNode as HTMLElement).tagName == 'BR') {
+    //             currentNode.replaceWith(document.createTextNode('\u200B'));
+    //         }
+
+    //         this.removeBreakTags(currentNode as HTMLElement);
+
+            
+    //     }
+    // }
 
 
 
@@ -158,7 +177,7 @@ export class ListStyle extends NodeStyle {
     }
 
 
-    
+
 
     removeList() {
         if (this.isSingleLineSelection) {
@@ -199,6 +218,10 @@ export class ListStyle extends NodeStyle {
 
             // Remove all styles from the node
             node.removeAttribute('style');
+
+            // if (node.firstChild.nodeType == 1 && (node.firstChild as HTMLElement).tagName == 'BR') {
+            //     node.firstChild.replaceWith(document.createTextNode('\u200B'));
+            // }
 
             // Append the node contents into the list item
             listItem.appendChild(node);
