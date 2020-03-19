@@ -104,6 +104,9 @@ export class TextBox {
         contentDocument.addEventListener("keypress", (event: KeyboardEvent) => {
             window.setTimeout(() => {
                 let selection: Selection = this.contentDocument.getSelection();
+
+                if(!selection.anchorNode) return;
+
                 let range = selection.getRangeAt(0);
 
                 // If the enter key is not pressed
@@ -113,9 +116,7 @@ export class TextBox {
                     // Remove the first character if it is a zero-width character
                     if (text.data.charCodeAt(0) == 8203) {
                         text.deleteData(0, 1);
-                    } else if (text.data.charCodeAt(1) == 8203) {
-                        text.deleteData(1, 1);
-                    }
+                    } 
                 }
             });
         });
@@ -124,6 +125,9 @@ export class TextBox {
         // Take care of selection change on keydown
         contentDocument.addEventListener("keydown", (event: KeyboardEvent) => {
             let selection: Selection = this.contentDocument.getSelection();
+
+            if(!selection.anchorNode) return;
+
             let range = selection.getRangeAt(0);
 
 
@@ -243,6 +247,15 @@ export class TextBox {
 
             window.setTimeout(() => {
                 range = selection.getRangeAt(0);
+
+                if(event.keyCode == 37) {
+                    let text: Text = range.startContainer as Text;
+                    
+                    // Make sure the cursor is not before the zero-width character
+                    if(text.data.charCodeAt(0) == 8203) {
+                        range.setStart(range.startContainer, 1);
+                    }
+                }
 
                 // If the enter key was pressed
                 if (event.keyCode == 13) {

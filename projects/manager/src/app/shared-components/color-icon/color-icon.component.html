@@ -1,12 +1,17 @@
 <div style="position: relative;">
-    <!-- Icon -->
-    <div class="icon-container" [title]="title" (click)="onClick()">
-        <i [class]="'fas ' + icon"></i>
+
+    <div (click)="onClick()" style="cursor: pointer;">
+        <!-- Icon -->
+        <div class="icon-container" [title]="title">
+            <i [class]="'fas ' + icon"></i>
+        </div>
+
+        <!-- Color bar -->
+        <div class="color-bar"
+            [style.backgroundColor]="'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')'"></div>
     </div>
 
-    <!-- Color bar -->
-    <div class="color-bar"
-        [style.backgroundColor]="'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')'"></div>
+
 
 
     <!-- Remove/change container -->

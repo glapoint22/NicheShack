@@ -31,19 +31,17 @@ export class Style {
         span.style[this.style] = this.styleValue;
 
         if (range.collapsed) {
-            // if (range.startContainer.nodeType == 3) {
             let text: Text = range.startContainer as Text;
 
             if ((text.data.length == 1 && text.data.charCodeAt(0) == 8203)) {
-                text.remove();
+                range.setStartBefore(range.startContainer);
+            } else {
+                range.insertNode(document.createTextNode('\u200B'));
             }
-            // }
-
-            span.appendChild(document.createTextNode('\u200B'));
-        } else {
-            // Place the contents inside the span
-            span.appendChild(range.extractContents());
         }
+
+        // Append the contents into the span
+        span.appendChild(this.extractContents(range));
 
 
 
@@ -72,6 +70,10 @@ export class Style {
     }
 
 
+    extractContents(range: Range): DocumentFragment {
+        return range.extractContents();
+    }
+
 
     removeStyle(range: Range) {
         let isStartContainer: boolean = range.startContainer == this.selectedRange.startContainer;
@@ -93,11 +95,12 @@ export class Style {
             // Insert the contents that is before the selected range into a start range
             startRange.setStartBefore(styleParent);
             startRange.setEnd(range.startContainer, range.startOffset);
-            if (collapsed && (startRange.endContainer as Text).length == 1 && (startRange.endContainer as Text).data.charCodeAt(0) == 8203) {
-                startRange.deleteContents();
-            } else {
-                startRange.insertNode(startRange.extractContents());
-            }
+
+            let contents = startRange.extractContents();
+
+            this.removeZeroWidth(contents.firstElementChild as HTMLElement);
+
+            startRange.insertNode(contents);
         }
 
         if (collapsed) {
@@ -131,6 +134,25 @@ export class Style {
         if (whole || end) styleParent.remove();
 
         if (collapsed) range.collapse();
+    }
+
+
+    removeZeroWidth(parent: HTMLElement) {
+        for (let i = 0; i < parent.childNodes.length; i++) {
+            let currentNode: ChildNode = parent.childNodes[i];
+
+            if (currentNode.nodeType == 3) {
+                let text: Text = currentNode as Text;
+
+                if (text.data.charCodeAt(0) == 8203) {
+                    text.remove();
+                }
+
+                continue;
+            }
+
+            this.removeZeroWidth(currentNode as HTMLElement);
+        }
     }
 
 
@@ -379,16 +401,6 @@ export class Style {
         let startParent: HTMLElement = this.getSelectionParent(this.selectedRange.startContainer);
         let endParent: HTMLElement = this.getSelectionParent(this.selectedRange.endContainer);
 
-        // if (startParent.firstChild.nodeType == 1 && (startParent.firstChild as HTMLElement).tagName == 'BR') {
-        //     startParent.firstChild.replaceWith(document.createTextNode('\u200B'));
-        //     range.setStart(startParent.firstChild, 0);
-        // }
-
-        // if (endParent.firstChild.nodeType == 1 && (endParent.firstChild as HTMLElement).tagName == 'BR') {
-        //     endParent.firstChild.replaceWith(document.createTextNode('\u200B'));
-        //     range.setEnd(endParent.firstChild, (endParent.firstChild as Text).length);
-        // }
-
         // Get the start and end of the range
         selection.startOffset = this.selectedRange.startOffset;
         selection.endOffset = this.selectedRange.endOffset;
@@ -484,5 +496,4 @@ export class Style {
             }
         }
     }
-
 }
