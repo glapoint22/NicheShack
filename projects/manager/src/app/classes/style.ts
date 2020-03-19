@@ -24,13 +24,26 @@ export class Style {
     setStyle(range: Range) {
         let isStartContainer: boolean = range.startContainer == this.selectedRange.startContainer;
         let isEndContainer: boolean = range.endContainer == this.selectedRange.endContainer;
+        let collapsed: boolean = range.collapsed;
         let span = document.createElement("span");
 
         // Apply the style
         span.style[this.style] = this.styleValue;
 
-        // Place the contents inside the span
-        span.appendChild(range.extractContents());
+        if (range.collapsed) {
+            let text: Text = range.startContainer as Text;
+
+            if ((text.data.length == 1 && text.data.charCodeAt(0) == 8203)) {
+                range.setStartBefore(range.startContainer);
+            } else {
+                range.insertNode(document.createTextNode('\u200B'));
+            }
+        }
+
+        // Append the contents into the span
+        span.appendChild(this.extractContents(range));
+
+
 
         // Remove any duplicate styles within the contents
         this.removeDuplicateStyle(span);
@@ -38,15 +51,107 @@ export class Style {
         // Insert the contents at the start of the range
         range.insertNode(span);
 
+
         // Update the selection if we are at the start of the range
         if (isStartContainer) {
-            this.selectedRange.setStart(this.getFirstTextChild(span), 0);
+            let firstTextChild = this.getFirstTextChild(span);
+
+            if (firstTextChild) this.selectedRange.setStart(firstTextChild, 0);
         }
 
         // Update the selection if we are at the end of the range
         if (isEndContainer) {
             let lastTextChild = this.getLastTextChild(span);
+
+            if (lastTextChild) this.selectedRange.setEnd(lastTextChild, lastTextChild.length);
+        }
+
+        if (collapsed) range.collapse();
+    }
+
+
+    extractContents(range: Range): DocumentFragment {
+        return range.extractContents();
+    }
+
+
+    removeStyle(range: Range) {
+        let isStartContainer: boolean = range.startContainer == this.selectedRange.startContainer;
+        let isEndContainer: boolean = range.endContainer == this.selectedRange.endContainer;
+        let styleParent: HTMLElement = this.getStyleParent(range.startContainer);
+        let startText = this.getFirstTextChild(styleParent);
+        let endText = this.getLastTextChild(styleParent);
+        let selectedContents: DocumentFragment;
+        let collapsed = range.collapsed;
+
+        let whole: boolean = range.comparePoint(startText, 0) == 0 && range.comparePoint(endText, endText.length) == 0;
+        let mid: boolean = range.comparePoint(startText, 0) == -1 && range.comparePoint(endText, endText.length) == 1;
+        let end: boolean = range.comparePoint(startText, 0) == -1 && range.comparePoint(endText, endText.length) == 0;
+
+        // If middle or end of the container is selected
+        if (mid || end) {
+            let startRange: Range = document.createRange();
+
+            // Insert the contents that is before the selected range into a start range
+            startRange.setStartBefore(styleParent);
+            startRange.setEnd(range.startContainer, range.startOffset);
+
+            let contents = startRange.extractContents();
+
+            this.removeZeroWidth(contents.firstElementChild as HTMLElement);
+
+            startRange.insertNode(contents);
+        }
+
+        if (collapsed) {
+            range.insertNode(document.createTextNode('\u200B'));
+        }
+
+        // Insert the selected range contents before the style parent
+        range.setStart(styleParent, 0);
+
+        selectedContents = range.extractContents();
+
+
+
+        let selectedContentsCount: number = selectedContents.childNodes.length;
+        styleParent.parentElement.insertBefore(selectedContents, styleParent);
+
+        // Update the selection if we are at the start of the range
+        if (isStartContainer) {
+            let index = Array.from(styleParent.parentElement.childNodes).indexOf(styleParent);
+            this.selectedRange.setStart(this.getFirstTextChild(styleParent.parentElement.childNodes[index - selectedContentsCount]), 0);
+        }
+
+        // Update the selection if we are at the end of the range
+        if (isEndContainer) {
+            let lastTextChild: Text = this.getLastTextChild(styleParent.previousSibling);
             this.selectedRange.setEnd(lastTextChild, lastTextChild.length);
+        }
+
+
+        // Remove the style parent contents
+        if (whole || end) styleParent.remove();
+
+        if (collapsed) range.collapse();
+    }
+
+
+    removeZeroWidth(parent: HTMLElement) {
+        for (let i = 0; i < parent.childNodes.length; i++) {
+            let currentNode: ChildNode = parent.childNodes[i];
+
+            if (currentNode.nodeType == 3) {
+                let text: Text = currentNode as Text;
+
+                if (text.data.charCodeAt(0) == 8203) {
+                    text.remove();
+                }
+
+                continue;
+            }
+
+            this.removeZeroWidth(currentNode as HTMLElement);
         }
     }
 
@@ -182,71 +287,21 @@ export class Style {
 
 
 
-    removeStyle(range: Range) {
-        let isStartContainer: boolean = range.startContainer == this.selectedRange.startContainer;
-        let isEndContainer: boolean = range.endContainer == this.selectedRange.endContainer;
-        let styleParent: HTMLElement = this.getStyleParent(range.startContainer);
-        let startText = this.getFirstTextChild(styleParent);
-        let endText = this.getLastTextChild(styleParent);
-
-        let whole: boolean = range.comparePoint(startText, 0) == 0 && range.comparePoint(endText, endText.length) == 0;
-        let mid: boolean = range.comparePoint(startText, 0) == -1 && range.comparePoint(endText, endText.length) == 1;
-        let end: boolean = range.comparePoint(startText, 0) == -1 && range.comparePoint(endText, endText.length) == 0;
-
-        // If middle or end of the container is selected
-        if (mid || end) {
-            let startRange: Range = document.createRange();
-
-            // Insert the contents that is before the selected range into a start range
-            startRange.setStartBefore(styleParent);
-            startRange.setEnd(range.startContainer, range.startOffset);
-            startRange.insertNode(startRange.extractContents());
-        }
-
-        // Insert the selected range contents before the style parent
-        range.setStart(styleParent, 0);
-        let selectedContents: DocumentFragment = range.extractContents();
-        let selectedContentsCount: number = selectedContents.childNodes.length;
-        styleParent.parentElement.insertBefore(selectedContents, styleParent);
-
-        // Update the selection if we are at the start of the range
-        if (isStartContainer) {
-            let index = Array.from(styleParent.parentElement.childNodes).indexOf(styleParent);
-            this.selectedRange.setStart(this.getFirstTextChild(styleParent.parentElement.childNodes[index - selectedContentsCount]), 0);
-        }
-
-        // Update the selection if we are at the end of the range
-        if (isEndContainer) {
-            let lastTextChild: Text = this.getLastTextChild(styleParent.previousSibling);
-            this.selectedRange.setEnd(lastTextChild, lastTextChild.length);
-        }
-
-
-        // Remove the style parent contents
-        if (whole || end) styleParent.remove();
-    }
-
-
-
-
-
-
     removeEmptyNodes(parent: HTMLElement) {
         for (let i = 0; i < parent.childNodes.length; i++) {
-            let childNode: ChildNode = parent.childNodes[i];
+            let currentNode: ChildNode = parent.childNodes[i];
 
-            if ((childNode.nodeType == 1 &&
-                ((childNode as HTMLElement).getBoundingClientRect().width == 0 || (childNode as HTMLElement).getBoundingClientRect().height == 0)) ||
-                (childNode.nodeType == 3 && childNode.nodeValue.length == 0)) {
-                childNode.remove();
-                i--;
-                continue;
+            if (currentNode.nodeType == 3) {
+                if (currentNode.nodeValue.length == 0) {
+                    currentNode.remove();
+                    i--;
+                }
             }
 
-            this.removeEmptyNodes(childNode as HTMLElement);
+            this.removeEmptyNodes(currentNode as HTMLElement);
 
-            if (childNode.nodeType == 1 && childNode.childNodes.length == 0) {
-                childNode.remove();
+            if (currentNode.nodeType == 1 && currentNode.childNodes.length == 0) {
+                currentNode.remove();
                 i--;
             }
         }
@@ -269,6 +324,8 @@ export class Style {
 
                 // Remove the duplicate style
                 this.removeStyle(range);
+                i--;
+                continue;
             }
 
             this.removeDuplicateStyle(child);
@@ -414,6 +471,29 @@ export class Style {
             let result = this.removeSelectAttribute(childNode, attribute);
 
             if (result) return result;
+        }
+    }
+
+    consolidateLists(parent: HTMLElement) {
+        for (let i = 0; i < parent.childNodes.length; i++) {
+            let currentNode = parent.childNodes[i] as HTMLElement;
+
+            if (currentNode.tagName == 'UL' || currentNode.tagName == 'OL') {
+                if (currentNode != parent.lastElementChild) {
+                    if (currentNode.nextElementSibling.tagName == currentNode.tagName) {
+                        let sibling = currentNode.nextElementSibling;
+                        let range: Range = document.createRange();
+
+                        range.setStartBefore(sibling.firstChild);
+                        range.setEndAfter(sibling.lastChild);
+                        let contents = range.extractContents();
+                        currentNode.appendChild(contents);
+                        sibling.remove();
+                        i--;
+                    }
+                }
+                this.consolidateLists(currentNode);
+            }
         }
     }
 }

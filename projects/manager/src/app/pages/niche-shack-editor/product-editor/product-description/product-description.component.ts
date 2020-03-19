@@ -20,6 +20,8 @@ export class ProductDescriptionComponent implements AfterViewInit {
     this.iframe.nativeElement.onload = (event) => {
       this.description = new Description(event.currentTarget.contentDocument, this.applicationRef, new Color(218, 218, 218, 1));
       this._FormService.description = this.description;
+      this.description.selectContents();
+      this.description.removeSelection();
     }
   }
 }

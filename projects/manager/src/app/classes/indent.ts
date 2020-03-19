@@ -33,29 +33,7 @@ export class Indent extends LineStyle {
     }
 
 
-    consolidateLists(parent: HTMLElement) {
-        for (let i = 0; i < parent.childNodes.length; i++) {
-            let currentNode = parent.childNodes[i] as HTMLElement;
-
-            if (currentNode.tagName == 'UL' || currentNode.tagName == 'OL') {
-                if (currentNode != parent.lastElementChild) {
-                    if (currentNode.nextElementSibling.tagName == currentNode.tagName) {
-                        let sibling = currentNode.nextElementSibling;
-                        let range: Range = document.createRange();
-
-                        range.setStartBefore(sibling.firstChild);
-                        range.setEndAfter(sibling.lastChild);
-                        let contents = range.extractContents();
-                        currentNode.appendChild(contents);
-                        sibling.remove();
-                        i--;
-                    }
-                }
-                this.consolidateLists(currentNode);
-            }
-        }
-    }
-
+    
 
 
     assignStyle(parent: HTMLElement) {

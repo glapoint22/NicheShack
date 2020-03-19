@@ -21,7 +21,9 @@ export class ListStyle extends NodeStyle {
             this.removeList();
         }
 
-        
+        this.consolidateLists(this.contentParentNode);
+
+
         // Set the selection and give back the focus to the text
         this.setSelection(selection);
 
@@ -34,7 +36,6 @@ export class ListStyle extends NodeStyle {
     checkSelection() {
         this.isSelected = this.selectionHasStyle();
     }
-
 
 
     switchListStyle() {
@@ -158,7 +159,7 @@ export class ListStyle extends NodeStyle {
     }
 
 
-    
+
 
     removeList() {
         if (this.isSingleLineSelection) {
