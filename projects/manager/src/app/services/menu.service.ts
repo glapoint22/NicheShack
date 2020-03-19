@@ -13,10 +13,16 @@ export class MenuService {
   private parentIndex: number;
   private subMenuIndex: number;
   private mainMenuLeft: number;
+  private lastMainMenuTop: number;
+  private lastMainMenuLeft: number;
+  private toggleMainMenuOn: boolean;
+  private routerOptionDown: boolean;
   private mainMenuHasFocus: boolean;
   private initialMenuWidth: number[];
+  private mainMenuHasInitialFocus: boolean;
   private subMenuOptionOutTimeout: number[];
   private subMenuOptionOverTimeout: number[];
+
   // Public
   public menus: Menu[];
   public showMenu: boolean[];
@@ -38,6 +44,7 @@ export class MenuService {
     this.subMenuOptionOutTimeout = [];
     this.subMenuOptionHighlightOn = [];
     this.subMenuOptionOverTimeout = [];
+    this.mainMenuHasInitialFocus = false;
 
 
     // Create the main menu
@@ -78,6 +85,18 @@ export class MenuService {
           isDisabled: mainMenuOptions[i].isDisabled,
           menuOptionFunction: mainMenuOptions[i].menuOptionFunction,
           functionParameters: mainMenuOptions[i].functionParameters
+        });
+      }
+
+      // Router Option
+      if (mainMenuOptions[i].type == "router option") {
+        this.subMenuTop += 26;
+        this.menus[0].options.push({
+          type: mainMenuOptions[i].type,
+          name: mainMenuOptions[i].name,
+          shortcutKeys: mainMenuOptions[i].shortcutKeys,
+          isDisabled: mainMenuOptions[i].isDisabled,
+          path: mainMenuOptions[i].path
         });
       }
     }
@@ -144,9 +163,81 @@ export class MenuService {
               functionParameters: currentMenu[i].options[j].functionParameters
             });
           }
+
+          // Router Option
+          if (currentMenu[i].options[j].type == "router option") {
+            this.subMenuTop += 26;
+            this.menus[this.menus.length - 1].options.push({
+              type: currentMenu[i].options[j].type,
+              name: currentMenu[i].options[j].name,
+              shortcutKeys: currentMenu[i].options[j].shortcutKeys,
+              isDisabled: currentMenu[i].options[j].isDisabled,
+              path: currentMenu[i].options[j].path
+            });
+          }
         }
         this.buildSubMenus(currentMenu[i].options)
       }
+    }
+  }
+
+
+  // -----------------------------( ON MENU SHOW )------------------------------ \\
+  onMenuShow(menuIndex: number, menu: HTMLElement) {
+    // Set the focus to any menu that becomes visible
+    menu.focus();
+
+    // When the main menu becomes visible
+    if (menuIndex == 0) {
+
+      // Wait, so we can see if the main menu was launched from a mouse down or a mouse up
+      window.setTimeout(() => {
+
+        // If the main menu already lost its focus, then that means that the main menu was launched from a mouse down
+        if (document.activeElement != menu) {
+
+          // If the left and top positions of the main menu differs from the recorded left and top positions or a router option was selected
+          if ((this.mainMenuLeft != this.lastMainMenuLeft && this.menuTop[menuIndex] != this.lastMainMenuTop) || this.routerOptionDown) {
+
+            // Then that means the mouse down is launching a different main menu instead of toggling the same main menu on and off or we're on a different page
+            this.toggleMainMenuOn = false;
+          }
+
+
+          // If the main menu is toggled off
+          if (!this.toggleMainMenuOn) {
+            // Then toggle the main menu on
+            this.toggleMainMenuOn = true;
+            // Set the focus to the main menu
+            menu.focus();
+
+            // But if the main menu is toggled on
+          } else {
+
+            // Toggle the main menu off
+            this.toggleMainMenuOn = false;
+            // Loop through all the menus
+            for (let i = 0; i < this.menus.length; i++) {
+              // And hide each one
+              this.showMenu[i] = false;
+            }
+          }
+          // Record the left and top positon of the main menu
+          this.lastMainMenuLeft = this.mainMenuLeft;
+          this.lastMainMenuTop = this.menuTop[menuIndex];
+
+
+          // If the main menu never lost its focus, then that means that the main menu was launched from a mouse up
+        } else {
+          // Set the main menu toggle to off
+          this.toggleMainMenuOn = false;
+        }
+
+        // If the initial focus to the main menu has NOT been set yet
+        if (!this.mainMenuHasInitialFocus) this.routerOptionDown = false;
+        // Mark that the initial focus to the main menu has been set
+        this.mainMenuHasInitialFocus = true;
+      }, 20)
     }
   }
 
@@ -300,27 +391,35 @@ export class MenuService {
 
   // -----------------------------( ON MENU BLUR )------------------------------ \\
   onMenuBlur(menuIndex: number, menu: HTMLElement) {
-    // When the main menu loses focus
-    if (menuIndex == 0) {
 
-      // Yield for one frame so we can wait and see if a another menu has the focus
-      window.setTimeout(() => {
+    // As long as the initial focus to the main menu has been set
+    if (this.mainMenuHasInitialFocus) {
 
-        // If the main menu lost its focus because of the focus being set to a sub menu
-        if (!this.mainMenuHasFocus) {
-          // Restore the focus back to the main menu
-          menu.focus();
+      // When the main menu loses focus
+      if (menuIndex == 0) {
 
-          // If NO menu has the focus
-        } else {
+        // Yield for one frame so we can wait and see if a another menu has the focus
+        window.setTimeout(() => {
 
-          // Loop through all the menus
-          for (let i = 0; i < this.menus.length; i++) {
-            // And hide each one
-            this.showMenu[i] = false;
+          // If the main menu lost its focus because of the focus being set to a sub menu
+          if (!this.mainMenuHasFocus) {
+            // Restore the focus back to the main menu
+            menu.focus();
+
+            // If NO menu has the focus
+          } else {
+
+            // Set the main menu toggle to off
+            this.toggleMainMenuOn = false;
+
+            // Loop through all the menus
+            for (let i = 0; i < this.menus.length; i++) {
+              // And hide each one
+              this.showMenu[i] = false;
+            }
           }
-        }
-      });
+        });
+      }
     }
   }
 
@@ -360,6 +459,13 @@ export class MenuService {
         this.showMenu[i] = false;
       }
     }
+  }
+
+
+  // -----------------------------( ON MENU ROUTER OPTION DOWN )------------------------------ \\
+  onMenuRouterOptionDown() {
+    this.mainMenuHasFocus = false;
+    this.routerOptionDown = true;
   }
 
 
@@ -429,6 +535,12 @@ export class MenuService {
   // -----------------------------( OPTION )------------------------------ \\
   option(name: string, shortcutKeys: string, isDisabled: boolean, menuOptionFunction: Function, ...functionParameters: any) {
     return { type: "option", name: name, shortcutKeys: shortcutKeys, isDisabled: isDisabled, menuOptionFunction: menuOptionFunction, functionParameters: functionParameters }
+  }
+
+
+  // -----------------------------( ROUTER OPTION )------------------------------ \\
+  routerOption(name: string, shortcutKeys: string, isDisabled: boolean, path: string) {
+    return { type: "router option", name: name, shortcutKeys: shortcutKeys, isDisabled: isDisabled, path: path }
   }
 
 

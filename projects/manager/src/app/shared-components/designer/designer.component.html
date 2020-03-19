@@ -42,25 +42,9 @@
                 </div>
 
 
+                <!-- Prevew/Publish Dropdown -->
+                <preview-publish-dropdown></preview-publish-dropdown>
 
-                <!-- Publish Dropdown Container -->
-                <div class="publish-dropdown-container">
-
-                    <!-- Publish Dropdown -->
-                    <div class="publish-dropdown" (mousedown)="showPublishMenu = !showPublishMenu">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-
-                <!-- Publish Dropdown Menu -->
-                <div *show="showPublishMenu" class="fade-start publish-dropdown-menu" transitionClass="fade-end"
-                    tabindex="0" (onHide)="showPublishMenu = false" (blur)="showPublishMenu = false">
-
-                    <div (mousedown)="$event.stopPropagation()">
-                        <div class="publish-dropdown-option">Preview</div>
-                        <div class="publish-dropdown-option">Publish</div>
-                    </div>
-                </div>
             </div>
 
             <!-- Design Area Background -->
@@ -79,7 +63,8 @@
                 <div #canvasElement class="canvas">
 
                     <!-- Content -->
-                    <div #content class="content" [style.maxWidth.px]="contentWidth" (mousemove)="setCursor(true)" (mouseleave)="setCursor()">
+                    <div #content class="content" [style.maxWidth.px]="contentWidth" (mousemove)="setCursor(true)"
+                        (mouseleave)="setCursor()">
                         <container></container>
                     </div>
                 </div>

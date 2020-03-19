@@ -1,32 +1,10 @@
-<!-- Context Menu -->
-<div #contextMenu [style.left.px]="contextMenuLeft" [style.top.px]="contextMenuTop"
-    *show="showContextMenu" class="fade-start menu-base" transitionClass="fade-end" tabindex="0"
-    (onHide)="showContextMenu = false" (blur)="showContextMenu = false">
-
-    <div (mousedown)="$event.stopPropagation()">
-        <div class="menu-option" [ngClass]="{'disabled-option': disableAdd}" (click)="addKeyword()">
-            <div>Add Keyword</div>
-            <div>Ctrl+Alt+K</div>
-        </div>
-        <div class="menu-option" [ngClass]="{'disabled-option': disableEdit}" (click)="editKeyword()">
-            <div>Edit Keyword</div>
-            <div>Ctrl+Shift+K</div>
-        </div>
-        <div class="menu-option" [ngClass]="{'disabled-option': disableDelete}" (click)="deleteKeyword()">
-            <div>{{disableEdit ? 'Delete Keywords' : 'Delete Keyword'}}</div>
-            <div>Delete</div>
-        </div>
-    </div>
-</div>
-
-
-<fieldset #contextMenuOffset style="height: 294px; position: relative;">
+<fieldset style="height: 294px; position: relative;">
     <legend>Keywords</legend>
     <div class="icon-bar">
         <!-- Trash -->
-        <div [attr.title]="!disableDelete ? disableEdit ? 'Delete Keywords' : 'Delete Keyword' : ''"
+        <div [attr.title]="!isDeleteDisabled ? isEditDisabled ? 'Delete Keywords' : 'Delete Keyword' : ''"
              class="icon-container"
-             [ngClass]="{'icon-disabled': disableDelete}"
+             [ngClass]="{'icon-disabled': isDeleteDisabled}"
              (mouseover)="preventMousedown=true"
              (mouseout)="preventMousedown=false"
              (click)="deleteKeyword()">
@@ -34,9 +12,9 @@
         </div>
 
         <!-- Edit -->
-        <div [attr.title]="!disableEdit ? 'Edit Keyword (Ctrl+Shift+K)' : ''" 
+        <div [attr.title]="!isEditDisabled ? 'Edit Keyword (Ctrl+Shift+K)' : ''" 
              class="icon-container"
-             [ngClass]="{'icon-disabled': disableEdit}"
+             [ngClass]="{'icon-disabled': isEditDisabled}"
              (mouseover)="preventMousedown=true"
              (mouseout)="preventMousedown=false"
              (click)="editKeyword()">
@@ -44,9 +22,9 @@
         </div>
 
         <!-- Add -->
-        <div [attr.title]="!disableAdd ? 'Add Keyword (Ctrl+Alt+K)' : ''" 
+        <div [attr.title]="!isAddDisabled ? 'Add Keyword (Ctrl+Alt+K)' : ''" 
              class="icon-container"
-             [ngClass]="{'icon-disabled': disableAdd}"
+             [ngClass]="{'icon-disabled': isAddDisabled}"
              (mouseover)="preventMousedown=true"
              (mouseout)="preventMousedown=false"
              (click)="addKeyword()">

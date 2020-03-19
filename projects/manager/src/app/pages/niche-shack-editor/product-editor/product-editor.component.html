@@ -1,45 +1,24 @@
-<div #productEditor class="grid">
+<div class="grid">
 
-    <!-- Dropdown -->
-    <div class="dropdown-container">
-        <div class="icon-container" (mousedown)="showMenu = true">
-            <i class="fas fa-chevron-down"></i>
-        </div>
-    </div>
-
-    <!-- Publish menu -->
-    <div *show="showMenu" class="fade-start menu-base" transitionClass="fade-end" tabindex="0"
-        (onHide)="showMenu = false" (blur)="showMenu = false">
-
-        <div (mousedown)="$event.stopPropagation()">
-            <div class="menu-option">
-                <div>Preview</div>
-                <div>Ctrl+Alt+P</div>
-            </div>
-            <div class="menu-option">
-                <div>Publish</div>
-                <div>Ctrl+Shift+Alt+P</div>
-            </div>
-        </div>
-    </div>
+    <!-- Prevew/Publish Dropdown -->
+    <preview-publish-dropdown></preview-publish-dropdown>
 
 
     <!-- Hoplink -->
     <product-hoplink></product-hoplink>
 
-    <div class="row" style="margin-bottom: 12px;">
 
+    <!-- Top Row -->
+    <div class="row" style="margin-bottom: 12px;">
         <!-- Description -->
         <div class="col-6-xl">
             <product-description></product-description>
         </div>
 
-
         <!-- Image -->
         <div class="col-3-xl col-6-lg">
             <product-image></product-image>
         </div>
-
 
         <!-- Filters -->
         <div class="col-3-xl col-6-lg">
@@ -48,21 +27,17 @@
     </div>
 
 
-
+    <!-- Bottom Row -->
     <div class="row">
-
-
         <!-- Content -->
         <div class="col-8-xxl">
             <product-content></product-content>
         </div>
 
-
         <!-- Media -->
         <div class="col-2-xxl col-6-md">
             <product-media></product-media>
         </div>
-
 
         <!-- Keywords -->
         <div class="col-2-xxl col-6-md">

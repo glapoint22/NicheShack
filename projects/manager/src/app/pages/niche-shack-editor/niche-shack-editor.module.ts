@@ -34,6 +34,7 @@ import { ProductHoplinkComponent } from './product-editor/product-hoplink/produc
 import { ColorIconModule } from '../../shared-components/color-icon/color-icon.module';
 import { LinkFormModule } from '../../shared-components/link-form/link-form.module';
 import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
+import { PreviewPublishDropdownModule } from '../../shared-components/preview-publish-dropdown/preview-publish-dropdown.module';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { ContextMenuModule } from '../../shared-components/context-menu/context-
     FormsModule,
     ColorIconModule,
     LinkFormModule,
-    ContextMenuModule
+    ContextMenuModule,
+    PreviewPublishDropdownModule
   ]
 })
 export class NicheShackEditorModule { }

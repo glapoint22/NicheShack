@@ -168,85 +168,46 @@ export class ProductContentComponent implements OnInit {
     this.productContent.selectedPricePointIndex = null;
   }
 
-
-
+  
   // -----------------------------( SET CONTEXT MENU )------------------------------ \\
   setContextMenu(e: MouseEvent) {
     // As long as the right mouse button is being pressed
     if (e.which == 3) {
 
-
-
-
+      // Define the menu options based on which selector type is being right clicked
       let selectorType: string = this.selectedColumnIndex != null ? "Price Point" : this.selectedRowIndex != null ? "Item" : null;
-      let contextMenuLeft: number = e.clientX + (selectorType == "Price Point" ? 0 : -205);
+      let direction1: string = selectorType == "Price Point" ? "Left" : "Above";
+      let direction2: string = selectorType == "Price Point" ? "Right" : "Below";
+      let isPasteDisabled: boolean = (selectorType == 'Price Point' && this.copied == 'Price Point') || (selectorType == 'Item' && this.copied == 'Item') ? false : true;
+      let isDeleteDisabled: boolean = (selectorType == 'Price Point' && this.productContent.items[0].pricePointOptions.length > 1) || (selectorType == 'Item' && this.productContent.items.length > 1) ? false : true;
+      let contextMenuLeft: number = e.clientX + (selectorType == "Price Point" ? 0 : -235);
 
-      this.menuService.buildMenu(this, contextMenuLeft, e.clientY - 130,
-        this.menuService.option("Alita", "Ctrl+A", false, null),
+
+      // Build the context menu
+      this.menuService.buildMenu(this, contextMenuLeft, e.clientY - 235,
+        // Cut
+        this.menuService.option("Cut", "Ctrl+X", isDeleteDisabled, this.cut),
+        // Copy
+        this.menuService.option("Copy", "Ctrl+C", false, this.copy),
+        // Paste
+        this.menuService.option("Paste", "Ctrl+V", isPasteDisabled, this.paste),
+        // Paste Special
+        this.menuService.subMenu("Paste Special", isPasteDisabled,
+          // Paste New Left/Above
+          this.menuService.option("Paste New " + selectorType + " " + direction1, null, false, this.pasteSpecial, direction1),
+          // Paste New Right/Below
+          this.menuService.option("Paste New " + selectorType + " " + direction2, null, false, this.pasteSpecial, direction2)),
+        // Divider
         this.menuService.divider(),
-        this.menuService.subMenu("Sub Menu 1", false,
-          this.menuService.option("Option A", "Ctrl+Shift+A", false, null),
-          this.menuService.option("Option B", "Ctrl+Shift+B", false, null),
-          this.menuService.subMenu("Sub Menu 2", false,
-            this.menuService.option("Option 2A", "Ctrl+Shift+2A", false, null),
-            this.menuService.option("Option 2B", "Ctrl+Shift+2B", false, null),
-            this.menuService.divider(),
-            this.menuService.option("Option 2C", "Ctrl+Shift+2C", false, null)),
-          this.menuService.option("Option C", "Ctrl+Shift+C", false, null),
-          this.menuService.option("Option D", "Ctrl+Shift+D", false, null),
-          this.menuService.divider(),
-          this.menuService.subMenu("Sub Menu 3", false,
-            this.menuService.option("Option 3A", "Ctrl+Shift+3A", false, null),
-            this.menuService.option("Option 3B", "Ctrl+Shift+3B", false, null),
-            this.menuService.divider(),
-            this.menuService.subMenu("Sub Menu 4", false,
-              this.menuService.option("Option 4A", "Ctrl+Shift+4A", false, null),
-              this.menuService.option("Option 4B", "Ctrl+Shift+4B", false, null),
-              this.menuService.option("Option 4C", "Ctrl+Shift+4C", false, null)),
-            this.menuService.option("Option 3C", "Ctrl+Shift+3C", false, null)),
-          this.menuService.option("Option E", "Ctrl+Shift+E", false, null),
-          this.menuService.option("Option F", "Ctrl+Shift+F", false, null)),
-        this.menuService.option("Battle", "Ctrl+B", false, null),
-        this.menuService.option("Angel", null, false, null));
-
-
-
-
-
-      // // Define the menu options based on which selector type is being right clicked
-      // let selectorType: string = this.selectedColumnIndex != null ? "Price Point" : this.selectedRowIndex != null ? "Item" : null;
-      // let direction1: string = selectorType == "Price Point" ? "Left" : "Above";
-      // let direction2: string = selectorType == "Price Point" ? "Right" : "Below";
-      // let isPasteDisabled: boolean = (selectorType == 'Price Point' && this.copied == 'Price Point') || (selectorType == 'Item' && this.copied == 'Item') ? false : true;
-      // let isDeleteDisabled: boolean = (selectorType == 'Price Point' && this.productContent.items[0].pricePointOptions.length > 1) || (selectorType == 'Item' && this.productContent.items.length > 1) ? false : true;
-      // let contextMenuLeft: number = e.clientX + (selectorType == "Price Point" ? 0 : -235);
-
-
-      // // Build the context menu
-      // this.menuService.buildMenu(this, contextMenuLeft, e.clientY - 235,
-      //   // Cut
-      //   this.menuService.option("Cut", "Ctrl+X", isDeleteDisabled, this.cut),
-      //   // Copy
-      //   this.menuService.option("Copy", "Ctrl+C", false, this.copy),
-      //   // Paste
-      //   this.menuService.option("Paste", "Ctrl+V", isPasteDisabled, this.paste),
-      //   // Paste Special
-      //   this.menuService.subMenu("Paste Special", isPasteDisabled,
-      //     // Paste New Left/Above
-      //     this.menuService.option("Paste New " + selectorType + " " + direction1, null, false, this.pasteSpecial, direction1),
-      //     // Paste New Right/Below
-      //     this.menuService.option("Paste New " + selectorType + " " + direction2, null, false, this.pasteSpecial, direction2)),
-      //   // Divider
-      //   this.menuService.divider(),
-      //   // Insert Left/Above
-      //   this.menuService.option("Insert " + direction1, null, false, this.insert, direction1),
-      //   // Insert Right/Below
-      //   this.menuService.option("Insert " + direction2, null, false, this.insert, direction2),
-      //   // Clear Values
-      //   this.menuService.option("Clear " + selectorType + " Values", null, false, this.clearValues),
-      //   // Delete
-      //   this.menuService.option("Delete " + selectorType, null, isDeleteDisabled, this.delete)
-      // )
+        // Insert Left/Above
+        this.menuService.option("Insert " + direction1, null, false, this.insert, direction1),
+        // Insert Right/Below
+        this.menuService.option("Insert " + direction2, null, false, this.insert, direction2),
+        // Clear Values
+        this.menuService.option("Clear " + selectorType + " Values", null, false, this.clearValues),
+        // Delete
+        this.menuService.option("Delete " + selectorType, null, isDeleteDisabled, this.delete)
+      )
     }
   }
 

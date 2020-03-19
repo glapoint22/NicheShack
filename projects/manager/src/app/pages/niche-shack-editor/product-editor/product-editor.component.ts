@@ -6,5 +6,5 @@ import { Component} from '@angular/core';
   styleUrls: ['./product-editor.component.scss']
 })
 export class ProductEditorComponent {
-  public showMenu: boolean;
+  constructor() {}
 }

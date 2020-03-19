@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import { MenuService } from 'projects/manager/src/app/services/menu.service';
 
 @Component({
   selector: 'product-keywords',
@@ -6,26 +7,21 @@ import { Component, OnInit, ViewChild, ViewChildren, ElementRef, QueryList } fro
   styleUrls: ['./product-keywords.component.scss']
 })
 export class ProductKeywordsComponent implements OnInit {
-  constructor() { }
+  constructor(public menuService: MenuService) {}
   public keywords: any[] = [];
   public selectedKeywordIndex: number = null;
   public unselectedKeywordIndex: number = null;
   public editedKeywordIndex: number = null;
   public eventListenersSet: boolean = false;
   public preventMousedown: boolean = false;
-  public disableAdd: boolean = false;
-  public disableEdit: boolean = true;
-  public disableDelete: boolean = true;
-  public contextMenuLeft: number;
-  public contextMenuTop: number;
-  public showContextMenu: boolean = false;
+  public isAddDisabled: boolean = false;
+  public isEditDisabled: boolean = true;
+  public isDeleteDisabled: boolean = true;
   private shiftDown: boolean = false;
   private ctrlDown: boolean = false;
   private newKeyword: boolean = false;
   private pivotIndex: number = null;
   @ViewChildren('keyword') keyword: QueryList<ElementRef>;
-  @ViewChild('contextMenu', { static: false }) contextMenu: ElementRef;
-  @ViewChild('contextMenuOffset', { static: false }) contextMenuOffset: ElementRef;
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
@@ -118,8 +114,8 @@ export class ProductKeywordsComponent implements OnInit {
   // -----------------------------( SET KEYWORD SELECTION )------------------------------ \\
   setKeywordSelection(index: number) {
     this.setEventListeners();
-    this.disableEdit = false;
-    this.disableDelete = false;
+    this.isEditDisabled = false;
+    this.isDeleteDisabled = false;
     this.selectedKeywordIndex = index;
     this.unselectedKeywordIndex = null;
     // Define what keywords are selected
@@ -144,7 +140,7 @@ export class ProductKeywordsComponent implements OnInit {
       this.keywordDownNoModifierKey(index);
     }
     // Set edit on or off
-    this.disableEdit = this.keywords.map(e => e.selected).indexOf(true) == this.keywords.map(e => e.selected).lastIndexOf(true) && this.unselectedKeywordIndex == null ? false : true;
+    this.isEditDisabled = this.keywords.map(e => e.selected).indexOf(true) == this.keywords.map(e => e.selected).lastIndexOf(true) && this.unselectedKeywordIndex == null ? false : true;
   }
 
 
@@ -244,12 +240,12 @@ export class ProductKeywordsComponent implements OnInit {
       // If no other keyword is selected
       if (this.keywords.map(e => e.selected).indexOf(true) == -1) {
         // Then there is nothing to delete, so disable the ability to delete
-        this.disableDelete = true;
+        this.isDeleteDisabled = true;
 
         // But if there is still a keyword that is selected
       } else {
         // Then enable the ability to delete a keyword
-        this.disableDelete = false;
+        this.isDeleteDisabled = false;
       }
 
       // If the keyword we are pressing down on is NOT yet selected
@@ -284,9 +280,9 @@ export class ProductKeywordsComponent implements OnInit {
     if ((/^[^.\s]/).test(keyword.textContent) && keyword.textContent.length > 0) {
       this.selectedKeywordIndex = this.editedKeywordIndex;
       this.newKeyword = false;
-      this.disableAdd = false;
-      this.disableEdit = false;
-      this.disableDelete = false;
+      this.isAddDisabled = false;
+      this.isEditDisabled = false;
+      this.isDeleteDisabled = false;
       this.editedKeywordIndex = null;
       this.unselectedKeywordIndex = null;
       this.pivotIndex = this.selectedKeywordIndex;
@@ -309,8 +305,8 @@ export class ProductKeywordsComponent implements OnInit {
   // -----------------------------( REMOVE FOCUS )------------------------------ \\
   removeFocus() {
     this.pivotIndex = null;
-    this.disableEdit = true;
-    this.disableDelete = true;
+    this.isEditDisabled = true;
+    this.isDeleteDisabled = true;
     this.editedKeywordIndex = null;
     this.selectedKeywordIndex = null;
     this.unselectedKeywordIndex = null;
@@ -324,14 +320,13 @@ export class ProductKeywordsComponent implements OnInit {
 
   // -----------------------------( ADD KEYWORD )------------------------------ \\
   addKeyword() {
-    if (!this.disableAdd) {
+    if (!this.isAddDisabled) {
       this.setEventListeners();
       this.newKeyword = true;
-      this.disableAdd = true;
-      this.disableEdit = true;
-      this.disableDelete = true;
+      this.isAddDisabled = true;
+      this.isEditDisabled = true;
+      this.isDeleteDisabled = true;
       this.editedKeywordIndex = 0;
-      this.showContextMenu = false;
       this.selectedKeywordIndex = null;
       this.keywords.unshift({ name: "", selected: false, selectType: null });
 
@@ -349,12 +344,11 @@ export class ProductKeywordsComponent implements OnInit {
 
   // -----------------------------( EDIT KEYWORD )------------------------------ \\
   editKeyword() {
-    if (!this.disableEdit) {
+    if (!this.isEditDisabled) {
       this.editedKeywordIndex = this.selectedKeywordIndex;
-      this.disableAdd = true;
-      this.disableEdit = true;
-      this.disableDelete = true;
-      this.showContextMenu = false;
+      this.isAddDisabled = true;
+      this.isEditDisabled = true;
+      this.isDeleteDisabled = true;
       this.selectedKeywordIndex = null;
 
       for (let i = 0; i < this.keywords.length; i++) {
@@ -377,9 +371,8 @@ export class ProductKeywordsComponent implements OnInit {
 
   // -----------------------------( DELETE )------------------------------ \\
   deleteKeyword() {
-    if (!this.disableDelete) {
+    if (!this.isDeleteDisabled) {
       let keywordCopy: any;
-      this.showContextMenu = false;
       let deletedKeywordIndex: number;
 
       // If a keyword is selected
@@ -433,7 +426,7 @@ export class ProductKeywordsComponent implements OnInit {
         } else {
           // Make no keyword marked as selected
           this.selectedKeywordIndex = null;
-          this.disableDelete = true;
+          this.isDeleteDisabled = true;
           this.pivotIndex = null;
         }
       }
@@ -442,7 +435,7 @@ export class ProductKeywordsComponent implements OnInit {
       if (this.unselectedKeywordIndex != null) {
         // Unselect that keyword again
         this.unselectedKeywordIndex = newSelectedKeywordIndex;
-        this.disableDelete = true;
+        this.isDeleteDisabled = true;
         // Re-establish the pivot index
         this.pivotIndex = this.unselectedKeywordIndex;
       }
@@ -453,9 +446,14 @@ export class ProductKeywordsComponent implements OnInit {
   // -----------------------------( SET CONTEXT MENU )------------------------------ \\
   setContextMenu(e: MouseEvent) {
     if (e.which == 3) {
-      this.showContextMenu = true;
-      this.contextMenuLeft = (e.clientX - this.contextMenuOffset.nativeElement.getBoundingClientRect().x - 250);
-      this.contextMenuTop = (e.clientY - this.contextMenuOffset.nativeElement.getBoundingClientRect().y) - 100;
+      // Build the context menu
+      this.menuService.buildMenu(this, e.clientX - 280, e.clientY - 92,
+        // Cut
+        this.menuService.option("Add Keyword", "Ctrl+Alt+K", this.isAddDisabled, this.addKeyword),
+        // Copy
+        this.menuService.option("Edit Keyword", "Ctrl+Shift+K", this.isEditDisabled, this.editKeyword),
+        // Paste
+        this.menuService.option("Delete Keyword", "Delete", this.isDeleteDisabled, this.deleteKeyword));
     }
   }
 
@@ -486,13 +484,13 @@ export class ProductKeywordsComponent implements OnInit {
       } else {
 
         // Reset the keyword back to the way it was before the edit
-        this.disableEdit = false;
-        this.disableDelete = false;
+        this.isEditDisabled = false;
+        this.isDeleteDisabled = false;
         this.selectedKeywordIndex = this.editedKeywordIndex;
         this.keywords[this.selectedKeywordIndex].selected = true;
         this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement.textContent = this.keywords[this.editedKeywordIndex].name;
       }
-      this.disableAdd = false;
+      this.isAddDisabled = false;
       this.editedKeywordIndex = null;
 
       // If a keyword is NOT being edited

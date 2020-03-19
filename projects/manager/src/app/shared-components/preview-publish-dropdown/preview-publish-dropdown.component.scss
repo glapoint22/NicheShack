@@ -1,0 +1,11 @@
+.dropdown-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    .icon-container {
+        width: 50px;
+        border-left: 2px groove #4a4a4a;
+        border-right: 2px groove #4a4a4a;
+    }
+}

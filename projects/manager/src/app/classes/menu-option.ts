@@ -7,4 +7,5 @@ export class MenuOption {
     isDisabled?: boolean;
     menuOptionFunction?: Function;
     functionParameters?: any;
+    path?: string;
 }

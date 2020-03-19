@@ -3,7 +3,7 @@
 
     <!-- Current Menu -->
     <div #menu *ngIf="menuService.showMenu[menuIndex]" [style.width]="menuService.setMenuWidth(menuIndex, menu)"
-        class="menu-base" tabindex="0" (onShow)="menu.focus()" (mouseover)="menuService.onMenuOver(menuIndex)"
+        class="menu-base" tabindex="0" (onShow)="menuService.onMenuShow(menuIndex, menu)" (mouseover)="menuService.onMenuOver(menuIndex)"
         (focus)="menuService.onMenuFocus(menuIndex)" (blur)="menuService.onMenuBlur(menuIndex, menu)"
         (mousedown)="$event.stopPropagation()" (contextmenu)="$event.preventDefault()">
 
@@ -11,12 +11,32 @@
         <!-- Loop through the contents of the current menu -->
         <ng-container *ngFor="let j of menuService.menus[menuIndex].options; let optionIndex = index">
 
+            <!-- <div routerLink="/page-builder" class="menu-option"></div> -->
 
             <!-- Option -->
-            <div *ngIf="menuService.menus[menuIndex].options[optionIndex].type == 'option'" class="menu-option"
+            <div *ngIf="menuService.menus[menuIndex].options[optionIndex].type == 'option'" 
+                class="menu-option"
                 (mouseover)="menuService.onMenuOptionOver(menuIndex, optionIndex)"
                 [ngClass]="{'disabled-option': menuService.menus[menuIndex].options[optionIndex].isDisabled}"
                 (click)="menuService.onMenuOptionClick(menuIndex, optionIndex)">
+                <!-- Name -->
+                <div>
+                    {{menuService.menus[menuIndex].options[optionIndex].name}}
+                </div>
+                <!-- Shortcut Keys -->
+                <div *ngIf="menuService.menus[menuIndex].options[optionIndex].shortcutKeys != null">
+                    {{menuService.menus[menuIndex].options[optionIndex].shortcutKeys}}
+                </div>
+            </div>
+
+
+            <!-- Router Option -->
+            <div *ngIf="menuService.menus[menuIndex].options[optionIndex].type == 'router option'" 
+                class="menu-option"
+                [routerLink]="menuService.menus[menuIndex].options[optionIndex].path"
+                (mouseover)="menuService.onMenuOptionOver(menuIndex, optionIndex)"
+                [ngClass]="{'disabled-option': menuService.menus[menuIndex].options[optionIndex].isDisabled}"
+                (mousedown)="menuService.onMenuRouterOptionDown()">
                 <!-- Name -->
                 <div>
                     {{menuService.menus[menuIndex].options[optionIndex].name}}
@@ -47,3 +67,6 @@
         </ng-container>
     </div>
 </ng-container>
+
+
+<!--  -->

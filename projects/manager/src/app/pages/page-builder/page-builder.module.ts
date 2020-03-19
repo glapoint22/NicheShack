@@ -15,6 +15,7 @@ import { DesignerModule } from '../../shared-components/designer/designer.module
 import { ColorPickerModule } from '../../shared-components/color-picker/color-picker.module';
 import { ImageFormModule } from '../../shared-components/image-form/image-form.module';
 import { LineFormModule } from '../../shared-components/line-form/line-form.module';
+import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { LineFormModule } from '../../shared-components/line-form/line-form.modu
     DesignerModule,
     ColorPickerModule,
     ImageFormModule,
-    LineFormModule
+    LineFormModule,
+    ContextMenuModule
   ]
 })
 export class PageBuilderModule { }

@@ -6,6 +6,7 @@ import { ChangeNameComponent } from './change-name.component';
 import { ValidationPageModule } from '../validation-page/validation-page.module';
 import { FormsModule } from '@angular/forms';
 import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module';
+import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module'
     ChangeNameRoutingModule,
     ValidationPageModule,
     FormsModule,
-    MenuBarModule
+    MenuBarModule,
+    ContextMenuModule
   ]
 })
 export class ChangeNameModule { }
