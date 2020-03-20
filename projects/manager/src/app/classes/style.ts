@@ -496,4 +496,12 @@ export class Style {
             }
         }
     }
+
+    getStyleNode(node: Node, style: string) {
+        while (node.parentElement && node.parentElement.style[style] == '') {
+            node = node.parentElement;
+        }
+
+        return node.parentElement as HTMLElement;
+    }
 }

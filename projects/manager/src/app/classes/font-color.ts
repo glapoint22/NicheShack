@@ -1,6 +1,7 @@
 import { ColorStyle } from './color-style';
 import { Color } from './color';
 import { Underline } from './underline';
+import { Style } from './style';
 
 export class FontColor extends ColorStyle {
 
@@ -9,6 +10,31 @@ export class FontColor extends ColorStyle {
 
         this.style = 'color';
         this.defaultColor = defaultColor;
+    }
+
+
+    setStyle(range: Range) {
+        let parent = this.getSelectionParent(range.startContainer);
+        let listItem = this.getListItem(range.startContainer);
+
+        // If the whole text is selected and we are inside a list
+        if (range.startOffset == 0 &&
+            range.endOffset == (range.endContainer as Text).length &&
+            this.getFirstTextChild(parent) == range.startContainer &&
+            this.getLastTextChild(parent) == range.endContainer && listItem) {
+
+            let colorNode = this.getStyleNode(range.startContainer, 'color');
+
+            // Give the list item the color
+            listItem.style[this.style] = this.styleValue;
+
+            // We also need to color the div if not already
+            if (colorNode && colorNode == listItem) {
+                Style.prototype.setStyle.call(this, range);
+            }
+        }
+
+        super.setStyle(range);
     }
 
 
@@ -34,5 +60,13 @@ export class FontColor extends ColorStyle {
         } else {
             return super.extractContents(range);
         }
+    }
+
+    getListItem(node: Node) {
+        while (node.parentElement && node.parentElement.tagName != 'LI') {
+            node = node.parentElement;
+        }
+
+        return node.parentElement as HTMLElement;
     }
 }
