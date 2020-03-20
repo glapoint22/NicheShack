@@ -5,7 +5,6 @@ import { MessageFormComponent } from './message-form/message-form.component';
 import { ProductReportFormComponent } from './product-report-form/product-report-form.component';
 import { ReviewComplaintFormComponent } from './review-complaint-form/review-complaint-form.component';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { RouterModule } from '@angular/router';
 
@@ -18,7 +17,6 @@ import { RouterModule } from '@angular/router';
     ProductReportFormComponent,
     ReviewComplaintFormComponent,
     NotificationsComponent,
-    NavigationMenuComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +29,6 @@ import { RouterModule } from '@angular/router';
     ProductReportFormComponent,
     ReviewComplaintFormComponent,
     NotificationsComponent,
-    NavigationMenuComponent
   ]
 })
 export class MenuBarModule { }
