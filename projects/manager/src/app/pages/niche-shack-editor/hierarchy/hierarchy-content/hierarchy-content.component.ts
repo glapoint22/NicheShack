@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { HierarchyItem } from '../../../classes/hierarchy-item';
-import { HierarchyComponent } from '../hierarchy/hierarchy.component';
+import { HierarchyItem } from 'projects/manager/src/app/classes/hierarchy-item';
+import { HierarchyComponent } from '../hierarchy.component';
 
 @Component({
   selector: 'hierarchy-content',
