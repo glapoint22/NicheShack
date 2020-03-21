@@ -7,13 +7,12 @@ import { MenuService } from 'projects/manager/src/app/services/menu.service';
   styleUrls: ['./product-keywords.component.scss']
 })
 export class ProductKeywordsComponent implements OnInit {
-  constructor(public menuService: MenuService) {}
+  constructor(public menuService: MenuService) { }
   public keywords: any[] = [];
   public selectedKeywordIndex: number = null;
   public unselectedKeywordIndex: number = null;
   public editedKeywordIndex: number = null;
   public eventListenersSet: boolean = false;
-  public preventMousedown: boolean = false;
   public isAddDisabled: boolean = false;
   public isEditDisabled: boolean = true;
   public isDeleteDisabled: boolean = true;
@@ -22,6 +21,7 @@ export class ProductKeywordsComponent implements OnInit {
   private newKeyword: boolean = false;
   private pivotIndex: number = null;
   @ViewChildren('keyword') keyword: QueryList<ElementRef>;
+  @ViewChildren('icon') icon: QueryList<ElementRef>;
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
@@ -34,7 +34,7 @@ export class ProductKeywordsComponent implements OnInit {
       { name: "Strawberry", selected: false, selectType: null },
       { name: "Sundae", selected: false, selectType: null },
       { name: "Ice Cream Cone", selected: false, selectType: null },
-      { name: "Mint Chocolate Chip", selected: false, selectType: null },
+      { name: "Mint Chocolate Chip Topped With Hot Fudge and Sprinkles", selected: false, selectType: null },
       // { name: "Flavor of the Day", selected: false, selectType: null }
     ]
   }
@@ -62,17 +62,39 @@ export class ProductKeywordsComponent implements OnInit {
 
   // -----------------------------( ON MOUSE DOWN )------------------------------ \\
   private onMouseDown = () => {
-    if (!this.preventMousedown) {
+    let preventMousedown: boolean = false;
 
-      // If a keyword is being edited
-      if (this.editedKeywordIndex != null) {
-        this.commitEdit();
+    window.setTimeout(() => {
+      // Loop through all the keywords
+      this.keyword.forEach(element => {
+        // Check to see if any of the keywords have focus
+        if (element.nativeElement == document.activeElement) {
+          // If so, prevent mouse down from executing
+          preventMousedown = true;
+        }
+      });
 
-        // If a keyword is NOT being edited
-      } else {
-        this.unsetEventListeners();
+      // Loop through all the icon buttons
+      this.icon.forEach(element => {
+        // Check to see if any of the icon buttons have focus
+        if (element.nativeElement == document.activeElement) {
+          // If so, prevent mouse down from executing
+          preventMousedown = true;
+        }
+      });
+
+      // As long as mouse down has NOT been prevented
+      if (!preventMousedown) {
+        // If a keyword is being edited
+        if (this.editedKeywordIndex != null) {
+          this.commitEdit();
+  
+          // If a keyword is NOT being edited
+        } else {
+          this.unsetEventListeners();
+        }
       }
-    }
+    });
   };
 
 
@@ -467,7 +489,7 @@ export class ProductKeywordsComponent implements OnInit {
     }
   }
 
-  
+
   // -----------------------------( ESCAPE )------------------------------ \\
   escape() {
     // If a keyword is being edited

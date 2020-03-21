@@ -45,6 +45,7 @@ export class PricePointFormComponent {
     this._FormService.productContent.pricePoints[this._FormService.productContent.selectedPricePointIndex].textAfter = this.textAfter.trim();
     this._FormService.productContent.pricePoints[this._FormService.productContent.selectedPricePointIndex].textBefore = this.textBefore.trim();
     window.removeEventListener('keydown', this.onKeydown);
+    this._FormService.productContent.lastFocusedPricePoint.focus();
   }
 
 
@@ -52,6 +53,7 @@ export class PricePointFormComponent {
   onCancel() {
     this._FormService.showPricePointForm = false;
     window.removeEventListener('keydown', this.onKeydown);
+    this._FormService.productContent.lastFocusedPricePoint.focus();
   }
 
 

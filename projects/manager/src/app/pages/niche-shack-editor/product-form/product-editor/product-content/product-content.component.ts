@@ -15,7 +15,6 @@ export class ProductContentComponent implements OnInit {
   private pricePointClipboard: any = { pricePoint: {}, pricePointOptions: [] };
   private itemClipboard: any = { type: "", description: "", showPlaceholder: false, pricePointOptions: [] };
   // Public
-  public overTable: boolean = false;
   public selectedRowIndex: number = null;
   public selectedColumnIndex: number = null;
   public selectedItemDescriptionIndex: number;
@@ -23,13 +22,36 @@ export class ProductContentComponent implements OnInit {
   public selectedPricePointOptionColumnIndex: number = null;
   public productContent: ProductContent = new ProductContent();
   constructor(public _FormService: FormService, public menuService: MenuService) {}
+
+  @ViewChildren('columnSelector') columnSelector: QueryList<ElementRef>;
+  @ViewChildren('pricePoint') pricePoint: QueryList<ElementRef>;
+  @ViewChildren('rowSelector') rowSelector: QueryList<ElementRef>;
+  @ViewChildren('itemType') itemType: QueryList<ElementRef>;
   @ViewChildren('itemDesc') itemDesc: QueryList<ElementRef>;
+  @ViewChildren('pricePointOption') pricePointOption: QueryList<ElementRef>;
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
-    this.productContent.items.push({ type: "assets/no-content-type.png", description: "", showPlaceholder: true, pricePointOptions: [true] });
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "0", decimal: "00", textAfter: "" });
+    // this.productContent.items.push({ type: "assets/no-content-type.png", description: "", showPlaceholder: true, pricePointOptions: [true] });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "0", decimal: "00", textAfter: "" });
+
+
+
+    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "49", decimal: "99", textAfter: "" });
+    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "99", decimal: "99", textAfter: "" });
+    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "149", decimal: "99", textAfter: "" });
+    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "199", decimal: "99", textAfter: "" });
+    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "249", decimal: "99", textAfter: "" });
+
+
+    this.productContent.items.push({ type: "images/pdf.png", description: "Gumpy's Ice Cream Machine Manual", showPlaceholder: false, pricePointOptions: [false, true, true, true, false] });
+    this.productContent.items.push({ type: "images/video.png", description: "Gumpy's Ice Cream Machine Quick Start Video Guide", showPlaceholder: false, pricePointOptions: [true, true, false, false, true] });
+    this.productContent.items.push({ type: "images/audio.png", description: "Gumpy's Ice Cream Machine Instructional Audio Guide", showPlaceholder: false, pricePointOptions: [false, false, true, true, false] });
+    this.productContent.items.push({ type: "images/software.png", description: "Gumpy's Ice Cream Machine Software", showPlaceholder: false, pricePointOptions: [true, true, true, true, true] });
+
+
+
   }
 
 
@@ -54,9 +76,69 @@ export class ProductContentComponent implements OnInit {
 
   // -----------------------------( ON MOUSE DOWN )------------------------------ \\
   private onMousedown = () => {
-    if (!this.overTable && !this._FormService.showMediaForm && !this._FormService.showPricePointForm) {
-      this.unsetEventListeners();
-    }
+    let preventMousedown: boolean = false;
+
+    window.setTimeout(() => {
+
+      // Loop through all the keywords
+      this.columnSelector.forEach(element => {
+        // Check to see if any of the column selectors have focus
+        if (element.nativeElement == document.activeElement) {
+          // If so, prevent mouse down from executing
+          preventMousedown = true;
+        }
+      });
+
+      // Loop through all the keywords
+      this.pricePoint.forEach(element => {
+        // Check to see if any of the column selectors have focus
+        if (element.nativeElement == document.activeElement) {
+          // If so, prevent mouse down from executing
+          preventMousedown = true;
+        }
+      });
+
+      // Loop through all the keywords
+      this.rowSelector.forEach(element => {
+        // Check to see if any of the column selectors have focus
+        if (element.nativeElement == document.activeElement) {
+          // If so, prevent mouse down from executing
+          preventMousedown = true;
+        }
+      });
+
+      // Loop through all the keywords
+      this.itemType.forEach(element => {
+        // Check to see if any of the column selectors have focus
+        if (element.nativeElement == document.activeElement) {
+          // If so, prevent mouse down from executing
+          preventMousedown = true;
+        }
+      });
+
+      // Loop through all the keywords
+      this.itemDesc.forEach(element => {
+        // Check to see if any of the column selectors have focus
+        if (element.nativeElement == document.activeElement) {
+          // If so, prevent mouse down from executing
+          preventMousedown = true;
+        }
+      });
+
+      // Loop through all the keywords
+      this.pricePointOption.forEach(element => {
+        // Check to see if any of the column selectors have focus
+        if (element.nativeElement == document.activeElement) {
+          // If so, prevent mouse down from executing
+          preventMousedown = true;
+        }
+      });
+
+      
+      if (!preventMousedown && !this._FormService.showMediaForm && !this._FormService.showPricePointForm) {
+        this.unsetEventListeners();
+      }
+    })
   };
 
 
@@ -95,8 +177,9 @@ export class ProductContentComponent implements OnInit {
 
 
   // -----------------------------( ON PRICE POINT DOWN )------------------------------ \\
-  onPricePointDown(columnIndex: number) {
+  onPricePointDown(columnIndex: number, pricePoint: HTMLTableElement) {
     this.setEventListeners();
+    this.productContent.lastFocusedPricePoint = pricePoint;
     this.productContent.selectedPricePointIndex = columnIndex;
   }
 
@@ -109,8 +192,9 @@ export class ProductContentComponent implements OnInit {
 
 
   // -----------------------------( ON ITEM TYPE DOWN )------------------------------ \\
-  onItemTypeDown(rowIndex: number) {
+  onItemTypeDown(rowIndex: number, itemType: HTMLTableElement) {
     this.setEventListeners();
+    this.productContent.lastFocusedItemType = itemType;
     this.productContent.selectedItemTypeIndex = rowIndex;
   }
 

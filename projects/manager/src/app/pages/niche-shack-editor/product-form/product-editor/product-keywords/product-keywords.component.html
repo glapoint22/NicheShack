@@ -2,31 +2,31 @@
     <legend>Keywords</legend>
     <div class="icon-bar">
         <!-- Trash -->
-        <div [attr.title]="!isDeleteDisabled ? isEditDisabled ? 'Delete Keywords' : 'Delete Keyword' : ''"
+        <div #icon
              class="icon-container"
+             tabindex="-1"
+             [attr.title]="!isDeleteDisabled ? isEditDisabled ? 'Delete Keywords' : 'Delete Keyword' : ''"
              [ngClass]="{'icon-disabled': isDeleteDisabled}"
-             (mouseover)="preventMousedown=true"
-             (mouseout)="preventMousedown=false"
              (click)="deleteKeyword()">
             <i class="fas fa-trash-alt"></i>
         </div>
 
         <!-- Edit -->
-        <div [attr.title]="!isEditDisabled ? 'Edit Keyword (Ctrl+Shift+K)' : ''" 
+        <div #icon
              class="icon-container"
+             tabindex="-1"
+             [attr.title]="!isEditDisabled ? 'Edit Keyword (Ctrl+Shift+K)' : ''" 
              [ngClass]="{'icon-disabled': isEditDisabled}"
-             (mouseover)="preventMousedown=true"
-             (mouseout)="preventMousedown=false"
              (click)="editKeyword()">
             <i class="fas fa-edit"></i>
         </div>
 
         <!-- Add -->
-        <div [attr.title]="!isAddDisabled ? 'Add Keyword (Ctrl+Alt+K)' : ''" 
+        <div #icon
              class="icon-container"
+             tabindex="-1"
+             [attr.title]="!isAddDisabled ? 'Add Keyword (Ctrl+Alt+K)' : ''" 
              [ngClass]="{'icon-disabled': isAddDisabled}"
-             (mouseover)="preventMousedown=true"
-             (mouseout)="preventMousedown=false"
              (click)="addKeyword()">
             <i class="fas fa-plus-circle"></i>
         </div>
@@ -34,13 +34,12 @@
 
     <div (contextmenu)="$event.preventDefault()" class="background" (mouseup)="setContextMenu($event)">
         <table>
-            <tr *ngFor="let keyword of keywords; let keywordIndex = index" >
+            <tr *ngFor="let keyword of keywords; let keywordIndex = index">
                 <td #keyword
                     class="keywordList"
+                    tabindex="-1"
                     [contentEditable]="editedKeywordIndex == keywordIndex"
                     [textContent]="keywords[keywordIndex].name"
-                    (mouseover)="preventMousedown=true"
-                    (mouseout)="preventMousedown=false"
                     (mousedown)="onKeywordDown(keywordIndex)"
                     (dblclick)="onKeywordDoubleClick(keywordIndex)"
                     [ngClass]="{'selected-keyword': selectedKeywordIndex == keywordIndex,

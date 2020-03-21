@@ -38,6 +38,7 @@ table {
         padding-top: 1px;
         padding-bottom: 1px;
         white-space: nowrap;
+        outline: none;
 
         &:hover:not(.selected-keyword):not(.transparent-keyword):not(.edited-keyword):not(.selected-keyword-top):not(.selected-keyword-middle):not(.selected-keyword-bottom):not(.selected-keyword-whole) {
             background: $hover-fill-color;
