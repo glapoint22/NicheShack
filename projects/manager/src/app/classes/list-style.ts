@@ -193,6 +193,9 @@ export class ListStyle extends NodeStyle {
 
         // Node is NOT part of a list
         if (!this.nodeHasStyle(node)) {
+            // Get the color, if any
+            let color = this.getColor(node);
+
             listItem = document.createElement('LI');
 
             // Give the list item the node's text align
@@ -203,6 +206,10 @@ export class ListStyle extends NodeStyle {
 
             // Append the node contents into the list item
             listItem.appendChild(node);
+
+            // Apply the color to the list item
+            if(color) listItem.style.color = color;
+            
 
             // Node is part of a list
         } else {
@@ -220,6 +227,36 @@ export class ListStyle extends NodeStyle {
 
         return listItem;
     }
+
+
+    getColor(node: Node, color?: string) {
+        for (let i = 0; i < node.childNodes.length; i++) {
+            let child: ChildNode = node.childNodes[i];
+            let currentColor;
+
+
+            if (child.nodeType == 3) {
+                let colorNode = this.getStyleNode(child, 'color');
+                if(!colorNode) return null;
+
+                currentColor = window.getComputedStyle(colorNode).color;
+
+                if (color && color != currentColor) return null;
+
+                color = currentColor;
+            }
+
+            color = this.getColor(child, color);
+
+            if (!color) return null;
+        }
+
+        return color;
+    }
+
+
+    
+
 
 
     getListParent(node: Node) {

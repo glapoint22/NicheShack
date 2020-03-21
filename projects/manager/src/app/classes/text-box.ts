@@ -101,11 +101,61 @@ export class TextBox {
             this.onSelectionEvent();
         });
 
+        contentDocument.addEventListener('paste', (event) => {
+            let selection: Selection = this.contentDocument.getSelection();
+
+            // If we have no selection, return
+            if (!selection.anchorNode) return;
+
+            let style = new Style(this.contentDocument);
+            let clipboardText: string = event.clipboardData.getData('text/plain');
+            let range = selection.getRangeAt(0);
+            let text: Text = document.createTextNode(clipboardText);
+            let singleLineSelection = range.commonAncestorContainer != this.contentParent &&
+                (range.commonAncestorContainer as HTMLElement).tagName != 'OL' &&
+                (range.commonAncestorContainer as HTMLElement).tagName != 'UL';
+
+            // Prevent from contents being pasted
+            event.preventDefault();
+
+
+            // Remove the first character if it is a zero-width character
+            if (range.collapsed) {
+                if ((range.startContainer as Text).data.charCodeAt(0) == 8203) {
+                    (range.startContainer as Text).deleteData(0, 1);
+                }
+            }
+
+
+            // Delete the contents
+            range.deleteContents();
+
+            // If not a single line selection, we need to create a div for the contents to go in
+            if (!singleLineSelection) {
+                let div = document.createElement('DIV');
+                div.appendChild(text);
+                range.insertNode(div);
+            } else {
+                range.insertNode(text);
+            }
+
+
+            // Reset the range
+            range.setStart(text, text.length);
+            range.setEnd(text, text.length);
+
+            // Remove any empty nodes;
+            style.removeEmptyNodes(this.contentParent);
+        });
+
+        
+
+
         contentDocument.addEventListener("keypress", (event: KeyboardEvent) => {
             window.setTimeout(() => {
                 let selection: Selection = this.contentDocument.getSelection();
 
-                if(!selection.anchorNode) return;
+                if (!selection.anchorNode) return;
 
                 let range = selection.getRangeAt(0);
 
@@ -116,7 +166,7 @@ export class TextBox {
                     // Remove the first character if it is a zero-width character
                     if (text.data.charCodeAt(0) == 8203) {
                         text.deleteData(0, 1);
-                    } 
+                    }
                 }
             });
         });
@@ -126,7 +176,7 @@ export class TextBox {
         contentDocument.addEventListener("keydown", (event: KeyboardEvent) => {
             let selection: Selection = this.contentDocument.getSelection();
 
-            if(!selection.anchorNode) return;
+            if (!selection.anchorNode) return;
 
             let range = selection.getRangeAt(0);
 
@@ -248,11 +298,11 @@ export class TextBox {
             window.setTimeout(() => {
                 range = selection.getRangeAt(0);
 
-                if(event.keyCode == 37) {
+                if (event.keyCode == 37) {
                     let text: Text = range.startContainer as Text;
-                    
+
                     // Make sure the cursor is not before the zero-width character
-                    if(text.data.charCodeAt(0) == 8203) {
+                    if (text.data.charCodeAt(0) == 8203) {
                         range.setStart(range.startContainer, 1);
                     }
                 }
