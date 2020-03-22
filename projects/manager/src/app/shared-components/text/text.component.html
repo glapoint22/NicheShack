@@ -13,7 +13,7 @@
 
         <!-- Dropdown -->
         <select style="width: 100%; max-width: 150px;" [selectedIndex]="_FormService.textBox.font.selectedIndex"
-            (change)="_FormService.textBox.font.setStyleValue($event.target.value)">
+            (change)="_FormService.textBox.font.setStyleValue($event.target.value); _FormService.textBox.onChange.next()">
             <option *ngFor="let option of _FormService.textBox.font.options" [value]="option.value">{{option.key}}
             </option>
         </select>
@@ -32,7 +32,7 @@
 
         <!-- Dropdown -->
         <select style="width:55px; position:relative;" [selectedIndex]="_FormService.textBox.fontSize.selectedIndex"
-            (change)="_FormService.textBox.fontSize.setStyleValue($event.target.value)">
+            (change)="_FormService.textBox.fontSize.setStyleValue($event.target.value); _FormService.textBox.onChange.next()">
             <option *ngFor="let option of _FormService.textBox.fontSize.options" [value]="option.value">{{option.key}}
             </option>
         </select>
@@ -51,19 +51,22 @@
     <div class="display-flex">
 
         <!-- Bold -->
-        <div class="icon-container" title="Bold (Ctrl+B)" (click)="_FormService.textBox.bold.applyStyle()"
+        <div class="icon-container" title="Bold (Ctrl+B)"
+            (click)="_FormService.textBox.bold.applyStyle(); _FormService.textBox.onChange.next()"
             [ngClass]="{'selected': _FormService.textBox.bold.isSelected}">
             <i class="fas fa-bold"></i>
         </div>
 
         <!-- Italic -->
-        <div class="icon-container" title="Italic (Ctrl+I)" (click)="_FormService.textBox.italic.applyStyle()"
+        <div class="icon-container" title="Italic (Ctrl+I)"
+            (click)="_FormService.textBox.italic.applyStyle(); _FormService.textBox.onChange.next()"
             [ngClass]="{'selected': _FormService.textBox.italic.isSelected}">
             <i class="fas fa-italic"></i>
         </div>
 
         <!-- Underline -->
-        <div class="icon-container" title="Underline (Ctrl+U)" (click)="_FormService.textBox.underline.applyStyle()"
+        <div class="icon-container" title="Underline (Ctrl+U)"
+            (click)="_FormService.textBox.underline.applyStyle(); _FormService.textBox.onChange.next()"
             [ngClass]="{'selected': _FormService.textBox.underline.isSelected}">
             <i class="fas fa-underline"></i>
         </div>
@@ -169,7 +172,7 @@
         <!-- Numbered list -->
         <div class="icon-container" title="Numbered list (Ctrl+Shift+7)"
             [ngClass]="{'selected': _FormService.textBox.orderedList.isSelected}"
-            (click)="_FormService.textBox.orderedList.applyStyle(); _FormService.textBox.unorderedList.checkSelection()">
+            (click)="_FormService.textBox.orderedList.applyStyle(); _FormService.textBox.unorderedList.checkSelection(); _FormService.textBox.onChange.next()">
             <i class="fas fa-list-ol"></i>
         </div>
 
@@ -177,7 +180,7 @@
         <!-- Bulleted list -->
         <div class="icon-container" title="Bulleted list (Ctrl+Shift+8)"
             [ngClass]="{'selected': _FormService.textBox.unorderedList.isSelected}"
-            (click)="_FormService.textBox.unorderedList.applyStyle(); _FormService.textBox.orderedList.checkSelection()">
+            (click)="_FormService.textBox.unorderedList.applyStyle(); _FormService.textBox.orderedList.checkSelection(); _FormService.textBox.onChange.next()">
             <i class="fas fa-list-ul"></i>
         </div>
     </div>

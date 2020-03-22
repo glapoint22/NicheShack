@@ -1,7 +1,9 @@
-import { ToggleableStyle } from './toggleable-style';
+import { Style } from './style';
 
 
-export class LineStyle extends ToggleableStyle {
+export class LineStyle extends Style {
+    public isSelected: boolean;
+
     setStyle(range: Range) {
         let parent = this.getSelectionParent(range.startContainer);
 

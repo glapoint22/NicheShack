@@ -4,6 +4,7 @@
     position: absolute;
     width: 100%;
     outline: none;
+    user-select: none;
 
     &:hover,&:active {
         outline: 1px dashed $selected-border-color;

@@ -73,10 +73,4 @@ export class WidgetComponent implements OnInit {
 
     return maxHeight;
   }
-
-
-  getMinHeight(): number {
-    let children: Array<Element> = Array.from(this.widget.nativeElement.children);
-    return Math.max(...children.map((x: any) => x.offsetHeight));
-  }
 }

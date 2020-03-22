@@ -6,10 +6,6 @@
     [style.marginBottom.px]="margins.bottom" [style.marginLeft]="margins.left + (margins.left == 'auto' ? '' : 'px')"
     [style.maxWidth.px]="width ? width : null" >
 
-    <!-- <div class="edit-button fas" (click)="onEdit()"></div>
-    <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div> -->
-
-
 
     <div class="top-left-handle" (mousedown)="onHandleMove('top', 'left', $event)"></div>
     <div class="top-right-handle" (mousedown)="onHandleMove('top', 'right', $event)"></div>
@@ -24,7 +20,4 @@
             d="m8.378 4.002c-0.324 0-0.587 0.269-0.587 0.601s0.263 0.601 0.587 0.601c0.325 0 0.587-0.269 0.587-0.601s-0.262-0.601-0.587-0.601z">
         </path>
     </svg>
-
-    
-    <!-- <img src="images/6c048ea442b646b59970f907a4d3ce61.jpg" style="width: 100%; user-select: none;" draggable="false"> -->
 </div>

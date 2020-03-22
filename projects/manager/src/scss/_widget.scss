@@ -8,36 +8,12 @@
     z-index: 1;
 }
 
-
-%widget-button {
-    position: absolute;
-    border-radius: 50%;
-    background: linear-gradient(#fefefe, #dadada);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25px;
-    height: 25px;
-    top: -30px;
-    left: 0;
-    font-size: 16px;
-    cursor: pointer;
-    color: #525252;
-    &:hover {
-        color: $selected-border-color;
-    }
-    &:active {
-        background: linear-gradient(#ffffff, #ededed);
-        color: lighten($selected-border-color, 10%);
-    }
-}
-
 .widget {
     position: relative;
     width: 100%;
 }
 
-body:not(#widget-cursor) .row:not(:active) {
+body:not(#widget-cursor) .row {
     & %column {
         &:hover:not(:last-of-type) .resize-button {
             display: flex;
@@ -179,63 +155,39 @@ body:not(#widget-cursor) .row:not(:active) {
                     cursor: n-resize;
                 }
             }
-        
-        
-            
-            // Edit Button
-            .edit-button {
-                @extend %widget-button;
-                &:before {
-                    content: "\f303";
-                }
-            }
-        
-        
-            // Show Hide Button
-            .show-hide-button {
-                @extend %widget-button;
-                left: 30px;
-            }
-        
-            .fa-eye, .fa-eye-slash {
-                visibility: visible;
-            }
         }
     }
 
     
 }
 
+.canvas {
+    .row:not(:active) %column {
+        &:hover {
+            outline: 1px solid greenyellow;
+            z-index: 2;
+        }
+    }
 
-.row:not(:active) %column {
-    &:hover {
-        // outline: 1px solid greenyellow;
-        z-index: 2;
+    %column {
+        &:active {
+            outline: 1px solid greenyellow;
+            z-index: 2;
+        }
+        &:hover .drop-indicator {
+            visibility: visible;
+        }
+    
+        &:active:not(:last-of-type) .resize-button {
+            display: flex;
+        }
     }
 }
 
 
 
-.fa-eye, .fa-eye-slash {
-    visibility: hidden;
-}
 
 
-
-
-%column {
-    &:active {
-        // outline: 1px solid greenyellow;
-        z-index: 2;
-    }
-    &:hover .drop-indicator {
-        visibility: visible;
-    }
-
-    &:active:not(:last-of-type) .resize-button {
-        display: flex;
-    }
-}
 
 
 .drop-widget {
