@@ -11,19 +11,22 @@
         
     <div class="background">
 
-        <table (mouseover)="overTable = true" (mouseout)="overTable=false">
+        <table>
 
             <!---------- (1st Row) ---------->
             <tr>
-                <td (mousedown)="removeFocus()"></td>
-                <td (mousedown)="removeFocus()"></td>
-                <td (mousedown)="removeFocus()"></td>
+                <td></td>
+                <td></td>
+                <td></td>
 
                 <!-- column selectors -->
                 <td *ngFor="let pricePoint of productContent.pricePoints; let columnIndex = index"
+                    #columnSelector
+                    tabindex="-1"
                     (contextmenu)="$event.preventDefault()"
                     [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex}"
-                    (mousedown)="onColumnSelectorDown(columnIndex)" (mouseup)="setContextMenu($event)">
+                    (mousedown)="onColumnSelectorDown(columnIndex)" 
+                    (mouseup)="setContextMenu($event)">
                 </td>
             </tr>
 
@@ -31,13 +34,16 @@
 
             <!---------- (2nd Row) ---------->
             <tr>
-                <td (mousedown)="removeFocus()"></td>
-                <td (mousedown)="removeFocus()"></td>
-                <td (mousedown)="removeFocus()">Items</td>
+                <td></td>
+                <td></td>
+                <td>Items</td>
 
                 <!-- Price points -->
                 <td *ngFor="let pricePoint of productContent.pricePoints; let columnIndex = index"
-                    (mousedown)="onPricePointDown(columnIndex)" (click)="onPricePointClick()"
+                    #pricePoint
+                    tabindex="-1"
+                    (mousedown)="onPricePointDown(columnIndex, pricePoint)" 
+                    (click)="onPricePointClick()"
                     [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex, 'selected-price-point': productContent.selectedPricePointIndex == columnIndex}">
                     {{(productContent.pricePoints[columnIndex].textBefore.length == 0 ? productContent.pricePoints[columnIndex].textBefore : productContent.pricePoints[columnIndex].textBefore + " ")
                         + 
@@ -52,18 +58,27 @@
             <tr *ngFor="let item of productContent.items; let rowIndex = index">
 
                 <!-- Row selectors -->
-                <td (contextmenu)="$event.preventDefault()" [ngClass]="{'selected-cells': selectedRowIndex == rowIndex}"
-                    (mousedown)="onRowSelectorDown(rowIndex)" (mouseup)="setContextMenu($event)">
+                <td #rowSelector
+                    tabindex="-1"
+                    (contextmenu)="$event.preventDefault()" 
+                    [ngClass]="{'selected-cells': selectedRowIndex == rowIndex}"
+                    (mousedown)="onRowSelectorDown(rowIndex)" 
+                    (mouseup)="setContextMenu($event)">
                 </td>
 
                 <!-- Item types -->
-                <td (mousedown)="onItemTypeDown(rowIndex)" (click)="onItemTypeClick(rowIndex)"
+                <td #itemType
+                    tabindex="-1"
+                    (mousedown)="onItemTypeDown(rowIndex, itemType)" 
+                    (click)="onItemTypeClick(rowIndex)"
                     [ngClass]="{'selected-content-type': productContent.selectedItemTypeIndex == rowIndex,'selected-cells': selectedRowIndex == rowIndex}">
                     <img [src]="productContent.items[rowIndex].type" draggable="false">
                 </td>
 
                 <!-- Item descriptions -->
-                <td #itemDesc tabindex="-1" contenteditable="true"
+                <td #itemDesc 
+                    tabindex="-1"
+                    contenteditable="true"
                     [textContent]="productContent.items[rowIndex].description"
                     (input)="setItemDescription(rowIndex, itemDesc, $event)"
                     [ngClass]="{'selected-cells': selectedRowIndex == rowIndex, 'item-description-placeholder': productContent.items[rowIndex].showPlaceholder, 'selected-item-description': selectedItemDescriptionIndex == rowIndex}"
@@ -72,7 +87,10 @@
 
                 <!-- Price point options -->
                 <td *ngFor="let pricePointOption of productContent.pricePoints; let columnIndex = index"
-                    (mousedown)="onPricePointOptionDown(columnIndex, rowIndex)" (click)="onPricePointOptionClick()"
+                    #pricePointOption
+                    tabindex="-1"
+                    (mousedown)="onPricePointOptionDown(columnIndex, rowIndex)" 
+                    (click)="onPricePointOptionClick()"
                     [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex || selectedRowIndex == rowIndex, 
                                     'selected-column': selectedColumnIndex == columnIndex, 
                                     'selected-row': selectedRowIndex == rowIndex, 

@@ -6,7 +6,7 @@
     align-items: center;
     color: $icon-color;
     user-select: none;
-    
+    outline: none;
 }
 
 body:not(#widget-cursor) .icon-container {

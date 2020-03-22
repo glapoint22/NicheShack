@@ -3,7 +3,7 @@
 
     <!-- Current Menu -->
     <div #menu *ngIf="menuService.showMenu[menuIndex]" [style.width]="menuService.setMenuWidth(menuIndex, menu)"
-        class="menu-base" tabindex="0" (onShow)="menuService.onMenuShow(menuIndex, menu)" (mouseover)="menuService.onMenuOver(menuIndex)"
+        class="menu-base" tabindex="-1" (onShow)="menuService.onMenuShow(menuIndex, menu)" (mouseover)="menuService.onMenuOver(menuIndex)"
         (focus)="menuService.onMenuFocus(menuIndex)" (blur)="menuService.onMenuBlur(menuIndex, menu)"
         (mousedown)="$event.stopPropagation()" (contextmenu)="$event.preventDefault()">
 
