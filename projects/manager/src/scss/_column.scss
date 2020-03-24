@@ -1,0 +1,56 @@
+$column-color: greenyellow;
+
+.canvas {
+    %column {
+        outline-offset: 1px;
+        &:hover {
+            & .drop-indicator {
+                visibility: visible;
+            }
+        }
+    }
+}
+
+
+body#column-resize {
+    .canvas {
+        & %column {
+          &:active {
+            outline: 1px solid $column-color;
+            
+            
+            
+            & + %column {
+                outline: 1px solid $column-color;
+                z-index: 2;
+            }
+          }  
+                
+                
+            
+            .resize-button:active {
+                display: flex;
+                z-index: 10;
+            }
+        }
+    }
+}
+
+
+
+body:not(#widget-resize):not(#column-resize):not(#widget-cursor) {
+    .canvas {
+        & %column {
+
+            &:hover {
+                outline: 1px solid $column-color;
+                z-index: 2;
+            }
+
+
+            &:hover:not(:last-of-type) .resize-button {
+                display: flex;
+            }
+        }
+    }
+}

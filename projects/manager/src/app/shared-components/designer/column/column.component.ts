@@ -56,6 +56,9 @@ export class ColumnComponent {
   }
 
   onResizeButtonMousedown(event: any) {
+    document.body.id = 'column-resize';
+    document.body.style.cursor = 'e-resize';
+
     // Get column and row elements
     let column: HTMLElement = event.currentTarget.parentElement;
     let row = column.parentElement;
@@ -100,7 +103,8 @@ export class ColumnComponent {
     let onMouseup = () => {
       window.removeEventListener("mousemove", onMousemove);
       window.removeEventListener("mouseup", onMouseup);
-
+      document.body.removeAttribute('style');
+      document.body.removeAttribute('id');
     }
 
     // Add the listeners

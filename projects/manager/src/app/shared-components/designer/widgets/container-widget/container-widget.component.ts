@@ -5,16 +5,16 @@ import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { Spacing } from 'projects/manager/src/app/classes/spacing';
-import { WidgetComponent } from '../widget/widget.component';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { Color } from 'projects/manager/src/app/classes/color';
+import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 
 @Component({
   selector: 'container-widget',
   templateUrl: './container-widget.component.html',
   styleUrls: ['./container-widget.component.scss']
 })
-export class ContainerWidgetComponent extends WidgetComponent {
+export class ContainerWidgetComponent extends FreeformWidgetComponent {
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public corners: Corners = new Corners();

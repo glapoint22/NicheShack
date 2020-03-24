@@ -4,16 +4,16 @@ import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { Spacing } from 'projects/manager/src/app/classes/spacing';
-import { WidgetComponent } from '../widget/widget.component';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { Color } from 'projects/manager/src/app/classes/color';
+import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 
 @Component({
   selector: 'line-widget',
   templateUrl: './line-widget.component.html',
   styleUrls: ['./line-widget.component.scss']
 })
-export class LineWidgetComponent extends WidgetComponent {
+export class LineWidgetComponent extends FreeformWidgetComponent {
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public shadow: Shadow = new Shadow();

@@ -1,5 +1,5 @@
-<div #row class="row" 
-     [ngClass]="{'drop-widget': widgetService.currentWidgetCursor, 'flex-10': columns.length == 5}"
+<div #row class="row" (mousedown)="onRowMoveMousedown($event); $event.stopPropagation()"
+     [ngClass]="{'drop-widget': widgetService.currentWidgetCursor, 'flex-10': columns.length == 5, 'selected': container.selectedRow == this}"
      (mousemove)="widgetService.currentWidgetCursor ? $event.stopPropagation(): null"
      [style.top.px]="top"
      [style.background]="fill.apply ? 'rgba(' + fill.color.r + ',' +  fill.color.g + ',' + fill.color.b + ',' + fill.color.a + ')' : 'transparent'"
@@ -12,14 +12,4 @@
     <ng-template  #viewContainerRef>
         <!-- Columns go here -->
     </ng-template>
-
-    <span>
-        <!-- Edit -->
-        <div class="row-edit" *ngIf="!widgetService.currentWidgetCursor" (mousedown)="onEdit()">Edit</div>
-
-        <!-- Move -->
-        <div class="row-move" (mousedown)="onRowMoveMousedown($event)" *ngIf="!widgetService.currentWidgetCursor">
-            <i class="fas fa-arrows-alt-v"></i>
-        </div>
-    </span>
 </div>

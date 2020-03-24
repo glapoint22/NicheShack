@@ -17,6 +17,8 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
   private bottomHandleMove: boolean;
   public handleMove: boolean;
   private content: HTMLElement;
+  public document: Document = document;
+  public iframeHeight: number;
 
   constructor(widgetService: WidgetService, private applicationRef: ApplicationRef, public _FormService: FormService) { super(widgetService) }
 
@@ -29,6 +31,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
   ngAfterViewInit() {
     this.iframe.nativeElement.srcdoc = document.createElement('div').outerHTML;
     this.iframe.nativeElement.onload = (event) => {
+      let a = this.iframe;
       let contentDocument: Document = event.currentTarget.contentDocument;
       this.content = contentDocument.body.firstElementChild as HTMLElement;
 
@@ -78,11 +81,15 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
 
   getContentHeight() {
     let height: number = 0;
-    for (let i = 0; i < this.content.childElementCount; i++) {
-      let child = this.content.children[i];
 
-      height += child.clientHeight;
+    if(this.content) {
+      for (let i = 0; i < this.content.childElementCount; i++) {
+        let child = this.content.children[i];
+  
+        height += child.clientHeight;
+      }
     }
+    
 
     return height;
   }
@@ -90,6 +97,19 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
 
   getMinHeight(): number {
     return this.getContentHeight();
+  }
+
+  showCover() {
+    if(this.widgetService.selectedWidget != this) {
+      this._FormService.showTextForm = false;
+      this.textBox.removeSelection();
+    }
+
+    return !this._FormService.showTextForm || this.handleMove || document.body.id == 'column-resize' || document.body.id == 'widget-cursor' || this.widgetService.selectedWidget != this;
+  }
+
+  ngDoCheck() {
+    this.iframeHeight = Math.max(this.height, this.getContentHeight());
   }
 
 }

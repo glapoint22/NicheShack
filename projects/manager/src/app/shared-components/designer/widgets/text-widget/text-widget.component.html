@@ -14,9 +14,8 @@
     <div class="bottom-handle-bar" (mousedown)="onHandleMove('bottom')"></div>
 
     <!-- Contents -->
-    <iframe #iframe width="100%" height="100%" style="background: white;"></iframe>
+    <iframe #iframe width="100%" height="100%" align="top" style="background: white;" [style.height.px]="iframeHeight"></iframe>
 
     <!-- Cover -->
-    <div *ngIf="!_FormService.showTextForm || handleMove" class="position-absolute-identity" style="user-select: none;"
-        (dblclick)="onEdit()"></div>
+    <div *ngIf="showCover()" class="position-absolute-identity" style="user-select: none;" (dblclick)="onEdit()"></div>
 </div>

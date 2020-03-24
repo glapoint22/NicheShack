@@ -12,9 +12,16 @@ export class ContainerComponent {
   @ViewChild('container', { static: false }) containerElement: ElementRef;
   public rows: Array<ComponentRef<RowComponent>> = new Array<ComponentRef<RowComponent>>();
   private selectedRowIndex: number;
+  private _selectedRow: RowComponent;
   public set selectedRow(row: RowComponent) {
     this.selectedRowIndex = this.rows.findIndex(x => x.instance == row);
+    this._selectedRow = row;
   }
+
+  public get selectedRow() {
+    return this._selectedRow;
+  }
+  
 
 
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }

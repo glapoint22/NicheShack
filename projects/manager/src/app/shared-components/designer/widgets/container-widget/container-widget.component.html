@@ -1,4 +1,4 @@
-<div #widget class="widget" (click)="onClick()" [ngClass]="{'widget-selected': widgetService.selectedWidget == this}"
+<div #widget class="widget" (mousedown)="onMousedown()" [ngClass]="{'widget-selected': widgetService.selectedWidget == this}"
     (dblclick)="onEdit()"
     [style.background]="fill.apply ? 'rgba(' + fill.color.r + ',' +  fill.color.g + ',' + fill.color.b + ',' + fill.color.a + ')' : 'transparent'"
     [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
@@ -6,21 +6,21 @@
     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
     [style.marginTop.px]="margins.top" [style.marginRight]="margins.right + (margins.right == 'auto' ? '' : 'px')"
     [style.marginBottom.px]="margins.bottom" [style.marginLeft]="margins.left + (margins.left == 'auto' ? '' : 'px')"
-    [style.maxWidth.px]="width ? width : null" [style.minHeight.px]="height"
+    [style.maxWidth.px]="width ? width : null" [style.height.px]="height"
     [style.padding]="padding.top + 'px ' + padding.right + 'px ' + padding.bottom + 'px ' + padding.left + 'px'">
 
 
     <!-- Handles -->
-    <div class="top-center-handle"></div>
-    <div class="left-handle"></div>
-    <div class="bottom-center-handle"></div>
-    <div class="right-handle"></div>
-    <div class="top-left-handle" (mousedown)="onMousedown('top left')"></div>
-    <div class="top-right-handle" (mousedown)="onMousedown('top right')"></div>
-    <div class="bottom-left-handle" (mousedown)="onMousedown('bottom left')"></div>
-    <div class="bottom-right-handle" (mousedown)="onMousedown('bottom right')"></div>
-    <div class="left-handle-bar" (mousedown)="onMousedown('left')"></div>
-    <div class="top-handle-bar" (mousedown)="onMousedown('top')"></div>
-    <div class="right-handle-bar" (mousedown)="onMousedown('right')"></div>
-    <div class="bottom-handle-bar" (mousedown)="onMousedown('bottom')"></div>
+    <div id="handle" class="top-center-handle"></div>
+    <div id="handle" class="left-handle"></div>
+    <div id="handle" class="bottom-center-handle"></div>
+    <div id="handle" class="right-handle"></div>
+    <div id="handle" class="top-left-handle" (mousedown)="onHandleMove('top-left')"></div>
+    <div id="handle" class="top-handle-bar" (mousedown)="onHandleMove('top')"></div>
+    <div id="handle" class="top-right-handle" (mousedown)="onHandleMove('top-right')"></div>
+    <div id="handle" class="right-handle-bar" (mousedown)="onHandleMove('right')"></div>
+    <div id="handle" class="bottom-right-handle" (mousedown)="onHandleMove('bottom-right')"></div>
+    <div id="handle" class="bottom-handle-bar" (mousedown)="onHandleMove('bottom')"></div>
+    <div id="handle" class="bottom-left-handle" (mousedown)="onHandleMove('bottom-left')"></div>
+    <div id="handle" class="left-handle-bar" (mousedown)="onHandleMove('left')"></div>
 </div>

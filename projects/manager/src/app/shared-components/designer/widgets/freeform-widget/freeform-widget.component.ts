@@ -14,6 +14,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
   }
 
   onHandleMove(handle: string) {
+    document.body.id = 'widget-resize';
     switch (handle) {
       case 'top-left':
         document.body.style.cursor = 'nw-resize';

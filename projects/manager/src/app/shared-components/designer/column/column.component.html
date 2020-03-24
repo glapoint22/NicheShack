@@ -2,7 +2,7 @@
     <!-- Widgets go here -->
 </ng-template>
 
-<div *ngIf="widgetService.selectedWidget != widget" (mousedown)="onResizeButtonMousedown($event)" class="resize-button">
+<div (mousedown)="onResizeButtonMousedown($event)" class="resize-button">
     <i class="fas fa-arrows-alt-h"></i>
 </div>
 

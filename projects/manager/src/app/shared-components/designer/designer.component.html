@@ -60,12 +60,12 @@
                 </div>
 
                 <!-- Canvas -->
-                <div #canvasElement class="canvas">
+                <div #canvasElement class="canvas" (mousedown)="onCanvasMousedown(container)">
 
                     <!-- Content -->
                     <div #content class="content" [style.maxWidth.px]="contentWidth" (mousemove)="setCursor(true)"
                         (mouseleave)="setCursor()">
-                        <container></container>
+                        <container #container></container>
                     </div>
                 </div>
 

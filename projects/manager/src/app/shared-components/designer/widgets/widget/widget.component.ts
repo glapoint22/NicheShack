@@ -32,6 +32,7 @@ export class WidgetComponent implements OnInit {
     window.removeEventListener("mousemove", onMousemove);
     window.removeEventListener("mouseup", onMouseup);
     document.body.removeAttribute('style');
+    document.body.removeAttribute('id');
   }
 
 
