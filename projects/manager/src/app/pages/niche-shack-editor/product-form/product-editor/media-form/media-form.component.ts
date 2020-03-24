@@ -13,12 +13,12 @@ export class MediaFormComponent {
 
   onOk() {
     this._FormService.showMediaForm = false;
-    this._FormService.productContent.lastFocusedItemType.focus();
+    this._FormService.productContent.lastFocusedElement.focus();
     // this._FormService.productContent.items[this._FormService.productContent.selectedItemTypeIndex].type = this.itemType;
   }
 
   onCancel() {
     this._FormService.showMediaForm = false;
-    this._FormService.productContent.lastFocusedItemType.focus();
+    this._FormService.productContent.lastFocusedElement.focus();
   }
 }

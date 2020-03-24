@@ -3,6 +3,5 @@ export class ProductContent {
     selectedItemTypeIndex: number;
     pricePoints: Array<any> = [];
     selectedPricePointIndex: number;
-    lastFocusedPricePoint: HTMLTableElement;
-    lastFocusedItemType: HTMLTableElement;
+    lastFocusedElement: any;
 }
