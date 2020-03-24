@@ -11,23 +11,25 @@ import { MenuService } from 'projects/manager/src/app/services/menu.service';
 export class ProductContentComponent implements OnInit {
   // Private
   private copied: string = "";
-  private eventListenersSet: boolean = false;
+  private eventListenersAdded: boolean = false;
   private pricePointClipboard: any = { pricePoint: {}, pricePointOptions: [] };
   private itemClipboard: any = { type: "", description: "", showPlaceholder: false, pricePointOptions: [] };
   // Public
   public selectedRowIndex: number = null;
+  public overIconButton: boolean = false;
   public selectedColumnIndex: number = null;
   public selectedItemDescriptionIndex: number;
   public selectedPricePointOptionRowIndex: number = null;
   public selectedPricePointOptionColumnIndex: number = null;
   public productContent: ProductContent = new ProductContent();
-  constructor(public _FormService: FormService, public menuService: MenuService) {}
+  constructor(public _FormService: FormService, public menuService: MenuService) { }
 
-  @ViewChildren('columnSelector') columnSelector: QueryList<ElementRef>;
-  @ViewChildren('pricePoint') pricePoint: QueryList<ElementRef>;
-  @ViewChildren('rowSelector') rowSelector: QueryList<ElementRef>;
+
   @ViewChildren('itemType') itemType: QueryList<ElementRef>;
   @ViewChildren('itemDesc') itemDesc: QueryList<ElementRef>;
+  @ViewChildren('pricePoint') pricePoint: QueryList<ElementRef>;
+  @ViewChildren('rowSelector') rowSelector: QueryList<ElementRef>;
+  @ViewChildren('columnSelector') columnSelector: QueryList<ElementRef>;
   @ViewChildren('pricePointOption') pricePointOption: QueryList<ElementRef>;
 
 
@@ -50,8 +52,29 @@ export class ProductContentComponent implements OnInit {
     this.productContent.items.push({ type: "images/audio.png", description: "Gumpy's Ice Cream Machine Instructional Audio Guide", showPlaceholder: false, pricePointOptions: [false, false, true, true, false] });
     this.productContent.items.push({ type: "images/software.png", description: "Gumpy's Ice Cream Machine Software", showPlaceholder: false, pricePointOptions: [true, true, true, true, true] });
 
+  }
 
 
+  // -----------------------------( ADD EVENT LISTENERS )------------------------------ \\
+  addEventListeners() {
+    if (!this.eventListenersAdded) {
+      this.eventListenersAdded = true;
+      window.addEventListener('keydown', this.onKeydown);
+      window.addEventListener('blur', this.onInnerWindowBlur);
+      window.addEventListener('mousedown', this.onMouseDown);
+    }
+    // Remove the selected index from the current element so that the next element can have the selection
+    this.removeSelectedIndex();
+  }
+
+
+  // -----------------------------( REMOVE EVENT LISTENERS )------------------------------ \\
+  removeEventListeners() {
+    this.removeSelectedIndex();
+    this.eventListenersAdded = false;
+    window.removeEventListener('keydown', this.onKeydown);
+    window.removeEventListener('blur', this.onInnerWindowBlur);
+    window.removeEventListener('mousedown', this.onMouseDown);
   }
 
 
@@ -74,113 +97,68 @@ export class ProductContentComponent implements OnInit {
   };
 
 
+  // -----------------------------( ON INNER WINDOW BLUR )------------------------------ \\
+  private onInnerWindowBlur = (event: KeyboardEvent) => {
+    // When the focus gets set to something that is outside the inner-window, then remove all listeners and selections
+    this.removeEventListeners();
+  }
+
+
   // -----------------------------( ON MOUSE DOWN )------------------------------ \\
-  private onMousedown = () => {
-    let preventMousedown: boolean = false;
+  private onMouseDown = (event: KeyboardEvent) => {
+    // As long as the context menu is open
+    if (this.menuService.menuOpen
+      // and we're NOT clicking on an icon button
+      && !this.overIconButton) {
 
+      // Then remove all listeners and selections
+      this.removeEventListeners();
+    }
+  }
+
+
+  // -----------------------------( ON ELEMENT BLUR )------------------------------ \\
+  onElementBlur() {
     window.setTimeout(() => {
+      // As long as a content element isn't losing focus becaus another content element is receiving focus
+      if (document.activeElement != this.productContent.lastFocusedElement
+        // and the Media Browser form is NOT open
+        && !this._FormService.showMediaForm
+        // and the Price Point form is NOT open
+        && !this._FormService.showPricePointForm
+        // and the context menu is NOT open
+        && !this.menuService.menuOpen
+        // and we're NOT clicking on an icon button
+        && !this.overIconButton) {
 
-      // Loop through all the keywords
-      this.columnSelector.forEach(element => {
-        // Check to see if any of the column selectors have focus
-        if (element.nativeElement == document.activeElement) {
-          // If so, prevent mouse down from executing
-          preventMousedown = true;
-        }
-      });
-
-      // Loop through all the keywords
-      this.pricePoint.forEach(element => {
-        // Check to see if any of the column selectors have focus
-        if (element.nativeElement == document.activeElement) {
-          // If so, prevent mouse down from executing
-          preventMousedown = true;
-        }
-      });
-
-      // Loop through all the keywords
-      this.rowSelector.forEach(element => {
-        // Check to see if any of the column selectors have focus
-        if (element.nativeElement == document.activeElement) {
-          // If so, prevent mouse down from executing
-          preventMousedown = true;
-        }
-      });
-
-      // Loop through all the keywords
-      this.itemType.forEach(element => {
-        // Check to see if any of the column selectors have focus
-        if (element.nativeElement == document.activeElement) {
-          // If so, prevent mouse down from executing
-          preventMousedown = true;
-        }
-      });
-
-      // Loop through all the keywords
-      this.itemDesc.forEach(element => {
-        // Check to see if any of the column selectors have focus
-        if (element.nativeElement == document.activeElement) {
-          // If so, prevent mouse down from executing
-          preventMousedown = true;
-        }
-      });
-
-      // Loop through all the keywords
-      this.pricePointOption.forEach(element => {
-        // Check to see if any of the column selectors have focus
-        if (element.nativeElement == document.activeElement) {
-          // If so, prevent mouse down from executing
-          preventMousedown = true;
-        }
-      });
-
-      
-      if (!preventMousedown && !this._FormService.showMediaForm && !this._FormService.showPricePointForm) {
-        this.unsetEventListeners();
+        // Then remove all listeners and selections
+        this.removeEventListeners();
       }
     })
-  };
-
-
-  // -----------------------------( SET EVENT LISTENERS )------------------------------ \\
-  setEventListeners() {
-    if (!this.eventListenersSet) {
-      this.eventListenersSet = true;
-      window.addEventListener('keydown', this.onKeydown);
-      window.addEventListener('mousedown', this.onMousedown);
-    }
-    this.removeFocus();
   }
 
 
-  // -----------------------------( UNSET EVENT LISTENERS )------------------------------ \\
-  unsetEventListeners() {
-    this.removeFocus();
-    this.eventListenersSet = false;
-    window.removeEventListener('keydown', this.onKeydown);
-    window.removeEventListener('mousedown', this.onMousedown);
-  }
-
-
-  // -----------------------------( ON COLUMN SELECTOR DOWN )------------------------------ \\
-  onColumnSelectorDown(columnIndex: number) {
-    this.setEventListeners();
+  // -----------------------------( ON COLUMN SELECTOR FOCUS )------------------------------ \\
+  onColumnSelectorFocus(columnIndex: number) {
+    this.addEventListeners();
     this.selectedColumnIndex = columnIndex;
+    this.productContent.lastFocusedElement = document.activeElement;
   }
 
 
-  // -----------------------------( ON ROW SELECTOR DOWN )------------------------------ \\
-  onRowSelectorDown(rowIndex: number) {
-    this.setEventListeners();
+  // -----------------------------( ON ROW SELECTOR FOCUS )------------------------------ \\
+  onRowSelectorFocus(rowIndex: number) {
+    this.addEventListeners();
     this.selectedRowIndex = rowIndex;
+    this.productContent.lastFocusedElement = document.activeElement;
   }
 
 
-  // -----------------------------( ON PRICE POINT DOWN )------------------------------ \\
-  onPricePointDown(columnIndex: number, pricePoint: HTMLTableElement) {
-    this.setEventListeners();
-    this.productContent.lastFocusedPricePoint = pricePoint;
+  // -----------------------------( ON PRICE POINT FOCUS )------------------------------ \\
+  onPricePointFocus(columnIndex: number) {
+    this.addEventListeners();
     this.productContent.selectedPricePointIndex = columnIndex;
+    this.productContent.lastFocusedElement = document.activeElement;
   }
 
 
@@ -191,11 +169,11 @@ export class ProductContentComponent implements OnInit {
   }
 
 
-  // -----------------------------( ON ITEM TYPE DOWN )------------------------------ \\
-  onItemTypeDown(rowIndex: number, itemType: HTMLTableElement) {
-    this.setEventListeners();
-    this.productContent.lastFocusedItemType = itemType;
+  // -----------------------------( ON ITEM TYPE FOCUS )------------------------------ \\
+  onItemTypeFocus(rowIndex: number) {
+    this.addEventListeners();
     this.productContent.selectedItemTypeIndex = rowIndex;
+    this.productContent.lastFocusedElement = document.activeElement;
   }
 
 
@@ -208,8 +186,9 @@ export class ProductContentComponent implements OnInit {
 
   // -----------------------------( ON ITEM DESCRIPTION FOCUS )------------------------------ \\
   onItemDescriptionFocus(rowIndex: number) {
-    this.setEventListeners();
+    this.addEventListeners();
     this.selectedItemDescriptionIndex = rowIndex;
+    this.productContent.lastFocusedElement = document.activeElement;
   }
 
 
@@ -227,11 +206,12 @@ export class ProductContentComponent implements OnInit {
   }
 
 
-  // -----------------------------( ON PRICE POINT OPTION DOWN )------------------------------ \\
-  onPricePointOptionDown(columnIndex: number, rowIndex: number) {
-    this.setEventListeners();
+  // -----------------------------( ON PRICE POINT OPTION FOCUS )------------------------------ \\
+  onPricePointOptionFocus(columnIndex: number, rowIndex: number) {
+    this.addEventListeners();
     this.selectedPricePointOptionRowIndex = rowIndex;
     this.selectedPricePointOptionColumnIndex = columnIndex;
+    this.productContent.lastFocusedElement = document.activeElement;
   }
 
 
@@ -242,7 +222,7 @@ export class ProductContentComponent implements OnInit {
 
 
   // -----------------------------( REMOVE FOCUS )------------------------------ \\
-  removeFocus() {
+  removeSelectedIndex() {
     this.selectedRowIndex = null;
     this.selectedColumnIndex = null;
     this.selectedItemDescriptionIndex = null;
@@ -250,9 +230,10 @@ export class ProductContentComponent implements OnInit {
     this.selectedPricePointOptionColumnIndex = null;
     this.productContent.selectedItemTypeIndex = null;
     this.productContent.selectedPricePointIndex = null;
+    window.getSelection().removeAllRanges();
   }
 
-  
+
   // -----------------------------( SET CONTEXT MENU )------------------------------ \\
   setContextMenu(e: MouseEvent) {
     // As long as the right mouse button is being pressed
@@ -298,7 +279,6 @@ export class ProductContentComponent implements OnInit {
 
   // -----------------------------( INSERT )------------------------------ \\
   insert(direction: string) {
-
     // If we're inserting a new Price Point
     if (this.selectedColumnIndex != null) {
       this.selectedColumnIndex = this.selectedColumnIndex + (direction == "Left" ? 0 : 1);
@@ -309,6 +289,10 @@ export class ProductContentComponent implements OnInit {
       for (let i = 0; i < this.productContent.items.length; i++) {
         this.productContent.items[i].pricePointOptions.splice(this.selectedColumnIndex, 0, false);
       }
+
+      window.setTimeout(() => {
+        this.columnSelector.find((item, index) => index == this.selectedColumnIndex).nativeElement.focus();
+      })
 
       // If we're inserting a new Item
     } else if (this.selectedRowIndex != null) {
@@ -321,6 +305,10 @@ export class ProductContentComponent implements OnInit {
       for (let i = 0; i < pricePointOptionsCount; i++) {
         this.productContent.items[this.selectedRowIndex].pricePointOptions.push(false);
       }
+
+      window.setTimeout(() => {
+        this.rowSelector.find((item, index) => index == this.selectedRowIndex).nativeElement.focus();
+      })
     }
   }
 
@@ -338,6 +326,11 @@ export class ProductContentComponent implements OnInit {
         this.productContent.items[i].pricePointOptions[this.selectedColumnIndex] = false;
       }
 
+      window.setTimeout(() => {
+        this.columnSelector.find((item, index) => index == this.selectedColumnIndex).nativeElement.focus();
+      })
+
+
       // If we're clearing an Item's values
     } else if (this.selectedRowIndex != null) {
 
@@ -350,15 +343,25 @@ export class ProductContentComponent implements OnInit {
       for (let i = 0; i < this.productContent.items[this.selectedRowIndex].pricePointOptions.length; i++) {
         this.productContent.items[this.selectedRowIndex].pricePointOptions[i] = false;
       }
+
+      window.setTimeout(() => {
+        this.rowSelector.find((item, index) => index == this.selectedRowIndex).nativeElement.focus();
+      })
     }
   }
 
 
   // -----------------------------( ENTER )------------------------------ \\
   enter() {
-    if (this.productContent.selectedItemTypeIndex != null) this.onItemTypeClick();
+    if (this.productContent.selectedItemTypeIndex != null) {
+      this.productContent.lastFocusedElement = this.itemType.find((item, index) => index == this.productContent.selectedItemTypeIndex).nativeElement;
+      this.onItemTypeClick();
+    }
     if (this.selectedPricePointOptionRowIndex != null) this.onPricePointOptionClick();
-    if (this.productContent.selectedPricePointIndex != null) this.onPricePointClick();
+    if (this.productContent.selectedPricePointIndex != null) {
+      this.productContent.lastFocusedElement = this.pricePoint.find((item, index) => index == this.productContent.selectedPricePointIndex).nativeElement;
+      this.onPricePointClick();
+    }
     if (this.selectedItemDescriptionIndex != null) {
       event.preventDefault();
       let item = this.itemDesc.find((item, index) => index == this.selectedItemDescriptionIndex);
@@ -384,32 +387,56 @@ export class ProductContentComponent implements OnInit {
         this.productContent.items[i].pricePointOptions.splice(this.selectedColumnIndex, 1);
       }
 
+      window.setTimeout(() => {
+        // If we're NOT deleting the last price point
+        if (this.selectedColumnIndex < this.productContent.items[0].pricePointOptions.length) {
+          // Set focus to the price point that now has the index of what the deleted price point once had
+          this.columnSelector.find((item, index) => index == this.selectedColumnIndex).nativeElement.focus();
+
+          // If we are deleting the last price point
+        } else {
+
+          // Then remove all listeners and selections
+          this.removeEventListeners();
+        }
+      })
+
+
       // If we're deleting an Item
     } else if (this.selectedRowIndex != null && this.productContent.items.length > 1) {
 
       // Delete the item at the specified index
       this.productContent.items.splice(this.selectedRowIndex, 1);
+
+      window.setTimeout(() => {
+        // If we're NOT deleting the last item
+        if (this.selectedRowIndex < this.productContent.items.length) {
+          // Set focus to the item that now has the index of what the deleted item once had
+          this.rowSelector.find((item, index) => index == this.selectedRowIndex).nativeElement.focus();
+
+          // If we are deleting the last item
+        } else {
+
+          // Then remove all listeners and selections
+          this.removeEventListeners();
+        }
+      })
     }
   }
 
 
   // -----------------------------( ESCAPE )------------------------------ \\
   escape() {
-    // If an item description is selected
-    if (this.selectedItemDescriptionIndex != null
-      // and the inner text is selected
-      && document.activeElement == this.itemDesc.find((item, index) => index == this.selectedItemDescriptionIndex).nativeElement) {
-
+    // If an item description is selected and the inner text is selected
+    if (this.selectedItemDescriptionIndex != null && window.getSelection().anchorNode != null && (window.getSelection().anchorNode.nodeType == 3 || !window.getSelection().isCollapsed)) {
       // Remove the text selection
       window.getSelection().removeAllRanges();
-      // Remove the focus from the cell
-      this.itemDesc.find((item, index) => index == this.selectedItemDescriptionIndex).nativeElement.blur();;
 
       // For everything else
     } else {
 
-      // Just remove the outer selection
-      this.unsetEventListeners();
+      // Just remove the focus
+      this.productContent.lastFocusedElement.blur();
     }
   }
 
@@ -635,6 +662,10 @@ export class ProductContentComponent implements OnInit {
       }
       this.copied = "Price Point";
 
+      window.setTimeout(() => {
+        this.columnSelector.find((item, index) => index == this.selectedColumnIndex).nativeElement.focus();
+      })
+
       // If we're copying an Item
     } else if (this.selectedRowIndex != null) {
 
@@ -649,6 +680,10 @@ export class ProductContentComponent implements OnInit {
         this.itemClipboard.pricePointOptions.push(this.productContent.items[this.selectedRowIndex].pricePointOptions[i]);
       }
       this.copied = "Item";
+
+      window.setTimeout(() => {
+        this.rowSelector.find((item, index) => index == this.selectedRowIndex).nativeElement.focus();
+      })
     }
   }
 
@@ -671,6 +706,10 @@ export class ProductContentComponent implements OnInit {
         this.productContent.items[i].pricePointOptions[this.selectedColumnIndex] = this.pricePointClipboard.pricePointOptions[i];
       }
 
+      window.setTimeout(() => {
+        this.columnSelector.find((item, index) => index == this.selectedColumnIndex).nativeElement.focus();
+      })
+
       // If we're pasting an Item
     } else if (this.selectedRowIndex != null && this.copied == "Item") {
 
@@ -685,6 +724,10 @@ export class ProductContentComponent implements OnInit {
       for (let i = 0; i < pricePointOptionsLength; i++) {
         this.productContent.items[this.selectedRowIndex].pricePointOptions[i] = this.itemClipboard.pricePointOptions[i];
       }
+
+      window.setTimeout(() => {
+        this.rowSelector.find((item, index) => index == this.selectedRowIndex).nativeElement.focus();
+      })
     }
   }
 

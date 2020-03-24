@@ -11,8 +11,6 @@
         <!-- Loop through the contents of the current menu -->
         <ng-container *ngFor="let j of menuService.menus[menuIndex].options; let optionIndex = index">
 
-            <!-- <div routerLink="/page-builder" class="menu-option"></div> -->
-
             <!-- Option -->
             <div *ngIf="menuService.menus[menuIndex].options[optionIndex].type == 'option'" 
                 class="menu-option"
@@ -67,6 +65,3 @@
         </ng-container>
     </div>
 </ng-container>
-
-
-<!--  -->

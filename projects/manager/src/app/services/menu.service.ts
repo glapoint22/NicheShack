@@ -25,8 +25,10 @@ export class MenuService {
 
   // Public
   public menus: Menu[];
+  public menuOpen: boolean;
   public showMenu: boolean[];
   public subMenuOptionHighlightOn: boolean[];
+
 
 
   // -----------------------------( BUILD MENU )------------------------------ \\
@@ -35,6 +37,7 @@ export class MenuService {
     this.menuTop = [];
     this.showMenu = [];
     this.subMenuTop = 0;
+    this.menuOpen = true;
     this.menuTop[0] = top;
     this.subMenuIndex = 0;
     this.thisObj = thisObj;
@@ -189,7 +192,7 @@ export class MenuService {
 
     // When the main menu becomes visible
     if (menuIndex == 0) {
-
+      
       // Wait, so we can see if the main menu was launched from a mouse down or a mouse up
       window.setTimeout(() => {
 
@@ -204,14 +207,14 @@ export class MenuService {
           }
 
 
-          // If the main menu is toggled off
+          // If the main menu is currently toggled off
           if (!this.toggleMainMenuOn) {
             // Then toggle the main menu on
             this.toggleMainMenuOn = true;
             // Set the focus to the main menu
             menu.focus();
 
-            // But if the main menu is toggled on
+            // But if the main menu is currently toggled on
           } else {
 
             // Toggle the main menu off
@@ -221,6 +224,7 @@ export class MenuService {
               // And hide each one
               this.showMenu[i] = false;
             }
+            this.menuOpen = false;
           }
           // Record the left and top positon of the main menu
           this.lastMainMenuLeft = this.mainMenuLeft;
@@ -411,12 +415,13 @@ export class MenuService {
 
             // Set the main menu toggle to off
             this.toggleMainMenuOn = false;
-
+            
             // Loop through all the menus
             for (let i = 0; i < this.menus.length; i++) {
               // And hide each one
               this.showMenu[i] = false;
             }
+            this.menuOpen = false;
           }
         });
       }
@@ -458,6 +463,7 @@ export class MenuService {
         // And hide each one
         this.showMenu[i] = false;
       }
+      this.menuOpen = false;
     }
   }
 
