@@ -2,7 +2,6 @@ $column-color: greenyellow;
 
 .canvas {
     %column {
-        outline-offset: 1px;
         &:hover {
             & .drop-indicator {
                 visibility: visible;
@@ -19,12 +18,16 @@ body#column-resize {
             outline: 1px solid $column-color;
             
             
-            
-            & + %column {
+            // Outline the next sibling
+            & + div {
                 outline: 1px solid $column-color;
-                z-index: 2;
+
+                // Apply a left border to the next sibling's sibling
+                & + div {
+                    border-left: 1px solid $column-color;
+                }
             }
-          }  
+        }  
                 
                 
             
@@ -44,7 +47,11 @@ body:not(#widget-resize):not(#column-resize):not(#widget-cursor) {
 
             &:hover {
                 outline: 1px solid $column-color;
-                z-index: 2;
+
+                // Apply a left border to the next sibling
+                & + div {
+                    border-left: 1px solid $column-color;
+                }
             }
 
 
