@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
 import { WidgetService } from '../../../services/widget.service';
 import { FormService } from '../../../services/form.service';
 import { FillColor } from '../../../classes/fill-color';
@@ -6,7 +6,6 @@ import { Border } from '../../../classes/border';
 import { Corners } from '../../../classes/corners';
 import { Shadow } from '../../../classes/shadow';
 import { Spacing } from '../../../classes/spacing';
-// import { Align } from '../../../classes/align';
 import { ColumnComponent } from '../column/column.component';
 import { ContainerComponent } from '../container/container.component';
 import { Alignment } from '../../../classes/alignment';
@@ -61,6 +60,8 @@ export class RowComponent {
 
 
   onRowMoveMousedown(event) {
+    if(document.body.id == 'widget-resize' || document.body.id == 'column-resize') return;
+
     let offset = event.clientY - this.top;
     let currentPos = this.top;
 
@@ -68,6 +69,7 @@ export class RowComponent {
     this.container.selectedRow = this;
 
     document.body.style.cursor = 'move';
+    document.body.id = 'row-move';
 
     // Mousemove
     let onMousemove = (e: MouseEvent) => {
@@ -89,6 +91,7 @@ export class RowComponent {
       window.removeEventListener("mousemove", onMousemove);
       window.removeEventListener("mouseup", onMouseup);
       document.body.removeAttribute('style');
+      document.body.removeAttribute('id');
     }
 
     // Add the listeners

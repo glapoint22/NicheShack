@@ -17,6 +17,7 @@ import { OrderedList } from './ordered-list';
 import { UnorderedList } from './unordered-list';
 import { Color } from './color';
 import { LinkStyle } from './link-style';
+import { Subject } from 'rxjs';
 
 export class TextBox {
     public bold: Bold;
@@ -35,7 +36,9 @@ export class TextBox {
     public orderedList: OrderedList;
     public unorderedList: UnorderedList;
     public linkStyle: LinkStyle;
+    public onChange = new Subject<void>();
     private contentParent: HTMLElement;
+
 
     constructor(private contentDocument: HTMLDocument, private applicationRef: ApplicationRef, defaultFontColor: Color) {
         // Styles
@@ -101,14 +104,22 @@ export class TextBox {
             this.onSelectionEvent();
         });
 
+
+        // Prevent dragging
+        contentDocument.addEventListener("dragstart", (event) => {
+            event.preventDefault();
+        });
+
+
         contentDocument.addEventListener('paste', (event) => {
             let selection: Selection = this.contentDocument.getSelection();
+            let clipboardText: string = event.clipboardData.getData('text/plain');
 
             // If we have no selection, return
-            if (!selection.anchorNode) return;
+            if (!selection.anchorNode || clipboardText == '') return;
 
             let style = new Style(this.contentDocument);
-            let clipboardText: string = event.clipboardData.getData('text/plain');
+            
             let range = selection.getRangeAt(0);
             let text: Text = document.createTextNode(clipboardText);
             let singleLineSelection = range.commonAncestorContainer != this.contentParent &&
@@ -171,6 +182,10 @@ export class TextBox {
             });
         });
 
+        contentDocument.oninput = () => {
+            this.onChange.next();
+            applicationRef.tick();
+        }
 
         // Take care of selection change on keydown
         contentDocument.addEventListener("keydown", (event: KeyboardEvent) => {
@@ -294,8 +309,9 @@ export class TextBox {
                     }
                 }
             }
-
+            
             window.setTimeout(() => {
+                
                 range = selection.getRangeAt(0);
 
                 if (event.keyCode == 37) {

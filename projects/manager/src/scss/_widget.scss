@@ -8,234 +8,192 @@
     z-index: 1;
 }
 
-
-%widget-button {
-    position: absolute;
-    border-radius: 50%;
-    background: linear-gradient(#fefefe, #dadada);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25px;
-    height: 25px;
-    top: -30px;
-    left: 0;
-    font-size: 16px;
-    cursor: pointer;
-    color: #525252;
-    &:hover {
-        color: $selected-border-color;
-    }
-    &:active {
-        background: linear-gradient(#ffffff, #ededed);
-        color: lighten($selected-border-color, 10%);
-    }
-}
-
 .widget {
     position: relative;
     width: 100%;
 }
 
-body:not(#widget-cursor) .row:not(:active) {
-    & %column {
-        &:hover:not(:last-of-type) .resize-button {
-            display: flex;
-        }
-    }
-    & .widget {
-        cursor: move;
-        &.widget-selected {
-            // Top Left Handle
-            .top-left-handle {
-                @extend %handle;
-                top: -5px;
-                left: -5px;
-                &:hover {
-                    cursor: nw-resize;
-                }
-            }
-        
-            // Top Center Handle
-            .top-center-handle {
-                @extend %handle;
-                top: -5px;
-                left: 50%;
-                transform: translate(-50%, 0);
-            }
-        
-        
-            // Top Right Handle
-            .top-right-handle {
-                @extend %handle;
-                top: -5px;
-                right: -5px;
-                &:hover {
-                    cursor: ne-resize;
-                }
-            }
-        
-        
-            // Left Handle
-            .left-handle {
-                @extend %handle;
-                left: -5px;
-                top: 50%;
-                transform: translate(0, -50%);
-            }
-        
-        
-            // Bottom Left Handle
-            .bottom-left-handle {
-                @extend %handle;
-                bottom: -5px;
-                left: -5px;
-                &:hover {
-                    cursor: sw-resize;
-                }
-            }
-        
-        
-            // Bottom Center Handle
-            .bottom-center-handle {
-                @extend %handle;
-                bottom: -5px;
-                left: 50%;
-                transform: translate(-50%, 0);
-            }
-        
-        
-            // Bottom Right Handle
-            .bottom-right-handle {
-                @extend %handle;
-                bottom: -5px;
-                right: -5px;
-                &:hover {
-                    cursor: se-resize;
-                }
-            }
-        
-        
-            // Right Handle
-            .right-handle {
-                @extend %handle;
-                right: -5px;
-                top: 50%;
-                transform: translate(0, -50%);
-            }
-        
-        
-            // Left Handle Bar
-            .left-handle-bar {
-                position: absolute;
-                left: -5px;
-                width: 10px;
-                top: 5px;
-                bottom: 5px;
-                z-index: 1;
-                &:hover {
-                    cursor: w-resize;
-                }
-            }
-        
-        
-            // Top Handle Bar
-            .top-handle-bar {
-                position: absolute;
-                left: 5px;
-                top: -5px;
-                right: 5px;
-                height: 10px;
-                z-index: 1;
-                &:hover {
-                    cursor: n-resize;
-                }
-            }
-        
-        
-            // Right Handle Bar
-            .right-handle-bar {
-                position: absolute;
-                right: -5px;
-                width: 10px;
-                top: 5px;
-                bottom: 5px;
-                z-index: 1;
-                &:hover {
-                    cursor: w-resize;
-                }
-            }
-        
-        
-            // Bottom Handle Bar
-            .bottom-handle-bar {
-                position: absolute;
-                left: 5px;
-                bottom: -5px;
-                right: 5px;
-                height: 10px;
-                z-index: 1;
-                &:hover {
-                    cursor: n-resize;
-                }
-            }
-        
-        
-            
-            // Edit Button
-            .edit-button {
-                @extend %widget-button;
-                &:before {
-                    content: "\f303";
-                }
-            }
-        
-        
-            // Show Hide Button
-            .show-hide-button {
-                @extend %widget-button;
-                left: 30px;
-            }
-        
-            .fa-eye, .fa-eye-slash {
-                visibility: visible;
-            }
-        }
-    }
 
+
+body:not(#widget-cursor) .canvas {
+    .row {
+        &:not(:active) {
+            cursor: move;
+        }
+    
+        & .widget {
+            &.widget-selected {
+                outline: 1px solid #ff00ff;
+                outline-offset: -1px;
+                z-index: 1;
+    
+                // Top Left Handle
+                .top-left-handle {
+                    @extend %handle;
+                    top: -5px;
+                    left: -5px;
+                }
+            
+                // Top Center Handle
+                .top-center-handle {
+                    @extend %handle;
+                    top: -5px;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                }
+            
+            
+                // Top Right Handle
+                .top-right-handle {
+                    @extend %handle;
+                    top: -5px;
+                    right: -5px;
+                }
+            
+            
+                // Left Handle
+                .left-handle {
+                    @extend %handle;
+                    left: -5px;
+                    top: 50%;
+                    transform: translate(0, -50%);
+                }
+            
+            
+                // Bottom Left Handle
+                .bottom-left-handle {
+                    @extend %handle;
+                    bottom: -5px;
+                    left: -5px;
+                }
+            
+            
+                // Bottom Center Handle
+                .bottom-center-handle {
+                    @extend %handle;
+                    bottom: -5px;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                }
+            
+            
+                // Bottom Right Handle
+                .bottom-right-handle {
+                    @extend %handle;
+                    bottom: -5px;
+                    right: -5px;
+                }
+            
+            
+                // Right Handle
+                .right-handle {
+                    @extend %handle;
+                    right: -5px;
+                    top: 50%;
+                    transform: translate(0, -50%);
+                }
+            
+            
+                // Left Handle Bar
+                .left-handle-bar {
+                    position: absolute;
+                    left: -5px;
+                    width: 10px;
+                    top: 5px;
+                    bottom: 5px;
+                    z-index: 1;
+                }
+            
+            
+                // Top Handle Bar
+                .top-handle-bar {
+                    position: absolute;
+                    left: 5px;
+                    top: -5px;
+                    right: 5px;
+                    height: 10px;
+                    z-index: 1;
+                }
+            
+            
+                // Right Handle Bar
+                .right-handle-bar {
+                    position: absolute;
+                    right: -5px;
+                    width: 10px;
+                    top: 5px;
+                    bottom: 5px;
+                    z-index: 1;
+                }
+            
+            
+                // Bottom Handle Bar
+                .bottom-handle-bar {
+                    position: absolute;
+                    left: 5px;
+                    bottom: -5px;
+                    right: 5px;
+                    height: 10px;
+                    z-index: 1;
+                }
+            }
+        }
+    }
     
 }
 
 
-.row:not(:active) %column {
-    &:hover {
-        // outline: 1px solid greenyellow;
-        z-index: 2;
+body:not(#widget-resize):not(#row-move):not(#column-resize) {
+    .top-left-handle {
+        &:hover {
+            cursor: nw-resize;
+        }
+    }
+
+    .left-handle-bar {
+        &:hover {
+            cursor: w-resize;
+        }
+    }
+
+    .top-right-handle {
+        &:hover {
+            cursor: ne-resize;
+        }
+    }
+
+    .bottom-left-handle {
+        &:hover {
+            cursor: sw-resize;
+        }
+    }
+
+    .bottom-right-handle {
+        &:hover {
+            cursor: se-resize;
+        }
+    }
+
+    .top-handle-bar {
+        &:hover {
+            cursor: n-resize;
+        }
+    }
+
+    .right-handle-bar {
+        &:hover {
+            cursor: e-resize;
+        }
+    }
+
+    .bottom-handle-bar {
+        &:hover {
+            cursor: n-resize;
+        }
     }
 }
 
 
-
-.fa-eye, .fa-eye-slash {
-    visibility: hidden;
-}
-
-
-
-
-%column {
-    &:active {
-        // outline: 1px solid greenyellow;
-        z-index: 2;
-    }
-    &:hover .drop-indicator {
-        visibility: visible;
-    }
-
-    &:active:not(:last-of-type) .resize-button {
-        display: flex;
-    }
-}
 
 
 .drop-widget {

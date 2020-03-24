@@ -6,7 +6,7 @@
     background: #494949;
     position: absolute;
     right: -10px;
-    z-index: 5;
+    z-index: 10;
     top: 50%;
     transform: translateY(-50%);
     border-radius: 50%;
@@ -15,4 +15,8 @@
     align-items: center;
     border: 1px solid greenyellow;
     font-size: 13px;
+
+    &:hover {
+        cursor: e-resize;
+    }
 }

@@ -7,23 +7,21 @@
     [style.marginBottom.px]="margins.bottom" [style.marginLeft]="margins.left + (margins.left == 'auto' ? '' : 'px')"
     [style.maxWidth.px]="width ? width : null" [style.minHeight.px]="height">
 
-    <!-- <div class="edit-button fas" (click)="onEdit()"></div>
-    <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div> -->
 
     <!-- Handles -->
-    <div class="top-center-handle"></div>
-    <div class="left-handle"></div>
-    <div class="bottom-center-handle"></div>
-    <div class="right-handle"></div>
-    <div class="top-left-handle" (mousedown)="onHandleMove('top-left')"></div>
-    <div class="top-handle-bar" (mousedown)="onHandleMove('top')"></div>
-    <div class="top-right-handle" (mousedown)="onHandleMove('top-right')"></div>
-    <div class="right-handle-bar" (mousedown)="onHandleMove('right')"></div>
-    <div class="bottom-right-handle" (mousedown)="onHandleMove('bottom-right')"></div>
-    <div class="bottom-handle-bar" (mousedown)="onHandleMove('bottom')"></div>
-    <div class="bottom-left-handle" (mousedown)="onHandleMove('bottom-left')"></div>
-    <div class="left-handle-bar" (mousedown)="onHandleMove('left')"></div>
-    
+    <div id="handle" class="top-center-handle"></div>
+    <div id="handle" class="left-handle"></div>
+    <div id="handle" class="bottom-center-handle"></div>
+    <div id="handle" class="right-handle"></div>
+    <div id="handle" class="top-left-handle" (mousedown)="onHandleMove('top-left')"></div>
+    <div id="handle" class="top-handle-bar" (mousedown)="onHandleMove('top')"></div>
+    <div id="handle" class="top-right-handle" (mousedown)="onHandleMove('top-right')"></div>
+    <div id="handle" class="right-handle-bar" (mousedown)="onHandleMove('right')"></div>
+    <div id="handle" class="bottom-right-handle" (mousedown)="onHandleMove('bottom-right')"></div>
+    <div id="handle" class="bottom-handle-bar" (mousedown)="onHandleMove('bottom')"></div>
+    <div id="handle" class="bottom-left-handle" (mousedown)="onHandleMove('bottom-left')"></div>
+    <div id="handle" class="left-handle-bar" (mousedown)="onHandleMove('left')"></div>
+
 
     <div [style.fontFamily]="text.fontFamily" [style.fontSize.px]="text.fontSize" [style.fontWeight]="text.fontWeight"
         [style.fontStyle]="text.fontStyle" [style.color]="getTextColor()">

@@ -30,6 +30,7 @@ export class ProportionalWidgetComponent extends WidgetComponent {
 
 
     // Set the cursor
+    document.body.id = 'widget-resize';
     switch (verticalHandle + '-' + horizontalHandle) {
       case 'top-left':
         document.body.style.cursor = 'nw-resize';

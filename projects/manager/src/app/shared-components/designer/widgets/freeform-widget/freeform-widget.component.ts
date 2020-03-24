@@ -14,6 +14,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
   }
 
   onHandleMove(handle: string) {
+    document.body.id = 'widget-resize';
     switch (handle) {
       case 'top-left':
         document.body.style.cursor = 'nw-resize';
@@ -128,14 +129,16 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
       }
 
 
+      // Make sure the widget's height does not go below the min height
+      if (this.height < minHeight) {
+        this.height = minHeight;
+
+        delta = minHeight - tempHeight;
+      }
+
+
       // Align Top
       if (this.column.row.alignment.value == 'flex-start') {
-        if (this.height < minHeight) {
-          this.height = minHeight;
-
-          delta = minHeight - tempHeight;
-        }
-
         this.column.row.top -= delta;
 
 
@@ -195,6 +198,13 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
       this.height = startHeight * percent;
       let delta = this.height - tempHeight;
 
+      // Make sure the widget's height does not go below the min height
+      if (this.height < minHeight) {
+        this.height = minHeight;
+
+        delta = minHeight - tempHeight;
+      }
+
 
       // Align Center
       if (this.column.row.alignment.value == 'center') {
@@ -215,12 +225,6 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
         // Align Bottom
       } else if (this.column.row.alignment.value == 'flex-end') {
-
-        if (this.height < minHeight) {
-          this.height = minHeight;
-
-          delta = minHeight - tempHeight;
-        }
 
 
         // Move the row if the widget's height is less than the row's height
@@ -253,5 +257,10 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
     this.width = Math.max(startWidth * percent, 10);
     if (this.width > columnWidth) this.width = null;
+  }
+
+  getMinHeight(): number {
+    let children: Array<Element> = Array.from(this.widget.nativeElement.children);
+    return Math.max(...children.filter(x => x.id != 'handle').map((x: any) => x.offsetHeight));
   }
 }
