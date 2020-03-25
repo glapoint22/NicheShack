@@ -24,7 +24,7 @@ body:not(#widget-cursor) .canvas {
         & .widget {
             &.widget-selected {
                 outline: 1px solid #ff00ff;
-                outline-offset: -1px;
+                outline-offset: 2px;
                 z-index: 1;
     
                 // Top Left Handle
