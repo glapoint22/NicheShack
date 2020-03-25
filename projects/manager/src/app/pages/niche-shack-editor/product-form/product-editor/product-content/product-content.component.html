@@ -9,7 +9,7 @@
         <div title="Delete"
              class="icon-container"
              (mouseover)="overIconButton = true"
-             (mouseout)="overIconButton = false"
+             (mouseout)="onIconButtonMouseOut()"
              (click)="delete()">
             <i class="fas fa-trash-alt"></i>
         </div>
@@ -19,7 +19,7 @@
     <div class="background">
 
         <table>
-
+            
             <!---------- (1st Row) ---------->
             <tr>
                 <td></td>
@@ -80,8 +80,8 @@
                 <td #itemType
                     tabindex="-1"
                     (focus)="onItemTypeFocus(rowIndex)" 
-                    (click)="onItemTypeClick(rowIndex)"
                     (blur)="onElementBlur()"
+                    (click)="onItemTypeClick(rowIndex)"
                     [ngClass]="{'selected-content-type': productContent.selectedItemTypeIndex == rowIndex,'selected-cells': selectedRowIndex == rowIndex}">
                     <img [src]="productContent.items[rowIndex].type" draggable="false">
                 </td>

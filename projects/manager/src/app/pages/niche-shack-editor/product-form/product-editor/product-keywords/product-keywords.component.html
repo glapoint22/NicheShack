@@ -2,31 +2,31 @@
     <legend>Keywords</legend>
     <div class="icon-bar">
         <!-- Trash -->
-        <div #icon
-             class="icon-container"
-             tabindex="-1"
+        <div class="icon-container"
              [attr.title]="!isDeleteDisabled ? isEditDisabled ? 'Delete Keywords' : 'Delete Keyword' : ''"
              [ngClass]="{'icon-disabled': isDeleteDisabled}"
+             (mouseover)="overIconButton = true"
+             (mouseout)="onIconButtonMouseOut()"
              (click)="deleteKeyword()">
             <i class="fas fa-trash-alt"></i>
         </div>
 
         <!-- Edit -->
-        <div #icon
-             class="icon-container"
-             tabindex="-1"
+        <div class="icon-container"
              [attr.title]="!isEditDisabled ? 'Edit Keyword (Ctrl+Shift+K)' : ''" 
              [ngClass]="{'icon-disabled': isEditDisabled}"
+             (mouseover)="overIconButton = true"
+             (mouseout)="onIconButtonMouseOut()"
              (click)="editKeyword()">
             <i class="fas fa-edit"></i>
         </div>
 
         <!-- Add -->
-        <div #icon
-             class="icon-container"
-             tabindex="-1"
+        <div class="icon-container"
              [attr.title]="!isAddDisabled ? 'Add Keyword (Ctrl+Alt+K)' : ''" 
              [ngClass]="{'icon-disabled': isAddDisabled}"
+             (mouseover)="overIconButton = true"
+             (mouseout)="onIconButtonMouseOut()"
              (click)="addKeyword()">
             <i class="fas fa-plus-circle"></i>
         </div>
@@ -41,6 +41,7 @@
                     [contentEditable]="editedKeywordIndex == keywordIndex"
                     [textContent]="keywords[keywordIndex].name"
                     (mousedown)="onKeywordDown(keywordIndex)"
+                    (blur)="onElementBlur()"
                     (dblclick)="onKeywordDoubleClick(keywordIndex)"
                     [ngClass]="{'selected-keyword': selectedKeywordIndex == keywordIndex,
                                 'unselected-keyword': unselectedKeywordIndex == keywordIndex,
