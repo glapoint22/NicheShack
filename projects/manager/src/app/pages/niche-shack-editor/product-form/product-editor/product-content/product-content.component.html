@@ -4,20 +4,39 @@
     <!-- Icon Bar -->
     <div class="icon-bar">
 
-
-        <!-- Trash -->
+        <!-- Delete -->
         <div title="Delete"
              class="icon-container"
+             [ngClass]="{'icon-disabled': (selectedColumnIndex == null || productContent.items[0].pricePointOptions.length == 1) && (selectedRowIndex == null || productContent.items.length == 1)}"
              (mouseover)="overIconButton = true"
              (mouseout)="onIconButtonMouseOut()"
              (click)="delete()">
             <i class="fas fa-trash-alt"></i>
         </div>
+        
+
+        <!-- Add Price Point -->
+        <div title="Add Price Point"
+             class="icon-container"
+             (mouseover)="overIconButton = true"
+             (mouseout)="onIconButtonMouseOut()"
+             (click)="addPricePoint()">
+            <i class="fas fa-dollar-sign"></i>
+        </div>
+
+        
+        <!-- Add Item -->
+        <div title="Add Item"
+             class="icon-container"
+             (mouseover)="overIconButton = true"
+             (mouseout)="onIconButtonMouseOut()"
+             (click)="addItem()">
+            <i class="fas fa-cart-plus"></i>
+        </div>
     </div>
 
         
     <div class="background">
-
         <table>
             
             <!---------- (1st Row) ---------->

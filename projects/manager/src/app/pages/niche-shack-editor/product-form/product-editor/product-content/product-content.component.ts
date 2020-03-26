@@ -35,22 +35,22 @@ export class ProductContentComponent implements OnInit {
 
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
-    // this.productContent.items.push({ type: "assets/no-content-type.png", description: "", showPlaceholder: true, pricePointOptions: [true] });
-    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "0", decimal: "00", textAfter: "" });
+    this.productContent.items.push({ type: "assets/no-content-type.png", description: "", showPlaceholder: true, pricePointOptions: [true] });
+    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "0", decimal: "00", textAfter: "" });
 
 
 
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "49", decimal: "99", textAfter: "" });
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "99", decimal: "99", textAfter: "" });
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "149", decimal: "99", textAfter: "" });
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "199", decimal: "99", textAfter: "" });
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "249", decimal: "99", textAfter: "" });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "49", decimal: "99", textAfter: "" });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "99", decimal: "99", textAfter: "" });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "149", decimal: "99", textAfter: "" });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "199", decimal: "99", textAfter: "" });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "249", decimal: "99", textAfter: "" });
 
 
-    this.productContent.items.push({ type: "images/pdf.png", description: "Gumpy's Ice Cream Machine Manual", showPlaceholder: false, pricePointOptions: [false, true, true, true, false] });
-    this.productContent.items.push({ type: "images/video.png", description: "Gumpy's Ice Cream Machine Quick Start Video Guide", showPlaceholder: false, pricePointOptions: [true, true, false, false, true] });
-    this.productContent.items.push({ type: "images/audio.png", description: "Gumpy's Ice Cream Machine Instructional Audio Guide", showPlaceholder: false, pricePointOptions: [false, false, true, true, false] });
-    this.productContent.items.push({ type: "images/software.png", description: "Gumpy's Ice Cream Machine Software", showPlaceholder: false, pricePointOptions: [true, true, true, true, true] });
+    // this.productContent.items.push({ type: "images/pdf.png", description: "Gumpy's Ice Cream Machine Manual", showPlaceholder: false, pricePointOptions: [false, true, true, true, false] });
+    // this.productContent.items.push({ type: "images/video.png", description: "Gumpy's Ice Cream Machine Quick Start Video Guide", showPlaceholder: false, pricePointOptions: [true, true, false, false, true] });
+    // this.productContent.items.push({ type: "images/audio.png", description: "Gumpy's Ice Cream Machine Instructional Audio Guide", showPlaceholder: false, pricePointOptions: [false, false, true, true, false] });
+    // this.productContent.items.push({ type: "images/software.png", description: "Gumpy's Ice Cream Machine Software", showPlaceholder: false, pricePointOptions: [true, true, true, true, true] });
 
   }
 
@@ -342,6 +342,22 @@ export class ProductContentComponent implements OnInit {
         this.rowSelector.find((item, index) => index == this.selectedRowIndex).nativeElement.focus();
       })
     }
+  }
+
+
+  // -----------------------------( ADD ITEM )------------------------------ \\
+  addItem() {
+    this.removeSelectedIndex();
+    this.selectedRowIndex = this.productContent.items.length - 1;
+    this.insert("below");
+  }
+
+
+  // -----------------------------( ADD PRICE POINT )------------------------------ \\
+  addPricePoint() {
+    this.removeSelectedIndex();
+    this.selectedColumnIndex = this.productContent.items[0].pricePointOptions.length - 1;
+    this.insert("right");
   }
 
 
