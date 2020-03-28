@@ -12,7 +12,7 @@ export class ProportionalWidgetComponent extends WidgetComponent {
   constructor(widgetService: WidgetService) { super(widgetService) }
 
 
-  onHandleMove(verticalHandle: string, horizontalHandle: string, event: MouseEvent) {
+  onHandleMousedown(verticalHandle: string, horizontalHandle: string, event: MouseEvent) {
     let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.margins.left == 'auto' && this.margins.right == 'auto' ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left +
       (horizontalHandle == 'left' || (this.margins.left == 'auto' && this.margins.right == 'auto') ? anchorWidth : 0);
@@ -120,6 +120,8 @@ export class ProportionalWidgetComponent extends WidgetComponent {
         tempHeight = this.width * heightWidthRatio;
       }
       mouse = new Vector(e.clientX, e.clientY);
+
+      this.column.row.container.checkHeightChange();
     }
 
     let onMouseup = () => {

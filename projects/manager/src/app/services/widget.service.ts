@@ -8,6 +8,12 @@ import { WidgetComponent } from '../shared-components/designer/widgets/widget/wi
 export class WidgetService {
   public currentWidgetCursor: WidgetCursor;
   public selectedWidget: WidgetComponent;
+  public currentContainer: HTMLElement;
+  public currentContainerSet: boolean;
+  public currentColumn: HTMLElement;
+  public currentColumnSet: boolean;
+  public overColumn: boolean;
+  
 
   constructor() { }
 }

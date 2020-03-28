@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, ElementRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, ElementRef, Output, EventEmitter } from '@angular/core';
 import { RowComponent } from '../row/row.component';
 import { WidgetService } from '../../../services/widget.service';
 
@@ -10,6 +10,7 @@ import { WidgetService } from '../../../services/widget.service';
 export class ContainerComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @ViewChild('container', { static: false }) containerElement: ElementRef;
+  @Output() onHeightChange: EventEmitter<number> = new EventEmitter();
   public rows: Array<ComponentRef<RowComponent>> = new Array<ComponentRef<RowComponent>>();
   private selectedRowIndex: number;
   private _selectedRow: RowComponent;
@@ -21,7 +22,6 @@ export class ContainerComponent {
   public get selectedRow() {
     return this._selectedRow;
   }
-  
 
 
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }
@@ -48,7 +48,7 @@ export class ContainerComponent {
     rowComponentRef.hostView.detectChanges();
     rowComponentRef.instance.addColumn();
 
-    
+
 
     // Set the selected row as this row
     this.selectedRow = rowComponentRef.instance;
@@ -99,5 +99,45 @@ export class ContainerComponent {
     }
 
     this.setSelectedRowMinTop();
+  }
+
+  checkHeightChange() {
+    if (this.rows.length > 0) {
+      let lastRow = this.rows[this.rows.length - 1];
+      let lastRowBottom = lastRow.instance.top + lastRow.location.nativeElement.firstElementChild.clientHeight;
+      let containerHeight = this.containerElement.nativeElement.clientHeight;
+
+      // If the last row's bottom is greater than the container's bottom or the last row's bottom is less than the container's bottom
+      if (lastRowBottom > containerHeight || lastRowBottom < containerHeight) {
+        let diff = lastRowBottom - containerHeight;
+        this.onHeightChange.emit(diff);
+      }
+    }
+  }
+
+  onMouseover() {
+    if (this.widgetService.currentWidgetCursor) {
+
+      // If a container has not been set and the mouse is not over a column, set this container as the current container
+      if (!this.widgetService.currentContainerSet && !this.widgetService.overColumn) {
+        this.widgetService.currentContainerSet = true;
+        this.widgetService.currentContainer = this.containerElement.nativeElement;
+      }
+
+      // If we have reached the last container in the event chain, flag that the current container is not set and we are not over a column
+      // This basically reinitializes the currentContainerSet and overColumn properties
+      if (this.isLastContainer(this.containerElement.nativeElement)) {
+        this.widgetService.currentContainerSet = false;
+        this.widgetService.overColumn = false;
+      }
+    }
+  }
+
+  isLastContainer(element: HTMLElement): boolean {
+    while (!element.parentElement.classList.contains('grid') && !element.parentElement.classList.contains('content')) {
+      element = element.parentElement;
+    }
+
+    return element.parentElement.classList.contains('content');
   }
 }

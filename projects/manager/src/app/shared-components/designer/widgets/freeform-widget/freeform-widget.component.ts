@@ -13,59 +13,59 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
     super.ngOnInit();
   }
 
-  onHandleMove(handle: string) {
+  onHandleMousedown(handle: string) {
     document.body.id = 'widget-resize';
     switch (handle) {
       case 'top-left':
         document.body.style.cursor = 'nw-resize';
-        this.onTopHandleMove();
-        this.onLeftHandleMove();
+        this.onTopHandleMousedown();
+        this.onLeftHandleMousedown();
         break;
 
       case 'top':
         document.body.style.cursor = 'n-resize';
-        this.onTopHandleMove();
+        this.onTopHandleMousedown();
         break;
 
       case 'top-right':
         document.body.style.cursor = 'ne-resize';
-        this.onTopHandleMove();
-        this.onRightHandleMove();
+        this.onTopHandleMousedown();
+        this.onRightHandleMousedown();
         break;
 
       case 'right':
         document.body.style.cursor = 'e-resize';
-        this.onRightHandleMove();
+        this.onRightHandleMousedown();
         break;
 
       case 'bottom-right':
         document.body.style.cursor = 'se-resize';
-        this.onBottomHandleMove();
-        this.onRightHandleMove();
+        this.onBottomHandleMousedown();
+        this.onRightHandleMousedown();
         break;
 
 
       case 'bottom':
         document.body.style.cursor = 's-resize';
-        this.onBottomHandleMove();
+        this.onBottomHandleMousedown();
         break;
 
 
       case 'bottom-left':
         document.body.style.cursor = 'sw-resize';
-        this.onBottomHandleMove();
-        this.onLeftHandleMove();
+        this.onBottomHandleMousedown();
+        this.onLeftHandleMousedown();
         break;
 
       case 'left':
         document.body.style.cursor = 'w-resize';
-        this.onLeftHandleMove();
+        this.onLeftHandleMousedown();
         break;
     }
   }
 
 
-  onLeftHandleMove() {
+  onLeftHandleMousedown() {
     let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.margins.left == 'auto' && this.margins.right == 'auto' ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left + anchorWidth;
     let startWidth: number = this.widget.nativeElement.clientWidth;
@@ -74,7 +74,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
       let mousePos = (anchorPoint - e.clientX);
       let percent = mousePos / anchorWidth;
 
-      this.setWidth(startWidth, percent)
+      this.setWidth(startWidth, percent);
     }
 
     let onMouseup = () => {
@@ -86,7 +86,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
 
-  onRightHandleMove() {
+  onRightHandleMousedown() {
     let isMarginAuto: boolean = this.margins.left == 'auto' && this.margins.right == 'auto';
     let anchorWidth: number = this.widget.nativeElement.clientWidth * (isMarginAuto ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left + (isMarginAuto ? anchorWidth : 0);
@@ -108,7 +108,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
 
-  onTopHandleMove() {
+  onTopHandleMousedown() {
     let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.alignment.value == 'center' ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().top + anchorHeight;
     let startHeight: number = this.widget.nativeElement.clientHeight;
@@ -168,7 +168,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
       // Collision
       if (delta > 0 || this.column.row.alignment.value == 'center') this.column.row.container.collisionUp();
       if (this.column.row.alignment.value == 'center' || this.column.row.alignment.value == 'flex-start') this.column.row.container.collisionDown();
-
+      this.column.row.container.checkHeightChange();
 
       tempHeight = this.height;
     }
@@ -182,7 +182,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
 
-  onBottomHandleMove() {
+  onBottomHandleMousedown() {
     let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.alignment.value == 'center' ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().top + (this.column.row.alignment.value == 'center' ? anchorHeight : 0);
     let startHeight: number = this.widget.nativeElement.clientHeight;
@@ -237,6 +237,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
       // Collision
       if (this.column.row.alignment.value == 'center' || this.column.row.alignment.value == 'flex-end') this.column.row.container.collisionUp();
       if (delta > 0 || this.column.row.alignment.value == 'center') this.column.row.container.collisionDown();
+      this.column.row.container.checkHeightChange();
 
 
       tempHeight = this.height;

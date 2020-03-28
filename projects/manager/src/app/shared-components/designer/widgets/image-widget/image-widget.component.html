@@ -8,10 +8,10 @@
     [style.maxWidth.px]="width ? width : null">
 
 
-    <div class="top-left-handle" (mousedown)="onHandleMove('top', 'left', $event)"></div>
-    <div class="top-right-handle" (mousedown)="onHandleMove('top', 'right', $event)"></div>
-    <div class="bottom-right-handle" (mousedown)="onHandleMove('bottom', 'right', $event)"></div>
-    <div class="bottom-left-handle" (mousedown)="onHandleMove('bottom', 'left', $event)"></div>
+    <div class="top-left-handle" (mousedown)="onHandleMousedown('top', 'left', $event)"></div>
+    <div class="top-right-handle" (mousedown)="onHandleMousedown('top', 'right', $event)"></div>
+    <div class="bottom-right-handle" (mousedown)="onHandleMousedown('bottom', 'right', $event)"></div>
+    <div class="bottom-left-handle" (mousedown)="onHandleMousedown('bottom', 'left', $event)"></div>
 
     <svg viewBox="0 0 12 12">
         <path
