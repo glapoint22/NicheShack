@@ -4,24 +4,28 @@ import { MenuService } from 'projects/manager/src/app/services/menu.service';
 @Component({
   selector: 'product-keywords',
   templateUrl: './product-keywords.component.html',
-  styleUrls: ['./product-keywords.component.scss']
+  styleUrls: ['./product-keywords.component.scss', '../product-editor.component.scss']
 })
 export class ProductKeywordsComponent implements OnInit {
   constructor(public menuService: MenuService) { }
+  // Private
+  private lastFocusedKeyword: any;
+  private pivotIndex: number = null;
+  private ctrlDown: boolean = false;
+  private shiftDown: boolean = false;
+  private newKeyword: boolean = false;
+  private eventListenersAdded: boolean = false;
+  // Public
   public keywords: any[] = [];
-  public selectedKeywordIndex: number = null;
-  public unselectedKeywordIndex: number = null;
-  public editedKeywordIndex: number = null;
-  public eventListenersSet: boolean = false;
   public isAddDisabled: boolean = false;
   public isEditDisabled: boolean = true;
+  public overIconButton: boolean = false;
   public isDeleteDisabled: boolean = true;
-  private shiftDown: boolean = false;
-  private ctrlDown: boolean = false;
-  private newKeyword: boolean = false;
-  private pivotIndex: number = null;
+  public editedKeywordIndex: number = null;
+  public selectedKeywordIndex: number = null;
+  public unselectedKeywordIndex: number = null;
   @ViewChildren('keyword') keyword: QueryList<ElementRef>;
-  @ViewChildren('icon') icon: QueryList<ElementRef>;
+  @ViewChildren('iconButton') iconButton: QueryList<ElementRef>;
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
@@ -37,6 +41,29 @@ export class ProductKeywordsComponent implements OnInit {
       { name: "Mint Chocolate Chip Topped With Hot Fudge and Sprinkles", selected: false, selectType: null },
       // { name: "Flavor of the Day", selected: false, selectType: null }
     ]
+  }
+
+
+  // -----------------------------( ADD EVENT LISTENERS )------------------------------ \\
+  addEventListeners() {
+    if (!this.eventListenersAdded) {
+      this.eventListenersAdded = true;
+      window.addEventListener('keyup', this.onKeyUp);
+      window.addEventListener('keydown', this.onKeyDown);
+      window.addEventListener('mousedown', this.onMouseDown);
+      window.addEventListener('blur', this.onInnerWindowBlur);
+    }
+  }
+
+
+  // -----------------------------( REMOVE EVENT LISTENERS )------------------------------ \\
+  removeEventListeners() {
+    this.removeFocus();
+    this.eventListenersAdded = false;
+    window.removeEventListener('keyup', this.onKeyUp);
+    window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('mousedown', this.onMouseDown);
+    window.removeEventListener('blur', this.onInnerWindowBlur);
   }
 
 
@@ -60,82 +87,111 @@ export class ProductKeywordsComponent implements OnInit {
   }
 
 
-  // -----------------------------( ON MOUSE DOWN )------------------------------ \\
-  private onMouseDown = () => {
-    let preventMousedown: boolean = false;
+  // -----------------------------( ON INNER WINDOW BLUR )------------------------------ \\
+  private onInnerWindowBlur = () => {
+    // * When the focus gets set to something that is outside the inner-window * \\
+    
+    // If a keyword is being edited or added
+    if (this.editedKeywordIndex != null) {
+      // Evaluate the state of the edit and then act accordingly
+      this.evaluateEdit();
 
-    window.setTimeout(() => {
-      // Loop through all the keywords
-      this.keyword.forEach(element => {
-        // Check to see if any of the keywords have focus
-        if (element.nativeElement == document.activeElement) {
-          // If so, prevent mouse down from executing
-          preventMousedown = true;
-        }
-      });
+      // If a keyword is NOT being edited
+    } else {
 
-      // Loop through all the icon buttons
-      this.icon.forEach(element => {
-        // Check to see if any of the icon buttons have focus
-        if (element.nativeElement == document.activeElement) {
-          // If so, prevent mouse down from executing
-          preventMousedown = true;
-        }
-      });
-
-      // As long as mouse down has NOT been prevented
-      if (!preventMousedown) {
-        // If a keyword is being edited
-        if (this.editedKeywordIndex != null) {
-          this.commitEdit();
-  
-          // If a keyword is NOT being edited
-        } else {
-          this.unsetEventListeners();
-        }
-      }
-    });
-  };
-
-
-  // -----------------------------( SET EVENT LISTENERS )------------------------------ \\
-  setEventListeners() {
-    if (!this.eventListenersSet) {
-      this.eventListenersSet = true;
-      window.addEventListener('keydown', this.onKeyDown);
-      window.addEventListener('keyup', this.onKeyUp);
-      window.addEventListener('mousedown', this.onMouseDown);
+      // Then remove all listeners and selections
+      this.removeEventListeners();
     }
   }
 
 
-  // -----------------------------( UNSET EVENT LISTENERS )------------------------------ \\
-  unsetEventListeners() {
-    this.removeFocus();
-    this.eventListenersSet = false;
-    window.removeEventListener('keydown', this.onKeyDown);
-    window.removeEventListener('keyup', this.onKeyUp);
-    window.removeEventListener('mousedown', this.onMouseDown);
+  // -----------------------------( ON MOUSE DOWN )------------------------------ \\
+  private onMouseDown = () => {
+    // As long as the context menu is open
+    if (this.menuService.menuOpen
+      // and we're NOT clicking on an icon button
+      && !this.overIconButton) {
+
+      window.setTimeout(() => {
+        // check to see if the context menu is now closed, if it is
+        if (!this.menuService.menuOpen
+          // and we're not selecting a keyword
+          && document.activeElement != this.lastFocusedKeyword) {
+
+          // Then remove all listeners and selections
+          this.removeEventListeners();
+        }
+      }, 20)
+    }
+  }
+
+
+  // -----------------------------( ON ELEMENT BLUR )------------------------------ \\
+  onElementBlur() {
+    window.setTimeout(() => {
+      // As long as a content element isn't losing focus becaus another content element is receiving focus
+      if (document.activeElement != this.lastFocusedKeyword
+        // and the context menu is NOT open
+        && !this.menuService.menuOpen
+        // and we're NOT clicking on an icon button
+        && !this.overIconButton) {
+          
+        // If a keyword is being edited or added
+        if (this.editedKeywordIndex != null) {
+          // Evaluate the state of the edit and then act accordingly
+          this.evaluateEdit();
+
+          // If a keyword is NOT being edited
+        } else {
+
+          // Then remove all listeners and selections
+          this.removeEventListeners();
+        }
+      }
+    })
+  }
+
+
+  // -----------------------------( ON ICON BUTTON MOUSE OUT )------------------------------ \\
+  onIconButtonMouseOut() {
+    this.overIconButton = false;
+
+    // * A fail safe that puts the focus back to the selected keyword if a mouseup occurs outside the click bounds of an icon button * \\ 
+
+    // As long as the context menu is NOT open
+    if (!this.menuService.menuOpen) {
+      // If a keyword is selected
+      if (this.selectedKeywordIndex != null) {
+        // Set focus to that keyword
+        this.keyword.find((item, index) => index == this.selectedKeywordIndex).nativeElement.focus();
+      }
+    }
   }
 
 
   // -----------------------------( ON KEYWORD DOWN )------------------------------ \\
   onKeywordDown(index: number) {
-    // If a keyword is NOT being edited
-    if (this.editedKeywordIndex == null) {
-      // Set the selection
-      this.setKeywordSelection(index)
 
-      // If a keyword is being edited and a keyword that is NOT being edited is selected
-    } else if (index != this.editedKeywordIndex) {
-      this.commitEdit();
-    }
+    window.setTimeout(() => {
+      this.lastFocusedKeyword = document.activeElement;
+
+      // If a keyword is NOT being edited
+      if (this.editedKeywordIndex == null) {
+        // Set the selection
+        this.setKeywordSelection(index)
+
+        // If a keyword is being edited and a keyword that is NOT being edited is selected
+      } else if (index != this.editedKeywordIndex) {
+        // Evaluate the state of the edit and then act accordingly
+        this.evaluateEdit();
+      }
+    })
   }
 
 
   // -----------------------------( SET KEYWORD SELECTION )------------------------------ \\
   setKeywordSelection(index: number) {
-    this.setEventListeners();
+    this.addEventListeners();
     this.isEditDisabled = false;
     this.isDeleteDisabled = false;
     this.selectedKeywordIndex = index;
@@ -294,12 +350,15 @@ export class ProductKeywordsComponent implements OnInit {
   }
 
 
-  // -----------------------------( COMMIT EDIT )------------------------------ \\
-  commitEdit() {
+  // -----------------------------( EVALUATE EDIT )------------------------------ \\
+  evaluateEdit() {
     let keyword = this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement;
+    let keywordTrimmed = keyword.textContent.trim();
+    
+    // If the keyword is NOT empty
+    if (keywordTrimmed.length > 0) {
 
-    // As long as the edited keyword has text and has no spaces in the begining
-    if ((/^[^.\s]/).test(keyword.textContent) && keyword.textContent.length > 0) {
+      // Commit the edit
       this.selectedKeywordIndex = this.editedKeywordIndex;
       this.newKeyword = false;
       this.isAddDisabled = false;
@@ -309,7 +368,31 @@ export class ProductKeywordsComponent implements OnInit {
       this.unselectedKeywordIndex = null;
       this.pivotIndex = this.selectedKeywordIndex;
       this.keywords[this.selectedKeywordIndex].selected = true;
-      this.keywords[this.selectedKeywordIndex].name = keyword.textContent;
+      this.keywords[this.selectedKeywordIndex].name = keywordTrimmed;
+      keyword.textContent = this.keywords[this.selectedKeywordIndex].name;
+
+      // If the keyword is empty
+    } else {
+
+      // If we were adding a keyword
+      if (this.newKeyword) {
+        // Remove that keyword
+        this.newKeyword = false;
+        this.unselectedKeywordIndex = null;
+        this.keywords.splice(this.editedKeywordIndex, 1);
+
+        // If we were NOT adding a keyword
+      } else {
+
+        // Reset the keyword back to the way it was before the edit
+        this.isEditDisabled = false;
+        this.isDeleteDisabled = false;
+        this.selectedKeywordIndex = this.editedKeywordIndex;
+        this.keywords[this.selectedKeywordIndex].selected = true;
+        keyword.textContent = this.keywords[this.editedKeywordIndex].name;
+      }
+      this.isAddDisabled = false;
+      this.editedKeywordIndex = null;
     }
   }
 
@@ -343,7 +426,7 @@ export class ProductKeywordsComponent implements OnInit {
   // -----------------------------( ADD KEYWORD )------------------------------ \\
   addKeyword() {
     if (!this.isAddDisabled) {
-      this.setEventListeners();
+      this.addEventListeners();
       this.newKeyword = true;
       this.isAddDisabled = true;
       this.isEditDisabled = true;
@@ -444,6 +527,10 @@ export class ProductKeywordsComponent implements OnInit {
           // Re-establish the pivot index
           this.pivotIndex = this.selectedKeywordIndex;
 
+          window.setTimeout(() => {
+            this.keyword.find((item, index) => index == this.selectedKeywordIndex).nativeElement.focus();
+          });
+
           // If there is NOT a next available keyword that can be selected
         } else {
           // Make no keyword marked as selected
@@ -460,14 +547,24 @@ export class ProductKeywordsComponent implements OnInit {
         this.isDeleteDisabled = true;
         // Re-establish the pivot index
         this.pivotIndex = this.unselectedKeywordIndex;
+
+        window.setTimeout(() => {
+          this.keyword.find((item, index) => index == this.unselectedKeywordIndex).nativeElement.focus();
+        });
       }
+
+
     }
   }
 
 
   // -----------------------------( SET CONTEXT MENU )------------------------------ \\
   setContextMenu(e: MouseEvent) {
-    if (e.which == 3) {
+    // As long as the right mouse button is being pressed
+    if (e.which == 3
+      // and a keyword is NOT being edited
+      && this.editedKeywordIndex == null) {
+
       // Build the context menu
       this.menuService.buildMenu(this, e.clientX - 280, e.clientY - 92,
         // Cut
@@ -485,7 +582,8 @@ export class ProductKeywordsComponent implements OnInit {
     event.preventDefault();
     // If a keyword is being edited
     if (this.editedKeywordIndex != null) {
-      this.commitEdit();
+      // Evaluate the state of the edit and then act accordingly
+      this.evaluateEdit();
     }
   }
 
@@ -494,32 +592,17 @@ export class ProductKeywordsComponent implements OnInit {
   escape() {
     // If a keyword is being edited
     if (this.editedKeywordIndex != null) {
-
-      // If we were adding a keyword
-      if (this.newKeyword) {
-        // Remove that keyword
-        this.newKeyword = false;
-        this.unselectedKeywordIndex = null;
-        this.keywords.splice(this.editedKeywordIndex, 1);
-
-        // If we're just escaping from an edit
-      } else {
-
-        // Reset the keyword back to the way it was before the edit
-        this.isEditDisabled = false;
-        this.isDeleteDisabled = false;
-        this.selectedKeywordIndex = this.editedKeywordIndex;
-        this.keywords[this.selectedKeywordIndex].selected = true;
-        this.keyword.find((item, index) => index == this.editedKeywordIndex).nativeElement.textContent = this.keywords[this.editedKeywordIndex].name;
-      }
-      this.isAddDisabled = false;
-      this.editedKeywordIndex = null;
+      // Evaluate the state of the edit and then act accordingly
+      this.evaluateEdit();
 
       // If a keyword is NOT being edited
     } else {
 
-      // Clear any list selections
-      this.unsetEventListeners();
+      // As long as the context menu is NOT open
+      if (!this.menuService.menuOpen) {
+        // Then remove all listeners and selections
+        this.removeEventListeners();
+      }
     }
   }
 

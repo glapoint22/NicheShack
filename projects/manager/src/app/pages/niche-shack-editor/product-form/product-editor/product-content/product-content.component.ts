@@ -6,7 +6,7 @@ import { MenuService } from 'projects/manager/src/app/services/menu.service';
 @Component({
   selector: 'product-content',
   templateUrl: './product-content.component.html',
-  styleUrls: ['./product-content.component.scss']
+  styleUrls: ['./product-content.component.scss', '../product-editor.component.scss']
 })
 export class ProductContentComponent implements OnInit {
   // Private
@@ -35,22 +35,22 @@ export class ProductContentComponent implements OnInit {
 
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
-    // this.productContent.items.push({ type: "assets/no-content-type.png", description: "", showPlaceholder: true, pricePointOptions: [true] });
-    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "0", decimal: "00", textAfter: "" });
+    this.productContent.items.push({ type: "assets/no-content-type.png", description: "", showPlaceholder: true, pricePointOptions: [true] });
+    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "0", decimal: "00", textAfter: "" });
 
 
 
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "49", decimal: "99", textAfter: "" });
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "99", decimal: "99", textAfter: "" });
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "149", decimal: "99", textAfter: "" });
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "199", decimal: "99", textAfter: "" });
-    this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "249", decimal: "99", textAfter: "" });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "49", decimal: "99", textAfter: "" });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "99", decimal: "99", textAfter: "" });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "149", decimal: "99", textAfter: "" });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "199", decimal: "99", textAfter: "" });
+    // this.productContent.pricePoints.push({ textBefore: "", wholeNumber: "249", decimal: "99", textAfter: "" });
 
 
-    this.productContent.items.push({ type: "images/pdf.png", description: "Gumpy's Ice Cream Machine Manual", showPlaceholder: false, pricePointOptions: [false, true, true, true, false] });
-    this.productContent.items.push({ type: "images/video.png", description: "Gumpy's Ice Cream Machine Quick Start Video Guide", showPlaceholder: false, pricePointOptions: [true, true, false, false, true] });
-    this.productContent.items.push({ type: "images/audio.png", description: "Gumpy's Ice Cream Machine Instructional Audio Guide", showPlaceholder: false, pricePointOptions: [false, false, true, true, false] });
-    this.productContent.items.push({ type: "images/software.png", description: "Gumpy's Ice Cream Machine Software", showPlaceholder: false, pricePointOptions: [true, true, true, true, true] });
+    // this.productContent.items.push({ type: "images/pdf.png", description: "Gumpy's Ice Cream Machine Manual", showPlaceholder: false, pricePointOptions: [false, true, true, true, false] });
+    // this.productContent.items.push({ type: "images/video.png", description: "Gumpy's Ice Cream Machine Quick Start Video Guide", showPlaceholder: false, pricePointOptions: [true, true, false, false, true] });
+    // this.productContent.items.push({ type: "images/audio.png", description: "Gumpy's Ice Cream Machine Instructional Audio Guide", showPlaceholder: false, pricePointOptions: [false, false, true, true, false] });
+    // this.productContent.items.push({ type: "images/software.png", description: "Gumpy's Ice Cream Machine Software", showPlaceholder: false, pricePointOptions: [true, true, true, true, true] });
 
   }
 
@@ -98,21 +98,29 @@ export class ProductContentComponent implements OnInit {
 
 
   // -----------------------------( ON INNER WINDOW BLUR )------------------------------ \\
-  private onInnerWindowBlur = (event: KeyboardEvent) => {
+  private onInnerWindowBlur = () => {
     // When the focus gets set to something that is outside the inner-window, then remove all listeners and selections
     this.removeEventListeners();
   }
 
 
   // -----------------------------( ON MOUSE DOWN )------------------------------ \\
-  private onMouseDown = (event: KeyboardEvent) => {
+  private onMouseDown = () => {
     // As long as the context menu is open
     if (this.menuService.menuOpen
       // and we're NOT clicking on an icon button
       && !this.overIconButton) {
 
-      // Then remove all listeners and selections
-      this.removeEventListeners();
+      window.setTimeout(() => {
+        // check to see if the context menu is now closed, if it is
+        if (!this.menuService.menuOpen
+          // and we're not selecting a content element
+          && document.activeElement != this.productContent.lastFocusedElement) {
+
+          // Then remove all listeners and selections
+          this.removeEventListeners();
+        }
+      }, 20)
     }
   }
 
@@ -135,6 +143,30 @@ export class ProductContentComponent implements OnInit {
         this.removeEventListeners();
       }
     })
+  }
+
+
+  // -----------------------------( ON ICON BUTTON MOUSE OUT )------------------------------ \\
+  onIconButtonMouseOut() {
+    this.overIconButton = false;
+
+    // * A fail safe that puts the focus back to the selected price point or item if a mouseup occurs outside the click bounds of an icon button *\\ 
+
+    // As long as the context menu is NOT open
+    if (!this.menuService.menuOpen) {
+
+      // If a price point is selected
+      if (this.selectedColumnIndex != null) {
+        // Set focus to that price point
+        this.columnSelector.find((item, index) => index == this.selectedColumnIndex).nativeElement.focus();
+
+
+        // If we're copying an Item
+      } else if (this.selectedRowIndex != null) {
+        // Set focus to that item
+        this.rowSelector.find((item, index) => index == this.selectedRowIndex).nativeElement.focus();
+      }
+    }
   }
 
 
@@ -313,6 +345,22 @@ export class ProductContentComponent implements OnInit {
   }
 
 
+  // -----------------------------( ADD ITEM )------------------------------ \\
+  addItem() {
+    this.removeSelectedIndex();
+    this.selectedRowIndex = this.productContent.items.length - 1;
+    this.insert("below");
+  }
+
+
+  // -----------------------------( ADD PRICE POINT )------------------------------ \\
+  addPricePoint() {
+    this.removeSelectedIndex();
+    this.selectedColumnIndex = this.productContent.items[0].pricePointOptions.length - 1;
+    this.insert("right");
+  }
+
+
   // -----------------------------( CLEAR VALUES )------------------------------ \\
   clearValues() {
     // If we're clearing a Price Point's values
@@ -435,8 +483,11 @@ export class ProductContentComponent implements OnInit {
       // For everything else
     } else {
 
-      // Just remove the focus
-      this.productContent.lastFocusedElement.blur();
+      // As long as the context menu is NOT open
+      if (!this.menuService.menuOpen) {
+        // Remove all listeners and selections
+        this.removeEventListeners();
+      }
     }
   }
 
