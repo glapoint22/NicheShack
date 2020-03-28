@@ -12,8 +12,26 @@ export class ColumnComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   public row: RowComponent;
   public widget: WidgetComponent;
+  private columnElement: HTMLElement;
 
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }
+
+  ngAfterViewInit() {
+    // Get the html column element
+    this.columnElement = this.viewContainerRef.element.nativeElement.parentElement;
+  }
+
+  ngDoCheck() {
+    // This will add or remove the "column-indicator-container" class to the column.
+    // By adding this class, it will enable the column indicators to be visible
+    if (this.columnElement) {
+      if (this.widgetService.currentWidgetCursor && this.widgetService.currentColumn == this.columnElement) {
+        this.columnElement.classList.add('column-indicator-container');
+      } else {
+        this.columnElement.classList.remove('column-indicator-container');
+      }
+    }
+  }
 
   addWidget() {
     let componentFactory = this.resolver.resolveComponentFactory(this.widgetService.currentWidgetCursor.component);
@@ -51,9 +69,42 @@ export class ColumnComponent {
   onMouseenter() {
     if (this.widgetService.currentWidgetCursor) {
       document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.notAllowed + '"), auto';
-      document.body.classList.add('over-row');
     }
   }
+
+  onMouseover(event: MouseEvent) {
+    if (this.widgetService.currentWidgetCursor) {
+
+      // If no other column has been set, set the current column to be this column
+      if (!this.widgetService.currentColumnSet) {
+        this.widgetService.currentColumn = event.currentTarget as HTMLElement;
+        this.widgetService.currentColumnSet = true;
+      }
+
+      // If we have reached the last column in the event chain, flag that the current column is not set
+      // This basically reinitializes the currentColumnSet property
+      if (this.isLastColumn(event.currentTarget as HTMLElement)) {
+        this.widgetService.currentColumnSet = false;
+      }
+
+      // If a container has not been set for the mouse to be over, flag that we are over a column
+      if (!this.widgetService.currentContainerSet) {
+        this.widgetService.currentContainer = null;
+        this.widgetService.overColumn = true;
+      } else {
+        this.widgetService.overColumn = false;
+      }
+    }
+  }
+
+  isLastColumn(element: HTMLElement): boolean {
+    while (element.parentElement.getAttribute('column') == null && !element.parentElement.classList.contains('content')) {
+      element = element.parentElement;
+    }
+
+    return element.parentElement.classList.contains('content');
+  }
+
 
   onResizeButtonMousedown(event: any) {
     document.body.id = 'column-resize';

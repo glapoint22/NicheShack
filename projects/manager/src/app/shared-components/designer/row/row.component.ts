@@ -59,8 +59,8 @@ export class RowComponent {
 
 
 
-  onRowMoveMousedown(event) {
-    if(document.body.id == 'widget-resize' || document.body.id == 'column-resize') return;
+  onMousedown(event) {
+    if (document.body.id == 'widget-resize' || document.body.id == 'column-resize') return;
 
     let offset = event.clientY - this.top;
     let currentPos = this.top;
@@ -84,6 +84,8 @@ export class RowComponent {
       } else {
         this.container.collisionUp();
       }
+
+      this.container.checkHeightChange();
     }
 
     // Mouseup
@@ -107,7 +109,7 @@ export class RowComponent {
     // Add this column to the columns array
     this.columns.push(columnComponentRef.location.nativeElement);
 
-    
+
 
     // Add or update each column with the correct col class based on the number of columns in this row
     this.columns.forEach((column: HTMLElement) => {
@@ -126,6 +128,7 @@ export class RowComponent {
 
     // Set the events
     columnComponentRef.location.nativeElement.addEventListener('mouseenter', columnComponentRef.instance.onMouseenter.bind(this));
+    columnComponentRef.location.nativeElement.addEventListener('mouseover', columnComponentRef.instance.onMouseover.bind(columnComponentRef.instance));
     columnComponentRef.location.nativeElement.addEventListener('mouseup', () => { this.widgetService.currentWidgetCursor = null; });
 
     // flag that this row has been selected
@@ -133,6 +136,7 @@ export class RowComponent {
 
     // Shift rows down if this row collides with its neighboring rows
     this.container.collisionDown();
+    this.container.checkHeightChange();
   }
 
 
@@ -147,7 +151,7 @@ export class RowComponent {
 
   getColumnIndex(columnElement: HTMLElement) {
     // Get the index of where we will be placing this column within the row
-    if(!columnElement) return 0;
+    if (!columnElement) return 0;
     return this.columns.findIndex(x => x == columnElement) + 1;
   }
 }

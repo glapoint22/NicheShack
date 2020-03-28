@@ -15,12 +15,14 @@
     <div id="handle" class="left-handle"></div>
     <div id="handle" class="bottom-center-handle"></div>
     <div id="handle" class="right-handle"></div>
-    <div id="handle" class="top-left-handle" (mousedown)="onHandleMove('top-left')"></div>
-    <div id="handle" class="top-handle-bar" (mousedown)="onHandleMove('top')"></div>
-    <div id="handle" class="top-right-handle" (mousedown)="onHandleMove('top-right')"></div>
-    <div id="handle" class="right-handle-bar" (mousedown)="onHandleMove('right')"></div>
-    <div id="handle" class="bottom-right-handle" (mousedown)="onHandleMove('bottom-right')"></div>
-    <div id="handle" class="bottom-handle-bar" (mousedown)="onHandleMove('bottom')"></div>
-    <div id="handle" class="bottom-left-handle" (mousedown)="onHandleMove('bottom-left')"></div>
-    <div id="handle" class="left-handle-bar" (mousedown)="onHandleMove('left')"></div>
+    <div id="handle" class="top-left-handle" (mousedown)="onHandleMousedown('top-left')"></div>
+    <div id="handle" class="top-handle-bar" (mousedown)="onHandleMousedown('top')"></div>
+    <div id="handle" class="top-right-handle" (mousedown)="onHandleMousedown('top-right')"></div>
+    <div id="handle" class="right-handle-bar" (mousedown)="onHandleMousedown('right')"></div>
+    <div id="handle" class="bottom-right-handle" (mousedown)="onHandleMousedown('bottom-right')"></div>
+    <div id="handle" class="bottom-handle-bar" (mousedown)="onHandleMousedown('bottom')"></div>
+    <div id="handle" class="bottom-left-handle" (mousedown)="onHandleMousedown('bottom-left')"></div>
+    <div id="handle" class="left-handle-bar" (mousedown)="onHandleMousedown('left')"></div>
+
+    <container #container (onHeightChange)="onHeightChange($event)"></container>
 </div>

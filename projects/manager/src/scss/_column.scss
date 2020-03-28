@@ -3,7 +3,7 @@ $column-color: greenyellow;
 .canvas {
     %column {
         &:hover {
-            & .drop-indicator {
+            & .column-indicator {
                 visibility: visible;
             }
         }

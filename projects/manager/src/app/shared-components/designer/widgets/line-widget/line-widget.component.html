@@ -7,8 +7,8 @@
     <!-- Handles -->
     <div class="left-handle"></div>
     <div class="right-handle"></div>
-    <div class="left-handle-bar" (mousedown)="onHandleMove('left')"></div>
-    <div class="right-handle-bar" (mousedown)="onHandleMove('right')"></div>
+    <div class="left-handle-bar" (mousedown)="onHandleMousedown('left')"></div>
+    <div class="right-handle-bar" (mousedown)="onHandleMousedown('right')"></div>
 
 
     <div style=" width: 100%;" [style.borderBottom]="border.width + 'px ' + border.style + ' ' + getBorderColor()"

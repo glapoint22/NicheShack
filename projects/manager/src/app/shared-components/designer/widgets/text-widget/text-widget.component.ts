@@ -31,7 +31,6 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
   ngAfterViewInit() {
     this.iframe.nativeElement.srcdoc = document.createElement('div').outerHTML;
     this.iframe.nativeElement.onload = (event) => {
-      let a = this.iframe;
       let contentDocument: Document = event.currentTarget.contentDocument;
       this.content = contentDocument.body.firstElementChild as HTMLElement;
 
@@ -61,10 +60,10 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
     this.textBox.selectContents();
   }
 
-  onHandleMove(handle: string) {
+  onHandleMousedown(handle: string) {
     this.handleMove = true;
     if (handle == 'bottom') this.bottomHandleMove = true;
-    super.onHandleMove(handle)
+    super.onHandleMousedown(handle)
   }
 
   mouseUp(onMousemove, onMouseup) {
@@ -75,8 +74,6 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
       this.bottomHandleMove = false;
       this.fixedHeight = this.height;
     }
-
-
   }
 
   getContentHeight() {

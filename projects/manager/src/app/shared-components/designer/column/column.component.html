@@ -6,8 +6,8 @@
     <i class="fas fa-arrows-alt-h"></i>
 </div>
 
-<!-- Drop indicators -->
-<div #leftIndicator class="drop-indicator" (mouseenter)="onDropIndicatorEnter()" (mouseleave)="onDropIndicatorLeave()"
+<!-- Column indicators -->
+<div #leftIndicator class="column-indicator" (mouseenter)="onDropIndicatorEnter()" (mouseleave)="onDropIndicatorLeave()"
     (mouseup)="onDropIndicatorMouseup(leftIndicator.parentElement.previousElementSibling)"></div>
-<div #rightIndicator class="drop-indicator" (mouseenter)="onDropIndicatorEnter()" (mouseleave)="onDropIndicatorLeave()"
+<div #rightIndicator class="column-indicator" (mouseenter)="onDropIndicatorEnter()" (mouseleave)="onDropIndicatorLeave()"
     (mouseup)="onDropIndicatorMouseup(rightIndicator.parentElement)"></div>
