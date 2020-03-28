@@ -6,7 +6,7 @@ import { MenuService } from 'projects/manager/src/app/services/menu.service';
 @Component({
   selector: 'product-content',
   templateUrl: './product-content.component.html',
-  styleUrls: ['./product-content.component.scss']
+  styleUrls: ['./product-content.component.scss', '../product-editor.component.scss']
 })
 export class ProductContentComponent implements OnInit {
   // Private

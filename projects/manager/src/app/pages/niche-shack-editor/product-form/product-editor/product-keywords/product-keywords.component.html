@@ -1,5 +1,14 @@
-<fieldset style="height: 294px; position: relative;">
+<!-- Fieldset -->
+<fieldset class="margin-top-5-xxs
+                 margin-top-11-md
+                 margin-top-10-lg
+                 margin-top-4-xl
+                 margin-top-3-xxl">
+
     <legend>Keywords</legend>
+
+
+    <!-- Icon Bar -->
     <div class="icon-bar">
 
         <!-- Delete -->
@@ -33,7 +42,9 @@
         </div>
     </div>
 
-    <div (contextmenu)="$event.preventDefault()" class="background" (mouseup)="setContextMenu($event)">
+
+    <!-- Background -->
+    <div class="background" (contextmenu)="$event.preventDefault()" (mouseup)="setContextMenu($event)">
         <table>
             <tr *ngFor="let keyword of keywords; let keywordIndex = index">
                 <td #keyword

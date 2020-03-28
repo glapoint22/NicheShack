@@ -33,11 +33,18 @@
 }
 
 iframe {
-    height: 266px;
+    height: 283px;
+    width: 100%;
     border: 1px solid $border-color;
     user-select: none;
     background: #1b1b1b;
+    margin-bottom: 0;
 }
+
+fieldset {
+    padding-bottom: 1px;
+}
+
 
 
 .selected {
