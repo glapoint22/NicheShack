@@ -24,6 +24,7 @@ export class ProductKeywordsComponent implements OnInit {
   public editedKeywordIndex: number = null;
   public selectedKeywordIndex: number = null;
   public unselectedKeywordIndex: number = null;
+  // View Children
   @ViewChildren('keyword') keyword: QueryList<ElementRef>;
   @ViewChildren('iconButton') iconButton: QueryList<ElementRef>;
 
