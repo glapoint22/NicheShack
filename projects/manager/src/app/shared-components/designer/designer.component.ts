@@ -6,7 +6,6 @@ import { LineWidgetComponent } from './widgets/line-widget/line-widget.component
 import { TextWidgetComponent } from './widgets/text-widget/text-widget.component';
 import { WidgetCursor } from '../../classes/widget-cursor';
 import { WidgetService } from '../../services/widget.service';
-import { ContainerComponent } from './container/container.component';
 
 @Component({
   selector: 'designer',
@@ -122,21 +121,5 @@ export class DesignerComponent implements OnInit {
       event.target.value = Number.parseInt(event.target.value) - 1;
       this.canvas.nativeElement.style.width = event.target.value + 'px';
     }
-  }
-
-  setCursor(allowed: boolean) {
-    if (this.widgetService.currentWidgetCursor) {
-      if (allowed) {
-        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.allowed + '"), auto';
-        document.body.removeAttribute('class');
-      } else {
-        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.notAllowed + '"), auto';
-      }
-    }
-  }
-
-  onCanvasMousedown(container: ContainerComponent) {
-    this.widgetService.selectedWidget = null; 
-    container.selectedRow = null;
   }
 }

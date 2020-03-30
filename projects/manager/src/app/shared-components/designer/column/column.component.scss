@@ -13,10 +13,22 @@
     color: #dadada;
     justify-content: center;
     align-items: center;
-    border: 1px solid greenyellow;
-    font-size: 13px;
+    border: 1px solid #b4b4b4;
 
     &:hover {
         cursor: e-resize;
     }
+}
+
+.column-area {
+    position: absolute; top: 0;
+    left:0;
+    right: 0;
+}
+
+
+.column-divider {
+    position: absolute;
+    right: 0;
+    top: 0;
 }

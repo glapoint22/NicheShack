@@ -124,12 +124,12 @@ export class RowComponent {
     columnComponentRef.instance.addWidget();
     columnComponentRef.hostView.detectChanges();
 
-    this.sortColumns();
+
 
     // Set the events
-    columnComponentRef.location.nativeElement.addEventListener('mouseenter', columnComponentRef.instance.onMouseenter.bind(this));
     columnComponentRef.location.nativeElement.addEventListener('mouseover', columnComponentRef.instance.onMouseover.bind(columnComponentRef.instance));
     columnComponentRef.location.nativeElement.addEventListener('mouseup', () => { this.widgetService.currentWidgetCursor = null; });
+    columnComponentRef.location.nativeElement.addEventListener('mouseleave', columnComponentRef.instance.onMouseleave.bind(columnComponentRef.instance));
 
     // flag that this row has been selected
     this.container.selectedRow = this;
@@ -137,6 +137,11 @@ export class RowComponent {
     // Shift rows down if this row collides with its neighboring rows
     this.container.collisionDown();
     this.container.checkHeightChange();
+
+    // Wait a frame to sort the column
+    window.setTimeout(() => {
+      this.sortColumns();
+    });
   }
 
 

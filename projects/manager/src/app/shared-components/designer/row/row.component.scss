@@ -5,9 +5,5 @@
     width: 100%;
     outline: none;
     user-select: none;
-}
-
-.row:hover, .selected, .row:active {
     outline: 1px dashed $selected-border-color;
-    outline-offset: 4px;
 }

@@ -1,4 +1,35 @@
-$column-color: greenyellow;
+.column-indicator {
+    position: absolute;
+}
+
+.column-indicator-container {
+    & > .column-indicator {
+        visibility: hidden;
+        
+        left: 0;
+        top: 0px;
+        width: 60px;
+        height: 100%;
+        background-color: rgba(0, 106, 255, 0.2);
+        background-image: linear-gradient(45deg, rgba(82, 173, 251, 0.3) 25%, transparent 25%, transparent 75%, rgba(82, 173, 251, 0.3) 75%, rgba(82, 173, 251, 0.3)), 
+                          linear-gradient(45deg, rgba(82, 173, 251, 0.3) 25%, transparent 25%, transparent 75%, rgba(82, 173, 251, 0.3) 75%, rgba(82, 173, 251, 0.3));
+        background-size: 8px 8px;
+        background-position: 0 0, 4px 4px;
+        z-index: 10;
+    
+        &:last-child {
+            right: 0;
+            left: initial;
+        }
+    
+        &:hover {
+            background-color: #006aff;
+            background-image: linear-gradient(45deg, #52adfb 25%, transparent 25%, transparent 75%, #52adfb 75%, #52adfb), 
+                              linear-gradient(45deg, #52adfb 25%, transparent 25%, transparent 75%, #52adfb 75%, #52adfb);
+        }
+    }
+}
+
 
 .canvas {
     %column {
@@ -7,33 +38,10 @@ $column-color: greenyellow;
                 visibility: visible;
             }
         }
-    }
-}
 
-
-body#column-resize {
-    .canvas {
-        & %column {
-          &:active {
-            outline: 1px solid $column-color;
-            
-            
-            // Outline the next sibling
-            & + div {
-                outline: 1px solid $column-color;
-
-                // Apply a left border to the next sibling's sibling
-                & + div {
-                    border-left: 1px solid $column-color;
-                }
-            }
-        }  
-                
-                
-            
-            .resize-button:active {
-                display: flex;
-                z-index: 10;
+        &:not(:last-child) {
+           & > .column-divider {
+                outline: 1px dashed $selected-border-color;
             }
         }
     }
@@ -41,22 +49,35 @@ body#column-resize {
 
 
 
-body:not(#widget-resize):not(#column-resize):not(#widget-cursor) {
-    .canvas {
-        & %column {
 
-            &:hover {
-                outline: 1px solid $column-color;
-
-                // Apply a left border to the next sibling
-                & + div {
-                    border-left: 1px solid $column-color;
-                }
+body {
+    &:not(#widget-cursor) {
+        .canvas {
+            %column {
+                &:not(:last-child):hover {
+                    & > .column-divider {
+                         .resize-button {
+                             display: flex;
+                         }
+                     }
+                     
+                 }
+        
+        
             }
+        }
+    }
 
-
-            &:hover:not(:last-of-type) .resize-button {
-                display: flex;
+    &#column-resize {
+        .canvas {
+            & %column {
+                .resize-button {
+                    display: none !important;
+                }
+                
+                .resize-button:active, .resize-button:hover {
+                    display: flex !important;
+                }
             }
         }
     }

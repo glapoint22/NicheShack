@@ -1,5 +1,6 @@
 <div #container class="grid" (mouseup)="onMouseup($event)" (mouseover)="onMouseover()"
-    (mousemove)="rowIndicator.style.top = ($event.clientY - container.getBoundingClientRect().y) + 'px'">
+    (mousemove)=" widgetService.currentWidgetCursor ? rowIndicator.style.top = ($event.clientY - container.getBoundingClientRect().y) + 'px' : null"
+    (mouseleave)="onMouseleave()">
 
 
     <div #rowIndicator

@@ -197,7 +197,8 @@ body:not(#widget-cursor) .sizing-bar:hover {
         margin-left: auto;
         margin-right: auto;
         position: relative;
-        border: 1px dashed rgb(77, 77, 77);
+        outline: 1px dashed rgb(77, 77, 77);
+        outline-offset: -5px;
         overflow: auto;
         padding: 5px;
     

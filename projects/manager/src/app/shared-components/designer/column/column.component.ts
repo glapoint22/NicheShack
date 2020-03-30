@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
 import { RowComponent } from '../row/row.component';
 import { WidgetService } from '../../../services/widget.service';
 import { WidgetComponent } from '../widgets/widget/widget.component';
@@ -10,9 +10,13 @@ import { WidgetComponent } from '../widgets/widget/widget.component';
 })
 export class ColumnComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+
   public row: RowComponent;
   public widget: WidgetComponent;
+  public rowHeight: number;
   private columnElement: HTMLElement;
+  private resizeButtonMousedown: boolean;
+
 
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }
 
@@ -25,12 +29,15 @@ export class ColumnComponent {
     // This will add or remove the "column-indicator-container" class to the column.
     // By adding this class, it will enable the column indicators to be visible
     if (this.columnElement) {
-      if (this.widgetService.currentWidgetCursor && this.widgetService.currentColumn == this.columnElement) {
+      if (this.widgetService.currentWidgetCursor && this.widgetService.currentColumn == this.columnElement && this.row.columns.length < 6) {
         this.columnElement.classList.add('column-indicator-container');
       } else {
         this.columnElement.classList.remove('column-indicator-container');
       }
     }
+
+    // Used to size the column divider & column indicators
+    this.rowHeight = this.row.rowElement.nativeElement.clientHeight;
   }
 
   addWidget() {
@@ -66,11 +73,6 @@ export class ColumnComponent {
     }
   }
 
-  onMouseenter() {
-    if (this.widgetService.currentWidgetCursor) {
-      document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.notAllowed + '"), auto';
-    }
-  }
 
   onMouseover(event: MouseEvent) {
     if (this.widgetService.currentWidgetCursor) {
@@ -91,10 +93,43 @@ export class ColumnComponent {
       if (!this.widgetService.currentContainerSet) {
         this.widgetService.currentContainer = null;
         this.widgetService.overColumn = true;
+        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.notAllowed + '"), auto';
       } else {
         this.widgetService.overColumn = false;
       }
+    } else {
+      let resizeButton = this.getPreiviousColumnResizeButton();
+
+      // Display the previous column's resize button when we hover over this column
+      if (resizeButton) resizeButton.style.display = 'flex';
     }
+  }
+
+
+  getPreiviousColumnResizeButton(): HTMLElement {
+    let previousColumn = this.columnElement.previousElementSibling;
+
+    // If there is no previous column, return
+    if (!previousColumn) return null;
+
+    let resizeButtons = previousColumn.querySelectorAll('.resize-button');
+
+    // If there are no resize buttons, return
+    if (resizeButtons.length == 0) return null;
+
+    // Return the last resize button in the array, which is the previous resize button
+    return resizeButtons[resizeButtons.length - 1] as HTMLElement;
+  }
+
+  onMouseleave() {
+    if (!this.widgetService.currentWidgetCursor) {
+      let resizeButton = this.getPreiviousColumnResizeButton();
+
+      // Hide the previous column's resize button when we leave this column
+      if (resizeButton) resizeButton.removeAttribute('style');
+    }
+
+
   }
 
   isLastColumn(element: HTMLElement): boolean {
@@ -106,12 +141,29 @@ export class ColumnComponent {
   }
 
 
+  onResizeButtonMouseover() {
+    if (!this.widgetService.currentWidgetCursor) {
+      document.body.id = 'column-resize';
+    }
+  }
+
+
+  onResizeButtonMouseleave() {
+    if (!this.widgetService.currentWidgetCursor && !this.resizeButtonMousedown) {
+      document.body.removeAttribute('id');
+    }
+  }
+
+
+
+
   onResizeButtonMousedown(event: any) {
-    document.body.id = 'column-resize';
+    this.resizeButtonMousedown = true;
+    // document.body.id = 'column-resize';
     document.body.style.cursor = 'e-resize';
 
     // Get column and row elements
-    let column: HTMLElement = event.currentTarget.parentElement;
+    let column: HTMLElement = event.currentTarget.parentElement.parentElement;
     let row = column.parentElement;
 
     // Get the current column position and the number of columns in this row
@@ -156,6 +208,7 @@ export class ColumnComponent {
       window.removeEventListener("mouseup", onMouseup);
       document.body.removeAttribute('style');
       document.body.removeAttribute('id');
+      this.resizeButtonMousedown = false;
     }
 
     // Add the listeners

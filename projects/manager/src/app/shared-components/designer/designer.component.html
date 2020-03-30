@@ -60,11 +60,10 @@
                 </div>
 
                 <!-- Canvas -->
-                <div #canvasElement class="canvas" (mousedown)="onCanvasMousedown(container)">
+                <div #canvasElement class="canvas" (mousedown)="widgetService.selectedWidget = null">
 
                     <!-- Content -->
-                    <div #content class="content" [style.maxWidth.px]="contentWidth" (mousemove)="setCursor(true)"
-                        (mouseleave)="setCursor()">
+                    <div #content class="content" [style.maxWidth.px]="contentWidth" >
                         <container #container></container>
                     </div>
                 </div>

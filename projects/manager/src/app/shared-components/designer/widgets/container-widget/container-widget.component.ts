@@ -61,7 +61,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
   
   
   getMinHeight(): number {
-    if(this.container.rows.length == 0) return 0;
+    if(this.container.rows.length == 0) return 20;
 
     let index = this.container.rows.length - 1;
 
@@ -76,6 +76,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
 
     // Check the height for the parent container
     this.column.row.container.checkHeightChange();
+    this.column.row.container.collisionDown();
   }
 
 
@@ -100,5 +101,4 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
     // Make sure any proportional widgets have not changed the container height
     this.container.checkHeightChange();
   }
-
 }

@@ -11,31 +11,29 @@
 .widget {
     position: relative;
     width: 100%;
+    &:not(.widget-selected) {
+        outline: 1px solid rgba(255, 0, 255, 0.5);
+    }
 }
 
 
-
-body:not(#widget-cursor) .canvas {
+.canvas {
     .row {
-        &:not(:active) {
-            cursor: move;
-        }
-    
         & .widget {
             &.widget-selected {
-                outline: 1px solid #ff00ff;
-                outline-offset: 2px;
+                outline: 2px solid #ff00ff;
+                // outline-offset: -2px;
                 z-index: 1;
     
                 // Top Left Handle
-                .top-left-handle {
+                & > .top-left-handle {
                     @extend %handle;
                     top: -5px;
                     left: -5px;
                 }
             
                 // Top Center Handle
-                .top-center-handle {
+                & > .top-center-handle {
                     @extend %handle;
                     top: -5px;
                     left: 50%;
@@ -44,7 +42,7 @@ body:not(#widget-cursor) .canvas {
             
             
                 // Top Right Handle
-                .top-right-handle {
+                & > .top-right-handle {
                     @extend %handle;
                     top: -5px;
                     right: -5px;
@@ -52,7 +50,7 @@ body:not(#widget-cursor) .canvas {
             
             
                 // Left Handle
-                .left-handle {
+                & > .left-handle {
                     @extend %handle;
                     left: -5px;
                     top: 50%;
@@ -61,7 +59,7 @@ body:not(#widget-cursor) .canvas {
             
             
                 // Bottom Left Handle
-                .bottom-left-handle {
+                & > .bottom-left-handle {
                     @extend %handle;
                     bottom: -5px;
                     left: -5px;
@@ -69,7 +67,7 @@ body:not(#widget-cursor) .canvas {
             
             
                 // Bottom Center Handle
-                .bottom-center-handle {
+                & > .bottom-center-handle {
                     @extend %handle;
                     bottom: -5px;
                     left: 50%;
@@ -78,7 +76,7 @@ body:not(#widget-cursor) .canvas {
             
             
                 // Bottom Right Handle
-                .bottom-right-handle {
+                & > .bottom-right-handle {
                     @extend %handle;
                     bottom: -5px;
                     right: -5px;
@@ -86,7 +84,7 @@ body:not(#widget-cursor) .canvas {
             
             
                 // Right Handle
-                .right-handle {
+                & > .right-handle {
                     @extend %handle;
                     right: -5px;
                     top: 50%;
@@ -95,7 +93,7 @@ body:not(#widget-cursor) .canvas {
             
             
                 // Left Handle Bar
-                .left-handle-bar {
+                & > .left-handle-bar {
                     position: absolute;
                     left: -5px;
                     width: 10px;
@@ -106,7 +104,7 @@ body:not(#widget-cursor) .canvas {
             
             
                 // Top Handle Bar
-                .top-handle-bar {
+                & > .top-handle-bar {
                     position: absolute;
                     left: 5px;
                     top: -5px;
@@ -117,7 +115,7 @@ body:not(#widget-cursor) .canvas {
             
             
                 // Right Handle Bar
-                .right-handle-bar {
+                & > .right-handle-bar {
                     position: absolute;
                     right: -5px;
                     width: 10px;
@@ -128,7 +126,7 @@ body:not(#widget-cursor) .canvas {
             
             
                 // Bottom Handle Bar
-                .bottom-handle-bar {
+                & > .bottom-handle-bar {
                     position: absolute;
                     left: 5px;
                     bottom: -5px;
@@ -143,97 +141,81 @@ body:not(#widget-cursor) .canvas {
 }
 
 
-body:not(#widget-resize):not(#row-move):not(#column-resize) {
-    .top-left-handle {
-        &:hover {
-            cursor: nw-resize;
+body {
+    &:not(#widget-cursor) {
+        & .canvas {
+            .row {
+                &:not(:active) {
+                    cursor: move;
+                }
+            }
+        }
+
+        &:not(#widget-resize):not(#row-move):not(#column-resize) {
+            .top-left-handle {
+                &:hover {
+                    cursor: nw-resize;
+                }
+            }
+        
+            .left-handle-bar {
+                &:hover {
+                    cursor: w-resize;
+                }
+            }
+        
+            .top-right-handle {
+                &:hover {
+                    cursor: ne-resize;
+                }
+            }
+        
+            .bottom-left-handle {
+                &:hover {
+                    cursor: sw-resize;
+                }
+            }
+        
+            .bottom-right-handle {
+                &:hover {
+                    cursor: se-resize;
+                }
+            }
+        
+            .top-handle-bar {
+                &:hover {
+                    cursor: n-resize;
+                }
+            }
+        
+            .right-handle-bar {
+                &:hover {
+                    cursor: e-resize;
+                }
+            }
+        
+            .bottom-handle-bar {
+                &:hover {
+                    cursor: n-resize;
+                }
+            }
         }
     }
 
-    .left-handle-bar {
-        &:hover {
-            cursor: w-resize;
+
+    &#widget-cursor {
+        & input {
+            pointer-events: none;
         }
-    }
 
-    .top-right-handle {
-        &:hover {
-            cursor: ne-resize;
+        & .hierarchy-container {
+            pointer-events: none;
         }
-    }
 
-    .bottom-left-handle {
-        &:hover {
-            cursor: sw-resize;
+        & .grid:hover {
+            .row-indicator {
+                visibility: visible;
+            }
         }
-    }
-
-    .bottom-right-handle {
-        &:hover {
-            cursor: se-resize;
-        }
-    }
-
-    .top-handle-bar {
-        &:hover {
-            cursor: n-resize;
-        }
-    }
-
-    .right-handle-bar {
-        &:hover {
-            cursor: e-resize;
-        }
-    }
-
-    .bottom-handle-bar {
-        &:hover {
-            cursor: n-resize;
-        }
-    }
-}
-
-
-
-
-.column-indicator-container {
-    & > .column-indicator {
-        visibility: hidden;
-        position: absolute;
-        left: 0;
-        top: 0px;
-        width: 60px;
-        height: 100%;
-        background-color: rgba(0, 106, 255, 0.2);
-        background-image: linear-gradient(45deg, rgba(82, 173, 251, 0.3) 25%, transparent 25%, transparent 75%, rgba(82, 173, 251, 0.3) 75%, rgba(82, 173, 251, 0.3)), 
-                          linear-gradient(45deg, rgba(82, 173, 251, 0.3) 25%, transparent 25%, transparent 75%, rgba(82, 173, 251, 0.3) 75%, rgba(82, 173, 251, 0.3));
-        background-size: 8px 8px;
-        background-position: 0 0, 4px 4px;
-    
-        &:last-child {
-            right: 0;
-            left: initial;
-        }
-    
-        &:hover {
-            background-color: #006aff;
-            background-image: linear-gradient(45deg, #52adfb 25%, transparent 25%, transparent 75%, #52adfb 75%, #52adfb), 
-                              linear-gradient(45deg, #52adfb 25%, transparent 25%, transparent 75%, #52adfb 75%, #52adfb);
-        }
-    }
-}
-
-
-body#widget-cursor input {
-    pointer-events: none;
-}
-
-body#widget-cursor .hierarchy-container {
-    pointer-events: none;
-}
-
-body#widget-cursor .grid:hover {
-    .row-indicator {
-        visibility: visible;
     }
 }

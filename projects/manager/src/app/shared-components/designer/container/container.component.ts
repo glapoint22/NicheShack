@@ -122,6 +122,7 @@ export class ContainerComponent {
       if (!this.widgetService.currentContainerSet && !this.widgetService.overColumn) {
         this.widgetService.currentContainerSet = true;
         this.widgetService.currentContainer = this.containerElement.nativeElement;
+        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.allowed + '"), auto';
       }
 
       // If we have reached the last container in the event chain, flag that the current container is not set and we are not over a column
@@ -130,6 +131,12 @@ export class ContainerComponent {
         this.widgetService.currentContainerSet = false;
         this.widgetService.overColumn = false;
       }
+    }
+  }
+
+  onMouseleave() {
+    if (this.widgetService.currentWidgetCursor) {
+      document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.notAllowed + '"), auto';
     }
   }
 

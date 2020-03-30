@@ -63,7 +63,7 @@
                     max-width: percentage($i / $num-grid-columns);
                 }
 
-                .flex-10 .col-#{$i}#{$extension} {
+                .flex-10 > .col-#{$i}#{$extension} {
                     flex: 0 0 percentage($i / 10);
                     max-width: percentage($i / 10);
                 }
