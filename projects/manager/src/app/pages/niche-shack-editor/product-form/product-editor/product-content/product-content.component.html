@@ -56,7 +56,7 @@
                 <td #columnSelector
                     *ngFor="let pricePoint of productContent.pricePoints; let columnIndex = index"
                     tabindex="-1"
-                    (focus)="onColumnSelectorFocus(columnIndex)"
+                    (mousedown)="onColumnSelectorDown(columnIndex)"
                     (blur)="onElementBlur()"
                     (mouseup)="setContextMenu($event)"
                     (contextmenu)="$event.preventDefault()"
@@ -76,7 +76,7 @@
                 <td #pricePoint
                     *ngFor="let pricePoint of productContent.pricePoints; let columnIndex = index"
                     tabindex="-1"
-                    (focus)="onPricePointFocus(columnIndex)"
+                    (mousedown)="onPricePointDown(columnIndex)"
                     (blur)="onElementBlur()"
                     (click)="onPricePointClick()"
                     [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex, 'selected-price-point': productContent.selectedPricePointIndex == columnIndex}">
@@ -96,7 +96,7 @@
                 <td #rowSelector
                     tabindex="-1"
                     (contextmenu)="$event.preventDefault()"
-                    (focus)="onRowSelectorFocus(rowIndex)"
+                    (mousedown)="onRowSelectorDown(rowIndex)"
                     (blur)="onElementBlur()"
                     (mouseup)="setContextMenu($event)"
                     [ngClass]="{'selected-cells': selectedRowIndex == rowIndex}">
@@ -105,7 +105,7 @@
                 <!-- Item types -->
                 <td #itemType
                     tabindex="-1"
-                    (focus)="onItemTypeFocus(rowIndex)" 
+                    (mousedown)="onItemTypeDown(rowIndex)" 
                     (blur)="onElementBlur()"
                     (click)="onItemTypeClick(rowIndex)"
                     [ngClass]="{'selected-content-type': productContent.selectedItemTypeIndex == rowIndex,'selected-cells': selectedRowIndex == rowIndex}">
@@ -116,7 +116,7 @@
                 <td #itemDesc 
                     tabindex="-1"
                     contenteditable="true"
-                    (focus)="onItemDescriptionFocus(rowIndex)"
+                    (mousedown)="onItemDescriptionDown(rowIndex)"
                     (blur)="onElementBlur()"
                     (input)="setItemDescription(rowIndex, itemDesc, $event)"
                     [textContent]="productContent.items[rowIndex].description"
@@ -127,7 +127,7 @@
                 <td #pricePointOption
                     *ngFor="let pricePointOption of productContent.pricePoints; let columnIndex = index"
                     tabindex="-1"
-                    (focus)="onPricePointOptionFocus(columnIndex, rowIndex)"
+                    (mousedown)="onPricePointOptionDown(columnIndex, rowIndex)"
                     (blur)="onElementBlur()"
                     (click)="onPricePointOptionClick()"
                     [ngClass]="{'selected-cells': selectedColumnIndex == columnIndex || selectedRowIndex == rowIndex, 

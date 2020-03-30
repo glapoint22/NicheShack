@@ -9,6 +9,7 @@ import { MenuService } from 'projects/manager/src/app/services/menu.service';
   styleUrls: ['./product-content.component.scss', '../product-editor.component.scss']
 })
 export class ProductContentComponent implements OnInit {
+  constructor(public _FormService: FormService, public menuService: MenuService) { }
   // Private
   private copied: string = "";
   private eventListenersAdded: boolean = false;
@@ -22,9 +23,7 @@ export class ProductContentComponent implements OnInit {
   public selectedPricePointOptionRowIndex: number = null;
   public selectedPricePointOptionColumnIndex: number = null;
   public productContent: ProductContent = new ProductContent();
-  constructor(public _FormService: FormService, public menuService: MenuService) { }
-
-
+  // View Children
   @ViewChildren('itemType') itemType: QueryList<ElementRef>;
   @ViewChildren('itemDesc') itemDesc: QueryList<ElementRef>;
   @ViewChildren('pricePoint') pricePoint: QueryList<ElementRef>;
@@ -101,6 +100,8 @@ export class ProductContentComponent implements OnInit {
   private onInnerWindowBlur = () => {
     // When the focus gets set to something that is outside the inner-window, then remove all listeners and selections
     this.removeEventListeners();
+    // Just in case an item description's text is selected, remove all ranges
+    window.getSelection().removeAllRanges();
   }
 
 
@@ -170,27 +171,33 @@ export class ProductContentComponent implements OnInit {
   }
 
 
-  // -----------------------------( ON COLUMN SELECTOR FOCUS )------------------------------ \\
-  onColumnSelectorFocus(columnIndex: number) {
-    this.addEventListeners();
-    this.selectedColumnIndex = columnIndex;
-    this.productContent.lastFocusedElement = document.activeElement;
+  // -----------------------------( ON COLUMN SELECTOR DOWN )------------------------------ \\
+  onColumnSelectorDown(columnIndex: number) {
+    window.setTimeout(() => {
+      this.addEventListeners();
+      this.selectedColumnIndex = columnIndex;
+      this.productContent.lastFocusedElement = document.activeElement;
+    })
   }
 
 
-  // -----------------------------( ON ROW SELECTOR FOCUS )------------------------------ \\
-  onRowSelectorFocus(rowIndex: number) {
-    this.addEventListeners();
-    this.selectedRowIndex = rowIndex;
-    this.productContent.lastFocusedElement = document.activeElement;
+  // -----------------------------( ON ROW SELECTOR DOWN )------------------------------ \\
+  onRowSelectorDown(rowIndex: number) {
+    window.setTimeout(() => {
+      this.addEventListeners();
+      this.selectedRowIndex = rowIndex;
+      this.productContent.lastFocusedElement = document.activeElement;
+    })
   }
 
 
-  // -----------------------------( ON PRICE POINT FOCUS )------------------------------ \\
-  onPricePointFocus(columnIndex: number) {
-    this.addEventListeners();
-    this.productContent.selectedPricePointIndex = columnIndex;
-    this.productContent.lastFocusedElement = document.activeElement;
+  // -----------------------------( ON PRICE POINT DOWN )------------------------------ \\
+  onPricePointDown(columnIndex: number) {
+    window.setTimeout(() => {
+      this.addEventListeners();
+      this.productContent.selectedPricePointIndex = columnIndex;
+      this.productContent.lastFocusedElement = document.activeElement;
+    })
   }
 
 
@@ -201,11 +208,13 @@ export class ProductContentComponent implements OnInit {
   }
 
 
-  // -----------------------------( ON ITEM TYPE FOCUS )------------------------------ \\
-  onItemTypeFocus(rowIndex: number) {
-    this.addEventListeners();
-    this.productContent.selectedItemTypeIndex = rowIndex;
-    this.productContent.lastFocusedElement = document.activeElement;
+  // -----------------------------( ON ITEM TYPE DOWN )------------------------------ \\
+  onItemTypeDown(rowIndex: number) {
+    window.setTimeout(() => {
+      this.addEventListeners();
+      this.productContent.selectedItemTypeIndex = rowIndex;
+      this.productContent.lastFocusedElement = document.activeElement;
+    })
   }
 
 
@@ -216,11 +225,13 @@ export class ProductContentComponent implements OnInit {
   }
 
 
-  // -----------------------------( ON ITEM DESCRIPTION FOCUS )------------------------------ \\
-  onItemDescriptionFocus(rowIndex: number) {
-    this.addEventListeners();
-    this.selectedItemDescriptionIndex = rowIndex;
-    this.productContent.lastFocusedElement = document.activeElement;
+  // -----------------------------( ON ITEM DESCRIPTION DOWN )------------------------------ \\
+  onItemDescriptionDown(rowIndex: number) {
+    window.setTimeout(() => {
+      this.addEventListeners();
+      this.selectedItemDescriptionIndex = rowIndex;
+      this.productContent.lastFocusedElement = document.activeElement;
+    })
   }
 
 
@@ -238,12 +249,14 @@ export class ProductContentComponent implements OnInit {
   }
 
 
-  // -----------------------------( ON PRICE POINT OPTION FOCUS )------------------------------ \\
-  onPricePointOptionFocus(columnIndex: number, rowIndex: number) {
-    this.addEventListeners();
-    this.selectedPricePointOptionRowIndex = rowIndex;
-    this.selectedPricePointOptionColumnIndex = columnIndex;
-    this.productContent.lastFocusedElement = document.activeElement;
+  // -----------------------------( ON PRICE POINT OPTION DOWN )------------------------------ \\
+  onPricePointOptionDown(columnIndex: number, rowIndex: number) {
+    window.setTimeout(() => {
+      this.addEventListeners();
+      this.selectedPricePointOptionRowIndex = rowIndex;
+      this.selectedPricePointOptionColumnIndex = columnIndex;
+      this.productContent.lastFocusedElement = document.activeElement;
+    })
   }
 
 
@@ -253,7 +266,7 @@ export class ProductContentComponent implements OnInit {
   }
 
 
-  // -----------------------------( REMOVE FOCUS )------------------------------ \\
+  // -----------------------------( REMOVE SELECTED INDEX )------------------------------ \\
   removeSelectedIndex() {
     this.selectedRowIndex = null;
     this.selectedColumnIndex = null;
@@ -262,7 +275,6 @@ export class ProductContentComponent implements OnInit {
     this.selectedPricePointOptionColumnIndex = null;
     this.productContent.selectedItemTypeIndex = null;
     this.productContent.selectedPricePointIndex = null;
-    window.getSelection().removeAllRanges();
   }
 
 
@@ -278,7 +290,6 @@ export class ProductContentComponent implements OnInit {
       let isPasteDisabled: boolean = (selectorType == 'Price Point' && this.copied == 'Price Point') || (selectorType == 'Item' && this.copied == 'Item') ? false : true;
       let isDeleteDisabled: boolean = (selectorType == 'Price Point' && this.productContent.items[0].pricePointOptions.length > 1) || (selectorType == 'Item' && this.productContent.items.length > 1) ? false : true;
       let contextMenuLeft: number = e.clientX + (selectorType == "Price Point" ? 0 : -235);
-
 
       // Build the context menu
       this.menuService.buildMenu(this, contextMenuLeft, e.clientY - 235,
@@ -510,6 +521,7 @@ export class ProductContentComponent implements OnInit {
 
     // If we're on an item description
     if (this.selectedItemDescriptionIndex != null) {
+      window.getSelection().removeAllRanges();
       if (this.selectedItemDescriptionIndex > 0) {
         this.selectedItemDescriptionIndex--;
       }
@@ -556,6 +568,7 @@ export class ProductContentComponent implements OnInit {
 
     // If we're on an item description
     if (this.selectedItemDescriptionIndex != null) {
+      window.getSelection().removeAllRanges();
       if (this.selectedItemDescriptionIndex < this.productContent.items.length - 1) {
         this.selectedItemDescriptionIndex++;
       }
@@ -620,6 +633,7 @@ export class ProductContentComponent implements OnInit {
     if (this.selectedItemDescriptionIndex != null) {
       this.productContent.selectedItemTypeIndex = this.selectedItemDescriptionIndex;
       this.selectedItemDescriptionIndex = null;
+      window.getSelection().removeAllRanges();
       return
     }
 
@@ -666,6 +680,7 @@ export class ProductContentComponent implements OnInit {
       this.selectedPricePointOptionRowIndex = this.selectedItemDescriptionIndex;
       this.selectedItemDescriptionIndex = null;
       this.selectedPricePointOptionColumnIndex = 0;
+      window.getSelection().removeAllRanges();
       return
     }
 
