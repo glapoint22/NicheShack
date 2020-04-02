@@ -5,11 +5,12 @@ import { FillColor } from '../../../classes/fill-color';
 import { Border } from '../../../classes/border';
 import { Corners } from '../../../classes/corners';
 import { Shadow } from '../../../classes/shadow';
-import { Spacing } from '../../../classes/spacing';
 import { ColumnComponent } from '../column/column.component';
 import { ContainerComponent } from '../container/container.component';
-import { Alignment } from '../../../classes/alignment';
+import { VerticalAlignment } from '../../../classes/vertical-alignment';
 import { Color } from '../../../classes/color';
+import { Column } from '../../../classes/column';
+import { Padding } from '../../../classes/padding';
 
 @Component({
   selector: 'row',
@@ -20,13 +21,13 @@ export class RowComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @ViewChild('row', { static: false }) rowElement: ElementRef;
   public top: number;
-  public columns: Array<HTMLElement> = new Array<HTMLElement>();
+  public columns: Array<Column> = new Array<Column>();
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public padding: Spacing = new Spacing();
-  public alignment: Alignment = new Alignment();
+  public padding: Padding = new Padding();
+  public verticalAlignment: VerticalAlignment = new VerticalAlignment();
   public container: ContainerComponent;
 
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService, public _FormService: FormService) { }
@@ -39,7 +40,7 @@ export class RowComponent {
     this._FormService.corners = this.corners;
     this._FormService.shadow = this.shadow;
     this._FormService.padding = this.padding;
-    this._FormService.alignment = this.alignment;
+    this._FormService.verticalAlignment = this.verticalAlignment;
 
     // Open the container form
     this._FormService.showRowForm = true;
@@ -106,14 +107,14 @@ export class RowComponent {
     let componentFactory = this.resolver.resolveComponentFactory(ColumnComponent);
     let columnComponentRef = this.viewContainerRef.createComponent(componentFactory, this.getColumnIndex(columnElement));
 
-    // Add this column to the columns array
-    this.columns.push(columnComponentRef.location.nativeElement);
+    // Add this column to the column array
+    this.columns.push(new Column(columnComponentRef.instance, columnComponentRef.location.nativeElement));
 
 
 
     // Add or update each column with the correct col class based on the number of columns in this row
-    this.columns.forEach((column: HTMLElement) => {
-      column.setAttribute('class', 'col-' + Math.max(2, Math.floor(12 / this.columns.length)));
+    this.columns.forEach((column: Column) => {
+      column.element.setAttribute('class', 'col-' + Math.max(2, Math.floor(12 / this.columns.length)));
     });
 
     // Set the column's row as this row
@@ -147,8 +148,8 @@ export class RowComponent {
 
   sortColumns() {
     // Sort the columns from left to right based on their position
-    this.columns.sort((a: HTMLElement, b: HTMLElement) => {
-      if (a.offsetLeft > b.offsetLeft) return 1;
+    this.columns.sort((a: Column, b: Column) => {
+      if (a.element.offsetLeft > b.element.offsetLeft) return 1;
       return -1;
     });
   }
@@ -157,6 +158,39 @@ export class RowComponent {
   getColumnIndex(columnElement: HTMLElement) {
     // Get the index of where we will be placing this column within the row
     if (!columnElement) return 0;
-    return this.columns.findIndex(x => x == columnElement) + 1;
+    return this.columns.findIndex(x => x.element == columnElement) + 1;
+  }
+
+  buildHTML(parent: HTMLElement) {
+    let row = document.createElement('div');
+
+    // Added the classes
+    row.classList.add('row');
+    if (this.columns.length == 5) row.classList.add('flex-10');
+
+    row.style.position = 'relative';
+    row.style.top = this.top + 'px';
+
+    // Fill
+    if (this.fill.apply) this.fill.applyColor(row);
+
+    // Border
+    this.border.applyStyle(row);
+
+    // Corners
+    this.corners.applyStyle(row);
+
+    // Shadow
+    this.shadow.applyStyle(row);
+
+    // Padding
+    this.padding.applyStyle(row);
+
+    // Vertical alignment
+    this.verticalAlignment.applyStyle(row);
+
+    parent.appendChild(row);
+
+    this.columns.forEach((column: Column) => column.component.buildHTML(row));
   }
 }

@@ -1,7 +1,8 @@
 import { Link } from './link';
 import { NodeStyle } from './node-style';
+import { LinkSource } from './link-source';
 
-export class LinkStyle extends NodeStyle {
+export class LinkStyle extends NodeStyle implements LinkSource {
     public link: Link = new Link();
 
     constructor(contentDocument: HTMLDocument) {
@@ -78,6 +79,7 @@ export class LinkStyle extends NodeStyle {
     setLinkData(anchor: HTMLElement) {
         // Assign the data to the anchor node
         anchor.setAttribute('href', JSON.stringify({ selectedOption: this.link.selectedOption, url: this.link.url }));
+        anchor.setAttribute('target', '_blank');
     }
 
     getAnchorNode(range: Range): HTMLElement {

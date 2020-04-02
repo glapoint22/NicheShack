@@ -267,6 +267,6 @@ export class ColorPickerComponent implements OnInit {
   getNewColor() {
     let rgb: Color = Color.HexToRGB('#' + this.hex)
     let a = Math.round((((249 - this.alphaSliderY) * 0.3952569169960474) / 100) * 100) / 100;
-    return rgb.toRGBAString();
+    return rgb.toRGBString();
   }
 }

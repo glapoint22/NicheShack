@@ -17,7 +17,6 @@ export class LineWidgetComponent extends FreeformWidgetComponent {
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public shadow: Shadow = new Shadow();
-  public margins: Spacing = new Spacing();
 
   constructor(widgetService: WidgetService, public _FormService: FormService) { super(widgetService) }
 
@@ -26,7 +25,7 @@ export class LineWidgetComponent extends FreeformWidgetComponent {
     this._FormService.fill = this.fill;
     this._FormService.border = this.border;
     this._FormService.shadow = this.shadow;
-    this._FormService.margins = this.margins;
+    this._FormService.horizontalAlignment = this.horizontalAlignment;
 
     // Open the line form
     this._FormService.showLineForm = true;

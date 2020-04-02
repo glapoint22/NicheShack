@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 
 @Component({
@@ -7,8 +7,10 @@ import { MenuService } from '../../services/menu.service';
   styleUrls: ['./preview-publish-dropdown.component.scss']
 })
 export class PreviewPublishDropdownComponent {
-  constructor(public menuService: MenuService) { }
   @ViewChild('container', { static: false }) container: ElementRef;
+  @Output() onPreview: EventEmitter<void> = new EventEmitter();
+
+  constructor(public menuService: MenuService) { }
 
 
   // -----------------------------( SHOW PREVIEW PUBLISH MENU )------------------------------ \\
@@ -25,6 +27,7 @@ export class PreviewPublishDropdownComponent {
   // -----------------------------( PREVIEW )------------------------------ \\
   preview() {
     // Preview
+    this.onPreview.emit();
   }
 
 

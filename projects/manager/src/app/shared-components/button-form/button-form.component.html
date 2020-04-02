@@ -58,7 +58,7 @@
                 <!-- Shadow -->
                 <shadow *ngIf="selectedNormalVerticalTab == 'shadow'"></shadow>
                 <!-- Link -->
-                <links *ngIf="selectedNormalVerticalTab == 'link'"></links>
+                <links *ngIf="selectedNormalVerticalTab == 'link'" [source]="_FormService.linkSource"></links>
                 <!-- Margins -->
                 <margins *ngIf="selectedNormalVerticalTab == 'margins'"></margins>
             </div>

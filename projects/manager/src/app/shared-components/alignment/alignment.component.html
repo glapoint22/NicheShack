@@ -11,17 +11,17 @@
     <div class="display-flex">
         
         <!-- Top -->
-        <div class="icon-container" (click)="_FormService.alignment.value = 'flex-start'" [ngClass]="{'selected': _FormService.alignment.value == 'flex-start'}" title="Align Top">
+        <div class="icon-container" (click)="_FormService.verticalAlignment.value = 'flex-start'" [ngClass]="{'selected': _FormService.verticalAlignment.value == 'flex-start'}" title="Align Top">
             <i class="fas fa-align-left" style="transform: rotate(90deg);"></i>
         </div>
 
         <!-- Middle -->
-        <div class="icon-container" (click)="_FormService.alignment.value = 'center'" [ngClass]="{'selected': _FormService.alignment.value == 'center'}" title="Align Middle">
+        <div class="icon-container" (click)="_FormService.verticalAlignment.value = 'center'" [ngClass]="{'selected': _FormService.verticalAlignment.value == 'center'}" title="Align Middle">
             <i class="fas fa-align-center" style="transform: rotate(90deg);"></i>
         </div>
 
         <!-- Bottom -->
-        <div class="icon-container" (click)="_FormService.alignment.value = 'flex-end'" [ngClass]="{'selected': _FormService.alignment.value == 'flex-end'}" title="Align Bottom">
+        <div class="icon-container" (click)="_FormService.verticalAlignment.value = 'flex-end'" [ngClass]="{'selected': _FormService.verticalAlignment.value == 'flex-end'}" title="Align Bottom">
             <i class="fas fa-align-right" style="transform: rotate(90deg);"></i>
         </div>
     </div>

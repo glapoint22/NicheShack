@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { WidgetComponent } from '../widget/widget.component';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { Vector } from 'projects/manager/src/app/classes/vector';
+import { HorizontalAlign } from 'projects/manager/src/app/classes/horizontal-alignment';
 
 @Component({
   template: '',
@@ -13,9 +14,9 @@ export class ProportionalWidgetComponent extends WidgetComponent {
 
 
   onHandleMousedown(verticalHandle: string, horizontalHandle: string, event: MouseEvent) {
-    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.margins.left == 'auto' && this.margins.right == 'auto' ? 0.5 : 1);
+    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.horizontalAlignment.value == HorizontalAlign.Center ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left +
-      (horizontalHandle == 'left' || (this.margins.left == 'auto' && this.margins.right == 'auto') ? anchorWidth : 0);
+      (horizontalHandle == 'left' || this.horizontalAlignment.value == HorizontalAlign.Center ? anchorWidth : 0);
     let startWidth: number = this.widget.nativeElement.clientWidth;
     let heightWidthRatio: number = this.widget.nativeElement.clientHeight / this.widget.nativeElement.clientWidth;
     let widthHeightRatio = this.widget.nativeElement.clientWidth / this.widget.nativeElement.clientHeight;
@@ -89,24 +90,24 @@ export class ProportionalWidgetComponent extends WidgetComponent {
 
 
       // Align Top
-      if (this.column.row.alignment.value == 'flex-start') {
+      if (this.column.row.verticalAlignment.value == 'flex-start') {
         this.column.row.container.collisionDown();
 
 
         // Align Center or Align Bottom
-      } else if ((this.column.row.alignment.value == 'center' || this.column.row.alignment.value == 'flex-end') && this.width) {
+      } else if ((this.column.row.verticalAlignment.value == 'center' || this.column.row.verticalAlignment.value == 'flex-end') && this.width) {
 
 
         // If the height of the widget is greater or equal to the row height, move the row
         if (widgetHeight >= maxRowHeight) {
-          this.column.row.top += (deltaHeight * (this.column.row.alignment.value == 'center' ? 0.5 : 1));
+          this.column.row.top += (deltaHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1));
         }
 
 
         // This will prevent the widget from sizing when colliding with a row above it or the top of the container
-        widgetTop += (deltaHeight * (this.column.row.alignment.value == 'center' ? 0.5 : 1));
+        widgetTop += (deltaHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1));
         if (widgetTop < topCollisionPoint) {
-          this.width += ((widgetTop - topCollisionPoint) * widthHeightRatio * (this.column.row.alignment.value == 'center' ? 2 : 1));
+          this.width += ((widgetTop - topCollisionPoint) * widthHeightRatio * (this.column.row.verticalAlignment.value == 'center' ? 2 : 1));
           mouseX -= deltaSum;
           widgetTop = topCollisionPoint;
         }
@@ -114,7 +115,7 @@ export class ProportionalWidgetComponent extends WidgetComponent {
 
         // Collision
         this.column.row.container.collisionUp();
-        if (this.column.row.alignment.value == 'center') this.column.row.container.collisionDown();
+        if (this.column.row.verticalAlignment.value == 'center') this.column.row.container.collisionDown();
 
         // Re-assign
         tempHeight = this.width * heightWidthRatio;

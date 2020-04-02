@@ -21,14 +21,12 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public margins: Spacing = new Spacing();
   public padding: Spacing = new Spacing();
   private fixedHeight: number;
 
   constructor(widgetService: WidgetService, public _FormService: FormService, private applicationRef: ApplicationRef) { super(widgetService) }
 
   ngOnInit() {
-    super.ngOnInit();
     this.fixedHeight = this.height = 250;
   }
 
@@ -39,8 +37,8 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
     this._FormService.border = this.border;
     this._FormService.corners = this.corners;
     this._FormService.shadow = this.shadow;
-    this._FormService.margins = this.margins;
     this._FormService.padding = this.padding;
+    this._FormService.horizontalAlignment = this.horizontalAlignment;
 
     // Open the container form
     this._FormService.showContainerForm = true;
@@ -65,7 +63,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
 
     let index = this.container.rows.length - 1;
 
-    return this.container.rows[index].instance.top + this.container.rows[index].location.nativeElement.firstElementChild.clientHeight;
+    return this.container.rows[index].component.top + this.container.rows[index].element.firstElementChild.clientHeight;
   }
 
   onHeightChange(value: number) {

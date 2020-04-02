@@ -7,12 +7,13 @@ import { Shadow } from '../classes/shadow';
 import { Spacing } from '../classes/spacing';
 import { HoverTab } from '../classes/hover-tab';
 import { Color } from '../classes/color';
-import { Alignment } from '../classes/alignment';
+import { VerticalAlignment } from '../classes/vertical-alignment';
 import { TextBox } from '../classes/text-box';
 import { Subject } from 'rxjs';
 import { ProductContent } from '../classes/product-content';
-import { Link } from '../classes/link';
 import { Description } from '../classes/description';
+import { HorizontalAlignment } from '../classes/horizontal-alignment';
+import { LinkSource } from '../classes/link-source';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,9 @@ export class FormService {
   public padding: Spacing;
   public textBox: TextBox;
   public description: Description;
-  public alignment: Alignment
+  public linkSource: LinkSource;
+  public horizontalAlignment: HorizontalAlignment;
+  public verticalAlignment: VerticalAlignment
   public productContent: ProductContent;
   public showMediaForm: boolean;
   public showPricePointForm: boolean;
@@ -47,7 +50,7 @@ export class FormService {
   public initialShadow: Shadow = new Shadow();
   public initialMargins: Spacing = new Spacing();
   public initialPadding: Spacing = new Spacing();
-  public initialAlignment: Alignment = new Alignment();
+  public initialVerticalAlignment: VerticalAlignment = new VerticalAlignment();
   public initialColorPickerColor: Color = new Color();
 
 

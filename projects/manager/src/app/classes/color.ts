@@ -20,13 +20,8 @@ export class Color {
             this.a == color.a
     }
 
-    toRGBAString(): string {
-        return 'rgba(' + this.r + ', ' + this.g + ', ' + this.b + ', ' + this.a + ')';
-    }
-
-
     toRGBString(): string {
-        return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b  + ')';
+        return 'rgb' + (this.a < 1 ? 'a' : '') + '(' + this.r + ', ' + this.g + ', ' + this.b + (this.a < 1 ? ', ' + this.a : '') + ')';
     }
 
 
@@ -175,18 +170,18 @@ export class Color {
         let g: string = color.g.toString(16);
         let b: string = color.b.toString(16);
         let a: string = Math.round(color.a * 255).toString(16);
-      
+
         if (r.length == 1)
-          r = "0" + r;
+            r = "0" + r;
         if (g.length == 1)
-          g = "0" + g;
+            g = "0" + g;
         if (b.length == 1)
-          b = "0" + b;
+            b = "0" + b;
         if (a.length == 1)
-          a = "0" + a;
-      
+            a = "0" + a;
+
         return "#" + r + g + b + a;
-      }
+    }
 
 
 

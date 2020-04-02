@@ -19,13 +19,13 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
   private content: HTMLElement;
   public document: Document = document;
   public iframeHeight: number;
+  private defaultColor: Color = new Color(0, 0, 0, 1);
 
   constructor(widgetService: WidgetService, private applicationRef: ApplicationRef, public _FormService: FormService) { super(widgetService) }
 
   ngOnInit() {
     this.height = 64;
     this.fixedHeight = this.height;
-    super.ngOnInit();
   }
 
   ngAfterViewInit() {
@@ -34,7 +34,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
       let contentDocument: Document = event.currentTarget.contentDocument;
       this.content = contentDocument.body.firstElementChild as HTMLElement;
 
-      this.textBox = new TextBox(contentDocument, this.applicationRef, new Color(0, 0, 0, 1));
+      this.textBox = new TextBox(contentDocument, this.applicationRef, this.defaultColor);
       this.textBox.onChange.subscribe(() => {
         let contentHeight = this.getContentHeight();
         this.height = Math.max(contentHeight, this.fixedHeight);
@@ -53,7 +53,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
   // -----------------------------( ON EDIT )------------------------------ \\
   onEdit() {
     this._FormService.textBox = this.textBox;
-    this._FormService.margins = this.margins;
+    this._FormService.horizontalAlignment = this.horizontalAlignment;
 
     // Open the text form
     this._FormService.showTextForm = true;
@@ -79,14 +79,14 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
   getContentHeight() {
     let height: number = 0;
 
-    if(this.content) {
+    if (this.content) {
       for (let i = 0; i < this.content.childElementCount; i++) {
         let child = this.content.children[i];
-  
+
         height += child.clientHeight;
       }
     }
-    
+
 
     return height;
   }
@@ -97,7 +97,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
   }
 
   showCover() {
-    if(this.widgetService.selectedWidget != this) {
+    if (this.widgetService.selectedWidget != this) {
       this._FormService.showTextForm = false;
       this.textBox.removeSelection();
     }
@@ -109,4 +109,34 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
     this.iframeHeight = Math.max(this.height, this.getContentHeight());
   }
 
+
+  buildHTML(parent: HTMLElement) {
+    let text = document.createElement('div');
+    let links = text.getElementsByTagName('a');
+
+    // Styles
+    text.style.fontFamily = 'Arial, Helvetica, sans-serif';
+    text.style.fontSize = '14px';
+    text.style.color = this.defaultColor.toRGBString();
+    if(this.width) text.style.maxWidth = this.width + 'px';
+    this.horizontalAlignment.applyStyle(text);
+    text.style.width = '100%';
+    text.style.lineHeight = 'normal';
+
+    // The content
+    text.innerHTML = this.content.innerHTML;
+    
+    
+    // This will change the href attribute of each link to just the url
+    for(let i = 0; i < links.length; i++) {
+      let link = links[i];
+      let regex= new RegExp(/(?:url":")([a-zA-Z0-9./?=:_&%+-]+)/);
+      let url = regex.exec(link.getAttribute('href'))[1];
+      link.attributes.removeNamedItem('href');
+      link.setAttribute('href', url);
+    }
+
+    // Append the text to the parent
+    parent.appendChild(text);
+  }
 }

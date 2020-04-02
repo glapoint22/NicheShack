@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Link } from '../../classes/link';
+import { LinkSource } from '../../classes/link-source';
 
 @Component({
   selector: 'links',
@@ -7,7 +8,7 @@ import { Link } from '../../classes/link';
   styleUrls: ['./link.component.scss']
 })
 export class LinkComponent implements OnInit {
-  @Input() source: any;
+  @Input() source: LinkSource;
   public link: Link;
   public currentLink: Link = new Link();
   public enableRemove: boolean;
@@ -30,7 +31,8 @@ export class LinkComponent implements OnInit {
   applyLink() {
     if (!this.applyDisabled()) {
       this.setCurrentLink();
-      this.source.applyLink();
+      if (this.source.applyLink) this.source.applyLink();
+
     }
   }
 

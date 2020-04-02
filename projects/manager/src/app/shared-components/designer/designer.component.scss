@@ -59,23 +59,23 @@
 }
 
 
-.page-menu {
-    max-width: 186px;
-    width: 100%;
-    height: 100%;
-    border-left: 2px groove #4a4a4a;
-    border-right: 2px groove #4a4a4a;
-    display: flex; 
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-}
+// .page-menu {
+//     max-width: 186px;
+//     width: 100%;
+//     height: 100%;
+//     border-left: 2px groove #4a4a4a;
+//     border-right: 2px groove #4a4a4a;
+//     display: flex; 
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: 10px;
+// }
 
-body:not(#widget-cursor) .page-menu:hover {
-    background: #424242;
-    color: white;
-    cursor: pointer;
-}
+// body:not(#widget-cursor) .page-menu:hover {
+//     background: #424242;
+//     color: white;
+//     cursor: pointer;
+// }
 
 
 .width-display-container {
@@ -110,32 +110,32 @@ body:not(#widget-cursor) .page-menu:hover {
 
 
 
-.publish-dropdown-container {
-    width: 100%;
-    height: 100%;
-    max-width: 186px;
-    display:flex;
-    justify-content: flex-end;
-    padding-left: 5px;
-    padding-right: 5px;
-}
+// .publish-dropdown-container {
+//     width: 100%;
+//     height: 100%;
+//     max-width: 186px;
+//     display:flex;
+//     justify-content: flex-end;
+//     padding-left: 5px;
+//     padding-right: 5px;
+// }
 
 
-.publish-dropdown {
-    width: 100%;
-    max-width: 50px;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    border-left: 2px groove #4a4a4a;
-    border-right: 2px groove #4a4a4a;
-}
+// .publish-dropdown {
+//     width: 100%;
+//     max-width: 50px;
+//     display:flex;
+//     align-items: center;
+//     justify-content: center;
+//     border-left: 2px groove #4a4a4a;
+//     border-right: 2px groove #4a4a4a;
+// }
 
-body:not(#widget-cursor) .publish-dropdown:hover {
-    background: #424242;
-    color: white;
-    cursor: pointer;
-}
+// body:not(#widget-cursor) .publish-dropdown:hover {
+//     background: #424242;
+//     color: white;
+//     cursor: pointer;
+// }
 
 
 .design-area-background {
@@ -163,13 +163,13 @@ body:not(#widget-cursor) .publish-dropdown:hover {
     flex-shrink: 0;
 }
 
-body:not(#widget-cursor) .sizing-bar:hover {
-    background-color: #3f3f3f;
-    cursor: ew-resize;
-    & .ridge {
-        border-color: #9b9b9b;
-    }
-}
+// .sizing-bar:hover {
+//     background-color: #3f3f3f;
+//     cursor: ew-resize;
+//     & .ridge {
+//         border-color: #9b9b9b;
+//     }
+// }
 
 
 .ridge-container {

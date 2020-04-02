@@ -21,14 +21,14 @@
             <div class="page-select-bar">
 
                 <!-- Page Menu Dropdown -->
-                <div class="page-menu" (mousedown)="pageMenu.show = !pageMenu.show">
+                <!-- <div class="page-menu" (mousedown)="pageMenu.show = !pageMenu.show">
                     <div>Home</div>
                     <i class="fas fa-chevron-down"></i>
-                </div>
+                </div> -->
 
 
                 <!-- Page Dropdown -->
-                <pages-menu #pageMenu></pages-menu>
+                <!-- <pages-menu #pageMenu></pages-menu> -->
 
 
 
@@ -43,7 +43,7 @@
 
 
                 <!-- Prevew/Publish Dropdown -->
-                <preview-publish-dropdown></preview-publish-dropdown>
+                <preview-publish-dropdown (onPreview)="onPreview()"></preview-publish-dropdown>
 
             </div>
 

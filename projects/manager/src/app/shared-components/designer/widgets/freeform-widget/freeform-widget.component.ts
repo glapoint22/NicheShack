@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from '../widget/widget.component';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
+import { HorizontalAlign } from 'projects/manager/src/app/classes/horizontal-alignment';
 
 @Component({
   template: '',
 })
-export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
+export class FreeformWidgetComponent extends WidgetComponent {
 
   constructor(widgetService: WidgetService) { super(widgetService) }
-
-  ngOnInit() {
-    super.ngOnInit();
-  }
 
   onHandleMousedown(handle: string) {
     document.body.id = 'widget-resize';
@@ -66,7 +63,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
   onLeftHandleMousedown() {
-    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.margins.left == 'auto' && this.margins.right == 'auto' ? 0.5 : 1);
+    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.horizontalAlignment.value == HorizontalAlign.Center ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left + anchorWidth;
     let startWidth: number = this.widget.nativeElement.clientWidth;
 
@@ -87,9 +84,8 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
   onRightHandleMousedown() {
-    let isMarginAuto: boolean = this.margins.left == 'auto' && this.margins.right == 'auto';
-    let anchorWidth: number = this.widget.nativeElement.clientWidth * (isMarginAuto ? 0.5 : 1);
-    let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left + (isMarginAuto ? anchorWidth : 0);
+    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.horizontalAlignment.value == HorizontalAlign.Center ? 0.5 : 1);
+    let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left + (this.horizontalAlignment.value == HorizontalAlign.Center ? anchorWidth : 0);
     let startWidth: number = this.widget.nativeElement.clientWidth;
 
     let onMousemove = (e: MouseEvent) => {
@@ -109,7 +105,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
   onTopHandleMousedown() {
-    let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.alignment.value == 'center' ? 0.5 : 1);
+    let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().top + anchorHeight;
     let startHeight: number = this.widget.nativeElement.clientHeight;
     let tempHeight: number = startHeight;
@@ -124,8 +120,8 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
       let delta = this.height - tempHeight;
 
       // Prevent the bottom of the widget extending when colliding with something above it
-      if (anchorPoint - (this.height * (this.column.row.alignment.value == 'center' ? 0.5 : 1)) < topCollisionPoint) {
-        this.height = (anchorPoint - topCollisionPoint) * (this.column.row.alignment.value == 'center' ? 2 : 1);
+      if (anchorPoint - (this.height * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1)) < topCollisionPoint) {
+        this.height = (anchorPoint - topCollisionPoint) * (this.column.row.verticalAlignment.value == 'center' ? 2 : 1);
       }
 
 
@@ -138,12 +134,12 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
       // Align Top
-      if (this.column.row.alignment.value == 'flex-start') {
+      if (this.column.row.verticalAlignment.value == 'flex-start') {
         this.column.row.top -= delta;
 
 
         // Align Center
-      } else if (this.column.row.alignment.value == 'center') {
+      } else if (this.column.row.verticalAlignment.value == 'center') {
 
         if (this.height > maxRowHeight) {
           this.column.row.top -= (delta * 0.5);
@@ -152,7 +148,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
         // Align Bottom
-      } else if (this.column.row.alignment.value == 'flex-end') {
+      } else if (this.column.row.verticalAlignment.value == 'flex-end') {
         if (this.height < minHeight) {
           this.height = minHeight;
 
@@ -166,8 +162,8 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
       // Collision
-      if (delta > 0 || this.column.row.alignment.value == 'center') this.column.row.container.collisionUp();
-      if (this.column.row.alignment.value == 'center' || this.column.row.alignment.value == 'flex-start') this.column.row.container.collisionDown();
+      if (delta > 0 || this.column.row.verticalAlignment.value == 'center') this.column.row.container.collisionUp();
+      if (this.column.row.verticalAlignment.value == 'center' || this.column.row.verticalAlignment.value == 'flex-start') this.column.row.container.collisionDown();
       this.column.row.container.checkHeightChange();
 
       tempHeight = this.height;
@@ -183,8 +179,8 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
   onBottomHandleMousedown() {
-    let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.alignment.value == 'center' ? 0.5 : 1);
-    let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().top + (this.column.row.alignment.value == 'center' ? anchorHeight : 0);
+    let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1);
+    let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().top + (this.column.row.verticalAlignment.value == 'center' ? anchorHeight : 0);
     let startHeight: number = this.widget.nativeElement.clientHeight;
     let tempHeight: number = startHeight;
     let topCollisionPoint: number = this.getTopCollisionPoint();
@@ -207,7 +203,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
       // Align Center
-      if (this.column.row.alignment.value == 'center') {
+      if (this.column.row.verticalAlignment.value == 'center') {
 
 
         // Prevent the bottom of the widget extending when colliding with something above it
@@ -224,7 +220,7 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
         // Align Bottom
-      } else if (this.column.row.alignment.value == 'flex-end') {
+      } else if (this.column.row.verticalAlignment.value == 'flex-end') {
 
 
         // Move the row if the widget's height is less than the row's height
@@ -235,8 +231,8 @@ export class FreeformWidgetComponent extends WidgetComponent implements OnInit {
 
 
       // Collision
-      if (this.column.row.alignment.value == 'center' || this.column.row.alignment.value == 'flex-end') this.column.row.container.collisionUp();
-      if (delta > 0 || this.column.row.alignment.value == 'center') this.column.row.container.collisionDown();
+      if (this.column.row.verticalAlignment.value == 'center' || this.column.row.verticalAlignment.value == 'flex-end') this.column.row.container.collisionUp();
+      if (delta > 0 || this.column.row.verticalAlignment.value == 'center') this.column.row.container.collisionDown();
       this.column.row.container.checkHeightChange();
 
 

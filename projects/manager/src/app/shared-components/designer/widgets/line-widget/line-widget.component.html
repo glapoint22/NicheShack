@@ -1,7 +1,6 @@
 <div #widget class="widget" (mousedown)="onMousedown()" (dblclick)="onEdit()"
-    [ngClass]="{'widget-selected': widgetService.selectedWidget == this}" [style.marginTop.px]="margins.top"
-    [style.marginRight]="margins.right + (margins.right == 'auto' ? '' : 'px')" [style.marginBottom.px]="margins.bottom"
-    [style.marginLeft]="margins.left + (margins.left == 'auto' ? '' : 'px')" [style.maxWidth.px]="width ? width : null">
+    [ngClass]="{'widget-selected': widgetService.selectedWidget == this}" [style.margin]="horizontalAlignment.value"
+    [style.maxWidth.px]="width ? width : null">
 
 
     <!-- Handles -->

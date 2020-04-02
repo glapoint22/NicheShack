@@ -215,4 +215,13 @@ export class ColumnComponent {
     window.addEventListener("mousemove", onMousemove);
     window.addEventListener("mouseup", onMouseup);
   }
+
+  buildHTML(parent: HTMLElement) {
+    let col = document.createElement('div');
+
+    col.className = this.columnElement.className;
+    parent.appendChild(col);
+
+    this.widget.buildHTML(col);
+  }
 }

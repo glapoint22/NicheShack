@@ -67,7 +67,8 @@ export class TextBox {
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 14px;
                 text-align: left;
-                color: ` + defaultFontColor.toRGBAString() + `
+                color: ` + defaultFontColor.toRGBString() + `;
+                line-height: normal;
             }
             ul, ol {
                 margin-top: 0;

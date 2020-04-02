@@ -74,11 +74,6 @@ export class ButtonFormComponent {
     this._FormService.initialShadow.color.g = this._FormService.shadow.color.g;
     this._FormService.initialShadow.color.b = this._FormService.shadow.color.b;
     this._FormService.initialShadow.color.a = this._FormService.shadow.color.a;
-
-    this._FormService.initialMargins.top = this._FormService.margins.top;
-    this._FormService.initialMargins.right = this._FormService.margins.right;
-    this._FormService.initialMargins.bottom = this._FormService.margins.bottom;
-    this._FormService.initialMargins.left = this._FormService.margins.left;
   }
 
 

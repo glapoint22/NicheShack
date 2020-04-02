@@ -16,10 +16,10 @@ export class ColorStyle extends PersistentStyle {
         if (this.colorPickerOpen) {
 
             // Only if the color has changed
-            if (this.styleValue != this._value.toRGBAString() && this.styleValue != this._value.toRGBString()) {
+            if (this.styleValue != this._value.toRGBString()) {
 
                 // Set the style value as the new color via the color picker and apply it
-                this.styleValue = this._value.toRGBAString();
+                this.styleValue = this._value.toRGBString();
                 this.applyStyle();
             }
         }

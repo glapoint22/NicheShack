@@ -31,7 +31,7 @@
                 <!-- Shadow -->
                 <shadow *ngIf="selectedTab == 'shadow'"></shadow>
                 <!-- Link -->
-                <links *ngIf="selectedTab == 'link'"></links>
+                <links *ngIf="selectedTab == 'link'" [source]="_FormService.linkSource"></links>
                 <!-- Margins -->
                 <margins *ngIf="selectedTab == 'margins'"></margins>
             </div>
