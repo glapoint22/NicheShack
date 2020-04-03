@@ -4,11 +4,11 @@ import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
-import { Spacing } from 'projects/manager/src/app/classes/spacing';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { ContainerComponent } from '../../container/container.component';
+import { Padding } from 'projects/manager/src/app/classes/padding';
 
 @Component({
   selector: 'container-widget',
@@ -21,7 +21,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public padding: Spacing = new Spacing();
+  public padding: Padding = new Padding();
   private fixedHeight: number;
 
   constructor(widgetService: WidgetService, public _FormService: FormService, private applicationRef: ApplicationRef) { super(widgetService) }
@@ -56,10 +56,10 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
     return Color.RGBAToHexA(this.shadow.color);
   }
 
-  
-  
+
+
   getMinHeight(): number {
-    if(this.container.rows.length == 0) return 20;
+    if (this.container.rows.length == 0) return 20;
 
     let index = this.container.rows.length - 1;
 
@@ -96,7 +96,29 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
   setWidth(startWidth: number, percent: number) {
     super.setWidth(startWidth, percent);
 
-    // Make sure any proportional widgets have not changed the container height
+    // Check to see if any proportional widgets have changed the container height
     this.container.checkHeightChange();
+  }
+
+  buildHTML(parent: HTMLElement) {
+    // Build the grid
+    this.container.buildHTML(parent);
+
+    // Get the grid
+    let grid = parent.firstElementChild as HTMLElement;
+
+    // Add width and height styles
+    if (this.width) grid.style.maxWidth = this.width + 'px';
+    grid.style.minHeight = this.height + 'px';
+
+    // Add fill if applied
+    if (this.fill.apply) this.fill.applyColor(grid);
+    
+    // Other styles
+    this.horizontalAlignment.applyStyle(grid);
+    this.border.applyStyle(grid);
+    this.corners.applyStyle(grid);
+    this.shadow.applyStyle(grid);
+    this.padding.applyStyle(grid);
   }
 }

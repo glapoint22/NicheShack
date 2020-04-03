@@ -3,7 +3,6 @@ import { FormService } from 'projects/manager/src/app/services/form.service';
 import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
-import { Spacing } from 'projects/manager/src/app/classes/spacing';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
@@ -41,5 +40,26 @@ export class LineWidgetComponent extends FreeformWidgetComponent {
   // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
   getShadowColor() {
     return Color.RGBAToHexA(this.shadow.color);
+  }
+
+  buildHTML(parent: HTMLElement) {
+    let div = document.createElement('div');
+
+    // This is the line container
+    if (this.width) div.style.maxWidth = this.width + 'px';
+    div.style.height = '20px';
+    this.horizontalAlignment.applyStyle(div);
+    div.style.display = 'flex';
+    div.style.alignItems = 'center';
+    div.style.width = '100%';
+
+    // Create the line and set styles
+    let line = document.createElement('div');
+    line.style.width = '100%';
+    line.style.borderBottom = this.border.width + 'px ' + this.border.style + ' ' + this.getBorderColor();
+    this.shadow.applyStyle(line);
+
+    div.appendChild(line);
+    parent.appendChild(div);
   }
 }

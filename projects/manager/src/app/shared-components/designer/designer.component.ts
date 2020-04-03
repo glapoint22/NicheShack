@@ -139,6 +139,8 @@ export class DesignerComponent implements OnInit {
 
     this.container.buildHTML(parent);
 
+    (parent.firstElementChild as HTMLElement).style.height = '100%';
+
 
 
     

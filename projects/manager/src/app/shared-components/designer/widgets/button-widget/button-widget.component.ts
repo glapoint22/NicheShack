@@ -121,7 +121,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   }
 
   buildHTML(parent: HTMLElement) {
-    let button = document.createElement('a');
+    let button: any = document.createElement(this.link.url ? 'a' : 'div');
     let className = this.createClassName();
     let css = '.' + className + ' {' +
       this.fill.getStyle() +
@@ -152,11 +152,15 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     button.style.alignItems = 'center';
     button.style.userSelect = 'none';
     button.style.textAlign = 'center';
+    if(!this.link.url) button.style.cursor = 'pointer';
 
     // Link
-    button.href = this.link.url;
-    button.target = '_blank';
-    button.style.textDecoration = 'none';
+    if (this.link.url) {
+      button.href = this.link.url;
+      button.target = '_blank';
+      button.style.textDecoration = 'none';
+    }
+
 
     // Button caption
     button.appendChild(document.createTextNode(this.text.caption));

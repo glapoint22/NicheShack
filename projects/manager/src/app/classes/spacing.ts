@@ -1,8 +1,8 @@
 export class Spacing {
     top: number = 0;
-    right: number | string = 0;
+    right: number = 0;
     bottom: number = 0;
-    left: number | string = 0;
+    left: number = 0;
     style: string;
 
     applyStyle(element: HTMLElement) {
