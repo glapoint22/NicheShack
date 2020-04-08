@@ -9,20 +9,20 @@
 
         <div (mousedown)="$event.stopPropagation()">
             <!-- Close header -->
-            <div class="background-color-dark-gray padding-top-2 padding-bottom-2 overflow-auto">
-                <i (click)="showListsMenu = false" class="fas fa-times margin-right-2 alt-color float-right"></i>
+            <div class="background-color-dark-gray padding-top-8 padding-bottom-8 overflow-auto">
+                <i (click)="showListsMenu = false" class="fas fa-times margin-right-8 alt-color float-right"></i>
             </div>
 
 
             <div class="position-absolute-identity" style="top:30px;">
-                <div class="padding-2 overflow-auto height-100 position-relative">
+                <div class="padding-8 overflow-auto height-100 position-relative">
 
                     <!-- Lists -->
                     <div class="width-100">
                         <h2 class="alt-color">Your Lists</h2>
 
                         <!-- Each List -->
-                        <div class="margin-bottom-4 cursor-pointer padding-2" *ngFor="let list of lists"
+                        <div class="margin-bottom-24 cursor-pointer padding-8" *ngFor="let list of lists"
                             [ngClass]="{'background-color-dark-gray cursor-default border': list == selectedList}"
                             (click)="onListClick(list, lists); showListsMenu = false">
                             <h3>{{list.name}}</h3>
@@ -64,19 +64,19 @@
                         <!-- Manage list links -->
 
                         <div
-                            class="width-100 background padding-2 background-color-dark-gray primary-color-light margin-bottom-3">
+                            class="width-100 background padding-8 background-color-dark-gray primary-color-light margin-bottom-16">
 
                             <!-- Non mobile -->
                             <div class="show-sm">
                                 <div class="display-flex  flex-row-reverse text-underline">
                                     <div class="cursor-pointer" (click)="shareList.show = true">Share List</div>
-                                    <div *ngIf="listData.isOwner" class="margin-right-4 cursor-pointer"
+                                    <div *ngIf="listData.isOwner" class="margin-right-24 cursor-pointer"
                                         (click)="editList.show = true">
                                         Edit List</div>
-                                    <div *ngIf="listData.isOwner" class="margin-right-4 cursor-pointer"
+                                    <div *ngIf="listData.isOwner" class="margin-right-24 cursor-pointer"
                                         (click)="deleteList.show = true">Delete List</div>
                                     <div *ngIf="listData.isOwner && listData.collaborators.length > 0"
-                                        class="margin-right-4 cursor-pointer" (click)="manageCollaborators.show = true">
+                                        class="margin-right-24 cursor-pointer" (click)="manageCollaborators.show = true">
                                         Manage
                                         Collaborators</div>
                                 </div>
@@ -88,7 +88,7 @@
 
                                     <!-- Your lists & Mange links -->
                                     <div (click)="showListsMenu = true"
-                                        class="margin-right-3 cursor-pointer text-underline">Your Lists</div>
+                                        class="margin-right-16 cursor-pointer text-underline">Your Lists</div>
                                     <div (click)="showManageListMenu = true">Manage
                                         <div class="arrow-down"></div>
                                     </div>
@@ -97,17 +97,17 @@
                                     <!-- Manage List menu -->
                                     <div *show="showManageListMenu" tabindex="0" (onHide)="showManageListMenu = false"
                                         (blur)="showManageListMenu = false"
-                                        class="dropdown dropdown-menu-arrow fade-start white-color padding-left-2"
+                                        class="dropdown dropdown-menu-arrow fade-start white-color padding-left-8"
                                         style="top: 26px; left: 9px; min-width: 167px;" transitionClass="fade-end">
 
                                         <div class="cursor-pointer" (click)="shareList.show = true">Share List</div>
-                                        <div *ngIf="listData.isOwner" class="margin-right-4 cursor-pointer"
+                                        <div *ngIf="listData.isOwner" class="margin-right-24 cursor-pointer"
                                             (click)="editList.show = true">
                                             Edit List</div>
-                                        <div *ngIf="listData.isOwner" class="margin-right-4 cursor-pointer"
+                                        <div *ngIf="listData.isOwner" class="margin-right-24 cursor-pointer"
                                             (click)="deleteList.show = true">Delete List</div>
                                         <div *ngIf="listData.isOwner && listData.collaborators.length > 0"
-                                            class="margin-right-4 cursor-pointer"
+                                            class="margin-right-24 cursor-pointer"
                                             (click)="manageCollaborators.show = true">
                                             Manage
                                             Collaborators</div>
@@ -125,7 +125,7 @@
                                 <h2 class="alt-color">Your Lists</h2>
 
                                 <!-- Each List -->
-                                <div class="margin-bottom-4 cursor-pointer padding-2" *ngFor="let list of lists"
+                                <div class="margin-bottom-24 cursor-pointer padding-8" *ngFor="let list of lists"
                                     [ngClass]="{'background-color-dark-gray cursor-default border': list == selectedList}"
                                     (click)="onListClick(list, lists)">
                                     <h3>{{list.name}}</h3>
@@ -151,7 +151,7 @@
 
 
                             <!-- Products container -->
-                            <div class="margin-left-4-xxs width-100">
+                            <div class="margin-left-24-xxs width-100">
                                 <h1>{{selectedList.name}}</h1>
 
                                 <ng-container *ngIf="sortOptions$ | async">
@@ -160,7 +160,7 @@
                                         <ng-container *ngIf="products.length > 0; else noProducts">
 
                                             <!-- Sort -->
-                                            <select class="margin-bottom-2 float-right-sm"
+                                            <select class="margin-bottom-8 float-right-sm"
                                                 [(ngModel)]="selectedSortOption" (change)="setSort()">
                                                 <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">
                                                     Sort by {{sortOption.key}}</option>
@@ -173,12 +173,12 @@
                                                     <ng-container
                                                         *ngIf="!product.deleted && !product.movedToList; else removedProduct">
                                                         <div class="display-flex justify-content-between flex-wrap">
-                                                            <div class="display-flex flex-wrap flex-nowrap-sm margin-top-3 margin-bottom-3 width-100"
+                                                            <div class="display-flex flex-wrap flex-nowrap-sm margin-top-16 margin-bottom-16 width-100"
                                                                 style="max-width: 400px">
 
 
                                                                 <!-- Product Image -->
-                                                                <div class="display-flex align-items-center justify-content-center margin-right-3 flex-shrink-0 cursor-pointer"
+                                                                <div class="display-flex align-items-center justify-content-center margin-right-16 flex-shrink-0 cursor-pointer"
                                                                     style="width: 150px; height: 150px"
                                                                     [routerLink]="['/' + product.urlTitle + '/' + product.id]">
                                                                     <img [src]="'/images/' + product.image"
@@ -186,14 +186,14 @@
                                                                 </div>
 
                                                                 <!-- Product Title -->
-                                                                <div class="width-100 text-break margin-top-3">
+                                                                <div class="width-100 text-break margin-top-16">
                                                                     <h3 class="text-hover-underline cursor-pointer"
                                                                         [routerLink]="['/' + product.urlTitle + '/' + product.id]">
                                                                         {{product.title}}</h3>
 
 
                                                                     <!-- Rating & Reviews -->
-                                                                    <stars class="margin-right-1"
+                                                                    <stars class="margin-right-4"
                                                                         [rating]="product.rating">
                                                                     </stars>
                                                                     <span class="text-nowrap primary-color-light"
@@ -219,14 +219,14 @@
 
 
                                                             <!-- Product Management -->
-                                                            <div class="margin-top-3 margin-bottom-3">
-                                                                <div class="margin-bottom-1 gray-color">Item added
+                                                            <div class="margin-top-16 margin-bottom-16">
+                                                                <div class="margin-bottom-4 gray-color">Item added
                                                                     {{product.dateAdded}}
                                                                 </div>
-                                                                <div class="margin-bottom-1 alt-color">
+                                                                <div class="margin-bottom-4 alt-color">
                                                                     Added by {{product.collaborator}}
                                                                 </div>
-                                                                <button class="alt-button margin-bottom-2"
+                                                                <button class="alt-button margin-bottom-8"
                                                                     (click)="onBuyClick(product.hoplink)">Visit
                                                                     Product Page To Buy</button>
 
@@ -245,11 +245,11 @@
 
                                                     <!-- Removed Product -->
                                                     <ng-template #removedProduct>
-                                                        <div class="padding-4 display-flex align-items-center"
+                                                        <div class="padding-24 display-flex align-items-center"
                                                             style="height: 182px;">
                                                             <div>
                                                                 <i
-                                                                    class="fas fa-check success-color font-size-4 margin-right-2"></i>
+                                                                    class="fas fa-check success-color font-size-4 margin-right-8"></i>
                                                                 <span *ngIf="product.deleted">{{product.title}} has been
                                                                     deleted.
                                                                 </span>
@@ -303,7 +303,7 @@
                             <button class="primary-button" (click)="createList.show = true">Create a List</button>
                         </div>
 
-                        <div class="margin-left-4 width-100 text-center border padding-3 font-size-3"
+                        <div class="margin-left-24 width-100 text-center border padding-16 font-size-3"
                             style="max-width: 600px;">
                             You currently have no lists. Click the "Create a List" button to create your list.
                         </div>

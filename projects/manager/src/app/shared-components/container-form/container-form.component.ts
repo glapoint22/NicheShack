@@ -51,10 +51,10 @@ export class ContainerFormComponent {
     // this._FormService.initialMargins.bottom = this._FormService.margins.bottom;
     // this._FormService.initialMargins.left = this._FormService.margins.left;
 
-    this._FormService.initialPadding.top = this._FormService.padding.top;
-    this._FormService.initialPadding.right = this._FormService.padding.right;
-    this._FormService.initialPadding.bottom = this._FormService.padding.bottom;
-    this._FormService.initialPadding.left = this._FormService.padding.left;
+    // this._FormService.initialPadding.top = this._FormService.padding.top;
+    // this._FormService.initialPadding.right = this._FormService.padding.right;
+    // this._FormService.initialPadding.bottom = this._FormService.padding.bottom;
+    // this._FormService.initialPadding.left = this._FormService.padding.left;
   }
 
 
@@ -100,15 +100,15 @@ export class ContainerFormComponent {
     this._FormService.shadow.color.b = this._FormService.initialShadow.color.b;
     this._FormService.shadow.color.a = this._FormService.initialShadow.color.a;
 
-    this._FormService.margins.top = this._FormService.initialMargins.top;
-    this._FormService.margins.right = this._FormService.initialMargins.right;
-    this._FormService.margins.bottom = this._FormService.initialMargins.bottom;
-    this._FormService.margins.left = this._FormService.initialMargins.left;
+    // this._FormService.margins.top = this._FormService.initialMargins.top;
+    // this._FormService.margins.right = this._FormService.initialMargins.right;
+    // this._FormService.margins.bottom = this._FormService.initialMargins.bottom;
+    // this._FormService.margins.left = this._FormService.initialMargins.left;
 
-    this._FormService.padding.top = this._FormService.initialPadding.top;
-    this._FormService.padding.right = this._FormService.initialPadding.right;
-    this._FormService.padding.bottom = this._FormService.initialPadding.bottom;
-    this._FormService.padding.left = this._FormService.initialPadding.left;
+    // this._FormService.padding.top = this._FormService.initialPadding.top;
+    // this._FormService.padding.right = this._FormService.initialPadding.right;
+    // this._FormService.padding.bottom = this._FormService.initialPadding.bottom;
+    // this._FormService.padding.left = this._FormService.initialPadding.left;
 
     this._FormService.showContainerForm = false;
   }

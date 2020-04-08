@@ -5,12 +5,12 @@
 
     <!-- Positive & Negagive Reviews -->
     <ng-container *ngIf="positiveReview || negativeReview">
-        <div class="display-flex justify-content-center margin-top-4 margin-bottom-4 flex-wrap flex-nowrap-sm">
+        <div class="display-flex justify-content-center margin-top-24 margin-bottom-24 flex-wrap flex-nowrap-sm">
 
             <!-- Postive Review -->
             <div *ngIf="positiveReview"
-                class="border padding-2 margin-right-4-sm background-color-dark-gray"
-                [ngClass]="{'margin-bottom-4 margin-bottom-0-sm': negativeReview}">
+                class="border padding-8 margin-right-24-sm background-color-dark-gray"
+                [ngClass]="{'margin-bottom-24 margin-bottom-0-sm': negativeReview}">
 
                 <!-- Header -->
                 <h2 class="alt-color">
@@ -18,7 +18,7 @@
                 </h2>
 
                 <!-- Likes -->
-                <div class="margin-bottom-2 font-italic">{{positiveReview.likes}} customers found this helpful</div>
+                <div class="margin-bottom-8 font-italic">{{positiveReview.likes}} customers found this helpful</div>
 
                 <!-- Review -->
                 <review [review]="positiveReview"></review>
@@ -27,7 +27,7 @@
 
 
             <!-- Negative Review -->
-            <div *ngIf="negativeReview" class="border padding-2 background-color-dark-gray">
+            <div *ngIf="negativeReview" class="border padding-8 background-color-dark-gray">
 
                 <!-- Header -->
                 <h2 class="alt-color">
@@ -35,7 +35,7 @@
                 </h2>
 
                 <!-- Likes -->
-                <div class="margin-bottom-2 font-italic">{{negativeReview.likes}} customers found this helpful</div>
+                <div class="margin-bottom-8 font-italic">{{negativeReview.likes}} customers found this helpful</div>
 
                 <!-- Review -->
                 <review [review]="negativeReview"></review>
@@ -46,10 +46,10 @@
 
     <!-- Reviews -->
     <div id="reviews"
-        class="margin-top-3 margin-bottom-4 border-top  padding-top-3 display-flex justify-content-between flex-wrap">
+        class="margin-top-16 margin-bottom-24 border-top  padding-top-16 display-flex justify-content-between flex-wrap">
 
         <!-- Showing -->
-        <div class="text-nowrap width-100 width-auto-xs margin-bottom-3 margin-bottom-0-xs">
+        <div class="text-nowrap width-100 width-auto-xs margin-bottom-16 margin-bottom-0-xs">
                 Showing {{reviewsStart}} - {{reviewsEnd}} of {{product.totalReviews | number}}
                 review{{product.totalReviews > 1 ? 's' : ''}}
         </div>
@@ -62,7 +62,7 @@
     </div>
 
     <!-- View All Button -->
-    <button *ngIf="!paging && product.totalReviews > reviewsPerPage" class="primary-button margin-bottom-4" (click)="onViewAllReviewsClick()">
+    <button *ngIf="!paging && product.totalReviews > reviewsPerPage" class="primary-button margin-bottom-24" (click)="onViewAllReviewsClick()">
         View all {{product.totalReviews | number}} reviews
     </button>
 

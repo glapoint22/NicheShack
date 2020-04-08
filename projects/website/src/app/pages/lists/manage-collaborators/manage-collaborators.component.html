@@ -13,7 +13,7 @@
             <!-- Collaborators -->
             <div *ngIf="!confirm; else confirmRemove" class="border-top">
                 <div *ngFor="let collaborator of collaborators"
-                    class="display-flex justify-content-between align-items-center padding-2 border-bottom">
+                    class="display-flex justify-content-between align-items-center padding-8 border-bottom">
                     <div class="text-truncate white-color" style="max-width: 190px">
                         {{collaborator.name}}
                     </div>
@@ -24,14 +24,14 @@
 
             <!-- Confirm Remove -->
             <ng-template #confirmRemove>
-                <div class="text-break margin-bottom-3">
+                <div class="text-break margin-bottom-16">
                     Are you sure you want to remove {{currentCollaborator.name}} from this list?
                 </div>
 
 
                 <!-- Buttons -->
                 <div class="float-right">
-                    <button class="margin-right-2" (mousedown)="$event.preventDefault()" (click)="confirm = false">Cancel</button>
+                    <button class="margin-right-8" (mousedown)="$event.preventDefault()" (click)="confirm = false">Cancel</button>
                     <button class="alt-button" (click)="onRemoveCollaborator()">Remove</button>
                 </div>
             </ng-template>

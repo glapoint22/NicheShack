@@ -9,14 +9,14 @@
 
     <div (mousedown)="$event.stopPropagation()">
         <!-- Close header -->
-        <div class="background-color-dark-gray padding-top-2 padding-bottom-2 overflow-auto">
+        <div class="background-color-dark-gray padding-top-8 padding-bottom-8 overflow-auto">
             <i (click)="showFilterMenu = false; setSelectedFilter()"
-                class="fas fa-times margin-right-2 alt-color float-right"></i>
+                class="fas fa-times margin-right-8 alt-color float-right"></i>
         </div>
 
 
         <div class="position-absolute-identity" style="top:30px;">
-            <div class="padding-2 overflow-auto height-100 position-relative">
+            <div class="padding-8 overflow-auto height-100 position-relative">
 
 
                 <!-- Caption -->
@@ -32,7 +32,7 @@
                 <div class="margin-n1" style="height: 50px;">
                     <div class="background-color-dark-gray position-fixed text-center position-fixed-bottom"
                         style="height:50px;">
-                        <button class="alt-button margin-top-2 width-95"
+                        <button class="alt-button margin-top-8 width-95"
                             (click)="onFilterClick(selectedFilter); showFilterMenu = false">Apply</button>
                     </div>
                 </div>
@@ -49,14 +49,14 @@
 
         <!-- Content -->
         <div class="content" style="max-width: 900px;">
-            <div class="display-flex justify-content-between align-items-center margin-bottom-3 flex-wrap">
+            <div class="display-flex justify-content-between align-items-center margin-bottom-16 flex-wrap">
                 <h1>Your Orders</h1>
                 <i class="fas fa-bars hide-sm font-size-4 alt-color" (click)="showFilterMenu = true"
                     *ngIf="!viewOrderDetails && displayType == 'order'"></i>
                 <form (ngSubmit)="onSearch()"
-                    class="display-flex align-items-center width-100 width-60-sm margin-top-3 margin-top-0-sm"
+                    class="display-flex align-items-center width-100 width-60-sm margin-top-16 margin-top-0-sm"
                     #form="ngForm">
-                    <input type="text" class="border-oval-left padding-left-3 width-100" [(ngModel)]="searchwords"
+                    <input type="text" class="border-oval-left padding-left-16 width-100" [(ngModel)]="searchwords"
                         name="search" placeholder="Search all orders">
                     <button class="alt-button button-rounded-right"><i class="fas fa-search"></i></button>
                 </form>
@@ -68,7 +68,7 @@
             <div class="show-sm">
                 <!-- Number of orders placed -->
                 <div class="display-flex align-items-center" *ngIf="filter && !route.snapshot.queryParams.search">
-                    <div class="margin-right-1">{{orders.length}} order{{orders.length == 1 ? '' : 's'}} placed in</div>
+                    <div class="margin-right-4">{{orders.length}} order{{orders.length == 1 ? '' : 's'}} placed in</div>
                     <dropdown-button [items]="filter" [defaultIndex]="getDefaultIndex()"
                         (itemClick)="onFilterClick($event)"></dropdown-button>
                 </div>
@@ -79,7 +79,7 @@
 
             <!-- Number of products matching -->
             <div *ngIf="route.snapshot.queryParams.search && displayType == 'product'"
-                class="margin-bottom-2 gray-color">
+                class="margin-bottom-8 gray-color">
                 <div>{{count}} product{{count == 1 ? '' : 's'}} matching
                     "{{route.snapshot.queryParams.search}}"</div>
             </div>
@@ -88,9 +88,9 @@
 
 
             <!-- ................................................Display type: Order........................................ -->
-            <div *ngIf="displayType == 'order'" class="width-100 margin-top-5-sm">
+            <div *ngIf="displayType == 'order'" class="width-100 margin-top-48-sm">
                 <h2 *ngIf="orders && orders.length == 0"
-                    class="text-center margin-top-5 gray-color border padding-4 hide-sm">No orders found
+                    class="text-center margin-top-48 gray-color border padding-24 hide-sm">No orders found
                 </h2>
 
                 <div *ngFor="let order of orders; let i = index">
@@ -99,7 +99,7 @@
 
 
                         <!-- Navigation box -->
-                        <div class="border border-bottom-0  padding-3 background-color-dark"
+                        <div class="border border-bottom-0  padding-16 background-color-dark"
                             [ngClass]="{'hide-sm': !viewOrderDetails}">
 
                             <!-- View Order Details -->
@@ -112,7 +112,7 @@
                             <!-- Back -->
                             <div *ngIf="viewOrderDetails" class="display-flex"
                                 (click)="viewOrderDetails = false; currentViewedOrderIndex = -1">
-                                <i class="fas fa-chevron-left font-size-4 alt-color margin-right-2"></i>
+                                <i class="fas fa-chevron-left font-size-4 alt-color margin-right-8"></i>
                                 <div>Back</div>
                             </div>
 
@@ -121,8 +121,8 @@
 
 
                         <div
-                            class="background-color-dark-gray padding-2 border border-bottom-0  display-flex-xs justify-content-between">
-                            <div class="margin-bottom-3 margin-bottom-0-xs">
+                            class="background-color-dark-gray padding-8 border border-bottom-0  display-flex-xs justify-content-between">
+                            <div class="margin-bottom-16 margin-bottom-0-xs">
                                 <h4>Ordered On:</h4>
                                 <div>{{order.date}}</div>
                             </div>
@@ -136,19 +136,19 @@
 
 
 
-                        <div class="border display-flex margin-bottom-4 justify-content-between">
+                        <div class="border display-flex margin-bottom-24 justify-content-between">
 
                             <!-- Products -->
                             <div *ngIf="!viewOrderDetails" class="flex-fill">
                                 <div *ngFor="let product of order.products">
                                     <div class="display-flex">
                                         <!-- Product Image -->
-                                        <div class="img-container display-flex align-items-center justify-content-center margin-2 flex-shrink-0 cursor-pointer" (click)="onProductClick({id: order.productId, urlTitle: order.urlTitle})">
+                                        <div class="img-container display-flex align-items-center justify-content-center margin-8 flex-shrink-0 cursor-pointer" (click)="onProductClick({id: order.productId, urlTitle: order.urlTitle})">
                                             <img [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">
                                         </div>
 
                                         <!-- Product Info -->
-                                        <div class="margin-top-2 margin-right-2 text-break">
+                                        <div class="margin-top-8 margin-right-8 text-break">
                                             <h4 class="text-hover-underline cursor-pointer" (click)="onProductClick({id: order.productId, urlTitle: order.urlTitle})">{{product.title}}</h4>
                                             <div class="gray-color">{{product.type}}</div>
                                             <div *ngIf="product.quantity > 0" class="gray-color">Quantity:
@@ -167,7 +167,7 @@
                                 <div class="display-flex flex-column height-100 justify-content-between">
                                     <div>
                                         <!-- Payment Method -->
-                                        <div class="margin-bottom-3">
+                                        <div class="margin-bottom-16">
                                             <h4>Payment Method</h4>
                                             <div class="line-item">
                                                 <div>{{order.paymentMethod}}:</div>
@@ -179,7 +179,7 @@
 
 
                                         <!-- Order Summary -->
-                                        <div class="margin-bottom-3">
+                                        <div class="margin-bottom-16">
                                             <h4>Order Summary</h4>
 
                                             <div class="line-item">
@@ -213,7 +213,7 @@
                                     <!-- Buttons -->
                                     <div>
                                         <button (click)="onBuyAgainClick(order.hoplink)"
-                                            class="alt-button margin-bottom-2 width-100">Buy again</button>
+                                            class="alt-button margin-bottom-8 width-100">Buy again</button>
                                         <button class="width-100" (click)="onWriteReviewClick(order.productId)">Write a review</button>
                                     </div>
                                 </div>
@@ -226,11 +226,11 @@
 
 
             <!-- ................................................Display type: Product........................................ -->
-            <div *ngIf="displayType == 'product'" class="border-top  margin-top-3">
+            <div *ngIf="displayType == 'product'" class="border-top  margin-top-16">
                 <div *ngFor="let product of products">
-                    <div class="display-flex border-bottom  padding-3">
+                    <div class="display-flex border-bottom  padding-16">
                         <!-- Product Image -->
-                        <div class="img-container display-flex align-items-center justify-content-center margin-right-3 flex-shrink-0 cursor-pointer" (click)="onProductClick({id: product.productId, urlTitle: product.urlTitle})">
+                        <div class="img-container display-flex align-items-center justify-content-center margin-right-16 flex-shrink-0 cursor-pointer" (click)="onProductClick({id: product.productId, urlTitle: product.urlTitle})">
                             <img [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">
                         </div>
 
@@ -238,7 +238,7 @@
                         <div class="text-break">
                             <h4 class="text-hover-underline cursor-pointer" (click)="onProductClick({id: product.productId, urlTitle: product.urlTitle})">{{product.title}}</h4>
                             <div class="gray-color">Ordered on {{product.date}}</div>
-                            <div class="alt-color text-underline cursor-pointer margin-bottom-2"
+                            <div class="alt-color text-underline cursor-pointer margin-bottom-8"
                                 (click)="searchwords = product.orderNumber; onSearch()">View order</div>
                             <button class="alt-button" (click)="onBuyAgainClick(product.hoplink)">Buy again</button>
                         </div>

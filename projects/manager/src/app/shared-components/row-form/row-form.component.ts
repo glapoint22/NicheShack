@@ -46,10 +46,10 @@ export class RowFormComponent {
     this._FormService.initialShadow.color.b = this._FormService.shadow.color.b;
     this._FormService.initialShadow.color.a = this._FormService.shadow.color.a;
 
-    this._FormService.initialPadding.top = this._FormService.padding.top;
-    this._FormService.initialPadding.right = this._FormService.padding.right;
-    this._FormService.initialPadding.bottom = this._FormService.padding.bottom;
-    this._FormService.initialPadding.left = this._FormService.padding.left;
+    // this._FormService.initialPadding.top = this._FormService.padding.top;
+    // this._FormService.initialPadding.right = this._FormService.padding.right;
+    // this._FormService.initialPadding.bottom = this._FormService.padding.bottom;
+    // this._FormService.initialPadding.left = this._FormService.padding.left;
 
     this._FormService.initialVerticalAlignment.value = this._FormService.verticalAlignment.value;
   }
@@ -97,10 +97,10 @@ export class RowFormComponent {
     this._FormService.shadow.color.b = this._FormService.initialShadow.color.b;
     this._FormService.shadow.color.a = this._FormService.initialShadow.color.a;
 
-    this._FormService.padding.top = this._FormService.initialPadding.top;
-    this._FormService.padding.right = this._FormService.initialPadding.right;
-    this._FormService.padding.bottom = this._FormService.initialPadding.bottom;
-    this._FormService.padding.left = this._FormService.initialPadding.left;
+    // this._FormService.padding.top = this._FormService.initialPadding.top;
+    // this._FormService.padding.right = this._FormService.initialPadding.right;
+    // this._FormService.padding.bottom = this._FormService.initialPadding.bottom;
+    // this._FormService.padding.left = this._FormService.initialPadding.left;
 
     this._FormService.verticalAlignment.value = this._FormService.initialVerticalAlignment.value;
       

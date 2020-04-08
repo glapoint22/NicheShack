@@ -1,27 +1,30 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
-import { Spacing } from 'projects/manager/src/app/classes/spacing';
 import { ColumnComponent } from '../../column/column.component';
 import { HorizontalAlignment } from 'projects/manager/src/app/classes/horizontal-alignment';
+import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
+import { Breakpoint } from 'projects/manager/src/app/classes/breakpoint';
+import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 
 @Component({
   template: '',
 })
-export class WidgetComponent {
+export class WidgetComponent implements OnInit, BreakpointsComponent {
   @ViewChild('widget', { static: false }) widget: ElementRef;
   public width: number;
   public height: number;
-  public horizontalAlignment: HorizontalAlignment = new HorizontalAlignment();
-  // public margins: Spacing = new Spacing();
   public column: ColumnComponent;
+  public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();
+  public horizontalAlignment: HorizontalAlignment = new HorizontalAlignment();
 
-  constructor(public widgetService: WidgetService) { }
+  constructor(public widgetService: WidgetService, public breakpointService: BreakpointService) { }
 
-  // ngOnInit() {
-  //   this.margins.left = 'auto';
-  //   this.margins.right = 'auto';
-  // }
-
+  ngOnInit() {
+    // When a breakpoint changes, this will update any property that has a value stored in the breakpoints array
+    this.breakpointService.onBreakpointChange.subscribe((screenSize: string) => {
+      this.breakpointService.setBreakpointValues(this.breakpoints, screenSize);
+    });
+  }
 
   onMousedown() {
     this.widgetService.selectedWidget = this;
@@ -77,5 +80,5 @@ export class WidgetComponent {
     return maxHeight;
   }
 
-  buildHTML(parent: HTMLElement) {}
+  buildHTML(parent: HTMLElement) { }
 }

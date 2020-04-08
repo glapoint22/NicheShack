@@ -12,8 +12,8 @@
                 <!-- Product Conent -->
                 <ng-container *ngIf="productData.content.length > 1">
                     <!-- Heading -->
-                    <h3 class="margin-top-5 white-color"
-                        [ngClass]="{'text-center margin-left-2': productData.pricePoints.length > 1}">
+                    <h3 class="margin-top-48 white-color"
+                        [ngClass]="{'text-center margin-left-8': productData.pricePoints.length > 1}">
                         {{productData.pricePoints.length > 1 ? 'Payment options' : 'Included with your purchase'}}
                     </h3>
 
@@ -22,17 +22,17 @@
                     <div [ngClass]="{'display-flex justify-content-center flex-wrap': productData.pricePoints.length > 1}">
                         
                         <!-- Price Points -->
-                        <div *ngFor="let pricePoint of productData.pricePoints; let i = index" [ngClass]="{'margin-bottom-4 margin-right-2 margin-left-2 border': productData.pricePoints.length > 1}">
-                            <div *ngIf="productData.pricePoints.length > 1" class="alt-color font-size-3 font-bold border-bottom  text-center padding-2 background-color-dark-gray">
+                        <div *ngFor="let pricePoint of productData.pricePoints; let i = index" [ngClass]="{'margin-bottom-24 margin-right-8 margin-left-8 border': productData.pricePoints.length > 1}">
+                            <div *ngIf="productData.pricePoints.length > 1" class="alt-color font-size-3 font-bold border-bottom  text-center padding-8 background-color-dark-gray">
                                 {{pricePoint}}
                             </div>
 
                             <!-- Content Item -->
-                            <div [ngClass]="{'padding-2': productData.pricePoints.length > 1}">
+                            <div [ngClass]="{'padding-8': productData.pricePoints.length > 1}">
                                 <ng-container *ngFor="let content of productData.content">
                                     <div *ngIf="hasIndex(content.priceIndices, i)">
                                         <img [src]="'images/' + content.type.image" [title]="content.type.name">
-                                        <span class="margin-left-1" [title]="content.type.name">
+                                        <span class="margin-left-4" [title]="content.type.name">
                                             {{content.title}}
                                         </span>
                                     </div>

@@ -4,7 +4,7 @@ import { Border } from '../classes/border';
 import { Corners } from '../classes/corners';
 import { ButtonText } from '../classes/button-text';
 import { Shadow } from '../classes/shadow';
-import { Spacing } from '../classes/spacing';
+// import { Spacing } from '../classes/spacing';
 import { HoverTab } from '../classes/hover-tab';
 import { Color } from '../classes/color';
 import { VerticalAlignment } from '../classes/vertical-alignment';
@@ -24,8 +24,8 @@ export class FormService {
   public corners: Corners;
   public buttonText: ButtonText;
   public shadow: Shadow;
-  public margins: Spacing;
-  public padding: Spacing;
+  // public margins: Spacing;
+  // public padding: Spacing;
   public textBox: TextBox;
   public description: Description;
   public linkSource: LinkSource;
@@ -48,8 +48,8 @@ export class FormService {
   public initialCorners: Corners = new Corners();
   public initialButtonText: ButtonText = new ButtonText();
   public initialShadow: Shadow = new Shadow();
-  public initialMargins: Spacing = new Spacing();
-  public initialPadding: Spacing = new Spacing();
+  // public initialMargins: Spacing = new Spacing();
+  // public initialPadding: Spacing = new Spacing();
   public initialVerticalAlignment: VerticalAlignment = new VerticalAlignment();
   public initialColorPickerColor: Color = new Color();
 

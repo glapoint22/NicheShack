@@ -11,18 +11,18 @@
 
             <!-- Content -->
             <ng-container *ngIf="!isSubmitted; else submitted">
-                <div class="margin-bottom-3">
+                <div class="margin-bottom-16">
                     If you find this review to be offensive or irrelevant to the item in question, please let us know by
                     clicking the submit button below.
                 </div>
 
                 <button class="alt-button float-right" (mousedown)="$event.preventDefault()" (click)="onSubmit()">Submit</button>
-                <button class="float-right margin-right-3" (click)="show = false">Cancel</button>
+                <button class="float-right margin-right-16" (click)="show = false">Cancel</button>
             </ng-container>
 
             <!-- Submitted -->
             <ng-template #submitted>
-                <div class="margin-bottom-3">
+                <div class="margin-bottom-16">
                     Thanks for your feedback.
                 </div>
 

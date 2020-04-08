@@ -2,9 +2,9 @@
     <div *ngIf="product.rating > 0; else noRating" class="display-flex flex-wrap justify-content-center">
 
         <!-- Rating & Stars -->
-        <div class="text-center margin-right-3-sm width-100 width-auto-sm">
+        <div class="text-center margin-right-16-sm width-100 width-auto-sm">
             <div class="display-flex align-items-center justify-content-center">
-                <div style="font-size: 46px" class="alt-color font-bold margin-right-2">
+                <div style="font-size: 46px" class="alt-color font-bold margin-right-8">
                     {{product.rating | number:'1.1-1'}}</div>
 
                 <div>
@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <button class="alt-button width-100-sm margin-bottom-3"
+            <button class="alt-button width-100-sm margin-bottom-16"
                     (click)="onWriteReviewClick(product.id)">Write a Review</button>
         </div>
 
@@ -29,7 +29,7 @@
                     <div class="bar" [style.width.px]="stat.percentage * 2"></div>
                 </div>
 
-                <div class="margin-left-1 show-xs">
+                <div class="margin-left-4 show-xs">
                     {{(stat.percentage)}}%
                 </div>
             </div>
@@ -39,7 +39,7 @@
     <!-- No Rating -->
     <ng-template #noRating>
         <div class="text-center">
-            <div class="primary-color-light margin-bottom-2">Be the first to review this item!</div>
+            <div class="primary-color-light margin-bottom-8">Be the first to review this item!</div>
             <button class="alt-button" (click)="onWriteReviewClick(product.id)">Write a Review</button>
         </div>
 

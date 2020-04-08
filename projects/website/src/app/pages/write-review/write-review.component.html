@@ -18,7 +18,7 @@
                     <h2>{{product.title}}</h2>
 
                     <!-- Image -->
-                    <img [src]="'/images/' + product.image" class="margin-right-3">
+                    <img [src]="'/images/' + product.image" class="margin-right-16">
 
                     <!-- Form -->
                     <form (ngSubmit)="onSubmit()" #form="ngForm">
@@ -54,7 +54,7 @@
                             </h4>
                         </ng-template>
 
-                        <div class="margin-bottom-4">
+                        <div class="margin-bottom-24">
                             <input type="hidden" required [(ngModel)]="review.rating" name="rating">
                             <span *ngFor="let i of [1,2,3,4,5]" (click)="review.rating = i"
                                 class="alt-color font-size-6 cursor-pointer">

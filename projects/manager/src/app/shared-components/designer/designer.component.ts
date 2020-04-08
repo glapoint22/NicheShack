@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { ButtonWidgetComponent } from './widgets/button-widget/button-widget.component';
 import { ContainerWidgetComponent } from './widgets/container-widget/container-widget.component';
 import { ImageWidgetComponent } from './widgets/image-widget/image-widget.component';
@@ -7,6 +7,7 @@ import { TextWidgetComponent } from './widgets/text-widget/text-widget.component
 import { WidgetCursor } from '../../classes/widget-cursor';
 import { WidgetService } from '../../services/widget.service';
 import { ContainerComponent } from './container/container.component';
+import { BreakpointService } from '../../services/breakpoint.service';
 
 @Component({
   selector: 'designer',
@@ -15,7 +16,6 @@ import { ContainerComponent } from './container/container.component';
   encapsulation: ViewEncapsulation.None
 })
 export class DesignerComponent implements OnInit {
-  @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @ViewChild('content', { static: false }) content: ElementRef;
   @ViewChild('canvasElement', { static: false }) canvas: ElementRef;
   @ViewChild('widthDisplay', { static: false }) widthDisplay: ElementRef;
@@ -25,7 +25,7 @@ export class DesignerComponent implements OnInit {
   public showPublishMenu: boolean;
   public contentWidth: number = 1496;
 
-  constructor(private widgetService: WidgetService) { }
+  constructor(private widgetService: WidgetService, private breakpointService: BreakpointService) { }
 
   ngOnInit() {
     this.widgetCursors = [
@@ -90,8 +90,8 @@ export class DesignerComponent implements OnInit {
   }
 
 
-  onSizingBarMousedown(e: any, direction: number) {
-    let mousePos = e.clientX;
+  onSizingBarMousedown(event: any, direction: number) {
+    let mousePos = event.clientX;
 
     // On Mousemove
     let onMousemove = (e: any) => {
@@ -100,6 +100,7 @@ export class DesignerComponent implements OnInit {
 
       this.canvas.nativeElement.style.width = (this.canvas.nativeElement.clientWidth + delta * direction * 2) + 'px';
       this.widthDisplay.nativeElement.value = this.canvas.nativeElement.clientWidth;
+      this.breakpointService.onCanvasWidthChange.next(this.canvas.nativeElement.clientWidth);
     }
 
 
@@ -140,14 +141,7 @@ export class DesignerComponent implements OnInit {
     this.container.buildHTML(parent);
 
     (parent.firstElementChild as HTMLElement).style.height = '100%';
-
-
-
-    
     previewWindow.document.write(parent.outerHTML);
-
-    
-
 
     let title = document.createElement('title');
     title.appendChild(document.createTextNode('Alita'));
@@ -171,6 +165,5 @@ export class DesignerComponent implements OnInit {
     previewWindow.document.head.appendChild(this.widgetService.buttonClasses);
 
     previewWindow.document.body.style.background = 'white';
-    
   }
 }

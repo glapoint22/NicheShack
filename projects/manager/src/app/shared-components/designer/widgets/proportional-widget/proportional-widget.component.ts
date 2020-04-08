@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { WidgetComponent } from '../widget/widget.component';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { Vector } from 'projects/manager/src/app/classes/vector';
-import { HorizontalAlign } from 'projects/manager/src/app/classes/horizontal-alignment';
+import { BreakpointHorizontalAlignment } from 'projects/manager/src/app/classes/breakpoint';
 
 @Component({
   template: '',
@@ -10,13 +9,10 @@ import { HorizontalAlign } from 'projects/manager/src/app/classes/horizontal-ali
 export class ProportionalWidgetComponent extends WidgetComponent {
   public minHeight: number = 40;
 
-  constructor(widgetService: WidgetService) { super(widgetService) }
-
-
   onHandleMousedown(verticalHandle: string, horizontalHandle: string, event: MouseEvent) {
-    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.horizontalAlignment.value == HorizontalAlign.Center ? 0.5 : 1);
+    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left +
-      (horizontalHandle == 'left' || this.horizontalAlignment.value == HorizontalAlign.Center ? anchorWidth : 0);
+      (horizontalHandle == 'left' || this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? anchorWidth : 0);
     let startWidth: number = this.widget.nativeElement.clientWidth;
     let heightWidthRatio: number = this.widget.nativeElement.clientHeight / this.widget.nativeElement.clientWidth;
     let widthHeightRatio = this.widget.nativeElement.clientWidth / this.widget.nativeElement.clientHeight;

@@ -10,14 +10,20 @@ import { ContainerComponent } from '../container/container.component';
 import { VerticalAlignment } from '../../../classes/vertical-alignment';
 import { Color } from '../../../classes/color';
 import { Column } from '../../../classes/column';
-import { Padding } from '../../../classes/padding';
+import { Breakpoint, BreakpointSpacing, BreakpointVerticalAlignment } from '../../../classes/breakpoint';
+import { BreakpointService } from '../../../services/breakpoint.service';
+import { PaddingTop } from '../../../classes/padding-top';
+import { PaddingRight } from '../../../classes/padding-right';
+import { PaddingBottom } from '../../../classes/padding-bottom';
+import { PaddingLeft } from '../../../classes/padding-left';
+import { BreakpointsComponent } from '../../../classes/breakpoints-component';
 
 @Component({
   selector: 'row',
   templateUrl: './row.component.html',
   styleUrls: ['./row.component.scss']
 })
-export class RowComponent {
+export class RowComponent implements BreakpointsComponent{
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @ViewChild('row', { static: false }) rowElement: ElementRef;
   public top: number;
@@ -26,11 +32,26 @@ export class RowComponent {
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public padding: Padding = new Padding();
+  public paddingTop: PaddingTop = new PaddingTop();
+  public paddingRight: PaddingRight = new PaddingRight();
+  public paddingBottom: PaddingBottom = new PaddingBottom();
+  public paddingLeft: PaddingLeft = new PaddingLeft();
   public verticalAlignment: VerticalAlignment = new VerticalAlignment();
   public container: ContainerComponent;
+  public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();
 
-  constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService, public _FormService: FormService) { }
+  constructor(private resolver: ComponentFactoryResolver,
+    public widgetService: WidgetService,
+    public _FormService: FormService,
+    private breakpointService: BreakpointService) { }
+
+
+  ngOnInit() {
+    // When a breakpoint changes, this will update any property that has a value stored in the breakpoints array
+    this.breakpointService.onBreakpointChange.subscribe((screenSize: string) => {
+      this.breakpointService.setBreakpointValues(this.breakpoints, screenSize);
+    });
+  }
 
 
   // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
@@ -39,7 +60,7 @@ export class RowComponent {
     this._FormService.border = this.border;
     this._FormService.corners = this.corners;
     this._FormService.shadow = this.shadow;
-    this._FormService.padding = this.padding;
+    // this._FormService.padding = this.padding;
     this._FormService.verticalAlignment = this.verticalAlignment;
 
     // Open the container form
@@ -111,12 +132,6 @@ export class RowComponent {
     this.columns.push(new Column(columnComponentRef.instance, columnComponentRef.location.nativeElement));
 
 
-
-    // Add or update each column with the correct col class based on the number of columns in this row
-    this.columns.forEach((column: Column) => {
-      column.element.setAttribute('class', 'col-' + Math.max(2, Math.floor(12 / this.columns.length)));
-    });
-
     // Set the column's row as this row
     columnComponentRef.instance.row = this;
 
@@ -138,6 +153,13 @@ export class RowComponent {
     // Shift rows down if this row collides with its neighboring rows
     this.container.collisionDown();
     this.container.checkHeightChange();
+
+
+    // Add or update each column with the correct column span based on the number of columns in this row
+    this.columns.forEach((column: Column) => {
+      column.component.columnSpan.value = Math.max(2, Math.floor(12 / this.columns.length));
+    });
+
 
     // Wait a frame to sort the column
     window.setTimeout(() => {
@@ -183,11 +205,8 @@ export class RowComponent {
     // Shadow
     this.shadow.applyStyle(row);
 
-    // Padding
-    this.padding.applyStyle(row);
-
-    // Vertical alignment
-    this.verticalAlignment.applyStyle(row);
+    // Set the classes
+    this.breakpointService.setBreakpointClasses(this, row);
 
     parent.appendChild(row);
 

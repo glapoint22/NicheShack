@@ -1,28 +1,51 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 import { RowComponent } from '../row/row.component';
 import { WidgetService } from '../../../services/widget.service';
 import { WidgetComponent } from '../widgets/widget/widget.component';
+import { BreakpointService } from '../../../services/breakpoint.service';
+import { ColumnSpan } from '../../../classes/column-span';
+import { BreakpointsComponent } from '../../../classes/breakpoints-component';
+import { Breakpoint } from '../../../classes/breakpoint';
+import { PaddingTop } from '../../../classes/padding-top';
+import { PaddingRight } from '../../../classes/padding-right';
+import { PaddingBottom } from '../../../classes/padding-bottom';
+import { PaddingLeft } from '../../../classes/padding-left';
+import { Visibility } from '../../../classes/visibility';
 
 @Component({
   selector: '[column]',
   templateUrl: './column.component.html',
   styleUrls: ['./column.component.scss']
 })
-export class ColumnComponent {
+export class ColumnComponent implements BreakpointsComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
   public row: RowComponent;
   public widget: WidgetComponent;
   public rowHeight: number;
-  private columnElement: HTMLElement;
+  public columnElement: HTMLElement;
   private resizeButtonMousedown: boolean;
+  public columnSpan: ColumnSpan;
+  public paddingTop: PaddingTop = new PaddingTop();
+  public paddingRight: PaddingRight = new PaddingRight();
+  public paddingBottom: PaddingBottom = new PaddingBottom();
+  public paddingLeft: PaddingLeft = new PaddingLeft();
+  public visibility = new Visibility();
+  public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();
 
+  constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService, private breakpointService: BreakpointService) { }
 
-  constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }
+  ngOnInit() {
+    this.breakpointService.onBreakpointChange.subscribe((screenSize: string) => {
+      this.breakpointService.setBreakpointValues(this.breakpoints, screenSize);
+    });
+  }
+
 
   ngAfterViewInit() {
     // Get the html column element
     this.columnElement = this.viewContainerRef.element.nativeElement.parentElement;
+    this.columnSpan = new ColumnSpan(this.columnElement);
   }
 
   ngDoCheck() {
@@ -34,6 +57,15 @@ export class ColumnComponent {
       } else {
         this.columnElement.classList.remove('column-indicator-container');
       }
+
+      // Update padding
+      this.columnElement.style.paddingTop = this.paddingTop.value;
+      this.columnElement.style.paddingRight = this.paddingRight.value;
+      this.columnElement.style.paddingBottom = this.paddingBottom.value;
+      this.columnElement.style.paddingLeft = this.paddingLeft.value;
+
+      // Update display for visibility
+      this.columnElement.style.display = this.visibility.value;
     }
 
     // Used to size the column divider & column indicators
@@ -128,8 +160,6 @@ export class ColumnComponent {
       // Hide the previous column's resize button when we leave this column
       if (resizeButton) resizeButton.removeAttribute('style');
     }
-
-
   }
 
   isLastColumn(element: HTMLElement): boolean {
@@ -157,34 +187,23 @@ export class ColumnComponent {
 
 
 
-  onResizeButtonMousedown(event: any) {
-    this.resizeButtonMousedown = true;
-    // document.body.id = 'column-resize';
-    document.body.style.cursor = 'e-resize';
-
-    // Get column and row elements
-    let column: HTMLElement = event.currentTarget.parentElement.parentElement;
-    let row = column.parentElement;
-
+  onResizeButtonMousedown() {
     // Get the current column position and the number of columns in this row
-    let columnPos = column.getBoundingClientRect().left;
+    let columnPos = this.columnElement.getBoundingClientRect().left;
     let columnCount = this.row.columns.length;
 
     // Get the width of the row
-    let rowWidth = row.getBoundingClientRect().width;
+    let rowWidth = this.row.rowElement.nativeElement.getBoundingClientRect().width;
 
     // Get the max column span the columns get span accross
     let maxColumnSpan = columnCount == 5 ? 10 : 12;
 
+    let index = this.row.columns.findIndex(x => x.component == this) + 1;
+    let nextColumn: ColumnComponent = this.row.columns[index].component;
+    let colspanOffset = maxColumnSpan - (this.columnSpan.value + nextColumn.columnSpan.value);
 
-
-    let patt = new RegExp(/\d+/g);
-    let colspan1: number = Number.parseInt(patt.exec(column.className)[0]);
-    patt = new RegExp(/\d+/g);
-    let colspan2: number = Number.parseInt(patt.exec(column.nextElementSibling.className)[0]);
-    let colspanOffset = maxColumnSpan - (colspan1 + colspan2);
-
-
+    this.resizeButtonMousedown = true;
+    document.body.style.cursor = 'e-resize';
 
 
     let onMousemove = (e: MouseEvent) => {
@@ -194,11 +213,10 @@ export class ColumnComponent {
       let nextElementSiblingColumnSpan = Math.max(maxColumnSpan - columnSpan - colspanOffset, 1);
       let totalColumnSpan = nextElementSiblingColumnSpan + colspanOffset + columnSpan;
 
-      if (column.className != 'col-' + columnSpan && totalColumnSpan <= maxColumnSpan) {
-        column.className = '';
-        column.classList.add('col-' + columnSpan);
-        column.nextElementSibling.className = '';
-        column.nextElementSibling.classList.add('col-' + nextElementSiblingColumnSpan);
+      if (this.columnSpan.value != columnSpan && totalColumnSpan <= maxColumnSpan) {
+        // Update the column spans
+        this.columnSpan.value = columnSpan;
+        nextColumn.columnSpan.value = nextElementSiblingColumnSpan;
       }
     }
 
@@ -219,7 +237,14 @@ export class ColumnComponent {
   buildHTML(parent: HTMLElement) {
     let col = document.createElement('div');
 
-    col.className = this.columnElement.className;
+    // If there are not any breakpoints set, set the class with the current col class
+    if (!this.breakpoints.find(x => x.type == this.columnSpan)) {
+      col.className = this.columnElement.className;
+    }
+
+    // Set the classes
+    this.breakpointService.setBreakpointClasses(this, col);
+
     parent.appendChild(col);
 
     this.widget.buildHTML(col);

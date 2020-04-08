@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { WidgetComponent } from '../widget/widget.component';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
-import { HorizontalAlign } from 'projects/manager/src/app/classes/horizontal-alignment';
+import { BreakpointHorizontalAlignment } from 'projects/manager/src/app/classes/breakpoint';
 
 @Component({
   template: '',
 })
 export class FreeformWidgetComponent extends WidgetComponent {
-
-  constructor(widgetService: WidgetService) { super(widgetService) }
 
   onHandleMousedown(handle: string) {
     document.body.id = 'widget-resize';
@@ -63,7 +60,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
   onLeftHandleMousedown() {
-    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.horizontalAlignment.value == HorizontalAlign.Center ? 0.5 : 1);
+    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left + anchorWidth;
     let startWidth: number = this.widget.nativeElement.clientWidth;
 
@@ -84,8 +81,8 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
   onRightHandleMousedown() {
-    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.horizontalAlignment.value == HorizontalAlign.Center ? 0.5 : 1);
-    let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left + (this.horizontalAlignment.value == HorizontalAlign.Center ? anchorWidth : 0);
+    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? 0.5 : 1);
+    let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left + (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? anchorWidth : 0);
     let startWidth: number = this.widget.nativeElement.clientWidth;
 
     let onMousemove = (e: MouseEvent) => {

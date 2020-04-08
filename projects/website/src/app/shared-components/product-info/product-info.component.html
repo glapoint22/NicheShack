@@ -9,20 +9,20 @@
         </div>
 
         <!-- Image -->
-        <div class="margin-top-3">
+        <div class="margin-top-16">
             <img [src]="'/images/' + productInfo.product.image" class="width-100 width-auto-xs">
         </div>
     </div>
 
 
     <!-- Product -->
-    <div class="margin-left-0 margin-left-3-sm">
+    <div class="margin-left-0 margin-left-16-sm">
         <div>
             <!-- Title -->
             <div class="text-break font-size-5 font-bold white-color">{{productInfo.product.title}}</div>
 
             <!-- Rating -->
-            <stars class="margin-right-1" [rating]="productInfo.product.rating"></stars>
+            <stars class="margin-right-4" [rating]="productInfo.product.rating"></stars>
             <span class="text-nowrap primary-color-light" *ngIf="productInfo.product.rating > 0">
                 {{productInfo.product.totalReviews | number}} reviews
             </span>
@@ -38,35 +38,35 @@
                 </div>
             </div>
 
-            <button class="alt-button margin-top-2 margin-bottom-2"
+            <button class="alt-button margin-top-8 margin-bottom-8"
                 (click)="onBuyClick(productInfo.product.hoplink)">Visit Product Page To Buy</button>
 
             <!-- Description -->
-            <div class="margin-top-2">{{productInfo.product.description}}</div>
+            <div class="margin-top-8">{{productInfo.product.description}}</div>
 
             <!-- Share -->
-            <div class="display-flex margin-top-3 flex-wrap">
-                <div class="margin-right-3 cursor-pointer" (click)="shareService.onFacebookClick(getProductUrl())">
+            <div class="display-flex margin-top-16 flex-wrap">
+                <div class="margin-right-16 cursor-pointer" (click)="shareService.onFacebookClick(getProductUrl())">
                     <img src="assets/Facebook.png" title="Share on Facebook">
                 </div>
-                <div class="margin-right-3 cursor-pointer" (click)="shareService.onTwitterClick(getProductUrl(), 'Check out what I found at NicheShack.com!')">
+                <div class="margin-right-16 cursor-pointer" (click)="shareService.onTwitterClick(getProductUrl(), 'Check out what I found at NicheShack.com!')">
                     <img src="assets/Twitter.png" title="Share on Twitter">
                 </div>
-                <div class="cursor-pointer margin-right-3 margin-bottom-2" (click)="shareService.onPinterestClick(getProductUrl(), productInfo.product.shareImage, productInfo.product.description)">
+                <div class="cursor-pointer margin-right-16 margin-bottom-8" (click)="shareService.onPinterestClick(getProductUrl(), productInfo.product.shareImage, productInfo.product.description)">
                     <img src="assets/Pinterest.png" title="Share on Pinterest">
                 </div>
 
                 <!-- Report item & Add to List -->
                 <div class="primary-color-light text-underline margin-left-auto">
                     <div class="cursor-pointer font-size-2" (click)="reportItem.show = true">
-                        <i class="fas fa-flag margin-right-1"></i>
+                        <i class="fas fa-flag margin-right-4"></i>
                         <span>Report this item</span>
                     </div>
                 </div>
             </div>
 
             <!-- Add to list button -->
-            <button class="primary-button margin-top-2" (click)="addToList.show = true">Add to List</button>
+            <button class="primary-button margin-top-8" (click)="addToList.show = true">Add to List</button>
         </div>
     </div>
 </div>

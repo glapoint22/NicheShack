@@ -6,18 +6,22 @@ import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
+import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
+import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 
 @Component({
   selector: 'line-widget',
   templateUrl: './line-widget.component.html',
   styleUrls: ['./line-widget.component.scss']
 })
-export class LineWidgetComponent extends FreeformWidgetComponent {
+export class LineWidgetComponent extends FreeformWidgetComponent implements BreakpointsComponent {
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public shadow: Shadow = new Shadow();
 
-  constructor(widgetService: WidgetService, public _FormService: FormService) { super(widgetService) }
+  constructor(widgetService: WidgetService,
+    breakpointService: BreakpointService,
+    public _FormService: FormService) { super(widgetService, breakpointService) }
 
   // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
   onEdit() {
@@ -43,15 +47,14 @@ export class LineWidgetComponent extends FreeformWidgetComponent {
   }
 
   buildHTML(parent: HTMLElement) {
-    let div = document.createElement('div');
+    let lineContainer = document.createElement('div');
 
     // This is the line container
-    if (this.width) div.style.maxWidth = this.width + 'px';
-    div.style.height = '20px';
-    this.horizontalAlignment.applyStyle(div);
-    div.style.display = 'flex';
-    div.style.alignItems = 'center';
-    div.style.width = '100%';
+    if (this.width) lineContainer.style.maxWidth = this.width + 'px';
+    lineContainer.style.height = '20px';
+    lineContainer.style.display = 'flex';
+    lineContainer.style.alignItems = 'center';
+    lineContainer.style.width = '100%';
 
     // Create the line and set styles
     let line = document.createElement('div');
@@ -59,7 +62,10 @@ export class LineWidgetComponent extends FreeformWidgetComponent {
     line.style.borderBottom = this.border.width + 'px ' + this.border.style + ' ' + this.getBorderColor();
     this.shadow.applyStyle(line);
 
-    div.appendChild(line);
-    parent.appendChild(div);
+    // Set the classes
+    this.breakpointService.setBreakpointClasses(this, lineContainer);
+
+    lineContainer.appendChild(line);
+    parent.appendChild(lineContainer);
   }
 }

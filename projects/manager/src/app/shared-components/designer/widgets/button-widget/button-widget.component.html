@@ -4,6 +4,10 @@
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
     [style.margin]="horizontalAlignment.value"
+    [style.paddingTop]="paddingTop.value"
+    [style.paddingRight]="paddingRight.value"
+    [style.paddingBottom]="paddingBottom.value"
+    [style.paddingLeft]="paddingLeft.value"
     [style.maxWidth.px]="width ? width : null" [style.minHeight.px]="height">
 
 

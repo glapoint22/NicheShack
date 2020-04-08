@@ -8,7 +8,11 @@ import { WidgetService } from 'projects/manager/src/app/services/widget.service'
 import { Color } from 'projects/manager/src/app/classes/color';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { ContainerComponent } from '../../container/container.component';
-import { Padding } from 'projects/manager/src/app/classes/padding';
+import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
+import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
+import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
+import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
+import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 
 @Component({
   selector: 'container-widget',
@@ -21,13 +25,20 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public padding: Padding = new Padding();
+  public paddingTop: PaddingTop = new PaddingTop();
+  public paddingRight: PaddingRight = new PaddingRight();
+  public paddingBottom: PaddingBottom = new PaddingBottom();
+  public paddingLeft: PaddingLeft = new PaddingLeft();
   private fixedHeight: number;
 
-  constructor(widgetService: WidgetService, public _FormService: FormService, private applicationRef: ApplicationRef) { super(widgetService) }
+  constructor(widgetService: WidgetService,
+    breakpointService: BreakpointService,
+    public _FormService: FormService,
+    private applicationRef: ApplicationRef) { super(widgetService, breakpointService) }
 
   ngOnInit() {
     this.fixedHeight = this.height = 250;
+    super.ngOnInit();
   }
 
 
@@ -37,7 +48,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
     this._FormService.border = this.border;
     this._FormService.corners = this.corners;
     this._FormService.shadow = this.shadow;
-    this._FormService.padding = this.padding;
+    // this._FormService.padding = this.padding;
     this._FormService.horizontalAlignment = this.horizontalAlignment;
 
     // Open the container form
@@ -113,12 +124,12 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
 
     // Add fill if applied
     if (this.fill.apply) this.fill.applyColor(grid);
-    
+
     // Other styles
-    this.horizontalAlignment.applyStyle(grid);
+    // this.horizontalAlignment.applyStyle(grid);
     this.border.applyStyle(grid);
     this.corners.applyStyle(grid);
     this.shadow.applyStyle(grid);
-    this.padding.applyStyle(grid);
+    // this.padding.applyStyle(grid);
   }
 }

@@ -5,7 +5,10 @@
     [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
-    [style.padding]="padding.top + 'px ' + padding.right + 'px ' + padding.bottom + 'px ' + padding.left + 'px'"
+    [style.paddingTop]="paddingTop.value"
+    [style.paddingRight]="paddingRight.value"
+    [style.paddingBottom]="paddingBottom.value"
+    [style.paddingLeft]="paddingLeft.value"
     [style.alignItems]="verticalAlignment.value">
 
     <ng-template #viewContainerRef>

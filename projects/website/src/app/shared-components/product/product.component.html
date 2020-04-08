@@ -1,7 +1,7 @@
 <div class="product display-flex display-block-md" [title]="product.title" (click)="onClick()">
 
     <!-- Image -->
-    <div class="margin-bottom-2 text-center img-container">
+    <div class="margin-bottom-8 text-center img-container">
         <img [src]="'images/' + product.image">
         <!-- Quick Look -->
         <div class="quick-look alt-background-color alt-color-darkest"
@@ -11,13 +11,13 @@
     </div>
 
 
-    <div class="margin-left-2 margin-left-3-xxs margin-left-0-md margin-right-2 margin-right-1-xxs">
+    <div class="margin-left-8 margin-left-16-xxs margin-left-0-md margin-right-8 margin-right-4-xxs">
         <!-- Product Title -->
         <div class="font-bold text-break">{{product.title}}</div>
 
 
         <!-- Stars -->
-        <stars class="margin-right-1" [rating]="product.rating"></stars>
+        <stars class="margin-right-4" [rating]="product.rating"></stars>
 
 
         <!-- Reviews -->

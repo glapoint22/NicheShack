@@ -1,8 +1,8 @@
 import { Spacing } from './spacing';
 
-export class Padding extends Spacing {
+export class PaddingLeft extends Spacing {
     constructor() {
         super();
-        this.style = 'padding';
+        this.position = 'Left';
     }
 }

@@ -1,9 +1,9 @@
-<div class="padding-bottom-3" style="max-width: 1200px" [ngClass]="{'border-bottom  margin-bottom-3': showReviewHelpful}">
+<div class="padding-bottom-16" style="max-width: 1200px" [ngClass]="{'border-bottom  margin-bottom-16': showReviewHelpful}">
     <div style="max-width: 800px">
 
         <!-- Stars and review title -->
         <stars [rating]="review.rating"></stars>
-        <span class="margin-left-1 font-bold font-size-3">
+        <span class="margin-left-4 font-bold font-size-3">
             {{review.title}}
         </span>
 
@@ -20,31 +20,31 @@
 
 
         <!-- review text -->
-        <div class="margin-top-3 margin-bottom-3 text-break">
+        <div class="margin-top-16 margin-bottom-16 text-break">
             {{review.text}}
         </div>
 
         <ng-container *ngIf="showReviewHelpful">
             <!-- Review helpful text -->
-            <span class="alt-color margin-right-2" *ngIf="!review.hasBeenRated">
+            <span class="alt-color margin-right-8" *ngIf="!review.hasBeenRated">
                 Was this review helpful?
             </span>
 
             <!-- Thanks for feedback text -->
-            <span *ngIf="review.hasBeenRated" class="success-color margin-right-2">
+            <span *ngIf="review.hasBeenRated" class="success-color margin-right-8">
                 <i class="fas fa-check success-color"></i> Thanks for your feedback.
             </span>
 
             <!-- Review rating container -->
             <span>
-                <span class="margin-right-3 cursor-pointer text-nowrap" *ngIf="!review.hasBeenRated"
+                <span class="margin-right-16 cursor-pointer text-nowrap" *ngIf="!review.hasBeenRated"
                     (click)="onRateReviewClick(1, 0)">
-                    <i class="fas fa-thumbs-up primary-color-light margin-right-1"></i>
+                    <i class="fas fa-thumbs-up primary-color-light margin-right-4"></i>
                     <span>{{review.likes}}</span>
                 </span>
 
-                <span class="cursor-pointer margin-right-3 text-nowrap" *ngIf="!review.hasBeenRated" (click)="onRateReviewClick(0, 1)">
-                    <i class="fas fa-thumbs-down primary-color-light margin-right-1"></i>
+                <span class="cursor-pointer margin-right-16 text-nowrap" *ngIf="!review.hasBeenRated" (click)="onRateReviewClick(0, 1)">
+                    <i class="fas fa-thumbs-down primary-color-light margin-right-4"></i>
                     <span>{{review.dislikes}}</span>
                 </span>
 

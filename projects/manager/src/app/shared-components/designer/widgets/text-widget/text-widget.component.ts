@@ -4,13 +4,19 @@ import { WidgetService } from 'projects/manager/src/app/services/widget.service'
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { TextBox } from 'projects/manager/src/app/classes/text-box';
 import { Color } from 'projects/manager/src/app/classes/color';
+import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
+import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
+import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
+import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
+import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
+import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 
 @Component({
   selector: 'text-widget',
   templateUrl: './text-widget.component.html',
   styleUrls: ['./text-widget.component.scss']
 })
-export class TextWidgetComponent extends FreeformWidgetComponent {
+export class TextWidgetComponent extends FreeformWidgetComponent implements BreakpointsComponent {
   @ViewChild('iframe', { static: false }) iframe: ElementRef;
   private textBox: TextBox;
   private fixedHeight: number;
@@ -20,12 +26,20 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
   public document: Document = document;
   public iframeHeight: number;
   private defaultColor: Color = new Color(0, 0, 0, 1);
+  public paddingTop: PaddingTop = new PaddingTop();
+  public paddingRight: PaddingRight = new PaddingRight();
+  public paddingBottom: PaddingBottom = new PaddingBottom();
+  public paddingLeft: PaddingLeft = new PaddingLeft();
 
-  constructor(widgetService: WidgetService, private applicationRef: ApplicationRef, public _FormService: FormService) { super(widgetService) }
+  constructor(widgetService: WidgetService,
+    breakpointService: BreakpointService,
+    private applicationRef: ApplicationRef,
+    public _FormService: FormService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
     this.height = 64;
     this.fixedHeight = this.height;
+    super.ngOnInit();
   }
 
   ngAfterViewInit() {
@@ -107,6 +121,14 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
 
   ngDoCheck() {
     this.iframeHeight = Math.max(this.height, this.getContentHeight());
+
+    // Set the padding
+    if (this.content) {
+      this.content.style.paddingTop = this.paddingTop.value;
+      this.content.style.paddingRight = this.paddingRight.value;
+      this.content.style.paddingBottom = this.paddingBottom.value;
+      this.content.style.paddingLeft = this.paddingLeft.value;
+    }
   }
 
 
@@ -118,23 +140,26 @@ export class TextWidgetComponent extends FreeformWidgetComponent {
     text.style.fontFamily = 'Arial, Helvetica, sans-serif';
     text.style.fontSize = '14px';
     text.style.color = this.defaultColor.toRGBString();
-    if(this.width) text.style.maxWidth = this.width + 'px';
-    this.horizontalAlignment.applyStyle(text);
+    if (this.width) text.style.maxWidth = this.width + 'px';
+    // this.horizontalAlignment.applyStyle(text);
     text.style.width = '100%';
     text.style.lineHeight = 'normal';
 
     // The content
     text.innerHTML = this.content.innerHTML;
-    
-    
+
+
     // This will change the href attribute of each link to just the url
-    for(let i = 0; i < links.length; i++) {
+    for (let i = 0; i < links.length; i++) {
       let link = links[i];
-      let regex= new RegExp(/(?:url":")([a-zA-Z0-9./?=:_&%+-]+)/);
+      let regex = new RegExp(/(?:url":")([a-zA-Z0-9./?=:_&%+-]+)/);
       let url = regex.exec(link.getAttribute('href'))[1];
       link.attributes.removeNamedItem('href');
       link.setAttribute('href', url);
     }
+
+    // Set the classes
+    this.breakpointService.setBreakpointClasses(this, text);
 
     // Append the text to the parent
     parent.appendChild(text);

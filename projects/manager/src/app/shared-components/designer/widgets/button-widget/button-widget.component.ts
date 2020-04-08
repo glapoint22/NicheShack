@@ -11,6 +11,11 @@ import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.comp
 import { Color } from 'projects/manager/src/app/classes/color';
 import { Link } from 'projects/manager/src/app/classes/link';
 import { LinkSource } from 'projects/manager/src/app/classes/link-source';
+import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
+import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
+import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
+import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
+import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 
 @Component({
   selector: 'button-widget',
@@ -25,12 +30,19 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   public text: ButtonText = new ButtonText();
   public shadow: Shadow = new Shadow();
   public link: Link = new Link();
+  public paddingTop: PaddingTop = new PaddingTop();
+  public paddingRight: PaddingRight = new PaddingRight();
+  public paddingBottom: PaddingBottom = new PaddingBottom();
+  public paddingLeft: PaddingLeft = new PaddingLeft();
 
-  constructor(widgetService: WidgetService, public _FormService: FormService) { super(widgetService) }
+  constructor(widgetService: WidgetService,
+    breakpointService: BreakpointService,
+    public _FormService: FormService) { super(widgetService, breakpointService) }
 
 
   ngOnInit() {
     this.height = 40;
+    super.ngOnInit();
   }
 
 
@@ -129,7 +141,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
       this.corners.getStyle() +
       this.shadow.getStyle() +
       this.text.getStyle() +
-      this.horizontalAlignment.getStyle() +
+      // this.horizontalAlignment.getStyle() +
       '\n\tmin-height: ' + this.height + 'px;' +
       (this.width ? '\n\tmax-width: ' + this.width + 'px;' : '') +
       '\n}' +
@@ -152,7 +164,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     button.style.alignItems = 'center';
     button.style.userSelect = 'none';
     button.style.textAlign = 'center';
-    if(!this.link.url) button.style.cursor = 'pointer';
+    if (!this.link.url) button.style.cursor = 'pointer';
 
     // Link
     if (this.link.url) {
@@ -160,6 +172,9 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
       button.target = '_blank';
       button.style.textDecoration = 'none';
     }
+
+    // Set the breakpoint classes
+    this.breakpointService.setBreakpointClasses(this, button);
 
 
     // Button caption

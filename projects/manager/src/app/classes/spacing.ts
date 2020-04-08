@@ -1,25 +1,17 @@
-export class Spacing {
-    top: number = 0;
-    right: number = 0;
-    bottom: number = 0;
-    left: number = 0;
-    style: string;
+import { BreakpointType } from './breakpoint-type';
+import { BreakpointSpacing } from './breakpoint';
 
-    applyStyle(element: HTMLElement) {
-        if (this.top > 0) {
-            element.style[this.style + 'Top'] = this.top + 'px';
-        }
+export class Spacing implements BreakpointType {
+    public value: string = BreakpointSpacing._0px;
+    public defaultValue: string = BreakpointSpacing._0px;
+    public position: string;
 
-        if (this.right > 0) {
-            element.style[this.style + 'Right'] = this.right + 'px';
-        }
+    constructor(public element?: HTMLElement) { }
 
-        if (this.bottom > 0) {
-            element.style[this.style + 'Bottom'] = this.bottom + 'px';
-        }
 
-        if (this.left > 0) {
-            element.style[this.style + 'Left'] = this.left + 'px';
-        }
+    setClass(element: HTMLElement, screenSize?: string) {
+        let className = 'padding-' + this.position + '-' + this.value.substr(0, this.value.length - 2);
+
+        element.classList.add(className + (screenSize ? '-' + screenSize : ''));
     }
 }

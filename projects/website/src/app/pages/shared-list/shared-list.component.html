@@ -6,7 +6,7 @@
     <div class="page-container">
         <div class="content-container">
             <div class="content" style="max-width: 1440px;">
-                <div class="margin-left-4 width-100 position-relative">
+                <div class="margin-left-24 width-100 position-relative">
                     <h1>{{listOwner}}'s List</h1>
 
 
@@ -28,12 +28,12 @@
 
                                 <div class="border-top ">
                                     <div *ngFor="let product of products" class="border-bottom ">
-                                        <div class="display-flex justify-content-between padding-3">
+                                        <div class="display-flex justify-content-between padding-16">
                                             <div class="display-flex flex-wrap">
 
 
                                                 <!-- Product Image -->
-                                                <div class="display-flex align-items-center justify-content-center margin-right-3 flex-shrink-0 cursor-pointer"
+                                                <div class="display-flex align-items-center justify-content-center margin-right-16 flex-shrink-0 cursor-pointer"
                                                     style="width: 150px; height: 150px"
                                                     [routerLink]="['/' + product.urlTitle + '/' + product.id]">
                                                     <img [src]="'/images/' + product.image"
@@ -41,14 +41,14 @@
                                                 </div>
 
                                                 <!-- Product Title -->
-                                                <div class="margin-right-2 text-break">
+                                                <div class="margin-right-8 text-break">
                                                     <h3 class="text-hover-underline cursor-pointer"
                                                         [routerLink]="['/' + product.urlTitle + '/' + product.id]">
                                                         {{product.title}}</h3>
 
 
                                                     <!-- Rating & Reviews -->
-                                                    <stars class="margin-right-1" [rating]="product.rating">
+                                                    <stars class="margin-right-4" [rating]="product.rating">
                                                     </stars>
                                                     <span class="text-nowrap primary-color-light"
                                                         *ngIf="product.rating > 0">
@@ -74,10 +74,10 @@
 
                                             <!-- Product Management -->
                                             <div>
-                                                <div class="margin-bottom-1 gray-color">Item added
+                                                <div class="margin-bottom-4 gray-color">Item added
                                                     {{product.dateAdded}}
                                                 </div>
-                                                <button class="alt-button margin-bottom-2"
+                                                <button class="alt-button margin-bottom-8"
                                                     (click)="onBuyClick(product.hoplink)">Visit
                                                     Product Page To Buy</button>
                                             </div>

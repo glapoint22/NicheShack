@@ -1,9 +1,9 @@
-<nav class="primary-color-gradient shadow padding-3 fixed-top display-flex align-items-center" style="min-height: 79px;">
+<nav class="primary-color-gradient shadow padding-16 fixed-top display-flex align-items-center" style="min-height: 79px;">
     
     <!-- Logo and menu bars -->
-    <div class="display-flex margin-bottom-2">
-        <i class="fas fa-bars margin-right-3 alt-color" (click)="navMenu.onClick()"></i>
-        <img src="assets/Logo.png" class="flex-shrink-0 margin-right-2 show-sm cursor-pointer" routerLink="" title="Niche Shack Homepage">
+    <div class="display-flex margin-bottom-8">
+        <i class="fas fa-bars margin-right-16 alt-color" (click)="navMenu.onClick()"></i>
+        <img src="assets/Logo.png" class="flex-shrink-0 margin-right-8 show-sm cursor-pointer" routerLink="" title="Niche Shack Homepage">
     </div>
     
     <!-- Container for search and navigation text -->
@@ -17,15 +17,15 @@
         </div>
 
         <!-- Navigation container -->
-        <div class="margin-left-3 margin-bottom-n2 show-md">
+        <div class="margin-left-16 margin-bottom-n2 show-md">
             <div class="text-truncate show-md customer-name">{{customerName ? 'Hello, ' + customerName : 'Sign in'}}</div>
             <div class="display-flex alt-color text-nowrap">
-                <div class="margin-right-5-md margin-top-3 margin-top-0-md position-relative cursor-pointer" (click)="accountMenu.onClick()" (mousedown)="accountMenu.onMousedown()">
+                <div class="margin-right-48-md margin-top-16 margin-top-0-md position-relative cursor-pointer" (click)="accountMenu.onClick()" (mousedown)="accountMenu.onMousedown()">
                     Account
                     <div class="arrow-down"></div>
                     <account-menu #accountMenu></account-menu>
                 </div>
-                <a class="margin-right-5-lg" routerLink="/account/orders">Your Orders</a>
+                <a class="margin-right-48-lg" routerLink="/account/orders">Your Orders</a>
                 <a class="show-lg" href="https://www.clkbank.com">Order Support</a>
             </div>
         </div>

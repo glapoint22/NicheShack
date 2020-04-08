@@ -9,13 +9,15 @@ import { Color } from 'projects/manager/src/app/classes/color';
 import { LinkSource } from 'projects/manager/src/app/classes/link-source';
 import { Link } from 'projects/manager/src/app/classes/link';
 import { Image } from 'projects/manager/src/app/classes/image';
+import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
+import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 
 @Component({
   selector: 'image-widget',
   templateUrl: './image-widget.component.html',
   styleUrls: ['./image-widget.component.scss']
 })
-export class ImageWidgetComponent extends ProportionalWidgetComponent implements LinkSource {
+export class ImageWidgetComponent extends ProportionalWidgetComponent implements LinkSource, BreakpointsComponent {
   @ViewChild('svg', { static: false }) placeholder: ElementRef;
   public border: Border = new Border();
   public corners: Corners = new Corners();
@@ -23,11 +25,14 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
   public image: Image = new Image();
   public link: Link = new Link();
 
-  constructor(widgetService: WidgetService, public _FormService: FormService) { super(widgetService) }
+  constructor(widgetService: WidgetService,
+    breakpointService: BreakpointService,
+    public _FormService: FormService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
     // this.image.url = '0aada12f8b21471ea96aebe9a503977b.png';
     this.image.title = 'Alita';
+    super.ngOnInit();
   }
 
 
@@ -107,18 +112,21 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
       anchor.style.width = '100%';
       anchor.href = this.link.url;
       anchor.target = '_blank';
-      this.horizontalAlignment.applyStyle(anchor);
 
       // If we have an image, display it as inline
       if (this.image.url) img.style.display = 'inline';
+
+      // Set the classes
+      this.breakpointService.setBreakpointClasses(this, anchor);
 
 
       // Place the image inside the anchor and place the anchor inside the parent
       anchor.appendChild(img);
       parent.appendChild(anchor);
     } else {
-      // Set the alignment for the image
-      this.horizontalAlignment.applyStyle(img);
+      
+      // Set the classes
+      this.breakpointService.setBreakpointClasses(this, img);
 
       // Place the image inside the parent
       parent.appendChild(img);
