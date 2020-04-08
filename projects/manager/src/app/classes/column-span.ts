@@ -23,7 +23,7 @@ export class ColumnSpan implements BreakpointType {
     constructor(private columnElement: HTMLElement) { }
 
 
-    setClass(element: HTMLElement, screenSize?: string) {
-        element.classList.add('col-' + this.value + (screenSize ? '-' + screenSize : ''));
+    setClass(value: number, element: HTMLElement, screenSize?: string) {
+        element.classList.add('col-' + value + (screenSize ? '-' + screenSize : ''));
     }
 }

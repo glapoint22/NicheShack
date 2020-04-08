@@ -6,8 +6,8 @@ export class VerticalAlignment extends Alignment implements BreakpointType{
     public value: string = BreakpointVerticalAlignment.Top;
     public defaultValue: string = BreakpointVerticalAlignment.Top;
 
-    setClass(element: HTMLElement, screenSize?: string) {
-        switch (this.value) {
+    setClass(value: string, element: HTMLElement, screenSize?: string) {
+        switch (value) {
             case BreakpointVerticalAlignment.Top:
                 this.applyClass(element, screenSize, 'vertical-align-top');
                 break;

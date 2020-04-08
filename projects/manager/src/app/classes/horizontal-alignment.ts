@@ -6,8 +6,8 @@ export class HorizontalAlignment extends Alignment implements BreakpointType {
     public value: string = BreakpointHorizontalAlignment.Left;
     public defaultValue: string = BreakpointHorizontalAlignment.Left;
 
-    setClass(element: HTMLElement, screenSize?: string) {
-        switch (this.value) {
+    setClass(value: string, element: HTMLElement, screenSize?: string) {
+        switch (value) {
             case BreakpointHorizontalAlignment.Left:
                 this.applyClass(element, screenSize, 'horizontal-align-left');
                 break;

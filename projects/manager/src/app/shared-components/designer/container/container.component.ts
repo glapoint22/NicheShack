@@ -159,7 +159,7 @@ export class ContainerComponent {
     grid.style.maxWidth = this.width + 'px';
 
     // Add the grid class
-    grid.classList.add('grid');
+    // grid.classList.add('grid');
 
     // Append to the parent and add the rows
     parent.appendChild(grid);

@@ -9,8 +9,8 @@ export class Spacing implements BreakpointType {
     constructor(public element?: HTMLElement) { }
 
 
-    setClass(element: HTMLElement, screenSize?: string) {
-        let className = 'padding-' + this.position + '-' + this.value.substr(0, this.value.length - 2);
+    setClass(value: string, element: HTMLElement, screenSize?: string) {
+        let className = 'padding-' + this.position + '-' + value.substr(0, this.value.length - 2);
 
         element.classList.add(className + (screenSize ? '-' + screenSize : ''));
     }

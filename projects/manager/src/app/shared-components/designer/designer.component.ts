@@ -141,6 +141,7 @@ export class DesignerComponent implements OnInit {
     this.container.buildHTML(parent);
 
     (parent.firstElementChild as HTMLElement).style.height = '100%';
+    (parent.firstElementChild as HTMLElement).classList.add('grid');
     previewWindow.document.write(parent.outerHTML);
 
     let title = document.createElement('title');

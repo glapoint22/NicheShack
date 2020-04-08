@@ -48,7 +48,6 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
     this._FormService.border = this.border;
     this._FormService.corners = this.corners;
     this._FormService.shadow = this.shadow;
-    // this._FormService.padding = this.padding;
     this._FormService.horizontalAlignment = this.horizontalAlignment;
 
     // Open the container form
@@ -126,10 +125,11 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
     if (this.fill.apply) this.fill.applyColor(grid);
 
     // Other styles
-    // this.horizontalAlignment.applyStyle(grid);
     this.border.applyStyle(grid);
     this.corners.applyStyle(grid);
     this.shadow.applyStyle(grid);
-    // this.padding.applyStyle(grid);
+
+    // Set the breakpoint classes
+    this.breakpointService.setBreakpointClasses(this, grid);
   }
 }

@@ -13,6 +13,7 @@ export class BreakpointService {
   private currentBreakpointScreenSize: string;
 
   constructor() {
+    // When the canvas has a width change, test to see if we are at a new breakpoint
     this.onCanvasWidthChange.subscribe((width: number) => {
       for (let item in BreakpointScreenSize) {
         let minSize: number = parseInt(BreakpointScreenSize[item]);
@@ -25,25 +26,14 @@ export class BreakpointService {
           break;
         }
       }
-    })
+    });
   }
 
-  private getNextBreakpointScreenSize(screenSize: string): number {
-    let nextScreenSize: number;
 
-    // This is the index of the next breakpoint screen size
-    let index: number = Object.values(BreakpointScreenSize).findIndex(x => x == screenSize) + 1;
-
-    if (index == Object.keys(BreakpointScreenSize).length) {
-      nextScreenSize = Infinity;
-    } else {
-      nextScreenSize = parseInt(Object.values(BreakpointScreenSize)[index]);
-    }
-
-    return nextScreenSize;
-  }
-
-  public setBreakpointValues(breakpoints: Array<Breakpoint>, screenSize: string) {
+  
+  
+  
+  setBreakpointValues(breakpoints: Array<Breakpoint>, screenSize: string) {
     breakpoints.forEach(x => x.type.value = x.type.defaultValue);
 
     // Filter the breakpoints based on screen size
@@ -56,30 +46,32 @@ export class BreakpointService {
     });
   }
 
-  sortBreakpoints(breakpoints: Array<Breakpoint>) {
-    breakpoints.sort((a, b) => {
-      if (parseInt(a.screenSize) < parseInt(b.screenSize)) return 1;
-      return -1;
-    });
-  }
-
-
-  private getScreenSizeKey(screenSize: string) {
-    return Object.keys(BreakpointScreenSize).filter(x => BreakpointScreenSize[x] == screenSize)[0].toLowerCase();
-  }
+  
+  
+  
 
 
   addBreakpoint(breakpoints: Array<Breakpoint>, type: BreakpointType, screenSize: BreakpointScreenSize, value: any) {
+    // Add a new breakpoint to the passed in breakpoints array
     breakpoints.push(new Breakpoint(type, screenSize, value));
 
+    // Sort the breakpoints based on screeen size
     this.sortBreakpoints(breakpoints);
   }
 
+
+
+  
+  
   removeBreakpoint(breakpoints: Array<Breakpoint>, breakpoint: Breakpoint) {
+    // Remove the breakpoint from the breakpoints array
     breakpoints.splice(breakpoints.findIndex(x => x == breakpoint), 1);
   }
 
 
+  
+  
+  
   setBreakpointClasses(breakpointsComponent: BreakpointsComponent, element: HTMLElement) {
     let properties = Object.keys(breakpointsComponent);
 
@@ -96,8 +88,7 @@ export class BreakpointService {
 
           // Set the class for each breakpoint
           breakpoints.forEach((breakpoint: Breakpoint) => {
-            breakpoint.type.value = breakpoint.value;
-            breakpoint.type.setClass(element, this.getScreenSizeKey(breakpoint.screenSize));
+            breakpoint.type.setClass(breakpoint.value, element, this.getScreenSizeKey(breakpoint.screenSize));
           });
 
           // No breakpoints have been set to this property
@@ -105,10 +96,47 @@ export class BreakpointService {
 
           // Set the class only if the property value is not the default value
           if (breakpointsComponent[property].value != breakpointsComponent[property].defaultValue) {
-            breakpointsComponent[property].setClass(element);
+            breakpointsComponent[property].setClass(breakpointsComponent[property].value, element);
           }
         }
       }
     });
+  }
+
+
+
+  private getNextBreakpointScreenSize(screenSize: string): number {
+    let nextScreenSize: number;
+
+    // This is the index of the next breakpoint screen size
+    let index: number = Object.values(BreakpointScreenSize).findIndex(x => x == screenSize) + 1;
+
+    // If this is the last screen size in the list
+    if (index == Object.keys(BreakpointScreenSize).length) {
+      nextScreenSize = Infinity;
+
+      // Assign the next screen size in the list
+    } else {
+      nextScreenSize = parseInt(Object.values(BreakpointScreenSize)[index]);
+    }
+
+    return nextScreenSize;
+  }
+
+
+
+  private sortBreakpoints(breakpoints: Array<Breakpoint>) {
+    breakpoints.sort((a, b) => {
+      if (parseInt(a.screenSize) < parseInt(b.screenSize)) return 1;
+      return -1;
+    });
+  }
+
+
+  
+  
+  private getScreenSizeKey(screenSize: string) {
+    // This will return the key based on the screenSize value (eg. MD)
+    return Object.keys(BreakpointScreenSize).filter(x => BreakpointScreenSize[x] == screenSize)[0].toLowerCase();
   }
 }
