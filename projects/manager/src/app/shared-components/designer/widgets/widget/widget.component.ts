@@ -49,21 +49,21 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
 
 
 
-  getTopCollisionPoint(): number {
-    let point: number = this.column.row.container.containerElement.nativeElement.getBoundingClientRect().top;
+  // getTopCollisionPoint(): number {
+  //   let point: number = this.column.row.container.containerElement.nativeElement.getBoundingClientRect().top;
 
-    for (let i = 0; i < this.column.row.container.rows.length; i++) {
-      let currentRow = this.column.row.container.rows[i];
+  //   for (let i = 0; i < this.column.row.container.rows.length; i++) {
+  //     let currentRow = this.column.row.container.rows[i];
 
-      if (!this.column.row.rowElement.nativeElement.isEqualNode(currentRow.element.firstElementChild)) {
-        point += currentRow.element.firstElementChild.getBoundingClientRect().height;
-      } else {
-        break;
-      }
-    }
+  //     if (!this.column.row.rowElement.nativeElement.isEqualNode(currentRow.element.firstElementChild)) {
+  //       point += currentRow.element.firstElementChild.getBoundingClientRect().height;
+  //     } else {
+  //       break;
+  //     }
+  //   }
 
-    return point;
-  }
+  //   return point;
+  // }
 
 
   getMaxRowHeight(): number {

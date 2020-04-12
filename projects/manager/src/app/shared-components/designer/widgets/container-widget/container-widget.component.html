@@ -9,7 +9,7 @@
     [style.paddingRight]="paddingRight.value"
     [style.paddingBottom]="paddingBottom.value"
     [style.paddingLeft]="paddingLeft.value"
-    [style.maxWidth.px]="width ? width : null" [style.height.px]="height">
+    [style.maxWidth.px]="width ? width : null" [style.minHeight.px]="height" [style.height.px]="widgetService.currentWidgetCursor ? height : null">
 
 
     <!-- Handles -->
@@ -26,5 +26,6 @@
     <div id="handle" class="bottom-left-handle" (mousedown)="onHandleMousedown('bottom-left')"></div>
     <div id="handle" class="left-handle-bar" (mousedown)="onHandleMousedown('left')"></div>
 
-    <container #container (onHeightChange)="onHeightChange($event)"></container>
+    <!-- <container #container (onHeightChange)="onHeightChange($event)"></container> -->
+    <container #container></container>
 </div>

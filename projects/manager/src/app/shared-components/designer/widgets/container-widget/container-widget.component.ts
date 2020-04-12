@@ -1,4 +1,4 @@
-import { Component, ViewChild, ApplicationRef } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormService } from 'projects/manager/src/app/services/form.service';
 import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
@@ -29,15 +29,15 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
   public paddingRight: PaddingRight = new PaddingRight();
   public paddingBottom: PaddingBottom = new PaddingBottom();
   public paddingLeft: PaddingLeft = new PaddingLeft();
-  private fixedHeight: number;
+  // private fixedHeight: number;
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService,
-    public _FormService: FormService,
-    private applicationRef: ApplicationRef) { super(widgetService, breakpointService) }
+    public _FormService: FormService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
-    this.fixedHeight = this.height = 250;
+    // this.fixedHeight = this.height = 250;
+    this.height = 250
     super.ngOnInit();
   }
 
@@ -76,60 +76,60 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
     return this.container.rows[index].component.top + this.container.rows[index].element.firstElementChild.clientHeight;
   }
 
-  onHeightChange(value: number) {
-    // Set the height and force detection change
-    this.height += value;
-    this.height = Math.max(this.height, this.fixedHeight);
-    this.applicationRef.tick();
+  // onHeightChange(value: number) {
+  //   // Set the height and force detection change
+  //   this.height += value;
+  //   this.height = Math.max(this.height, this.fixedHeight);
+  //   this.applicationRef.tick();
 
-    // Check the height for the parent container
-    this.column.row.container.checkHeightChange();
-    this.column.row.container.collisionDown();
-  }
+  //   // Check the height for the parent container
+  //   this.column.row.container.checkHeightChange();
+  //   this.column.row.container.collisionDown();
+  // }
 
 
-  onBottomHandleMousedown() {
-    super.onBottomHandleMousedown();
+  // onBottomHandleMousedown() {
+  //   super.onBottomHandleMousedown();
 
-    let onMousemove = (e: MouseEvent) => {
-      // Reset the fixed height
-      this.fixedHeight = this.height;
-    }
+  //   let onMousemove = (e: MouseEvent) => {
+  //     // Reset the fixed height
+  //     this.fixedHeight = this.height;
+  //   }
 
-    let onMouseup = () => {
-      this.mouseUp(onMousemove, onMouseup);
-    }
+  //   let onMouseup = () => {
+  //     this.mouseUp(onMousemove, onMouseup);
+  //   }
 
-    this.addEventListeners(onMousemove, onMouseup);
-  }
+  //   this.addEventListeners(onMousemove, onMouseup);
+  // }
 
-  setWidth(startWidth: number, percent: number) {
-    super.setWidth(startWidth, percent);
+  // setWidth(startWidth: number, percent: number) {
+  //   super.setWidth(startWidth, percent);
 
-    // Check to see if any proportional widgets have changed the container height
-    this.container.checkHeightChange();
-  }
+  //   // Check to see if any proportional widgets have changed the container height
+  //   this.container.checkHeightChange();
+  // }
 
   buildHTML(parent: HTMLElement) {
     // Build the grid
     this.container.buildHTML(parent);
 
-    // Get the grid
-    let grid = parent.firstElementChild as HTMLElement;
+    // Get the container
+    let container = parent.firstElementChild as HTMLElement;
 
     // Add width and height styles
-    if (this.width) grid.style.maxWidth = this.width + 'px';
-    grid.style.minHeight = this.height + 'px';
+    if (this.width) container.style.maxWidth = this.width + 'px';
+    container.style.minHeight = this.height + 'px';
 
     // Add fill if applied
-    if (this.fill.apply) this.fill.applyColor(grid);
+    if (this.fill.apply) this.fill.applyColor(container);
 
     // Other styles
-    this.border.applyStyle(grid);
-    this.corners.applyStyle(grid);
-    this.shadow.applyStyle(grid);
+    this.border.applyStyle(container);
+    this.corners.applyStyle(container);
+    this.shadow.applyStyle(container);
 
     // Set the breakpoint classes
-    this.breakpointService.setBreakpointClasses(this, grid);
+    this.breakpointService.setBreakpointClasses(this, container);
   }
 }

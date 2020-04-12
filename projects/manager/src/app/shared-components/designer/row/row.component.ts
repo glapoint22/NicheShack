@@ -100,14 +100,16 @@ export class RowComponent implements BreakpointsComponent{
       let delta = this.top - currentPos;
       currentPos = this.top;
 
-      // Check for collision
-      if (delta > 0) {
-        this.container.collisionDown();
-      } else {
-        this.container.collisionUp();
-      }
+      this.setNextRowTop(delta);
 
-      this.container.checkHeightChange();
+      // Check for collision
+      // if (delta > 0) {
+      //   this.container.collisionDown();
+      // } else {
+      //   this.container.collisionUp();
+      // }
+
+      // this.container.checkHeightChange();
     }
 
     // Mouseup
@@ -121,6 +123,12 @@ export class RowComponent implements BreakpointsComponent{
     // Add the listeners
     window.addEventListener("mousemove", onMousemove);
     window.addEventListener("mouseup", onMouseup);
+  }
+  
+  setNextRowTop(delta: number) {
+    if(this.container.selectedRowIndex != this.container.rows.length - 1) {
+      this.container.rows[this.container.selectedRowIndex + 1].component.top -= delta;
+    }
   }
 
 
@@ -152,7 +160,7 @@ export class RowComponent implements BreakpointsComponent{
 
     // Shift rows down if this row collides with its neighboring rows
     this.container.collisionDown();
-    this.container.checkHeightChange();
+    // this.container.checkHeightChange();
 
 
     // Add or update each column with the correct column span based on the number of columns in this row
@@ -190,8 +198,8 @@ export class RowComponent implements BreakpointsComponent{
     row.classList.add('row');
     if (this.columns.length == 5) row.classList.add('flex-10');
 
-    row.style.position = 'relative';
-    row.style.top = this.top + 'px';
+    // row.style.position = 'relative';
+    row.style.marginTop = this.top + 'px';
 
     // Fill
     if (this.fill.apply) this.fill.applyColor(row);

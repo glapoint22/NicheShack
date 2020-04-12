@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { WidgetComponent } from '../widget/widget.component';
-import { BreakpointHorizontalAlignment } from 'projects/manager/src/app/classes/breakpoint';
+import { BreakpointHorizontalAlignment, BreakpointVerticalAlignment } from 'projects/manager/src/app/classes/breakpoint';
 
 @Component({
   template: '',
@@ -105,8 +105,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
     let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().top + anchorHeight;
     let startHeight: number = this.widget.nativeElement.clientHeight;
-    let tempHeight: number = startHeight;
-    let topCollisionPoint: number = this.getTopCollisionPoint();
+    let previousHeight: number = startHeight;
     let maxRowHeight: number = this.getMaxRowHeight();
     let minHeight: number = this.getMinHeight();
 
@@ -114,56 +113,116 @@ export class FreeformWidgetComponent extends WidgetComponent {
       let mousePos = (anchorPoint - e.clientY);
       let percent = mousePos / anchorHeight;
       this.height = startHeight * percent;
-      let delta = this.height - tempHeight;
+      let delta = this.height - previousHeight;
 
-      // Prevent the bottom of the widget extending when colliding with something above it
-      if (anchorPoint - (this.height * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1)) < topCollisionPoint) {
-        this.height = (anchorPoint - topCollisionPoint) * (this.column.row.verticalAlignment.value == 'center' ? 2 : 1);
-      }
 
 
       // Make sure the widget's height does not go below the min height
       if (this.height < minHeight) {
         this.height = minHeight;
 
-        delta = minHeight - tempHeight;
+        delta = minHeight - previousHeight;
       }
 
 
-      // Align Top
-      if (this.column.row.verticalAlignment.value == 'flex-start') {
+      // The row's vertical alignment is set to top
+      if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
         this.column.row.top -= delta;
 
 
-        // Align Center
-      } else if (this.column.row.verticalAlignment.value == 'center') {
 
-        if (this.height > maxRowHeight) {
-          this.column.row.top -= (delta * 0.5);
+        // The widget's height is less than the row's height
+        if (this.height < maxRowHeight) {
+
+          // If the previous height was greater or equal to the row's height
+          if (previousHeight >= maxRowHeight) {
+
+            // We are recalculating the delta because we don't want the full delta, 
+            // just the difference between the current height and the row's height
+            delta = this.height - maxRowHeight;
+          }
+
+
+          // The widget's height is greater or equal to the row's height
+        } else {
+
+          // The previous height was less than or equal to the row's height
+          if (previousHeight <= maxRowHeight) {
+
+            // We are recalculating the delta because we don't want the full delta,
+            // just the difference between the row's height and the previous height
+            delta = maxRowHeight - previousHeight;
+          } else {
+            delta = 0;
+          }
+        }
+
+
+        // Set the next row's top
+        this.column.row.setNextRowTop(-delta);
+
+
+
+
+
+
+
+
+
+        // The row's vertical alignment is set to middle or bottom
+      } else if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
+        this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom) {
+
+
+
+        // The widget's height is less than the row's height
+        if (this.height < maxRowHeight) {
+
+          // If the previous height was greater or equal to the row's height
+          if (previousHeight >= maxRowHeight) {
+
+            // We are recalculating the delta because we don't want the full delta, 
+            // just the difference between the row's height and the previous height
+            delta = maxRowHeight - previousHeight;
+
+          } else {
+            delta = 0;
+          }
+
+
+          // The widget's height is greater or equal to the row's height
+        } else {
+
+          // The previous height was less than or equal to the row's height
+          if (previousHeight <= maxRowHeight) {
+
+            // We are recalculating the delta because we don't want the full delta,
+            // just the difference between the current height and the row's height
+            delta = this.height - maxRowHeight;
+          }
         }
 
 
 
-        // Align Bottom
-      } else if (this.column.row.verticalAlignment.value == 'flex-end') {
-        if (this.height < minHeight) {
-          this.height = minHeight;
 
-          delta = minHeight - tempHeight;
+
+        // The row's vertical alignment is set to middle
+        if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
+          delta *= 0.5;
+          this.column.row.setNextRowTop(delta);
         }
 
-        if (this.height > maxRowHeight) {
-          this.column.row.top -= delta;
-        }
+
+        // Move the row
+        this.column.row.top -= delta;
       }
-
 
       // Collision
       if (delta > 0 || this.column.row.verticalAlignment.value == 'center') this.column.row.container.collisionUp();
       if (this.column.row.verticalAlignment.value == 'center' || this.column.row.verticalAlignment.value == 'flex-start') this.column.row.container.collisionDown();
-      this.column.row.container.checkHeightChange();
+      // this.column.row.container.checkHeightChange();
 
-      tempHeight = this.height;
+      previousHeight = this.height;
     }
 
     let onMouseup = () => {
@@ -179,8 +238,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
     let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().top + (this.column.row.verticalAlignment.value == 'center' ? anchorHeight : 0);
     let startHeight: number = this.widget.nativeElement.clientHeight;
-    let tempHeight: number = startHeight;
-    let topCollisionPoint: number = this.getTopCollisionPoint();
+    let previousHeight: number = startHeight;
     let maxRowHeight: number = this.getMaxRowHeight();
     let minHeight: number = this.getMinHeight();
 
@@ -189,51 +247,124 @@ export class FreeformWidgetComponent extends WidgetComponent {
       let mousePos = (e.clientY - anchorPoint);
       let percent = mousePos / anchorHeight;
       this.height = startHeight * percent;
-      let delta = this.height - tempHeight;
+      let delta = this.height - previousHeight;
 
       // Make sure the widget's height does not go below the min height
       if (this.height < minHeight) {
         this.height = minHeight;
 
-        delta = minHeight - tempHeight;
+        delta = minHeight - previousHeight;
       }
 
 
-      // Align Center
-      if (this.column.row.verticalAlignment.value == 'center') {
-
-
-        // Prevent the bottom of the widget extending when colliding with something above it
-        if (anchorPoint - (this.height * 0.5) < topCollisionPoint) {
-          this.height = (anchorPoint - topCollisionPoint) * 2;
-        }
+      // The row's vertical alignment is set to top or middle
+      if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top ||
+        this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
 
 
 
-        // If the height of the widget is greater than the row height, move the row
-        if (this.height > maxRowHeight) {
-          this.column.row.top -= (delta * 0.5);
-        }
 
-
-        // Align Bottom
-      } else if (this.column.row.verticalAlignment.value == 'flex-end') {
-
-
-        // Move the row if the widget's height is less than the row's height
+        // The widget's height is less than the row's height
         if (this.height < maxRowHeight) {
+
+          // If the previous height was greater or equal to the row's height
+          if (previousHeight >= maxRowHeight) {
+
+            // We are recalculating the delta because we don't want the full delta, 
+            // just the difference between the previous height and the row's height
+            delta = maxRowHeight - previousHeight;
+
+            // The previous height was less than the row's height
+          } else {
+            delta = 0;
+          }
+
+
+          // The widget's height is greater or equal to the row's height
+        } else {
+
+          // The previous height was less than or equal to the row's height
+          if (previousHeight <= maxRowHeight) {
+
+            // We are recalculating the delta because we don't want the full delta,
+            // just the difference between the current height and the row's height
+            delta = this.height - maxRowHeight;
+          }
+        }
+
+
+
+
+
+
+
+
+        // The row's vertical alignment is set to middle
+        if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
+
+          // Move the row with half of the delta
+          delta *= 0.5;
+          this.column.row.top -= delta;
+        }
+
+        // Set the next row's top
+        this.column.row.setNextRowTop(delta);
+
+
+
+
+
+
+
+
+        // The row's vertical alignment is set to bottom
+      } else if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom) {
+
+
+        // Set the next row's top
+        this.column.row.setNextRowTop(delta);
+
+
+
+        // The widget's height is less than the row's height
+        if (this.height < maxRowHeight) {
+
+          // If the previous height was greater or equal to the row's height
+          if (previousHeight >= maxRowHeight) {
+
+            // We are recalculating the delta because we don't want the full delta, 
+            // just the difference between the current height and the row's height
+            delta = this.height - maxRowHeight;
+          }
+
+          // Move the row
           this.column.row.top += delta;
+
+          // The widget's height is greater or equal to the row's height
+        } else {
+
+          // The previous height was less than or equal to the row's height
+          if (previousHeight <= maxRowHeight) {
+
+            // We are recalculating the delta because we don't want the full delta, 
+            // just the difference between the row's height and the previous height
+            delta = maxRowHeight - previousHeight;
+
+            // Move the row
+            this.column.row.top += delta;
+          }
         }
       }
+
 
 
       // Collision
       if (this.column.row.verticalAlignment.value == 'center' || this.column.row.verticalAlignment.value == 'flex-end') this.column.row.container.collisionUp();
       if (delta > 0 || this.column.row.verticalAlignment.value == 'center') this.column.row.container.collisionDown();
-      this.column.row.container.checkHeightChange();
+      // this.column.row.container.checkHeightChange();
 
 
-      tempHeight = this.height;
+      previousHeight = this.height;
     }
 
     let onMouseup = () => {

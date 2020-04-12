@@ -20,8 +20,8 @@ export class ProportionalWidgetComponent extends WidgetComponent {
     let columnWidth: number = this.widget.nativeElement.parentElement.parentElement.clientWidth;
     let mouse: Vector = new Vector(event.clientX, event.clientY);
     let mouseX: number = mouse.x;
-    let widgetTop: number = this.widget.nativeElement.getBoundingClientRect().top;
-    let topCollisionPoint: number = this.getTopCollisionPoint();
+    // let widgetTop: number = this.widget.nativeElement.getBoundingClientRect().top;
+    // let topCollisionPoint: number = this.getTopCollisionPoint();
     let maxRowHeight: number = this.getMaxRowHeight();
     let tempHeight = startWidth * heightWidthRatio;
 
@@ -101,12 +101,12 @@ export class ProportionalWidgetComponent extends WidgetComponent {
 
 
         // This will prevent the widget from sizing when colliding with a row above it or the top of the container
-        widgetTop += (deltaHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1));
-        if (widgetTop < topCollisionPoint) {
-          this.width += ((widgetTop - topCollisionPoint) * widthHeightRatio * (this.column.row.verticalAlignment.value == 'center' ? 2 : 1));
-          mouseX -= deltaSum;
-          widgetTop = topCollisionPoint;
-        }
+        // widgetTop += (deltaHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1));
+        // if (widgetTop < topCollisionPoint) {
+        //   this.width += ((widgetTop - topCollisionPoint) * widthHeightRatio * (this.column.row.verticalAlignment.value == 'center' ? 2 : 1));
+        //   mouseX -= deltaSum;
+        //   widgetTop = topCollisionPoint;
+        // }
 
 
         // Collision
@@ -118,7 +118,7 @@ export class ProportionalWidgetComponent extends WidgetComponent {
       }
       mouse = new Vector(e.clientX, e.clientY);
 
-      this.column.row.container.checkHeightChange();
+      // this.column.row.container.checkHeightChange();
     }
 
     let onMouseup = () => {
