@@ -76,39 +76,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
     return this.container.rows[index].component.top + this.container.rows[index].element.firstElementChild.clientHeight;
   }
 
-  // onHeightChange(value: number) {
-  //   // Set the height and force detection change
-  //   this.height += value;
-  //   this.height = Math.max(this.height, this.fixedHeight);
-  //   this.applicationRef.tick();
-
-  //   // Check the height for the parent container
-  //   this.column.row.container.checkHeightChange();
-  //   this.column.row.container.collisionDown();
-  // }
-
-
-  // onBottomHandleMousedown() {
-  //   super.onBottomHandleMousedown();
-
-  //   let onMousemove = (e: MouseEvent) => {
-  //     // Reset the fixed height
-  //     this.fixedHeight = this.height;
-  //   }
-
-  //   let onMouseup = () => {
-  //     this.mouseUp(onMousemove, onMouseup);
-  //   }
-
-  //   this.addEventListeners(onMousemove, onMouseup);
-  // }
-
-  // setWidth(startWidth: number, percent: number) {
-  //   super.setWidth(startWidth, percent);
-
-  //   // Check to see if any proportional widgets have changed the container height
-  //   this.container.checkHeightChange();
-  // }
+  
 
   buildHTML(parent: HTMLElement) {
     // Build the grid

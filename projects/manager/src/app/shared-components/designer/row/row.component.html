@@ -1,4 +1,4 @@
-<div #row class="row" (mousedown)="onMousedown($event); $event.stopPropagation()" (dblclick)="onEdit()"
+<div #row class="row" (mousedown)="onMousedown(); $event.stopPropagation()" (dblclick)="onEdit()"
     [ngClass]="{'flex-10': columns.length == 5}"
     (mousemove)="widgetService.currentWidgetCursor ? $event.stopPropagation(): null" [style.marginTop.px]="top"
     [style.background]="fill.apply ? 'rgba(' + fill.color.r + ',' +  fill.color.g + ',' + fill.color.b + ',' + fill.color.a + ')' : 'transparent'"

@@ -24,13 +24,14 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
   public shadow: Shadow = new Shadow();
   public image: Image = new Image();
   public link: Link = new Link();
+  public imageLoaded: boolean;
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService,
     public _FormService: FormService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
-    // this.image.url = '0aada12f8b21471ea96aebe9a503977b.png';
+    this.image.url = '0aada12f8b21471ea96aebe9a503977b.png';
     this.image.title = 'Alita';
     super.ngOnInit();
   }
@@ -62,6 +63,7 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
 
   onImageLoad(event) {
     this.width = event.srcElement.naturalWidth;
+    this.imageLoaded = true;
   }
 
 

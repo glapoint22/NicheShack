@@ -72,7 +72,7 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
     if (this.column.row.columns.length > 1) {
       for (let i = 0; i < this.column.row.columns.length; i++) {
         if (!this.column.row.columns[i].element.isEqualNode(this.column.viewContainerRef.element.nativeElement.parentElement)) {
-          maxHeight = Math.max(maxHeight, this.column.row.columns[i].element.clientHeight);
+          maxHeight = Math.max(maxHeight, this.column.row.columns[i].element.getBoundingClientRect().height);
         }
       }
     }

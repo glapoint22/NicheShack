@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, ElementRef } from '@angular/core';
 import { RowComponent } from '../row/row.component';
 import { WidgetService } from '../../../services/widget.service';
 import { Row } from '../../../classes/row';
@@ -11,7 +11,6 @@ import { Row } from '../../../classes/row';
 export class ContainerComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @ViewChild('container', { static: false }) containerElement: ElementRef;
-  // @Output() onHeightChange: EventEmitter<number> = new EventEmitter();
   public rows: Array<Row> = new Array<Row>();
   public selectedRowIndex: number;
   private _selectedRow: RowComponent;
@@ -90,54 +89,6 @@ export class ContainerComponent {
     }
   }
 
-  // sortRows() {
-  //   this.rows.sort((a, b) => {
-  //     if (a.element.getBoundingClientRect().y > b.element.getBoundingClientRect().y) return 1;
-  //     return -1;
-  //   });
-  // }
-
-  collisionDown() {
-    // for (let i = this.selectedRowIndex; i < this.rows.length - 1; i++) {
-    //   if (this.rows[i].component.top + this.rows[i].element.firstElementChild.clientHeight > this.rows[i + 1].component.top) {
-    //     this.rows[i + 1].component.top = this.rows[i].component.top + this.rows[i].element.firstElementChild.clientHeight;
-    //   }
-    // }
-
-    // this.setSelectedRowMinTop();
-  }
-
-  collisionUp() {
-    // for (let i = this.selectedRowIndex; i > 0; i--) {
-    //   if (this.rows[i].component.top < this.rows[i - 1].component.top + this.rows[i - 1].element.firstElementChild.clientHeight) {
-    //     this.rows[i - 1].component.top = this.rows[i].component.top - this.rows[i - 1].element.firstElementChild.clientHeight;
-
-    //     // Make sure we can't shift the rows below zero
-    //     if (this.rows[0].component.top < 0) {
-    //       let diff = -this.rows[0].component.top;
-    //       for (let j = 0; j < this.selectedRowIndex + 1; j++) {
-    //         this.rows[j].component.top = this.rows[j].component.top + diff;
-    //       }
-    //     }
-    //   }
-    // }
-
-    // this.setSelectedRowMinTop();
-  }
-
-  // checkHeightChange() {
-  //   if (this.rows.length > 0) {
-  //     let lastRow = this.rows[this.rows.length - 1];
-  //     let lastRowBottom = lastRow.component.top + lastRow.element.firstElementChild.clientHeight;
-  //     let containerHeight = this.containerElement.nativeElement.clientHeight;
-
-  //     // If the last row's bottom is greater than the container's bottom or the last row's bottom is less than the container's bottom
-  //     if (lastRowBottom > containerHeight || lastRowBottom < containerHeight) {
-  //       let diff = lastRowBottom - containerHeight;
-  //       this.onHeightChange.emit(diff);
-  //     }
-  //   }
-  // }
 
   onMouseover() {
     if (this.widgetService.currentWidgetCursor) {

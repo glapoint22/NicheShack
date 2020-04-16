@@ -115,7 +115,9 @@ export class FreeformWidgetComponent extends WidgetComponent {
       this.height = startHeight * percent;
       let delta = this.height - previousHeight;
 
-
+      // if(this.column.row.top - delta < 0) {
+      //   this.height -= (delta - this.column.row.top);
+      // }
 
       // Make sure the widget's height does not go below the min height
       if (this.height < minHeight) {
@@ -159,7 +161,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
         // Set the next row's top
-        this.column.row.setNextRowTop(-delta);
+        this.column.row.positionNextRow(-delta);
 
 
 
@@ -209,18 +211,13 @@ export class FreeformWidgetComponent extends WidgetComponent {
         // The row's vertical alignment is set to middle
         if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
           delta *= 0.5;
-          this.column.row.setNextRowTop(delta);
+          this.column.row.positionNextRow(delta);
         }
 
 
         // Move the row
         this.column.row.top -= delta;
       }
-
-      // Collision
-      if (delta > 0 || this.column.row.verticalAlignment.value == 'center') this.column.row.container.collisionUp();
-      if (this.column.row.verticalAlignment.value == 'center' || this.column.row.verticalAlignment.value == 'flex-start') this.column.row.container.collisionDown();
-      // this.column.row.container.checkHeightChange();
 
       previousHeight = this.height;
     }
@@ -308,7 +305,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
         }
 
         // Set the next row's top
-        this.column.row.setNextRowTop(delta);
+        this.column.row.positionNextRow(delta);
 
 
 
@@ -322,7 +319,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
         // Set the next row's top
-        this.column.row.setNextRowTop(delta);
+        this.column.row.positionNextRow(delta);
 
 
 
@@ -355,14 +352,6 @@ export class FreeformWidgetComponent extends WidgetComponent {
           }
         }
       }
-
-
-
-      // Collision
-      if (this.column.row.verticalAlignment.value == 'center' || this.column.row.verticalAlignment.value == 'flex-end') this.column.row.container.collisionUp();
-      if (delta > 0 || this.column.row.verticalAlignment.value == 'center') this.column.row.container.collisionDown();
-      // this.column.row.container.checkHeightChange();
-
 
       previousHeight = this.height;
     }

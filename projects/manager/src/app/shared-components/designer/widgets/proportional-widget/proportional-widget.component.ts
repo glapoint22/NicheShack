@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { WidgetComponent } from '../widget/widget.component';
 import { Vector } from 'projects/manager/src/app/classes/vector';
-import { BreakpointHorizontalAlignment } from 'projects/manager/src/app/classes/breakpoint';
+import { BreakpointHorizontalAlignment, BreakpointVerticalAlignment } from 'projects/manager/src/app/classes/breakpoint';
 
 @Component({
   template: '',
@@ -14,16 +14,14 @@ export class ProportionalWidgetComponent extends WidgetComponent {
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left +
       (horizontalHandle == 'left' || this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? anchorWidth : 0);
     let startWidth: number = this.widget.nativeElement.clientWidth;
-    let heightWidthRatio: number = this.widget.nativeElement.clientHeight / this.widget.nativeElement.clientWidth;
-    let widthHeightRatio = this.widget.nativeElement.clientWidth / this.widget.nativeElement.clientHeight;
     let widgetHeight: number;
     let columnWidth: number = this.widget.nativeElement.parentElement.parentElement.clientWidth;
     let mouse: Vector = new Vector(event.clientX, event.clientY);
     let mouseX: number = mouse.x;
-    // let widgetTop: number = this.widget.nativeElement.getBoundingClientRect().top;
-    // let topCollisionPoint: number = this.getTopCollisionPoint();
     let maxRowHeight: number = this.getMaxRowHeight();
-    let tempHeight = startWidth * heightWidthRatio;
+    let previousHeight = this.widget.nativeElement.getBoundingClientRect().height;
+
+
 
 
     // Set the cursor
@@ -67,7 +65,16 @@ export class ProportionalWidgetComponent extends WidgetComponent {
       // Calculate the width of the widget
       let mousePos = (anchorPoint - mouseX) * (horizontalHandle == 'left' ? 1 : -1);
       let percent = mousePos / anchorWidth;
-      this.width = startWidth * percent;
+      this.width = Math.round(startWidth * percent);
+
+
+
+      // Calculte the height of the widget
+      widgetHeight = this.width * this.widget.nativeElement.getBoundingClientRect().height / this.widget.nativeElement.getBoundingClientRect().width;
+      let deltaHeight = previousHeight - widgetHeight;
+
+
+
 
       // Make sure the width doesn't go below the min width
       if (this.width < this.minHeight) {
@@ -75,50 +82,68 @@ export class ProportionalWidgetComponent extends WidgetComponent {
         mouseX -= deltaSum;
       }
 
-
-      // Calculte the height of the widget
-      widgetHeight = this.width * heightWidthRatio;
-      let deltaHeight = tempHeight - widgetHeight;
-
-
-      // If the width is greater than the column width, mark it as null
-      if (this.width > columnWidth) this.width = null;
+      // If the width is greater than the column width
+      if (this.width > columnWidth) {
+        this.width = columnWidth;
+        mouseX -= deltaSum;
+      }
 
 
-      // Align Top
-      if (this.column.row.verticalAlignment.value == 'flex-start') {
-        this.column.row.container.collisionDown();
 
 
-        // Align Center or Align Bottom
-      } else if ((this.column.row.verticalAlignment.value == 'center' || this.column.row.verticalAlignment.value == 'flex-end') && this.width) {
 
+      // The widget's height is less than the row's height
+      if (widgetHeight < maxRowHeight) {
 
-        // If the height of the widget is greater or equal to the row height, move the row
-        if (widgetHeight >= maxRowHeight) {
-          this.column.row.top += (deltaHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1));
+        // If the previous height was greater or equal to the row's height
+        if (previousHeight >= maxRowHeight) {
+          deltaHeight = previousHeight - maxRowHeight
+
+        } else {
+          deltaHeight = 0;
         }
 
 
-        // This will prevent the widget from sizing when colliding with a row above it or the top of the container
-        // widgetTop += (deltaHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1));
-        // if (widgetTop < topCollisionPoint) {
-        //   this.width += ((widgetTop - topCollisionPoint) * widthHeightRatio * (this.column.row.verticalAlignment.value == 'center' ? 2 : 1));
-        //   mouseX -= deltaSum;
-        //   widgetTop = topCollisionPoint;
-        // }
+        // The widget's height is greater or equal to the row's height
+      } else {
 
-
-        // Collision
-        this.column.row.container.collisionUp();
-        if (this.column.row.verticalAlignment.value == 'center') this.column.row.container.collisionDown();
-
-        // Re-assign
-        tempHeight = this.width * heightWidthRatio;
+        
+        
+        // The previous height was less than or equal to the row's height
+        if (previousHeight <= maxRowHeight) {
+          deltaHeight = maxRowHeight - widgetHeight;
+        }
       }
+
+
+
+
+
+      // Align Top
+      if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
+        this.column.row.positionNextRow(-deltaHeight);
+
+
+        // Align Center or Align Bottom
+      } else if ((this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
+        this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom) && this.width) {
+
+
+          // Align center
+        if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
+          this.column.row.positionNextRow(-deltaHeight * 0.5);
+        }
+
+        // Position the row
+        this.column.row.top += (deltaHeight * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 0.5 : 1));
+      }
+
+
       mouse = new Vector(e.clientX, e.clientY);
 
-      // this.column.row.container.checkHeightChange();
+
+      // Re-assign
+      previousHeight = widgetHeight;
     }
 
     let onMouseup = () => {

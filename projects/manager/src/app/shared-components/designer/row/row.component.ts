@@ -10,7 +10,7 @@ import { ContainerComponent } from '../container/container.component';
 import { VerticalAlignment } from '../../../classes/vertical-alignment';
 import { Color } from '../../../classes/color';
 import { Column } from '../../../classes/column';
-import { Breakpoint, BreakpointSpacing, BreakpointVerticalAlignment } from '../../../classes/breakpoint';
+import { Breakpoint } from '../../../classes/breakpoint';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { PaddingTop } from '../../../classes/padding-top';
 import { PaddingRight } from '../../../classes/padding-right';
@@ -23,10 +23,20 @@ import { BreakpointsComponent } from '../../../classes/breakpoints-component';
   templateUrl: './row.component.html',
   styleUrls: ['./row.component.scss']
 })
-export class RowComponent implements BreakpointsComponent{
+export class RowComponent implements BreakpointsComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @ViewChild('row', { static: false }) rowElement: ElementRef;
-  public top: number;
+
+
+  private _top: number;
+  public get top(): number {
+    return this._top;
+  }
+  public set top(value: number) {
+    this._top = Math.max(value, 0);
+  }
+
+
   public columns: Array<Column> = new Array<Column>();
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
@@ -60,7 +70,6 @@ export class RowComponent implements BreakpointsComponent{
     this._FormService.border = this.border;
     this._FormService.corners = this.corners;
     this._FormService.shadow = this.shadow;
-    // this._FormService.padding = this.padding;
     this._FormService.verticalAlignment = this.verticalAlignment;
 
     // Open the container form
@@ -81,35 +90,27 @@ export class RowComponent implements BreakpointsComponent{
 
 
 
-  onMousedown(event) {
-    if (document.body.id == 'widget-resize' || document.body.id == 'column-resize') return;
 
-    let offset = event.clientY - this.top;
-    let currentPos = this.top;
+
+  onMousedown() {
+    // If we are resizing a widget or resizing a column, return
+    if (document.body.id == 'widget-resize' || document.body.id == 'column-resize') return;
 
     // flag that this row has been selected
     this.container.selectedRow = this;
 
+    // Update the cursor
     document.body.style.cursor = 'move';
     document.body.id = 'row-move';
 
     // Mousemove
     let onMousemove = (e: MouseEvent) => {
-      this.top = e.clientY - offset;
+      // Position the row
+      let delta = this.positionRow(e.movementY);
 
-      let delta = this.top - currentPos;
-      currentPos = this.top;
 
-      this.setNextRowTop(delta);
-
-      // Check for collision
-      // if (delta > 0) {
-      //   this.container.collisionDown();
-      // } else {
-      //   this.container.collisionUp();
-      // }
-
-      // this.container.checkHeightChange();
+      // Position the next row
+      this.positionNextRow(delta);
     }
 
     // Mouseup
@@ -124,12 +125,85 @@ export class RowComponent implements BreakpointsComponent{
     window.addEventListener("mousemove", onMousemove);
     window.addEventListener("mouseup", onMouseup);
   }
-  
-  setNextRowTop(delta: number) {
-    if(this.container.selectedRowIndex != this.container.rows.length - 1) {
-      this.container.rows[this.container.selectedRowIndex + 1].component.top -= delta;
+
+
+
+  positionRow(delta: number) {
+    let value = this.top + delta;
+    let allRowsAtZero: boolean;
+
+    // Set the position for this row
+    this.top = value;
+
+    // If the position is a negative value, we need to update each previous row
+    // This will basically push the rows up
+    if (value < 0) {
+      allRowsAtZero = true;
+
+
+      // Loop through each previous row
+      for (let i = this.container.selectedRowIndex - 1; i > -1; i--) {
+        value += this.container.rows[i].component._top;
+
+        // Update the row's position
+        this.container.rows[i].component._top = value;
+
+        // If the row's top is zero or greater, we can stop here and don't need to update any other row
+        if (this.container.rows[i].component._top >= 0) {
+          allRowsAtZero = false;
+          break;
+
+          // The row's top is below zero so we update it to zero
+        } else {
+          this.container.rows[i].component._top = 0;
+        }
+      }
+    }
+
+    // If all rows end up at a zero position, we need to update the delta
+    if (allRowsAtZero) {
+      delta += -value;
+    }
+
+    return delta;
+  }
+
+
+
+
+  positionNextRow(delta: number) {
+    let rowIndex = this.container.rows.findIndex(x => x.component == this);
+
+
+    // If this is not the last row
+    if (rowIndex != this.container.rows.length - 1) {
+      let nextRow = this.container.rows[rowIndex + 1].component;
+
+      // Move the row
+      nextRow._top -= delta;
+
+      // If the top is below zero
+      if (nextRow._top < 0) {
+        let diff = delta - nextRow.top;
+
+        // Set the row to zero
+        nextRow._top = 0;
+
+        // If the next row is not the last row
+        if (rowIndex + 1 != this.container.rows.length - 1) {
+
+          // Adjust the next row's next row
+          nextRow.positionNextRow(diff - delta);
+        }
+      }
     }
   }
+
+
+
+
+
+
 
 
   addColumn(columnElement?: HTMLElement) {
@@ -158,11 +232,6 @@ export class RowComponent implements BreakpointsComponent{
     // flag that this row has been selected
     this.container.selectedRow = this;
 
-    // Shift rows down if this row collides with its neighboring rows
-    this.container.collisionDown();
-    // this.container.checkHeightChange();
-
-
     // Add or update each column with the correct column span based on the number of columns in this row
     this.columns.forEach((column: Column) => {
       column.component.columnSpan.value = Math.max(2, Math.floor(12 / this.columns.length));
@@ -176,6 +245,10 @@ export class RowComponent implements BreakpointsComponent{
   }
 
 
+
+
+
+
   sortColumns() {
     // Sort the columns from left to right based on their position
     this.columns.sort((a: Column, b: Column) => {
@@ -185,11 +258,19 @@ export class RowComponent implements BreakpointsComponent{
   }
 
 
+
+
+
   getColumnIndex(columnElement: HTMLElement) {
     // Get the index of where we will be placing this column within the row
     if (!columnElement) return 0;
     return this.columns.findIndex(x => x.element == columnElement) + 1;
   }
+
+
+
+
+
 
   buildHTML(parent: HTMLElement) {
     let row = document.createElement('div');
