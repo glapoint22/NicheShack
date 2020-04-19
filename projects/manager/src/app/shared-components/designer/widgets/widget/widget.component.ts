@@ -3,7 +3,7 @@ import { WidgetService } from 'projects/manager/src/app/services/widget.service'
 import { ColumnComponent } from '../../column/column.component';
 import { HorizontalAlignment } from 'projects/manager/src/app/classes/horizontal-alignment';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
-import { Breakpoint } from 'projects/manager/src/app/classes/breakpoint';
+import { Breakpoint, BreakpointVerticalAlignment } from 'projects/manager/src/app/classes/breakpoint';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 
 @Component({
@@ -48,22 +48,17 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
 
 
 
+  getMaxHeight() {
+    let maxHeight = this.column.row.top * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 2 : 1) +
+      (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top ? this.height : this.column.row.rowElement.nativeElement.getBoundingClientRect().height);
 
-  // getTopCollisionPoint(): number {
-  //   let point: number = this.column.row.container.containerElement.nativeElement.getBoundingClientRect().top;
+    for (let i = this.column.row.container.selectedRowIndex - 1; i > -1; i--) {
+      maxHeight += this.column.row.container.rows[i].component.top * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 2 : 1);
+    }
 
-  //   for (let i = 0; i < this.column.row.container.rows.length; i++) {
-  //     let currentRow = this.column.row.container.rows[i];
+    return maxHeight;
+  }
 
-  //     if (!this.column.row.rowElement.nativeElement.isEqualNode(currentRow.element.firstElementChild)) {
-  //       point += currentRow.element.firstElementChild.getBoundingClientRect().height;
-  //     } else {
-  //       break;
-  //     }
-  //   }
-
-  //   return point;
-  // }
 
 
   getMaxRowHeight(): number {

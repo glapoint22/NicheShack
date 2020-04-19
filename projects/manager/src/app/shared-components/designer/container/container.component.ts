@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, ElementRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, ElementRef, Output, EventEmitter } from '@angular/core';
 import { RowComponent } from '../row/row.component';
 import { WidgetService } from '../../../services/widget.service';
 import { Row } from '../../../classes/row';
@@ -11,6 +11,7 @@ import { Row } from '../../../classes/row';
 export class ContainerComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @ViewChild('container', { static: false }) containerElement: ElementRef;
+  @Output() onRowTransform: EventEmitter<number> = new EventEmitter();
   public rows: Array<Row> = new Array<Row>();
   public selectedRowIndex: number;
   private _selectedRow: RowComponent;

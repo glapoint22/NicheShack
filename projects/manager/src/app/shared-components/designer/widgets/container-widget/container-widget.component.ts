@@ -29,14 +29,12 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
   public paddingRight: PaddingRight = new PaddingRight();
   public paddingBottom: PaddingBottom = new PaddingBottom();
   public paddingLeft: PaddingLeft = new PaddingLeft();
-  // private fixedHeight: number;
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService,
     public _FormService: FormService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
-    // this.fixedHeight = this.height = 250;
     this.height = 250
     super.ngOnInit();
   }
@@ -76,7 +74,29 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
     return this.container.rows[index].component.top + this.container.rows[index].element.firstElementChild.clientHeight;
   }
 
-  
+
+  onRowTransform(delta) {
+    let lastChildRow = this.container.rows[this.container.rows.length - 1].element;
+    let lastChildRowBottom = lastChildRow.getBoundingClientRect().top + delta + lastChildRow.clientHeight;
+    let rowFixedHeight = this.column.row.rowElement.nativeElement.getBoundingClientRect().top + Math.max(this.getMaxRowHeight(), this.height);
+    let newRowHeight = this.column.row.rowElement.nativeElement.getBoundingClientRect().top + this.column.row.rowElement.nativeElement.clientHeight;
+
+    // If the last row's bottom in this container is greater than this row's fixed height, the container will flex
+    // Because of this, we need to re-position the row after this container
+    if (lastChildRowBottom > rowFixedHeight) {
+      this.column.row.positionNextRow(lastChildRowBottom - newRowHeight);
+
+      // The last row's bottom is less or equal to this row's fixed height
+    } else {
+
+      // Position the next row only if the last row's bottom was greater than the row's fixed height
+      if (lastChildRow.getBoundingClientRect().top + lastChildRow.clientHeight > rowFixedHeight) {
+        this.column.row.positionNextRow(rowFixedHeight - newRowHeight);
+      }
+    }
+  }
+
+
 
   buildHTML(parent: HTMLElement) {
     // Build the grid

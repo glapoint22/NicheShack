@@ -31,7 +31,7 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
     public _FormService: FormService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
-    this.image.url = '0aada12f8b21471ea96aebe9a503977b.png';
+    // this.image.url = '0aada12f8b21471ea96aebe9a503977b.png';
     this.image.title = 'Alita';
     super.ngOnInit();
   }
@@ -63,6 +63,7 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
 
   onImageLoad(event) {
     this.width = event.srcElement.naturalWidth;
+    this.height = event.srcElement.naturalHeight;
     this.imageLoaded = true;
   }
 

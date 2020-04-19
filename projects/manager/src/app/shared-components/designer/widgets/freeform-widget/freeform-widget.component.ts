@@ -102,12 +102,15 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
   onTopHandleMousedown() {
-    let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1);
+    let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 0.5 : 1);
     let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().top + anchorHeight;
     let startHeight: number = this.widget.nativeElement.clientHeight;
     let previousHeight: number = startHeight;
     let maxRowHeight: number = this.getMaxRowHeight();
     let minHeight: number = this.getMinHeight();
+    let maxHeight = this.getMaxHeight();
+
+
 
     let onMousemove = (e: MouseEvent) => {
       let mousePos = (anchorPoint - e.clientY);
@@ -115,9 +118,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
       this.height = startHeight * percent;
       let delta = this.height - previousHeight;
 
-      // if(this.column.row.top - delta < 0) {
-      //   this.height -= (delta - this.column.row.top);
-      // }
+
 
       // Make sure the widget's height does not go below the min height
       if (this.height < minHeight) {
@@ -126,14 +127,22 @@ export class FreeformWidgetComponent extends WidgetComponent {
         delta = minHeight - previousHeight;
       }
 
+      // Make sure the widget's height does not go above the max height
+      if (this.height > maxHeight) {
+        this.height -= this.height - maxHeight;
+
+        delta = maxHeight - previousHeight;
+      }
+
 
       // The row's vertical alignment is set to top
       if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
-        this.column.row.top -= delta;
+        // Set the row's position
+        this.column.row.setPosition(-delta);
 
 
 
-        // The widget's height is less than the row's height
+        // This block of code calculates delta to prevent the current row and next rows from moving
         if (this.height < maxRowHeight) {
 
           // If the previous height was greater or equal to the row's height
@@ -177,7 +186,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
 
-        // The widget's height is less than the row's height
+        // This block of code calculates delta to prevent the current row and next rows from moving
         if (this.height < maxRowHeight) {
 
           // If the previous height was greater or equal to the row's height
@@ -215,8 +224,8 @@ export class FreeformWidgetComponent extends WidgetComponent {
         }
 
 
-        // Move the row
-        this.column.row.top -= delta;
+        // Set the row's position
+        this.column.row.setPosition(-delta);
       }
 
       previousHeight = this.height;
@@ -231,13 +240,16 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
 
+
+
   onBottomHandleMousedown() {
-    let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == 'center' ? 0.5 : 1);
-    let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().top + (this.column.row.verticalAlignment.value == 'center' ? anchorHeight : 0);
+    let anchorHeight: number = this.widget.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 0.5 : 1);
+    let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().top + (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? anchorHeight : 0);
     let startHeight: number = this.widget.nativeElement.clientHeight;
     let previousHeight: number = startHeight;
     let maxRowHeight: number = this.getMaxRowHeight();
-    let minHeight: number = this.getMinHeight();
+    let minHeight: number = this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom ? Math.max(this.getMinHeightAlt(), this.getMinHeight()) : this.getMinHeight();
+    let maxHeight = this.getMaxHeight();
 
 
     let onMousemove = (e: MouseEvent) => {
@@ -254,6 +266,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
       }
 
 
+
       // The row's vertical alignment is set to top or middle
       if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top ||
         this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
@@ -261,7 +274,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
 
-        // The widget's height is less than the row's height
+        // This block of code calculates delta to prevent the current row and next rows from moving
         if (this.height < maxRowHeight) {
 
           // If the previous height was greater or equal to the row's height
@@ -299,9 +312,17 @@ export class FreeformWidgetComponent extends WidgetComponent {
         // The row's vertical alignment is set to middle
         if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
 
+          // Make sure the widget's height does not go above the max height
+          if (this.height > maxHeight) {
+            this.height -= this.height - maxHeight;
+
+            delta = maxHeight - previousHeight;
+          }
+
+
           // Move the row with half of the delta
           delta *= 0.5;
-          this.column.row.top -= delta;
+          this.column.row.setPosition(-delta);
         }
 
         // Set the next row's top
@@ -323,7 +344,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
 
-        // The widget's height is less than the row's height
+        // This block of code calculates delta to prevent the current row and next rows from moving
         if (this.height < maxRowHeight) {
 
           // If the previous height was greater or equal to the row's height
@@ -334,8 +355,6 @@ export class FreeformWidgetComponent extends WidgetComponent {
             delta = this.height - maxRowHeight;
           }
 
-          // Move the row
-          this.column.row.top += delta;
 
           // The widget's height is greater or equal to the row's height
         } else {
@@ -347,10 +366,12 @@ export class FreeformWidgetComponent extends WidgetComponent {
             // just the difference between the row's height and the previous height
             delta = maxRowHeight - previousHeight;
 
-            // Move the row
-            this.column.row.top += delta;
+          } else {
+            delta = 0;
           }
         }
+
+        this.column.row.setPosition(delta);
       }
 
       previousHeight = this.height;
@@ -376,5 +397,21 @@ export class FreeformWidgetComponent extends WidgetComponent {
   getMinHeight(): number {
     let children: Array<Element> = Array.from(this.widget.nativeElement.children);
     return Math.max(...children.filter(x => x.id != 'handle').map((x: any) => x.offsetHeight));
+  }
+
+  getMinHeightAlt() {
+    // This method is used when vertical alignment is set to bottom and the bottom handle is being used
+    let topsTotal = 0;
+
+    // Get a sum of all previous rows tops
+    for (let i = this.column.row.container.selectedRowIndex; i > -1; i--) {
+      topsTotal += this.column.row.container.rows[i].component.top;
+    }
+
+    // Get the min height from all widgets in the current selected row
+    let height = Math.min(...this.column.row.columns.map(x => x.component.widget.height));
+
+
+    return height - topsTotal;
   }
 }

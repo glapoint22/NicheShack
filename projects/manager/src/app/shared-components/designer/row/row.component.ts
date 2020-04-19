@@ -106,7 +106,7 @@ export class RowComponent implements BreakpointsComponent {
     // Mousemove
     let onMousemove = (e: MouseEvent) => {
       // Position the row
-      let delta = this.positionRow(e.movementY);
+      let delta = this.setPosition(e.movementY);
 
 
       // Position the next row
@@ -128,7 +128,7 @@ export class RowComponent implements BreakpointsComponent {
 
 
 
-  positionRow(delta: number) {
+  setPosition(delta: number) {
     let value = this.top + delta;
     let allRowsAtZero: boolean;
 
@@ -174,10 +174,14 @@ export class RowComponent implements BreakpointsComponent {
   positionNextRow(delta: number) {
     let rowIndex = this.container.rows.findIndex(x => x.component == this);
 
+    // If this is the last row
+    if (delta != 0 && rowIndex == this.container.rows.length - 1) this.container.onRowTransform.emit(delta);
+
 
     // If this is not the last row
     if (rowIndex != this.container.rows.length - 1) {
       let nextRow = this.container.rows[rowIndex + 1].component;
+
 
       // Move the row
       nextRow._top -= delta;
@@ -185,6 +189,9 @@ export class RowComponent implements BreakpointsComponent {
       // If the top is below zero
       if (nextRow._top < 0) {
         let diff = delta - nextRow.top;
+
+        // If this is the last row
+        if (rowIndex + 1 == this.container.rows.length - 1) this.container.onRowTransform.emit(diff - delta);
 
         // Set the row to zero
         nextRow._top = 0;
