@@ -117,7 +117,7 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
       anchor.appendChild(img);
       parent.appendChild(anchor);
     } else {
-      
+
       // Set the classes
       this.breakpointService.setBreakpointClasses(this, img);
 

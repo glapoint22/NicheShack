@@ -4,10 +4,8 @@
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHexA() : 'none'"
     [style.margin]="horizontalAlignment.value" [style.maxWidth.px]="width ? width : null"
-    [style.display]="!image.url ? 'flex' : null"
-    [style.justifyContent]="!image.url ? 'center' : null"
-    [style.alignItems]="!image.url ? 'center' : null"
-    [style.background]="!image.url ? 'white' : null">
+    [style.display]="!image.url ? 'flex' : null" [style.justifyContent]="!image.url ? 'center' : null"
+    [style.alignItems]="!image.url ? 'center' : null" [style.background]="!image.url ? 'white' : null">
 
 
     <div class="top-left-handle" (mousedown)="onHandleMousedown('top', 'left', $event)"></div>
@@ -17,7 +15,8 @@
 
     <!-- Image -->
     <ng-container *ngIf="image.url; else placeholder">
-        <img [src]="'images/' + image.url" (load)="onImageLoad($event)" [alt]="image.title" [title]="image.title" [style.display]="imageLoaded ? 'inline' : 'none'">
+        <img [src]="'images/' + image.url" (load)="onImageLoad($event)" [alt]="image.title" [title]="image.title"
+            [style.display]="imageLoaded ? 'inline' : 'none'">
     </ng-container>
 
     <!-- Placeholder image -->

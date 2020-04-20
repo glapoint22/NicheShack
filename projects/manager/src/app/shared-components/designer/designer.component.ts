@@ -8,6 +8,7 @@ import { WidgetCursor } from '../../classes/widget-cursor';
 import { WidgetService } from '../../services/widget.service';
 import { ContainerComponent } from './container/container.component';
 import { BreakpointService } from '../../services/breakpoint.service';
+import { VideoWidgetComponent } from './widgets/video-widget/video-widget.component';
 
 @Component({
   selector: 'designer',
@@ -63,6 +64,13 @@ export class DesignerComponent implements OnInit {
         icon: '<i class="fas fa-slash"></i>',
         allowed: 'line-widget-allowed.png',
         notAllowed: 'line-widget-not-allowed.png'
+      },
+      {
+        title: 'Video',
+        component: VideoWidgetComponent,
+        icon: '<i class="fas fa-film"></i>',
+        allowed: 'video-widget-allowed.png',
+        notAllowed: 'video-widget-not-allowed.png'
       }
     ]
   }

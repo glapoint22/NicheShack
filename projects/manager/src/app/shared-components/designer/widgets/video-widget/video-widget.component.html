@@ -1,13 +1,36 @@
-<div class="widget widget-selected"
-     [style.margin]="margins.top + 'px ' + margins.right + 'px ' + margins.bottom + 'px ' + margins.left + 'px'">
+<div #widget class="widget" [ngClass]="{'widget-selected': widgetService.selectedWidget == this}"
+    (mousedown)="onMousedown()" (dblclick)="onEdit()"
+    [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + border.color.toHexA() : 'none'"
+    [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
+    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHexA() : 'none'"
+    [style.margin]="horizontalAlignment.value" [style.maxWidth.px]="width ? width : null"
+    [style.display]="!video ? 'flex' : null" [style.justifyContent]="!video ? 'center' : null"
+    [style.alignItems]="!video ? 'center' : null" [style.background]="!video ? 'white' : null">
 
-    <div class="edit-button fas" (click)="onEdit()"></div>
-    <div class="show-hide-button fas fa-eye" [ngClass]="{'fa-eye-slash': false}"></div>
-    <div class="top-left-handle"></div>
-    <div class="top-right-handle"></div>
-    <div class="bottom-left-handle"></div>
-    <div class="bottom-right-handle"></div>
-    <svg viewBox="-16 -16 64 64">
-        <path  d="M16,0C7.164,0,0,7.164,0,16s7.164,16,16,16s16-7.164,16-16S24.836,0,16,0z M10,24V8l16.008,8L10,24z"/>
-    </svg>
+
+    <div class="top-left-handle" (mousedown)="onHandleMousedown('top', 'left', $event)"></div>
+    <div class="top-right-handle" (mousedown)="onHandleMousedown('top', 'right', $event)"></div>
+    <div class="bottom-right-handle" (mousedown)="onHandleMousedown('bottom', 'right', $event)"></div>
+    <div class="bottom-left-handle" (mousedown)="onHandleMousedown('bottom', 'left', $event)"></div>
+
+
+    <!-- Video -->
+    <ng-container *ngIf="video; else placeholder">
+        <div class="container">
+            <iframe [src]="sanitizedVideo" frameborder="0" allowfullscreen class="video"></iframe>
+        </div>
+    </ng-container>
+
+
+    <!-- Placeholder -->
+    <ng-template #placeholder>
+        <svg #svg viewBox="-16 -16 64 64">
+            <path
+                d="M16,0C7.164,0,0,7.164,0,16s7.164,16,16,16s16-7.164,16-16S24.836,0,16,0z M10,24V8l16.008,8L10,24z" />
+        </svg>
+    </ng-template>
+
+
+    <!-- Cover -->
+    <div *ngIf="handleMove" class="position-absolute-identity" style="user-select: none;"></div>
 </div>
