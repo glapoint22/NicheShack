@@ -77,21 +77,6 @@ export class RowComponent implements BreakpointsComponent {
   }
 
 
-  // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
-  getBorderColor() {
-    return Color.RGBAToHexA(this.border.color);
-  }
-
-
-  // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
-  getShadowColor() {
-    return Color.RGBAToHexA(this.shadow.color);
-  }
-
-
-
-
-
   onMousedown() {
     // If we are resizing a widget or resizing a column, return
     if (document.body.id == 'widget-resize' || document.body.id == 'column-resize') return;

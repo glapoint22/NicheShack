@@ -1,5 +1,5 @@
 <!-- Column area (Used for mouse events for the column) -->
-<div class="column-area" [style.height.px]="rowHeight"></div>
+<div class="column-area" [style.height.px]="rowHeight" [style.top.px]="rowTop"></div>
 
 
 <ng-template #viewContainerRef>
@@ -9,7 +9,7 @@
 
 
 <!-- Column divider -->
-<div class="column-divider" [style.height.px]="rowHeight">
+<div class="column-divider" [style.height.px]="rowHeight" [style.top.px]="rowTop">
 
     <!-- Resize column button -->
     <div (mousedown)="onResizeButtonMousedown()" (mouseover)="onResizeButtonMouseover()"
@@ -23,7 +23,7 @@
 <!-- Column indicators -->
 <div #leftIndicator class="column-indicator" (mouseenter)="onDropIndicatorEnter()" (mouseleave)="onDropIndicatorLeave()"
     (mouseup)="onDropIndicatorMouseup(leftIndicator.parentElement.previousElementSibling)"
-    [style.height.px]="rowHeight"></div>
+    [style.height.px]="rowHeight" [style.top.px]="rowTop"></div>
 <div #rightIndicator class="column-indicator" (mouseenter)="onDropIndicatorEnter()"
     (mouseleave)="onDropIndicatorLeave()" (mouseup)="onDropIndicatorMouseup(rightIndicator.parentElement)"
-    [style.height.px]="rowHeight"></div>
+    [style.height.px]="rowHeight" [style.top.px]="rowTop"></div>

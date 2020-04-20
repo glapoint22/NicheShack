@@ -8,7 +8,6 @@ import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { HoverTab } from 'projects/manager/src/app/classes/hover-tab';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
-import { Color } from 'projects/manager/src/app/classes/color';
 import { Link } from 'projects/manager/src/app/classes/link';
 import { LinkSource } from 'projects/manager/src/app/classes/link-source';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
@@ -92,14 +91,14 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     if (this.hoverTab.selected) {
 
       // Style the button border with the hover look
-      hexA = Color.RGBAToHexA(this.border.hoverColor);
+      hexA = this.border.hoverColor.toHexA();
 
 
       // If the normal tab on the button form is selected
     } else {
 
       // Style the button border with the normal look
-      hexA = Color.RGBAToHexA(this.border.color);
+      hexA = this.border.color.toHexA();
     }
     return hexA;
   }
@@ -127,11 +126,6 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   }
 
 
-  // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
-  getShadowColor() {
-    return Color.RGBAToHexA(this.shadow.color);
-  }
-
   buildHTML(parent: HTMLElement) {
     let button: any = document.createElement(this.link.url ? 'a' : 'div');
     let className = this.createClassName();
@@ -141,7 +135,6 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
       this.corners.getStyle() +
       this.shadow.getStyle() +
       this.text.getStyle() +
-      // this.horizontalAlignment.getStyle() +
       '\n\tmin-height: ' + this.height + 'px;' +
       (this.width ? '\n\tmax-width: ' + this.width + 'px;' : '') +
       '\n}' +
@@ -181,8 +174,8 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     button.appendChild(document.createTextNode(this.text.caption));
 
 
-    // Add this class to the classes array
-    this.widgetService.buttonClasses.firstElementChild.appendChild(document.createTextNode(css));
+    // Add this button style
+    this.widgetService.buttonStylesDocumentFragment.firstElementChild.appendChild(document.createTextNode(css));
 
     // Append this button to the parent
     parent.appendChild(button);

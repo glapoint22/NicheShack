@@ -50,16 +50,6 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
   }
 
 
-  // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
-  getBorderColor() {
-    return Color.RGBAToHexA(this.border.color);
-  }
-
-
-  // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
-  getShadowColor() {
-    return Color.RGBAToHexA(this.shadow.color);
-  }
 
   onImageLoad(event) {
     this.width = event.srcElement.naturalWidth;

@@ -130,29 +130,41 @@ export class DesignerComponent implements OnInit {
   onPreview() {
     let previewWindow = window.open();
     let parent = document.createElement('div');
+    let title = document.createElement('title');
+    let meta = document.createElement('meta');
+    let buttonStyles = document.createElement('style');
+    let pageStyles = document.createElement('style');
 
+    // Center the parent div
     parent.style.margin = 'auto';
 
-    this.widgetService.buttonClasses = document.createDocumentFragment();
-    let buttonStyle = document.createElement('style');
-    buttonStyle.type = 'text/css';
-    this.widgetService.buttonClasses.appendChild(buttonStyle);
+    // This documnet fragment will hold all the button styles for the buttons on the page
+    this.widgetService.buttonStylesDocumentFragment = document.createDocumentFragment();
+    
+    // Append the button styles style element to the button styles document fragment
+    buttonStyles.type = 'text/css';
+    this.widgetService.buttonStylesDocumentFragment.appendChild(buttonStyles);
 
+    // This will build the HTML for each widget on the page
     this.container.buildHTML(parent);
 
+    // Add the grid class
     (parent.firstElementChild as HTMLElement).style.height = '100%';
     (parent.firstElementChild as HTMLElement).classList.add('grid');
+
+
+    // Write out the html to the preview window
     previewWindow.document.write(parent.outerHTML);
 
-    let title = document.createElement('title');
+    
+    // Title
     title.appendChild(document.createTextNode('Alita'));
     previewWindow.document.head.appendChild(title);
 
 
-    let meta = document.createElement('meta');
+    // Meta tag
     meta.setAttribute('charset', 'utf-8');
     previewWindow.document.head.appendChild(meta);
-
     meta = document.createElement('meta');
     meta.setAttribute('name', 'viewport');
     meta.setAttribute('content', 'width=device-width, initial-scale=1');
@@ -160,11 +172,14 @@ export class DesignerComponent implements OnInit {
 
     
 
-    let style = document.createElement('style');
-    style.innerHTML = document.head.querySelector('style').innerHTML;
-    previewWindow.document.head.appendChild(style);
-    previewWindow.document.head.appendChild(this.widgetService.buttonClasses);
+    // Append the styles to the head
+    pageStyles.type = 'text/css';
+    pageStyles.innerHTML = document.head.querySelector('style').innerHTML;
+    previewWindow.document.head.appendChild(pageStyles);
+    previewWindow.document.head.appendChild(this.widgetService.buttonStylesDocumentFragment);
 
+
+    // Page color
     previewWindow.document.body.style.background = 'white';
   }
 }

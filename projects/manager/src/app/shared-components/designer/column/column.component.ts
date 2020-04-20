@@ -5,7 +5,7 @@ import { WidgetComponent } from '../widgets/widget/widget.component';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { ColumnSpan } from '../../../classes/column-span';
 import { BreakpointsComponent } from '../../../classes/breakpoints-component';
-import { Breakpoint } from '../../../classes/breakpoint';
+import { Breakpoint, BreakpointVerticalAlignment } from '../../../classes/breakpoint';
 import { PaddingTop } from '../../../classes/padding-top';
 import { PaddingRight } from '../../../classes/padding-right';
 import { PaddingBottom } from '../../../classes/padding-bottom';
@@ -23,6 +23,7 @@ export class ColumnComponent implements BreakpointsComponent {
   public row: RowComponent;
   public widget: WidgetComponent;
   public rowHeight: number;
+  public rowTop: number;
   public columnElement: HTMLElement;
   private resizeButtonMousedown: boolean;
   public columnSpan: ColumnSpan;
@@ -70,6 +71,15 @@ export class ColumnComponent implements BreakpointsComponent {
 
     // Used to size the column divider & column indicators
     this.rowHeight = this.row.rowElement.nativeElement.clientHeight;
+
+    // Calculate the row top
+    if (this.widget) {
+      if (this.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
+        this.rowTop = 0;
+      } else {
+        this.rowTop = (this.widget.height - this.rowHeight) * (this.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 0.5 : 1);
+      }
+    }
   }
 
   addWidget() {

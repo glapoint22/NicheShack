@@ -53,18 +53,6 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
   }
 
 
-  // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
-  getBorderColor() {
-    return Color.RGBAToHexA(this.border.color);
-  }
-
-
-  // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
-  getShadowColor() {
-    return Color.RGBAToHexA(this.shadow.color);
-  }
-
-
 
   getMinHeight(): number {
     if (this.container.rows.length == 0) return 20;

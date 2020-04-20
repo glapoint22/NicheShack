@@ -39,8 +39,8 @@ export class ColorPickerComponent implements OnInit {
   // -----------------------------( ON FORM OPEN )------------------------------ \\
   onFormOpen() {
     window.setTimeout(() => {
-      let hsl: HSL = Color.RGBToHSL(this._FormService.colorPicker);
-      let hsb: HSB = Color.RGBToHSB(this._FormService.colorPicker);
+      let hsl: HSL = this._FormService.colorPicker.toHSL();
+      let hsb: HSB = this._FormService.colorPicker.toHSB();
 
       // Set the current color
       this._FormService.initialColorPickerColor.copy(this._FormService.colorPicker);
@@ -152,9 +152,10 @@ export class ColorPickerComponent implements OnInit {
 
   // -----------------------------( SET RGB )------------------------------ \\
   setRGB() {
-    let hsl = Color.HSBToHSL((Math.round((249 - this.hueSliderY) * 1.422924901185771)), this.ringX, 100 - this.ringY);
+    let hsb: HSB = new HSB((Math.round((249 - this.hueSliderY) * 1.422924901185771)), this.ringX, 100 - this.ringY);
+    let hsl: HSL = hsb.toHSL();
     let rgbColor: Color = Color.HSLToRGB(hsl.h / 360, hsl.s / 100, hsl.l / 100);
-    let hex: string = Color.RGBToHex(rgbColor);
+    let hex: string = rgbColor.toHex();
 
     // Update the Color Palette
     this.hue = hsl.h;
@@ -227,9 +228,9 @@ export class ColorPickerComponent implements OnInit {
         //RGB
         let rgb: Color = Color.HexToRGB("#" + this.hexInput.nativeElement.value);
         //HSL
-        hsl = Color.RGBToHSL(rgb);
+        hsl = rgb.toHSL();
         //HSB
-        hsb = Color.RGBToHSB(rgb);
+        hsb = rgb.toHSB();
 
 
         //If the input field is r,g or b
@@ -245,9 +246,9 @@ export class ColorPickerComponent implements OnInit {
         if (this.blueInput.nativeElement.value > 255) this.blueInput.nativeElement.value = 255;
 
         //HSL
-        hsl = Color.RGBToHSL(new Color(this.redInput.nativeElement.value, this.greenInput.nativeElement.value, this.blueInput.nativeElement.value, 1));
+        hsl = new Color(this.redInput.nativeElement.value, this.greenInput.nativeElement.value, this.blueInput.nativeElement.value, 1).toHSL();
         //HSB
-        hsb = Color.RGBToHSB(new Color(this.redInput.nativeElement.value, this.greenInput.nativeElement.value, this.blueInput.nativeElement.value, 1));
+        hsb = new Color(this.redInput.nativeElement.value, this.greenInput.nativeElement.value, this.blueInput.nativeElement.value, 1).toHSB();
       }
 
       // Move the ring

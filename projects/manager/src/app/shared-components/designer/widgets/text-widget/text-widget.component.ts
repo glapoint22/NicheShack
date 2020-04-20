@@ -104,7 +104,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
 
 
   getMinHeight(): number {
-    return this.getContentHeight();
+    return Math.max(this.getContentHeight(), 22);
   }
 
   showCover() {

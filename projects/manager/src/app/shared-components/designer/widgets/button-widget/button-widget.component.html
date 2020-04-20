@@ -2,7 +2,7 @@
     [ngClass]="{'widget-selected': widgetService.selectedWidget == this}" [style.background]="getFillColor()"
     [style.border]="border.apply ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
-    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + getShadowColor() : 'none'"
+    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHexA() : 'none'"
     [style.margin]="horizontalAlignment.value"
     [style.paddingTop]="paddingTop.value"
     [style.paddingRight]="paddingRight.value"
@@ -26,6 +26,7 @@
     <div id="handle" class="left-handle-bar" (mousedown)="onHandleMousedown('left')"></div>
 
 
+    <!-- Text -->
     <div [style.fontFamily]="text.fontFamily" [style.fontSize.px]="text.fontSize" [style.fontWeight]="text.fontWeight"
         [style.fontStyle]="text.fontStyle" [style.color]="getTextColor()">
         {{text.caption}}

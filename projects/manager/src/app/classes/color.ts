@@ -43,8 +43,25 @@ export class Color {
         return new Color(Math.round(r * 255), Math.round(g * 255), Math.round(b * 255), 1);
     }
 
-    static RGBToHex(color: Color): string {
-        return this.componentToHex(color.r) + this.componentToHex(color.g) + this.componentToHex(color.b);
+
+    private static hue2rgb(p: number, q: number, t: number): number {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+    }
+
+
+    toHex(): string {
+        return this.componentToHex(this.r) + this.componentToHex(this.g) + this.componentToHex(this.b);
+    }
+
+
+    private componentToHex(component: number): string {
+        let hex = component.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
     }
 
 
@@ -91,21 +108,13 @@ export class Color {
     }
 
 
-    static HSBToHSL(h, s, b) {
-        // determine the lightness in the range [0,100]
-        let l = (2 - s / 100) * b / 2;
-        let hsl = new HSL(h, s * b / (l < 50 ? l * 2 : 200 - l * 2), l);
-
-        // correct a division-by-zero error
-        if (isNaN(hsl.s)) hsl.s = 0;
-        return hsl;
-    }
 
 
-    static RGBToHSL(color: Color) {
-        let r = color.r;
-        let g = color.g;
-        let b = color.b;
+
+    toHSL(): HSL {
+        let r = this.r;
+        let g = this.g;
+        let b = this.b;
 
         r /= 255, g /= 255, b /= 255;
         let max = Math.max(r, g, b), min = Math.min(r, g, b);
@@ -129,11 +138,16 @@ export class Color {
 
 
 
-    static RGBToHSB(color: Color) {
+
+    
+
+
+
+    toHSB(): HSB {
         let rr: number, gg: number, bb: number;
-        let newRed: number = color.r / 255;
-        let newGreen: number = color.g / 255;
-        let newBlue: number = color.b / 255;
+        let newRed: number = this.r / 255;
+        let newGreen: number = this.g / 255;
+        let newBlue: number = this.b / 255;
         let h: number, s: number;
         let b: number = Math.max(newRed, newGreen, newBlue);
         let diff: number = b - Math.min(newRed, newGreen, newBlue);
@@ -164,12 +178,19 @@ export class Color {
     }
 
 
+    private diffc(c, b, diff) {
+        return (b - c) / 6 / diff + 1 / 2;
+    };
 
-    static RGBAToHexA(color: Color): string {
-        let r: string = color.r.toString(16);
-        let g: string = color.g.toString(16);
-        let b: string = color.b.toString(16);
-        let a: string = Math.round(color.a * 255).toString(16);
+
+
+    
+
+    toHexA(): string {
+        let r: string = this.r.toString(16);
+        let g: string = this.g.toString(16);
+        let b: string = this.b.toString(16);
+        let a: string = Math.round(this.a * 255).toString(16);
 
         if (r.length == 1)
             r = "0" + r;
@@ -181,26 +202,5 @@ export class Color {
             a = "0" + a;
 
         return "#" + r + g + b + a;
-    }
-
-
-
-    private static diffc(c, b, diff) {
-        return (b - c) / 6 / diff + 1 / 2;
-    };
-
-    private static componentToHex(component: number): string {
-        let hex = component.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
-    }
-
-
-    private static hue2rgb(p: number, q: number, t: number): number {
-        if (t < 0) t += 1;
-        if (t > 1) t -= 1;
-        if (t < 1 / 6) return p + (q - p) * 6 * t;
-        if (t < 1 / 2) return q;
-        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-        return p;
     }
 }

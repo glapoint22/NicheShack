@@ -4,7 +4,6 @@ import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
-import { Color } from 'projects/manager/src/app/classes/color';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
@@ -35,17 +34,6 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
   }
 
 
-  // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
-  getBorderColor() {
-    return Color.RGBAToHexA(this.fill.color);
-  }
-
-
-  // -------------------------------------------------( GET SHADOW COLOR )-----------------------------------------------\\
-  getShadowColor() {
-    return Color.RGBAToHexA(this.shadow.color);
-  }
-
   buildHTML(parent: HTMLElement) {
     let lineContainer = document.createElement('div');
 
@@ -59,7 +47,7 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
     // Create the line and set styles
     let line = document.createElement('div');
     line.style.width = '100%';
-    line.style.borderBottom = this.border.width + 'px ' + this.border.style + ' ' + this.getBorderColor();
+    line.style.borderBottom = this.border.width + 'px ' + this.border.style + ' ' + this.fill.color.toHexA();
     this.shadow.applyStyle(line);
 
     // Set the classes
