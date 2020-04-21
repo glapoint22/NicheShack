@@ -14,6 +14,9 @@ export class ContainerComponent {
   @Output() onRowTransform: EventEmitter<number> = new EventEmitter();
   public rows: Array<Row> = new Array<Row>();
   public selectedRowIndex: number;
+  public width: number;
+  
+  // SelectedRow property
   private _selectedRow: RowComponent;
   public set selectedRow(row: RowComponent) {
     this.selectedRowIndex = this.rows.findIndex(x => x.component == row);
@@ -24,14 +27,17 @@ export class ContainerComponent {
     return this._selectedRow;
   }
 
-  public width: number;
 
 
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }
 
+
+
   onMouseup(event) {
     if (this.widgetService.currentWidgetCursor) this.addRow(event.y - event.currentTarget.getBoundingClientRect().y);
   }
+
+
 
   addRow(position: number) {
     // Get the new row index based on the position
@@ -69,7 +75,6 @@ export class ContainerComponent {
       let rowBottom = this.rows[this.selectedRowIndex].component.top + this.rows[this.selectedRowIndex].element.clientHeight;
       this.rows[this.selectedRowIndex + 1].component.top -= rowBottom;
     }
-
   }
 
 
@@ -125,15 +130,15 @@ export class ContainerComponent {
   }
 
   buildHTML(parent: HTMLElement) {
-    let grid = document.createElement('div');
+    let div: HTMLDivElement = document.createElement('div');
 
-    grid.style.maxWidth = this.width + 'px';
-
-    grid.style.display = 'flex';
-    grid.style.flexDirection = 'column';
+    // Add the styles
+    div.style.maxWidth = this.width + 'px';
+    div.style.display = 'flex';
+    div.style.flexDirection = 'column';
 
     // Append to the parent and add the rows
-    parent.appendChild(grid);
-    this.rows.forEach((row: Row) => row.component.buildHTML(grid));
+    parent.appendChild(div);
+    this.rows.forEach((row: Row) => row.component.buildHTML(div));
   }
 }

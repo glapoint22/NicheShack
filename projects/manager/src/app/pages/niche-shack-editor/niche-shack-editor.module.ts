@@ -9,11 +9,8 @@ import { MediaBrowserModule } from '../../shared-components/media-browser/media-
 import { HierarchyComponent } from './hierarchy/hierarchy.component';
 import { ColorPickerModule } from '../../shared-components/color-picker/color-picker.module';
 import { VideoFormModule } from '../../shared-components/video-form/video-form.module';
-import { CarouselFormModule } from '../../shared-components/carousel-form/carousel-form.module';
 import { ImageFormModule } from '../../shared-components/image-form/image-form.module';
 import { LineFormModule } from '../../shared-components/line-form/line-form.module';
-import { FeaturedProductsFormModule } from '../../shared-components/featured-products-form/featured-products-form.module';
-import { CategoriesFormModule } from '../../shared-components/categories-form/categories-form.module';
 import { NicheFormComponent } from './niche-form/niche-form.component';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
@@ -22,7 +19,6 @@ import { FormsModule } from '@angular/forms';
 import { ColorIconModule } from '../../shared-components/color-icon/color-icon.module';
 import { LinkFormModule } from '../../shared-components/link-form/link-form.module';
 import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
-import { PreviewPublishDropdownModule } from '../../shared-components/preview-publish-dropdown/preview-publish-dropdown.module';
 import { MediaFormComponent } from './product-form/product-editor/media-form/media-form.component';
 import { PricePointFormComponent } from './product-form/product-editor/product-content/price-point-form/price-point-form.component';
 import { ProductEditorComponent } from './product-form/product-editor/product-editor.component';
@@ -62,11 +58,8 @@ import { ProductHoplinkComponent } from './product-form/product-editor/product-h
     MediaBrowserModule,
     ColorPickerModule,
     VideoFormModule,
-    CarouselFormModule,
     ImageFormModule,
     LineFormModule,
-    FeaturedProductsFormModule,
-    CategoriesFormModule,
     DesignerModule,
     ShowHideModule,
     PromptModule,
@@ -74,7 +67,6 @@ import { ProductHoplinkComponent } from './product-form/product-editor/product-h
     ColorIconModule,
     LinkFormModule,
     ContextMenuModule,
-    PreviewPublishDropdownModule
   ]
 })
 export class NicheShackEditorModule { }

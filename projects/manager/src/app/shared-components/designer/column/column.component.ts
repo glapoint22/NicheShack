@@ -37,8 +37,9 @@ export class ColumnComponent implements BreakpointsComponent {
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService, private breakpointService: BreakpointService) { }
 
   ngOnInit() {
-    this.breakpointService.onBreakpointChange.subscribe((screenSize: string) => {
-      this.breakpointService.setBreakpointValues(this.breakpoints, screenSize);
+    // When a breakpoint changes, this will update any property that has a value stored in the breakpoints array
+    this.breakpointService.onBreakpointChange.subscribe(() => {
+      this.breakpointService.setBreakpointValues(this.breakpoints);
     });
   }
 
@@ -59,20 +60,20 @@ export class ColumnComponent implements BreakpointsComponent {
         this.columnElement.classList.remove('column-indicator-container');
       }
 
-      // Update padding
+      // Update padding for the column
       this.columnElement.style.paddingTop = this.paddingTop.value;
       this.columnElement.style.paddingRight = this.paddingRight.value;
       this.columnElement.style.paddingBottom = this.paddingBottom.value;
       this.columnElement.style.paddingLeft = this.paddingLeft.value;
 
-      // Update display for visibility
+      // Update visibility for the column
       this.columnElement.style.display = this.visibility.value;
     }
 
     // Used to size the column divider & column indicators
     this.rowHeight = this.row.rowElement.nativeElement.clientHeight;
 
-    // Calculate the row top
+    // Used to position the column divider & column indicators
     if (this.widget) {
       if (this.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
         this.rowTop = 0;

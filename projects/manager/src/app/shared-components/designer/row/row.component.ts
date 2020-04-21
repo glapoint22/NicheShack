@@ -58,8 +58,8 @@ export class RowComponent implements BreakpointsComponent {
 
   ngOnInit() {
     // When a breakpoint changes, this will update any property that has a value stored in the breakpoints array
-    this.breakpointService.onBreakpointChange.subscribe((screenSize: string) => {
-      this.breakpointService.setBreakpointValues(this.breakpoints, screenSize);
+    this.breakpointService.onBreakpointChange.subscribe(() => {
+      this.breakpointService.setBreakpointValues(this.breakpoints);
     });
   }
 

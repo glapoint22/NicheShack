@@ -9,7 +9,7 @@ import { BreakpointsComponent } from '../classes/breakpoints-component';
 })
 export class BreakpointService {
   public onCanvasWidthChange = new Subject<number>();
-  public onBreakpointChange = new Subject<string>();
+  public onBreakpointChange = new Subject<void>();
   private currentBreakpointScreenSize: string;
 
   constructor() {
@@ -22,7 +22,7 @@ export class BreakpointService {
         // Test to see if the width falls between a new breakpoint
         if (width >= minSize && width < maxSize && this.currentBreakpointScreenSize != BreakpointScreenSize[item]) {
           this.currentBreakpointScreenSize = BreakpointScreenSize[item];
-          this.onBreakpointChange.next(BreakpointScreenSize[item]);
+          this.onBreakpointChange.next();
           break;
         }
       }
@@ -33,11 +33,11 @@ export class BreakpointService {
   
   
   
-  setBreakpointValues(breakpoints: Array<Breakpoint>, screenSize: string) {
+  setBreakpointValues(breakpoints: Array<Breakpoint>) {
     breakpoints.forEach(x => x.type.value = x.type.defaultValue);
 
     // Filter the breakpoints based on screen size
-    let filteredBreakpoints = breakpoints.filter((x) => parseInt(screenSize) >= parseInt(x.screenSize))
+    let filteredBreakpoints = breakpoints.filter((x) => parseInt(this.currentBreakpointScreenSize) >= parseInt(x.screenSize))
       .filter((v, i, a) => a.map(x => x.type).indexOf(v.type) == i);
 
     // Set the values
