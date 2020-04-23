@@ -1,11 +1,4 @@
-<!-- Fieldset -->
-<fieldset #fieldset 
-          class="margin-right-16-xl
-                 margin-top-8-xxs">
-
-    <legend>Description</legend>
-
-
+<div style="border: 1px solid #444444; overflow: hidden;">
     <!-- Icon Bar -->
     <div class="icon-bar" *ngIf="description">
 
@@ -24,23 +17,27 @@
             </div>
         </div>
 
-        <!-- Font -->
+
+
+
+        
         <div>
+            <!-- Font -->
             <select title="Font" [selectedIndex]="description.font.selectedIndex"
                 (change)="description.font.setStyleValue($event.target.value)">
                 <option *ngFor="let option of description.font.options" [value]="option.value">{{option.key}}</option>
             </select>
-        </div>
 
-
-        <!-- Font size -->
-        <div>
+            <!-- Font size -->
             <select title="Font size" [selectedIndex]="description.fontSize.selectedIndex"
                 (change)="description.fontSize.setStyleValue($event.target.value)">
                 <option *ngFor="let option of description.fontSize.options" [value]="option.value">{{option.key}}
                 </option>
             </select>
         </div>
+
+
+
 
 
 
@@ -65,15 +62,16 @@
                 [ngClass]="{'selected': description.underline.isSelected}">
                 <i class="fas fa-underline"></i>
             </div>
+        </div>
 
 
 
+
+        <div>
             <!-- Text color -->
             <color-icon [color]="description.fontColor.value" [icon]="'fa-font'" [title]="'Text color'"
                 (onShowColorPicker)="description.fontColor.onShowColorPicker(_FormService.onColorPickerClose)">
             </color-icon>
-
-
 
 
             <!-- Highlight color -->
@@ -82,7 +80,6 @@
                 (onShowColorPicker)="description.highlightColor.onShowColorPicker(_FormService.onColorPickerClose)"
                 (onRemoveColor)="description.highlightColor.removeColor()">
             </color-icon>
-
         </div>
 
 
@@ -104,9 +101,9 @@
             <!-- Left align -->
             <div class="icon-container" title="Left align (Ctrl+Shift+L)"
                 [ngClass]="{'selected':description.alignLeft.isSelected}" (click)="description.alignLeft.applyStyle();
-                   description.alignCenter.isSelected = false;
-                   description.alignRight.isSelected = false;
-                   description.alignJustify.isSelected = false">
+               description.alignCenter.isSelected = false;
+               description.alignRight.isSelected = false;
+               description.alignJustify.isSelected = false">
                 <i class="fas fa-align-left"></i>
             </div>
 
@@ -115,9 +112,9 @@
             <!-- Center align -->
             <div class="icon-container" title="Center align (Ctrl+Shift+E)"
                 [ngClass]="{'selected': description.alignCenter.isSelected}" (click)="description.alignCenter.applyStyle(); 
-                    description.alignLeft.isSelected = false;
-                    description.alignRight.isSelected = false; 
-                    description.alignJustify.isSelected = false">
+                description.alignLeft.isSelected = false;
+                description.alignRight.isSelected = false; 
+                description.alignJustify.isSelected = false">
                 <i class="fas fa-align-center"></i>
             </div>
 
@@ -125,9 +122,9 @@
             <!-- Right align -->
             <div class="icon-container" title="Right align (Ctrl+Shift+R)"
                 [ngClass]="{'selected': description.alignRight.isSelected}" (click)="description.alignRight.applyStyle();
-                    description.alignLeft.isSelected = false;
-                    description.alignJustify.isSelected = false;
-                    description.alignCenter.isSelected = false">
+                description.alignLeft.isSelected = false;
+                description.alignJustify.isSelected = false;
+                description.alignCenter.isSelected = false">
                 <i class="fas fa-align-right"></i>
             </div>
 
@@ -135,9 +132,9 @@
             <!-- Justify -->
             <div class="icon-container" title="Justify (Ctrl+Shift+J)"
                 [ngClass]="{'selected': description.alignJustify.isSelected}" (click)="description.alignJustify.applyStyle();
-                    description.alignLeft.isSelected = false;
-                    description.alignCenter.isSelected = false;
-                    description.alignRight.isSelected = false">
+                description.alignLeft.isSelected = false;
+                description.alignCenter.isSelected = false;
+                description.alignRight.isSelected = false">
                 <i class="fas fa-align-justify"></i>
             </div>
         </div>
@@ -184,4 +181,4 @@
 
     <!-- Description -->
     <iframe #iframe></iframe>
-</fieldset>
+</div>

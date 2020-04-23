@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ApplicationRef, AfterViewInit, HostListener } from '@angular/core';
+import { Component, ViewChild, ElementRef, ApplicationRef, AfterViewInit } from '@angular/core';
 import { Description } from 'projects/manager/src/app/classes/description';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { FormService } from 'projects/manager/src/app/services/form.service';
@@ -23,27 +23,6 @@ export class ProductDescriptionComponent implements AfterViewInit {
       this._FormService.description = this.description;
       this.description.selectContents();
       this.description.removeSelection();
-
-      // Set the height of the iframe
-      this.setIframeHeight();
     }
-  }
-
-
-  // -----------------------------( HOST LISTENER )------------------------------ \\
-  @HostListener('window:resize') onResize() {
-    this.setIframeHeight();
-  }
-
-
-  // -----------------------------( SET IFRAME HEIGHT )------------------------------ \\
-  setIframeHeight() {
-    window.setTimeout(() => {
-      let iframeTop: number = this.iframe.nativeElement.getBoundingClientRect().top;
-      let fieldsetBottom: number = this.fieldset.nativeElement.getBoundingClientRect().height + this.fieldset.nativeElement.getBoundingClientRect().top;
-
-      // Set the height of the iframe by getting the difference between the bottom of the fieldset and the top of the iframe minus the magic number
-      this.iframe.nativeElement.style.height = (fieldsetBottom - iframeTop - 17) + "px";
-    })
   }
 }

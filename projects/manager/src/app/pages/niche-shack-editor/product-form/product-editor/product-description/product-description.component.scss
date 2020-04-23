@@ -1,11 +1,12 @@
 @import '../../../../../../scss/variables';
 
 .icon-bar {
+    width: auto;
     border: 1px solid $border-color;
     border-bottom: 0;
     padding: 5px;
-    margin-top: 5px;
-    background-color: #2d2d2d;
+    margin: 2px;
+    background-color: #3b3b3b;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -13,18 +14,12 @@
     
     & > div {
         display: flex;
-        border-left: 1px solid $border-color;
         margin: 0;
-        padding: 0 5px;
-    }
-
-    & > div:last-child {
-        border-right: 1px solid $border-color;
     }
 }
 
 .icon-container {
-    margin: 0 3px;
+    margin: 4px;
     border-radius: 2px;
 
     &:hover:not(.selected) {
@@ -33,18 +28,14 @@
 }
 
 iframe {
-    height: 283px;
+    height: 280px;
     width: 100%;
-    border: 1px solid $border-color;
+    border: none;
     user-select: none;
     background: #1b1b1b;
     margin-bottom: 0;
+    display: block;
 }
-
-fieldset {
-    padding-bottom: 1px;
-}
-
 
 
 .selected {
@@ -54,5 +45,8 @@ fieldset {
 }
 
 select {
-    max-width: 140px;
+    max-width: 100px;
+    &:first-child {
+        margin-right: 5px;
+    }
 }
