@@ -1,65 +1,69 @@
 <!-- Designer Container -->
 <div class="designer-container">
 
-    <!-- Bottom Section -->
-    <div class="bottom-section">
+    <!-- Widget Bar -->
+    <div class="widget-bar">
 
-        <!-- Widget Bar -->
-        <div class="widget-bar">
+        <!-- Widgets -->
+        <ng-container *ngFor="let widgetCursor of widgetCursors">
+            <div class="icon-container" 
+                 [title]="widgetCursor.title" 
+                 [innerHTML]="widgetCursor.icon"
+                 (mousedown)="onWidgetIconMousedown($event, widgetCursor)">
+            </div>
+        </ng-container>
+    </div>
 
-            <ng-container *ngFor="let widgetCursor of widgetCursors">
-                <div class="icon-container" [title]="widgetCursor.title" [innerHTML]="widgetCursor.icon"
-                    (mousedown)="onWidgetIconMousedown($event, widgetCursor)"></div>
-            </ng-container>
-        </div>
 
+    <!-- Work Area -->
+    <div #workArea class="work-area">
 
-        <!-- Design Area -->
-        <div class="design-area">
+        <!-- Design Area Container -->
+        <div #designAreaContainer class="design-area-container">
 
-            <!-- Page Select Bar -->
-            <div class="page-select-bar">
+            <!-- Design Area Bar -->
+            <div class="design-area-bar">
 
-                <!-- Width Display Container -->
-                <div class="width-display-container">
+                <!-- Design Area Dropdown -->
+                <div class="design-area-dropdown">
+                    <input #designAreaDropdown
+                           (click)="designAreaDropdown.select();" 
+                           (keydown)="onDesignAreaDropdownKeydown($event)">
 
-                    <!-- Width Display -->
-                    <div class="width-display">
-                        <input #widthDisplay (click)="widthDisplay.select();" (keydown)="onWidthDisplayKeydown($event)">
+                    <!-- Design Area Dropdown Button -->
+                    <div class="design-area-dropdown-button">
+                        <div>></div>
                     </div>
                 </div>
-
-
-                <!-- Prevew/Publish Dropdown -->
-                <!-- <preview-publish-dropdown (onPreview)="onPreview()"></preview-publish-dropdown> -->
-
             </div>
 
-            <!-- Design Area Background -->
-            <div class="design-area-background">
+            <!-- Design Area -->
+            <div class="design-area">
 
-                <!-- Sizing Bar Left -->
-                <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, 1)">
+                <!-- Design Area Resizer Left -->
+                <div class="design-area-resizer"
+                     (mousedown)="onDesignAreaResizerMousedown($event, 1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
-                        <div class="ridge"></div>
+                        <div class="ridge"></div>                        
                     </div>
                 </div>
+
 
                 <!-- Canvas -->
                 <div #canvasElement class="canvas" (mousedown)="widgetService.selectedWidget = null">
-
-                    <!-- Content -->
-                    <div #content class="content" [style.maxWidth.px]="contentWidth" >
-                        <container #container></container>
+                    <div #contentElement 
+                         class="content"
+                         [style.maxWidth.px]="contentWidth">
+                        <container #rootContainer></container>
                     </div>
                 </div>
 
 
-
-                <!-- Sizing Bar Right -->
-                <div class="sizing-bar" (mousedown)="onSizingBarMousedown($event, -1)">
+                <!-- Design Area Resizer Right -->
+                <div class="design-area-resizer"  
+                     (mousedown)="onDesignAreaResizerMousedown($event, -1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
@@ -68,5 +72,13 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Properties Editor Resizer -->
+        <div class="properties-editor-resizer" (mousedown)="onPropertiesEditorResizerDown()"></div>
+
+
+        <!-- Properties Editor Container -->
+        <div #PropertiesEditorContainer class="properties-editor-container"></div>
     </div>
 </div>
