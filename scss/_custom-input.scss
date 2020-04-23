@@ -1,0 +1,52 @@
+[id=custom-input] {
+    label {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 12px;
+        height: 12px;
+        line-height: 12px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        
+    
+        &:hover {
+            input ~ .checkmark {
+                background-color: $checkmark-background-hover-color;
+            }
+        }
+    
+        input {
+            display: none;
+            &:checked ~ .checkmark {
+                background-color: $checkmark-background-checked-color;
+    
+                &:after {
+                    display: block;
+                }
+            }
+        }
+    }
+    
+    .checkmark {
+        position: absolute;
+        top: 0px;
+        left: 0;
+        height: 12px;
+        width: 12px;
+        background-color: $checkmark-background-color;
+        &:after {
+            content: "";
+            top: 3px;
+            left: 3px;
+            width: 6px;
+            height: 6px;
+            position: absolute;
+            display: none;
+            background: $checkmark-indicator-color;
+            color: $checkmark-indicator-color;
+        }
+    }
+}

@@ -6,8 +6,9 @@ import { OrdersComponent } from './orders.component';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
 import { DropdownButtonModule } from '../../shared-components/dropdown-button/dropdown-button.module';
 import { FormsModule } from '@angular/forms';
-import { CustomInputModule } from '../../custom-input/custom-input.module';
+import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
+
 
 
 @NgModule({

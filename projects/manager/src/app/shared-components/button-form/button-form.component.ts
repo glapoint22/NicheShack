@@ -33,7 +33,7 @@ export class ButtonFormComponent {
     this._FormService.initialFill.hoverColor.b = this._FormService.fill.hoverColor.b;
     this._FormService.initialFill.hoverColor.a = this._FormService.fill.hoverColor.a;
 
-    this._FormService.initialBorder.apply = this._FormService.border.apply;
+    this._FormService.initialBorder.enable = this._FormService.border.enable;
     this._FormService.initialBorder.width = this._FormService.border.width;
     this._FormService.initialBorder.style = this._FormService.border.style;
     this._FormService.initialBorder.color.r = this._FormService.border.color.r;
@@ -128,7 +128,7 @@ export class ButtonFormComponent {
     this._FormService.fill.hoverColor.b = this._FormService.initialFill.hoverColor.b;
     this._FormService.fill.hoverColor.a = this._FormService.initialFill.hoverColor.a;
 
-    this._FormService.border.apply = this._FormService.initialBorder.apply;
+    this._FormService.border.enable = this._FormService.initialBorder.enable;
     this._FormService.border.width = this._FormService.initialBorder.width;
     this._FormService.border.style = this._FormService.initialBorder.style;
     this._FormService.border.color.r = this._FormService.initialBorder.color.r;

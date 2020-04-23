@@ -1,6 +1,7 @@
 import { Color } from './color';
+import { Enableable } from './enableable';
 
-export class Shadow {
+export class Shadow implements Enableable {
     enable: boolean;
     x: number = 5;
     y: number = 5;

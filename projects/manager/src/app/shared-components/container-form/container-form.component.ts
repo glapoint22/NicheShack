@@ -16,13 +16,13 @@ export class ContainerFormComponent {
     // Set the fill tab to be the starting tab on form open
     this.selectedTab = "fill";
 
-    this._FormService.initialFill.apply = this._FormService.fill.apply;
+    this._FormService.initialFill.enable = this._FormService.fill.enable;
     this._FormService.initialFill.color.r = this._FormService.fill.color.r;
     this._FormService.initialFill.color.g = this._FormService.fill.color.g;
     this._FormService.initialFill.color.b = this._FormService.fill.color.b;
     this._FormService.initialFill.color.a = this._FormService.fill.color.a;
 
-    this._FormService.initialBorder.apply = this._FormService.border.apply;
+    this._FormService.initialBorder.enable = this._FormService.border.enable;
     this._FormService.initialBorder.width = this._FormService.border.width;
     this._FormService.initialBorder.style = this._FormService.border.style;
     this._FormService.initialBorder.color.r = this._FormService.border.color.r;
@@ -70,13 +70,13 @@ export class ContainerFormComponent {
 
   // --------------------------------------( ON CANCEL )-------------------------------------\\
   onCancel() {
-    this._FormService.fill.apply = this._FormService.initialFill.apply;
+    this._FormService.fill.enable = this._FormService.initialFill.enable;
     this._FormService.fill.color.r = this._FormService.initialFill.color.r;
     this._FormService.fill.color.g = this._FormService.initialFill.color.g;
     this._FormService.fill.color.b = this._FormService.initialFill.color.b;
     this._FormService.fill.color.a = this._FormService.initialFill.color.a;
 
-    this._FormService.border.apply = this._FormService.initialBorder.apply;
+    this._FormService.border.enable = this._FormService.initialBorder.enable;
     this._FormService.border.width = this._FormService.initialBorder.width;
     this._FormService.border.style = this._FormService.initialBorder.style;
     this._FormService.border.color.r = this._FormService.initialBorder.color.r;
