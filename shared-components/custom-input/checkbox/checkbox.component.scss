@@ -1,0 +1,12 @@
+.checkmark {
+    &:after {
+        left: 4px;
+        top: 0px;
+        width: 5px;
+        height: 10px;
+        border: solid;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        background: none;
+    }
+}

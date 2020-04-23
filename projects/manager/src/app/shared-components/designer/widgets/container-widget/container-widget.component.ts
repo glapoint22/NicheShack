@@ -98,7 +98,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
     container.style.minHeight = this.height + 'px';
 
     // Add fill if applied
-    if (this.fill.apply) this.fill.applyColor(container);
+    if (this.fill.enable) this.fill.applyColor(container);
 
     // Other styles
     this.border.applyStyle(container);

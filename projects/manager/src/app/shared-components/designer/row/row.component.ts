@@ -275,7 +275,7 @@ export class RowComponent implements BreakpointsComponent {
     row.style.marginTop = this.top + 'px';
 
     // Fill
-    if (this.fill.apply) this.fill.applyColor(row);
+    if (this.fill.enable) this.fill.applyColor(row);
 
     // Border
     this.border.applyStyle(row);

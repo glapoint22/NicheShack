@@ -16,7 +16,7 @@ export class ImageFormComponent {
     // Set the image tab to be the starting tab on form open
     this.selectedTab = "image";
 
-    this._FormService.initialBorder.apply = this._FormService.border.apply;
+    this._FormService.initialBorder.enable = this._FormService.border.enable;
     this._FormService.initialBorder.width = this._FormService.border.width;
     this._FormService.initialBorder.style = this._FormService.border.style;
     this._FormService.initialBorder.color.r = this._FormService.border.color.r;
@@ -58,7 +58,7 @@ export class ImageFormComponent {
 
   // ----------------------------------------------------( ON CANCEL )--------------------------------------------------\\
   onCancel() {
-    this._FormService.border.apply = this._FormService.initialBorder.apply;
+    this._FormService.border.enable = this._FormService.initialBorder.enable;
     this._FormService.border.width = this._FormService.initialBorder.width;
     this._FormService.border.style = this._FormService.initialBorder.style;
     this._FormService.border.color.r = this._FormService.initialBorder.color.r;
