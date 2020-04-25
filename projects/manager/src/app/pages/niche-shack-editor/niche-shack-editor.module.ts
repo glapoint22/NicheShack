@@ -2,71 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NicheShackEditorRoutingModule } from './niche-shack-editor-routing.module';
 import { NicheShackEditorComponent } from './niche-shack-editor.component';
-import { DialogBoxModule } from '../../shared-components/dialog-box/dialog-box.module';
 import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module';
-import { ProductFormComponent } from './product-form/product-form.component';
-import { MediaBrowserModule } from '../../shared-components/media-browser/media-browser.module';
-import { HierarchyComponent } from './hierarchy/hierarchy.component';
-import { ColorPickerModule } from '../../shared-components/color-picker/color-picker.module';
-import { VideoFormModule } from '../../shared-components/video-form/video-form.module';
-import { ImageFormModule } from '../../shared-components/image-form/image-form.module';
-import { LineFormModule } from '../../shared-components/line-form/line-form.module';
-import { NicheFormComponent } from './niche-form/niche-form.component';
-import { DesignerModule } from '../../shared-components/designer/designer.module';
-import { ShowHideModule } from 'directives/show-hide/show-hide.module';
-import { PromptModule } from '../../shared-components/prompt/prompt.module';
-import { FormsModule } from '@angular/forms';
-import { ColorIconModule } from '../../shared-components/color-icon/color-icon.module';
-import { LinkFormModule } from '../../shared-components/link-form/link-form.module';
-import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
-import { MediaFormComponent } from './product-form/product-editor/media-form/media-form.component';
-import { PricePointFormComponent } from './product-form/product-editor/product-content/price-point-form/price-point-form.component';
-import { ProductEditorComponent } from './product-form/product-editor/product-editor.component';
-import { ProductDescriptionComponent } from './product-form/product-editor/product-description/product-description.component';
-import { HierarchyContentComponent } from './hierarchy/hierarchy-content/hierarchy-content.component';
-import { ProductContentComponent } from './product-form/product-editor/product-content/product-content.component';
-import { ProductImageComponent } from './product-form/product-editor/product-image/product-image.component';
-import { ProductFiltersComponent } from './product-form/product-editor/product-filters/product-filters.component';
-import { ProductMediaComponent } from './product-form/product-editor/product-media/product-media.component';
-import { ProductKeywordsComponent } from './product-form/product-editor/product-keywords/product-keywords.component';
-import { ProductHoplinkComponent } from './product-form/product-editor/product-hoplink/product-hoplink.component';
 
 
 @NgModule({
   declarations: [
-    NicheShackEditorComponent,
-    ProductFormComponent,
-    MediaFormComponent,
-    PricePointFormComponent,
-    HierarchyComponent,
-    ProductEditorComponent,
-    ProductDescriptionComponent,
-    NicheFormComponent,
-    HierarchyContentComponent,
-    ProductContentComponent,
-    ProductImageComponent,
-    ProductFiltersComponent,
-    ProductMediaComponent,
-    ProductKeywordsComponent,
-    ProductHoplinkComponent,
+    NicheShackEditorComponent
   ],
   imports: [
     CommonModule,
     NicheShackEditorRoutingModule,
-    DialogBoxModule,
-    MenuBarModule,
-    MediaBrowserModule,
-    ColorPickerModule,
-    VideoFormModule,
-    ImageFormModule,
-    LineFormModule,
-    DesignerModule,
-    ShowHideModule,
-    PromptModule,
-    FormsModule,
-    ColorIconModule,
-    LinkFormModule,
-    ContextMenuModule,
+    MenuBarModule
   ]
 })
 export class NicheShackEditorModule { }
