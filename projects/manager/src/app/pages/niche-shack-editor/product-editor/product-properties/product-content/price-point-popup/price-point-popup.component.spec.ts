@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PricePointFormComponent } from './price-point-form.component';
+import { PricePointPopupComponent } from './price-point-popup.component';
 
 describe('PricePointFormComponent', () => {
-  let component: PricePointFormComponent;
-  let fixture: ComponentFixture<PricePointFormComponent>;
+  let component: PricePointPopupComponent;
+  let fixture: ComponentFixture<PricePointPopupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PricePointFormComponent ]
+      declarations: [ PricePointPopupComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PricePointFormComponent);
+    fixture = TestBed.createComponent(PricePointPopupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

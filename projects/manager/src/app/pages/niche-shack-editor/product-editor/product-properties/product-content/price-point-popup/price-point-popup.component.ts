@@ -2,11 +2,11 @@ import { Component, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { FormService } from 'projects/manager/src/app/services/form.service';
 
 @Component({
-  selector: 'price-point-form',
-  templateUrl: './price-point-form.component.html',
-  styleUrls: ['./price-point-form.component.scss']
+  selector: 'price-point-popup',
+  templateUrl: './price-point-popup.component.html',
+  styleUrls: ['./price-point-popup.component.scss']
 })
-export class PricePointFormComponent {
+export class PricePointPopupComponent {
   public decimal: string;
   public textAfter: string;
   public textBefore: string;

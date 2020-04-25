@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormService } from '../../../services/form.service';
 
 @Component({
   selector: 'vertical-alignment',
@@ -7,5 +6,5 @@ import { FormService } from '../../../services/form.service';
   styleUrls: ['./vertical-alignment.component.scss']
 })
 export class VerticalAlignmentComponent {
-  constructor(public _FormService: FormService) { }
+  constructor() { }
 }

@@ -5,12 +5,12 @@ import { HSL } from '../../../classes/hsl';
 import { HSB } from '../../../classes/hsb';
 
 @Component({
-  selector: 'color-picker',
-  templateUrl: './color-picker.component.html',
-  styleUrls: ['./color-picker.component.scss'],
+  selector: 'color-picker-popup',
+  templateUrl: './color-picker-popup.component.html',
+  styleUrls: ['./color-picker-popup.component.scss'],
 })
 
-export class ColorPickerComponent implements OnInit {
+export class ColorPickerPopupComponent implements OnInit {
   @ViewChild('colorContainer', { static: false }) colorContainer: ElementRef;
   @ViewChild('hueContainer', { static: false }) hueContainer: ElementRef;
   @ViewChild('alphaContainer', { static: false }) alphaContainer: ElementRef;

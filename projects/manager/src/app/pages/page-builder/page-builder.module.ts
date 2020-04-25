@@ -4,9 +4,15 @@ import { PageBuilderRoutingModule } from './page-builder-routing.module';
 import { PageBuilderComponent } from './page-builder.component';
 import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
+import { PageEditorComponent } from './page-editor/page-editor.component';
+import { SearchPopupComponent } from './search-popup/search-popup.component';
 
 @NgModule({
-  declarations: [PageBuilderComponent],
+  declarations: [
+    PageBuilderComponent,
+    PageEditorComponent,
+    SearchPopupComponent
+  ],
   imports: [
     CommonModule,
     PageBuilderRoutingModule,

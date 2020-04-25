@@ -4,11 +4,11 @@ import { delay, debounceTime, switchMap, tap } from 'rxjs/operators';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
 
 @Component({
-  selector: 'hierarchy',
-  templateUrl: './hierarchy.component.html',
-  styleUrls: ['./hierarchy.component.scss']
+  selector: 'hierarchy-popup',
+  templateUrl: './hierarchy-popup.component.html',
+  styleUrls: ['./hierarchy-popup.component.scss']
 })
-export class HierarchyComponent implements OnInit {
+export class HierarchyPopupComponent implements OnInit {
   @Output() showForm: EventEmitter<HierarchyItem> = new EventEmitter();
   public items: Array<HierarchyItem> = [];
   public selectedItem: HierarchyItem;

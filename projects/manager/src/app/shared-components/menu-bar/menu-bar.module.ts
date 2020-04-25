@@ -7,6 +7,9 @@ import { ReviewComplaintFormComponent } from './review-complaint-form/review-com
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { RouterModule } from '@angular/router';
+import { HierarchyPopupComponent } from './hierarchy-popup/hierarchy-popup.component';
+import { HierarchyContentComponent } from './hierarchy-popup/hierarchy-content/hierarchy-content.component';
+import { PromptModule } from '../prompt/prompt.module';
 
 
 
@@ -17,11 +20,14 @@ import { RouterModule } from '@angular/router';
     ProductReportFormComponent,
     ReviewComplaintFormComponent,
     NotificationsComponent,
+    HierarchyPopupComponent,
+    HierarchyContentComponent
   ],
   imports: [
     CommonModule,
     ShowHideModule,
-    RouterModule
+    RouterModule,
+    PromptModule
   ],
   exports: [
     MenuBarComponent,
@@ -29,6 +35,8 @@ import { RouterModule } from '@angular/router';
     ProductReportFormComponent,
     ReviewComplaintFormComponent,
     NotificationsComponent,
+    HierarchyPopupComponent,
+    HierarchyContentComponent
   ]
 })
 export class MenuBarModule { }

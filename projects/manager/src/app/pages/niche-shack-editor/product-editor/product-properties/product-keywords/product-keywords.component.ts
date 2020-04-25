@@ -4,7 +4,7 @@ import { MenuService } from 'projects/manager/src/app/services/menu.service';
 @Component({
   selector: 'product-keywords',
   templateUrl: './product-keywords.component.html',
-  styleUrls: ['./product-keywords.component.scss', '../product-editor.component.scss']
+  styleUrls: ['./product-keywords.component.scss']
 })
 export class ProductKeywordsComponent implements OnInit {
   constructor(public menuService: MenuService) { }

@@ -6,7 +6,7 @@ import { FormService } from 'projects/manager/src/app/services/form.service';
 @Component({
   selector: 'product-description',
   templateUrl: './product-description.component.html',
-  styleUrls: ['./product-description.component.scss', '../product-editor.component.scss']
+  styleUrls: ['./product-description.component.scss']
 })
 export class ProductDescriptionComponent implements AfterViewInit {
   public description: Description;
