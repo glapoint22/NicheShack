@@ -1,1 +1,7 @@
-<p>category-editor works!</p>
+<div class="rounded-container-dark">
+    <!-- Category Name -->
+    <div>Category:</div>
+    <input class="txt-22" [(ngModel)]="category.name">
+
+    <image-property [title]="'Icon'" [roundedPanel]="true" [image]="category.icon"></image-property>
+</div>

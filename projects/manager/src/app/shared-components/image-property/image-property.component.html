@@ -1,0 +1,22 @@
+<!-- Panel -->
+<panel #panel [title]="title" [rounded]="roundedPanel">
+
+    <!-- Property Box -->
+    <div class="property-box-dark">
+        
+        <!-- Icons -->
+    <div class="icons">
+
+            <!-- Media Browser Icon -->
+            <div class="icon-container" (click)="openMediaBrowser()">
+                <i class="fas fa-image"></i>
+            </div>
+        </div>
+
+
+        <!-- Image -->
+        <div class="img-container">
+            <img [src]="'images/' + image" (load)="panel.onContentLoad()">
+        </div>
+    </div>
+</panel>

@@ -53,10 +53,10 @@
 
 
 
-.property-box {
+.property-box-dark {
     border: 1px solid #444444;
     background: #222222;
-    .bar {
+    .icons {
         margin: 2px;
         background: #3b3b3b;
         height: 22px;
@@ -75,16 +75,19 @@
     border: 1px solid #373737;
     border-radius: 3px;
     color: #e4e4e4;
+    width: 100%;
 }
 
 .txt-20 {
     @extend %txt;
     height: 20px;
+    font-size: 12px;
 }
 
 .txt-22 {
     @extend %txt;
     height: 22px;
+    margin-bottom: 12px;
 }
 
 
@@ -100,6 +103,9 @@
     @extend %rounded-container;
     background: #2d2d2d;
     border-color: #3c3c3c;
+    padding: 8px;
+    font-size: 11px;
+    color: #aaaaaa;
 }
 
 .rounded-container-light {

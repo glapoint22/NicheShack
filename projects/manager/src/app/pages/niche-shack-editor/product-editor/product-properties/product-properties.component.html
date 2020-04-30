@@ -1,1 +1,22 @@
-<p>product-properties works!</p>
+<div class="container">
+    <ng-container *ngIf="product$ | async as product">
+
+        <!-- Hoplink -->
+        <product-hoplink [hoplink]="product.hoplink"></product-hoplink>
+
+        <!-- Image -->
+        <image-property [title]="'Image'" [image]="product.image"></image-property>
+
+        <!-- Filter -->
+        <product-filters [filters]="product.filters"></product-filters>
+
+        <!-- Content -->
+        <product-content [content]="product.content" [pricePoints]="product.pricePoints"></product-content>
+
+        <!-- Media -->
+        <product-media [media]="product.media"></product-media>
+
+        <!-- Keywords -->
+        <product-keywords [keywords]="product.keywords"></product-keywords>
+    </ng-container>
+</div>

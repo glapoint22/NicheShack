@@ -1,0 +1,37 @@
+<panel [title]="'Content'">
+    <!-- Property Box -->
+    <div class="property-box-dark">
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Delete content Icon -->
+            <div class="icon-container">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+
+            <!-- Add content Icon -->
+            <div class="icon-container">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+        </div>
+
+        <!-- Content container -->
+        <div class="content-container">
+            <ng-container *ngFor="let content of content">
+                
+                <!-- Content -->
+                <div class="content">
+
+                    <!-- Icon -->
+                    <div class="img-container">
+                        <img [src]="'images/' + content.icon">
+                    </div>
+                    
+                    <!-- Title -->
+                    <div class="content-title">{{content.title}}</div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</panel>

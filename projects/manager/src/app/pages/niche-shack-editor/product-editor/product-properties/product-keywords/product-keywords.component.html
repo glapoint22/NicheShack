@@ -1,70 +1,29 @@
-<!-- Fieldset -->
-<fieldset class="margin-top-48-xxs
-                 margin-top-40-md
-                 margin-top-32-lg
-                 margin-top-24-xl
-                 margin-top-16-xxl">
+<panel [title]="'Keywords'">
+    <!-- Property Box -->
+    <div class="property-box-dark">
 
-    <legend>Keywords</legend>
+        <!-- Icons -->
+        <div class="icons">
 
+            <!-- Delete keyword Icon -->
+            <div class="icon-container">
+                <i class="fas fa-trash-alt"></i>
+            </div>
 
-    <!-- Icon Bar -->
-    <div class="icon-bar">
+            <!-- Edit keyword Icon -->
+            <div class="icon-container">
+                <i class="fas fa-edit"></i>
+            </div>
 
-        <!-- Delete -->
-        <div class="icon-container"
-             [attr.title]="!isDeleteDisabled ? isEditDisabled ? 'Delete Keywords' : 'Delete Keyword' : ''"
-             [ngClass]="{'icon-disabled': isDeleteDisabled}"
-             (mouseover)="overIconButton = true"
-             (mouseout)="onIconButtonMouseOut()"
-             (click)="deleteKeyword()">
-            <i class="fas fa-trash-alt"></i>
+            <!-- Add keyword Icon -->
+            <div class="icon-container">
+                <i class="fas fa-plus-circle"></i>
+            </div>
         </div>
 
-        <!-- Edit -->
-        <div class="icon-container"
-             [attr.title]="!isEditDisabled ? 'Edit Keyword (Ctrl+Shift+K)' : ''" 
-             [ngClass]="{'icon-disabled': isEditDisabled}"
-             (mouseover)="overIconButton = true"
-             (mouseout)="onIconButtonMouseOut()"
-             (click)="editKeyword()">
-            <i class="fas fa-edit"></i>
-        </div>
 
-        <!-- Add -->
-        <div class="icon-container"
-             [attr.title]="!isAddDisabled ? 'Add Keyword (Ctrl+Alt+K)' : ''" 
-             [ngClass]="{'icon-disabled': isAddDisabled}"
-             (mouseover)="overIconButton = true"
-             (mouseout)="onIconButtonMouseOut()"
-             (click)="addKeyword()">
-            <i class="fas fa-plus-circle"></i>
+        <div style="padding: 5px;">
+            <div *ngFor="let keyword of keywords" class="keywords">{{keyword}}</div>
         </div>
     </div>
-
-
-    <!-- Background -->
-    <div class="background" (contextmenu)="$event.preventDefault()" (mouseup)="setContextMenu($event)">
-        <table>
-            <tr *ngFor="let keyword of keywords; let keywordIndex = index">
-                <td #keyword
-                    class="keywordList"
-                    tabindex="-1"
-                    [contentEditable]="editedKeywordIndex == keywordIndex"
-                    [textContent]="keywords[keywordIndex].name"
-                    (mousedown)="onKeywordDown(keywordIndex)"
-                    (blur)="onElementBlur()"
-                    (dblclick)="onKeywordDoubleClick(keywordIndex)"
-                    [ngClass]="{'selected-keyword': selectedKeywordIndex == keywordIndex,
-                                'unselected-keyword': unselectedKeywordIndex == keywordIndex,
-                                'edited-keyword': editedKeywordIndex == keywordIndex,
-                                'selected-keyword-top': keywords[keywordIndex].selectType == 'top',
-                                'selected-keyword-middle': keywords[keywordIndex].selectType == 'middle',
-                                'selected-keyword-bottom': keywords[keywordIndex].selectType == 'bottom',
-                                'selected-keyword-whole': keywords[keywordIndex].selectType == 'whole',
-                                'transparent-keyword': editedKeywordIndex != null && editedKeywordIndex != keywordIndex}">
-                </td>
-            </tr>
-        </table>
-    </div>
-</fieldset>
+</panel>

@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'product-editor',
@@ -6,5 +6,5 @@ import { Component} from '@angular/core';
   styleUrls: ['./product-editor.component.scss']
 })
 export class ProductEditorComponent {
-  constructor() {}
+  
 }

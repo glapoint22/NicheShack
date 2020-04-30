@@ -44,11 +44,12 @@ import { EmailComponent } from './shared-components/properties/email/email.compo
 import { NumberFieldComponent } from './shared-components/elements/number-field/number-field.component';
 import { DropdownComponent } from './shared-components/elements/dropdown/dropdown.component';
 import { ColorSwatchComponent } from './shared-components/elements/color-swatch/color-swatch.component';
-import { IncrementerComponent } from './shared-components/elements/incrementer/incrementer.component';
 import { ColorPickerPopupComponent } from './shared-components/popups/color-picker-popup/color-picker-popup.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { LinkPopupComponent } from './shared-components/popups/link-popup/link-popup.component';
 import { MediaBrowserPopupComponent } from './shared-components/popups/media-browser-popup/media-browser-popup.component';
+import { ImagePropertyComponent } from './shared-components/image-property/image-property.component';
+import { PaginatorComponent } from './shared-components/paginator/paginator.component';
 
 
 @NgModule({
@@ -96,10 +97,11 @@ import { MediaBrowserPopupComponent } from './shared-components/popups/media-bro
     NumberFieldComponent,
     DropdownComponent,
     ColorSwatchComponent,
-    IncrementerComponent,
     ColorPickerPopupComponent,
     LinkPopupComponent,
-    MediaBrowserPopupComponent
+    MediaBrowserPopupComponent,
+    ImagePropertyComponent,
+    PaginatorComponent
   ],
   imports: [
     CommonModule,
@@ -150,10 +152,11 @@ import { MediaBrowserPopupComponent } from './shared-components/popups/media-bro
     NumberFieldComponent,
     DropdownComponent,
     ColorSwatchComponent,
-    IncrementerComponent,
     ColorPickerPopupComponent,
     LinkPopupComponent,
-    MediaBrowserPopupComponent
+    MediaBrowserPopupComponent,
+    ImagePropertyComponent,
+    PaginatorComponent
   ]
 })
 export class PropertiesEditorModule { }

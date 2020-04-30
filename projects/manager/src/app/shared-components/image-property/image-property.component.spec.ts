@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IncrementerComponent } from './incrementer.component';
+import { ImagePropertyComponent } from './image-property.component';
 
-describe('IncrementerComponent', () => {
-  let component: IncrementerComponent;
-  let fixture: ComponentFixture<IncrementerComponent>;
+describe('ImagePropertyComponent', () => {
+  let component: ImagePropertyComponent;
+  let fixture: ComponentFixture<ImagePropertyComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IncrementerComponent ]
+      declarations: [ ImagePropertyComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IncrementerComponent);
+    fixture = TestBed.createComponent(ImagePropertyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

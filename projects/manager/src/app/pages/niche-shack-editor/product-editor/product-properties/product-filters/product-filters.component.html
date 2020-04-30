@@ -1,61 +1,32 @@
-<!-- Fieldset -->
-<fieldset class="margin-top-24-xxs
-                 margin-top-16-lg
-                 margin-top-8-xl">
+<panel [title]="'Filters'">
+    <!-- Property Box -->
+    <div class="property-box-dark">
 
-    <legend>Filters</legend>
+        <!-- Icons -->
+        <div class="icons">
 
-
-    <!-- Icon Bar -->
-    <div class="icon-bar">
-
-        <!-- Collapse -->
-        <div class="icon-container" title="Collapse">
-            <i class="fas fa-minus-square"></i>
-        </div>
-
-        <!-- Delete -->
-        <div class="icon-container" title="Delete">
-            <i class="fas fa-trash-alt"></i>
-        </div>
-
-        <!-- Add -->
-        <div class="icon-container" title="Add filter">
-            <i class="fas fa-plus-circle"></i>
-        </div>
-    </div>
-
-
-    <!-- Background -->
-    <div class="background">
-
-        <div class="arrow-button-container">
-            <input type="checkbox" [id]="'Billing Type'">
-            <label class="arrow-button" [for]="'Billing Type'"></label>
-            <div>Billing Type</div>
-        </div>
-
-        <!-- Content -->
-        <div style="padding-left: 28px;">
-            <div class="display-flex align-items-center">
-                <input type="checkbox">
-                <div>Single Payment</div>
+            <!-- Delete filter Icon -->
+            <div class="icon-container">
+                <i class="fas fa-trash-alt"></i>
             </div>
 
-            <div class="display-flex align-items-center">
-                <input type="checkbox">
-                <div>Trial</div>
+            <!-- Add Filter Icon -->
+            <div class="icon-container">
+                <i class="fas fa-plus-circle"></i>
             </div>
         </div>
 
+        <div class="filters-container">
 
+            <!-- Filters -->
+            <div *ngFor="let filter of filters" class="filter">
+                {{filter.name}}
 
-        <div class="arrow-button-container">
-            <input type="checkbox" [id]="'Gender'">
-            <label class="arrow-button" [for]="'Gender'"></label>
-            <div>Gender</div>
+                <!-- Filter Options -->
+                <div *ngFor="let option of filter.options" class="filter-option">
+                    <div>{{option.name}}</div>
+                </div>
+            </div>
         </div>
-
     </div>
-
-</fieldset>
+</panel>
