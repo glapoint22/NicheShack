@@ -6,6 +6,7 @@
     color: #ffffff;
     font-size: 12px;
     user-select: none;
+    border-top: 1px solid #464646;
 }
 
 .content {
@@ -15,7 +16,8 @@
     background-color: #2d2d2d;
     border-left: 1px solid #343434;
     border-right: 1px solid #343434;
-    padding-left: 24px;
+    border-bottom: 1px solid #343434;
+    padding-left: 5px;
     padding-right: 5px;
     overflow: hidden;
     transition: max-height 0.25s ease-in-out, padding-top 0.25s ease-in-out, padding-bottom 0.25s ease-in-out;
@@ -40,7 +42,6 @@ input {
 }
 
 .rounded {
-    border-top: 1px solid #464646;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }

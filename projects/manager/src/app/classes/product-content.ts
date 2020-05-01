@@ -1,7 +1,6 @@
-export class ProductContent {
-    items: Array<any> = [];
-    selectedItemTypeIndex: number;
-    pricePoints: Array<any> = [];
-    selectedPricePointIndex: number;
-    lastFocusedElement: any;
+export interface ProductContent {
+    id: string;
+    title: string;
+    icon: string;
+    priceIndices: Array<number>;
 }

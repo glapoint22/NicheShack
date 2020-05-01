@@ -1,38 +1,40 @@
-<!-- Fieldset -->
-<fieldset class="margin-right-16-md
-                 margin-top-40-xxs
-                 margin-top-32-lg
-                 margin-top-24-xl
-                 margin-top-16-xxl">
-
-    <legend>Media</legend>
+<panel #panel [title]="'Media'">
+    <!-- Property Box -->
+    <div class="property-box-dark">
 
 
-    <!-- Icon Bar -->
-    <div class="icon-bar">
+        <!-- Container for paginator & icons -->
+        <div class="container">
 
-        <!-- Trash -->
-        <div class="icon-container" title="Delete">
-            <i class="fas fa-trash-alt"></i>
+            <paginator [itemCount]="media.length" (onItemChange)="currentIndex = $event"></paginator>
+
+            <!-- Icons -->
+            <div class="icons">
+
+                <!-- Delete Media Icon -->
+                <div class="icon-container">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+
+                <!-- Add Image Icon -->
+                <div class="icon-container">
+                    <i class="fas fa-image"></i>
+                </div>
+
+                <!-- Add Video Icon -->
+                <div class="icon-container">
+                    <i class="fas fa-film"></i>
+                </div>
+            </div>
         </div>
 
-        <!-- Add -->
-        <div class="icon-container" title="Add">
-            <i class="fas fa-plus-circle"></i>
-        </div>
 
-        <div class="icon-container" title="Play video">
-            <i class="fas fa-play-circle"></i>
+        <!-- Media -->
+        <div class="media-container">
+            <div class="thumbnail" [ngStyle]="{ 'background-image': 'url(images/' + media[currentIndex].thumbnail + ')'}">
+                <!-- Display a play icon if media type is video -->
+                <i *ngIf="media[currentIndex].type == 0" class="far fa-play-circle"></i>
+            </div>
         </div>
     </div>
-
-
-    <!-- Background -->
-    <div class="background">
-        <div class="margin-bottom-8 display-flex justify-content-center align-items-center"
-            style="width: 88px; height: 50px; background: red; cursor: pointer;">
-            <i class="far fa-play-circle font-size-6"></i>
-        </div>
-
-    </div>
-</fieldset>
+</panel>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ProductMedia } from 'projects/manager/src/app/classes/product-media';
 
 @Component({
   selector: 'product-media',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-media.component.scss']
 })
 export class ProductMediaComponent implements OnInit {
+  @Input() media: Array<ProductMedia>;
+  public currentIndex: number = 0;
 
   constructor() { }
 

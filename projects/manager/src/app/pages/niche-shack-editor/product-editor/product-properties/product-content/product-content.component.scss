@@ -1,0 +1,17 @@
+.content-container {
+    padding: 5px;
+
+    .content {
+        display: flex;
+        align-items: center;
+
+        .img-container {
+            margin-right: 10px;
+        }
+
+        .content-title {
+            font-size: 11px;
+            color: #c7c7c7;
+        }
+    }
+}
