@@ -9,8 +9,8 @@ export class DropdownMenuService {
   private menuTop: number;
   private menuLeft: number;
   private allowMenuHide: boolean;
-  private lastMenuTop: number;
-  private lastMenuLeft: number;
+  private previousMenuTop: number;
+  private previousMenuLeft: number;
   private arrowKeyDownFunction: Function;
   private menuOptionSelectFunction: Function;
   private restoreSelectedIndexValueFunction: Function;
@@ -38,7 +38,7 @@ export class DropdownMenuService {
 
     // If the left or top positions of the menu differs from the recorded left or top positions, then
     // that means we're selecting a different dropdown instead of toggling the same dropdown on and off
-    if (this.menuLeft != this.lastMenuLeft || this.menuTop != this.lastMenuTop) {
+    if (this.menuLeft != this.previousMenuLeft || this.menuTop != this.previousMenuTop) {
 
       // We may come across a situation where the previous dropdown still has its menu open and its selected 
       // index value is different from its initial selected index value, so here we'll assign its current selected
@@ -51,8 +51,8 @@ export class DropdownMenuService {
 
     // Update
     this.currentObj = currentObj;
-    this.lastMenuTop = this.menuTop;
-    this.lastMenuLeft = this.menuLeft;
+    this.previousMenuTop = this.menuTop;
+    this.previousMenuLeft = this.menuLeft;
 
     // Delay assigning the values
     window.setTimeout(() => {

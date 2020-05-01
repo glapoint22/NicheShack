@@ -6,47 +6,47 @@ import { Menu } from '../classes/menu';
 })
 export class MenuService {
   // Private
-  private thisObj: object;
+  private currentObj: object;
   private menuTop: number[];
   private subMenuTop: number;
   private parentIndex: number;
   private subMenuIndex: number;
   private mainMenuLeft: number;
-  private lastMainMenuTop: number;
-  private lastMainMenuLeft: number;
+  private previousMainMenuTop: number;
+  private previousMainMenuLeft: number;
   private toggleMainMenuOn: boolean;
   private routerOptionDown: boolean;
   private mainMenuHasFocus: boolean;
   private initialMenuWidth: number[];
-  private mainMenuHasInitialFocus: boolean;
+  private allowMenuHide: boolean;
   private subMenuOptionOutTimeout: number[];
   private subMenuOptionOverTimeout: number[];
 
   // Public
   public menus: Menu[];
-  public menuOpen: boolean;
-  public showMenu: boolean[];
+  public showMenu: boolean;
+  public showMenus: boolean[];
   public subMenuOptionHighlightOn: boolean[];
 
 
 
   // -----------------------------( BUILD MENU )------------------------------ \\
-  buildMenu(thisObj: object, left: number, top: number, ...mainMenuOptions: any) {
+  buildMenu(currentObj: object, left: number, top: number, ...mainMenuOptions: any) {
     this.menus = [];
     this.menuTop = [];
-    this.showMenu = [];
+    this.showMenus = [];
     this.subMenuTop = 0;
-    this.menuOpen = true;
+    this.showMenu = true;
     this.menuTop[0] = top;
     this.subMenuIndex = 0;
-    this.thisObj = thisObj;
-    this.showMenu[0] = true;
+    this.currentObj = currentObj;
+    this.showMenus[0] = true;
     this.mainMenuLeft = left;
     this.initialMenuWidth = [];
     this.subMenuOptionOutTimeout = [];
     this.subMenuOptionHighlightOn = [];
     this.subMenuOptionOverTimeout = [];
-    this.mainMenuHasInitialFocus = false;
+    this.allowMenuHide = false;
 
 
     // Create the main menu
@@ -199,7 +199,7 @@ export class MenuService {
         if (document.activeElement != menu) {
 
           // If the left or top positions of the main menu differs from the recorded left or top positions or a router option was selected
-          if ((this.mainMenuLeft != this.lastMainMenuLeft || this.menuTop[menuIndex] != this.lastMainMenuTop) || this.routerOptionDown) {
+          if ((this.mainMenuLeft != this.previousMainMenuLeft || this.menuTop[menuIndex] != this.previousMainMenuTop) || this.routerOptionDown) {
 
             // Then that means the mouse down is launching a different main menu instead of toggling the same main menu on and off or we're on a different page
             this.toggleMainMenuOn = false;
@@ -221,13 +221,13 @@ export class MenuService {
             // Loop through all the menus
             for (let i = 0; i < this.menus.length; i++) {
               // And hide each one
-              this.showMenu[i] = false;
+              this.showMenus[i] = false;
             }
-            this.menuOpen = false;
+            this.showMenu = false;
           }
           // Record the left and top positon of the main menu
-          this.lastMainMenuLeft = this.mainMenuLeft;
-          this.lastMainMenuTop = this.menuTop[menuIndex];
+          this.previousMainMenuLeft = this.mainMenuLeft;
+          this.previousMainMenuTop = this.menuTop[menuIndex];
 
 
           // If the main menu never lost its focus, then that means that the main menu was launched from a mouse up
@@ -237,10 +237,10 @@ export class MenuService {
         }
 
         // If the initial focus to the main menu has NOT been set yet
-        if (!this.mainMenuHasInitialFocus) this.routerOptionDown = false;
+        if (!this.allowMenuHide) this.routerOptionDown = false;
         
         // Mark that the initial focus to the main menu has been set
-        this.mainMenuHasInitialFocus = true;
+        this.allowMenuHide = true;
       }, 20)
     }
   }
@@ -397,7 +397,7 @@ export class MenuService {
   onMenuBlur(menuIndex: number, menu: HTMLElement) {
 
     // As long as the initial focus to the main menu has been set
-    if (this.mainMenuHasInitialFocus) {
+    if (this.allowMenuHide) {
 
       // When the main menu loses focus
       if (menuIndex == 0) {
@@ -419,9 +419,9 @@ export class MenuService {
             // Loop through all the menus
             for (let i = 0; i < this.menus.length; i++) {
               // And hide each one
-              this.showMenu[i] = false;
+              this.showMenus[i] = false;
             }
-            this.menuOpen = false;
+            this.showMenu = false;
           }
         });
       }
@@ -443,7 +443,7 @@ export class MenuService {
       // Loop through all the menus starting with the menu that's after the one we are on
       for (let i = menuIndex + 1; i < this.menus.length; i++) {
         // Hide each menu
-        this.showMenu[i] = false;
+        this.showMenus[i] = false;
         // Turn off each sub menu option highlight
         this.subMenuOptionHighlightOn[i] = false;
       }
@@ -456,14 +456,14 @@ export class MenuService {
     // As long as this menu option is NOT disabled
     if (!this.menus[menuIndex].options[optionIndex].isDisabled) {
       // Call the function that is associated with this menu option
-      this.menus[menuIndex].options[optionIndex].menuOptionFunction.apply(this.thisObj, this.menus[menuIndex].options[optionIndex].functionParameters)
+      this.menus[menuIndex].options[optionIndex].menuOptionFunction.apply(this.currentObj, this.menus[menuIndex].options[optionIndex].functionParameters)
 
       // Loop through all the menus
       for (let i = 0; i < this.menus.length; i++) {
         // And hide each one
-        this.showMenu[i] = false;
+        this.showMenus[i] = false;
       }
-      this.menuOpen = false;
+      this.showMenu = false;
     }
   }
 
@@ -487,7 +487,7 @@ export class MenuService {
       // Wait, so we can see if we intend on opening the sub menu or just passing by
       this.subMenuOptionOverTimeout[subMenuIndex] = window.setTimeout(() => {
         // If we wait long enough, show the sub menu
-        this.showMenu[subMenuIndex] = true;
+        this.showMenus[subMenuIndex] = true;
         // Turn on the sub menu option highlight
         this.subMenuOptionHighlightOn[subMenuIndex] = true;
       }, 300)
@@ -509,7 +509,7 @@ export class MenuService {
         // If we wait long enough, and we don't go on a sub menu, then loop through all the menus starting with the the sub menu of the menu we are on
         for (let i = subMenuIndex; i < this.menus.length; i++) {
           // And hide each menu from that point
-          this.showMenu[i] = false;
+          this.showMenus[i] = false;
           // Turn off the sub menu option highlight
           this.subMenuOptionHighlightOn[subMenuIndex] = false;
         }
@@ -527,7 +527,7 @@ export class MenuService {
         // And the sub menu index is NOT the same index as the sub menu option we're hovering over
         if (this.menus[menuIndex].options[i].subMenuIndex != subMenuIndex) {
           // Then hide that menu
-          this.showMenu[this.menus[menuIndex].options[i].subMenuIndex] = false;
+          this.showMenus[this.menus[menuIndex].options[i].subMenuIndex] = false;
           // Turn off its sub menu option highlight
           this.subMenuOptionHighlightOn[this.menus[menuIndex].options[i].subMenuIndex] = false;
           // Now, take the menu we just hid, and loop through its menu options to see if there is a sub menu on it we need to hide
