@@ -5,7 +5,6 @@ import { Menu } from '../classes/menu';
   providedIn: 'root'
 })
 export class MenuService {
-  constructor() { }
   // Private
   private thisObj: object;
   private menuTop: number[];
@@ -199,8 +198,8 @@ export class MenuService {
         // If the main menu already lost its focus, then that means that the main menu was launched from a mouse down
         if (document.activeElement != menu) {
 
-          // If the left and top positions of the main menu differs from the recorded left and top positions or a router option was selected
-          if ((this.mainMenuLeft != this.lastMainMenuLeft && this.menuTop[menuIndex] != this.lastMainMenuTop) || this.routerOptionDown) {
+          // If the left or top positions of the main menu differs from the recorded left or top positions or a router option was selected
+          if ((this.mainMenuLeft != this.lastMainMenuLeft || this.menuTop[menuIndex] != this.lastMainMenuTop) || this.routerOptionDown) {
 
             // Then that means the mouse down is launching a different main menu instead of toggling the same main menu on and off or we're on a different page
             this.toggleMainMenuOn = false;
@@ -239,6 +238,7 @@ export class MenuService {
 
         // If the initial focus to the main menu has NOT been set yet
         if (!this.mainMenuHasInitialFocus) this.routerOptionDown = false;
+        
         // Mark that the initial focus to the main menu has been set
         this.mainMenuHasInitialFocus = true;
       }, 20)

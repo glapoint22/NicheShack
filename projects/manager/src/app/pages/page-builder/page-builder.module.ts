@@ -6,6 +6,9 @@ import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module'
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { PageEditorComponent } from './page-editor/page-editor.component';
 import { SearchPopupComponent } from './search-popup/search-popup.component';
+import { PropertiesEditorModule } from '../../properties-editor.module';
+import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
+import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/dropdown-menu/dropdown-menu.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { SearchPopupComponent } from './search-popup/search-popup.component';
     CommonModule,
     PageBuilderRoutingModule,
     MenuBarModule,
-    DesignerModule
+    DesignerModule,
+    PropertiesEditorModule,
+    ContextMenuModule,
+    DropdownMenuModule
   ]
 })
 export class PageBuilderModule { }

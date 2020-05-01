@@ -1,0 +1,21 @@
+<!-- Base -->
+<div #base
+     class="base"
+     [title]="title"
+     [style.width.px]="width"
+     [style.height.px]="height"
+     (mousedown)="onDropdownSelect()"
+     [ngClass]="{'hightlight-base': dropdownMenuService.showMenu && dropdownMenuService.currentObj == this}">
+
+    <!-- Label -->
+    <div class="label">
+        {{selectedIndex == -1 ? "" : keyValue[selectedIndex].key}}
+    </div>
+
+    <!-- Button -->
+    <div class="button">
+        <div class="arrow">
+            >
+        </div>
+    </div>
+</div>

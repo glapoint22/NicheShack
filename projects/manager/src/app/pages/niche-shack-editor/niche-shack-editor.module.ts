@@ -21,6 +21,8 @@ import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { PropertiesEditorModule } from '../../properties-editor.module';
 import { PricePointPopupComponent } from './product-editor/product-properties/product-content/price-point-popup/price-point-popup.component';
 import { FormsModule } from '@angular/forms';
+import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
+import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/dropdown-menu/dropdown-menu.module';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import { FormsModule } from '@angular/forms';
     MenuBarModule,
     ShowHideModule,
     PropertiesEditorModule,
-    FormsModule
+    FormsModule,
+    ContextMenuModule,
+    DropdownMenuModule
   ]
 })
 export class NicheShackEditorModule { }

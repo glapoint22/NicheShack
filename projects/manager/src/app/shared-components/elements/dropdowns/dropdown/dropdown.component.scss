@@ -1,0 +1,38 @@
+.base {
+    position: relative;
+    display: flex;
+    background: #222222;
+    border: 1px solid #373737;
+    border-radius: 3px;
+    &:hover:not(.hightlight-base) {
+        color: white;
+    }
+    &.hightlight-base {
+        color: white;
+    }
+}
+
+.label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    padding-left: 4px;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.button {
+    min-width: 15px;
+}
+
+.arrow {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    font-family:cursive;
+    transform: rotate(90deg);
+    user-select: none;
+}

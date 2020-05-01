@@ -7,6 +7,10 @@ export class FontSize extends DropdownStyle {
 
         this.options = [
             {
+                key: 'Other',
+                value: ''
+            },
+            {
                 key: '6',
                 value: '6px'
             },
