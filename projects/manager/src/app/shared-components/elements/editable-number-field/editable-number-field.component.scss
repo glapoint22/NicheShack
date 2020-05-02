@@ -1,0 +1,14 @@
+.container {
+    input {
+        cursor: w-resize;
+    
+        &::selection {
+            background: #191919;
+        }
+    }
+    
+    .edit-mode {
+        text-align: left;
+        cursor: text;
+    }
+}

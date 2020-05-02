@@ -50,6 +50,7 @@ import { LinkPopupComponent } from './shared-components/popups/link-popup/link-p
 import { MediaBrowserPopupComponent } from './shared-components/popups/media-browser-popup/media-browser-popup.component';
 import { ImagePropertyComponent } from './shared-components/image-property/image-property.component';
 import { PaginatorComponent } from './shared-components/paginator/paginator.component';
+import { EditableNumberFieldComponent } from './shared-components/elements/editable-number-field/editable-number-field.component';
 
 
 @NgModule({
@@ -101,7 +102,8 @@ import { PaginatorComponent } from './shared-components/paginator/paginator.comp
     LinkPopupComponent,
     MediaBrowserPopupComponent,
     ImagePropertyComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    EditableNumberFieldComponent
   ],
   imports: [
     CommonModule,
@@ -156,7 +158,8 @@ import { PaginatorComponent } from './shared-components/paginator/paginator.comp
     LinkPopupComponent,
     MediaBrowserPopupComponent,
     ImagePropertyComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    EditableNumberFieldComponent
   ]
 })
 export class PropertiesEditorModule { }
