@@ -2,7 +2,7 @@
 <ng-container *ngFor="let i of menuService.menus; let menuIndex = index">
 
     <!-- Current Menu -->
-    <div #menu *ngIf="menuService.showMenu[menuIndex]" [style.width]="menuService.setMenuWidth(menuIndex, menu)"
+    <div #menu *ngIf="menuService.showMenus[menuIndex]" [style.width]="menuService.setMenuWidth(menuIndex, menu)"
         class="menu-base" tabindex="-1" (onShow)="menuService.onMenuShow(menuIndex, menu)" (mouseover)="menuService.onMenuOver(menuIndex)"
         (focus)="menuService.onMenuFocus(menuIndex)" (blur)="menuService.onMenuBlur(menuIndex, menu)"
         (mousedown)="$event.stopPropagation()" (contextmenu)="$event.preventDefault()">

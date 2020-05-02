@@ -17,7 +17,7 @@ export class ContextMenuComponent {
       // Loop through all the menus
       for(let i = 0; i < this.menuService.menus.length; i++) {
         // And hide each one
-        this.menuService.showMenu[i] = false;
+        this.menuService.showMenus[i] = false;
       }
     }
   }

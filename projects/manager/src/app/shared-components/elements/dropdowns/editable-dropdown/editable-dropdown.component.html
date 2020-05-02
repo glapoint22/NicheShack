@@ -1,0 +1,24 @@
+<!-- Base -->
+<div #base 
+     class="base"
+     [title]="title"
+     [style.width.px]="width"
+     [style.height.px]="height"
+     [ngClass]="{'hightlight-base': (dropdownMenuService.showMenu && dropdownMenuService.currentObj == this) || textInputHasFocus}">
+
+    <!-- Text Input -->
+    <input #textInput
+         (blur)="onTextInputBlur()"
+         (focus)="onTextInputFocus()"
+         (input)="onTextInputChange()"
+         [value]="selectedIndex == -1 ? '' : keyValue[selectedIndex].key"
+         [ngClass]="{'hightlight-text': (dropdownMenuService.showMenu && dropdownMenuService.currentObj == this)}">
+            
+    <!-- Button -->
+    <div class="button"
+         (mousedown)="onDropdownSelect()">
+        <div class="arrow">
+            >
+        </div>
+    </div>
+</div>

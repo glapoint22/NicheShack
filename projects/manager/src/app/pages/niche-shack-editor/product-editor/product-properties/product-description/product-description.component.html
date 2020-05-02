@@ -23,17 +23,48 @@
         
         <div>
             <!-- Font -->
-            <select title="Font" [selectedIndex]="description.font.selectedIndex"
+            <!-- <select title="Font" [selectedIndex]="description.font.selectedIndex"
                 (change)="description.font.setStyleValue($event.target.value)">
                 <option *ngFor="let option of description.font.options" [value]="option.value">{{option.key}}</option>
-            </select>
+            </select> -->
+
+
+
+            <dropdown [width]="100"
+                      [height]="24"
+                      [title]="'Font'"
+                      [keyValue]="description.font.options"
+                      [selectedIndex]="description.font.selectedIndex"
+                      (onChange)="description.font.setStyleValue($event)">
+           </dropdown>
+
+
+
+            <!-- <dropdown [keyValue]="[{key: 'alita', value: 'Alita'}, {key: 'battle', value: 'Battle'}, {key: 'angel', value: 'Angel'}]" [selectedIndex]="1" (onChange)="alita()"></dropdown> -->
 
             <!-- Font size -->
-            <select title="Font size" [selectedIndex]="description.fontSize.selectedIndex"
+            <!-- <select title="Font size" [selectedIndex]="description.fontSize.selectedIndex"
                 (change)="description.fontSize.setStyleValue($event.target.value)">
                 <option *ngFor="let option of description.fontSize.options" [value]="option.value">{{option.key}}
                 </option>
-            </select>
+            </select> -->
+
+
+
+            <editable-dropdown [width]="40"
+                      [height]="24"
+                      [title]="'Font Size'"
+                      [keyValue]="description.fontSize.options"
+                      [selectedIndex]="description.fontSize.selectedIndex"
+                      (onChange)="description.fontSize.setStyleValue($event)">
+           </editable-dropdown>
+
+
+
+
+
+
+            
         </div>
 
 

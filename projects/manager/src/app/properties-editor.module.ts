@@ -42,12 +42,13 @@ import { VideoComponent } from './shared-components/properties/video/video.compo
 import { CaptionComponent } from './shared-components/properties/caption/caption.component';
 import { EmailComponent } from './shared-components/properties/email/email.component';
 import { NumberFieldComponent } from './shared-components/elements/number-field/number-field.component';
-import { DropdownComponent } from './shared-components/elements/dropdown/dropdown.component';
+import { DropdownComponent } from './shared-components/elements/dropdowns/dropdown/dropdown.component';
 import { ColorSwatchComponent } from './shared-components/elements/color-swatch/color-swatch.component';
 import { ColorPickerPopupComponent } from './shared-components/popups/color-picker-popup/color-picker-popup.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { LinkPopupComponent } from './shared-components/popups/link-popup/link-popup.component';
 import { MediaBrowserPopupComponent } from './shared-components/popups/media-browser-popup/media-browser-popup.component';
+import { EditableDropdownComponent } from './shared-components/elements/dropdowns/editable-dropdown/editable-dropdown.component';
 import { ImagePropertyComponent } from './shared-components/image-property/image-property.component';
 import { PaginatorComponent } from './shared-components/paginator/paginator.component';
 import { EditableNumberFieldComponent } from './shared-components/elements/editable-number-field/editable-number-field.component';
@@ -97,6 +98,7 @@ import { EditableNumberFieldComponent } from './shared-components/elements/edita
     EmailComponent,
     NumberFieldComponent,
     DropdownComponent,
+    EditableDropdownComponent,
     ColorSwatchComponent,
     ColorPickerPopupComponent,
     LinkPopupComponent,
@@ -153,6 +155,7 @@ import { EditableNumberFieldComponent } from './shared-components/elements/edita
     EmailComponent,
     NumberFieldComponent,
     DropdownComponent,
+    EditableDropdownComponent,
     ColorSwatchComponent,
     ColorPickerPopupComponent,
     LinkPopupComponent,
