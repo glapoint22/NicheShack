@@ -8,13 +8,13 @@
      (onShow)="dropdownMenuService.onMenuShow(menu)"
      [style.minWidth.px]="dropdownMenuService.menuWidth"
      [style.left]="dropdownMenuService.setMenuPosition(menu)"
-     [style.height.px]="dropdownMenuService.menuOptions.length * 19">
+     [style.height.px]="(dropdownMenuService.menuOptions.length * 19) + (dropdownMenuService.isEditable ? 5 : 0)">
 
      <!-- Menu Option -->
      <ng-container *ngFor="let i of dropdownMenuService.menuOptions; let optionIndex = index">
           <div 
                class="menu-option"
-               (mousedown)="dropdownMenuService.onMenuOptionSelect(optionIndex)" 
+               (click)="dropdownMenuService.onMenuOptionSelect(optionIndex)" 
                [ngClass]="{'selected-option': dropdownMenuService.selectedIndex == optionIndex}">
                {{dropdownMenuService.menuOptions[optionIndex].key}}
           </div>

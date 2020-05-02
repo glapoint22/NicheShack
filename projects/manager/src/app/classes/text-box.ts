@@ -40,7 +40,7 @@ export class TextBox {
     private contentParent: HTMLElement;
 
 
-    constructor(private contentDocument: HTMLDocument, private applicationRef: ApplicationRef, defaultFontColor: Color) {
+    constructor(private text: string, private contentDocument: HTMLDocument, private applicationRef: ApplicationRef, defaultFontColor: Color) {
         // Styles
         this.bold = new Bold(contentDocument);
         this.italic = new Italic(contentDocument);
@@ -98,7 +98,25 @@ export class TextBox {
         this.contentParent.style.bottom = '0';
         this.contentParent.style.left = '0';
         this.contentParent.style.outline = "none";
-        this.contentParent.innerHTML = '<div>&#8203;</div>';
+        this.contentParent.innerHTML = '<div>' + (this.text ? this.text : '&#8203;') + '</div>';
+
+
+        // Give focus to the document
+        this.contentParent.focus();
+
+        let selection = this.contentDocument.getSelection();
+        let range = selection.getRangeAt(0);
+
+        // If there is no text
+        if (!this.text) {
+            // Set the start and end of the range
+            range.setStart(range.startContainer, 1);
+            range.setEnd(range.startContainer, 1);
+        }
+        
+        // This will basically initialize the properties (ie. bold, fontSize, fontColor etc.)
+        this.onSelectionChange(range);
+
 
         // Take care of selection change on mouse up
         contentDocument.addEventListener("mouseup", () => {
@@ -120,7 +138,7 @@ export class TextBox {
             if (!selection.anchorNode || clipboardText == '') return;
 
             let style = new Style(this.contentDocument);
-            
+
             let range = selection.getRangeAt(0);
             let text: Text = document.createTextNode(clipboardText);
             let singleLineSelection = range.commonAncestorContainer != this.contentParent &&
@@ -160,7 +178,7 @@ export class TextBox {
             style.removeEmptyNodes(this.contentParent);
         });
 
-        
+
 
 
         contentDocument.addEventListener("keypress", (event: KeyboardEvent) => {
@@ -310,9 +328,9 @@ export class TextBox {
                     }
                 }
             }
-            
+
             window.setTimeout(() => {
-                
+
                 range = selection.getRangeAt(0);
 
                 if (event.keyCode == 37) {
