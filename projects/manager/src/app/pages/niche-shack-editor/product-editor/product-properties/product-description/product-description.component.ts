@@ -21,8 +21,12 @@ export class ProductDescriptionComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.iframe.nativeElement.srcdoc = document.createElement('div').outerHTML;
     this.iframe.nativeElement.onload = (event) => {
-      this.description = new Description(this.text, event.currentTarget.contentDocument, this.applicationRef, new Color(218, 218, 218, 1));
+      this.description = new Description(event.currentTarget.contentDocument, this.applicationRef, new Color(218, 218, 218, 1));
       this._FormService.description = this.description;
     }
+  }
+
+  ngOnChanges() {
+    if (this.text) this.description.content.innerHTML = this.text;
   }
 }

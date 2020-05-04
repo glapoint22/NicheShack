@@ -1,5 +1,5 @@
 <div class="hierarchy-container">
-    <div class="base" *ngIf="!isCollapsed">
+    <div class="base">
 
         
 
@@ -68,7 +68,7 @@
             <div class="icon-container"
                 [title]="selectedItem && (selectedItem.type == 'Niche' || selectedItem.type == 'Product') ? 'Open ' + selectedItem.type + ' Form' : 'Open Form'"
                 [ngClass]="{'icon-disabled': !selectedItem || selectedItem.type == 'Category'}"
-                (click)="onOpenFormButtonClick()">
+                (click)="onItemClick()">
                 <i class="fas fa-file-invoice"></i>
             </div>
 
@@ -82,7 +82,7 @@
 
 
         <!-- Content -->
-        <div class="hierarchy-content">
+        <div>
             <!-- Search results close button -->
             <div class="search-results" *ngIf="searchResultsCount != null">
                 <div class="results">{{searchResultsCount}} results</div>
@@ -95,7 +95,7 @@
 
 
     <!-- Expand / collapse bar -->
-    <div class="expand-collapse-bar" (click)="isCollapsed = !isCollapsed"></div>
+    <!-- <div class="expand-collapse-bar" (click)="isCollapsed = !isCollapsed"></div> -->
 
 </div>
 

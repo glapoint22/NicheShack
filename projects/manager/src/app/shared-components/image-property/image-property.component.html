@@ -16,7 +16,7 @@
 
         <!-- Image -->
         <div class="img-container">
-            <img [src]="'images/' + image" (load)="panel.onContentLoad()">
+            <img *ngIf="image" [src]="'images/' + image" (load)="panel.onContentLoad()">
         </div>
     </div>
 </panel>

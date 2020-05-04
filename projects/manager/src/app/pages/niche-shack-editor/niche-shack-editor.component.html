@@ -1,6 +1,13 @@
-<menu-bar></menu-bar>
+<!-- <menu-bar></menu-bar>
 
 
 <context-menu></context-menu>
 
 <dropdown-menu></dropdown-menu>
+
+<category-editor *ngIf="selectedItem.type == 'Category'" [hierarchyItem]="selectedItem"></category-editor>
+<niche-editor *ngIf="selectedItem.type == 'Niche'" [hierarchyItem]="selectedItem"></niche-editor>
+<product-editor *ngIf="selectedItem.type == 'Product'" [hierarchyItem]="selectedItem"></product-editor>
+
+
+<hierarchy-popup (showItemProperties)="selectedItem = $event"></hierarchy-popup> -->

@@ -8,8 +8,8 @@ export class Description extends TextBox {
     public lowercaseStyle: LowercaseStyle;
     public uppercaseStyle: UppercaseStyle;
 
-    constructor(text: string, contentDocument: HTMLDocument, applicationRef: ApplicationRef, defaultFontColor: Color) {
-        super(text, contentDocument, applicationRef, defaultFontColor);
+    constructor(contentDocument: HTMLDocument, applicationRef: ApplicationRef, defaultFontColor: Color) {
+        super(contentDocument, applicationRef, defaultFontColor);
 
         this.lowercaseStyle = new LowercaseStyle(contentDocument);
         this.uppercaseStyle = new UppercaseStyle(contentDocument);

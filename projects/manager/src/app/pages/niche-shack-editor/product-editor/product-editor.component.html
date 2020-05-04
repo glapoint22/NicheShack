@@ -6,9 +6,12 @@
 
 <!-- Product Name -->
 <div class="container">
-    <div class="label">Product:</div>
-    <input class="txt-22">
+    <!-- Product Label -->
+    <span class="label">Product:</span>
+
+    <!-- Product Title -->
+    <span class="name">{{hierarchyItem.name}}</span>
 </div>
 
 <!-- Product Properties -->
-<product-properties></product-properties>
+<product-properties [productId]="product.id"></product-properties>

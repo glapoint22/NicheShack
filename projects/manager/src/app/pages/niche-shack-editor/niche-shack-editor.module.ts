@@ -23,6 +23,7 @@ import { PricePointPopupComponent } from './product-editor/product-properties/pr
 import { FormsModule } from '@angular/forms';
 import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
 import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/dropdown-menu/dropdown-menu.module';
+import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/d
     PropertiesEditorModule,
     FormsModule,
     ContextMenuModule,
-    DropdownMenuModule
+    DropdownMenuModule,
+    CustomInputModule
   ]
 })
 export class NicheShackEditorModule { }

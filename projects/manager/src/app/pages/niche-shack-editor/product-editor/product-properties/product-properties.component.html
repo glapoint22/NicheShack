@@ -1,25 +1,23 @@
 <div class="container">
-    <ng-container *ngIf="product$ | async as product">
+    <!-- Hoplink -->
+    <product-hoplink [hoplink]="productProperties.hoplink"></product-hoplink>
 
-        <!-- Hoplink -->
-        <product-hoplink [hoplink]="product.hoplink"></product-hoplink>
+    <!-- Description -->
+    <product-description [text]="productProperties.description"></product-description>
 
-        <!-- Description -->
-        <product-description [text]="product.description"></product-description>
+    <!-- Image -->
+    <image-property [title]="'Image'" [image]="productProperties.image"></image-property>
 
-        <!-- Image -->
-        <image-property [title]="'Image'" [image]="product.image"></image-property>
+    <!-- Filter -->
+    <product-filters [filters]="productProperties.filters"></product-filters>
 
-        <!-- Filter -->
-        <product-filters [filters]="product.filters"></product-filters>
+    <!-- Content -->
+    <product-content [content]="productProperties.content" [pricePoints]="productProperties.pricePoints">
+    </product-content>
 
-        <!-- Content -->
-        <product-content [content]="product.content" [pricePoints]="product.pricePoints"></product-content>
+    <!-- Media -->
+    <product-media [media]="productProperties.media"></product-media>
 
-        <!-- Media -->
-        <product-media [media]="product.media"></product-media>
-
-        <!-- Keywords -->
-        <product-keywords [keywords]="product.keywords"></product-keywords>
-    </ng-container>
+    <!-- Keywords -->
+    <product-keywords [keywords]="productProperties.keywords"></product-keywords>
 </div>

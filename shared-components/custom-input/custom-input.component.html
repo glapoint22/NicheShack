@@ -1,7 +1,7 @@
 <div id="custom-input">
     <label [ngClass]="{'disabled' : disabled}">
         {{label}}
-        <input [type]="type" [name]="name" [value]="value" [checked]="checked" [disabled]="disabled">
+        <input [type]="type" [name]="name" [value]="value ? value : ''" [checked]="checked" [disabled]="disabled">
         <span class="checkmark"></span>
     </label>
 </div>

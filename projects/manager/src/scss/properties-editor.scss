@@ -27,7 +27,7 @@
 
         &:active {
             border-color: #424242;
-            background: #353535;
+            background: #555555;
             color: #b6b6b6;
         }
     }
@@ -52,10 +52,8 @@
 }
 
 
-
-.property-box-dark {
+%property-box {
     border: 1px solid #444444;
-    background: #222222;
     .icons {
         margin: 2px;
         background: #3b3b3b;
@@ -69,6 +67,20 @@
         }
     }
 }
+
+
+.property-box-dark {
+    @extend %property-box;
+    background: #222222;
+}
+
+
+.property-box-light {
+    @extend %property-box;
+    background: #2d2d2d;
+}
+
+
 
 %txt {
     background: #222222;
@@ -112,6 +124,9 @@
     @extend %rounded-container;
     background: #343434;
     border-color: #464646;
+    padding: 4px;
+    display: flex;
+    padding-bottom: 8px;
 }
 
 .grooved-container {
@@ -120,6 +135,11 @@
     width: 100%;
     background: #343434;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 4px;
+    height: 48px;
 
     &:before {
         content: '';

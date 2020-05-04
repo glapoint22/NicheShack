@@ -48,7 +48,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
       let contentDocument: Document = event.currentTarget.contentDocument;
       this.content = contentDocument.body.firstElementChild as HTMLElement;
 
-      this.textBox = new TextBox('', contentDocument, this.applicationRef, this.defaultColor);
+      this.textBox = new TextBox(contentDocument, this.applicationRef, this.defaultColor);
       this.textBox.onChange.subscribe(() => {
         let contentHeight = this.getContentHeight();
         let previousHeight = this.height;

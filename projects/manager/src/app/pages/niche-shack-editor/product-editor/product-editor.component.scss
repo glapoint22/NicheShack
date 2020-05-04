@@ -6,7 +6,15 @@
     padding-right: 8px;
 
     .label {
-        font-size: 11px; 
-        color: #aaaaaa;
+        color: white;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+    
+    .name {
+        margin-bottom: 10px;
+        display: inline-block;
+        color: #bfbfbf;
+        font-size: 11px;
     }
 }
