@@ -31,11 +31,13 @@ export class ItemListComponent implements OnChanges {
 
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
-    this.listItems = this.list.map(x => ({
-      name: x,
-      selected: false,
-      selectType: null
-    }));
+    if (this.list) {
+      this.listItems = this.list.map(x => ({
+        name: x,
+        selected: false,
+        selectType: null
+      }));
+    }
   }
 
 
@@ -61,7 +63,7 @@ export class ItemListComponent implements OnChanges {
     window.removeEventListener('blur', this.onInnerWindowBlur);
   }
 
-  
+
   // -----------------------------( ON KEY DOWN )------------------------------ \\
   onKeyDown = (event: KeyboardEvent) => {
     this.setShortcutKeys(event)
@@ -129,8 +131,8 @@ export class ItemListComponent implements OnChanges {
         && !this.menuService.showMenu
         // and we're NOT clicking on an icon button
         && !this.overIconButton) {
-          // Determine what happens when a list item loses focus 
-          this.setListItemBlur();
+        // Determine what happens when a list item loses focus 
+        this.setListItemBlur();
       }
     })
   }

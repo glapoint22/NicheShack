@@ -17,13 +17,15 @@ export class ProductContentComponent implements OnChanges{
   ngOnChanges() {
     let formatter = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
 
-    this.pricePointList = this.pricePoints.map(x => (
-      // Text Before
-      ((x.textBefore.length == 0 ? "" : x.textBefore) + " " +
-      // Price
-      (formatter.format(parseFloat(x.wholeNumber + "." + x.decimal))) +
-      // Text After
-      (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()));
+    if(this.pricePoints) {
+      this.pricePointList = this.pricePoints.map(x => (
+        // Text Before
+        ((x.textBefore.length == 0 ? "" : x.textBefore) + " " +
+        // Price
+        (formatter.format(parseFloat(x.wholeNumber + "." + x.decimal))) +
+        // Text After
+        (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()));
+      }
   }
 
 
