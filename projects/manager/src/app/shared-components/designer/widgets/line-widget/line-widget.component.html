@@ -1,4 +1,4 @@
-<div #widget class="widget" (mousedown)="onMousedown()" (dblclick)="onEdit()"
+<div #widget class="widget" (mousedown)="onMousedown()"
     [ngClass]="{'widget-selected': widgetService.selectedWidget == this}" [style.margin]="horizontalAlignment.value"
     [style.maxWidth.px]="width ? width : null">
 

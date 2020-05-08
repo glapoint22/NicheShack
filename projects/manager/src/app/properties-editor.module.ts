@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { RowEditorComponent } from './shared-components/row-editor/row-editor.component';
 import { PositionComponent } from './shared-components/row-properties/position/position.component';
 import { VerticalAlignmentComponent } from './shared-components/row-properties/vertical-alignment/vertical-alignment.component';
-import { ColumnEditorComponent } from './shared-components/column-editor/column-editor.component';
-import { HorizontalAlignmentComponent } from './shared-components/column-editor/horizontal-alignment/horizontal-alignment.component';
+import { ColumnPropertiesComponent } from './shared-components/column-properties/column-properties.component';
+import { HorizontalAlignmentComponent } from './shared-components/column-properties/horizontal-alignment/horizontal-alignment.component';
 import { WidgetEditorComponent } from './shared-components/widget-editor/widget-editor.component';
 import { ButtonWidgetEditorComponent } from './shared-components/widget-editor/button-widget-editor/button-widget-editor.component';
 import { ButtonColorComponent } from './shared-components/widget-editor/button-widget-editor/button-color/button-color.component';
@@ -64,7 +63,7 @@ import { FormsModule } from '@angular/forms';
     RowPropertiesComponent,
     PositionComponent,
     VerticalAlignmentComponent,
-    ColumnEditorComponent,
+    ColumnPropertiesComponent,
     HorizontalAlignmentComponent,
     WidgetEditorComponent,
     ButtonWidgetEditorComponent,
@@ -125,7 +124,7 @@ import { FormsModule } from '@angular/forms';
     RowPropertiesComponent,
     PositionComponent,
     VerticalAlignmentComponent,
-    ColumnEditorComponent,
+    ColumnPropertiesComponent,
     HorizontalAlignmentComponent,
     WidgetEditorComponent,
     ButtonWidgetEditorComponent,

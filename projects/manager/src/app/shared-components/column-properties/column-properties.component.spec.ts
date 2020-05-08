@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ColumnEditorComponent } from './column-editor.component';
+import { ColumnPropertiesComponent } from './column-properties.component';
 
-describe('ColumnEditorComponent', () => {
-  let component: ColumnEditorComponent;
-  let fixture: ComponentFixture<ColumnEditorComponent>;
+describe('ColumnPropertiesComponent', () => {
+  let component: ColumnPropertiesComponent;
+  let fixture: ComponentFixture<ColumnPropertiesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ColumnEditorComponent ]
+      declarations: [ ColumnPropertiesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ColumnEditorComponent);
+    fixture = TestBed.createComponent(ColumnPropertiesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,11 +6,12 @@ import { BreakpointService } from '../../../services/breakpoint.service';
 import { ColumnSpan } from '../../../classes/column-span';
 import { BreakpointsComponent } from '../../../classes/breakpoints-component';
 import { Breakpoint, BreakpointVerticalAlignment } from '../../../classes/breakpoint';
-import { PaddingTop } from '../../../classes/padding-top';
-import { PaddingRight } from '../../../classes/padding-right';
-import { PaddingBottom } from '../../../classes/padding-bottom';
-import { PaddingLeft } from '../../../classes/padding-left';
 import { Visibility } from '../../../classes/visibility';
+import { Padding } from '../../../classes/padding';
+import { Corners } from '../../../classes/corners';
+import { Shadow } from '../../../classes/shadow';
+import { Border } from '../../../classes/border';
+import { HorizontalAlignment } from '../../../classes/horizontal-alignment';
 
 @Component({
   selector: '[column]',
@@ -27,12 +28,14 @@ export class ColumnComponent implements BreakpointsComponent {
   public columnElement: HTMLElement;
   private resizeButtonMousedown: boolean;
   public columnSpan: ColumnSpan;
-  public paddingTop: PaddingTop = new PaddingTop();
-  public paddingRight: PaddingRight = new PaddingRight();
-  public paddingBottom: PaddingBottom = new PaddingBottom();
-  public paddingLeft: PaddingLeft = new PaddingLeft();
+  public border: Border = new Border();
+  public padding: Padding = new Padding();
+  public corners: Corners = new Corners();
+  public shadow: Shadow = new Shadow();
+  public horizontalAlignment: HorizontalAlignment = new HorizontalAlignment();
   public visibility = new Visibility();
   public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();
+  public name: string = 'Column';
 
   constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService, private breakpointService: BreakpointService) { }
 
@@ -61,10 +64,39 @@ export class ColumnComponent implements BreakpointsComponent {
       }
 
       // Update padding for the column
-      this.columnElement.style.paddingTop = this.paddingTop.value;
-      this.columnElement.style.paddingRight = this.paddingRight.value;
-      this.columnElement.style.paddingBottom = this.paddingBottom.value;
-      this.columnElement.style.paddingLeft = this.paddingLeft.value;
+      this.columnElement.style.paddingTop = this.padding.top.value;
+      this.columnElement.style.paddingRight = this.padding.right.value;
+      this.columnElement.style.paddingBottom = this.padding.bottom.value;
+      this.columnElement.style.paddingLeft = this.padding.left.value;
+
+      // If border is enabled, update the border properties
+      if (this.border.enable) {
+        this.columnElement.style.borderWidth = this.border.width + 'px';
+        this.columnElement.style.borderStyle = this.border.style;
+        this.columnElement.style.borderColor = this.border.color.toHexA();
+      } else {
+        this.columnElement.style.border = 'none';
+      }
+
+
+      // Update the corners
+      this.columnElement.style.borderTopLeftRadius = this.corners.topLeft + 'px';
+      this.columnElement.style.borderTopRightRadius = this.corners.topRight + 'px';
+      this.columnElement.style.borderBottomRightRadius = this.corners.bottomRight + 'px';
+      this.columnElement.style.borderBottomLeftRadius = this.corners.bottomLeft + 'px';
+
+
+      // If shadow is enabled, update the shadow properties
+      if (this.shadow.enable) {
+        this.columnElement.style.boxShadow = this.shadow.x + 'px ' +
+          this.shadow.y + 'px ' +
+          this.shadow.blur + 'px ' +
+          this.shadow.size + 'px ' +
+          this.shadow.color.toHexA();
+      } else {
+        this.columnElement.style.boxShadow = 'none';
+      }
+
 
       // Update visibility for the column
       this.columnElement.style.display = this.visibility.value;

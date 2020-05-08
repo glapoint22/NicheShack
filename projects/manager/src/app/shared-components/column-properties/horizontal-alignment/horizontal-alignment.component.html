@@ -1,0 +1,26 @@
+<panel [title]="'Horizontal Alignment'">
+    <div class="property">
+        <div class="label">Align</div>
+
+        <div class="image-container" title="Align Left"
+            [ngClass]="{'selected': horizontalAlignment.value == breakpointHorizontalAlignment.Left}"
+            (click)="horizontalAlignment.value = breakpointHorizontalAlignment.Left">
+            <img src="assets/align-left.png">
+        </div>
+
+        <div class="image-container" title="Align Center"
+            [ngClass]="{'selected': horizontalAlignment.value == breakpointHorizontalAlignment.Center}"
+            (click)="horizontalAlignment.value = breakpointHorizontalAlignment.Center">
+            <img src="assets/align-center.png">
+        </div>
+
+        <div class="image-container" title="Align Right"
+            [ngClass]="{'selected': horizontalAlignment.value == breakpointHorizontalAlignment.Right}"
+            (click)="horizontalAlignment.value = breakpointHorizontalAlignment.Right">
+            <img src="assets/align-right.png">
+        </div>
+
+        <!-- Breakpoint checkbox -->
+        <checkbox></checkbox>
+    </div>
+</panel>
