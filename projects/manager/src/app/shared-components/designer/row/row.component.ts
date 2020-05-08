@@ -1,6 +1,5 @@
 import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
 import { WidgetService } from '../../../services/widget.service';
-import { FormService } from '../../../services/form.service';
 import { FillColor } from '../../../classes/fill-color';
 import { Border } from '../../../classes/border';
 import { Corners } from '../../../classes/corners';
@@ -8,15 +7,11 @@ import { Shadow } from '../../../classes/shadow';
 import { ColumnComponent } from '../column/column.component';
 import { ContainerComponent } from '../container/container.component';
 import { VerticalAlignment } from '../../../classes/vertical-alignment';
-import { Color } from '../../../classes/color';
 import { Column } from '../../../classes/column';
 import { Breakpoint } from '../../../classes/breakpoint';
 import { BreakpointService } from '../../../services/breakpoint.service';
-import { PaddingTop } from '../../../classes/padding-top';
-import { PaddingRight } from '../../../classes/padding-right';
-import { PaddingBottom } from '../../../classes/padding-bottom';
-import { PaddingLeft } from '../../../classes/padding-left';
 import { BreakpointsComponent } from '../../../classes/breakpoints-component';
+import { Padding } from '../../../classes/padding';
 
 @Component({
   selector: 'row',
@@ -36,23 +31,19 @@ export class RowComponent implements BreakpointsComponent {
     this._top = Math.max(value, 0);
   }
 
-
   public columns: Array<Column> = new Array<Column>();
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public paddingTop: PaddingTop = new PaddingTop();
-  public paddingRight: PaddingRight = new PaddingRight();
-  public paddingBottom: PaddingBottom = new PaddingBottom();
-  public paddingLeft: PaddingLeft = new PaddingLeft();
+  public padding: Padding = new Padding();
   public verticalAlignment: VerticalAlignment = new VerticalAlignment();
   public container: ContainerComponent;
   public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();
+  public name: string = 'Row';
 
   constructor(private resolver: ComponentFactoryResolver,
     public widgetService: WidgetService,
-    public _FormService: FormService,
     private breakpointService: BreakpointService) { }
 
 
@@ -61,19 +52,6 @@ export class RowComponent implements BreakpointsComponent {
     this.breakpointService.onBreakpointChange.subscribe(() => {
       this.breakpointService.setBreakpointValues(this.breakpoints);
     });
-  }
-
-
-  // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
-  onEdit() {
-    this._FormService.fill = this.fill;
-    this._FormService.border = this.border;
-    this._FormService.corners = this.corners;
-    this._FormService.shadow = this.shadow;
-    this._FormService.verticalAlignment = this.verticalAlignment;
-
-    // Open the container form
-    this._FormService.showRowForm = true;
   }
 
 

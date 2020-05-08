@@ -1,1 +1,45 @@
-<p>shadow works!</p>
+<enableable-panel [title]="'Shadow'" [enableableProperty]="shadow">
+
+    <!-- Shadow X -->
+    <div class="property">
+        <div class="label">Shadow X</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="shadow.x" (onValueChange)="shadow.x = $event"></editable-number-field>
+        </div>
+    </div>
+
+    <!-- Shadow Y -->
+    <div class="property">
+        <div class="label">Shadow Y</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="shadow.y" (onValueChange)="shadow.y = $event"></editable-number-field>
+        </div>
+    </div>
+
+
+    <!-- Blur -->
+    <div class="property">
+        <div class="label">Blur</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="shadow.blur" (onValueChange)="shadow.blur = $event"></editable-number-field>
+        </div>
+    </div>
+
+
+    <!-- Size -->
+    <div class="property">
+        <div class="label">Size</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="shadow.size" (onValueChange)="shadow.size = $event"></editable-number-field>
+        </div>
+    </div>
+
+    <!-- Color -->
+    <div class="property">
+        <div class="label">Color</div>
+        <div style="flex: 1;">
+            <color-swatch></color-swatch>
+        </div>
+    </div>
+
+</enableable-panel>

@@ -1,10 +1,30 @@
-<div class="rounded-container-dark">
-    <!-- Category Label -->
-    <span class="label">Category:</span>
+<div class="rounded-container-light">
 
-    <!-- Category Name -->
-    <span class="name">{{hierarchyItem.name}}</span>
+    <div class="container">
+        <!-- Category Label -->
+        <div class="label">Category:</div>
+
+        <!-- Category Name -->
+        <div class="name">{{hierarchyItem.name}}</div>
+    </div>
+
 
     <!-- Category Icon -->
-    <image-property [title]="'Icon'" [roundedPanel]="true" [image]="category.icon"></image-property>
+    <div class="property-box-dark">
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Media Browser Icon -->
+            <div class="icon-container" (click)="openMediaBrowser()">
+                <i class="fas fa-image"></i>
+            </div>
+        </div>
+
+
+        <!-- Image -->
+        <div class="img-container">
+            <img *ngIf="category.icon" [src]="'images/' + category.icon">
+        </div>
+    </div>
 </div>

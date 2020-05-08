@@ -1,11 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormService } from 'projects/manager/src/app/services/form.service';
 import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
-import { Color } from 'projects/manager/src/app/classes/color';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { ContainerComponent } from '../../container/container.component';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
@@ -31,27 +29,12 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
   public paddingLeft: PaddingLeft = new PaddingLeft();
 
   constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService,
-    public _FormService: FormService) { super(widgetService, breakpointService) }
+    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
     this.height = 250
     super.ngOnInit();
   }
-
-
-  // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
-  onEdit() {
-    this._FormService.fill = this.fill;
-    this._FormService.border = this.border;
-    this._FormService.corners = this.corners;
-    this._FormService.shadow = this.shadow;
-    this._FormService.horizontalAlignment = this.horizontalAlignment;
-
-    // Open the container form
-    this._FormService.showContainerForm = true;
-  }
-
 
 
   getMinHeight(): number {

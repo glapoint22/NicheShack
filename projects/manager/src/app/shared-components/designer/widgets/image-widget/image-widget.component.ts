@@ -1,11 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { FormService } from 'projects/manager/src/app/services/form.service';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { ProportionalWidgetComponent } from '../proportional-widget/proportional-widget.component';
-import { Color } from 'projects/manager/src/app/classes/color';
 import { LinkSource } from 'projects/manager/src/app/classes/link-source';
 import { Link } from 'projects/manager/src/app/classes/link';
 import { Image } from 'projects/manager/src/app/classes/image';
@@ -27,29 +25,13 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
   public imageLoaded: boolean;
 
   constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService,
-    public _FormService: FormService) { super(widgetService, breakpointService) }
+    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
     // this.image.url = '0aada12f8b21471ea96aebe9a503977b.png';
     this.image.title = 'Alita';
     super.ngOnInit();
   }
-
-
-  // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
-  onEdit() {
-    this._FormService.border = this.border;
-    this._FormService.corners = this.corners;
-    this._FormService.shadow = this.shadow;
-    this._FormService.horizontalAlignment = this.horizontalAlignment;
-    this._FormService.linkSource = this;
-
-    // Open the image form
-    this._FormService.showImageForm = true;
-  }
-
-
 
   onImageLoad(event) {
     this.width = event.srcElement.naturalWidth;

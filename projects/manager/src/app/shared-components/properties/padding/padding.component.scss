@@ -1,0 +1,18 @@
+.number-field-container {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.property {
+    &:nth-child(2) .label { 
+        margin-left: 19px;
+    }
+
+    &:nth-child(3) .label { 
+        margin-left: 10px;
+    }
+
+    &:nth-child(5) .label { 
+        margin-left: 18px;
+    }
+}

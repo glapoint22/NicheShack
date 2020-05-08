@@ -1,15 +1,13 @@
 <!-- Designer Container -->
-<div class="designer-container">
+<div class="designer-container" >
 
     <!-- Widget Bar -->
     <div class="widget-bar">
 
         <!-- Widgets -->
         <ng-container *ngFor="let widgetCursor of widgetCursors">
-            <div class="icon-container" 
-                 [title]="widgetCursor.title" 
-                 [innerHTML]="widgetCursor.icon"
-                 (mousedown)="onWidgetIconMousedown($event, widgetCursor)">
+            <div class="icon-container" [title]="widgetCursor.title" [innerHTML]="widgetCursor.icon"
+                (mousedown)="onWidgetIconMousedown($event, widgetCursor)">
             </div>
         </ng-container>
     </div>
@@ -25,45 +23,42 @@
             <div class="design-area-bar">
 
                 <!-- Design Area Dropdown -->
-                <div class="design-area-dropdown">
-                    <input #designAreaDropdown
-                           (click)="designAreaDropdown.select();" 
-                           (keydown)="onDesignAreaDropdownKeydown($event)">
+                <!-- <div class="design-area-dropdown">
+                    <input #designAreaDropdown (click)="designAreaDropdown.select();"
+                        (keydown)="onDesignAreaDropdownKeydown($event)">
 
-                    <!-- Design Area Dropdown Button -->
+                    
                     <div class="design-area-dropdown-button">
                         <div>></div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Design Area -->
             <div class="design-area">
 
                 <!-- Design Area Resizer Left -->
-                <div class="design-area-resizer"
-                     (mousedown)="onDesignAreaResizerMousedown($event, 1)">
+                <div class="design-area-resizer" (mousedown)="onDesignAreaResizerMousedown($event, 1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
-                        <div class="ridge"></div>                        
+                        <div class="ridge"></div>
                     </div>
                 </div>
 
 
                 <!-- Canvas -->
                 <div #canvasElement class="canvas" (mousedown)="widgetService.selectedWidget = null">
-                    <div #contentElement 
-                         class="content"
-                         [style.maxWidth.px]="contentWidth">
+                    <div #contentElement class="content" [style.maxWidth.px]="pageService.page.width"
+                        [style.backgroundColor]="pageService.page.background.backgroundType == 0 ? pageService.page.background.color: null"
+                        [ngStyle]="{ 'background-image': pageService.page.background.backgroundType == 1 && pageService.page.background.image ? 'url(images/' + pageService.page.background.image + ')' : null}">
                         <container #rootContainer></container>
                     </div>
                 </div>
 
 
                 <!-- Design Area Resizer Right -->
-                <div class="design-area-resizer"  
-                     (mousedown)="onDesignAreaResizerMousedown($event, -1)">
+                <div class="design-area-resizer" (mousedown)="onDesignAreaResizerMousedown($event, -1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
@@ -72,13 +67,5 @@
                 </div>
             </div>
         </div>
-
-
-        <!-- Properties Editor Resizer -->
-        <div class="properties-editor-resizer" (mousedown)="onPropertiesEditorResizerDown()"></div>
-
-
-        <!-- Properties Editor Container -->
-        <div #PropertiesEditorContainer class="properties-editor-container"></div>
     </div>
 </div>

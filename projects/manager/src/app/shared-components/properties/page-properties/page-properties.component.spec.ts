@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RowEditorComponent } from './row-editor.component';
+import { PagePropertiesComponent } from './page-properties.component';
 
-describe('RowEditorComponent', () => {
-  let component: RowEditorComponent;
-  let fixture: ComponentFixture<RowEditorComponent>;
+describe('PagePropertiesComponent', () => {
+  let component: PagePropertiesComponent;
+  let fixture: ComponentFixture<PagePropertiesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RowEditorComponent ]
+      declarations: [ PagePropertiesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RowEditorComponent);
+    fixture = TestBed.createComponent(PagePropertiesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,8 +5,8 @@
     <div class="arrow"></div>
 
     <!-- Checkbox -->
-    <div *ngIf="enableableProperty" style="margin-top: 16px;" (mousedown)="$event.stopPropagation()">
-        <!-- <checkbox [checked]="enableableProperty.enable" (change)="enableableProperty.enable = !enableableProperty.enable"></checkbox> -->
+    <div *ngIf="enableableProperty" (mousedown)="$event.stopPropagation()">
+        <checkbox [checked]="enableableProperty.enable" (change)="enableableProperty.enable = !enableableProperty.enable"></checkbox>
     </div>
 
     <!-- Title -->

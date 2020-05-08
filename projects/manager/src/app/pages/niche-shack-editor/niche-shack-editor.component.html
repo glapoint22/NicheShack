@@ -1,13 +1,22 @@
-<!-- <menu-bar></menu-bar>
+<menu-bar></menu-bar>
 
+<div style="position: absolute; top: 33px; right: 0; bottom: 0; left: 0; display: flex; justify-content: flex-end;">
+    <div style="flex: 1; position: relative;" *ngIf="selectedItem.type == 'Niche'">
+        <designer></designer>
+    </div>
+    <div style="flex-basis: 15%; max-width: 15%; background: #252525;">
+
+        <category-editor *ngIf="selectedItem.type == 'Category'" [hierarchyItem]="selectedItem"></category-editor>
+        <niche-editor *ngIf="selectedItem.type == 'Niche'" [hierarchyItem]="selectedItem"></niche-editor>
+        <product-editor *ngIf="selectedItem.type == 'Product'" [hierarchyItem]="selectedItem"></product-editor>
+
+
+    </div>
+
+</div>
+
+<hierarchy-popup (showItemProperties)="selectedItem = $event"></hierarchy-popup>
 
 <context-menu></context-menu>
 
 <dropdown-menu></dropdown-menu>
-
-<category-editor *ngIf="selectedItem.type == 'Category'" [hierarchyItem]="selectedItem"></category-editor>
-<niche-editor *ngIf="selectedItem.type == 'Niche'" [hierarchyItem]="selectedItem"></niche-editor>
-<product-editor *ngIf="selectedItem.type == 'Product'" [hierarchyItem]="selectedItem"></product-editor>
-
-
-<hierarchy-popup (showItemProperties)="selectedItem = $event"></hierarchy-popup> -->

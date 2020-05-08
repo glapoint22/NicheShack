@@ -1,61 +1,15 @@
-.rounded-container-light {
-    margin-top: -8px;   
-}
-
-.container {
-    margin: 2px;
-    background: #3b3b3b;
-    height: 22px;
-    display: flex;
-    justify-content: space-between;
-
-    .icons {
-        margin: 0;
-    }
-}
-
-.light-tabs-container {
-    margin-top: 8px;
-}
-
-.tab-content {
-    width: 100%;
-    background: #343434;
-    padding: 10px;
-
-    .tab-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-
-        .label {
-            font-size: 12px;
-            color: #aaaaaa;
-            margin-right: 10px;
-        }
-
-        input {
-            width: 100%;
-        }
-    }
-}
-
-.img-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-}
-
 .label {
-    color: white;
+    color: #c2c2c2;
     font-size: 12px;
     margin-right: 5px;
 }
 
 .name {
-    margin-bottom: 10px;
-    display: inline-block;
-    color: #bfbfbf;
+    color: #4d9ce0;
     font-size: 11px;
+}
+
+.rounded-container-light {
+    display: flex;
+    align-items: center;
 }

@@ -82,17 +82,17 @@
 
             <div>
                 <!-- Text color -->
-                <color-icon [color]="description.fontColor.value" [icon]="'fa-font'" [title]="'Text color'"
-                    (onShowColorPicker)="description.fontColor.onShowColorPicker(_FormService.onColorPickerClose)">
+                <color-icon [color]="description.fontColor.value" [icon]="'fa-font'" [title]="'Text color'">
                 </color-icon>
+                <!-- (onShowColorPicker)="description.fontColor.onShowColorPicker(_FormService.onColorPickerClose)" -->
 
 
                 <!-- Highlight color -->
                 <color-icon [color]="description.highlightColor.value" [icon]="'fa-highlighter'"
                     [title]="'Highlight color'" [removable]="true"
-                    (onShowColorPicker)="description.highlightColor.onShowColorPicker(_FormService.onColorPickerClose)"
                     (onRemoveColor)="description.highlightColor.removeColor()">
                 </color-icon>
+                <!-- (onShowColorPicker)="description.highlightColor.onShowColorPicker(_FormService.onColorPickerClose)" -->
             </div>
 
 
@@ -100,10 +100,11 @@
 
             <div>
                 <!-- Link -->
-                <div class="icon-container" title="Insert link (Ctrl+K)" (click)="_FormService.showLinkForm = true"
+                <div class="icon-container" title="Insert link (Ctrl+K)"
                     [ngClass]="{'selected': description.linkStyle.isSelected}">
                     <i class="fas fa-link"></i>
                 </div>
+                <!-- (click)="_FormService.showLinkForm = true" -->
             </div>
 
 

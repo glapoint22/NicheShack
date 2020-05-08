@@ -6,7 +6,6 @@ import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module'
 import { CategoryEditorComponent } from './category-editor/category-editor.component';
 import { NicheEditorComponent } from './niche-editor/niche-editor.component';
 import { LeadPageEditorComponent } from './niche-editor/lead-page-editor/lead-page-editor.component';
-import { LeadPagePropertiesComponent } from './niche-editor/lead-page-editor/lead-page-properties/lead-page-properties.component';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
 import { ProductPropertiesComponent } from './product-editor/product-properties/product-properties.component';
 import { ProductContentComponent } from './product-editor/product-properties/product-content/product-content.component';
@@ -24,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
 import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/dropdown-menu/dropdown-menu.module';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
+import { DesignerModule } from '../../shared-components/designer/designer.module';
 
 
 @NgModule({
@@ -32,7 +32,6 @@ import { CustomInputModule } from 'shared-components/custom-input/custom-input.m
     CategoryEditorComponent,
     NicheEditorComponent,
     LeadPageEditorComponent,
-    LeadPagePropertiesComponent,
     ProductEditorComponent,
     ProductPropertiesComponent,
     ProductContentComponent,
@@ -54,7 +53,8 @@ import { CustomInputModule } from 'shared-components/custom-input/custom-input.m
     FormsModule,
     ContextMenuModule,
     DropdownMenuModule,
-    CustomInputModule
+    CustomInputModule,
+    DesignerModule
   ]
 })
 export class NicheShackEditorModule { }

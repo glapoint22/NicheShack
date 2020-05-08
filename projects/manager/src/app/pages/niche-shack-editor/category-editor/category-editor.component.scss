@@ -1,12 +1,23 @@
+.container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
 .label {
-    color: white;
+    color: #c2c2c2;
     font-size: 12px;
     margin-right: 5px;
 }
 
 .name {
-    margin-bottom: 10px;
-    display: inline-block;
-    color: #bfbfbf;
+    color: #4d9ce0;
     font-size: 11px;
+}
+
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
 }

@@ -1,0 +1,56 @@
+<div class="properties">
+    <!-- Page Name -->
+    <div class="property">
+        <div class="label" style="margin-left: 30px;">Name:</div>
+        <input class="txt-20" [value]="page.name">
+    </div>
+
+    <!-- Page Width -->
+    <div class="property">
+        <div class="label">Page Width:</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="page.width" (onValueChange)="page.width = $event"></editable-number-field>
+        </div>
+
+    </div>
+
+    <!-- Background -->
+    <div class="property">
+        <!-- Background Label -->
+        <div class="label">Background:</div>
+
+        <!-- Radio Buttons -->
+        <div class="radio-buttons">
+            <radio-button [name]="'background-option'" [label]="'Color'" [checked]="page.background.backgroundType == 0"
+                (change)="page.background.backgroundType = 0"></radio-button>
+            <radio-button [name]="'background-option'" [label]="'Image'" [checked]="page.background.backgroundType == 1"
+                (change)="page.background.backgroundType = 1"></radio-button>
+        </div>
+    </div>
+
+
+    <!-- Background color -->
+    <div *ngIf="page.background.backgroundType == 0" class="property">
+        <div style="width: 100%">
+            <color-swatch></color-swatch>
+        </div>
+    </div>
+
+
+    <!-- Background Image -->
+    <div *ngIf="page.background.backgroundType == 1" class="property-box-dark">
+
+        <!-- Media browser icon -->
+        <div class="icons">
+            <div class="icon-container">
+                <i class="fas fa-image"></i>
+            </div>
+        </div>
+
+
+        <!-- Image -->
+        <div class="img-container" [style.padding.px]="page.background.image ? 10 : 0">
+            <img [src]="page.background.image ? 'images/' + page.background.image : ''">
+        </div>
+    </div>
+</div>

@@ -1,20 +1,26 @@
 .container {
-    width: 100%;
-    background: #2d2d2d;
-    padding-top: 14px;
-    padding-left: 8px;
-    padding-right: 8px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
 
     .label {
-        color: white;
+        color: #c2c2c2;
         font-size: 12px;
         margin-right: 5px;
     }
     
     .name {
-        margin-bottom: 10px;
-        display: inline-block;
-        color: #bfbfbf;
+        color: #4d9ce0;
         font-size: 11px;
     }
+}
+
+.rounded-container-light {
+    padding: 0;
+}
+
+.buttons-container {
+    display: flex;
+    padding: 0 5px;
+    margin-bottom: 10px;
 }
