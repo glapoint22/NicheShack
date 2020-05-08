@@ -1,5 +1,5 @@
 <!-- Title bar -->
-<div class="title-bar" (mousedown)="expanded = !expanded" [ngClass]="{'rounded': rounded}">
+<div class="title-bar" (click)="expanded = !expanded" [ngClass]="{'rounded': rounded}">
     <!-- Arrow -->
     <input type="checkbox" [checked]="expanded">
     <div class="arrow"></div>

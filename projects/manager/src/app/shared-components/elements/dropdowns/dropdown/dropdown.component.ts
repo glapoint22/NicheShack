@@ -9,7 +9,6 @@ import { KeyValue } from '@angular/common';
 })
 export class DropdownComponent {
   constructor(public dropdownMenuService: DropdownMenuService) { }
-  @Input() width: number;
   @Input() title: string;
   @Input() height: number;
   @Input() selectedIndex: number;

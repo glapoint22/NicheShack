@@ -1,29 +1,50 @@
+<!-- Panel -->
 <panel [title]="'Keywords'">
+
     <!-- Property Box -->
     <div class="property-box-dark">
 
         <!-- Icons -->
         <div class="icons">
 
-            <!-- Delete keyword Icon -->
-            <div class="icon-container">
+            <!-- Delete -->
+            <div class="icon-container"
+                    [attr.title]="itemList.isDeleteDisabled ? 'Delete Keyword (Delete)' : itemList.isEditDisabled ? 'Delete Keywords (Delete)' : 'Delete Keyword (Delete)'"
+                    [ngClass]="{'icon-disabled': itemList.isDeleteDisabled}"
+                    (mouseover)="itemList.overIconButton = true"
+                    (mouseout)="itemList.onIconButtonMouseOut()"
+                    (click)="itemList.deleteListItem()">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
-            <!-- Edit keyword Icon -->
-            <div class="icon-container">
+            <!-- Edit -->
+            <div class="icon-container"
+                    [attr.title]="'Edit Keyword (Ctrl+Alt+E)'" 
+                    [ngClass]="{'icon-disabled': itemList.isEditDisabled}"
+                    (mouseover)="itemList.overIconButton = true"
+                    (mouseout)="itemList.onIconButtonMouseOut()"
+                    (click)="itemList.editListItem()">
                 <i class="fas fa-edit"></i>
             </div>
 
-            <!-- Add keyword Icon -->
-            <div class="icon-container">
+            <!-- Add -->
+            <div class="icon-container"
+                    [attr.title]="'Add Keyword (Ctrl+Alt+A)'" 
+                    [ngClass]="{'icon-disabled': itemList.isAddDisabled}"
+                    (mouseover)="itemList.overIconButton = true"
+                    (mouseout)="itemList.onIconButtonMouseOut()"
+                    (click)="itemList.addListItem()">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>
 
-
-        <div style="padding: 5px;">
-            <div *ngFor="let keyword of keywords" class="keywords">{{keyword}}</div>
-        </div>
+        <!-- Editable Item LIst -->
+        <editable-item-list 
+            #itemList 
+            [list]="keywords"
+            (onAddItem)="addKeyword()"
+            (onEditItem)="editKeyword()"
+            [menuOptions]="['Add Keyword', 'Edit Keyword', 'Delete Keyword', 'Delete Keywords']">
+        </editable-item-list>
     </div>
 </panel>

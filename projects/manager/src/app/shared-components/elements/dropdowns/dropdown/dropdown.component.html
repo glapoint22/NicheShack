@@ -2,7 +2,6 @@
 <div #base
      class="base"
      [title]="title"
-     [style.width.px]="width"
      [style.height.px]="height"
      (mousedown)="onDropdownSelect()"
      [ngClass]="{'hightlight-base': dropdownMenuService.showMenu && dropdownMenuService.currentObj == this}">

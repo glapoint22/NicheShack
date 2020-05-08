@@ -51,6 +51,9 @@ import { MediaBrowserPopupComponent } from './shared-components/popups/media-bro
 import { EditableDropdownComponent } from './shared-components/elements/dropdowns/editable-dropdown/editable-dropdown.component';
 import { ImagePropertyComponent } from './shared-components/image-property/image-property.component';
 import { PaginatorComponent } from './shared-components/paginator/paginator.component';
+import { ItemListComponent } from './shared-components/item-lists/item-list/item-list.component';
+import { EditableItemListComponent } from './shared-components/item-lists/editable-item-list/editable-item-list.component';
+import { CheckboxItemListComponent } from './shared-components/item-lists/checkbox-item-list/checkbox-item-list.component';
 
 
 @NgModule({
@@ -103,7 +106,10 @@ import { PaginatorComponent } from './shared-components/paginator/paginator.comp
     LinkPopupComponent,
     MediaBrowserPopupComponent,
     ImagePropertyComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    ItemListComponent,
+    EditableItemListComponent,
+    CheckboxItemListComponent
   ],
   imports: [
     CommonModule,
@@ -159,7 +165,10 @@ import { PaginatorComponent } from './shared-components/paginator/paginator.comp
     LinkPopupComponent,
     MediaBrowserPopupComponent,
     ImagePropertyComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    ItemListComponent,
+    EditableItemListComponent,
+    CheckboxItemListComponent
   ]
 })
 export class PropertiesEditorModule { }

@@ -10,8 +10,8 @@
     font-size: 14px;
     cursor: pointer;
 
-    &:active {
-        color: darken($icon-color, 1%);
+    &:active:not(.icon-disabled) {
+        color: lighten($icon-color, 35%);
     }
 }
 

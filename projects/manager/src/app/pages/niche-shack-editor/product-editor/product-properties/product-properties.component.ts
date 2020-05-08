@@ -107,20 +107,28 @@ export class ProductPropertiesComponent implements OnInit {
         ],
         pricePoints: [
           {
-            price: 5.16,
-            description: 'Single Payment of {0:C2}'
+            textBefore: "Single Payment of",
+            wholeNumber: "5",
+            decimal: "16",
+            textAfter: ""
           },
           {
-            price: 7.12,
-            description: '{0:C2} per Week'
+            textBefore: "",
+            wholeNumber: "7",
+            decimal: "12",
+            textAfter: "per Week"
           },
           {
-            price: 15.59,
-            description: '3 Easy Payments of {0:C2} per Month'
+            textBefore: "3 Easy Payments of",
+            wholeNumber: "15",
+            decimal: "59",
+            textAfter: "per Month"
           },
           {
-            price: 16.8,
-            description: '{0:C2} a Year'
+            textBefore: "",
+            wholeNumber: "16",
+            decimal: "80",
+            textAfter: "a Year"
           }
         ],
         media: [

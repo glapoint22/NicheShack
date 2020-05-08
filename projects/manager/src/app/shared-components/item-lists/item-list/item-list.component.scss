@@ -1,0 +1,112 @@
+@import '../../../../scss/variables';
+
+
+
+table {
+    width: 100%;
+    min-height: 22px;
+    
+    td {
+        user-select: none;
+        text-indent: 3px;
+        font-size: 13px;
+        border: 1px solid transparent;
+        padding: 0px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        white-space: nowrap;
+        outline: none;
+
+        &:hover:not(.no-hover):not(.selected-listItem):not(.transparent-listItem):not(.edited-listItem):not(.selected-listItem-top):not(.selected-listItem-middle):not(.selected-listItem-bottom):not(.selected-listItem-whole) {
+            background: $hover-fill-color;
+            color: #dddddd;
+        }
+
+        &.selected-listItem:not(.transparent-listItem):not(.edited-listItem) {
+            background: $selected-fill-color;
+            border-style: double;
+            border-color: $selected-border-color;
+            color: white;
+        }
+
+        &.unselected-listItem:not(.transparent-listItem):not(.edited-listItem) {
+            border-style: double;
+            border-color: $selected-border-color;
+            color: #aaaaaa;
+        }
+
+        &.selected-listItem-top {
+            background: rgba(0, 119, 224, 0.15);
+            color: #cfcfcf;
+            border-top-style: double;
+            border-top-color: #0055a0;
+            border-left-style: double;
+            border-left-color: #0055a0;
+            border-right-style: double;
+            border-right-color: #0055a0;
+            &:hover{
+                background: rgba(0, 119, 224, 0.3);
+                color: white;
+            }
+        }
+
+        &.selected-listItem-middle {
+            background: rgba(0, 119, 224, 0.15);
+            color: #cfcfcf;
+            border-left-style: double;
+            border-left-color: #0055a0;
+            border-right-style: double;
+            border-right-color: #0055a0;
+            &:hover{
+                background: rgba(0, 119, 224, 0.3);
+                color: white;
+            }
+        }
+
+        &.selected-listItem-bottom {
+            background: rgba(0, 119, 224, 0.15);
+            color: #cfcfcf;
+            border-left-style: double;
+            border-left-color: #0055a0;
+            border-right-style: double;
+            border-right-color: #0055a0;
+            border-bottom-style: double;
+            border-bottom-color: #0055a0;
+            &:hover{
+                background: rgba(0, 119, 224, 0.3);
+                color: white;
+            }
+        }
+
+        
+        &.selected-listItem-whole {
+            background: rgba(0, 119, 224, 0.15);
+            border-style: double;
+            border-color: #0055a0;
+            color: #cfcfcf;
+            &:hover{
+                background: rgba(0, 119, 224, 0.3);
+                color: white;
+            }
+        }
+
+        &.edited-listItem {
+            background: #2b2b2b;
+            border-style: double;
+            border-color: #114262;
+            color: #cccccc;
+            outline: none;
+        }
+        &.transparent-listItem {
+            color: rgba(170, 170, 170, 0.2)
+        }
+
+        
+    }
+}
+
+
+.no-hover { 
+    background: red;
+
+}

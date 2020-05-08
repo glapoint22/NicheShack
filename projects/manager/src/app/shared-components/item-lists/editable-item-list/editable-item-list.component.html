@@ -1,0 +1,20 @@
+<table (contextmenu)="$event.preventDefault()" (mouseup)="setContextMenu($event)">
+    <tr *ngFor="let listItem of listItems; let listItemIndex = index">
+        <td #listItem
+            tabindex="-1"
+            (blur)="onListItemBlur()"
+            (mousedown)="onListItemDown(listItemIndex)"
+            [textContent]="listItems[listItemIndex].name"
+            (dblclick)="onListItemDoubleClick(listItemIndex)"
+            [contentEditable]="indexOfEditedListItem == listItemIndex"
+            [ngClass]="{'edited-listItem': indexOfEditedListItem == listItemIndex,
+                        'selected-listItem': selectedListItemIndex == listItemIndex,
+                        'unselected-listItem': unselectedListItemIndex == listItemIndex,
+                        'selected-listItem-top': listItems[listItemIndex].selectType == 'top',
+                        'selected-listItem-whole': listItems[listItemIndex].selectType == 'whole',
+                        'selected-listItem-middle': listItems[listItemIndex].selectType == 'middle',
+                        'selected-listItem-bottom': listItems[listItemIndex].selectType == 'bottom',
+                        'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
+        </td>
+    </tr>
+</table>

@@ -1,1 +1,50 @@
-<p>categories works!</p>
+<!-- Panel -->
+<panel [title]="'Categories'">
+
+    <!-- Property Box -->
+    <div class="property-box-dark">
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Delete -->
+            <div class="icon-container"
+                    [attr.title]="itemList.isDeleteDisabled ? 'Delete Category (Delete)' : itemList.isEditDisabled ? 'Delete Categories (Delete)' : 'Delete Category (Delete)'"
+                    [ngClass]="{'icon-disabled': itemList.isDeleteDisabled}"
+                    (mouseover)="itemList.overIconButton = true"
+                    (mouseout)="itemList.onIconButtonMouseOut()"
+                    (click)="itemList.deleteListItem()">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+
+            <!-- Edit -->
+            <div class="icon-container"
+                    [attr.title]="'Edit Category (Ctrl+Alt+E)'" 
+                    [ngClass]="{'icon-disabled': itemList.isEditDisabled}"
+                    (mouseover)="itemList.overIconButton = true"
+                    (mouseout)="itemList.onIconButtonMouseOut()"
+                    (click)="!itemList.isEditDisabled ? editCategory() : null">
+                <i class="fas fa-edit"></i>
+            </div>
+
+            <!-- Add -->
+            <div class="icon-container"
+                    [attr.title]="'Add Category (Ctrl+Alt+A)'" 
+                    [ngClass]="{'icon-disabled': itemList.isAddDisabled}"
+                    (mouseover)="itemList.overIconButton = true"
+                    (mouseout)="itemList.onIconButtonMouseOut()"
+                    (click)="!itemList.isAddDisabled ? addCategory() : null">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+        </div>
+
+        <!-- Item LIst -->
+        <item-list 
+            #itemList 
+            [list]="categories"
+            (onAddItem)="addCategory()"
+            (onEditItem)="editCategory()"
+            [menuOptions]="['Add Category', 'Edit Category', 'Delete Category', 'Delete Categories']">
+        </item-list>
+    </div>
+</panel>

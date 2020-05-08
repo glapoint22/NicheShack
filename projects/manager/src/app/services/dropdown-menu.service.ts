@@ -34,7 +34,7 @@ export class DropdownMenuService {
     this.menuLeft = dropdown.getBoundingClientRect().left;
     this.menuOptionSelectFunction = menuOptionSelectFunction;
     this.restoreSelectedIndexValueFunction = restoreSelectedIndexValueFunction;
-    this.menuTop = dropdown.getBoundingClientRect().top + dropdown.getBoundingClientRect().height;
+    this.menuTop = dropdown.getBoundingClientRect().top + dropdown.getBoundingClientRect().height - 1;
 
     // If the left or top positions of the menu differs from the recorded left or top positions, then
     // that means we're selecting a different dropdown instead of toggling the same dropdown on and off

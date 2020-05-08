@@ -1,37 +1,50 @@
+<!-- Panel -->
 <panel [title]="'Content'">
+
     <!-- Property Box -->
     <div class="property-box-dark">
 
         <!-- Icons -->
         <div class="icons">
 
-            <!-- Delete content Icon -->
-            <div class="icon-container">
+            <!-- Delete -->
+            <div class="icon-container"
+                    [attr.title]="itemList.isDeleteDisabled ? 'Delete Price Point (Delete)' : itemList.isEditDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
+                    [ngClass]="{'icon-disabled': itemList.isDeleteDisabled}"
+                    (mouseover)="itemList.overIconButton = true"
+                    (mouseout)="itemList.onIconButtonMouseOut()"
+                    (click)="itemList.deleteListItem()">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
-            <!-- Add content Icon -->
-            <div class="icon-container">
+            <!-- Edit -->
+            <div class="icon-container"
+                    [attr.title]="'Edit Price Point (Ctrl+Alt+E)'" 
+                    [ngClass]="{'icon-disabled': itemList.isEditDisabled}"
+                    (mouseover)="itemList.overIconButton = true"
+                    (mouseout)="itemList.onIconButtonMouseOut()"
+                    (click)="!itemList.isEditDisabled ? editPricePoint() : null">
+                <i class="fas fa-edit"></i>
+            </div>
+
+            <!-- Add -->
+            <div class="icon-container"
+                    [attr.title]="'Add Price Point (Ctrl+Alt+A)'" 
+                    [ngClass]="{'icon-disabled': itemList.isAddDisabled}"
+                    (mouseover)="itemList.overIconButton = true"
+                    (mouseout)="itemList.onIconButtonMouseOut()"
+                    (click)="!itemList.isAddDisabled ? addPricePoint() : null">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>
 
-        <!-- Content container -->
-        <div class="content-container">
-            <ng-container *ngFor="let content of content">
-                
-                <!-- Content -->
-                <div class="content">
-
-                    <!-- Icon -->
-                    <div class="img-container">
-                        <img [src]="'images/' + content.icon">
-                    </div>
-                    
-                    <!-- Title -->
-                    <div class="content-title">{{content.title}}</div>
-                </div>
-            </ng-container>
-        </div>
+        <!-- Checkbox Item LIst -->
+        <checkbox-item-list
+            #itemList 
+            [list]="pricePointList"
+            (onAddItem)="addPricePoint()"
+            (onEditItem)="editPricePoint()"
+            [menuOptions]="['Add Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">
+        </checkbox-item-list>
     </div>
 </panel>
