@@ -4,26 +4,12 @@ import { PositionComponent } from './shared-components/row-properties/position/p
 import { VerticalAlignmentComponent } from './shared-components/row-properties/vertical-alignment/vertical-alignment.component';
 import { ColumnPropertiesComponent } from './shared-components/column-properties/column-properties.component';
 import { HorizontalAlignmentComponent } from './shared-components/column-properties/horizontal-alignment/horizontal-alignment.component';
-import { WidgetEditorComponent } from './shared-components/widget-editor/widget-editor.component';
-import { ButtonWidgetEditorComponent } from './shared-components/widget-editor/button-widget-editor/button-widget-editor.component';
-import { ButtonColorComponent } from './shared-components/widget-editor/button-widget-editor/button-color/button-color.component';
-import { ButtonWidgetNormalEditorComponent } from './shared-components/widget-editor/button-widget-editor/button-widget-normal-editor/button-widget-normal-editor.component';
-import { ButtonTextComponent } from './shared-components/widget-editor/button-widget-editor/button-widget-normal-editor/button-text/button-text.component';
-import { ButtonWidgetHoverEditorComponent } from './shared-components/widget-editor/button-widget-editor/button-widget-hover-editor/button-widget-hover-editor.component';
-import { ButtonWidgetActiveEditorComponent } from './shared-components/widget-editor/button-widget-editor/button-widget-active-editor/button-widget-active-editor.component';
-import { TextWidgetEditorComponent } from './shared-components/widget-editor/text-widget-editor/text-widget-editor.component';
-import { TextComponent } from './shared-components/widget-editor/text-widget-editor/text/text.component';
-import { ImageWidgetEditorComponent } from './shared-components/widget-editor/image-widget-editor/image-widget-editor.component';
-import { VideoWidgetEditorComponent } from './shared-components/widget-editor/video-widget-editor/video-widget-editor.component';
-import { ContainerWidgetEditorComponent } from './shared-components/widget-editor/container-widget-editor/container-widget-editor.component';
-import { LineWidgetEditorComponent } from './shared-components/widget-editor/line-widget-editor/line-widget-editor.component';
-import { StyleComponent } from './shared-components/widget-editor/line-widget-editor/style/style.component';
-import { CarouselWidgetEditorComponent } from './shared-components/widget-editor/carousel-widget-editor/carousel-widget-editor.component';
-import { BannersComponent } from './shared-components/widget-editor/carousel-widget-editor/banners/banners.component';
-import { ProductGroupWidgetEditorComponent } from './shared-components/widget-editor/product-group-widget-editor/product-group-widget-editor.component';
-import { ProductGroupTypeComponent } from './shared-components/widget-editor/product-group-widget-editor/product-group-type/product-group-type.component';
-import { CategoriesWidgetEditorComponent } from './shared-components/widget-editor/categories-widget-editor/categories-widget-editor.component';
-import { CategoriesComponent } from './shared-components/widget-editor/categories-widget-editor/categories/categories.component';
+import { ButtonColorComponent } from './shared-components/widget-properties/button-widget-properties/button-color/button-color.component';
+import { TextComponent } from './shared-components/widget-properties/text-widget-properties/text/text.component';
+import { StyleComponent } from './shared-components/widget-properties/line-widget-properties/style/style.component';
+import { BannersComponent } from './shared-components/widget-properties/carousel-widget-properties/banners/banners.component';
+import { ProductGroupTypeComponent } from './shared-components/widget-properties/product-group-widget-properties/product-group-type/product-group-type.component';
+import { CategoriesComponent } from './shared-components/widget-properties/categories-widget-properties/categories/categories.component';
 import { EnableablePanelComponent } from './shared-components/panels/enableable-panel/enableable-panel.component';
 import { PanelComponent } from './shared-components/panels/panel/panel.component';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
@@ -56,6 +42,20 @@ import { EditableNumberFieldComponent } from './shared-components/elements/edita
 import { PagePropertiesComponent } from './shared-components/properties/page-properties/page-properties.component';
 import { RowPropertiesComponent } from './shared-components/row-properties/row-properties.component';
 import { FormsModule } from '@angular/forms';
+import { WidgetPropertiesComponent } from './shared-components/widget-properties/widget-properties.component';
+import { ButtonTextComponent } from './shared-components/widget-properties/button-widget-properties/button-widget-normal-properties/button-text/button-text.component';
+import { ButtonWidgetPropertiesComponent } from './shared-components/widget-properties/button-widget-properties/button-widget-properties.component';
+import { ButtonWidgetNormalPropertiesComponent } from './shared-components/widget-properties/button-widget-properties/button-widget-normal-properties/button-widget-normal-properties.component';
+import { ButtonWidgetHoverPropertiesComponent } from './shared-components/widget-properties/button-widget-properties/button-widget-hover-properties/button-widget-hover-properties.component';
+import { ButtonWidgetActivePropertiesComponent } from './shared-components/widget-properties/button-widget-properties/button-widget-active-properties/button-widget-active-properties.component';
+import { TextWidgetPropertiesComponent } from './shared-components/widget-properties/text-widget-properties/text-widget-properties.component';
+import { ImageWidgetPropertiesComponent } from './shared-components/widget-properties/image-widget-properties/image-widget-properties.component';
+import { VideoWidgetPropertiesComponent } from './shared-components/widget-properties/video-widget-properties/video-widget-properties.component';
+import { ContainerWidgetPropertiesComponent } from './shared-components/widget-properties/container-widget-properties/container-widget-properties.component';
+import { LineWidgetPropertiesComponent } from './shared-components/widget-properties/line-widget-properties/line-widget-properties.component';
+import { CarouselWidgetPropertiesComponent } from './shared-components/widget-properties/carousel-widget-properties/carousel-widget-properties.component';
+import { CategoriesWidgetPropertiesComponent } from './shared-components/widget-properties/categories-widget-properties/categories-widget-properties.component';
+import { ProductGroupWidgetPropertiesComponent } from './shared-components/widget-properties/product-group-widget-properties/product-group-widget-properties.component';
 
 
 @NgModule({
@@ -65,25 +65,14 @@ import { FormsModule } from '@angular/forms';
     VerticalAlignmentComponent,
     ColumnPropertiesComponent,
     HorizontalAlignmentComponent,
-    WidgetEditorComponent,
-    ButtonWidgetEditorComponent,
+    WidgetPropertiesComponent,
     ButtonColorComponent,
-    ButtonWidgetNormalEditorComponent,
     ButtonTextComponent,
-    ButtonWidgetHoverEditorComponent,
-    ButtonWidgetActiveEditorComponent,
-    TextWidgetEditorComponent,
     TextComponent,
-    ImageWidgetEditorComponent,
-    VideoWidgetEditorComponent,
-    ContainerWidgetEditorComponent,
-    LineWidgetEditorComponent,
     StyleComponent,
-    CarouselWidgetEditorComponent,
     BannersComponent,
-    ProductGroupWidgetEditorComponent,
+    ProductGroupWidgetPropertiesComponent,
     ProductGroupTypeComponent,
-    CategoriesWidgetEditorComponent,
     CategoriesComponent,
     EnableablePanelComponent,
     PanelComponent,
@@ -112,7 +101,18 @@ import { FormsModule } from '@angular/forms';
     EditableItemListComponent,
     CheckboxItemListComponent,
     EditableNumberFieldComponent,
-    PagePropertiesComponent
+    PagePropertiesComponent,
+    ButtonWidgetPropertiesComponent,
+    ButtonWidgetNormalPropertiesComponent,
+    ButtonWidgetHoverPropertiesComponent,
+    ButtonWidgetActivePropertiesComponent,
+    TextWidgetPropertiesComponent,
+    ImageWidgetPropertiesComponent,
+    VideoWidgetPropertiesComponent,
+    ContainerWidgetPropertiesComponent,
+    LineWidgetPropertiesComponent,
+    CarouselWidgetPropertiesComponent,
+    CategoriesWidgetPropertiesComponent
   ],
   imports: [
     CommonModule,
@@ -126,25 +126,14 @@ import { FormsModule } from '@angular/forms';
     VerticalAlignmentComponent,
     ColumnPropertiesComponent,
     HorizontalAlignmentComponent,
-    WidgetEditorComponent,
-    ButtonWidgetEditorComponent,
+    WidgetPropertiesComponent,
     ButtonColorComponent,
-    ButtonWidgetNormalEditorComponent,
     ButtonTextComponent,
-    ButtonWidgetHoverEditorComponent,
-    ButtonWidgetActiveEditorComponent,
-    TextWidgetEditorComponent,
     TextComponent,
-    ImageWidgetEditorComponent,
-    VideoWidgetEditorComponent,
-    ContainerWidgetEditorComponent,
-    LineWidgetEditorComponent,
     StyleComponent,
-    CarouselWidgetEditorComponent,
     BannersComponent,
-    ProductGroupWidgetEditorComponent,
+    ProductGroupWidgetPropertiesComponent,
     ProductGroupTypeComponent,
-    CategoriesWidgetEditorComponent,
     CategoriesComponent,
     EnableablePanelComponent,
     PanelComponent,
@@ -173,7 +162,18 @@ import { FormsModule } from '@angular/forms';
     EditableItemListComponent,
     CheckboxItemListComponent,
     EditableNumberFieldComponent,
-    PagePropertiesComponent
+    PagePropertiesComponent,
+    ButtonWidgetPropertiesComponent,
+    ButtonWidgetNormalPropertiesComponent,
+    ButtonWidgetHoverPropertiesComponent,
+    ButtonWidgetActivePropertiesComponent,
+    TextWidgetPropertiesComponent,
+    ImageWidgetPropertiesComponent,
+    VideoWidgetPropertiesComponent,
+    ContainerWidgetPropertiesComponent,
+    LineWidgetPropertiesComponent,
+    CarouselWidgetPropertiesComponent,
+    CategoriesWidgetPropertiesComponent
   ]
 })
 export class PropertiesEditorModule { }
