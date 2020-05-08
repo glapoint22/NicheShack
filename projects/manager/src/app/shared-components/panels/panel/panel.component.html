@@ -1,12 +1,13 @@
 <!-- Title bar -->
-<div class="title-bar" (click)="expanded = !expanded" [ngClass]="{'rounded': rounded}">
+<div class="title-bar" (click)="expanded = !expanded; $event.stopPropagation()" [ngClass]="{'rounded': rounded}">
     <!-- Arrow -->
     <input type="checkbox" [checked]="expanded">
     <div class="arrow"></div>
 
     <!-- Checkbox -->
     <div *ngIf="enableableProperty" (mousedown)="$event.stopPropagation()">
-        <checkbox [checked]="enableableProperty.enable" (change)="enableableProperty.enable = !enableableProperty.enable"></checkbox>
+        <checkbox [checked]="enableableProperty.enable"
+            (change)="enableableProperty.enable = !enableableProperty.enable"></checkbox>
     </div>
 
     <!-- Title -->
