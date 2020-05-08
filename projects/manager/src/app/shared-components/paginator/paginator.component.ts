@@ -12,6 +12,8 @@ export class PaginatorComponent {
 
   
   onArrowClick(direction: number) {
+    if(this.itemCount == 0) return;
+
     this.currentIndex = Math.min(Math.max(0, this.currentIndex + direction), this.itemCount - 1);
     this.onItemChange.emit(this.currentIndex);
   }

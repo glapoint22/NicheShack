@@ -3,9 +3,9 @@
 
     <!-- Property Box -->
     <div class="property-box-dark">
-        
+
         <!-- Icons -->
-    <div class="icons">
+        <div class="icons">
 
             <!-- Media Browser Icon -->
             <div class="icon-container" (click)="openMediaBrowser()">
@@ -16,7 +16,7 @@
 
         <!-- Image -->
         <div class="img-container">
-            <img [src]="'images/' + image" (load)="panel.onContentLoad()">
+            <img *ngIf="image" [src]="'images/' + image" (load)="panel.onContentLoad()">
         </div>
     </div>
 </panel>

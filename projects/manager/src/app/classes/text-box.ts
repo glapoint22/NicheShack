@@ -37,7 +37,7 @@ export class TextBox {
     public unorderedList: UnorderedList;
     public linkStyle: LinkStyle;
     public onChange = new Subject<void>();
-    private contentParent: HTMLElement;
+    public content: HTMLElement;
 
 
     constructor(private contentDocument: HTMLDocument, private applicationRef: ApplicationRef, defaultFontColor: Color) {
@@ -58,7 +58,7 @@ export class TextBox {
         this.orderedList = new OrderedList(contentDocument);
         this.unorderedList = new UnorderedList(contentDocument);
         this.linkStyle = new LinkStyle(contentDocument);
-        this.contentParent = contentDocument.body.firstElementChild as HTMLElement;
+        this.content = contentDocument.body.firstElementChild as HTMLElement;
 
 
         let styleTag = document.createElement('style');
@@ -91,14 +91,33 @@ export class TextBox {
 
         // Content
         contentDocument.body.tabIndex = 0;
-        this.contentParent.contentEditable = 'true';
-        this.contentParent.style.position = 'absolute';
-        this.contentParent.style.top = '0';
-        this.contentParent.style.right = '0';
-        this.contentParent.style.bottom = '0';
-        this.contentParent.style.left = '0';
-        this.contentParent.style.outline = "none";
-        this.contentParent.innerHTML = '<div>&#8203;</div>';
+        this.content.contentEditable = 'true';
+        this.content.style.position = 'absolute';
+        this.content.style.top = '0';
+        this.content.style.right = '0';
+        this.content.style.bottom = '0';
+        this.content.style.left = '0';
+        this.content.style.outline = "none";
+        // this.contentParent.innerHTML = '<div>' + (this.text ? this.text : '&#8203;') + '</div>';
+        this.content.innerHTML = '<div>&#8203;</div>';
+
+
+        // Give focus to the document
+        this.content.focus();
+
+        let selection = this.contentDocument.getSelection();
+        let range = selection.getRangeAt(0);
+
+        // If there is no text
+        // if (!this.text) {
+            // Set the start and end of the range
+            range.setStart(range.startContainer, 1);
+            range.setEnd(range.startContainer, 1);
+        // }
+        
+        // This will basically initialize the properties (ie. bold, fontSize, fontColor etc.)
+        this.onSelectionChange(range);
+
 
         // Take care of selection change on mouse up
         contentDocument.addEventListener("mouseup", () => {
@@ -120,10 +139,10 @@ export class TextBox {
             if (!selection.anchorNode || clipboardText == '') return;
 
             let style = new Style(this.contentDocument);
-            
+
             let range = selection.getRangeAt(0);
             let text: Text = document.createTextNode(clipboardText);
-            let singleLineSelection = range.commonAncestorContainer != this.contentParent &&
+            let singleLineSelection = range.commonAncestorContainer != this.content &&
                 (range.commonAncestorContainer as HTMLElement).tagName != 'OL' &&
                 (range.commonAncestorContainer as HTMLElement).tagName != 'UL';
 
@@ -157,10 +176,10 @@ export class TextBox {
             range.setEnd(text, text.length);
 
             // Remove any empty nodes;
-            style.removeEmptyNodes(this.contentParent);
+            style.removeEmptyNodes(this.content);
         });
 
-        
+
 
 
         contentDocument.addEventListener("keypress", (event: KeyboardEvent) => {
@@ -233,7 +252,7 @@ export class TextBox {
 
                                         // Extract the contents and insert it before the list parent
                                         let docFrag = newRange.extractContents();
-                                        this.contentParent.insertBefore(docFrag, listParent);
+                                        this.content.insertBefore(docFrag, listParent);
 
                                         // Remove the empty list item
                                         listItem.remove();
@@ -256,7 +275,7 @@ export class TextBox {
                                     // We are not inside a list
                                 } else
                                     // If this is the first element of the content, do nothing
-                                    if (parent == this.contentParent.firstElementChild) {
+                                    if (parent == this.content.firstElementChild) {
                                         event.preventDefault();
                                     } else {
                                         // By replacing the text with a BR tag, it will cause the cursor to move up to the next line
@@ -290,7 +309,7 @@ export class TextBox {
                             let text = document.createTextNode('\u200B');
 
                             // If the start container is a list element or content parent
-                            if ((range.startContainer as HTMLElement).tagName == 'LI' || range.startContainer == this.contentParent) {
+                            if ((range.startContainer as HTMLElement).tagName == 'LI' || range.startContainer == this.content) {
                                 let div = document.createElement('DIV');
                                 div.appendChild(text);
 
@@ -310,9 +329,9 @@ export class TextBox {
                     }
                 }
             }
-            
+
             window.setTimeout(() => {
-                
+
                 range = selection.getRangeAt(0);
 
                 if (event.keyCode == 37) {
@@ -353,12 +372,12 @@ export class TextBox {
 
     selectContents() {
         // Give focus to the document
-        this.contentParent.focus();
+        this.content.focus();
 
         let selection = this.contentDocument.getSelection();
         let range = selection.getRangeAt(0);
         let style = new Style(this.contentDocument);
-        let firstTextChild = style.getFirstTextChild(this.contentParent);
+        let firstTextChild = style.getFirstTextChild(this.content);
 
         if (firstTextChild) {
             let lastTextChild = style.getLastTextChild(this.contentDocument.body.lastElementChild);

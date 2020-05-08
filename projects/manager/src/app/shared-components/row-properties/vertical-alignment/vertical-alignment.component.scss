@@ -1,0 +1,34 @@
+@import '../../../../scss/variables';
+
+.property {
+    justify-content: space-around;
+
+    .image-container {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover:not(.selected) img {
+            filter: brightness(125%);
+        }
+    }
+}
+
+.selected {
+    position: relative;
+
+    &:after {
+        content: '';
+        background: $selected-fill-color;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 1px solid $selected-border-color;
+        border-radius: 2px;
+    }
+}

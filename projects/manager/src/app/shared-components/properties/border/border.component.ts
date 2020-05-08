@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Border } from '../../../classes/border';
 
 @Component({
   selector: 'border',
   templateUrl: './border.component.html',
   styleUrls: ['./border.component.scss']
 })
-export class BorderComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class BorderComponent {
+  @Input() border: Border;
 }

@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FillColor } from '../../../classes/fill-color';
 
 @Component({
   selector: 'fill',
   templateUrl: './fill.component.html',
   styleUrls: ['./fill.component.scss']
 })
-export class FillComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class FillComponent {
+  @Input() fill: FillColor;
 }

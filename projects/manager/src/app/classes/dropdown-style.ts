@@ -9,10 +9,19 @@ export class DropdownStyle extends PersistentStyle {
         super.onSelectionChange(range);
 
         this.styleValue = window.getComputedStyle(this.selectedRange.startContainer.parentElement)[this.style];
-        
 
-        if(this.selectionHasStyle()) {
+
+        if (this.selectionHasStyle()) {
             this.selectedIndex = this.options.findIndex(x => x.value == this.styleValue);
+
+            if (this.selectedIndex == -1) {
+                this.options[0] = {
+                    key: this.styleValue.substr(0, this.styleValue.length - 2),
+                    value: this.styleValue
+                }
+                this.selectedIndex = 0;
+            }
+
         } else {
             this.selectedIndex = -1;
         }

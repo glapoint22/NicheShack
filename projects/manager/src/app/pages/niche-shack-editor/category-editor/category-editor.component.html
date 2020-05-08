@@ -1,7 +1,30 @@
-<div class="rounded-container-dark">
-    <!-- Category Name -->
-    <div>Category:</div>
-    <input class="txt-22" [(ngModel)]="category.name">
+<div class="rounded-container-light">
 
-    <image-property [title]="'Icon'" [roundedPanel]="true" [image]="category.icon"></image-property>
+    <div class="container">
+        <!-- Category Label -->
+        <div class="label">Category:</div>
+
+        <!-- Category Name -->
+        <div class="name">{{hierarchyItem.name}}</div>
+    </div>
+
+
+    <!-- Category Icon -->
+    <div class="property-box-dark">
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Media Browser Icon -->
+            <div class="icon-container" (click)="openMediaBrowser()">
+                <i class="fas fa-image"></i>
+            </div>
+        </div>
+
+
+        <!-- Image -->
+        <div class="img-container">
+            <img *ngIf="category.icon" [src]="'images/' + category.icon">
+        </div>
+    </div>
 </div>

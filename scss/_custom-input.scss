@@ -2,7 +2,6 @@
     label {
         position: relative;
         padding-left: 20px;
-        // margin-bottom: 12px;
         height: 12px;
         line-height: 12px;
         cursor: pointer;
@@ -10,6 +9,8 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        font-size: 12px;
+        display: inherit;
         
     
         &:hover {

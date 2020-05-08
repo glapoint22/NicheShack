@@ -1,0 +1,28 @@
+<ng-container *ngIf="widgetService.selectedWidget">
+    <!-- Row ID -->
+    <div class="grooved-container">
+        <div class="row-label">Name:</div>
+        <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.column.row.name">
+    </div>
+
+    <!-- Fill -->
+    <fill [fill]="widgetService.selectedWidget.column.row.fill"></fill>
+
+    <!-- Border -->
+    <border [border]="widgetService.selectedWidget.column.row.border"></border>
+
+    <!-- Corners -->
+    <corners [corners]="widgetService.selectedWidget.column.row.corners"></corners>
+
+    <!-- Shadow -->
+    <shadow [shadow]="widgetService.selectedWidget.column.row.shadow"></shadow>
+
+    <!-- Position -->
+    <position [row]="widgetService.selectedWidget.column.row"></position>
+
+    <!-- Padding -->
+    <padding [padding]="widgetService.selectedWidget.column.row.padding"></padding>
+
+    <!-- Vertical Alignment -->
+    <vertical-alignment [verticalAlignment]="widgetService.selectedWidget.column.row.verticalAlignment"></vertical-alignment>
+</ng-container>

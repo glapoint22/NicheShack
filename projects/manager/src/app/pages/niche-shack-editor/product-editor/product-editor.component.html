@@ -1,14 +1,19 @@
-<!-- Tabs -->
-<div class="dark-tabs-container">
-    <div class="dark-tab selected-dark-tab">Properties</div>
-    <div class="dark-tab">Email</div>
-</div>
+<div class="rounded-container-light">
 
-<!-- Product Name -->
-<div class="container">
-    <div class="label">Product:</div>
-    <input class="txt-22">
-</div>
+    <div class="container">
+        <!-- Product Label -->
+        <div class="label">Product:</div>
 
-<!-- Product Properties -->
-<product-properties></product-properties>
+        <!-- Product Title -->
+        <div class="name">{{hierarchyItem.name}}</div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="buttons-container">
+        <div class="button-left">Properties</div>
+        <div class="button-right">Email</div>
+    </div>
+
+    <!-- Product Properties -->
+    <product-properties [productId]="product.id"></product-properties>
+</div>

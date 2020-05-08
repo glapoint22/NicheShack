@@ -1,1 +1,66 @@
-<p>padding works!</p>
+<panel [title]="'Padding'">
+    <!-- Constrain -->
+    <checkbox style="color: white;" [label]="'Constrain'" [checked]="padding.constrain"
+        (change)="padding.constrain = !padding.constrain">
+    </checkbox>
+
+    <!-- Top -->
+    <div class="property">
+        <div class="label">Top</div>
+
+        <!-- Padding value -->
+        <div class="number-field-container">
+            <number-field [value]="padding.top.value" [values]="paddingValues"
+                (onValueChange)="onValueChange('top', $event)">
+            </number-field>
+        </div>
+
+        <!-- Breakpoint checkbox -->
+        <checkbox></checkbox>
+    </div>
+
+    <!-- Top Right -->
+    <div class="property">
+        <div class="label">Right</div>
+
+        <!-- Padding value -->
+        <div class="number-field-container">
+            <number-field [value]="padding.right.value" [values]="paddingValues"
+                (onValueChange)="onValueChange('right', $event)">
+            </number-field>
+        </div>
+
+        <!-- Breakpoint checkbox -->
+        <checkbox></checkbox>
+    </div>
+
+
+    <!-- Bottom Right -->
+    <div class="property">
+        <div class="label">Bottom</div>
+
+        <!-- Padding value -->
+        <div class="number-field-container">
+            <number-field [value]="padding.bottom.value" [values]="paddingValues"
+                (onValueChange)="onValueChange('bottom', $event)">
+            </number-field>
+        </div>
+
+        <!-- Breakpoint checkbox -->
+        <checkbox></checkbox>
+    </div>
+
+
+    <!-- Bottom Left -->
+    <div class="property">
+        <div class="label">Left</div>
+        <div class="number-field-container">
+            <number-field [value]="padding.left.value" [values]="paddingValues"
+                (onValueChange)="onValueChange('left', $event)">
+            </number-field>
+        </div>
+
+        <!-- Breakpoint checkbox -->
+        <checkbox></checkbox>
+    </div>
+</panel>

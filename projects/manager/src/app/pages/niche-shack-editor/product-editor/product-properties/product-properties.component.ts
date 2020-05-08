@@ -1,25 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from 'projects/manager/src/app/classes/product';
 import { delay } from 'rxjs/operators';
 import { ProductMediaType } from 'projects/manager/src/app/classes/product-media';
+import { ProductProperties } from 'projects/manager/src/app/classes/product-properties';
 
 @Component({
   selector: 'product-properties',
   templateUrl: './product-properties.component.html',
   styleUrls: ['./product-properties.component.scss']
 })
-export class ProductPropertiesComponent implements OnInit {
-  public product$: Observable<Product>;
+export class ProductPropertiesComponent implements OnChanges {
+  @Input() productId: string;
+  public productProperties: ProductProperties = new ProductProperties();
 
   constructor() { }
 
   // ---------------------Temp-----------------------------
-  public getTempProduct(): Observable<Product> {
+  public getTempProductProperties(): Observable<ProductProperties> {
 
-    return new Observable<Product>(subscriber => {
+    return new Observable<ProductProperties>(subscriber => {
       subscriber.next({
-        id: '1E61093062',
         image: '8307dc287c6147bcaddbfc921411eece.png',
         rating: 2.8,
         totalReviews: 60,
@@ -193,8 +193,13 @@ export class ProductPropertiesComponent implements OnInit {
     }).pipe(delay(1000));
   }
 
-  ngOnInit() {
-    this.product$ = this.getTempProduct();
+  ngOnChanges() {
+    if (this.productId) {
+      this.getTempProductProperties().subscribe((productProperties: ProductProperties) => {
+        this.productProperties = productProperties;
+      });
+    }
+
   }
 
 }

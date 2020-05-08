@@ -1,1 +1,44 @@
-<p>corners works!</p>
+<panel [title]="'Corners'">
+    <!-- Constrain -->
+    <checkbox style="color: white;" [label]="'Constrain'" [checked]="corners.constrain"
+        (change)="corners.constrain = !corners.constrain">
+    </checkbox>
+
+    <!-- Top Left -->
+    <div class="property">
+        <div class="label">Top Left</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="corners.topLeft" (onValueChange)="onValueChange('topLeft', $event)">
+            </editable-number-field>
+        </div>
+    </div>
+
+    <!-- Top Right -->
+    <div class="property">
+        <div class="label">Top Right</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="corners.topRight" (onValueChange)="onValueChange('topRight', $event)">
+            </editable-number-field>
+        </div>
+    </div>
+
+
+    <!-- Bottom Right -->
+    <div class="property">
+        <div class="label">Bottom Right</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="corners.bottomRight" (onValueChange)="onValueChange('bottomRight', $event)">
+            </editable-number-field>
+        </div>
+    </div>
+
+
+    <!-- Bottom Left -->
+    <div class="property">
+        <div class="label">Bottom Left</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="corners.bottomLeft" (onValueChange)="onValueChange('bottomLeft', $event)">
+            </editable-number-field>
+        </div>
+    </div>
+</panel>

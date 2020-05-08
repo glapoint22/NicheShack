@@ -1,0 +1,24 @@
+<panel [title]="'Vertical Alignment'">
+    <div class="property">
+        <div class="label">Align</div>
+
+        <div class="image-container" title="Align Top" [ngClass]="{'selected': verticalAlignment.value == 'flex-start'}"
+            (click)="verticalAlignment.value = 'flex-start'">
+            <img src="assets/align-top.png">
+        </div>
+
+        <div class="image-container" title="Align Middle" [ngClass]="{'selected': verticalAlignment.value == 'center'}"
+            (click)="verticalAlignment.value = 'center'">
+            <img src="assets/align-middle.png">
+        </div>
+
+        <div class="image-container" title="Align Bottom"
+            [ngClass]="{'selected': verticalAlignment.value == 'flex-end'}"
+            (click)="verticalAlignment.value = 'flex-end'">
+            <img src="assets/align-bottom.png">
+        </div>
+
+        <!-- Breakpoint checkbox -->
+        <checkbox></checkbox>
+    </div>
+</panel>

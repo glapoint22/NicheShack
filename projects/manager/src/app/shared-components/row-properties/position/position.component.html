@@ -1,0 +1,10 @@
+<panel [title]="'Position'">
+    <!-- Y -->
+    <div class="property">
+        <div class="label">Y</div>
+        <div style="flex: 1;">
+            <editable-number-field #numberField [value]="getPosition()"
+                (onValueChange)="setPosition($event, numberField)"></editable-number-field>
+        </div>
+    </div>
+</panel>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormService } from 'projects/manager/src/app/services/form.service';
 import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
@@ -15,6 +14,7 @@ import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
 import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
 import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
 import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
+import { PageService } from 'projects/manager/src/app/services/page.service';
 
 @Component({
   selector: 'button-widget',
@@ -36,30 +36,13 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService,
-    public _FormService: FormService) { super(widgetService, breakpointService) }
+    private pageService: PageService) { super(widgetService, breakpointService) }
 
 
   ngOnInit() {
     this.height = 40;
     super.ngOnInit();
   }
-
-
-  // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
-  onEdit() {
-    this._FormService.buttonFormHoverTab = this.hoverTab;
-    this._FormService.fill = this.fill;
-    this._FormService.border = this.border;
-    this._FormService.corners = this.corners;
-    this._FormService.buttonText = this.text;
-    this._FormService.shadow = this.shadow;
-    this._FormService.horizontalAlignment = this.horizontalAlignment;
-    this._FormService.linkSource = this;
-
-    // Open the Button form
-    this._FormService.showButtonForm = true;
-  }
-
 
   // -------------------------------------------------( GET FILL COLOR )-----------------------------------------------\\
   getFillColor() {
@@ -175,7 +158,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
 
     // Add this button style
-    this.widgetService.buttonStylesDocumentFragment.firstElementChild.appendChild(document.createTextNode(css));
+    this.pageService.buttonStylesDocumentFragment.firstElementChild.appendChild(document.createTextNode(css));
 
     // Append this button to the parent
     parent.appendChild(button);

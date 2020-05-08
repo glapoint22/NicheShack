@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RowEditorComponent } from './shared-components/row-editor/row-editor.component';
-import { PositionComponent } from './shared-components/row-editor/position/position.component';
-import { VerticalAlignmentComponent } from './shared-components/row-editor/vertical-alignment/vertical-alignment.component';
+// import { RowEditorComponent } from './shared-components/row-editor/row-editor.component';
+import { PositionComponent } from './shared-components/row-properties/position/position.component';
+import { VerticalAlignmentComponent } from './shared-components/row-properties/vertical-alignment/vertical-alignment.component';
 import { ColumnEditorComponent } from './shared-components/column-editor/column-editor.component';
 import { HorizontalAlignmentComponent } from './shared-components/column-editor/horizontal-alignment/horizontal-alignment.component';
 import { WidgetEditorComponent } from './shared-components/widget-editor/widget-editor.component';
@@ -40,7 +40,6 @@ import { VisibilityComponent } from './shared-components/properties/visibility/v
 import { ImageComponent } from './shared-components/properties/image/image.component';
 import { VideoComponent } from './shared-components/properties/video/video.component';
 import { CaptionComponent } from './shared-components/properties/caption/caption.component';
-import { EmailComponent } from './shared-components/properties/email/email.component';
 import { NumberFieldComponent } from './shared-components/elements/number-field/number-field.component';
 import { DropdownComponent } from './shared-components/elements/dropdowns/dropdown/dropdown.component';
 import { ColorSwatchComponent } from './shared-components/elements/color-swatch/color-swatch.component';
@@ -54,11 +53,15 @@ import { PaginatorComponent } from './shared-components/paginator/paginator.comp
 import { ItemListComponent } from './shared-components/item-lists/item-list/item-list.component';
 import { EditableItemListComponent } from './shared-components/item-lists/editable-item-list/editable-item-list.component';
 import { CheckboxItemListComponent } from './shared-components/item-lists/checkbox-item-list/checkbox-item-list.component';
+import { EditableNumberFieldComponent } from './shared-components/elements/editable-number-field/editable-number-field.component';
+import { PagePropertiesComponent } from './shared-components/properties/page-properties/page-properties.component';
+import { RowPropertiesComponent } from './shared-components/row-properties/row-properties.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    RowEditorComponent,
+    RowPropertiesComponent,
     PositionComponent,
     VerticalAlignmentComponent,
     ColumnEditorComponent,
@@ -97,7 +100,6 @@ import { CheckboxItemListComponent } from './shared-components/item-lists/checkb
     ImageComponent,
     VideoComponent,
     CaptionComponent,
-    EmailComponent,
     NumberFieldComponent,
     DropdownComponent,
     EditableDropdownComponent,
@@ -109,15 +111,18 @@ import { CheckboxItemListComponent } from './shared-components/item-lists/checkb
     PaginatorComponent,
     ItemListComponent,
     EditableItemListComponent,
-    CheckboxItemListComponent
+    CheckboxItemListComponent,
+    EditableNumberFieldComponent,
+    PagePropertiesComponent
   ],
   imports: [
     CommonModule,
     CustomInputModule,
-    ShowHideModule
+    ShowHideModule,
+    FormsModule
   ],
   exports: [
-    RowEditorComponent,
+    RowPropertiesComponent,
     PositionComponent,
     VerticalAlignmentComponent,
     ColumnEditorComponent,
@@ -156,7 +161,6 @@ import { CheckboxItemListComponent } from './shared-components/item-lists/checkb
     ImageComponent,
     VideoComponent,
     CaptionComponent,
-    EmailComponent,
     NumberFieldComponent,
     DropdownComponent,
     EditableDropdownComponent,
@@ -168,7 +172,9 @@ import { CheckboxItemListComponent } from './shared-components/item-lists/checkb
     PaginatorComponent,
     ItemListComponent,
     EditableItemListComponent,
-    CheckboxItemListComponent
+    CheckboxItemListComponent,
+    EditableNumberFieldComponent,
+    PagePropertiesComponent
   ]
 })
 export class PropertiesEditorModule { }

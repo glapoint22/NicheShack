@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Shadow } from '../../../classes/shadow';
 
 @Component({
   selector: 'shadow',
   templateUrl: './shadow.component.html',
   styleUrls: ['./shadow.component.scss']
 })
-export class ShadowComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class ShadowComponent {
+  @Input() shadow: Shadow;
 }

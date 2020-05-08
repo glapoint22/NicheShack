@@ -9,10 +9,10 @@ import { HierarchyItem } from '../../../classes/hierarchy-item';
   styleUrls: ['./hierarchy-popup.component.scss']
 })
 export class HierarchyPopupComponent implements OnInit {
-  @Output() showForm: EventEmitter<HierarchyItem> = new EventEmitter();
+  @Output() showItemProperties: EventEmitter<HierarchyItem> = new EventEmitter();
   public items: Array<HierarchyItem> = [];
   public selectedItem: HierarchyItem;
-  public isCollapsed: boolean;
+  // public isCollapsed: boolean;
   public showMenu: boolean;
   public filterType: string = 'Product';
   public searchResultsCount: number;
@@ -274,7 +274,7 @@ export class HierarchyPopupComponent implements OnInit {
 
 
   onAddItemButtonClick() {
-    if(this.isAddButtonDisabled()) return;
+    if (this.isAddButtonDisabled()) return;
 
     if (!this.selectedItem) {
       this.addItem(this.items);
@@ -347,16 +347,21 @@ export class HierarchyPopupComponent implements OnInit {
       el.removeEventListener('keydown', onKeydown);
     }
 
-    // Remove blue listener
+    // Remove blur listener
     let removeBlurListener = () => {
       el.removeEventListener('blur', onBlur);
     }
 
     // On Keydown
     let onKeydown = (event: KeyboardEvent) => {
+      // If enter or escape was pressed
       if (event.keyCode == 13 || event.keyCode == 27) {
+
+        // Escape was pressed
         if (event.keyCode == 27) {
           el.innerText = this.selectedItem.name;
+
+          // Enter was pressed
         } else {
           event.preventDefault();
           this.selectedItem.name = el.innerText;
@@ -374,7 +379,8 @@ export class HierarchyPopupComponent implements OnInit {
     // On Blur
     let onBlur = () => {
       el.contentEditable = 'false';
-      el.innerText = this.selectedItem.name;
+      if (el.innerText != this.selectedItem.name) el.innerText = this.selectedItem.name;
+
       removeBlurListener();
       removeKeydownListener();
     }
@@ -404,10 +410,10 @@ export class HierarchyPopupComponent implements OnInit {
     return document.getElementById(this.selectedItem.type + '-' + this.selectedItem.id);
   }
 
-  onOpenFormButtonClick() {
-    if (!this.selectedItem || this.selectedItem.type == 'Category') return;
+  onItemClick() {
+    // if (!this.selectedItem || this.selectedItem.type == 'Category') return;
 
-    this.showForm.emit(this.selectedItem);
+    this.showItemProperties.emit(this.selectedItem);
   }
 
   clearSearchResults() {

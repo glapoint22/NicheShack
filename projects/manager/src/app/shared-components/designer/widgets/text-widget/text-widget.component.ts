@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, ApplicationRef } from '@angular/core';
-import { FormService } from 'projects/manager/src/app/services/form.service';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { TextBox } from 'projects/manager/src/app/classes/text-box';
@@ -33,8 +32,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService,
-    private applicationRef: ApplicationRef,
-    public _FormService: FormService) { super(widgetService, breakpointService) }
+    private applicationRef: ApplicationRef) { super(widgetService, breakpointService) }
 
   ngOnInit() {
     this.height = 64;
@@ -60,16 +58,6 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
     }
   }
 
-
-  // -----------------------------( ON EDIT )------------------------------ \\
-  onEdit() {
-    this._FormService.textBox = this.textBox;
-    this._FormService.horizontalAlignment = this.horizontalAlignment;
-
-    // Open the text form
-    this._FormService.showTextForm = true;
-    this.textBox.selectContents();
-  }
 
   onHandleMousedown(handle: string) {
     this.handleMove = true;
@@ -109,11 +97,11 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
 
   showCover() {
     if (this.widgetService.selectedWidget != this) {
-      this._FormService.showTextForm = false;
+
       this.textBox.removeSelection();
     }
 
-    return !this._FormService.showTextForm || this.handleMove || document.body.id == 'column-resize' || document.body.id == 'widget-cursor' || this.widgetService.selectedWidget != this;
+    return this.handleMove || document.body.id == 'column-resize' || document.body.id == 'widget-cursor' || this.widgetService.selectedWidget != this;
   }
 
   ngDoCheck() {

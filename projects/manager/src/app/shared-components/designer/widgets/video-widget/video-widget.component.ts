@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { FormService } from 'projects/manager/src/app/services/form.service';
 import { ProportionalWidgetComponent } from '../proportional-widget/proportional-widget.component';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
@@ -24,15 +23,8 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
   public handleMove: boolean;
 
   constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService,
-    public _FormService: FormService, private sanitizer: DomSanitizer) { super(widgetService, breakpointService) }
+    breakpointService: BreakpointService, private sanitizer: DomSanitizer) { super(widgetService, breakpointService) }
 
-  // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
-  onEdit() {
-
-    // Open the image form
-    this._FormService.showVideoForm = true;
-  }
 
   ngOnInit() {
     // this.video = 'https://player.vimeo.com/video/264188894';
@@ -67,7 +59,7 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
       container.style.height = '0';
       container.style.paddingBottom = '56.25%';
       video.appendChild(container);
-      
+
       iframe.frameBorder = '0';
       iframe.allowFullscreen = true;
       iframe.src = this.video;

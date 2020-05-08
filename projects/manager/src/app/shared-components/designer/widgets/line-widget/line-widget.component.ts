@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormService } from 'projects/manager/src/app/services/form.service';
 import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
@@ -19,19 +18,7 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
   public shadow: Shadow = new Shadow();
 
   constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService,
-    public _FormService: FormService) { super(widgetService, breakpointService) }
-
-  // ----------------------------------------------------( ON EDIT )--------------------------------------------------\\
-  onEdit() {
-    this._FormService.fill = this.fill;
-    this._FormService.border = this.border;
-    this._FormService.shadow = this.shadow;
-    this._FormService.horizontalAlignment = this.horizontalAlignment;
-
-    // Open the line form
-    this._FormService.showLineForm = true;
-  }
+    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
 
   buildHTML(parent: HTMLElement) {
