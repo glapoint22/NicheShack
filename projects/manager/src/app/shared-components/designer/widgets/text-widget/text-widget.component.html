@@ -1,7 +1,6 @@
 <div #widget class="widget" [ngClass]="{'widget-selected': widgetService.selectedWidget == this}"
     (mousedown)="onMousedown()" [style.margin]="horizontalAlignment.value" [style.maxWidth.px]="width ? width : null"
-    [style.margin]="horizontalAlignment.value"
-    [style.minHeight.px]="height">
+    [style.margin]="horizontalAlignment.value" [style.minHeight.px]="height">
 
 
     <!-- Handles -->
@@ -17,5 +16,5 @@
         [style.height.px]="iframeHeight"></iframe>
 
     <!-- Cover -->
-    <div *ngIf="showCover()" class="position-absolute-identity" style="user-select: none;" (dblclick)="onEdit()"></div>
+    <div *ngIf="showCover()" class="position-absolute-identity" style="user-select: none;"></div>
 </div>

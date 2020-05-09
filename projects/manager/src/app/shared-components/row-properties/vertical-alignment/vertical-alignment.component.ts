@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { VerticalAlignment } from '../../../classes/vertical-alignment';
+import { BreakpointVerticalAlignment } from '../../../classes/breakpoint';
 
 @Component({
   selector: 'vertical-alignment',
@@ -8,4 +9,5 @@ import { VerticalAlignment } from '../../../classes/vertical-alignment';
 })
 export class VerticalAlignmentComponent {
   @Input() verticalAlignment: VerticalAlignment;
+  public breakpointVerticalAlignment = BreakpointVerticalAlignment;
 }

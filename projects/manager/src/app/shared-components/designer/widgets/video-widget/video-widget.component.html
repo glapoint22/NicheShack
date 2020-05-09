@@ -1,5 +1,5 @@
 <div #widget class="widget" [ngClass]="{'widget-selected': widgetService.selectedWidget == this}"
-    (mousedown)="onMousedown()" (dblclick)="onEdit()"
+    (mousedown)="onMousedown()"
     [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHexA() : 'none'"
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHexA() : 'none'"
