@@ -1,7 +1,7 @@
 <div style="display: flex;">
     <div>
-        <div *ngFor="let listItem of listItems; let listItemIndex = index" style="width: 22px; height: 22px; padding-top: 2px; padding-left: 5px;">
-            <checkbox (mouseover)="overIconButton = true" (mouseout)="onIconButtonMouseOut()"></checkbox>
+        <div *ngFor="let listItem of listItems; let listItemIndex = index" style="width: 22px; height: 22px; padding-top: 5px; padding-left: 5px;">
+            <checkbox (mouseover)="overIconButton = true" (mouseout)="onIconButtonMouseOut()" [checked]="checkList[listItemIndex]"></checkbox>
         </div>
     </div>
 

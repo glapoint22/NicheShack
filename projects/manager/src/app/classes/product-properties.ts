@@ -9,9 +9,9 @@ export class ProductProperties {
     totalReviews: number;
     hoplink: string;
     description: string;
-    filters: Array<productFilter>;
-    content: Array<ProductContent>;
-    pricePoints: Array<ProductPricePoint>;
-    media: Array<ProductMedia>;
-    keywords: Array<string>;
+    filters: Array<productFilter> = [];
+    content: Array<ProductContent> = [];
+    pricePoints: Array<ProductPricePoint> = [];
+    media: Array<ProductMedia> = [];
+    keywords: Array<string> = [];
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ItemListComponent } from '../item-list/item-list.component';
 
 @Component({
@@ -7,5 +7,5 @@ import { ItemListComponent } from '../item-list/item-list.component';
   styleUrls: ['../item-list/item-list.component.scss']
 })
 export class CheckboxItemListComponent extends ItemListComponent {
-
+  @Input() checkList: Array<boolean>;
 }

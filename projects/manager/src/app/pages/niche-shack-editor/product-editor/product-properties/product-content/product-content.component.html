@@ -2,49 +2,113 @@
 <panel [title]="'Content'">
 
     <!-- Property Box -->
-    <div class="property-box-dark">
+    <div class="property-box-light">
 
-        <!-- Icons -->
-        <div class="icons">
+        <!-- Container for paginator & icons -->
+        <div class="property-box-light-icon-bar">
 
-            <!-- Delete -->
-            <div class="icon-container"
-                    [attr.title]="itemList.isDeleteDisabled ? 'Delete Price Point (Delete)' : itemList.isEditDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
-                    [ngClass]="{'icon-disabled': itemList.isDeleteDisabled}"
-                    (mouseover)="itemList.overIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="itemList.deleteListItem()">
-                <i class="fas fa-trash-alt"></i>
-            </div>
+            <!-- Paginator -->
+            <paginator [itemCount]="content.length" (onItemChange)="contentIndex = $event"></paginator>
+            
+            <!-- Icons -->
+            <div class="icons">
 
-            <!-- Edit -->
-            <div class="icon-container"
-                    [attr.title]="'Edit Price Point (Ctrl+Alt+E)'" 
-                    [ngClass]="{'icon-disabled': itemList.isEditDisabled}"
-                    (mouseover)="itemList.overIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="!itemList.isEditDisabled ? editPricePoint() : null">
-                <i class="fas fa-edit"></i>
-            </div>
+                <!-- Delete Page Icon -->
+                <div class="icon-container">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
 
-            <!-- Add -->
-            <div class="icon-container"
-                    [attr.title]="'Add Price Point (Ctrl+Alt+A)'" 
-                    [ngClass]="{'icon-disabled': itemList.isAddDisabled}"
-                    (mouseover)="itemList.overIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="!itemList.isAddDisabled ? addPricePoint() : null">
-                <i class="fas fa-plus-circle"></i>
+                <!-- Add Page Icon -->
+                <div class="icon-container">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
             </div>
         </div>
 
-        <!-- Checkbox Item LIst -->
-        <checkbox-item-list
-            #itemList 
-            [list]="pricePointList"
-            (onAddItem)="addPricePoint()"
-            (onEditItem)="editPricePoint()"
-            [menuOptions]="['Add Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">
-        </checkbox-item-list>
+
+        <!-- Content -->
+        <div *ngIf="content[0]" class="content">
+
+
+            <!-- Title -->
+            <div class="property">
+                <div class="label" >Title:</div>
+            </div>
+            <input class="txt-20" [value]="content[contentIndex].title">
+            
+
+
+            <!-- Icon -->
+            <div class="property">
+                <div class="label">Icon:</div>
+            </div>
+            <div class="property-box-dark">
+
+                <!-- Media Browser Icon -->
+                <div class="icons">
+                    <div class="icon-container">
+                        <i class="fas fa-image"></i>
+                    </div>
+                </div>
+
+                <!-- Image -->
+                <div class="img-container">
+                    <img [src]="'images/' + content[contentIndex].icon">
+                </div>
+            </div>
+
+
+
+            <!-- Price Points -->
+            <div class="property">
+                <div class="label">Price Points:</div>
+            </div>
+            <div class="property-box-dark">
+
+                <!-- Icons -->
+                <div class="icons">
+
+                    <!-- Delete -->
+                    <div class="icon-container"
+                            [attr.title]="itemList.isDeleteDisabled ? 'Delete Price Point (Delete)' : itemList.isEditDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
+                            [ngClass]="{'icon-disabled': itemList.isDeleteDisabled}"
+                            (mouseover)="itemList.overIconButton = true"
+                            (mouseout)="itemList.onIconButtonMouseOut()"
+                            (click)="itemList.deleteListItem()">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+
+                    <!-- Edit -->
+                    <div class="icon-container"
+                            [attr.title]="'Edit Price Point (Ctrl+Alt+E)'" 
+                            [ngClass]="{'icon-disabled': itemList.isEditDisabled}"
+                            (mouseover)="itemList.overIconButton = true"
+                            (mouseout)="itemList.onIconButtonMouseOut()"
+                            (click)="!itemList.isEditDisabled ? editPricePoint() : null">
+                        <i class="fas fa-edit"></i>
+                    </div>
+
+                    <!-- Add -->
+                    <div class="icon-container"
+                            [attr.title]="'Add Price Point (Ctrl+Alt+A)'" 
+                            [ngClass]="{'icon-disabled': itemList.isAddDisabled}"
+                            (mouseover)="itemList.overIconButton = true"
+                            (mouseout)="itemList.onIconButtonMouseOut()"
+                            (click)="!itemList.isAddDisabled ? addPricePoint() : null">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                </div>
+
+                <!-- Checkbox Item LIst -->
+                <checkbox-item-list
+                    #itemList 
+                    [list]="pricePointList"
+                    [checkList]="checkList[contentIndex]"
+                    (onAddItem)="addPricePoint()"
+                    (onEditItem)="editPricePoint()"
+                    [menuOptions]="['Add Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">
+                </checkbox-item-list>
+            </div>
+        </div>
     </div>
 </panel>

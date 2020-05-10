@@ -13,7 +13,7 @@ export class ProductMediaComponent implements OnChanges {
   public currentIndex: number = 0;
 
   ngOnChanges() {
-    if(this.media) {
+    if(this.media.length > 0) {
       window.setTimeout(()=> {
         this.panel.onContentLoad();
       });
