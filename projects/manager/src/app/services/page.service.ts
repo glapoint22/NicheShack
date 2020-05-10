@@ -60,6 +60,6 @@ export class PageService {
 
     // Page color
     previewWindow.document.body.style.background =
-      this.page.background.backgroundType == PageBackgroundType.Color ? this.page.background.color : 'url("images/' + this.page.background.image + '")';
+      this.page.background.backgroundType == PageBackgroundType.Color ? this.page.background.color.toRGBString() : 'url("images/' + this.page.background.image + '")';
   }
 }

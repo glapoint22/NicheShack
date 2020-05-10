@@ -5,6 +5,7 @@ import { HorizontalAlignment } from 'projects/manager/src/app/classes/horizontal
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { Breakpoint, BreakpointVerticalAlignment } from 'projects/manager/src/app/classes/breakpoint';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
+import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 
 @Component({
   template: '',
@@ -16,6 +17,8 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
   public column: ColumnComponent;
   public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();
   public horizontalAlignment: HorizontalAlignment = new HorizontalAlignment();
+  public name: string;
+  public type: WidgetType;
 
   constructor(public widgetService: WidgetService, public breakpointService: BreakpointService) { }
 

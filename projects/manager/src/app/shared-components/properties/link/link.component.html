@@ -1,1 +1,26 @@
-<p>link works!</p>
+<panel [title]="'Link'">
+
+    <!-- Property Box -->
+    <div class="property-box-dark">
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Media Browser Icon -->
+            <div class="icon-container" (click)="openLinkPopup()">
+                <i class="fas fa-link"></i>
+            </div>
+        </div>
+
+        <!-- Link -->
+        <div *ngIf="link.url; else placeholder" class="link">
+            <a [href]="link.url" target="_blank">{{link.url}}</a>
+        </div>
+
+
+        <!-- Placeholder -->
+        <ng-template #placeholder>
+            <div class="link">No link available</div>
+        </ng-template>
+    </div>
+</panel>

@@ -199,3 +199,8 @@
         margin-right: 10px;
     }
 }
+
+// This adds a top border to a panel that's not the first property
+*:not(#first-property) >  * > .title-bar {
+    border-top: 1px solid #464646;
+}

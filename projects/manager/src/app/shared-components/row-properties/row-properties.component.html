@@ -1,7 +1,7 @@
 <ng-container *ngIf="widgetService.selectedWidget">
     <!-- Row ID -->
     <div class="grooved-container">
-        <div class="row-label">Name:</div>
+        <div class="label">Name:</div>
         <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.column.row.name">
     </div>
 
@@ -9,7 +9,7 @@
     <!-- <fill [fill]="widgetService.selectedWidget.column.row.fill"></fill> -->
 
     <!-- Border -->
-    <border [border]="widgetService.selectedWidget.column.row.border"></border>
+    <border id="first-property" [border]="widgetService.selectedWidget.column.row.border"></border>
 
     <!-- Corners -->
     <corners [corners]="widgetService.selectedWidget.column.row.corners"></corners>

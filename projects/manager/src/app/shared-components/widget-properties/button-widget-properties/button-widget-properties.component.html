@@ -1,1 +1,30 @@
-<p>button-widget-properties works!</p>
+<div style="background: #343434;">
+    <div class="light-tabs-container">
+        <!-- Normal Tab -->
+        <div class="light-tab" [ngClass]="{'selected-light-tab': button.currentState == buttonState.Normal}"
+            (click)="button.currentState = buttonState.Normal">Normal</div>
+
+        <!-- Hover Tab -->
+        <div class="light-tab" [ngClass]="{'selected-light-tab': button.currentState == buttonState.Hover}"
+            (click)="button.currentState = buttonState.Hover">Hover</div>
+
+        <!-- Active Tab -->
+        <div id="active" class="light-tab"
+            [ngClass]="{'selected-light-tab': button.currentState == buttonState.Active}"
+            (click)="button.currentState = buttonState.Active">Active</div>
+    </div>
+</div>
+
+<!-- Normal Properties -->
+<button-widget-normal-properties *ngIf="button.currentState == buttonState.Normal" [button]="button">
+</button-widget-normal-properties>
+
+
+<!-- Hover Colors -->
+<button-color *ngIf="button.currentState == buttonState.Hover" [backgroundColor]="button.backgroundHover.color"
+    [borderColor]="button.borderHover.color" [textColor]="button.textHover.color"></button-color>
+
+
+<!-- Active Colors -->
+<button-color *ngIf="button.currentState == buttonState.Active" [backgroundColor]="button.backgroundActive.color"
+    [borderColor]="button.borderActive.color" [textColor]="button.textActive.color"></button-color>

@@ -11,6 +11,7 @@ import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
 import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
 import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
 import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
+import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 
 @Component({
   selector: 'container-widget',
@@ -33,6 +34,8 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
 
   ngOnInit() {
     this.height = 250
+    this.name = 'Container';
+    this.type = WidgetType.Container;
     super.ngOnInit();
   }
 

@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ButtonText } from 'projects/manager/src/app/classes/button-text';
 
 @Component({
   selector: 'button-text',
   templateUrl: './button-text.component.html',
   styleUrls: ['./button-text.component.scss']
 })
-export class ButtonTextComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class ButtonTextComponent {
+  @Input() text: ButtonText;
 }

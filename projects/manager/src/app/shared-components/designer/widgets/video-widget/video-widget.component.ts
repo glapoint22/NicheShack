@@ -7,6 +7,7 @@ import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 
 @Component({
   selector: 'video-widget',
@@ -29,6 +30,8 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
   ngOnInit() {
     // this.video = 'https://player.vimeo.com/video/264188894';
     this.sanitizedVideo = this.sanitizer.bypassSecurityTrustResourceUrl(this.video);
+    this.name = 'Video';
+    this.type = WidgetType.Video;
     super.ngOnInit();
   }
 

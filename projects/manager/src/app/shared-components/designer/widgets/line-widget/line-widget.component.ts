@@ -6,6 +6,7 @@ import { WidgetService } from 'projects/manager/src/app/services/widget.service'
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
+import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 
 @Component({
   selector: 'line-widget',
@@ -19,6 +20,12 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService) { super(widgetService, breakpointService) }
+
+  ngOnInit() {
+    this.name = 'Line';
+    this.type = WidgetType.Line;
+    super.ngOnInit();
+  }
 
 
   buildHTML(parent: HTMLElement) {

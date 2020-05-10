@@ -28,7 +28,12 @@ export class DropdownStyle extends PersistentStyle {
     }
 
     applyStyle() {
-        super.applyStyle();
+        // If there is no selected range, that means there is not a content document
+        // and we do not need to apply a style
+        if (this.selectedRange) {
+            super.applyStyle();
+        }
+
         this.selectedIndex = this.options.findIndex(x => x.value == this.styleValue);
     }
 }
