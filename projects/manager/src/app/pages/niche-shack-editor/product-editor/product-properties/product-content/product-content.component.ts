@@ -1,6 +1,7 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { ProductPricePoint } from 'projects/manager/src/app/classes/product-price-point';
 import { ProductContent } from 'projects/manager/src/app/classes/product-content';
+import { PanelComponent } from 'projects/manager/src/app/shared-components/panels/panel/panel.component';
 
 @Component({
   selector: 'product-content',
@@ -8,6 +9,7 @@ import { ProductContent } from 'projects/manager/src/app/classes/product-content
   styleUrls: ['./product-content.component.scss']
 })
 export class ProductContentComponent implements OnChanges {
+  @ViewChild('panel', { static: false }) panel: PanelComponent;
   public checkList = [];
   public contentIndex: number = 0;
   public pricePointList: Array<string>;
@@ -19,7 +21,7 @@ export class ProductContentComponent implements OnChanges {
   ngOnChanges() {
     let priceIndices: Array<Array<number>>;
     let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
-    
+
     // Map the content's price indices into a stand alone array
     if (this.content) {
       priceIndices = this.content.map(x => (x.priceIndices));
@@ -46,6 +48,11 @@ export class ProductContentComponent implements OnChanges {
         }
       }
     }
+
+    // Update the panel height
+    window.setTimeout(() => {
+      this.panel.onContentLoad();
+    });
   }
 
 
