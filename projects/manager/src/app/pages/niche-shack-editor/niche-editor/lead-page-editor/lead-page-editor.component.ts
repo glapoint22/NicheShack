@@ -4,6 +4,7 @@ import { delay } from 'rxjs/operators';
 import { Page } from 'projects/manager/src/app/classes/page';
 import { PageBackgroundType } from 'projects/manager/src/app/classes/page-background';
 import { PageService } from 'projects/manager/src/app/services/page.service';
+import { Color } from 'projects/manager/src/app/classes/color';
 
 @Component({
   selector: 'lead-page-editor',
@@ -15,7 +16,7 @@ export class LeadPageEditorComponent implements OnChanges {
   public leadPages: Array<Page> = new Array<Page>();
   public view: string = 'page';
 
-  constructor(public pageService: PageService) {}
+  constructor(public pageService: PageService) { }
 
 
   // ---------------------Temp-----------------------------
@@ -27,7 +28,7 @@ export class LeadPageEditorComponent implements OnChanges {
           width: 1600,
           background: {
             backgroundType: PageBackgroundType.Color,
-            color: '#ffffff',
+            color: new Color(255, 255, 255, 1),
             image: ''
           }
         },
@@ -36,7 +37,7 @@ export class LeadPageEditorComponent implements OnChanges {
           width: 1400,
           background: {
             backgroundType: PageBackgroundType.Image,
-            color: '',
+            color: null,
             image: '09f972f68d5d4d968275e5f919e48c96.png'
           }
         }

@@ -9,6 +9,7 @@ import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
 import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
 import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
+import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 
 @Component({
   selector: 'text-widget',
@@ -37,6 +38,8 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
   ngOnInit() {
     this.height = 64;
     this.fixedHeight = this.height;
+    this.name = 'Text';
+    this.type = WidgetType.Text;
     super.ngOnInit();
   }
 

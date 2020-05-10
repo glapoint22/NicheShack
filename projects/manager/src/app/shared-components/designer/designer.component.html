@@ -1,5 +1,5 @@
 <!-- Designer Container -->
-<div class="designer-container" >
+<div class="designer-container">
 
     <!-- Widget Bar -->
     <div class="widget-bar">
@@ -50,7 +50,7 @@
                 <!-- Canvas -->
                 <div #canvasElement class="canvas" (mousedown)="widgetService.selectedWidget = null">
                     <div #contentElement class="content" [style.maxWidth.px]="pageService.page.width"
-                        [style.backgroundColor]="pageService.page.background.backgroundType == 0 ? pageService.page.background.color: null"
+                        [style.backgroundColor]="pageService.page.background.backgroundType == 0 ? pageService.page.background.color.toRGBString(): null"
                         [ngStyle]="{ 'background-image': pageService.page.background.backgroundType == 1 && pageService.page.background.image ? 'url(images/' + pageService.page.background.image + ')' : null}">
                         <container #rootContainer></container>
                     </div>

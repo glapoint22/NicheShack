@@ -2,7 +2,9 @@ import { DropdownStyle } from './dropdown-style';
 
 export class FontSize extends DropdownStyle {
 
-    constructor(contentDocument: HTMLDocument) {
+    constructor(contentDocument?: HTMLDocument) {
+        contentDocument = contentDocument != null ? contentDocument : document.implementation.createHTMLDocument();
+
         super(contentDocument);
 
         this.options = [

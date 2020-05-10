@@ -1,31 +1,33 @@
 import { Color } from './color';
+import { Font } from './font';
+import { FontSize } from './font-size';
 
 export class ButtonText {
     caption: string = 'Button';
-    fontFamily: string = 'Arial, Helvetica, sans-serif';
-    fontSize: number = 15;
+    font: Font = new Font();
+    fontSize: FontSize = new FontSize();
     fontWeight: string = 'normal';
     fontStyle: string = 'normal';
-    color: Color = new Color(200, 200, 200, 1);
-    hoverColor: Color = new Color(255, 255, 255, 1);
+    textDecoration: string = 'none';
 
-    applyStyle(element: HTMLElement) {
-        element.style.fontFamily = this.fontFamily;
-        element.style.fontSize = this.fontSize + 'px';
-        element.style.fontWeight = this.fontWeight;
-        element.style.fontStyle = this.fontStyle;
-        element.style.color = this.color.toRGBString();
+    constructor(public color: Color = new Color(200, 200, 200, 1)) {
+        this.font.selectedIndex = 0;
+        this.font.styleValue = this.font.options[this.font.selectedIndex].value;
+
+        this.fontSize.selectedIndex = 7;
+        this.fontSize.styleValue = this.fontSize.options[this.fontSize.selectedIndex].value;
     }
 
     getStyle() {
-        return '\n\tfont-family: ' + this.fontFamily + ';' +
-            '\n\tfont-size: ' + this.fontSize + 'px;' +
+        return '\n\tfont-family: ' + this.font.styleValue + ';' +
+            '\n\tfont-size: ' + this.fontSize.styleValue + ';' +
             '\n\tfont-weight: ' + this.fontWeight + ';' +
             '\n\tfont-style: ' + this.fontStyle + ';' +
+            '\n\ttext-decoration: ' + this.textDecoration + ';' +
             '\n\tcolor: ' + this.color.toRGBString() + ';';
     }
 
-    getHoverStyle() {
-        return '\n\tcolor: ' + this.hoverColor.toRGBString() + ';';
+    getColorStyle() {
+        return '\n\tcolor: ' + this.color.toRGBString() + ';';
     }
 }

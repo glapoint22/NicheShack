@@ -9,6 +9,7 @@ import { Link } from 'projects/manager/src/app/classes/link';
 import { Image } from 'projects/manager/src/app/classes/image';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
+import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 
 @Component({
   selector: 'image-widget',
@@ -30,6 +31,8 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
   ngOnInit() {
     // this.image.url = '0aada12f8b21471ea96aebe9a503977b.png';
     this.image.title = 'Alita';
+    this.name = 'Image';
+    this.type = WidgetType.Image;
     super.ngOnInit();
   }
 

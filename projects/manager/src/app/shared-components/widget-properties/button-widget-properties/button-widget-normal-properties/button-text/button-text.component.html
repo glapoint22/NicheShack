@@ -1,1 +1,61 @@
-<p>button-text works!</p>
+<panel [title]="'Text'">
+    <!-- Caption -->
+    <div class="property">
+        <div class="label">Caption</div>
+        <input class="txt-20" [(ngModel)]="text.caption">
+    </div>
+
+    <!-- Font -->
+    <div class="property">
+        <div class="label">Font</div>
+        <div style="flex: 1;">
+            <dropdown [height]="20" [keyValue]="text.font.options" [selectedIndex]="text.font.selectedIndex"
+                (onChange)="text.font.setStyleValue($event)">
+            </dropdown>
+        </div>
+    </div>
+
+    <!-- Font Size -->
+    <div class="property">
+        <div class="label">Font Size</div>
+        <div style="flex: 1;">
+            <editable-dropdown [height]="20" [keyValue]="text.fontSize.options"
+                [selectedIndex]="text.fontSize.selectedIndex" (onChange)="text.fontSize.setStyleValue($event)">
+            </editable-dropdown>
+        </div>
+    </div>
+
+    <!-- Font Style -->
+    <div class="property">
+        <div class="label">Style</div>
+        <div style="flex: 1; display: flex; justify-content: space-between;">
+
+            <!-- Bold -->
+            <div class="style-icon" [ngClass]="{'selected': text.fontWeight == 'bold'}"
+                (click)="text.fontWeight = text.fontWeight == 'normal' ? 'bold' : 'normal'">
+                <i class="fas fa-bold"></i>
+            </div>
+
+            <!-- Italic -->
+            <div class="style-icon" [ngClass]="{'selected': text.fontStyle == 'italic'}"
+                (click)="text.fontStyle = text.fontStyle == 'normal' ? 'italic' : 'normal'">
+                <i class="fas fa-italic"></i>
+            </div>
+
+            <!-- Underline -->
+            <div class="style-icon" [ngClass]="{'selected': text.textDecoration == 'underline'}"
+                (click)="text.textDecoration = text.textDecoration == 'none' ? 'underline' : 'none'">
+                <i class="fas fa-underline"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Font Color -->
+    <div class="property">
+        <div class="label">Color</div>
+        <div style="flex: 1;">
+            <color-swatch [color]="text.color"></color-swatch>
+        </div>
+    </div>
+</panel>

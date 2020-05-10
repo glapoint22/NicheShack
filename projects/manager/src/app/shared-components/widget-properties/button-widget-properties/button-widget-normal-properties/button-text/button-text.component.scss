@@ -1,0 +1,46 @@
+@import '../../../../../../scss/variables';
+
+.style-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.property {
+    &:nth-child(1) .label { 
+        margin-left: 10px;
+    }
+
+    &:nth-child(2) .label { 
+        margin-left: 26px;
+        margin-right: 11px;
+    }
+
+    &:nth-child(4) .label { 
+        margin-left: 24px;
+    }
+
+    &:nth-child(5) .label { 
+        margin-left: 21px;
+        margin-right: 11px;
+    }
+}
+
+.selected {
+    position: relative;
+
+    &:after {
+        content: '';
+        background: $selected-fill-color;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 1px solid $selected-border-color;
+        border-radius: 2px;
+    }
+}

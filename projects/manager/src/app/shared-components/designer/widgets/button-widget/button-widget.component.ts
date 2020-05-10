@@ -4,17 +4,16 @@ import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { ButtonText } from 'projects/manager/src/app/classes/button-text';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
-import { HoverTab } from 'projects/manager/src/app/classes/hover-tab';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { Link } from 'projects/manager/src/app/classes/link';
 import { LinkSource } from 'projects/manager/src/app/classes/link-source';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
-import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
-import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
-import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
-import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 import { PageService } from 'projects/manager/src/app/services/page.service';
+import { Padding } from 'projects/manager/src/app/classes/padding';
+import { Color } from 'projects/manager/src/app/classes/color';
+import { ButtonState } from 'projects/manager/src/app/classes/button-state';
+import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 
 @Component({
   selector: 'button-widget',
@@ -22,93 +21,123 @@ import { PageService } from 'projects/manager/src/app/services/page.service';
   styleUrls: ['./button-widget.component.scss']
 })
 export class ButtonWidgetComponent extends FreeformWidgetComponent implements OnInit, LinkSource {
-  public hoverTab: HoverTab = new HoverTab();
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public text: ButtonText = new ButtonText();
   public shadow: Shadow = new Shadow();
   public link: Link = new Link();
-  public paddingTop: PaddingTop = new PaddingTop();
-  public paddingRight: PaddingRight = new PaddingRight();
-  public paddingBottom: PaddingBottom = new PaddingBottom();
-  public paddingLeft: PaddingLeft = new PaddingLeft();
+  public padding: Padding = new Padding();
+
+  // Background Hover & Active
+  public backgroundHover: FillColor = new FillColor(new Color(150, 150, 150, 1));
+  public backgroundActive: FillColor = new FillColor(new Color(135, 135, 135, 1));
+
+  // Border Hover & Active
+  public borderHover: Border = new Border(new Color(240, 240, 240, 1));
+  public borderActive: Border = new Border(new Color(220, 220, 220, 1));
+
+  // Text Hover & Active
+  public textHover: ButtonText = new ButtonText(new Color(255, 255, 255, 1));
+  public textActive: ButtonText = new ButtonText(new Color(225, 225, 225, 1));
+
+  // Current state of the button (ie. normal, hover, active)
+  public currentState: ButtonState;
+
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService,
     private pageService: PageService) { super(widgetService, breakpointService) }
 
 
+
+
+
+  // ---------------------------------------------------------------- Ng On Init --------------------------------------------------------------
   ngOnInit() {
     this.height = 40;
+    this.name = 'Button';
+    this.type = WidgetType.Button;
+    this.currentState = ButtonState.Normal;
     super.ngOnInit();
   }
 
-  // -------------------------------------------------( GET FILL COLOR )-----------------------------------------------\\
-  getFillColor() {
-    let fillColor: string;
 
 
-    // If the hover tab on the button form is selected
-    if (this.hoverTab.selected) {
 
-      // Style the button fill with the hover look
-      fillColor = this.fill.hoverColor.toRGBString();
 
-      // If the normal tab on the button form is selected
-    } else {
 
-      // Style the button fill with the normal look
-      fillColor = this.fill.color.toRGBString();
+  // ------------------------------------------------------------ Get Background Color ----------------------------------------------------------
+  getBackgroundColor(): string {
+    let color: string;
+
+    switch (this.currentState) {
+      case ButtonState.Normal:
+        color = this.fill.color.toRGBString();
+        break;
+
+      case ButtonState.Hover:
+        color = this.backgroundHover.color.toRGBString();
+        break;
+
+      case ButtonState.Active:
+        color = this.backgroundActive.color.toRGBString();
+        break;
     }
-    return fillColor;
+
+    return color;
   }
 
 
-  // -------------------------------------------------( GET BORDER COLOR )-----------------------------------------------\\
-  getBorderColor() {
-    let hexA: string;
 
 
-    // If the hover tab on the button form is selected
-    if (this.hoverTab.selected) {
 
-      // Style the button border with the hover look
-      hexA = this.border.hoverColor.toHexA();
+  // --------------------------------------------------------------- Get Border Color ----------------------------------------------------------
+  getBorderColor(): string {
+    let color: string;
 
+    switch (this.currentState) {
+      case ButtonState.Normal:
+        color = this.border.color.toHexA();
+        break;
 
-      // If the normal tab on the button form is selected
-    } else {
+      case ButtonState.Hover:
+        color = this.borderHover.color.toHexA();
+        break;
 
-      // Style the button border with the normal look
-      hexA = this.border.color.toHexA();
+      case ButtonState.Active:
+        color = this.borderActive.color.toHexA();
+        break;
     }
-    return hexA;
+
+    return color;
   }
 
 
-  // -------------------------------------------------( GET TEXT COLOR )-----------------------------------------------\\
-  getTextColor() {
-    let textColor: string;
+  // ----------------------------------------------------------------- Get Text Color -----------------------------------------------------------
+  getTextColor(): string {
+    let color: string;
 
+    switch (this.currentState) {
+      case ButtonState.Normal:
+        color = this.text.color.toRGBString();
+        break;
 
-    // If the hover tab on the button form is selected
-    if (this.hoverTab.selected) {
+      case ButtonState.Hover:
+        color = this.textHover.color.toRGBString();
+        break;
 
-      // Style the button text with the hover look
-      textColor = this.text.hoverColor.toRGBString();
-
-
-      // If the normal tab on the button form is selected
-    } else {
-
-      // Style the button text with the normal look
-      textColor = this.text.color.toRGBString();
+      case ButtonState.Active:
+        color = this.textActive.color.toRGBString();
+        break;
     }
-    return textColor;
+
+    return color;
   }
 
 
+
+  // ------------------------------------------------------------------- Build HTML -----------------------------------------------------------
   buildHTML(parent: HTMLElement) {
     let button: any = document.createElement(this.link.url ? 'a' : 'div');
     let className = this.createClassName();
@@ -122,10 +151,18 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
       (this.width ? '\n\tmax-width: ' + this.width + 'px;' : '') +
       '\n}' +
 
+      // Hover
       '\n.' + className + ':hover {' +
-      this.fill.getHoverStyle() +
-      this.border.getHoverStyle() +
-      this.text.getHoverStyle() +
+      this.backgroundHover.getStyle() +
+      (this.border.enable ? this.borderHover.getColorStyle() : '') +
+      this.textHover.getColorStyle() +
+      '\n}' +
+
+      // Active
+      '\n.' + className + ':active {' +
+      this.backgroundActive.getStyle() +
+      (this.border.enable ? this.borderActive.getColorStyle() : '') +
+      this.textActive.getColorStyle() +
       '\n}';
 
     // Added the classes
@@ -164,6 +201,11 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     parent.appendChild(button);
   }
 
+
+
+
+
+  // ------------------------------------------------------------ Create Class Name -----------------------------------------------------------
   createClassName() {
     let result = '';
     let characters = 'abcdefghijklmnopqrstuvwxyz';

@@ -1,6 +1,8 @@
+import { Color } from './color';
+
 export class PageBackground {
     backgroundType: PageBackgroundType;
-    color: string;
+    color: Color;
     image: string;
 }
 

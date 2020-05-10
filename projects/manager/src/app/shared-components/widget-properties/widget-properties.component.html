@@ -1,0 +1,11 @@
+<ng-container *ngIf="widgetService.selectedWidget">
+    <!-- Widget ID -->
+    <div class="grooved-container">
+        <div class="label">Name:</div>
+        <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.name">
+    </div>
+
+    <!-- Button Widget Properties -->
+    <button-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Button"></button-widget-properties>
+
+</ng-container>
