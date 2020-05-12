@@ -1,0 +1,59 @@
+<!-- Property Box -->
+<div class="property-box-light">
+    <!-- Container for paginator & icons -->
+    <div class="container">
+
+        
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Delete Page Icon -->
+            <div class="icon-container">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+
+            <!-- Duplicate Page Icon -->
+            <div class="icon-container">
+                <i class="fas fa-clone"></i>
+            </div>
+
+            <!-- Add Page Icon -->
+            <div class="icon-container">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+        </div>
+    </div>
+
+    
+        <!-- Preview & Publish buttons -->
+        <div class="grooved-container">
+            <div class="button-left" (click)="pageService.preview()">Preview</div>
+            <div class="button-right">Publish</div>
+        </div>
+
+        
+
+
+        <!-- Page, Row, Column, and Widget buttons -->
+        <div class="grooved-container-bottom">
+            <div class="button-left" [ngClass]="{'button-selected': view == 'page'}" (click)="view = 'page'">Page</div>
+            <div class="button-center" [ngClass]="{'button-selected': view == 'row'}" (click)="view = 'row'">Row</div>
+            <div class="button-center" [ngClass]="{'button-selected': view == 'column'}" (click)="view = 'column'">Column</div>
+            <div class="button-right" [ngClass]="{'button-selected': view == 'widget'}" (click)="view = 'widget'">Widget</div>
+        </div>
+
+        
+        <!-- Page Properties -->
+        <page-properties *ngIf="view == 'page'" [page]="pageService.page"></page-properties>
+
+        <!-- Row Propterties -->
+        <row-properties *ngIf="view == 'row'"></row-properties>
+
+        <!-- Column Propterties -->
+        <column-properties *ngIf="view == 'column'"></column-properties>
+
+        <!-- Widget Properties -->
+        <widget-properties *ngIf="view == 'widget'"></widget-properties>
+    
+</div>

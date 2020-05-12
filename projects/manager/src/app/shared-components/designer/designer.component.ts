@@ -8,6 +8,9 @@ import { WidgetCursor } from '../../classes/widget-cursor';
 import { WidgetService } from '../../services/widget.service';
 import { ContainerComponent } from './container/container.component';
 import { VideoWidgetComponent } from './widgets/video-widget/video-widget.component';
+import { ProductGroupWidgetComponent } from './widgets/product-group-widget/product-group-widget.component';
+import { CategoriesWidgetComponent } from './widgets/categories-widget/categories-widget.component';
+import { CarouselWidgetComponent } from './widgets/carousel-widget/carousel-widget.component';
 import { PageService } from '../../services/page.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 
@@ -58,7 +61,7 @@ export class DesignerComponent implements OnInit, AfterViewInit {
       {
         title: 'Container',
         component: ContainerWidgetComponent,
-        icon: '<i class="fas fa-box-open"></i>',
+        icon: '<img class="image-icon" src="assets/container-widget-icon.png">',
         allowed: 'container-widget-allowed.png',
         notAllowed: 'container-widget-not-allowed.png'
       },
@@ -75,6 +78,28 @@ export class DesignerComponent implements OnInit, AfterViewInit {
         icon: '<i class="fas fa-film"></i>',
         allowed: 'video-widget-allowed.png',
         notAllowed: 'video-widget-not-allowed.png'
+      }
+      ,
+      {
+        title: 'Product Group',
+        component: ProductGroupWidgetComponent,
+        icon: '<img class="image-icon" src="assets/product-group-widget-icon.png">',
+        allowed: 'product-group-widget-allowed.png',
+        notAllowed: 'product-group-widget-not-allowed.png'
+      },
+      {
+        title: 'Categories',
+        component: CategoriesWidgetComponent,
+        icon: '<img class="categories-icon" src="assets/categories-widget-icon.png">',
+        allowed: 'categories-widget-allowed.png',
+        notAllowed: 'categories-widget-not-allowed.png'
+      },
+      {
+        title: 'Carousel',
+        component: CarouselWidgetComponent,
+        icon: '<img class="carousel-icon" src="assets/carousel-widget-icon.png">',
+        allowed: 'carousel-widget-allowed.png',
+        notAllowed: 'carousel-widget-not-allowed.png'
       }
     ]
   }

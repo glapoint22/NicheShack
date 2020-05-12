@@ -112,3 +112,26 @@
     width: 1px;
     border-left: 2px ridge #666666;
 }
+
+.image-icon {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    &:hover {
+        filter: brightness(132%);
+    }
+}
+
+
+.categories-icon {
+    @extend .image-icon;
+    margin-top: 18px;
+}
+
+
+.carousel-icon {
+    @extend .image-icon;
+    margin-top: 35px;
+}

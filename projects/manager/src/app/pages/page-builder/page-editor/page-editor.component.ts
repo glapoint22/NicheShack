@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageService } from '../../../services/page.service';
 
 @Component({
   selector: 'page-editor',
@@ -6,8 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page-editor.component.scss']
 })
 export class PageEditorComponent implements OnInit {
+  public view: string = 'page';
 
-  constructor() { }
+  constructor(public pageService: PageService) { }
 
   ngOnInit() {
   }

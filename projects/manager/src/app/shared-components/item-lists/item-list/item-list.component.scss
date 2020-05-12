@@ -1,6 +1,9 @@
 @import '../../../../scss/variables';
 
-
+.overflow-container {
+    overflow: auto;
+    overflow-y: hidden;
+}
 
 table {
     width: 100%;

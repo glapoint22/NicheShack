@@ -1,27 +1,34 @@
-<div style="display: flex;">
-    <div>
-        <div *ngFor="let listItem of listItems; let listItemIndex = index" style="width: 22px; height: 22px; padding-top: 5px; padding-left: 5px;">
-            <checkbox (mouseover)="overIconButton = true" (mouseout)="onIconButtonMouseOut()" [checked]="checkList[listItemIndex]"></checkbox>
+<div class="overflow-container">
+    <div style="display: flex;">
+        <div>
+            <div *ngFor="let listItem of listItems; let listItemIndex = index" style="width: 22px; height: 22px; padding-top: 5px; padding-left: 5px;">
+                <checkbox (mouseover)="overIconButton = true" 
+                          (mouseout)="onIconButtonMouseOut()" 
+                          [checked]="checkList[listItemIndex]">
+                </checkbox>
+            </div>
         </div>
-    </div>
 
-    <table (contextmenu)="$event.preventDefault()" (mouseup)="setContextMenu($event)">
-        <tr *ngFor="let listItem of listItems; let listItemIndex = index">
-            <td #listItem
-                tabindex="-1"
-                (blur)="onListItemBlur()"
-                (mousedown)="onListItemDown(listItemIndex)"
-                [textContent]="listItems[listItemIndex].name"
-                (dblclick)="onListItemDoubleClick(listItemIndex)"
-                [ngClass]="{'edited-listItem': indexOfEditedListItem == listItemIndex,
-                            'selected-listItem': selectedListItemIndex == listItemIndex,
-                            'unselected-listItem': unselectedListItemIndex == listItemIndex,
-                            'selected-listItem-top': listItems[listItemIndex].selectType == 'top',
-                            'selected-listItem-whole': listItems[listItemIndex].selectType == 'whole',
-                            'selected-listItem-middle': listItems[listItemIndex].selectType == 'middle',
-                            'selected-listItem-bottom': listItems[listItemIndex].selectType == 'bottom',
-                            'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
-            </td>
-        </tr>
-    </table>
+        <table (contextmenu)="$event.preventDefault()" 
+               (mouseup)="setContextMenu($event)">
+               
+            <tr *ngFor="let listItem of listItems; let listItemIndex = index">
+                <td #listItem
+                    tabindex="-1"
+                    (blur)="onListItemBlur()"
+                    (mousedown)="onListItemDown(listItemIndex)"
+                    [textContent]="listItems[listItemIndex].name"
+                    (dblclick)="onListItemDoubleClick(listItemIndex)"
+                    [ngClass]="{'edited-listItem': indexOfEditedListItem == listItemIndex,
+                                'selected-listItem': selectedListItemIndex == listItemIndex,
+                                'unselected-listItem': unselectedListItemIndex == listItemIndex,
+                                'selected-listItem-top': listItems[listItemIndex].selectType == 'top',
+                                'selected-listItem-whole': listItems[listItemIndex].selectType == 'whole',
+                                'selected-listItem-middle': listItems[listItemIndex].selectType == 'middle',
+                                'selected-listItem-bottom': listItems[listItemIndex].selectType == 'bottom',
+                                'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>

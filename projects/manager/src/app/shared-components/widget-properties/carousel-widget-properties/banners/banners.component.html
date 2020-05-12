@@ -1,1 +1,67 @@
-<p>banners works!</p>
+<!-- Panel -->
+<panel #panel [title]="'Banners'">
+
+    <!-- Property Box -->
+    <div class="property-box-light">
+
+        <!-- Container for paginator & icons -->
+        <div class="property-box-light-icon-bar">
+
+            <!-- Paginator -->
+            <paginator [itemCount]="3"></paginator>
+            
+            <!-- Icons -->
+            <div class="icons">
+
+                <!-- Delete Banner Icon -->
+                <div class="icon-container">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+
+                <!-- Add Banner Icon -->
+                <div class="icon-container">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Content -->
+        <div class="content">
+
+            <!-- Icon -->
+            <div class="property">
+                <div class="label">Banner:</div>
+            </div>
+            <div class="property-box-dark">
+
+                <!-- Media Browser Icon -->
+                <div class="icons">
+                    <div class="icon-container">
+                        <i class="fas fa-image"></i>
+                    </div>
+                </div>
+
+                <!-- Banner -->
+                <div class="img-container">
+                    <img>
+                </div>
+            </div>
+
+
+            <!-- Link -->
+            <div class="property">
+                <div class="label">Link:</div>
+            </div>
+            <div class="property-box-dark">
+
+                <!-- Link Icon -->
+                <div class="icons">
+                    <div class="icon-container">
+                        <i class="fas fa-link"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</panel>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'caption',
+  selector: 'caption-property',
   templateUrl: './caption.component.html',
   styleUrls: ['./caption.component.scss']
 })

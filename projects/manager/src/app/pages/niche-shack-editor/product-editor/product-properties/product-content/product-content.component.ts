@@ -9,14 +9,14 @@ import { PanelComponent } from 'projects/manager/src/app/shared-components/panel
   styleUrls: ['./product-content.component.scss']
 })
 export class ProductContentComponent implements OnChanges {
-  @ViewChild('panel', { static: false }) panel: PanelComponent;
   public checkList = [];
   public contentIndex: number = 0;
   public pricePointList: Array<string>;
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
+  @ViewChild('panel', { static: false }) panel: PanelComponent;
 
-
+  
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
     let priceIndices: Array<Array<number>>;

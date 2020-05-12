@@ -13,6 +13,9 @@ import { WidgetComponent } from './widgets/widget/widget.component';
 import { ColumnComponent } from './column/column.component';
 import { ProportionalWidgetComponent } from './widgets/proportional-widget/proportional-widget.component';
 import { FreeformWidgetComponent } from './widgets/freeform-widget/freeform-widget.component';
+import { ProductGroupWidgetComponent } from './widgets/product-group-widget/product-group-widget.component';
+import { CategoriesWidgetComponent } from './widgets/categories-widget/categories-widget.component';
+import { CarouselWidgetComponent } from './widgets/carousel-widget/carousel-widget.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { FreeformWidgetComponent } from './widgets/freeform-widget/freeform-widg
     WidgetComponent,
     ColumnComponent,
     ProportionalWidgetComponent,
-    FreeformWidgetComponent
+    FreeformWidgetComponent,
+    ProductGroupWidgetComponent,
+    CategoriesWidgetComponent,
+    CarouselWidgetComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +48,10 @@ import { FreeformWidgetComponent } from './widgets/freeform-widget/freeform-widg
     TextWidgetComponent,
     VideoWidgetComponent,
     RowComponent,
-    ColumnComponent
+    ColumnComponent,
+    ProductGroupWidgetComponent,
+    CategoriesWidgetComponent,
+    CarouselWidgetComponent
   ]
 })
 export class DesignerModule { }
