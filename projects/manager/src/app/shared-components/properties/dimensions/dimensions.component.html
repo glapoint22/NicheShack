@@ -1,1 +1,19 @@
-<p>dimensions works!</p>
+<panel [title]="'Dimensions'">
+    <!-- Width -->
+    <div class="property">
+        <div class="label">Width</div>
+        <div style="flex: 1;">
+            <editable-number-field #widthNumberField [value]="getWidth()"
+                (onValueChange)="setWidth($event, widthNumberField)"></editable-number-field>
+        </div>
+    </div>
+
+    <!-- Height -->
+    <div class="property">
+        <div class="label">Height</div>
+        <div style="flex: 1;">
+            <editable-number-field #heightNumberField [value]="getHeight()"
+                (onValueChange)="setHeight($event, heightNumberField)"></editable-number-field>
+        </div>
+    </div>
+</panel>

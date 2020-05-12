@@ -11,7 +11,7 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
   template: '',
 })
 export class WidgetComponent implements OnInit, BreakpointsComponent {
-  @ViewChild('widget', { static: false }) widget: ElementRef;
+  @ViewChild('widget', { static: false }) widgetElement: ElementRef;
   public width: number;
   public height: number;
   public column: ColumnComponent;

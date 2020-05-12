@@ -6,6 +6,8 @@
     </div>
 
     <!-- Button Widget Properties -->
-    <button-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Button"></button-widget-properties>
+    <button-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Button"
+        [widget]="widgetService.selectedWidget"></button-widget-properties>
+
 
 </ng-container>

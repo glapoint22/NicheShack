@@ -205,6 +205,8 @@ export class RowComponent implements BreakpointsComponent {
     // Add or update each column with the correct column span based on the number of columns in this row
     this.columns.forEach((column: Column) => {
       column.component.columnSpan.value = Math.max(2, Math.floor(12 / this.columns.length));
+      // column.component.widget.width = this.rowElement.nativeElement.getBoundingClientRect().width / this.columns.length;
+      // column.component.widget.height = column.element.getBoundingClientRect().height;
     });
 
 

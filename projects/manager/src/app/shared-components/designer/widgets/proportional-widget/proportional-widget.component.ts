@@ -10,17 +10,18 @@ export class ProportionalWidgetComponent extends WidgetComponent {
   public minWidth: number = 40;
 
   onHandleMousedown(verticalHandle: string, horizontalHandle: string, event: MouseEvent) {
-    let anchorWidth: number = this.widget.nativeElement.clientWidth * (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? 0.5 : 1);
-    let anchorPoint: number = this.widget.nativeElement.getBoundingClientRect().left +
+    let anchorWidth: number = this.widgetElement.nativeElement.clientWidth * (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? 0.5 : 1);
+    let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().left +
       (horizontalHandle == 'left' || this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? anchorWidth : 0);
-    let startWidth: number = this.widget.nativeElement.clientWidth;
-    let columnWidth: number = this.widget.nativeElement.parentElement.parentElement.clientWidth;
+    let startWidth: number = this.widgetElement.nativeElement.clientWidth;
+    let columnWidth: number = this.column.columnElement.clientWidth;
     let mouse: Vector = new Vector(event.clientX, event.clientY);
     let mouseX: number = mouse.x;
     let maxRowHeight: number = this.getMaxRowHeight();
-    let previousHeight = this.widget.nativeElement.getBoundingClientRect().height;
-    let maxHeight = this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
-    this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom ? this.getMaxHeight(): Infinity;
+    let previousHeight: number = this.widgetElement.nativeElement.getBoundingClientRect().height;
+    let maxHeight: number = this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
+      this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom ? this.getMaxHeight() : Infinity;
+    let offset = event.clientX - (horizontalHandle == 'left' ? anchorPoint - anchorWidth : anchorPoint + anchorWidth);
 
     // Set the cursor
     document.body.id = 'widget-resize';
@@ -61,95 +62,19 @@ export class ProportionalWidgetComponent extends WidgetComponent {
       mouseX += deltaSum;
 
       // Calculate the width of the widget
-      let mousePos = (anchorPoint - mouseX) * (horizontalHandle == 'left' ? 1 : -1);
+      let mousePos = ((anchorPoint - mouseX) + offset) * (horizontalHandle == 'left' ? 1 : -1);
       let percent = mousePos / anchorWidth;
       this.width = Math.round(startWidth * percent);
 
-      let aspectRatio = this.widget.nativeElement.getBoundingClientRect().height / this.widget.nativeElement.getBoundingClientRect().width;
-
-
-      // Make sure the width doesn't go below the min width
-      if (this.width < this.minWidth) {
-        this.width = this.minWidth;
-      }
-
-      // If the width is greater than the column width
-      if (this.width > columnWidth) {
-        this.width = columnWidth;
-      }
-
-
-      // Calculte the height of the widget
-      this.height = this.width * aspectRatio;
-      let deltaHeight = previousHeight - this.height;
-
-
-      // Make sure the widget's height does not go above the max height
-      if (this.height > maxHeight) {
-        let diff = this.height - maxHeight;
-        this.width -= diff / aspectRatio;
-        this.height -= diff;
-
-        if (previousHeight < maxHeight) {
-          deltaHeight = previousHeight - maxHeight;
-        } else {
-          deltaHeight = 0;
-        }
-      }
-
-
-      // This block of code calculates deltaHeight to prevent the current row and next rows from moving
-      if (this.height < maxRowHeight) {
-
-        // If the previous height was greater or equal to the row's height
-        if (previousHeight >= maxRowHeight) {
-          deltaHeight = previousHeight - maxRowHeight;
-
-        } else {
-          deltaHeight = 0;
-        }
-
-
-        // The widget's height is greater or equal to the row's height
-      } else {
-
-
-
-        // The previous height was less than or equal to the row's height
-        if (previousHeight <= maxRowHeight) {
-          deltaHeight = maxRowHeight - this.height;
-        }
-      }
-
-
-
-
-
-      // Align Top
-      if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
-        this.column.row.positionNextRow(-deltaHeight);
-
-
-        // Align Center or Align Bottom
-      } else if ((this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
-        this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom) && this.width) {
-
-
-        // Align center
-        if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
-          this.column.row.positionNextRow(-deltaHeight * 0.5);
-        }
-
-        // Position the row
-        this.column.row.setPosition((deltaHeight * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 0.5 : 1)));
-      }
-
-
-      mouse = new Vector(e.clientX, e.clientY);
+      // Set the dimensions of the widget
+      this.setDimensions(columnWidth, maxRowHeight, maxHeight, previousHeight);
 
 
       // Re-assign
       previousHeight = this.height;
+
+
+      mouse = new Vector(e.clientX, e.clientY);
     }
 
     let onMouseup = () => {
@@ -157,5 +82,89 @@ export class ProportionalWidgetComponent extends WidgetComponent {
     }
 
     this.addEventListeners(onMousemove, onMouseup);
+  }
+
+
+
+  setDimensions(columnWidth: number, maxRowHeight: number, maxHeight: number, previousHeight: number) {
+    let aspectRatio = this.widgetElement.nativeElement.getBoundingClientRect().height / this.widgetElement.nativeElement.getBoundingClientRect().width;
+
+
+    // Make sure the width doesn't go below the min width
+    if (this.width < this.minWidth) {
+      this.width = this.minWidth;
+    }
+
+    // If the width is greater than the column width
+    if (this.width >= columnWidth) {
+      // this.width = columnWidth;
+      this.width = null;
+    }
+
+
+    // Calculte the height of the widget
+    this.height = (this.width ? this.width : columnWidth) * aspectRatio;
+    let deltaHeight = previousHeight - this.height;
+
+
+    // Make sure the widget's height does not go above the max height
+    if (this.height > maxHeight) {
+      let diff = this.height - maxHeight;
+      this.width -= diff / aspectRatio;
+      this.height -= diff;
+
+      if (previousHeight < maxHeight) {
+        deltaHeight = previousHeight - maxHeight;
+      } else {
+        deltaHeight = 0;
+      }
+    }
+
+
+    // This block of code calculates deltaHeight to prevent the current row and next rows from moving
+    if (this.height < maxRowHeight) {
+
+      // If the previous height was greater or equal to the row's height
+      if (previousHeight >= maxRowHeight) {
+        deltaHeight = previousHeight - maxRowHeight;
+
+      } else {
+        deltaHeight = 0;
+      }
+
+
+      // The widget's height is greater or equal to the row's height
+    } else {
+
+
+
+      // The previous height was less than or equal to the row's height
+      if (previousHeight <= maxRowHeight) {
+        deltaHeight = maxRowHeight - this.height;
+      }
+    }
+
+
+
+
+
+    // Align Top
+    if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
+      this.column.row.positionNextRow(-deltaHeight);
+
+
+      // Align Center or Align Bottom
+    } else if ((this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
+      this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom) && this.width) {
+
+
+      // Align center
+      if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
+        this.column.row.positionNextRow(-deltaHeight * 0.5);
+      }
+
+      // Position the row
+      this.column.row.setPosition((deltaHeight * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 0.5 : 1)));
+    }
   }
 }
