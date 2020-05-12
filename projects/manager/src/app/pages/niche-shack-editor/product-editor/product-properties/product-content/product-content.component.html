@@ -53,7 +53,7 @@
 
                 <!-- Image -->
                 <div class="img-container">
-                    <img [src]="'images/' + content[contentIndex].icon">
+                    <img [src]="'images/' + content[contentIndex].icon" (load)="panel.onContentLoad()">
                 </div>
             </div>
 

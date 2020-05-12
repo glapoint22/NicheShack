@@ -6,7 +6,8 @@
     </div>
 
     <!-- Button -->
-    <button-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Button"></button-widget-properties>
+    <button-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Button"
+        [widget]="widgetService.selectedWidget"></button-widget-properties>
     <!-- Text -->
     <text-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Text"></text-widget-properties>
     <!-- Image -->
@@ -24,4 +25,6 @@
     <!-- Carousel -->
     <carousel-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Carousel"></carousel-widget-properties>
 </ng-container>
+    
+
 

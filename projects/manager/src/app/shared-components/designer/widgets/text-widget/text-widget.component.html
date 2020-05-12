@@ -7,9 +7,9 @@
     <div class="left-handle"></div>
     <div class="bottom-center-handle"></div>
     <div class="right-handle"></div>
-    <div class="left-handle-bar" (mousedown)="onHandleMousedown('left')"></div>
-    <div class="right-handle-bar" (mousedown)="onHandleMousedown('right')"></div>
-    <div class="bottom-handle-bar" (mousedown)="onHandleMousedown('bottom')"></div>
+    <div class="left-handle-bar" (mousedown)="onHandleMousedown('left', $event)"></div>
+    <div class="right-handle-bar" (mousedown)="onHandleMousedown('right', $event)"></div>
+    <div class="bottom-handle-bar" (mousedown)="onHandleMousedown('bottom', $event)"></div>
 
     <!-- Contents -->
     <iframe #iframe width="100%" height="100%" align="top" style="background: white;"

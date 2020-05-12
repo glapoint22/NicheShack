@@ -1,7 +1,6 @@
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { ProductPricePoint } from 'projects/manager/src/app/classes/product-price-point';
 import { ProductContent } from 'projects/manager/src/app/classes/product-content';
-import { PanelComponent } from 'projects/manager/src/app/shared-components/panels/panel/panel.component';
 
 @Component({
   selector: 'product-content',
@@ -48,11 +47,6 @@ export class ProductContentComponent implements OnChanges {
         }
       }
     }
-
-    // Update the panel height
-    window.setTimeout(() => {
-      this.panel.onContentLoad();
-    });
   }
 
 

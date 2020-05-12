@@ -3,8 +3,8 @@ import { BreakpointType } from './breakpoint-type';
 import { Alignment } from './alignment';
 
 export class VerticalAlignment extends Alignment implements BreakpointType{
-    public value: string = BreakpointVerticalAlignment.Top;
-    public defaultValue: string = BreakpointVerticalAlignment.Top;
+    public value: BreakpointVerticalAlignment = BreakpointVerticalAlignment.Top;
+    public defaultValue: BreakpointVerticalAlignment = BreakpointVerticalAlignment.Top;
 
     setClass(value: string, element: HTMLElement, screenSize?: string) {
         switch (value) {

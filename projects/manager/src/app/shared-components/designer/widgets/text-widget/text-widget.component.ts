@@ -62,10 +62,10 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
   }
 
 
-  onHandleMousedown(handle: string) {
+  onHandleMousedown(handle: string, event: MouseEvent) {
     this.handleMove = true;
     if (handle == 'bottom') this.bottomHandleMove = true;
-    super.onHandleMousedown(handle)
+    super.onHandleMousedown(handle, event)
   }
 
   mouseUp(onMousemove, onMouseup) {
