@@ -10,6 +10,7 @@ import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
 import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { Padding } from 'projects/manager/src/app/classes/padding';
 
 @Component({
   selector: 'text-widget',
@@ -26,10 +27,11 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
   public document: Document = document;
   public iframeHeight: number;
   private defaultColor: Color = new Color(0, 0, 0, 1);
-  public paddingTop: PaddingTop = new PaddingTop();
-  public paddingRight: PaddingRight = new PaddingRight();
-  public paddingBottom: PaddingBottom = new PaddingBottom();
-  public paddingLeft: PaddingLeft = new PaddingLeft();
+  // public paddingTop: PaddingTop = new PaddingTop();
+  // public paddingRight: PaddingRight = new PaddingRight();
+  // public paddingBottom: PaddingBottom = new PaddingBottom();
+  // public paddingLeft: PaddingLeft = new PaddingLeft();
+  public padding = new Padding();
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService,
@@ -112,10 +114,10 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
 
     // Set the padding
     if (this.content) {
-      this.content.style.paddingTop = this.paddingTop.value;
-      this.content.style.paddingRight = this.paddingRight.value;
-      this.content.style.paddingBottom = this.paddingBottom.value;
-      this.content.style.paddingLeft = this.paddingLeft.value;
+      this.content.style.paddingTop = this.padding.top.value;
+      this.content.style.paddingRight = this.padding.right.value;
+      this.content.style.paddingBottom = this.padding.bottom.value;
+      this.content.style.paddingLeft = this.padding.left.value;
     }
   }
 

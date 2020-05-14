@@ -9,7 +9,7 @@
     <button-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Button"
         [buttonWidget]="widgetService.selectedWidget"></button-widget-properties>
     <!-- Text -->
-    <text-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Text"></text-widget-properties>
+    <text-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Text" [textWidget]="widgetService.selectedWidget"></text-widget-properties>
     <!-- Image -->
     <image-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Image"></image-widget-properties>
     <!-- Container -->
