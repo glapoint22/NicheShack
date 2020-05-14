@@ -9,7 +9,7 @@ export class NumberFieldComponent implements OnChanges {
   @Output() onValueChange: EventEmitter<number> = new EventEmitter();
   @Input() value: number;
   @Input() values: Array<number>;
-  private currentIndex: number;
+  public currentIndex: number;
 
 
   ngOnChanges() {

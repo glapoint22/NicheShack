@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { BreakpointVerticalAlignment } from '../../../classes/breakpoint';
-import { EditableNumberFieldComponent } from '../../elements/editable-number-field/editable-number-field.component';
+import { EditableNumberFieldComponent } from '../../elements/number-fields/editable-number-field/editable-number-field.component';
 import { ProportionalWidgetComponent } from '../../designer/widgets/proportional-widget/proportional-widget.component';
 import { FreeformWidgetComponent } from '../../designer/widgets/freeform-widget/freeform-widget.component';
 

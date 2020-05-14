@@ -25,7 +25,7 @@ import { VisibilityComponent } from './shared-components/properties/visibility/v
 import { ImageComponent } from './shared-components/properties/image/image.component';
 import { VideoComponent } from './shared-components/properties/video/video.component';
 import { CaptionComponent } from './shared-components/properties/caption/caption.component';
-import { NumberFieldComponent } from './shared-components/elements/number-field/number-field.component';
+import { NumberFieldComponent } from './shared-components/elements/number-fields/number-field/number-field.component';
 import { DropdownComponent } from './shared-components/elements/dropdowns/dropdown/dropdown.component';
 import { ColorSwatchComponent } from './shared-components/elements/color-swatch/color-swatch.component';
 import { ColorPickerPopupComponent } from './shared-components/popups/color-picker-popup/color-picker-popup.component';
@@ -38,7 +38,7 @@ import { PaginatorComponent } from './shared-components/paginator/paginator.comp
 import { ItemListComponent } from './shared-components/item-lists/item-list/item-list.component';
 import { EditableItemListComponent } from './shared-components/item-lists/editable-item-list/editable-item-list.component';
 import { CheckboxItemListComponent } from './shared-components/item-lists/checkbox-item-list/checkbox-item-list.component';
-import { EditableNumberFieldComponent } from './shared-components/elements/editable-number-field/editable-number-field.component';
+import { EditableNumberFieldComponent } from './shared-components/elements/number-fields/editable-number-field/editable-number-field.component';
 import { PagePropertiesComponent } from './shared-components/properties/page-properties/page-properties.component';
 import { RowPropertiesComponent } from './shared-components/row-properties/row-properties.component';
 import { FormsModule } from '@angular/forms';
@@ -56,6 +56,7 @@ import { LineWidgetPropertiesComponent } from './shared-components/widget-proper
 import { CarouselWidgetPropertiesComponent } from './shared-components/widget-properties/carousel-widget-properties/carousel-widget-properties.component';
 import { CategoriesWidgetPropertiesComponent } from './shared-components/widget-properties/categories-widget-properties/categories-widget-properties.component';
 import { ProductGroupWidgetPropertiesComponent } from './shared-components/widget-properties/product-group-widget-properties/product-group-widget-properties.component';
+import { NormalizedNumberFieldComponent } from './shared-components/elements/number-fields/normalized-number-field/normalized-number-field.component';
 
 
 @NgModule({
@@ -112,7 +113,8 @@ import { ProductGroupWidgetPropertiesComponent } from './shared-components/widge
     ContainerWidgetPropertiesComponent,
     LineWidgetPropertiesComponent,
     CarouselWidgetPropertiesComponent,
-    CategoriesWidgetPropertiesComponent
+    CategoriesWidgetPropertiesComponent,
+    NormalizedNumberFieldComponent
   ],
   imports: [
     CommonModule,
@@ -173,7 +175,8 @@ import { ProductGroupWidgetPropertiesComponent } from './shared-components/widge
     ContainerWidgetPropertiesComponent,
     LineWidgetPropertiesComponent,
     CarouselWidgetPropertiesComponent,
-    CategoriesWidgetPropertiesComponent
+    CategoriesWidgetPropertiesComponent,
+    NormalizedNumberFieldComponent
   ]
 })
 export class PropertiesEditorModule { }

@@ -72,7 +72,7 @@ export class EditableNumberFieldComponent extends NumberFieldComponent {
               if(!input.value) {
                 this.value = 0;
               } else {
-                this.value = parseInt(input.value);
+                this.value = this.parseValue(input.value);
               }
               
               this.onValueChange.emit(this.value);
@@ -106,6 +106,11 @@ export class EditableNumberFieldComponent extends NumberFieldComponent {
     window.addEventListener("mousemove", onMousemove);
     window.addEventListener("mouseup", onMouseup);
 
+  }
+
+
+  parseValue(value: string) {
+    return parseInt(value)
   }
 
 

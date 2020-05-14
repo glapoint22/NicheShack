@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { RowComponent } from '../../designer/row/row.component';
-import { EditableNumberFieldComponent } from '../../elements/editable-number-field/editable-number-field.component';
+import { EditableNumberFieldComponent } from '../../elements/number-fields/editable-number-field/editable-number-field.component';
 
 @Component({
   selector: 'position',
