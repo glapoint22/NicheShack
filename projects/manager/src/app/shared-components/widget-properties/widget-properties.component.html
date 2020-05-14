@@ -7,7 +7,7 @@
 
     <!-- Button -->
     <button-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Button"
-        [widget]="widgetService.selectedWidget"></button-widget-properties>
+        [buttonWidget]="widgetService.selectedWidget"></button-widget-properties>
     <!-- Text -->
     <text-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Text" [textWidget]="widgetService.selectedWidget"></text-widget-properties>
     <!-- Image -->

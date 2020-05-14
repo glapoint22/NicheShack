@@ -7,5 +7,5 @@ import { ButtonWidgetComponent } from '../../../designer/widgets/button-widget/b
   styleUrls: ['./button-widget-normal-properties.component.scss']
 })
 export class ButtonWidgetNormalPropertiesComponent {
-  @Input() button: ButtonWidgetComponent;
+  @Input() buttonWidget: ButtonWidgetComponent;
 }
