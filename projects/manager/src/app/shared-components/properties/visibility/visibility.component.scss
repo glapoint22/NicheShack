@@ -1,0 +1,21 @@
+.property {
+    justify-content: space-between;
+
+    img {
+        margin-right: 2px;
+        cursor: pointer;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+
+        &:hover:not(.hidden) {
+            filter: brightness(1.5);
+        }
+    }
+}
+
+.hidden {
+    filter: brightness(0.6);;
+}

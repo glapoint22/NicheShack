@@ -1,12 +1,6 @@
 @each $key in map-keys($breakpoints) {
     $extension: get-class-extension($key);
 
-    @if not($extension == "") {
-        .show#{$extension} {
-            display: none;
-        }
-    }
-
     @include media-breakpoint($key) {
         @if not($extension == "") {
             .hide#{$extension} {

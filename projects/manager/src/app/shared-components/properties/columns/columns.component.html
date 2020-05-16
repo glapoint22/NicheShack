@@ -1,16 +1,17 @@
 <panel [title]="'Columns'">
-    
-
     <!-- Span -->
     <div class="property">
         <div class="label">Span</div>
 
         <!-- value -->
         <div class="number-field-container">
-            <number-field #numberField [value]="column.columnSpan.value" [values]="columns" (onValueChange)="onValueChange($event, numberField)"></number-field>
+            <number-field #numberField [value]="column.columnSpan.value" [values]="columns"
+                (onValueChange)="onValueChange($event, numberField)"></number-field>
         </div>
 
         <!-- Breakpoint checkbox -->
-        <checkbox></checkbox>
+        <div class="checkbox-container">
+            <checkbox [disabled]="column.row.columns.length == 1 || breakpointService.currentBreakpointScreenSize == '0'" (change)="setBreakpoint()" [checked]="isBreakpointSet"></checkbox>
+        </div>
     </div>
 </panel>

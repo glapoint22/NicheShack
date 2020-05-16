@@ -4,7 +4,6 @@
         padding-left: 20px;
         height: 12px;
         line-height: 12px;
-        cursor: pointer;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -14,19 +13,24 @@
         
     
         &:hover {
-            input ~ .checkmark {
+            input + .checkmark {
                 background-color: $checkmark-background-hover-color;
             }
         }
     
         input {
             display: none;
-            &:checked ~ .checkmark {
+            &:checked + .checkmark {
                 background-color: $checkmark-background-checked-color;
     
                 &:after {
                     display: block;
                 }
+            }
+
+            &:disabled + .checkmark {
+                background-color: darken($checkmark-background-color, 15%);
+                cursor: default;
             }
         }
     }
@@ -38,6 +42,7 @@
         height: 12px;
         width: 12px;
         background-color: $checkmark-background-color;
+        cursor: pointer;
         &:after {
             content: "";
             top: 3px;

@@ -12,6 +12,7 @@ import { Corners } from '../../../classes/corners';
 import { Shadow } from '../../../classes/shadow';
 import { Border } from '../../../classes/border';
 import { HorizontalAlignment } from '../../../classes/horizontal-alignment';
+import { Column } from '../../../classes/column';
 
 @Component({
   selector: '[column]',
@@ -124,6 +125,15 @@ export class ColumnComponent implements BreakpointsComponent {
 
     // Set the widget's column as this column
     this.widget.column = this;
+
+
+    // Remove all column span breakpoints
+    this.row.columns.forEach((column: Column)=> {
+      this.breakpointService.removeAllBreakpoints(column.component.breakpoints, column.component.columnSpan);
+    })
+
+    // We need to flag that there is a breakpoint change
+    this.breakpointService.onBreakpointChange.next();
   }
 
   onDropIndicatorEnter() {
