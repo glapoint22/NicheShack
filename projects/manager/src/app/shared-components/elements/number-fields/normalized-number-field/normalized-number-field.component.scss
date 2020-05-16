@@ -1,6 +1,10 @@
 .container {
+
     input {
         cursor: w-resize;
+        position: relative;
+        top: -15px;
+        background: transparent;
     
         &::selection {
             background: #191919;

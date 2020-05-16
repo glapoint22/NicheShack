@@ -19,9 +19,8 @@ export class NormalizedNumberFieldComponent extends EditableNumberFieldComponent
 
 
   parseValue(value: string) {
-    return parseFloat(value)
+    return parseFloat(value);
   }
-
 
 
 

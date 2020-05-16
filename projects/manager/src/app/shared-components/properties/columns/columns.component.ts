@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ColumnComponent } from '../../designer/column/column.component';
-import { ColumnSpan } from '../../../classes/column-span';
 import { NumberFieldComponent } from '../../elements/number-fields/number-field/number-field.component';
+import { ColumnSpan } from '../../../classes/column-span';
 import { Column } from '../../../classes/column';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { Breakpoint } from '../../../classes/breakpoint';
+
 
 @Component({
   selector: 'columns',

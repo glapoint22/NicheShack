@@ -66,10 +66,23 @@
     margin-left: -5px;
     margin-top: -5px;
     user-select: none;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .ring-dark {
     border-color: black;
+}
+
+.hueSlider {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    background: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 
@@ -82,6 +95,10 @@
     background-size: 16px 16px;
     background-position: 0 0, 8px 8px;
 }
+
+
+
+
 
 // .color-property-container {
 //     background: #2e2e2e;
