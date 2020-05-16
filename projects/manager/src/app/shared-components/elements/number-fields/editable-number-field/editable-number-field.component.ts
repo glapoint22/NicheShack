@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { NumberFieldComponent } from '../number-field/number-field.component';
 
 @Component({
@@ -8,6 +8,7 @@ import { NumberFieldComponent } from '../number-field/number-field.component';
 })
 export class EditableNumberFieldComponent extends NumberFieldComponent {
   public inEditMode: boolean;
+  @Output() onSliderDown: EventEmitter<boolean> = new EventEmitter();
 
   ngOnChanges(){}
 
@@ -25,7 +26,7 @@ export class EditableNumberFieldComponent extends NumberFieldComponent {
     // If not already in edit mode, prevent the input's default actions
     if (!this.inEditMode) mouseEvent.preventDefault();
 
-
+    this.onSliderDown.emit(true);
 
     // On Mouse Move
     let onMousemove = (e: MouseEvent) => {
@@ -43,6 +44,9 @@ export class EditableNumberFieldComponent extends NumberFieldComponent {
 
     // On Mouse Up
     let onMouseup = () => {
+
+      this.onSliderDown.emit(false);
+
       // If not using the slider and not in edit mode
       if (!usingSlider && !this.inEditMode) {
         // Flag that we are now in edit mode

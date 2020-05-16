@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ColumnComponent } from '../../designer/column/column.component';
-import { NumberFieldComponent } from '../../elements/number-field/number-field.component';
+import { NumberFieldComponent } from '../../elements/number-fields/number-field/number-field.component';
 import { ColumnSpan } from '../../../classes/column-span';
+
 
 @Component({
   selector: 'columns',

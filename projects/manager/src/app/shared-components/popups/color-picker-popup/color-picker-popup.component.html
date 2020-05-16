@@ -12,7 +12,7 @@
 
         <div #hueContainer class="hue" (mousedown)="hueDown($event)">
         
-            <div [style.top.px]="hueSliderY" style="position: relative; width: 7px; height: 7px; background: white; border: 1px solid black; border-radius: 4px;"></div>
+            <div [style.top.px]="hueSliderY" class="hueSlider"></div>
         </div>
 
     </div>
@@ -21,31 +21,27 @@
         <!-- R -->
         <div class="property" style="margin-left: 13px;">
             <div class="label" style="margin-right: 9px;">R</div>
-            <!-- <input #redInput class="txt-20" (input)="onInputChange()"> -->
-            <normalized-number-field [value]="red" (onValueChange)="red = $event; updateRGB()"></normalized-number-field>
+            <normalized-number-field [value]="red" (onValueChange)="red = $event; updateRGB('red')" (onSliderDown)="cover.showResizeCover = $event"></normalized-number-field>
         </div>
         <!-- G -->
-        <div class="property" style="margin-left: 13px; margin-top: 0;">
+        <div class="property" style="margin-left: 13px; margin-top: 1px;">
             <div class="label" style="margin-right: 9px;">G</div>
-            <!-- <input #greenInput class="txt-20" style="border-top: none;" (input)="onInputChange()"> -->
-            <normalized-number-field [value]="green" (onValueChange)="green = $event; updateRGB()"></normalized-number-field>
+            <normalized-number-field [value]="green" (onValueChange)="green = $event; updateRGB('green')" (onSliderDown)="cover.showResizeCover = $event"></normalized-number-field>
         </div>
         <!-- B -->
-        <div class="property" style="margin-left: 13px; margin-top: 0;">
+        <div class="property" style="margin-left: 13px; margin-top: 1px;">
             <div class="label">B</div>
-            <!-- <input #blueInput class="txt-20" style="border-top: none;" (input)="onInputChange()"> -->
-            <normalized-number-field [value]="blue" (onValueChange)="blue = $event; updateRGB()"></normalized-number-field>
+            <normalized-number-field [value]="blue" (onValueChange)="blue = $event; updateRGB('blue')" (onSliderDown)="cover.showResizeCover = $event"></normalized-number-field>
         </div>
         <!-- A -->
-        <div class="property" style="margin-left: 13px; margin-top: 0;">
+        <div class="property" style="margin-left: 13px; margin-top: 1px;">
             <div class="label">A</div>
-            <normalized-number-field [value]="alpha" (onValueChange)="alpha = $event"></normalized-number-field>
+            <normalized-number-field [value]="alpha" (onValueChange)="alpha = $event" (onSliderDown)="cover.showResizeCover = $event"></normalized-number-field>
         </div>
         <!-- Hex -->
-        <div class="property" style="margin-top: 0;">
+        <div class="property" style="margin-top: 1px;">
             <div class="label">Hex</div>
-            <input #hexInput class="txt-20" style="border-top: none;" (input)="onInputChange()">
+            <input [value]="hexFocus ? hex : '#' + hex" class="txt-20" (input)="updateHex($event.target)" spellcheck="false" maxlength="6" (focus)="hexFocus = true;" (blur)="hexFocus = false; editMode = false" (click)="onHexInputClick($event.target)" (select)="editMode = true">
         </div>
     </div>
-
 </div>

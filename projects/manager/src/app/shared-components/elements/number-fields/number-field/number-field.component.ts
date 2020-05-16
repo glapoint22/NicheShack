@@ -19,6 +19,7 @@ export class NumberFieldComponent implements OnChanges {
   
   onMousedown(mouseEvent: MouseEvent) {
     mouseEvent.preventDefault();
+    
   }
 
 
