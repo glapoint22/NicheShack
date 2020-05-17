@@ -17,8 +17,8 @@
     <shadow [shadow]="widgetService.selectedWidget.column.shadow"></shadow>
 
     <!-- Padding -->
-    <padding [padding]="widgetService.selectedWidget.column.padding"></padding>
+    <padding [paddingComponent]="widgetService.selectedWidget.column"></padding>
 
     <!-- Horizontal Alignment -->
-    <horizontal-alignment [horizontalAlignment]="widgetService.selectedWidget.horizontalAlignment"></horizontal-alignment>
+    <horizontal-alignment [widget]="widgetService.selectedWidget"></horizontal-alignment>
 </ng-container>

@@ -19,6 +19,7 @@ export class ColumnSpan implements BreakpointType {
     }
 
     public defaultValue: number = 12;
+    public breakpointSet: boolean;
 
     constructor(private columnElement: HTMLElement) { }
 

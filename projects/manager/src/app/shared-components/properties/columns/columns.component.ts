@@ -15,17 +15,16 @@ import { Breakpoint } from '../../../classes/breakpoint';
 export class ColumnsComponent implements OnInit {
   @Input() column: ColumnComponent;
   public columns: Array<number> = new Array<number>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-  public isBreakpointSet: boolean;
 
 
   constructor(public breakpointService: BreakpointService) { }
 
 
   ngOnInit() {
-    this.isBreakpointSet = this.breakpointService.isBreakpointSet(this.column.breakpoints, this.column.columnSpan);
+    this.breakpointService.isBreakpointSet(this.column.breakpoints, this.column.columnSpan);
 
     this.breakpointService.onBreakpointChange.subscribe(() => {
-      this.isBreakpointSet = this.breakpointService.isBreakpointSet(this.column.breakpoints, this.column.columnSpan);
+      this.breakpointService.isBreakpointSet(this.column.breakpoints, this.column.columnSpan);
     });
   }
 
@@ -120,7 +119,7 @@ export class ColumnsComponent implements OnInit {
 
 
     // If there are any breakpoints set at this screen size, remove them
-    if (this.isBreakpointSet) {
+    if (this.column.columnSpan.breakpointSet) {
       this.column.row.columns.forEach((column: Column) => {
         this.breakpointService.removeBreakpointAtCurrentScreenSize(column.component.breakpoints, column.component.columnSpan);
       });
@@ -210,14 +209,12 @@ export class ColumnsComponent implements OnInit {
 
   // ----------------------------------------------------------Set Breakpoint ----------------------------------------------------------------------
   setBreakpoint() {
-    if (this.isBreakpointSet) {
+    if (this.column.columnSpan.breakpointSet) {
       this.removeBreakpoint();
 
     } else {
       this.addBreakpoint();
     }
-
-    this.isBreakpointSet = true;
   }
 
 
@@ -232,6 +229,7 @@ export class ColumnsComponent implements OnInit {
   addBreakpoint() {
     this.column.row.columns.forEach((column: Column) => {
       this.breakpointService.addBreakpoint(column.component.breakpoints, column.component.columnSpan, column.component.columnSpan.value);
+      column.component.columnSpan.breakpointSet = true;
     });
   }
 
@@ -248,8 +246,7 @@ export class ColumnsComponent implements OnInit {
     this.column.row.columns.forEach((column: Column) => {
       let breakpoint: Breakpoint = this.breakpointService.getBreakpoint(column.component.breakpoints, column.component.columnSpan);
       this.breakpointService.removeBreakpoint(column.component.breakpoints, breakpoint);
+      column.component.columnSpan.breakpointSet = false;
     });
-
-    this.breakpointService.onBreakpointChange.next();
   }
 }

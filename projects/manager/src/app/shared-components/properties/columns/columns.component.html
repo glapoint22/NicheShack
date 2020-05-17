@@ -11,7 +11,7 @@
 
         <!-- Breakpoint checkbox -->
         <div class="checkbox-container">
-            <checkbox [disabled]="column.row.columns.length == 1 || breakpointService.currentBreakpointScreenSize == '0'" (change)="setBreakpoint()" [checked]="isBreakpointSet"></checkbox>
+            <checkbox [disabled]="column.row.columns.length == 1 || breakpointService.currentBreakpointScreenSize == '0'" (change)="setBreakpoint()" [checked]="column.columnSpan.breakpointSet"></checkbox>
         </div>
     </div>
 </panel>
