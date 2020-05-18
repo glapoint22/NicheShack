@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CoverService {
+  public showCover: boolean = false;
   public showPointerCover: boolean = false;
   public showResizeCover: boolean = false;
 }

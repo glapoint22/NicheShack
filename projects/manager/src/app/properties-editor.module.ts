@@ -58,6 +58,7 @@ import { CategoriesWidgetPropertiesComponent } from './shared-components/widget-
 import { ProductGroupWidgetPropertiesComponent } from './shared-components/widget-properties/product-group-widget-properties/product-group-widget-properties.component';
 import { NormalizedNumberFieldComponent } from './shared-components/elements/number-fields/normalized-number-field/normalized-number-field.component';
 import { CoverComponent } from './shared-components/cover/cover.component';
+import { PopupComponent } from './shared-components/popups/popup/popup.component';
 
 
 @NgModule({
@@ -116,7 +117,8 @@ import { CoverComponent } from './shared-components/cover/cover.component';
     CarouselWidgetPropertiesComponent,
     CategoriesWidgetPropertiesComponent,
     NormalizedNumberFieldComponent,
-    CoverComponent
+    CoverComponent,
+    PopupComponent
 
   ],
   imports: [
@@ -180,7 +182,8 @@ import { CoverComponent } from './shared-components/cover/cover.component';
     CarouselWidgetPropertiesComponent,
     CategoriesWidgetPropertiesComponent,
     NormalizedNumberFieldComponent,
-    CoverComponent
+    CoverComponent,
+    PopupComponent
   ]
 })
 export class PropertiesEditorModule { }
