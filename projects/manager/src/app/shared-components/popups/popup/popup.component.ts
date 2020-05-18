@@ -58,21 +58,21 @@ export class PopupComponent {
   onMouseMove = (e: MouseEvent) => {
     if (!this.cover.showCover && this.popup.getBoundingClientRect().left != 0) {
       // If the mouse is to the left of the popup
-      if (e.clientX < this.popup.getBoundingClientRect().left ||
+      if (e.clientX < this.popup.getBoundingClientRect().left - 20 ||
         // Or the mouse is to the right of the popup
-        (e.clientX > (this.popup.getBoundingClientRect().left + this.popup.getBoundingClientRect().width) ||
+        (e.clientX > (this.popup.getBoundingClientRect().left + this.popup.getBoundingClientRect().width + 20) ||
           // Or the popup is below the source element
           (this.arrowOnTop &&
             // And the mouse is beyond the top of the source element
-            (e.clientY < this.popupService.sourceElement.getBoundingClientRect().top ||
+            (e.clientY < this.popupService.sourceElement.getBoundingClientRect().top - 20 ||
               // Or the mouse is below the bottom of the popup
-              (e.clientY > this.popup.getBoundingClientRect().top + this.popup.getBoundingClientRect().height))) ||
+              (e.clientY > this.popup.getBoundingClientRect().top + this.popup.getBoundingClientRect().height + 20))) ||
           // Or the popup is above the source element
           (!this.arrowOnTop &&
             // And the mouse is beyond the top of the popup
-            (e.clientY < this.popup.getBoundingClientRect().top ||
+            (e.clientY < this.popup.getBoundingClientRect().top - 20 ||
               // Or the mouse is below the bottom of the source element
-              (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height))))) {
+              (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + 20))))) {
 
 
         this.popupService.showColorPicker = false;

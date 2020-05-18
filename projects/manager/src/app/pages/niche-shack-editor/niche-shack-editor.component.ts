@@ -9,10 +9,4 @@ import { Color } from '../../classes/color';
 })
 export class NicheShackEditorComponent {
   public selectedItem: HierarchyItem = new HierarchyItem();
-
-  public red: Color = new Color(255, 0, 0, 1);
-  public green: Color = new Color(0, 255, 0, 1);
-  public blue: Color = new Color(0, 0, 255, 1);
-  public yellow: Color = new Color(255, 255, 0, 1);
-  public purple: Color = new Color(200, 0, 255, 1);
 }
