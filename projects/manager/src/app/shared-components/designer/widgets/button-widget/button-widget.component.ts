@@ -14,20 +14,31 @@ import { Padding } from 'projects/manager/src/app/classes/padding';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { ButtonState } from 'projects/manager/src/app/classes/button-state';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
+import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
+import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
+import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
+import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 
 @Component({
   selector: 'button-widget',
   templateUrl: './button-widget.component.html',
   styleUrls: ['./button-widget.component.scss']
 })
-export class ButtonWidgetComponent extends FreeformWidgetComponent implements OnInit, LinkSource {
+export class ButtonWidgetComponent extends FreeformWidgetComponent implements OnInit, LinkSource, BreakpointsPaddingComponent {
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public text: ButtonText = new ButtonText();
   public shadow: Shadow = new Shadow();
   public link: Link = new Link();
-  public padding: Padding = new Padding();
+
+  // Padding
+  public paddingTop: PaddingTop = new PaddingTop();
+  public paddingRight: PaddingRight = new PaddingRight();
+  public paddingBottom: PaddingBottom = new PaddingBottom();
+  public paddingLeft: PaddingLeft = new PaddingLeft();
+  public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
 
   // Background Hover & Active
   public backgroundHover: FillColor = new FillColor(new Color(150, 150, 150, 1));

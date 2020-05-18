@@ -1,7 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ColumnComponent } from '../../designer/column/column.component';
 import { NumberFieldComponent } from '../../elements/number-fields/number-field/number-field.component';
 import { ColumnSpan } from '../../../classes/column-span';
+import { Column } from '../../../classes/column';
+import { BreakpointService } from '../../../services/breakpoint.service';
+import { Breakpoint } from '../../../classes/breakpoint';
 
 
 @Component({
@@ -9,9 +12,21 @@ import { ColumnSpan } from '../../../classes/column-span';
   templateUrl: './columns.component.html',
   styleUrls: ['./columns.component.scss']
 })
-export class ColumnsComponent {
+export class ColumnsComponent implements OnInit {
   @Input() column: ColumnComponent;
   public columns: Array<number> = new Array<number>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+
+
+  constructor(public breakpointService: BreakpointService) { }
+
+
+  ngOnInit() {
+    this.breakpointService.isBreakpointSet(this.column.breakpoints, this.column.columnSpan);
+
+    this.breakpointService.onBreakpointChange.subscribe(() => {
+      this.breakpointService.isBreakpointSet(this.column.breakpoints, this.column.columnSpan);
+    });
+  }
 
 
   // ------------------------------------------------------------ On Value Change ----------------------------------------------------------
@@ -101,16 +116,27 @@ export class ColumnsComponent {
 
     // This will set this column's column span value, the number field value, and the number field's current index
     numberField.currentIndex = (numberField.value = this.column.columnSpan.value = value) - 1;
+
+
+    // If there are any breakpoints set at this screen size, remove them
+    if (this.column.columnSpan.breakpointSet) {
+      this.column.row.columns.forEach((column: Column) => {
+        this.breakpointService.removeBreakpointAtCurrentScreenSize(column.component.breakpoints, column.component.columnSpan);
+      });
+
+      // Add a new breakpoint
+      this.addBreakpoint();
+    }
   }
 
 
 
 
 
-  
-  
-  
-  
+
+
+
+
   // -------------------------------------------------------- Get Next Column Span ----------------------------------------------------------
   getNextColumnSpan(index: number, maxColumnSpan: number): ColumnSpan {
     let nextColumnSpan: ColumnSpan;
@@ -168,7 +194,7 @@ export class ColumnsComponent {
 
 
 
-  // ----------------------------------------------------------- Get First Column -----------------------------------------------------------------
+  // ---------------------------------------------------------- Get First Column ------------------------------------------------------------------
   getFirstColumn(): ColumnComponent {
     // This will return the first column that does not have a column span of one
     for (let i = 0; i < this.column.row.columns.length; i++) {
@@ -176,5 +202,51 @@ export class ColumnsComponent {
 
       if (currentColumn.columnSpan.value != 1) return currentColumn;
     }
+  }
+
+
+
+
+  // ----------------------------------------------------------Set Breakpoint ----------------------------------------------------------------------
+  setBreakpoint() {
+    if (this.column.columnSpan.breakpointSet) {
+      this.removeBreakpoint();
+
+    } else {
+      this.addBreakpoint();
+    }
+  }
+
+
+
+
+
+
+
+
+
+  // ----------------------------------------------------------Add Breakpoint ----------------------------------------------------------------------
+  addBreakpoint() {
+    this.column.row.columns.forEach((column: Column) => {
+      this.breakpointService.addBreakpoint(column.component.breakpoints, column.component.columnSpan, column.component.columnSpan.value);
+      column.component.columnSpan.breakpointSet = true;
+    });
+  }
+
+
+
+
+
+
+
+
+
+  // ----------------------------------------------------------Remove Breakpoint --------------------------------------------------------------------
+  removeBreakpoint() {
+    this.column.row.columns.forEach((column: Column) => {
+      let breakpoint: Breakpoint = this.breakpointService.getBreakpoint(column.component.breakpoints, column.component.columnSpan);
+      this.breakpointService.removeBreakpoint(column.component.breakpoints, breakpoint);
+      column.component.columnSpan.breakpointSet = false;
+    });
   }
 }

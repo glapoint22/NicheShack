@@ -4,20 +4,21 @@ import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.comp
 import { TextBox } from 'projects/manager/src/app/classes/text-box';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
+import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
+import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { Padding } from 'projects/manager/src/app/classes/padding';
 import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
 import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
 import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
 import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
-import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
-import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
-import { Padding } from 'projects/manager/src/app/classes/padding';
+import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 
 @Component({
   selector: 'text-widget',
   templateUrl: './text-widget.component.html',
   styleUrls: ['./text-widget.component.scss']
 })
-export class TextWidgetComponent extends FreeformWidgetComponent implements BreakpointsComponent {
+export class TextWidgetComponent extends FreeformWidgetComponent implements BreakpointsComponent, BreakpointsPaddingComponent {
   @ViewChild('iframe', { static: false }) iframe: ElementRef;
   private textBox: TextBox;
   private fixedHeight: number;
@@ -27,11 +28,12 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
   public document: Document = document;
   public iframeHeight: number;
   private defaultColor: Color = new Color(0, 0, 0, 1);
-  // public paddingTop: PaddingTop = new PaddingTop();
-  // public paddingRight: PaddingRight = new PaddingRight();
-  // public paddingBottom: PaddingBottom = new PaddingBottom();
-  // public paddingLeft: PaddingLeft = new PaddingLeft();
-  public padding = new Padding();
+  public paddingTop: PaddingTop = new PaddingTop();
+  public paddingRight: PaddingRight = new PaddingRight();
+  public paddingBottom: PaddingBottom = new PaddingBottom();
+  public paddingLeft: PaddingLeft = new PaddingLeft();
+
+  public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService,

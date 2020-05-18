@@ -1,10 +1,11 @@
 import { BreakpointType } from './breakpoint-type';
 
 export class Breakpoint {
-    constructor(public type: BreakpointType, public screenSize: BreakpointScreenSize, public value: any) {}
+    constructor(public type: BreakpointType, public screenSize: string, public value: any) {}
 }
 
 export enum BreakpointScreenSize {
+    Z = '0',
     XXS = '320',
     XS = '480',
     SM = '600',

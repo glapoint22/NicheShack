@@ -21,8 +21,8 @@
     <position [row]="widgetService.selectedWidget.column.row"></position>
 
     <!-- Padding -->
-    <padding [padding]="widgetService.selectedWidget.column.row.padding"></padding>
+    <padding [paddingComponent]="widgetService.selectedWidget.column.row"></padding>
 
     <!-- Vertical Alignment -->
-    <vertical-alignment [verticalAlignment]="widgetService.selectedWidget.column.row.verticalAlignment"></vertical-alignment>
+    <vertical-alignment [row]="widgetService.selectedWidget.column.row"></vertical-alignment>
 </ng-container>

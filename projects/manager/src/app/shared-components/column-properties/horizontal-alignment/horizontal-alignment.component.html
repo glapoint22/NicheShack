@@ -2,25 +2,32 @@
     <div class="property">
         <div class="label">Align</div>
 
+        <!-- Left -->
         <div class="image-container" title="Align Left"
-            [ngClass]="{'selected': horizontalAlignment.value == breakpointHorizontalAlignment.Left}"
-            (click)="horizontalAlignment.value = breakpointHorizontalAlignment.Left">
+            [ngClass]="{'selected': widget.horizontalAlignment.value == breakpointHorizontalAlignment.Left}"
+            (click)="setValue(breakpointHorizontalAlignment.Left)">
             <img src="assets/align-left.png">
         </div>
 
+
+        <!-- Center -->
         <div class="image-container" title="Align Center"
-            [ngClass]="{'selected': horizontalAlignment.value == breakpointHorizontalAlignment.Center}"
-            (click)="horizontalAlignment.value = breakpointHorizontalAlignment.Center">
+            [ngClass]="{'selected': widget.horizontalAlignment.value == breakpointHorizontalAlignment.Center}"
+            (click)="setValue(breakpointHorizontalAlignment.Center)">
             <img src="assets/align-center.png">
         </div>
 
+
+        <!-- Right -->
         <div class="image-container" title="Align Right"
-            [ngClass]="{'selected': horizontalAlignment.value == breakpointHorizontalAlignment.Right}"
-            (click)="horizontalAlignment.value = breakpointHorizontalAlignment.Right">
+            [ngClass]="{'selected': widget.horizontalAlignment.value == breakpointHorizontalAlignment.Right}"
+            (click)="setValue(breakpointHorizontalAlignment.Right)">
             <img src="assets/align-right.png">
         </div>
 
         <!-- Breakpoint checkbox -->
-        <checkbox></checkbox>
+        <checkbox (change)="breakpointService.toggleBreakpoint(widget.breakpoints, widget.horizontalAlignment)"
+            [checked]="widget.horizontalAlignment.breakpointSet"
+            [disabled]="breakpointService.currentBreakpointScreenSize == '0'"></checkbox>
     </div>
 </panel>

@@ -5,8 +5,6 @@ import { PaddingLeft } from './padding-left';
 
 export class Padding {
     constrain: boolean = true;
-    top: PaddingTop = new PaddingTop();
-    right: PaddingRight = new PaddingRight();
-    bottom: PaddingBottom = new PaddingBottom();
-    left: PaddingLeft = new PaddingLeft();
+
+    constructor(public top: PaddingTop, public right: PaddingRight, public bottom: PaddingBottom, public left: PaddingLeft) { }
 }

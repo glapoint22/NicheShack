@@ -12,13 +12,19 @@ import { Corners } from '../../../classes/corners';
 import { Shadow } from '../../../classes/shadow';
 import { Border } from '../../../classes/border';
 import { HorizontalAlignment } from '../../../classes/horizontal-alignment';
+import { Column } from '../../../classes/column';
+import { PaddingTop } from '../../../classes/padding-top';
+import { PaddingRight } from '../../../classes/padding-right';
+import { PaddingBottom } from '../../../classes/padding-bottom';
+import { PaddingLeft } from '../../../classes/padding-left';
+import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-padding-component';
 
 @Component({
   selector: '[column]',
   templateUrl: './column.component.html',
   styleUrls: ['./column.component.scss']
 })
-export class ColumnComponent implements BreakpointsComponent {
+export class ColumnComponent implements BreakpointsComponent, BreakpointsPaddingComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
   public row: RowComponent;
@@ -29,7 +35,14 @@ export class ColumnComponent implements BreakpointsComponent {
   private resizeButtonMousedown: boolean;
   public columnSpan: ColumnSpan;
   public border: Border = new Border();
-  public padding: Padding = new Padding();
+  public paddingTop: PaddingTop = new PaddingTop();
+  public paddingRight: PaddingRight = new PaddingRight();
+  public paddingBottom: PaddingBottom = new PaddingBottom();
+  public paddingLeft: PaddingLeft = new PaddingLeft();
+
+  public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
+
+  
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
   public horizontalAlignment: HorizontalAlignment = new HorizontalAlignment();
@@ -124,6 +137,15 @@ export class ColumnComponent implements BreakpointsComponent {
 
     // Set the widget's column as this column
     this.widget.column = this;
+
+
+    // Remove all column span breakpoints
+    this.row.columns.forEach((column: Column)=> {
+      this.breakpointService.removeAllBreakpoints(column.component.breakpoints, column.component.columnSpan);
+    })
+
+    // We need to flag that there is a breakpoint change
+    this.breakpointService.onBreakpointChange.next();
   }
 
   onDropIndicatorEnter() {

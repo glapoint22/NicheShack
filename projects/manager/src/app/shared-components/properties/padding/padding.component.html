@@ -1,8 +1,12 @@
 <panel [title]="'Padding'">
     <!-- Constrain -->
-    <checkbox style="color: white;" [label]="'Constrain'" [checked]="padding.constrain"
-        (change)="padding.constrain = !padding.constrain">
+    <checkbox style="color: white;" [label]="'Constrain'" [checked]="paddingComponent.padding.constrain"
+        (change)="paddingComponent.padding.constrain = !paddingComponent.padding.constrain">
     </checkbox>
+
+
+
+
 
     <!-- Top -->
     <div class="property">
@@ -10,57 +14,87 @@
 
         <!-- Padding value -->
         <div class="number-field-container">
-            <number-field [value]="padding.top.value" [values]="paddingValues"
+            <number-field [value]="paddingComponent.padding.top.value" [values]="paddingValues"
                 (onValueChange)="onValueChange('top', $event)">
             </number-field>
         </div>
 
         <!-- Breakpoint checkbox -->
-        <checkbox></checkbox>
+        <div class="checkbox-container">
+            <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == '0'"
+                (change)="onBreakpointChange('top')" [checked]="paddingComponent.padding.top.breakpointSet"></checkbox>
+        </div>
     </div>
 
-    <!-- Top Right -->
+
+
+
+
+
+
+    <!-- Right -->
     <div class="property">
         <div class="label">Right</div>
 
         <!-- Padding value -->
         <div class="number-field-container">
-            <number-field [value]="padding.right.value" [values]="paddingValues"
+            <number-field [value]="paddingComponent.padding.right.value" [values]="paddingValues"
                 (onValueChange)="onValueChange('right', $event)">
             </number-field>
         </div>
 
         <!-- Breakpoint checkbox -->
-        <checkbox></checkbox>
+        <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == '0'"
+            (change)="onBreakpointChange('right')" [checked]="paddingComponent.padding.right.breakpointSet"></checkbox>
     </div>
 
 
-    <!-- Bottom Right -->
+
+
+
+
+
+
+
+    <!-- Bottom -->
     <div class="property">
         <div class="label">Bottom</div>
 
         <!-- Padding value -->
         <div class="number-field-container">
-            <number-field [value]="padding.bottom.value" [values]="paddingValues"
+            <number-field [value]="paddingComponent.padding.bottom.value" [values]="paddingValues"
                 (onValueChange)="onValueChange('bottom', $event)">
             </number-field>
         </div>
 
         <!-- Breakpoint checkbox -->
-        <checkbox></checkbox>
+        <div class="checkbox-container">
+            <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == '0'"
+                (change)="onBreakpointChange('bottom')" [checked]="paddingComponent.padding.bottom.breakpointSet"></checkbox>
+        </div>
     </div>
 
 
-    <!-- Bottom Left -->
+
+
+
+
+
+
+
+    <!-- Left -->
     <div class="property">
         <div class="label">Left</div>
         <div class="number-field-container">
-            <number-field [value]="padding.left.value" [values]="paddingValues"
+            <number-field [value]="paddingComponent.padding.left.value" [values]="paddingValues"
                 (onValueChange)="onValueChange('left', $event)">
             </number-field>
         </div>
 
         <!-- Breakpoint checkbox -->
-        <checkbox></checkbox>
+        <div class="checkbox-container">
+            <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == '0'"
+                (change)="onBreakpointChange('left')" [checked]="paddingComponent.padding.left.breakpointSet"></checkbox>
+        </div>
     </div>
 </panel>

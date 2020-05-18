@@ -5,6 +5,7 @@ import { Alignment } from './alignment';
 export class VerticalAlignment extends Alignment implements BreakpointType{
     public value: BreakpointVerticalAlignment = BreakpointVerticalAlignment.Top;
     public defaultValue: BreakpointVerticalAlignment = BreakpointVerticalAlignment.Top;
+    public breakpointSet: boolean;
 
     setClass(value: string, element: HTMLElement, screenSize?: string) {
         switch (value) {
@@ -13,7 +14,7 @@ export class VerticalAlignment extends Alignment implements BreakpointType{
                 break;
 
             case BreakpointVerticalAlignment.Middle:
-                this.applyClass(element, screenSize, 'vertical-align-center');
+                this.applyClass(element, screenSize, 'vertical-align-middle');
                 break;
 
             case BreakpointVerticalAlignment.Bottom:

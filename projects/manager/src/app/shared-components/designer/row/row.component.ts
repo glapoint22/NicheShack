@@ -12,13 +12,18 @@ import { Breakpoint } from '../../../classes/breakpoint';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { BreakpointsComponent } from '../../../classes/breakpoints-component';
 import { Padding } from '../../../classes/padding';
+import { PaddingTop } from '../../../classes/padding-top';
+import { PaddingRight } from '../../../classes/padding-right';
+import { PaddingBottom } from '../../../classes/padding-bottom';
+import { PaddingLeft } from '../../../classes/padding-left';
+import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-padding-component';
 
 @Component({
   selector: 'row',
   templateUrl: './row.component.html',
   styleUrls: ['./row.component.scss']
 })
-export class RowComponent implements BreakpointsComponent {
+export class RowComponent implements BreakpointsComponent, BreakpointsPaddingComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   @ViewChild('row', { static: false }) rowElement: ElementRef;
 
@@ -36,7 +41,12 @@ export class RowComponent implements BreakpointsComponent {
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public padding: Padding = new Padding();
+  public paddingTop: PaddingTop = new PaddingTop();
+  public paddingRight: PaddingRight = new PaddingRight();
+  public paddingBottom: PaddingBottom = new PaddingBottom();
+  public paddingLeft: PaddingLeft = new PaddingLeft();
+
+  public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
   public verticalAlignment: VerticalAlignment = new VerticalAlignment();
   public container: ContainerComponent;
   public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();

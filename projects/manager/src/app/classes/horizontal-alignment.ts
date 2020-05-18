@@ -5,6 +5,7 @@ import { Alignment } from './alignment';
 export class HorizontalAlignment extends Alignment implements BreakpointType {
     public value: string = BreakpointHorizontalAlignment.Left;
     public defaultValue: string = BreakpointHorizontalAlignment.Left;
+    public breakpointSet: boolean;
 
     setClass(value: string, element: HTMLElement, screenSize?: string) {
         switch (value) {

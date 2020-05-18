@@ -1,1 +1,11 @@
-<p>visibility works!</p>
+<panel [title]="'Visibility'">
+    <!-- Span -->
+    <div class="property">
+        <!-- Label -->
+        <div class="label">Visible</div>
+
+        <!-- Visibility icon -->
+        <img src="assets/visibility-icon.png"
+            [ngClass]="{'hidden': column.visibility.value == breakpointVisibility.Hidden}" (click)="setVisibility()">
+    </div>
+</panel>

@@ -2,23 +2,32 @@
     <div class="property">
         <div class="label">Align</div>
 
-        <div class="image-container" title="Align Top" [ngClass]="{'selected': verticalAlignment.value == breakpointVerticalAlignment.Top}"
-            (click)="verticalAlignment.value = breakpointVerticalAlignment.Top">
+        <!-- Top -->
+        <div class="image-container" title="Align Top"
+            [ngClass]="{'selected': row.verticalAlignment.value == breakpointVerticalAlignment.Top}"
+            (click)="setValue(breakpointVerticalAlignment.Top)">
             <img src="assets/align-top.png">
         </div>
 
-        <div class="image-container" title="Align Middle" [ngClass]="{'selected': verticalAlignment.value == breakpointVerticalAlignment.Middle}"
-            (click)="verticalAlignment.value = breakpointVerticalAlignment.Middle">
+
+        <!-- Middle -->
+        <div class="image-container" title="Align Middle"
+            [ngClass]="{'selected': row.verticalAlignment.value == breakpointVerticalAlignment.Middle}"
+            (click)="setValue(breakpointVerticalAlignment.Middle)">
             <img src="assets/align-middle.png">
         </div>
 
+
+        <!-- Bottom -->
         <div class="image-container" title="Align Bottom"
-            [ngClass]="{'selected': verticalAlignment.value == breakpointVerticalAlignment.Bottom}"
-            (click)="verticalAlignment.value = breakpointVerticalAlignment.Bottom">
+            [ngClass]="{'selected': row.verticalAlignment.value == breakpointVerticalAlignment.Bottom}"
+            (click)="setValue(breakpointVerticalAlignment.Bottom)">
             <img src="assets/align-bottom.png">
         </div>
 
         <!-- Breakpoint checkbox -->
-        <checkbox></checkbox>
+        <checkbox (change)="breakpointService.toggleBreakpoint(row.breakpoints, row.verticalAlignment)"
+            [checked]="row.verticalAlignment.breakpointSet"
+            [disabled]="breakpointService.currentBreakpointScreenSize == '0'"></checkbox>
     </div>
 </panel>

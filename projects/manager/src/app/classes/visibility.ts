@@ -4,6 +4,7 @@ import { BreakpointVisibility } from './breakpoint';
 export class Visibility implements BreakpointType {
     public value: string = BreakpointVisibility.Visible;
     public defaultValue: string = BreakpointVisibility.Visible;
+    public breakpointSet: boolean;
 
     setClass(value:string, element: HTMLElement, screenSize?: string) {
         let className: string;
