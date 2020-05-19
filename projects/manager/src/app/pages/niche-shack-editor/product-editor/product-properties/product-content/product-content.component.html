@@ -84,7 +84,7 @@
                             [ngClass]="{'icon-disabled': itemList.isEditDisabled}"
                             (mouseover)="itemList.overIconButton = true"
                             (mouseout)="itemList.onIconButtonMouseOut()"
-                            (click)="!itemList.isEditDisabled ? editPricePoint() : null">
+                            (click)="!itemList.isEditDisabled ? editPricePoint($event.target) : null">
                         <i class="fas fa-edit"></i>
                     </div>
 
@@ -94,7 +94,7 @@
                             [ngClass]="{'icon-disabled': itemList.isAddDisabled}"
                             (mouseover)="itemList.overIconButton = true"
                             (mouseout)="itemList.onIconButtonMouseOut()"
-                            (click)="!itemList.isAddDisabled ? addPricePoint() : null">
+                            (click)="!itemList.isAddDisabled ? addPricePoint($event.target) : null">
                         <i class="fas fa-plus-circle"></i>
                     </div>
                 </div>

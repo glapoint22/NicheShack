@@ -12,7 +12,6 @@ export class PopupComponent {
   private arrow;
   private popupTop: number;
   private arrowOnTop: boolean = false;
-  private sourceElementMouseDown: boolean = false;
   constructor(public popupService: PopupService, public cover: CoverService) { }
 
 
@@ -21,36 +20,11 @@ export class PopupComponent {
     window.setTimeout(() => {
       this.popup = popup;
       this.arrow = arrow;
-      this.sourceElementMouseDown = false;
-
       this.setPopupTop();
       this.setPopupLeft();
       this.setArrowLeft();
       window.addEventListener('mousemove', this.onMouseMove);
-      window.addEventListener('mousedown', this.onMouseDown);
     })
-  }
-
-
-  // --------------------------------( ON POPUP BLUR )-------------------------------- \\
-  onPopupBlur() {
-    window.setTimeout(() => {
-      if (!this.sourceElementMouseDown) {
-        this.popupService.showColorPicker = false
-        window.removeEventListener('mousedown', this.onMouseDown);
-      }
-    })
-  }
-
-
-  // --------------------------------( ON MOUSE DOWN )-------------------------------- \\
-  onMouseDown = (e: MouseEvent) => {
-    if (e.clientX >= this.popupService.sourceElement.getBoundingClientRect().left &&
-      (e.clientX <= this.popupService.sourceElement.getBoundingClientRect().left + this.popupService.sourceElement.getBoundingClientRect().width) &&
-      e.clientY >= this.popupService.sourceElement.getBoundingClientRect().top &&
-      (e.clientY <= this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height)) {
-      this.sourceElementMouseDown = true;
-    }
   }
 
 
@@ -75,9 +49,10 @@ export class PopupComponent {
               (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + 20))))) {
 
 
-        this.popupService.showColorPicker = false;
+        this.popupService.showColorPickerPopup = false;
+        this.popupService.showPricePointPopup = false;
+        this.popupService.showHierarchyPopup = false;
         window.removeEventListener('mousemove', this.onMouseMove);
-        window.removeEventListener('mousedown', this.onMouseDown);
       }
     }
   }

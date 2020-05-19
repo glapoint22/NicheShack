@@ -1,104 +1,150 @@
-<div class="hierarchy-container">
-    <div class="base">
+<!-- Popup Base -->
+<div #popup *show="popupService.showHierarchyPopup" transitionClass="fade-end" class="popup-base fade-start"
+    (onShow)="onPopupShow(popup, arrow)">
 
-        
-
-        <!-- Search bar & filter menu -->
-        <div class="position-relative">
-            <!-- Search bar -->
-            <div class="search-bar">
-                <input #searchInput id="search-input" class="border-oval-left">
-                <div (mousedown)="showMenu = true">{{filterType}}</div>
-            </div>
+    <!-- Arrow -->
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
 
 
-            <!-- Filter menu -->
-            <div *show="showMenu" class="fade-start filter-menu" transitionClass="fade-end" tabindex="0"
-                (onHide)="showMenu = false" (blur)="showMenu = false">
 
-                <div (mousedown)="$event.stopPropagation()">
-                    <label>
-                        <input type="radio" name="filter" [checked]="filterType == 'Category'"
-                            (change)="filterType = 'Category'; showMenu = false; searchInput.value = ''">
-                        <i class="fas fa-check"></i>
-                        Filter by Category
-                    </label>
 
-                    <label>
-                        <input type="radio" name="filter" [checked]="filterType == 'Niche'"
-                            (change)="filterType = 'Niche'; showMenu = false; searchInput.value = ''">
-                        <i class="fas fa-check"></i>
-                        Filter by Niche
-                    </label>
 
-                    <label>
-                        <input type="radio" name="filter" [checked]="filterType == 'Product'"
-                            (change)="filterType = 'Product'; showMenu = false; searchInput.value = ''">
-                        <i class="fas fa-check"></i>
-                        Filter by Product
-                    </label>
+
+
+
+
+
+
+
+    <!-- <div class="hierarchy-container">
+        <div class="base"> -->
+
+
+
+            <!-- Search bar & filter menu -->
+            <div class="position-relative">
+                <!-- Search bar -->
+                <div class="search-bar">
+                    <input #searchInput id="search-input" class="border-oval-left">
+                    <div (mousedown)="showMenu = true">{{filterType}}</div>
+                </div>
+
+
+                <!-- Filter menu -->
+                <div *show="showMenu" class="fade-start filter-menu" transitionClass="fade-end" tabindex="0"
+                    (onHide)="showMenu = false" (blur)="showMenu = false">
+
+                    <div (mousedown)="$event.stopPropagation()">
+                        <label>
+                            <input type="radio" name="filter" [checked]="filterType == 'Category'"
+                                (change)="filterType = 'Category'; showMenu = false; searchInput.value = ''">
+                            <i class="fas fa-check"></i>
+                            Filter by Category
+                        </label>
+
+                        <label>
+                            <input type="radio" name="filter" [checked]="filterType == 'Niche'"
+                                (change)="filterType = 'Niche'; showMenu = false; searchInput.value = ''">
+                            <i class="fas fa-check"></i>
+                            Filter by Niche
+                        </label>
+
+                        <label>
+                            <input type="radio" name="filter" [checked]="filterType == 'Product'"
+                                (change)="filterType = 'Product'; showMenu = false; searchInput.value = ''">
+                            <i class="fas fa-check"></i>
+                            Filter by Product
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
 
 
-        <!-- Icons -->
-        <div class="icon-bar">
-            <!-- Collapse -->
-            <div class="icon-container" title="Collapse" (click)="onCollapseButtonClick()"
-                [ngClass]="{'icon-disabled': isCollapseButtonDisabled()}">
-                <i class="fas fa-minus-square"></i>
+            <!-- Icons -->
+            <div class="icon-bar">
+                <!-- Collapse -->
+                <div class="icon-container" title="Collapse" (click)="onCollapseButtonClick()"
+                    [ngClass]="{'icon-disabled': isCollapseButtonDisabled()}">
+                    <i class="fas fa-minus-square"></i>
+                </div>
+
+                <!-- Add -->
+                <div class="icon-container" [title]="getAddButtonTitle()"
+                    [ngClass]="{'icon-disabled': isAddButtonDisabled()}" (click)="onAddItemButtonClick()">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+
+                <!-- Rename -->
+                <div class="icon-container" [title]="selectedItem ? 'Rename ' + selectedItem.type : 'Rename'"
+                    [ngClass]="{'icon-disabled': !selectedItem}" (click)="editItem()">
+                    <i class="fas fa-pencil-alt"></i>
+                </div>
+
+
+                <!-- Open Form -->
+                <div class="icon-container"
+                    [title]="selectedItem && (selectedItem.type == 'Niche' || selectedItem.type == 'Product') ? 'Open ' + selectedItem.type + ' Form' : 'Open Form'"
+                    [ngClass]="{'icon-disabled': !selectedItem || selectedItem.type == 'Category'}"
+                    (click)="onItemClick()">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+
+
+                <!-- Delete -->
+                <div class="icon-container" [title]="selectedItem ? 'Delete ' + selectedItem.type : 'Delete'"
+                    [ngClass]="{'icon-disabled': !selectedItem}" (click)="selectedItem ? prompt.show = true: null">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
             </div>
 
-            <!-- Add -->
-            <div class="icon-container" [title]="getAddButtonTitle()"
-                [ngClass]="{'icon-disabled': isAddButtonDisabled()}"
-                (click)="onAddItemButtonClick()">
-                <i class="fas fa-plus-circle"></i>
+
+            <!-- Content -->
+            <div>
+                <!-- Search results close button -->
+                <div class="search-results" *ngIf="searchResultsCount != null">
+                    <div class="results">{{searchResultsCount}} results</div>
+                    <div class="close-button" title="Clear search results" (click)="clearSearchResults()">x</div>
+                </div>
+
+                <hierarchy-content [items]="items" [hierarchy]="this"></hierarchy-content>
             </div>
-
-            <!-- Rename -->
-            <div class="icon-container" [title]="selectedItem ? 'Rename ' + selectedItem.type : 'Rename'"
-                [ngClass]="{'icon-disabled': !selectedItem}" (click)="editItem()">
-                <i class="fas fa-pencil-alt"></i>
-            </div>
+        <!-- </div> -->
 
 
-            <!-- Open Form -->
-            <div class="icon-container"
-                [title]="selectedItem && (selectedItem.type == 'Niche' || selectedItem.type == 'Product') ? 'Open ' + selectedItem.type + ' Form' : 'Open Form'"
-                [ngClass]="{'icon-disabled': !selectedItem || selectedItem.type == 'Category'}"
-                (click)="onItemClick()">
-                <i class="fas fa-file-invoice"></i>
-            </div>
+        <!-- Expand / collapse bar -->
+        <!-- <div class="expand-collapse-bar" (click)="isCollapsed = !isCollapsed"></div> -->
+
+    <!-- </div> -->
+
+    <prompt #prompt [promptTitle]="'Delete ' + (selectedItem ? selectedItem.type : '')"
+        [message]="'Are you sure you want to delete ' + (selectedItem ? selectedItem.name : '') + '?'"
+        (onYes)="deleteItem()"></prompt>
 
 
-            <!-- Delete -->
-            <div class="icon-container" [title]="selectedItem ? 'Delete ' + selectedItem.type : 'Delete'"
-                [ngClass]="{'icon-disabled': !selectedItem}" (click)="selectedItem ? prompt.show = true: null">
-                <i class="fas fa-trash-alt"></i>
-            </div>
-        </div>
 
 
-        <!-- Content -->
-        <div>
-            <!-- Search results close button -->
-            <div class="search-results" *ngIf="searchResultsCount != null">
-                <div class="results">{{searchResultsCount}} results</div>
-                <div class="close-button" title="Clear search results" (click)="clearSearchResults()">x</div>
-            </div>
-
-            <hierarchy-content [items]="items" [hierarchy]="this"></hierarchy-content>
-        </div>
-    </div>
 
 
-    <!-- Expand / collapse bar -->
-    <!-- <div class="expand-collapse-bar" (click)="isCollapsed = !isCollapsed"></div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </div>
-
-<prompt #prompt [promptTitle]="'Delete ' + (selectedItem ? selectedItem.type : '')"
-    [message]="'Are you sure you want to delete ' + (selectedItem ? selectedItem.name : '') + '?'"
-    (onYes)="deleteItem()"></prompt>

@@ -16,6 +16,6 @@ export class ColorSwatchComponent{
   onClick(sourceElement) {
     this.popupService.colorPickerColor = this.color;
     this.popupService.sourceElement = sourceElement;
-    this.popupService.showColorPicker = !this.popupService.showColorPicker;
+    this.popupService.showColorPickerPopup = !this.popupService.showColorPickerPopup;
   }
 }

@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { HierarchyPopupComponent } from './hierarchy-popup/hierarchy-popup.component';
 import { HierarchyContentComponent } from './hierarchy-popup/hierarchy-content/hierarchy-content.component';
 import { PromptModule } from '../prompt/prompt.module';
+import { ShackIconComponent } from '../shack-icon/shack-icon.component';
 
 
 
@@ -21,7 +22,8 @@ import { PromptModule } from '../prompt/prompt.module';
     ReviewComplaintFormComponent,
     NotificationsComponent,
     HierarchyPopupComponent,
-    HierarchyContentComponent
+    HierarchyContentComponent,
+    ShackIconComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +38,8 @@ import { PromptModule } from '../prompt/prompt.module';
     ReviewComplaintFormComponent,
     NotificationsComponent,
     HierarchyPopupComponent,
-    HierarchyContentComponent
+    HierarchyContentComponent,
+    ShackIconComponent
   ]
 })
 export class MenuBarModule { }

@@ -1,0 +1,25 @@
+<div #popup *show="popupService.showPricePointPopup" class="popup-base fade-start" transitionClass="fade-end"
+    (onShow)="onPopupShow(popup, arrow)">
+
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
+
+    <div class="property">
+        <div class="label">Text Before</div>
+        <input #txtInput class="txt-20">
+    </div>
+
+    <div class="property">
+        <div class="label">Price</div>
+        <div class="label">$</div>
+        <input #txtInput class="txt-20" (input)="numbersOnly(1)">
+        <div class="label">.</div>
+        <input #txtInput class="txt-20" maxlength="2" (input)="numbersOnly(2)">
+    </div>
+
+    <div class="property">
+        <div class="label">Text After</div>
+        <input #txtInput class="txt-20">
+    </div>
+
+
+</div>
