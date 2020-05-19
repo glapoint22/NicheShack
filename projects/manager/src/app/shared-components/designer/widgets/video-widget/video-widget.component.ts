@@ -6,8 +6,8 @@ import { WidgetService } from 'projects/manager/src/app/services/widget.service'
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { Video } from 'projects/manager/src/app/classes/video';
 
 @Component({
   selector: 'video-widget',
@@ -16,42 +16,38 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 })
 export class VideoWidgetComponent extends ProportionalWidgetComponent implements BreakpointsComponent {
   @ViewChild('svg', { static: false }) placeholder: ElementRef;
+  @ViewChild('iframe', { static: false }) iframe: ElementRef;
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public video: string;
-  public sanitizedVideo: SafeUrl;
-  public handleMove: boolean;
+  public video: Video;
+  
 
   constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService, private sanitizer: DomSanitizer) { super(widgetService, breakpointService) }
+    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
 
   ngOnInit() {
-    // this.video = 'https://player.vimeo.com/video/264188894';
-    this.sanitizedVideo = this.sanitizer.bypassSecurityTrustResourceUrl(this.video);
     this.name = 'Video';
     this.type = WidgetType.Video;
     super.ngOnInit();
   }
 
-  onHandleMousedown(verticalHandle: string, horizontalHandle: string, event: MouseEvent) {
-    this.handleMove = true;
-    super.onHandleMousedown(verticalHandle, horizontalHandle, event);
-  }
 
-  mouseUp(onMousemove, onMouseup) {
-    this.handleMove = false;
-    super.mouseUp(onMousemove, onMouseup);
+  ngAfterViewInit() {
+    this.video = new Video(this.iframe.nativeElement);
+    // this.video.thumbnail = 'thumbnail1.png';
+    // this.video.url = 'https://www.youtube.com/embed/1AI6RS1st2E';
+    // this.video.url = '//player.vimeo.com/video/173192945?muted=false';
+    
   }
-
 
 
   buildHTML(parent: HTMLElement) {
     let video: HTMLDivElement;
 
     // If we have a video
-    if (this.video) {
+    if (this.video.url) {
       let iframe = document.createElement('iframe');
 
       video = document.createElement('div');
@@ -65,7 +61,7 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
 
       iframe.frameBorder = '0';
       iframe.allowFullscreen = true;
-      iframe.src = this.video;
+      iframe.src = this.video.url;
       iframe.align = 'top';
       iframe.style.position = 'absolute';
       iframe.style.top = '0';

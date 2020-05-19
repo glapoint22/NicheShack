@@ -1,0 +1,32 @@
+<panel #panel [title]="'Video'">
+    <!-- Property Box -->
+    <div class="property-box-dark">
+
+            <!-- Icons -->
+            <div class="icons">
+
+                <!-- Add Video Icon -->
+                <div class="icon-container">
+                    <i class="fas fa-film"></i>
+                </div>
+
+
+                <!-- Play Video Icon -->
+                <div class="icon-container" [ngClass]="{'icon-disabled': !video.url}" (click)="video.play()">
+                    <i *ngIf="!video.playing" class="fas fa-play-circle"></i>
+                    <i *ngIf="video.playing" class="fas fa-pause-circle"></i>
+                </div>
+            </div>
+
+        <!-- Video -->
+        <div class="video-container">
+            <!-- Thumbnail -->
+            <div *ngIf="video.thumbnail" class="thumbnail" [ngStyle]="{ 'background-image': 'url(images/' + video.thumbnail + ')'}">
+                <i class="far fa-play-circle"></i>
+            </div>
+
+            <!-- No video message -->
+            <div *ngIf="!video.thumbnail" class="no-video">No video available</div>
+        </div>
+    </div>
+</panel>

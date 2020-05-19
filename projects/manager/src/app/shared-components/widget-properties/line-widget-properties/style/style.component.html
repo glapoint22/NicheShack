@@ -1,1 +1,72 @@
-<p>style works!</p>
+<panel [title]="'Style'">
+
+
+    <!-- Width -->
+    <div class="property">
+        <div class="label">Width</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="border.width" (onValueChange)="border.width = $event">
+            </editable-number-field>
+        </div>
+    </div>
+
+
+    <!-- Style -->
+    <div class="property">
+        <div class="label">Style</div>
+        <div style="flex: 1; padding-left: 5px; padding-right: 3px;">
+
+            <div style="height: 22px; display: flex; margin-bottom: 7px;">
+                <!-- Solid -->
+                <div class="border-solid" title="Solid" (mousedown)="border.style='solid'"
+                    [ngClass]="{'selected-border': border.style=='solid'}"></div>
+                <div class="spacer"></div>
+
+                <!-- Dotted -->
+                <div class="border-dotted" title="Dotted" (mousedown)="border.style='dotted'"
+                    [ngClass]="{'selected-border': border.style=='dotted'}"></div>
+                <div class="spacer"></div>
+
+                <!-- Dashed -->
+                <div class="border-dashed" title="Dashed" (mousedown)="border.style='dashed'"
+                    [ngClass]="{'selected-border': border.style=='dashed'}"></div>
+                <div class="spacer"></div>
+
+                <!-- Double -->
+                <div class="border-double" title="Double" (mousedown)="border.style='double'"
+                    [ngClass]="{'selected-border': border.style=='double'}"></div>
+            </div>
+
+            <div style="height: 22px; display: flex;">
+                <!-- Groove -->
+                <div class="border-groove" title="Groove" (mousedown)="border.style='groove'"
+                    [ngClass]="{'selected-border-groove': border.style=='groove'}"></div>
+                <div class="spacer"></div>
+
+                <!-- Ridge -->
+                <div class="border-ridge" title="Ridge" (mousedown)="border.style='ridge'"
+                    [ngClass]="{'selected-border-ridge': border.style=='ridge'}"></div>
+                <div class="spacer"></div>
+
+                <!-- Inset -->
+                <div class="border-inset" title="Inset" (mousedown)="border.style='inset'"
+                    [ngClass]="{'selected-border-inset': border.style=='inset'}"></div>
+                <div class="spacer"></div>
+
+                <!-- Outset -->
+                <div class="border-outset" title="Outset" (mousedown)="border.style='outset'"
+                    [ngClass]="{'selected-border-outset': border.style=='outset'}"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Color -->
+    <div class="property">
+        <div class="label">Color</div>
+        <div style="flex: 1;">
+            <color-swatch [color]="border.color"></color-swatch>
+        </div>
+    </div>
+
+</panel>

@@ -23,7 +23,7 @@ import { ColumnsComponent } from './shared-components/properties/columns/columns
 import { PaddingComponent } from './shared-components/properties/padding/padding.component';
 import { VisibilityComponent } from './shared-components/properties/visibility/visibility.component';
 import { ImageComponent } from './shared-components/properties/image/image.component';
-import { VideoComponent } from './shared-components/properties/video/video.component';
+import { VideoComponent } from './shared-components/widget-properties/video-widget-properties/video/video.component';
 import { CaptionComponent } from './shared-components/properties/caption/caption.component';
 import { NumberFieldComponent } from './shared-components/elements/number-fields/number-field/number-field.component';
 import { DropdownComponent } from './shared-components/elements/dropdowns/dropdown/dropdown.component';

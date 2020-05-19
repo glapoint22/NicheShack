@@ -12,13 +12,15 @@ import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
 import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
 import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { Padding } from 'projects/manager/src/app/classes/padding';
+import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 
 @Component({
   selector: 'container-widget',
   templateUrl: './container-widget.component.html',
   styleUrls: ['./container-widget.component.scss']
 })
-export class ContainerWidgetComponent extends FreeformWidgetComponent {
+export class ContainerWidgetComponent extends FreeformWidgetComponent implements BreakpointsPaddingComponent {
   @ViewChild('container', { static: false }) container: ContainerComponent;
   public fill: FillColor = new FillColor();
   public border: Border = new Border();
@@ -28,6 +30,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent {
   public paddingRight: PaddingRight = new PaddingRight();
   public paddingBottom: PaddingBottom = new PaddingBottom();
   public paddingLeft: PaddingLeft = new PaddingLeft();
+  public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService) { super(widgetService, breakpointService) }

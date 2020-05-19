@@ -4,8 +4,10 @@
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHexA() : 'none'"
     [style.margin]="horizontalAlignment.value" [style.maxWidth.px]="width ? width : null"
-    [style.display]="!video ? 'flex' : null" [style.justifyContent]="!video ? 'center' : null"
-    [style.alignItems]="!video ? 'center' : null" [style.background]="!video ? 'white' : null">
+    [style.display]="!video || !video.url ? 'flex' : null"
+    [style.justifyContent]="!video || !video.url ? 'center' : null"
+    [style.alignItems]="!video || !video.url ? 'center' : null"
+    [style.background]="!video || !video.url ? 'white' : null">
 
 
     <div class="top-left-handle" (mousedown)="onHandleMousedown('top', 'left', $event)"></div>
@@ -15,22 +17,20 @@
 
 
     <!-- Video -->
-    <ng-container *ngIf="video; else placeholder">
-        <div class="container">
-            <iframe [src]="sanitizedVideo" frameborder="0" allowfullscreen class="video"></iframe>
-        </div>
-    </ng-container>
+    <div [ngClass]="{'container': video && video.url}">
+        <iframe #iframe frameborder="0" allowfullscreen class="video" allow="autoplay"></iframe>
+    </div>
 
 
     <!-- Placeholder -->
-    <ng-template #placeholder>
+    <ng-container *ngIf="!video || !video.url">
         <svg #svg viewBox="-16 -16 64 64">
             <path
                 d="M16,0C7.164,0,0,7.164,0,16s7.164,16,16,16s16-7.164,16-16S24.836,0,16,0z M10,24V8l16.008,8L10,24z" />
         </svg>
-    </ng-template>
+    </ng-container>
 
 
     <!-- Cover -->
-    <div *ngIf="handleMove" class="position-absolute-identity" style="user-select: none;"></div>
+    <div class="position-absolute-identity" style="user-select: none;"></div>
 </div>

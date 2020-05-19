@@ -1,0 +1,30 @@
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+
+    .thumbnail {
+        width: 220px; 
+        height: 125px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 70px;
+        color: white;
+
+        i {
+            -webkit-text-stroke: 1px #808080;
+        }
+    }
+}
+
+.no-video {
+    font-size: 11px;
+    text-align: center;
+    padding: 10px;
+    color: #888888;
+}
