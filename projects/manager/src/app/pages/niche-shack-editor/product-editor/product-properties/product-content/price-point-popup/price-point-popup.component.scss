@@ -1,0 +1,50 @@
+.property {
+
+    // Text Before Input
+    &:nth-child(2) input{
+        width: 135px;
+    }
+
+
+    &:nth-child(3) .label { 
+        // Price Label
+        &:nth-child(1) {
+            margin-left: 33px;
+            margin-right: 16px;
+        }
+        // Dollar Sign Label
+        &:nth-child(2) {
+            margin-left: -5px;
+            margin-right: 3px;
+        }
+        // Decimal Point Label
+        &:nth-child(4) {
+            margin-left: 0;
+            margin-right: 0;
+            font-size: 24px;
+        }
+    }
+    &:nth-child(3) input { 
+        // Whole Number Input
+        &:nth-child(3) {
+            width: 91px;
+            text-align:right;
+            padding-right: 5px;
+        }
+        // Decimal Input
+        &:nth-child(5) {
+            width: 27px;
+        }
+    }
+
+
+    // Text After Label
+    &:nth-child(4) .label {
+        margin-left: 10px;
+        margin-right: 11px;
+    }
+    // Text After Input
+    &:nth-child(4) input {
+        width: 135px;
+    }
+}

@@ -23,8 +23,8 @@ export class ColorPickerPopupComponent extends PopupComponent {
   public editMode: boolean;
   public ringDark: boolean;
   public hueSliderY: number;
-  @ViewChild('hueContainer', { static: false }) hueContainer: ElementRef;
-  @ViewChild('colorContainer', { static: false }) colorContainer: ElementRef;
+  @ViewChild('hueBar', { static: false }) hueBar: ElementRef;
+  @ViewChild('colorPalette', { static: false }) colorPalette: ElementRef;
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
@@ -48,10 +48,10 @@ export class ColorPickerPopupComponent extends PopupComponent {
   // -----------------------------( COLOR DOWN )------------------------------ \\
   colorDown(e: MouseEvent) {
     let setColor = (e: MouseEvent) => {
-      let colorContainerLeft: number = this.colorContainer.nativeElement.getBoundingClientRect().x;
-      let colorContainerTop: number = this.colorContainer.nativeElement.getBoundingClientRect().y;
-      let colorContainerWidth: number = this.colorContainer.nativeElement.offsetWidth;
-      let colorContainerHeight: number = this.colorContainer.nativeElement.offsetHeight;
+      let colorContainerLeft: number = this.colorPalette.nativeElement.getBoundingClientRect().x;
+      let colorContainerTop: number = this.colorPalette.nativeElement.getBoundingClientRect().y;
+      let colorContainerWidth: number = this.colorPalette.nativeElement.offsetWidth;
+      let colorContainerHeight: number = this.colorPalette.nativeElement.offsetHeight;
       let cursorPosX: number = e.clientX - colorContainerLeft;
       let cursorPosY: number = e.clientY - colorContainerTop;
       let cursorPercentageX: number = Math.round((cursorPosX / colorContainerWidth) * 100);
@@ -85,9 +85,9 @@ export class ColorPickerPopupComponent extends PopupComponent {
   // -----------------------------( HUE DOWN )------------------------------ \\
   hueDown(e: MouseEvent) {
     let setHue = (e: MouseEvent) => {
-      this.hueSliderY = e.clientY - this.hueContainer.nativeElement.getBoundingClientRect().y - 3;
+      this.hueSliderY = e.clientY - this.hueBar.nativeElement.getBoundingClientRect().y - 3;
       if (this.hueSliderY <= 0) this.hueSliderY = 0;
-      if (this.hueSliderY >= this.hueContainer.nativeElement.getBoundingClientRect().height - 7) this.hueSliderY = this.hueContainer.nativeElement.getBoundingClientRect().height - 7;
+      if (this.hueSliderY >= this.hueBar.nativeElement.getBoundingClientRect().height - 7) this.hueSliderY = this.hueBar.nativeElement.getBoundingClientRect().height - 7;
       this.hue = this.getHue();
       this.setRGB();
     }
@@ -188,7 +188,7 @@ export class ColorPickerPopupComponent extends PopupComponent {
 
   // -----------------------------( GET HUE )------------------------------ \\
   getHue() {
-    let hueContainerHeight = this.hueContainer.nativeElement.getBoundingClientRect().height - 7;
+    let hueContainerHeight = this.hueBar.nativeElement.getBoundingClientRect().height - 7;
     let magicNumber = 360 / hueContainerHeight;
     let hue = 360 - Math.round(this.hueSliderY * magicNumber);
 
@@ -198,7 +198,7 @@ export class ColorPickerPopupComponent extends PopupComponent {
 
   // -----------------------------( SET HUE SLIDER POSITION )------------------------------ \\
   setHueSliderPosition(hsl: HSL) {
-    let hueContainerHeight = this.hueContainer.nativeElement.getBoundingClientRect().height - 7;
+    let hueContainerHeight = this.hueBar.nativeElement.getBoundingClientRect().height - 7;
     let magicNumber = 360 / hueContainerHeight;
     let hue = hsl.h * 360;
     this.hueSliderY = hueContainerHeight - (hue / magicNumber);

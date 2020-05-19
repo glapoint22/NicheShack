@@ -2,13 +2,14 @@ import { Component, OnInit, HostListener, Output, EventEmitter } from '@angular/
 import { Observable, fromEvent } from 'rxjs';
 import { delay, debounceTime, switchMap, tap } from 'rxjs/operators';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
+import { PopupComponent } from '../../popups/popup/popup.component';
 
 @Component({
   selector: 'hierarchy-popup',
   templateUrl: './hierarchy-popup.component.html',
-  styleUrls: ['./hierarchy-popup.component.scss']
+  styleUrls: ['./hierarchy-popup.component.scss', '../../popups/popup/popup.component.scss']
 })
-export class HierarchyPopupComponent implements OnInit {
+export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   @Output() showItemProperties: EventEmitter<HierarchyItem> = new EventEmitter();
   public items: Array<HierarchyItem> = [];
   public selectedItem: HierarchyItem;
@@ -17,6 +18,36 @@ export class HierarchyPopupComponent implements OnInit {
   public filterType: string = 'Product';
   public searchResultsCount: number;
   private searchInput: any;
+
+
+  // -----------------------------( ON POPUP SHOW )------------------------------ \\
+  onPopupShow(popup, arrow) {
+    super.onPopupShow(popup, arrow);
+
+    this.searchInput = document.getElementById('search-input');
+
+    fromEvent(this.searchInput, 'input')
+      .pipe(
+        debounceTime(250),
+        switchMap((event: any) => {
+
+          // Replace with this.dataService.get(...)
+          return this.getTempItems(event.target.value == '' ? 'Category' : this.filterType);
+        }),
+        tap(items => {
+          // Set the item properties
+          items.map(item => {
+            item.type = this.searchInput.value == '' ? 'Category' : this.filterType;
+            item.children = [];
+          })
+        }))
+      .subscribe((result: any) => {
+        this.items = result;
+        this.selectedItem = null;
+        this.searchResultsCount = this.searchInput.value == '' ? null : this.items.length;
+      });
+  }
+
 
   // ---------------------Temp-----------------------------
   public getTempItems(type: string): Observable<any> {
@@ -111,30 +142,7 @@ export class HierarchyPopupComponent implements OnInit {
 
   }
 
-  ngAfterViewInit() {
-    this.searchInput = document.getElementById('search-input');
-
-    fromEvent(this.searchInput, 'input')
-      .pipe(
-        debounceTime(250),
-        switchMap((event: any) => {
-
-          // Replace with this.dataService.get(...)
-          return this.getTempItems(event.target.value == '' ? 'Category' : this.filterType);
-        }),
-        tap(items => {
-          // Set the item properties
-          items.map(item => {
-            item.type = this.searchInput.value == '' ? 'Category' : this.filterType;
-            item.children = [];
-          })
-        }))
-      .subscribe((result: any) => {
-        this.items = result;
-        this.selectedItem = null;
-        this.searchResultsCount = this.searchInput.value == '' ? null : this.items.length;
-      });
-  }
+  
 
 
 
@@ -427,3 +435,30 @@ export class HierarchyPopupComponent implements OnInit {
       });
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

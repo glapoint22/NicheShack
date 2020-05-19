@@ -1,56 +1,103 @@
-<div #popup *show="popupService.showColorPicker" class="base fade-start" transitionClass="fade-end"
-    (onShow)="onPopupShow(popup, arrow)" (blur)="onPopupBlur()" tabindex="-1">
+<!-- Popup Base -->
+<div #popup
+     transitionClass="fade-end"
+     class="popup-base fade-start"
+     (onShow)="onPopupShow(popup, arrow)"
+     *show="popupService.showColorPickerPopup">
 
+     <!-- Arrow -->
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
 
-    <div style="height: 152px; margin-bottom: 10px; display: flex;">
-        <div #colorContainer class="color-container" (mousedown)="colorDown($event)">
+
+    <!-- Color Container -->
+    <div class="color-container">
+
+        <!-- Color Palette -->
+        <div #colorPalette class="color-palette" (mousedown)="colorDown($event)">
+            
+            <!-- Alpha Background -->
             <div class="alpha-background"></div>
-            <div style="position: absolute; width: 100%; height: 100%;"
-                [style.background]="'hsla(' + hue + ', 100%, 50%,' + alpha + ')'"></div>
+            <!-- Color Background -->
+            <div class="color-background" [style.background]="'hsla(' + hue + ', 100%, 50%,' + alpha + ')'"></div>
+            <!-- Saturation -->
             <div class="saturation" [style.opacity]="alpha"></div>
+            <!-- Lightness -->
             <div class="lightness" [style.opacity]="alpha"></div>
+
             <!-- Ring -->
-            <div [style.left.%]="ringX" [style.top.%]="ringY" class="ring" [ngClass]="{'ring-dark': ringDark}"></div>
+            <div class="ring"
+                 [style.top.%]="ringY"
+                 [style.left.%]="ringX"
+                 [ngClass]="{'ring-dark': ringDark}">
+            </div>
         </div>
 
-        <div #hueContainer class="hue" (mousedown)="hueDown($event)">
-            <div [style.top.px]="hueSliderY" class="hueSlider"></div>
+        <!-- Hue Bar -->
+        <div #hueBar 
+             class="hue-bar"
+             (mousedown)="hueDown($event)">
+
+             <!-- Hue Slider -->
+            <div class="hueSlider"
+                 [style.top.px]="hueSliderY">
+            </div>
         </div>
     </div>
 
+    <!-- Input Section -->
     <div style="width: 100%;">
         <!-- R -->
-        <div class="property" style="margin-left: 13px;">
-            <div class="label" style="margin-right: 9px;">R</div>
-            <normalized-number-field [value]="red" (onValueChange)="red = $event; updateRGB('red')"
-                (onSliderDown)="cover.showResizeCover = $event"></normalized-number-field>
+        <div class="property">
+            <div class="label">R</div>
+            <normalized-number-field 
+                [value]="red"
+                (onSliderDown)="cover.showResizeCover = $event"
+                (onValueChange)="red = $event; updateRGB('red')">
+            </normalized-number-field>
         </div>
+        
         <!-- G -->
-        <div class="property" style="margin-left: 13px; margin-top: 1px;">
-            <div class="label" style="margin-right: 9px;">G</div>
-            <normalized-number-field [value]="green" (onValueChange)="green = $event; updateRGB('green')"
-                (onSliderDown)="cover.showResizeCover = $event"></normalized-number-field>
+        <div class="property">
+            <div class="label">G</div>
+            <normalized-number-field 
+                [value]="green"
+                (onSliderDown)="cover.showResizeCover = $event"
+                (onValueChange)="green = $event; updateRGB('green')">
+            </normalized-number-field>
         </div>
+
         <!-- B -->
-        <div class="property" style="margin-left: 13px; margin-top: 1px;">
+        <div class="property">
             <div class="label">B</div>
-            <normalized-number-field [value]="blue" (onValueChange)="blue = $event; updateRGB('blue')"
-                (onSliderDown)="cover.showResizeCover = $event"></normalized-number-field>
+            <normalized-number-field
+                [value]="blue"
+                (onSliderDown)="cover.showResizeCover = $event"
+                (onValueChange)="blue = $event; updateRGB('blue')">
+            </normalized-number-field>
         </div>
+
         <!-- A -->
-        <div class="property" style="margin-left: 13px; margin-top: 1px;">
+        <div class="property">
             <div class="label">A</div>
-            <normalized-number-field [value]="alpha"
-                (onValueChange)="alpha = $event; popupService.colorPickerColor.a = $event"
-                (onSliderDown)="cover.showResizeCover = $event"></normalized-number-field>
+            <normalized-number-field
+                [value]="alpha"
+                (onSliderDown)="cover.showResizeCover = $event"
+                (onValueChange)="alpha = $event; popupService.colorPickerColor.a = $event">
+            </normalized-number-field>
         </div>
+
         <!-- Hex -->
-        <div class="property" style="margin-top: 1px;">
+        <div class="property">
             <div class="label">Hex</div>
-            <input [value]="hexFocus ? hex : '#' + hex" class="txt-20" (input)="updateHexInput($event.target)"
-                spellcheck="false" maxlength="6" (focus)="hexFocus = true;" (blur)="hexFocus = false; editMode = false"
-                (click)="onHexInputClick($event.target)" (select)="editMode = true">
+            <input class="txt-20"
+                   maxlength="6"
+                   spellcheck="false"
+                   (select)="editMode = true"
+                   (focus)="hexFocus = true;"
+                   [value]="hexFocus ? hex : '#' + hex"
+                   (input)="updateHexInput($event.target)"
+                   (click)="onHexInputClick($event.target)"
+                   (blur)="hexFocus = false; editMode = false">
         </div>
     </div>
 </div>

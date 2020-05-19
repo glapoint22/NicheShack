@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { ProductPricePoint } from 'projects/manager/src/app/classes/product-price-point';
 import { ProductContent } from 'projects/manager/src/app/classes/product-content';
 import { PanelComponent } from 'projects/manager/src/app/shared-components/panels/panel/panel.component';
+import { PopupService } from 'projects/manager/src/app/services/popup.service';
 
 @Component({
   selector: 'product-content',
@@ -14,9 +15,10 @@ export class ProductContentComponent implements OnChanges {
   public pricePointList: Array<string>;
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
+  constructor(public popupService: PopupService) { }
   @ViewChild('panel', { static: false }) panel: PanelComponent;
-
   
+
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
     let priceIndices: Array<Array<number>>;
@@ -52,13 +54,15 @@ export class ProductContentComponent implements OnChanges {
 
 
   // -----------------------------( ADD PRICE POINT )------------------------------ \\
-  addPricePoint() {
-    console.log("Add Price Point");
+  addPricePoint(sourceElement) {
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.showPricePointPopup = true;
   }
 
 
   // -----------------------------( EDIT PRICE POINT )------------------------------ \\
-  editPricePoint() {
-    console.log("Edit Price Point");
+  editPricePoint(sourceElement) {
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.showPricePointPopup = true;
   }
 }

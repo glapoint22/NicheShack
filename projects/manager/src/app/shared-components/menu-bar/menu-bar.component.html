@@ -1,20 +1,34 @@
 <!-- Menu -->
 <div class="menu-bar">
 
-    <!-- Navigation Dropdown -->
-    <div #navigationDropdown class="icon-container" (mousedown)="showNavigationMenu()">
-        <div class="arrow-down"></div>
-    </div>
+    <shack-icon></shack-icon>
 
-    <!-- Notifications Dropdown -->
-    <div class="icon-container position-relative" (mousedown)="notificationsMenu.show = !notificationsMenu.show">
-        <i class="fas fa-bell font-size-4"></i>
-        <div class="notification-circle">
-            <div>3</div>
+    <div style="display: flex;">
+
+        <!-- User Name -->
+        <div class="margin-right-24 font-size-2" style="color: white">Welcome, Gabe</div>
+
+        <!-- Notifications Dropdown -->
+        <div class="icon-container position-relative" (mousedown)="notificationsMenu.show = !notificationsMenu.show">
+            <i class="fas fa-bell font-size-4"></i>
+            <div class="notification-circle">
+                <div>3</div>
+            </div>
+        </div>
+
+        
+        <!-- Navigation Dropdown -->
+        <div #navigationDropdown class="icon-container" (mousedown)="showNavigationMenu()">
+            <div class="arrow-down"></div>
         </div>
     </div>
 
-    <!-- User Name -->
-    <div class="margin-right-24 font-size-2" style="color: white">Welcome, Gabe</div>
+
+
+
+
+
+
+
 </div>
 <notifications #notificationsMenu></notifications>
