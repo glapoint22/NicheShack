@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ApplicationRef } from '@angular/core';
 import { BreakpointVerticalAlignment } from '../../../classes/breakpoint';
 import { EditableNumberFieldComponent } from '../../elements/number-fields/editable-number-field/editable-number-field.component';
 import { ProportionalWidgetComponent } from '../../designer/widgets/proportional-widget/proportional-widget.component';
@@ -11,6 +11,8 @@ import { FreeformWidgetComponent } from '../../designer/widgets/freeform-widget/
 })
 export class DimensionsComponent {
   @Input() widget: any;
+
+  constructor(private applicationRef: ApplicationRef) { };
 
   getWidth() {
     // If the widget does not have a width defined or the width is greater or equal to the column width, return the column width
@@ -51,8 +53,21 @@ export class DimensionsComponent {
       // Set the dimensions
       this.setDimensions(proportionalWidget);
 
+
       // Update the number field with the new value
-      numberField.value = Math.round(proportionalWidget.width);
+      if (proportionalWidget.width == null) {
+        let aspectRatio = this.widget.widgetElement.nativeElement.getBoundingClientRect().width /
+          this.widget.widgetElement.nativeElement.getBoundingClientRect().height;
+
+        // Force change detection
+        this.applicationRef.tick();
+        numberField.value = proportionalWidget.height * aspectRatio;
+
+      } else {
+        numberField.value = Math.round(proportionalWidget.width);
+      }
+
+
 
 
       // This is a freeform widget
@@ -89,6 +104,9 @@ export class DimensionsComponent {
 
       // Set the new dimensions
       this.setDimensions(proportionalWidget);
+
+      // Force change detection
+      this.applicationRef.tick();
 
       // Update the number field with the new value
       numberField.value = Math.round(proportionalWidget.height);

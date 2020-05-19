@@ -8,23 +8,45 @@
     <!-- Button -->
     <button-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Button"
         [buttonWidget]="widgetService.selectedWidget"></button-widget-properties>
+
+
     <!-- Text -->
-    <text-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Text" [textWidget]="widgetService.selectedWidget"></text-widget-properties>
+    <text-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Text"
+        [textWidget]="widgetService.selectedWidget"></text-widget-properties>
+
+
     <!-- Image -->
-    <image-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Image"></image-widget-properties>
+    <image-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Image"
+        [imageWidget]="widgetService.selectedWidget"></image-widget-properties>
+
+
     <!-- Container -->
-    <container-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Container"></container-widget-properties>
+    <container-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Container"
+        [containerWidget]="widgetService.selectedWidget">
+    </container-widget-properties>
+
+
     <!-- Line -->
-    <line-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Line"></line-widget-properties>
+    <line-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Line"
+        [lineWidget]="widgetService.selectedWidget"></line-widget-properties>
+
+
     <!-- Video -->
-    <video-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Video"></video-widget-properties>
+    <video-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Video"
+        [videoWidget]="widgetService.selectedWidget"></video-widget-properties>
+
+
     <!-- Product Group -->
-    <product-group-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.ProductGroup"></product-group-widget-properties>
+    <product-group-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.ProductGroup">
+    </product-group-widget-properties>
+
+
     <!-- Categories -->
-    <categories-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Categories"></categories-widget-properties>
+    <categories-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Categories">
+    </categories-widget-properties>
+
+
     <!-- Carousel -->
-    <carousel-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Carousel"></carousel-widget-properties>
+    <carousel-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Carousel">
+    </carousel-widget-properties>
 </ng-container>
-    
-
-

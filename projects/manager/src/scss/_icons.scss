@@ -24,6 +24,7 @@ body:not(#widget-cursor) .icon-container {
 
 .icon-disabled {
     color: #525252;
+    cursor: default;
 }
 
 .icon-bar {
