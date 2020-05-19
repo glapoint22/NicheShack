@@ -1,15 +1,16 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Color } from '../../../classes/color';
 import { HSL } from '../../../classes/hsl';
 import { HSB } from '../../../classes/hsb';
-import { CoverService } from '../../../services/cover.service';
+import { PopupComponent } from '../popup/popup.component';
 
 @Component({
   selector: 'color-picker-popup',
   templateUrl: './color-picker-popup.component.html',
-  styleUrls: ['./color-picker-popup.component.scss'],
+  styleUrls: ['./color-picker-popup.component.scss', '../popup/popup.component.scss'],
 })
-export class ColorPickerPopupComponent {
+
+export class ColorPickerPopupComponent extends PopupComponent {
   public hue: number;
   public red: number;
   public hex: string;
@@ -22,46 +23,26 @@ export class ColorPickerPopupComponent {
   public editMode: boolean;
   public ringDark: boolean;
   public hueSliderY: number;
-  constructor(public cover: CoverService) { }
   @ViewChild('hueContainer', { static: false }) hueContainer: ElementRef;
   @ViewChild('colorContainer', { static: false }) colorContainer: ElementRef;
-  
 
 
+  // -----------------------------( ON POPUP SHOW )------------------------------ \\
+  onPopupShow(popup, arrow) {
+    super.onPopupShow(popup, arrow);
 
-
-  // ngOnInit() {
-  //   // this._FormService.onColorPickerClose.subscribe((canceled: boolean) => {
-  //   //   if (canceled) this._FormService.colorPicker.copy(this._FormService.initialColorPickerColor);
-  //   // });
-  // }
-
-  // // -----------------------------( ON FORM OPEN )------------------------------ \\
-  // onFormOpen() {
-  //   window.setTimeout(() => {
-  //     // let hsl: HSL = this._FormService.colorPicker.toHSL();
-  //     // let hsb: HSB = this._FormService.colorPicker.toHSB();
-
-  //     // Set the current color
-  //     // this._FormService.initialColorPickerColor.copy(this._FormService.colorPicker);
-
-  //     // Move the ring
-  //     // this.ringX = hsb.s;
-  //     // this.ringY = 100 - hsb.b;
-
-  //     // Move the hue slider   
-  //     // this.hueSliderY = Math.round((249 - ((hsl.h * 360) / 1.422924901185771)));
-
-  //     // Move the alpha slider
-  //     // this.alphaSliderY = 249 - (((this._FormService.colorPicker.a * 100) / 0.3952569169960474));
-
-  //     // Set the rgb
-  //     this.setRGB()
-
-  //     // Set a
-  //     this.setA(false)
-  //   })
-  // }
+    window.setTimeout(() => {
+      let color: Color = this.popupService.colorPickerColor;
+      // Set the ring position
+      this.setRingPosition(new Color((color.r), (color.g), (color.b), 1).toHSB());
+      // Set the hue slider position
+      this.setHueSliderPosition(new Color((color.r), (color.g), (color.b), 1).toHSL());
+      // Set the RGB
+      this.setRGB();
+      // Set the alpha
+      this.alpha = color.a;
+    })
+  }
 
 
   // -----------------------------( COLOR DOWN )------------------------------ \\
@@ -107,6 +88,7 @@ export class ColorPickerPopupComponent {
       this.hueSliderY = e.clientY - this.hueContainer.nativeElement.getBoundingClientRect().y - 3;
       if (this.hueSliderY <= 0) this.hueSliderY = 0;
       if (this.hueSliderY >= this.hueContainer.nativeElement.getBoundingClientRect().height - 7) this.hueSliderY = this.hueContainer.nativeElement.getBoundingClientRect().height - 7;
+      this.hue = this.getHue();
       this.setRGB();
     }
     setHue(e)
@@ -129,24 +111,18 @@ export class ColorPickerPopupComponent {
 
   // -----------------------------( SET RGB )------------------------------ \\
   setRGB(activeElement?: string) {
-    let hueContainerHeight = this.hueContainer.nativeElement.getBoundingClientRect().height - 7;
-    let magicNumber = 360 / hueContainerHeight;
-    let hue = 360 - Math.round(this.hueSliderY * magicNumber);
-    let hsb: HSB = new HSB(hue, this.ringX, 100 - this.ringY);
+    this.hue = this.getHue();
+    let hsb: HSB = new HSB(this.hue, this.ringX, 100 - this.ringY);
     let hsl: HSL = hsb.toHSL();
     let rgbColor: Color = Color.HSLToRGB(hsl.h / 360, hsl.s / 100, hsl.l / 100);
-    let hex: string = rgbColor.toHex();
-
-    // Update the Color Palette
-    this.hue = hsl.h;
 
     //Update the input fields
-    if (activeElement != "hex") this.hex = hex;
-    // this._FormService.colorPicker.r = rgbColor.r;
+    if (activeElement != "hex") this.hex = rgbColor.toHex();
+    this.popupService.colorPickerColor.r = rgbColor.r;
     if (activeElement != "red") this.red = Math.round(((rgbColor.r / 2.55) / 100) * 100) / 100;
-    // this._FormService.colorPicker.g = rgbColor.g;
+    this.popupService.colorPickerColor.g = rgbColor.g;
     if (activeElement != "green") this.green = Math.round(((rgbColor.g / 2.55) / 100) * 100) / 100;
-    // this._FormService.colorPicker.b = rgbColor.b;
+    this.popupService.colorPickerColor.b = rgbColor.b;
     if (activeElement != "blue") this.blue = Math.round(((rgbColor.b / 2.55) / 100) * 100) / 100;
 
     //Set the ring color
@@ -188,8 +164,8 @@ export class ColorPickerPopupComponent {
   }
 
 
-  // -----------------------------( UPDATE HEX )------------------------------ \\
-  updateHex(hexInput) {
+  // -----------------------------( UPDATE HEX INPUT )------------------------------ \\
+  updateHexInput(hexInput) {
     //Only allow hex characters
     !(/^[0123456789abcdef]*$/i).test(hexInput.value) ? hexInput.value = hexInput.value.replace(/[^0123456789abcdef]/ig, '') : null;
     // Update the hex variable from the hex input
@@ -207,6 +183,16 @@ export class ColorPickerPopupComponent {
   setRingPosition(hsb: HSB) {
     this.ringX = hsb.s;
     this.ringY = 100 - hsb.b;
+  }
+
+
+  // -----------------------------( GET HUE )------------------------------ \\
+  getHue() {
+    let hueContainerHeight = this.hueContainer.nativeElement.getBoundingClientRect().height - 7;
+    let magicNumber = 360 / hueContainerHeight;
+    let hue = 360 - Math.round(this.hueSliderY * magicNumber);
+
+    return hue;
   }
 
 

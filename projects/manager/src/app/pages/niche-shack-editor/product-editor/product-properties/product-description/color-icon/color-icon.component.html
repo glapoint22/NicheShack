@@ -1,6 +1,6 @@
 <div style="position: relative;">
 
-    <div (click)="onClick()" style="cursor: pointer;">
+    <div (click)="onClick($event.target)" style="cursor: pointer;">
         <!-- Icon -->
         <div class="icon-container" [title]="title">
             <i [class]="'fas ' + icon"></i>
@@ -17,10 +17,10 @@
     <!-- Remove/change container -->
     <div *show="showRemoveChange" class="fade-start remove-change-container" transitionClass="fade-end" tabindex="0"
         (onHide)="showRemoveChange = false" (blur)="showRemoveChange = false">
-        <div class="option" (click)="onOptionClick(false)" title="Remove Color">
+        <div class="option" (click)="onOptionClick(false, $event.target)" title="Remove Color">
             <i class="fas fa-ban"></i>
         </div>
-        <div class="option" (click)="onOptionClick(true)" title="Change Color">
+        <div class="option" (click)="onOptionClick(true, $event.target)" title="Change Color">
             <i class="fas fa-tint"
                 [style.color]="'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', ' + color.a + ')'"></i>
         </div>

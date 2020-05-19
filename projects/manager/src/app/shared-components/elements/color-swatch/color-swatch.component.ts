@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Color } from '../../../classes/color';
+import { PopupService } from '../../../services/popup.service';
 
 @Component({
   selector: 'color-swatch',
@@ -7,16 +8,14 @@ import { Color } from '../../../classes/color';
   styleUrls: ['./color-swatch.component.scss']
 })
 
-export class ColorSwatchComponent {
+export class ColorSwatchComponent{
+  constructor(public popupService: PopupService) {}
   @Input() color: Color;
-  @Output() onShowColorPicker: EventEmitter<void> = new EventEmitter();
 
   
-  
-  
-  onClick() {
-    // this._FormService.colorPicker = this.color;
-    // this._FormService.showColorPicker = true;
-    this.onShowColorPicker.emit();
+  onClick(sourceElement) {
+    this.popupService.colorPickerColor = this.color;
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.showColorPicker = !this.popupService.showColorPicker;
   }
 }

@@ -15,20 +15,20 @@ export class ColorIconComponent extends ColorSwatchComponent {
   public showRemoveChange: boolean;
 
   // Click of the icon
-  onClick() {
+  onClick(sourceElement) {
     if (this.removable && !this.color.isEqual(Color.zero)) {
       // Show the remove/change options
       this.showRemoveChange = true;
     } else {
       // This will open up the color picker
-      super.onClick();
+      super.onClick(sourceElement);
     }
   }
 
   // Click of one of the options (remove color / change color)
-  onOptionClick(changeColor: boolean) {
+  onOptionClick(changeColor: boolean, sourceElement) {
     if (changeColor) {
-      super.onClick();
+      super.onClick(sourceElement);
     } else {
       this.onRemoveColor.emit();
     }

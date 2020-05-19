@@ -8,4 +8,18 @@ import { CoverService } from '../../services/cover.service';
 })
 export class CoverComponent {
   constructor(public coverService: CoverService) { }
+
+  showCover(): boolean {
+    let result: boolean;
+
+    if (this.coverService.showPointerCover || this.coverService.showResizeCover) {
+      result = true;
+      this.coverService.showCover = true;
+
+    } else {
+      result = false;
+      this.coverService.showCover = false;
+    }
+    return result;
+  }
 }

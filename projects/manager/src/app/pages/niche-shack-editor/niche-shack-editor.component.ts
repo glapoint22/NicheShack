@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HierarchyItem } from '../../classes/hierarchy-item';
+import { Color } from '../../classes/color';
 
 @Component({
   selector: 'niche-shack-editor',
