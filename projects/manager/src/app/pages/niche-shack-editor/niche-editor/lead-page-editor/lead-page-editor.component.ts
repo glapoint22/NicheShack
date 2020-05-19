@@ -2,9 +2,9 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { Page } from 'projects/manager/src/app/classes/page';
-import { PageBackgroundType } from 'projects/manager/src/app/classes/page-background';
 import { PageService } from 'projects/manager/src/app/services/page.service';
 import { Color } from 'projects/manager/src/app/classes/color';
+import { BackgroundImage } from 'projects/manager/src/app/classes/background-image';
 
 @Component({
   selector: 'lead-page-editor',
@@ -27,18 +27,16 @@ export class LeadPageEditorComponent implements OnChanges {
           name: 'campland',
           width: 1600,
           background: {
-            backgroundType: PageBackgroundType.Color,
             color: new Color(255, 255, 255, 1),
-            image: ''
+            image: new BackgroundImage('campland-background.jpg')
           }
         },
         {
           name: 'gumpys',
           width: 1400,
           background: {
-            backgroundType: PageBackgroundType.Image,
-            color: null,
-            image: '09f972f68d5d4d968275e5f919e48c96.png'
+            color: new Color(255, 0, 255, 1),
+            image: null
           }
         }
       ]);

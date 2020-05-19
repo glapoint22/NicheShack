@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Page } from '../classes/page';
 import { ContainerComponent } from '../shared-components/designer/container/container.component';
-import { PageBackgroundType } from '../classes/page-background';
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +58,7 @@ export class PageService {
     previewWindow.document.head.appendChild(this.buttonStylesDocumentFragment);
 
     // Page color
-    previewWindow.document.body.style.background =
-      this.page.background.backgroundType == PageBackgroundType.Color ? this.page.background.color.toRGBString() : 'url("images/' + this.page.background.image + '")';
+    // previewWindow.document.body.style.background =
+    //   this.page.background.backgroundType == PageBackgroundType.Color ? this.page.background.color.toRGBString() : 'url("images/' + this.page.background.image + '")';
   }
 }

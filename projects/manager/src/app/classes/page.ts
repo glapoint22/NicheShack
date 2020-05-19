@@ -1,7 +1,7 @@
-import { PageBackground } from './page-background';
+import { Background } from './background';
 
 export class Page {
     name: string;
     width: number;
-    background: PageBackground = new PageBackground();
+    background: Background = new Background();
 }

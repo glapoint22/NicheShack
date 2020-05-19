@@ -1,0 +1,38 @@
+<!-- color -->
+<div class="property">
+    <div class="label" >Color:</div>
+</div>
+
+<div style="width: 100%; margin-bottom: 10px;">
+    <color-swatch [color]="background.color"></color-swatch>
+</div>
+
+
+
+<!-- Image -->
+<div class="property">
+    <div class="label" >Image:</div>
+</div>
+
+
+<div class="property-box-dark">
+
+    <!-- Media browser icon -->
+    <div class="icons">
+        <div class="icon-container">
+            <i class="fas fa-image"></i>
+        </div>
+
+        <div class="icon-container">
+            <i class="fas fa-cog"></i>
+        </div>
+    </div>
+
+
+    <!-- Image -->
+    <div class="img-container">
+        <div *ngIf="background.image" [ngStyle]="{ 'background-image': 'url(images/' + background.image.name + ')'}"
+            class="img"></div>
+        <div *ngIf="!background.image" class="no-property">No image available</div>
+    </div>
+</div>

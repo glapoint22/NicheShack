@@ -1,0 +1,19 @@
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .img {
+        width: -webkit-fill-available;
+        height: 134px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}
+
+.no-property {
+    height: 134px;
+    display: flex;
+    align-items: center;
+}
