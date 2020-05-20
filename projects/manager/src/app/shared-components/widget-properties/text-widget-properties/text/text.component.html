@@ -20,33 +20,7 @@
         </div>
     </div>
 
-    <!-- Font Style -->
-    <div class="property">
-        <div class="label">Style</div>
-        <div style="flex: 1; display: flex; justify-content: space-between;">
-
-            <!-- Spacer -->
-            <div class="icon-container" style="cursor: default;"></div>
-
-            <!-- Bold -->
-            <div class="style-icon" [ngClass]="{'selected': text.fontWeight == 'bold'}"
-                (click)="text.fontWeight = text.fontWeight == 'normal' ? 'bold' : 'normal'">
-                <i class="fas fa-bold"></i>
-            </div>
-
-            <!-- Italic -->
-            <div class="style-icon" [ngClass]="{'selected': text.fontStyle == 'italic'}"
-                (click)="text.fontStyle = text.fontStyle == 'normal' ? 'italic' : 'normal'">
-                <i class="fas fa-italic"></i>
-            </div>
-
-            <!-- Underline -->
-            <div class="style-icon" [ngClass]="{'selected': text.textDecoration == 'underline'}"
-                (click)="text.textDecoration = text.textDecoration == 'none' ? 'underline' : 'none'">
-                <i class="fas fa-underline"></i>
-            </div>
-        </div>
-    </div>
+    
 
 
     <!-- Font Color -->
@@ -63,6 +37,15 @@
         <div class="label">Highlight</div>
         <div style="flex: 1;">
             <color-swatch [color]="text.highlightColor.defaultColor"></color-swatch>
+        </div>
+    </div>
+
+
+    <!-- Background -->
+    <div class="property">
+        <div class="label">Background</div>
+        <div style="flex: 1;">
+            <color-swatch [color]="text.fontColor.defaultColor"></color-swatch>
         </div>
     </div>
 
@@ -109,6 +92,35 @@
             text.alignCenter.isSelected = false;
             text.alignRight.isSelected = false">
                 <i class="fas fa-align-justify"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Font Style -->
+    <div class="property">
+        <div class="label">Style</div>
+        <div style="flex: 1; display: flex; justify-content: space-between;">
+
+            <!-- Spacer -->
+            <div class="icon-container" style="cursor: default;"></div>
+
+            <!-- Bold -->
+            <div class="style-icon" [ngClass]="{'selected': text.fontWeight == 'bold'}"
+                (click)="text.fontWeight = text.fontWeight == 'normal' ? 'bold' : 'normal'">
+                <i class="fas fa-bold"></i>
+            </div>
+
+            <!-- Italic -->
+            <div class="style-icon" [ngClass]="{'selected': text.fontStyle == 'italic'}"
+                (click)="text.fontStyle = text.fontStyle == 'normal' ? 'italic' : 'normal'">
+                <i class="fas fa-italic"></i>
+            </div>
+
+            <!-- Underline -->
+            <div class="style-icon" [ngClass]="{'selected': text.textDecoration == 'underline'}"
+                (click)="text.textDecoration = text.textDecoration == 'none' ? 'underline' : 'none'">
+                <i class="fas fa-underline"></i>
             </div>
         </div>
     </div>
@@ -174,10 +186,7 @@
         <div class="label">Link</div>
         <div style="flex: 1; display: flex; justify-content: flex-end;">
 
-            <div class="icon-container" title="Insert link (Ctrl+K)"
-                [ngClass]="{'selected': text.linkStyle.isSelected}">
-                <i class="fas fa-link"></i>
-            </div>
+            <link-icon></link-icon>
         </div>
     </div>
 

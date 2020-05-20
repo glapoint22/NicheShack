@@ -10,4 +10,5 @@ export class PopupService {
   public showPricePointPopup: boolean;
   public showColorPickerPopup: boolean;
   public showHierarchyPopup: boolean;
+  public showLinkPopup: boolean;
 }

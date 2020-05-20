@@ -1,7 +1,7 @@
 .popup-base {
     position: absolute;
     background:  rgba(27, 27, 27, 0.97);
-    border-radius: 5px;
+    border-radius: 4px;
     padding: 10px;
     z-index: 100;
 }
@@ -9,8 +9,8 @@
 .arrow-on-top {
     position: absolute;
     top: -20px;
-    margin-left: -10px;
-    border-width: 10px;
+    margin-left: -9px;
+    border-width: 9px;
     border-style: solid;
     border-color:   transparent  transparent rgba(27, 27, 27, 0.97) transparent;
 }
@@ -18,8 +18,8 @@
 .arrow-on-bottom {
     position: absolute;
     top: 100%;
-    margin-left: -10px;
-    border-width: 10px;
+    margin-left: -9px;
+    border-width: 9px;
     border-style: solid;
     border-color:  rgba(27, 27, 27, 0.97) transparent transparent transparent;
 }

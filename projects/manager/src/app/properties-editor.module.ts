@@ -60,6 +60,7 @@ import { NormalizedNumberFieldComponent } from './shared-components/elements/num
 import { CoverComponent } from './shared-components/cover/cover.component';
 import { PopupComponent } from './shared-components/popups/popup/popup.component';
 import { BackgroundComponent } from './shared-components/properties/background/background.component';
+import { LinkIconComponent } from './shared-components/link-icon/link-icon.component';
 
 
 @NgModule({
@@ -120,7 +121,8 @@ import { BackgroundComponent } from './shared-components/properties/background/b
     NormalizedNumberFieldComponent,
     CoverComponent,
     PopupComponent,
-    BackgroundComponent
+    BackgroundComponent,
+    LinkIconComponent
   ],
   imports: [
     CommonModule,
@@ -185,7 +187,8 @@ import { BackgroundComponent } from './shared-components/properties/background/b
     NormalizedNumberFieldComponent,
     CoverComponent,
     PopupComponent,
-    BackgroundComponent
+    BackgroundComponent,
+    LinkIconComponent
   ]
 })
 export class PropertiesEditorModule { }

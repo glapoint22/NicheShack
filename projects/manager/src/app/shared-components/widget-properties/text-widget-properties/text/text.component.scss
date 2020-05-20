@@ -10,39 +10,60 @@
 }
 
 .property {
+
+    // Font
+    &:nth-child(1) .label {
+        margin-left: 39px;
+        margin-right: 11px;
+    }
     
-
-    &:nth-child(1) .label { 
-        margin-left: 26px;
-        margin-right: 11px;
+    // Font Size
+    &:nth-child(2) .label {
+        margin-left: 13px;
     }
 
+        // Color
     &:nth-child(3) .label { 
-        margin-left: 24px;
-    }
-
-    &:nth-child(4) .label { 
-        margin-left: 21px;
+        margin-left: 34px;
         margin-right: 11px;
     }
 
-    &:nth-child(5) .label { 
-        margin-left: 5px;
-        margin-right: 10px;
+    // Highlight
+    &:nth-child(4) .label { 
+        margin-left: 17px;
     }
 
+    // Background
+    // &:nth-child(5) .label {
+
+    // }
+
+    // Alignment
+    &:nth-child(6) .label {
+        margin-left: 10px;
+        margin-right: 11px;
+    }
+
+    // Style
     &:nth-child(7) .label { 
-        margin-left: 18px;
-        margin-right: 10px;
+        margin-left: 37px;
     }
 
-    &:nth-child(8) .label {
-        margin-left: 20px;
-        margin-right: 10px;
+    // Bullets
+    &:nth-child(8) .label { 
+        margin-left: 28px;
     }
 
+    // Indent
     &:nth-child(9) .label {
-        margin-left: 31px;
+        margin-left: 30px;
+        margin-right: 11px;
+    }
+
+    // Link
+    &:nth-child(10) .label {
+        margin-left: 41px;
+        margin-right: 11px;
     }
 }
 

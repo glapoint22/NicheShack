@@ -1,1 +1,42 @@
-<p>link-popup works!</p>
+<!-- Popup Base -->
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)" *show="popupService.showLinkPopup">
+
+    <!-- Arrow -->
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
+
+
+    <!-- Page -->
+    <div class="radio-button-option">
+        <radio-button [name]="'link-option'" [label]="'Page'"></radio-button>
+    </div>
+
+    <!-- Category -->
+    <div class="radio-button-option">
+        <radio-button [name]="'link-option'" [label]="'Category'"></radio-button>
+    </div>
+
+    <!-- Niche -->
+    <div class="radio-button-option">
+        <radio-button [name]="'link-option'" [label]="'Niche'"></radio-button>
+    </div>
+
+    <!-- Product -->
+    <div class="radio-button-option">
+        <radio-button [name]="'link-option'" [label]="'Product'"></radio-button>
+    </div>
+
+    <!-- Web Address -->
+    <div class="radio-button-option">
+        <radio-button [name]="'link-option'" [label]="'Web Address'"></radio-button>
+    </div>
+
+    <!-- On Click() -->
+    <div class="radio-button-option">
+        <radio-button [name]="'link-option'" [label]="'On Click()'"></radio-button>
+    </div>
+
+    
+
+    <input class="txt-20">
+
+</div>

@@ -52,6 +52,7 @@ export class PopupComponent {
         this.popupService.showColorPickerPopup = false;
         this.popupService.showPricePointPopup = false;
         this.popupService.showHierarchyPopup = false;
+        this.popupService.showLinkPopup = false;
         window.removeEventListener('mousemove', this.onMouseMove);
       }
     }
