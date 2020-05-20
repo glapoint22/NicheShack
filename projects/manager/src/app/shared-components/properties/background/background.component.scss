@@ -17,3 +17,17 @@
     display: flex;
     align-items: center;
 }
+
+.image-options-container {
+    margin-top: 10px;
+
+    .property {
+        &:nth-child(1) .label { 
+            margin-left: 18px;
+        }
+    
+        &:nth-child(2) .label { 
+            margin-left: 22px;
+        }
+    }
+}

@@ -5,7 +5,7 @@ import { Color } from '../classes/color';
   providedIn: 'root'
 })
 export class PopupService {
-  public sourceElement;
+  public sourceElement: HTMLElement;
   public colorPickerColor: Color;
   public showPricePointPopup: boolean;
   public showColorPickerPopup: boolean;

@@ -1,30 +1,36 @@
 <!-- color -->
 <div class="property">
-    <div class="label" >Color:</div>
+    <div class="label">Color:</div>
+
+    <div style="flex: 1;">
+        <color-swatch [color]="background.color"></color-swatch>
+    </div>
 </div>
 
-<div style="width: 100%; margin-bottom: 10px;">
-    <color-swatch [color]="background.color"></color-swatch>
-</div>
+
 
 
 
 <!-- Image -->
 <div class="property">
-    <div class="label" >Image:</div>
+    <div class="label">Image:</div>
 </div>
 
 
 <div class="property-box-dark">
 
-    <!-- Media browser icon -->
+    <!-- Icons -->
     <div class="icons">
-        <div class="icon-container">
+        <!-- Media browser icon -->
+        <div class="icon-container" title="Media Browser">
             <i class="fas fa-image"></i>
         </div>
 
-        <div class="icon-container">
-            <i class="fas fa-cog"></i>
+
+        <!-- Remove image icon -->
+        <div class="icon-container" (click)="background.image = null" title="Remove Image"
+            [ngClass]="{'icon-disabled': background.image == null}">
+            <i class="fas fa-trash-alt"></i>
         </div>
     </div>
 
@@ -34,5 +40,46 @@
         <div *ngIf="background.image" [ngStyle]="{ 'background-image': 'url(images/' + background.image.name + ')'}"
             class="img"></div>
         <div *ngIf="!background.image" class="no-property">No image available</div>
+    </div>
+</div>
+
+
+<!-- Image Options -->
+<div class="image-options-container" *ngIf="background.image">
+    <!-- Position -->
+    <div class="property">
+        <div class="label">Position</div>
+        <div style="flex: 1;">
+            <dropdown [height]="20" [keyValue]="positionOptions" [selectedIndex]="selectedPositionIndex"
+                (onChange)="background.image.position = $event">
+            </dropdown>
+        </div>
+    </div>
+
+
+
+
+    <!-- Repeat -->
+    <div class="property">
+        <div class="label">Repeat</div>
+        <div style="flex: 1;">
+            <dropdown [height]="20" [keyValue]="repeatOptions" [selectedIndex]="selectedRepeatIndex"
+                (onChange)="background.image.repeat = $event">
+            </dropdown>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Attachment -->
+    <div class="property">
+        <div class="label">Attachment</div>
+        <div style="flex: 1;">
+            <dropdown [height]="20" [keyValue]="attachmentOptions" [selectedIndex]="selectedAttachmentIndex"
+                (onChange)="background.image.attachment = $event">
+            </dropdown>
+        </div>
     </div>
 </div>

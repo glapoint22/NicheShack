@@ -9,7 +9,7 @@ import { PopupService } from '../../services/popup.service';
 export class ShackIconComponent {
   constructor(public popupService: PopupService) { }
 
-  onShackClick(sourceElement) {
+  onShackClick(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
     this.popupService.showHierarchyPopup = !this.popupService.showHierarchyPopup;
   }
