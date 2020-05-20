@@ -28,7 +28,12 @@ export class LeadPageEditorComponent implements OnChanges {
           width: 1600,
           background: {
             color: new Color(255, 255, 255, 1),
-            image: new BackgroundImage('campland-background.jpg')
+            image: {
+              name: 'campland-background.jpg',
+              position: null,
+              repeat: null,
+              attachment: null
+            }
           }
         },
         {

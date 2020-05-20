@@ -13,7 +13,7 @@ export class ColorSwatchComponent{
   @Input() color: Color;
 
   
-  onClick(sourceElement) {
+  onClick(sourceElement: HTMLElement) {
     this.popupService.colorPickerColor = this.color;
     this.popupService.sourceElement = sourceElement;
     this.popupService.showColorPickerPopup = !this.popupService.showColorPickerPopup;

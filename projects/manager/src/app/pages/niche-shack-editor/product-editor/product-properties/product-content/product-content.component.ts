@@ -54,14 +54,14 @@ export class ProductContentComponent implements OnChanges {
 
 
   // -----------------------------( ADD PRICE POINT )------------------------------ \\
-  addPricePoint(sourceElement) {
+  addPricePoint(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
     this.popupService.showPricePointPopup = true;
   }
 
 
   // -----------------------------( EDIT PRICE POINT )------------------------------ \\
-  editPricePoint(sourceElement) {
+  editPricePoint(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
     this.popupService.showPricePointPopup = true;
   }

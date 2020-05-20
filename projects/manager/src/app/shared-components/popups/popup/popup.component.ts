@@ -49,9 +49,14 @@ export class PopupComponent {
               (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + 20))))) {
 
 
-        this.popupService.showColorPickerPopup = false;
-        this.popupService.showPricePointPopup = false;
-        this.popupService.showHierarchyPopup = false;
+        // Close all popups
+        Object.keys(this.popupService).forEach((property: string) => {
+          if (typeof (this.popupService[property]) == 'boolean') {
+            this.popupService[property] = false;
+          }
+        });
+
+
         window.removeEventListener('mousemove', this.onMouseMove);
       }
     }
@@ -60,12 +65,12 @@ export class PopupComponent {
 
   // --------------------------------( SET POPUP TOP )-------------------------------- \\
   setPopupTop() {
-    if (this.popupService.sourceElement.getBoundingClientRect().y - this.popup.getBoundingClientRect().height - (this.arrow.getBoundingClientRect().height - 5) < 0) {
+    if (this.popupService.sourceElement.getBoundingClientRect().top - this.popup.getBoundingClientRect().height - (this.arrow.getBoundingClientRect().height - 5) < 0) {
       this.arrowOnTop = true;
-      this.popupTop = this.popupService.sourceElement.getBoundingClientRect().y + this.popupService.sourceElement.getBoundingClientRect().height + (this.arrow.getBoundingClientRect().height - 5);
+      this.popupTop = this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + (this.arrow.getBoundingClientRect().height - 5);
     } else {
       this.arrowOnTop = false;
-      this.popupTop = this.popupService.sourceElement.getBoundingClientRect().y - this.popup.getBoundingClientRect().height - (this.arrow.getBoundingClientRect().height - 5);
+      this.popupTop = this.popupService.sourceElement.getBoundingClientRect().top - this.popup.getBoundingClientRect().height - (this.arrow.getBoundingClientRect().height - 5);
     }
     this.popup.style.top = this.popupTop + "px";
   }
@@ -74,9 +79,9 @@ export class PopupComponent {
   // --------------------------------( SET POPUP LEFT )-------------------------------- \\
   setPopupLeft() {
     let sourceElementCenter = (this.popupService.sourceElement.getBoundingClientRect().width - this.popup.getBoundingClientRect().width) / 2;
-      let popupLeft = this.popupService.sourceElement.getBoundingClientRect().x + sourceElementCenter;
-      let popupRight = popupLeft + this.popup.getBoundingClientRect().width;
-      let popupOffset = popupRight - window.innerWidth;
+    let popupLeft = this.popupService.sourceElement.getBoundingClientRect().left + sourceElementCenter;
+    let popupRight = popupLeft + this.popup.getBoundingClientRect().width;
+    let popupOffset = popupRight - window.innerWidth;
 
     // If the popup extends beyond the left side of the screen
     if (popupLeft < 0) {
