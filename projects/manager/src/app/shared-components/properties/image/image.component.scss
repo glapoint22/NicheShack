@@ -1,0 +1,20 @@
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 114px;
+
+    .img {
+        width: -webkit-fill-available;
+        height: 114px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}
+
+.no-property {
+    height: 114px;
+    display: flex;
+    align-items: center;
+}

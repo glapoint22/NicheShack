@@ -9,22 +9,5 @@
     </div>
 
 
-    <!-- Category Icon -->
-    <div class="property-box-dark">
-
-        <!-- Icons -->
-        <div class="icons">
-
-            <!-- Media Browser Icon -->
-            <div class="icon-container" (click)="openMediaBrowser()">
-                <i class="fas fa-image"></i>
-            </div>
-        </div>
-
-
-        <!-- Image -->
-        <div class="img-container">
-            <img *ngIf="category.icon" [src]="'images/' + category.icon">
-        </div>
-    </div>
+    <image [image]="category.icon"></image>
 </div>

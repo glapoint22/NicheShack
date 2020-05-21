@@ -1,5 +1,8 @@
 <!-- Image -->
-<image-property id="first-property" [title]="'Image'" [image]="imageWidget.image.url"></image-property>
+<panel [title]="'Image'">
+    <image [image]="imageWidget.image"></image>
+</panel>
+
 
 <!-- Link -->
 <link-property [link]="imageWidget.link"></link-property>

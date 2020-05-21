@@ -30,7 +30,7 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
 
   ngOnInit() {
     // this.image.url = '0aada12f8b21471ea96aebe9a503977b.png';
-    this.image.title = 'Alita';
+    // this.image.title = 'Alita';
     this.name = 'Image';
     this.type = WidgetType.Image;
     super.ngOnInit();

@@ -47,6 +47,7 @@
 
 
     <!-- Carousel -->
-    <carousel-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Carousel">
+    <carousel-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Carousel"
+        [carouselWidget]="widgetService.selectedWidget">
     </carousel-widget-properties>
 </ng-container>

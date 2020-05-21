@@ -1,1 +1,30 @@
-<p>image works!</p>
+<div class="property-box-dark">
+
+    <!-- Icons -->
+    <div class="icons">
+        <!-- Media browser icon -->
+        <div class="icon-container" title="Media Browser">
+            <i class="fas fa-image"></i>
+        </div>
+
+
+        <!-- Remove image icon -->
+        <div class="icon-container" (click)="image.url = null" title="Remove Image"
+            [ngClass]="{'icon-disabled':  !image || !image.url}">
+            <i class="fas fa-trash-alt"></i>
+        </div>
+    </div>
+
+
+    <!-- Image -->
+    <div class="img-container">
+        <div *ngIf="image && image.url" [ngStyle]="{ 'background-image': 'url(images/' + image.url + ')'}" class="img">
+        </div>
+        <!-- <ng-template #loading>
+            
+            <i class="fa fa-spinner fa-pulse"></i>
+        </ng-template> -->
+
+        <div *ngIf="!image || !image.url" class="no-property">No image available</div>
+    </div>
+</div>

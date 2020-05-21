@@ -11,37 +11,14 @@
 
 
 
-<!-- Image -->
+<!-- Image label -->
 <div class="property">
     <div class="label">Image:</div>
 </div>
 
 
-<div class="property-box-dark">
-
-    <!-- Icons -->
-    <div class="icons">
-        <!-- Media browser icon -->
-        <div class="icon-container" title="Media Browser">
-            <i class="fas fa-image"></i>
-        </div>
-
-
-        <!-- Remove image icon -->
-        <div class="icon-container" (click)="background.image = null" title="Remove Image"
-            [ngClass]="{'icon-disabled': background.image == null}">
-            <i class="fas fa-trash-alt"></i>
-        </div>
-    </div>
-
-
-    <!-- Image -->
-    <div class="img-container">
-        <div *ngIf="background.image" [ngStyle]="{ 'background-image': 'url(images/' + background.image.name + ')'}"
-            class="img"></div>
-        <div *ngIf="!background.image" class="no-property">No image available</div>
-    </div>
-</div>
+<!-- Image -->
+<image [image]="background.image"></image>
 
 
 <!-- Image Options -->

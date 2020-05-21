@@ -4,7 +4,6 @@ import { delay } from 'rxjs/operators';
 import { Page } from 'projects/manager/src/app/classes/page';
 import { PageService } from 'projects/manager/src/app/services/page.service';
 import { Color } from 'projects/manager/src/app/classes/color';
-import { BackgroundImage } from 'projects/manager/src/app/classes/background-image';
 
 @Component({
   selector: 'lead-page-editor',
@@ -29,7 +28,8 @@ export class LeadPageEditorComponent implements OnChanges {
           background: {
             color: new Color(255, 255, 255, 1),
             image: {
-              name: 'campland-background.jpg',
+              url: 'campland-background.jpg',
+              title: 'Campland',
               position: null,
               repeat: null,
               attachment: null

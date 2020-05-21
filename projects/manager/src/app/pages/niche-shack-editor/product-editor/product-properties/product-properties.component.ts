@@ -20,7 +20,10 @@ export class ProductPropertiesComponent implements OnChanges {
 
     return new Observable<ProductProperties>(subscriber => {
       subscriber.next({
-        image: '8307dc287c6147bcaddbfc921411eece.png',
+        image: {
+          url: '8307dc287c6147bcaddbfc921411eece.png',
+          title: 'The Skinny Asian Diet'
+        },
         rating: 2.8,
         totalReviews: 60,
         hoplink: 'https://3243080do6mo2l19eepynzevdg.hop.clickbank.net/',

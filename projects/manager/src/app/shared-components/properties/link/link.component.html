@@ -1,24 +1,21 @@
-<panel [title]="'Link'">
+<!-- Property Box -->
+<div class="property-box-dark">
 
-    <!-- Property Box -->
-    <div class="property-box-dark">
+    <!-- Icons -->
+    <div class="icons">
 
-        <!-- Icons -->
-        <div class="icons">
-
-            <!-- Link Icon -->
-            <link-icon></link-icon>
-        </div>
-
-        <!-- Link -->
-        <div *ngIf="link.url; else placeholder" class="link">
-            <a [href]="link.url" target="_blank">{{link.url}}</a>
-        </div>
-
-
-        <!-- Placeholder -->
-        <ng-template #placeholder>
-            <div class="no-property">No link available</div>
-        </ng-template>
+        <!-- Link Icon -->
+        <link-icon></link-icon>
     </div>
-</panel>
+
+    <!-- Link -->
+    <div *ngIf="link.url; else placeholder" class="link">
+        <a [href]="link.url" target="_blank">{{link.url}}</a>
+    </div>
+
+
+    <!-- Placeholder -->
+    <ng-template #placeholder>
+        <div class="no-property">No link available</div>
+    </ng-template>
+</div>

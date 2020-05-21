@@ -14,7 +14,10 @@
 <padding [paddingComponent]="buttonWidget"></padding>
 
 <!-- Link -->
-<link-property [link]="buttonWidget.link"></link-property>
+<panel [title]="'Link'">
+    <link-property [link]="buttonWidget.link"></link-property>
+</panel>
+
 
 <!-- Dimensions -->
 <dimensions [widget]="buttonWidget"></dimensions>

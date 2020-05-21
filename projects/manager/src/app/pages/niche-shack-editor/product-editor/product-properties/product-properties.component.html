@@ -6,7 +6,10 @@
     <product-description [text]="productProperties.description"></product-description>
 
     <!-- Image -->
-    <image-property [title]="'Image'" [image]="productProperties.image"></image-property>
+    <panel [title]="'Image'">
+        <image [image]="productProperties.image"></image>
+    </panel>
+    
 
     <!-- Filter -->
     <product-filters [filters]="productProperties.filters"></product-filters>

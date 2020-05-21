@@ -4,7 +4,7 @@
     <div style="flex: 1; position: relative;" *ngIf="selectedItem.type == 'Niche'">
         <designer></designer>
     </div>
-    <div style="flex-basis: 15%; max-width: 15%; background: #252525;">
+    <div style="flex-basis: 13%; max-width: 13%; background: #252525;">
 
         <category-editor *ngIf="selectedItem.type == 'Category'" [hierarchyItem]="selectedItem"></category-editor>
         <niche-editor *ngIf="selectedItem.type == 'Niche'" [hierarchyItem]="selectedItem"></niche-editor>

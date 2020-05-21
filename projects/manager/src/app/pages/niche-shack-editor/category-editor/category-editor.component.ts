@@ -26,7 +26,7 @@ export class CategoryEditorComponent implements OnChanges {
 
     // Get the category icon based on the category Id
     this.getTempCategoryIcon().subscribe((icon: string) => {
-      this.category.icon = icon;
+      this.category.icon.url = icon;
     });
   }
 }

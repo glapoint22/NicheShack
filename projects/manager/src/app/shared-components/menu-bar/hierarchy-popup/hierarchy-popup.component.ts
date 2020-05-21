@@ -142,7 +142,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
   }
 
-  
+
 
 
 
@@ -175,7 +175,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
         let el: HTMLElement = this.getItemElement();
 
         // Set editable to false
-        if (el.contentEditable == 'true') {
+        if (el && el.contentEditable == 'true') {
           el.contentEditable = 'false';
         } else {
           // Deselect the selected item

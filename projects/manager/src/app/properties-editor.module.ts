@@ -33,7 +33,6 @@ import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { LinkPopupComponent } from './shared-components/popups/link-popup/link-popup.component';
 import { MediaBrowserPopupComponent } from './shared-components/popups/media-browser-popup/media-browser-popup.component';
 import { EditableDropdownComponent } from './shared-components/elements/dropdowns/editable-dropdown/editable-dropdown.component';
-import { ImagePropertyComponent } from './shared-components/image-property/image-property.component';
 import { PaginatorComponent } from './shared-components/paginator/paginator.component';
 import { ItemListComponent } from './shared-components/item-lists/item-list/item-list.component';
 import { EditableItemListComponent } from './shared-components/item-lists/editable-item-list/editable-item-list.component';
@@ -100,7 +99,6 @@ import { LinkIconComponent } from './shared-components/link-icon/link-icon.compo
     ColorPickerPopupComponent,
     LinkPopupComponent,
     MediaBrowserPopupComponent,
-    ImagePropertyComponent,
     PaginatorComponent,
     ItemListComponent,
     EditableItemListComponent,
@@ -166,7 +164,6 @@ import { LinkIconComponent } from './shared-components/link-icon/link-icon.compo
     ColorPickerPopupComponent,
     LinkPopupComponent,
     MediaBrowserPopupComponent,
-    ImagePropertyComponent,
     PaginatorComponent,
     ItemListComponent,
     EditableItemListComponent,

@@ -1,1 +1,58 @@
-<banners id="first-property"></banners>
+<!-- Property Box -->
+<div class="property-box-light">
+
+    <!-- Container for paginator & icons -->
+    <div class="property-box-light-icon-bar">
+
+        <!-- Paginator -->
+        <paginator [itemCount]="carouselWidget.banners.length"></paginator>
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Delete Banner Icon -->
+            <div class="icon-container" [ngClass]="{'icon-disabled':  carouselWidget.banners.length == 0}">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+
+            <!-- Add Banner Icon -->
+            <div class="icon-container">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Content -->
+    <div class="content" *ngIf="carouselWidget.banners.length > 0; else placeholder">
+
+        <ng-container *ngFor="let banner of carouselWidget.banners">
+            <!-- Banner label -->
+            <div class="property">
+                <div class="label">Banner:</div>
+            </div>
+
+
+            <!-- Banner Image -->
+            <image [image]="banner.image"></image>
+
+
+
+            <!-- Link label -->
+            <div class="property">
+                <div class="label">Link:</div>
+            </div>
+
+            
+            <!-- Link -->
+            <link-property [link]="banner.link"></link-property>
+        </ng-container>
+
+
+    </div>
+
+    <!-- Placeholder -->
+    <ng-template #placeholder>
+        <div class="no-property">No banners available</div>
+    </ng-template>
+</div>

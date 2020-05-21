@@ -51,7 +51,7 @@
                 <div #canvasElement class="canvas" (mousedown)="widgetService.selectedWidget = null">
                     <div #contentElement class="content" [style.maxWidth.px]="pageService.page.width"
                         [style.backgroundColor]="pageService.page.background.color ? pageService.page.background.color.toRGBString(): null"
-                        [ngStyle]="{ 'background-image': pageService.page.background.image ? 'url(images/' + pageService.page.background.image.name + ')' : null,
+                        [ngStyle]="{ 'background-image': pageService.page.background.image && pageService.page.background.image.url ? 'url(images/' + pageService.page.background.image.url + ')' : null,
                         'background-position': pageService.page.background.image ? pageService.page.background.image.position : null,
                         'background-repeat': pageService.page.background.image ? pageService.page.background.image.repeat : null,
                         'background-attachment': pageService.page.background.image ? pageService.page.background.image.attachment : null}">
