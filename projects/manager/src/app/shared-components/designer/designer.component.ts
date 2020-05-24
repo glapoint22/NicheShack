@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, AfterViewInit, HostListener } from '@angular/core';
 import { ButtonWidgetComponent } from './widgets/button-widget/button-widget.component';
 import { ContainerWidgetComponent } from './widgets/container-widget/container-widget.component';
 import { ImageWidgetComponent } from './widgets/image-widget/image-widget.component';
@@ -30,7 +30,7 @@ export class DesignerComponent implements OnInit, AfterViewInit {
   @ViewChild('PropertiesEditorContainer', { static: false }) PropertiesEditorContainer: ElementRef;
   public widgetCursors: Array<WidgetCursor>;
 
-  
+
   constructor(private widgetService: WidgetService, public pageService: PageService, private breakpointService: BreakpointService) { }
 
 
@@ -145,7 +145,7 @@ export class DesignerComponent implements OnInit, AfterViewInit {
 
       // Set the width of the canvas
       this.canvasElement.nativeElement.style.maxWidth = (startWidth * percent) + 'px';
-      
+
 
       // Alert that the canvas width has changed
       this.breakpointService.onCanvasWidthChange.next(this.contentElement.nativeElement.getBoundingClientRect().width);
@@ -160,5 +160,12 @@ export class DesignerComponent implements OnInit, AfterViewInit {
 
     window.addEventListener("mousemove", onMousemove);
     window.addEventListener("mouseup", onMouseup);
+  }
+
+  @HostListener('document:keydown.delete')
+  onDeleteKeydown() {
+    if (this.widgetService.selectedWidget) {
+      this.widgetService.selectedWidget.column.row.deleteColumn(this.widgetService.selectedWidget.column);
+    }
   }
 }
