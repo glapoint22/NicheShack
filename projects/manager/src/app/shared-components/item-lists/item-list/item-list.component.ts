@@ -1,5 +1,6 @@
 import { Component, ViewChildren, ElementRef, QueryList, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { MenuService } from '../../../services/menu.service';
+import { ListItem } from '../../../classes/list-item';
 
 @Component({
   selector: 'item-list',
@@ -7,7 +8,7 @@ import { MenuService } from '../../../services/menu.service';
   styleUrls: ['./item-list.component.scss']
 })
 export class ItemListComponent implements OnChanges {
-  public listItems: any[] = [];
+  public listItems: ListItem[] = [];
   public lastFocusedListItem: any;
   public pivotIndex: number = null;
   public ctrlDown: boolean = false;
@@ -32,6 +33,7 @@ export class ItemListComponent implements OnChanges {
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
     if (this.list) {
+
       this.listItems = this.list.map(x => ({
         name: x,
         selected: false,
@@ -103,7 +105,7 @@ export class ItemListComponent implements OnChanges {
 
   // -----------------------------( ON MOUSE DOWN )------------------------------ \\
   onMouseDown = () => {
-    // As long as the context menu is open
+    // As long as the context menu IS open
     if (this.menuService.showMenu
       // and we're NOT clicking on an icon button
       && !this.overIconButton) {
@@ -366,25 +368,36 @@ export class ItemListComponent implements OnChanges {
   // -----------------------------( ADD LIST ITEM )------------------------------ \\
   addListItem() {
     if (!this.isAddDisabled) {
-      this.onAddItem.emit();
+      this.setListItemAdd();
     }
+  }
+
+
+  // -----------------------------( SET LIST ITEM ADD )------------------------------ \\
+  setListItemAdd() {
+    this.onAddItem.emit();
   }
 
 
   // -----------------------------( EDIT LIST ITEM )------------------------------ \\
   editListItem() {
     if (!this.isEditDisabled) {
-      this.onEditItem.emit();
+      this.setListItemEdit();
     }
   }
 
 
-  // -----------------------------( DELETE )------------------------------ \\
+  // -----------------------------( SET LIST ITEM EDIT )------------------------------ \\
+  setListItemEdit() {
+    this.onEditItem.emit();
+  }
+
+
+  // -----------------------------( DELETE LIST ITEM )------------------------------ \\
   deleteListItem() {
     if (!this.isDeleteDisabled) {
       let listItemCopy: any;
       let deletedListItemIndex: number;
-
 
       // If a list item is selected
       if (this.selectedListItemIndex != null) {
@@ -413,7 +426,7 @@ export class ItemListComponent implements OnChanges {
         // As long as a list item that is marked as selected is found
         if (deletedListItemIndex != -1) {
           // Remove that list item
-          this.listItems.splice(deletedListItemIndex, 1);
+          this.removeListItem(deletedListItemIndex)
         }
       }
       // Loop until all the list items marked as selected are deleted
@@ -468,20 +481,32 @@ export class ItemListComponent implements OnChanges {
   }
 
 
+  // -----------------------------( REMOVE LIST ITEM )------------------------------ \\
+  removeListItem(deletedListItemIndex: number) {
+    this.listItems.splice(deletedListItemIndex, 1);
+  }
+
+
   // -----------------------------( SET CONTEXT MENU )------------------------------ \\
   setContextMenu(e: MouseEvent) {
     // As long as the right mouse button is being pressed
     if (e.which == 3) {
-
       // Build the context menu
-      this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-        // Add
-        this.menuService.option(this.menuOptions[0], "Ctrl+Alt+A", this.isAddDisabled, this.addListItem),
-        // Edit
-        this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.isEditDisabled, this.editListItem),
-        // Delete
-        this.menuService.option(this.isDeleteDisabled ? this.menuOptions[2] : this.isEditDisabled ? this.menuOptions[3] : this.menuOptions[2], "Delete", this.isDeleteDisabled, this.deleteListItem));
+      this.buildContextMenu(e)
     }
+  }
+
+
+  // -----------------------------( BUILD CONTEXT MENU )------------------------------ \\
+  buildContextMenu(e: MouseEvent) {
+    // Build the context menu
+    this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
+      // Add
+      this.menuService.option(this.menuOptions[0], "Ctrl+Alt+A", this.isAddDisabled, this.addListItem),
+      // Edit
+      this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.isEditDisabled, this.editListItem),
+      // Delete
+      this.menuService.option(this.isDeleteDisabled ? this.menuOptions[2] : this.isEditDisabled ? this.menuOptions[3] : this.menuOptions[2], "Delete", this.isDeleteDisabled, this.deleteListItem));
   }
 
 

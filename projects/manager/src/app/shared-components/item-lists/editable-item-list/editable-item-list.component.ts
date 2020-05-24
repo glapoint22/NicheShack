@@ -37,6 +37,9 @@ export class EditableItemListComponent extends ItemListComponent {
     // If the list item is NOT empty
     if (listItemTrimmed.length > 0) {
 
+      // Set the focus to the list item just in case it lost it on a mouse down
+      this.setFocusToListItem(listItem);
+
       // Commit the edit
       this.selectedListItemIndex = this.indexOfEditedListItem;
       this.newListItem = false;
@@ -73,6 +76,12 @@ export class EditableItemListComponent extends ItemListComponent {
       this.isAddDisabled = false;
       this.indexOfEditedListItem = null;
     }
+  }
+
+
+  // -----------------------------( SET FOCUS TO LIST ITEM )------------------------------ \\
+  setFocusToListItem(listItem) {
+    listItem.focus();
   }
 
 
@@ -141,54 +150,50 @@ export class EditableItemListComponent extends ItemListComponent {
   }
 
 
-  // -----------------------------( ADD LIST ITEM )------------------------------ \\
-  addListItem() {
-    if (!this.isAddDisabled) {
-      this.addEventListeners();
-      this.newListItem = true;
-      this.isAddDisabled = true;
-      this.isEditDisabled = true;
-      this.isDeleteDisabled = true;
-      this.indexOfEditedListItem = 0;
-      this.selectedListItemIndex = null;
-      this.listItems.unshift({ name: "", selected: false, selectType: null });
+  // -----------------------------( SET LIST ITEM ADD )------------------------------ \\
+  setListItemAdd() {
+    this.addEventListeners();
+    this.newListItem = true;
+    this.isAddDisabled = true;
+    this.isEditDisabled = true;
+    this.isDeleteDisabled = true;
+    this.indexOfEditedListItem = 0;
+    this.selectedListItemIndex = null;
+    this.listItems.unshift({ name: "", selected: false, selectType: null });
 
-      for (let i = 0; i < this.listItems.length; i++) {
-        this.listItems[i].selected = false;
-        this.listItems[i].selectType = null;
-      }
-
-      window.setTimeout(() => {
-        this.listItem.find((item, index) => index == this.indexOfEditedListItem).nativeElement.focus();
-      });
+    for (let i = 0; i < this.listItems.length; i++) {
+      this.listItems[i].selected = false;
+      this.listItems[i].selectType = null;
     }
+
+    window.setTimeout(() => {
+      this.listItem.find((item, index) => index == this.indexOfEditedListItem).nativeElement.focus();
+    });
   }
 
 
-  // -----------------------------( EDIT LIST ITEM )------------------------------ \\
-  editListItem() {
-    if (!this.isEditDisabled) {
-      this.indexOfEditedListItem = this.selectedListItemIndex;
-      this.isAddDisabled = true;
-      this.isEditDisabled = true;
-      this.isDeleteDisabled = true;
-      this.selectedListItemIndex = null;
+  // -----------------------------( SET LIST ITEM EDIT )------------------------------ \\
+  setListItemEdit() {
+    this.indexOfEditedListItem = this.selectedListItemIndex;
+    this.isAddDisabled = true;
+    this.isEditDisabled = true;
+    this.isDeleteDisabled = true;
+    this.selectedListItemIndex = null;
 
-      for (let i = 0; i < this.listItems.length; i++) {
-        this.listItems[i].selected = false;
-        this.listItems[i].selectType = null;
-      }
-
-      window.setTimeout(() => {
-        let listItem = this.listItem.find((item, index) => index == this.indexOfEditedListItem);
-        listItem.nativeElement.focus();
-        let range = document.createRange();
-        range.selectNodeContents(listItem.nativeElement);
-        let sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-      });
+    for (let i = 0; i < this.listItems.length; i++) {
+      this.listItems[i].selected = false;
+      this.listItems[i].selectType = null;
     }
+
+    window.setTimeout(() => {
+      let listItem = this.listItem.find((item, index) => index == this.indexOfEditedListItem);
+      listItem.nativeElement.focus();
+      let range = document.createRange();
+      range.selectNodeContents(listItem.nativeElement);
+      let sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
   }
 
 

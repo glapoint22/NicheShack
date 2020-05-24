@@ -11,4 +11,5 @@ export class PopupService {
   public showColorPickerPopup: boolean;
   public showHierarchyPopup: boolean;
   public showLinkPopup: boolean;
+  public showMediaBrowserPopup: boolean;
 }

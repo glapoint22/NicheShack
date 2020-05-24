@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { PopupComponent } from '../popup/popup.component';
 
 @Component({
   selector: 'media-browser-popup',
   templateUrl: './media-browser-popup.component.html',
-  styleUrls: ['./media-browser-popup.component.scss']
+  styleUrls: ['./media-browser-popup.component.scss', '../popup/popup.component.scss']
 })
-export class MediaBrowserPopupComponent implements OnInit {
+export class MediaBrowserPopupComponent extends PopupComponent {
 
-  constructor() { }
+  // -----------------------------( ON POPUP SHOW )------------------------------ \\
+  onPopupShow(popup, arrow) {
+    super.onPopupShow(popup, arrow);
 
-  ngOnInit() {
+    
   }
 
+
+  // -----------------------------( ON DROPDOWN OPTION SELECT )------------------------------ \\
+  onDropdownOptionSelect() {
+
+  }
 }

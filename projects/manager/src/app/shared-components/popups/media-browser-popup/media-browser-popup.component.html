@@ -1,0 +1,99 @@
+<!-- Popup Base -->
+<div #popup
+     transitionClass="fade-end"
+     class="popup-base fade-start"
+     (onShow)="onPopupShow(popup, arrow)"
+     *show="popupService.showMediaBrowserPopup" 
+     style="width: 250px;">
+
+     <!-- Arrow -->
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
+
+     <!-- Media Type Container -->
+    <div class="media-type-container">
+        
+        <!-- Label -->
+        <div class="media-type-label">
+            <div class="label">Media Type:</div>
+        </div>
+
+        <!-- Dropdown -->
+        <div class="dropdown">
+            <dropdown 
+                [height]="20"
+                [title]="''"
+                [keyValue]="[
+                            {key: 'Background Images', value: 'Background Images'}, 
+                            {key: 'Banner Images', value: 'Banner Images'}, 
+                            {key: 'Category Images', value: 'Category Images'},
+                            {key: 'Designer Images', value: 'Designer Images'},
+                            {key: 'Icon Images', value: 'Icon Images'},
+                            {key: 'Product Images', value: 'Product Images'},
+                            {key: 'Videos', value: 'Videos'}
+                            ]"
+                [selectedIndex]="0"
+                (onChange)="onDropdownOptionSelect($event)">
+            </dropdown>
+        </div>
+    </div>
+
+    
+    <!-- Search -->
+    <div class="search-container" >
+        <div class="search-icon-container">
+            <i class="fas fa-search"></i>
+        </div>
+
+        <div class="input-container">
+            <input> 
+        </div>
+    </div>
+
+        
+    <!-- Media Item LIst -->
+    <media-item-list
+        [mediaList]="['2f119b657c194b32a88b0f0051d525be.png', 
+                      '6c048ea442b646b59970f907a4d3ce61.jpg', 
+                      '6e1659b63e5643e0a9039064b4a52e12.png', 
+                      '899c7b6deb544dd28a7ec3055c5196a1.jpg', 
+                      'b4fa43f207d7420cbb2c72d0fe9c64ba.jpg', 
+                      'b212b69728ee4f3b9473831bb4f7ace9.png',
+                      'c2421d044ae64fcc8320845d6deaa62f.jpg',
+                      'c3b7bb370e1641eda0036f02f41bd7bf.png',
+                      'f20e893f38d5433b9bf49e88fe7cfe9e.png',
+                      '2a08e8f8bc7940b087f7e29d2e80a106.png',
+                      '0018ffd4eca34b6eb4fdc9bcdb0d329e.png',
+                      '81af3c1dcb6745ae932883d2f69e0b66.png',
+                      '3273f27e8bbb44bab5d58a642fd23773.png',
+                      '53074ab3817f4a029f4f20eb45c51ba0.png',
+                      'bc9ce0cc860e422aa7c9cafaaf61fc8a.png',
+                      'f318f360038a4ccd80a4accc168e590a.png',
+                      'd7f8ac43d31e49edaefb55eda385b468.png',
+                      'f5ca6bd2ac0549d3b7f0609c534eb182.png',
+                      'ed7ef2d101b54ae8a1f0404376dac268.png',
+                      'bcddc0a43cdc41b0a0b86c6a2a56bacd.png']"
+
+        [list]="['Image 1',
+                 'Image 2',
+                 'Image 3',
+                 'Image 4',
+                 'Image 5',
+                 'Image 6',
+                 'Image 7',
+                 'Image 8',
+                 'Image 9',
+                 'Image 10',
+                 'Image 11',
+                 'Image 12',
+                 'Image 13',
+                 'Image 14',
+                 'Image 15',
+                 'Image 16',
+                 'Image 17',
+                 'Image 18',
+                 'Image 19',
+                 'Image 20']"
+                 
+        [menuOptions]="['Add Image', 'Edit Image', 'Delete Image', 'Delete Images']">
+    </media-item-list>
+</div>
