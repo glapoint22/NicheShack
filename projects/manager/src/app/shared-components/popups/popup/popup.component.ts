@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'popup',
@@ -8,6 +9,8 @@ import { CoverService } from '../../../services/cover.service';
   styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent {
+  public show: boolean;
+  public onPopupClose = new Subject<void>();
   private popup;
   private arrow;
   private popupTop: number;
@@ -49,12 +52,9 @@ export class PopupComponent {
               (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + 20))))) {
 
 
-        // Close all popups
-        Object.keys(this.popupService).forEach((property: string) => {
-          if (typeof (this.popupService[property]) == 'boolean') {
-            this.popupService[property] = false;
-          }
-        });
+        // Close this popup
+        this.show = false;
+        this.onPopupClose.next();
 
 
         window.removeEventListener('mousemove', this.onMouseMove);

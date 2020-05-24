@@ -8,6 +8,4 @@ import { Link } from '../../../classes/link';
 })
 export class LinkComponent {
   @Input() link: Link;
-
-  openLinkPopup() {}
 }

@@ -12,9 +12,15 @@
     <div class="bottom-handle-bar" (mousedown)="onHandleMousedown('bottom', $event)"></div>
 
     <!-- Contents -->
-    <iframe #iframe width="100%" height="100%" align="top" style="background: white;"
+    <iframe #iframe width="100%" height="100%" align="top" [style.backgroundColor]="background.color.toRGBString()"
+        [ngStyle]="{ 'background-image': background.image && background.image.url ? 'url(images/' + background.image.url + ')' : null,
+                        'background-position': background.image ? background.image.position : null,
+                        'background-repeat': background.image ? background.image.repeat : null,
+                        'background-attachment': background.image ? background.image.attachment : null}"
         [style.height.px]="iframeHeight"></iframe>
 
     <!-- Cover -->
-    <div *ngIf="showCover()" class="position-absolute-identity" style="user-select: none;"></div>
+    <div *ngIf="!inEditMode" class="position-absolute-identity" style="user-select: none;"
+        (dblclick)="setEditMode()">
+    </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ColorSwatchComponent } from '../../../../../../shared-components/elements/color-swatch/color-swatch.component';
 import { Color } from '../../../../../../classes/color';
 
@@ -14,7 +14,8 @@ export class ColorIconComponent extends ColorSwatchComponent {
   @Output() onRemoveColor: EventEmitter<void> = new EventEmitter();
   public showRemoveChange: boolean;
 
-  // Click of the icon
+
+  // ---------------------------------------------------------------- On Click --------------------------------------------------------------
   onClick(sourceElement: HTMLElement) {
     if (this.removable && !this.color.isEqual(Color.zero)) {
       // Show the remove/change options
@@ -25,8 +26,13 @@ export class ColorIconComponent extends ColorSwatchComponent {
     }
   }
 
-  // Click of one of the options (remove color / change color)
+  
+
+
+
+  // -------------------------------------------------------------- On Option Click -----------------------------------------------------------
   onOptionClick(changeColor: boolean, sourceElement: HTMLElement) {
+    // Click of one of the options (remove color / change color)
     if (changeColor) {
       super.onClick(sourceElement);
     } else {

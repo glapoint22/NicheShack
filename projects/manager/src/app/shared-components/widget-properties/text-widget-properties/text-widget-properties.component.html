@@ -1,5 +1,17 @@
+<div class="grooved-container-bottom">
+    <div class="button-center" (click)="textWidget.setEditMode()">{{textWidget.inEditMode ? 'Exit Edit Mode' : 'Enter Edit Mode'}}</div>
+</div>
+
+
+<!-- background -->
+<div id="first-property">
+    <panel [title]="'Background'">
+        <background [background]="textWidget.background"></background>
+    </panel>
+</div>
+
 <!-- Text -->
-<text id="first-property" [text]="textWidget.textBox"></text>
+<text [textWidget]="textWidget"></text>
 
 
 <!-- Dimensions -->

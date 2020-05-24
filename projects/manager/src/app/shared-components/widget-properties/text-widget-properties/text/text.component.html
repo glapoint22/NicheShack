@@ -1,11 +1,12 @@
-<panel *ngIf="text" [title]="'Text'">
+<panel *ngIf="textWidget.textBox" [title]="'Text'">
 
     <!-- Font -->
     <div class="property">
         <div class="label">Font</div>
         <div style="flex: 1;">
-            <dropdown [height]="20" [keyValue]="text.font.options" [selectedIndex]="text.font.selectedIndex"
-                (onChange)="text.font.setStyleValue($event)">
+            <dropdown [height]="20" [keyValue]="textWidget.textBox.font.options"
+                [selectedIndex]="textWidget.textBox.font.selectedIndex"
+                (onChange)="textWidget.textBox.font.setStyleValue($event)">
             </dropdown>
         </div>
     </div>
@@ -14,20 +15,23 @@
     <div class="property">
         <div class="label">Font Size</div>
         <div style="flex: 1;">
-            <editable-dropdown [height]="20" [keyValue]="text.fontSize.options"
-                [selectedIndex]="text.fontSize.selectedIndex" (onChange)="text.fontSize.setStyleValue($event)">
+            <editable-dropdown [height]="20" [keyValue]="textWidget.textBox.fontSize.options"
+                [selectedIndex]="textWidget.textBox.fontSize.selectedIndex"
+                (onChange)="textWidget.textBox.fontSize.setStyleValue($event)">
             </editable-dropdown>
         </div>
     </div>
 
-    
+
 
 
     <!-- Font Color -->
     <div class="property">
         <div class="label">Color</div>
         <div style="flex: 1;">
-            <color-swatch [color]="text.fontColor.defaultColor"></color-swatch>
+            <color-swatch [color]="textWidget.textBox.fontColor.value"
+                (onInit)="textWidget.textBox.fontColor.colorPicker = $event"
+                (onColorPickerOpen)="textWidget.textBox.fontColor.onColorPickerOpen()"></color-swatch>
         </div>
     </div>
 
@@ -36,16 +40,9 @@
     <div class="property">
         <div class="label">Highlight</div>
         <div style="flex: 1;">
-            <color-swatch [color]="text.highlightColor.defaultColor"></color-swatch>
-        </div>
-    </div>
-
-
-    <!-- Background -->
-    <div class="property">
-        <div class="label">Background</div>
-        <div style="flex: 1;">
-            <color-swatch [color]="text.fontColor.defaultColor"></color-swatch>
+            <color-swatch [color]="textWidget.textBox.highlightColor.value"
+                (onInit)="textWidget.textBox.highlightColor.colorPicker = $event"
+                (onColorPickerOpen)="textWidget.textBox.highlightColor.onColorPickerOpen()"></color-swatch>
         </div>
     </div>
 
@@ -58,39 +55,39 @@
 
             <!-- Left align -->
             <div class="icon-container" title="Left align (Ctrl+Shift+L)"
-                [ngClass]="{'selected':text.alignLeft.isSelected}" (click)="text.alignLeft.applyStyle();
-            text.alignCenter.isSelected = false;
-            text.alignRight.isSelected = false;
-            text.alignJustify.isSelected = false">
+                [ngClass]="{'selected':textWidget.textBox.alignLeft.isSelected}" (click)="textWidget.textBox.alignLeft.applyStyle();
+            textWidget.textBox.alignCenter.isSelected = false;
+            textWidget.textBox.alignRight.isSelected = false;
+            textWidget.textBox.alignJustify.isSelected = false">
                 <i class="fas fa-align-left"></i>
             </div>
 
             <!-- Center align -->
             <div class="icon-container" title="Center align (Ctrl+Shift+E)"
-            [ngClass]="{'selected': text.alignCenter.isSelected}" (click)="text.alignCenter.applyStyle(); 
-            text.alignLeft.isSelected = false;
-            text.alignRight.isSelected = false; 
-            text.alignJustify.isSelected = false">
+                [ngClass]="{'selected': textWidget.textBox.alignCenter.isSelected}" (click)="textWidget.textBox.alignCenter.applyStyle(); 
+            textWidget.textBox.alignLeft.isSelected = false;
+            textWidget.textBox.alignRight.isSelected = false; 
+            textWidget.textBox.alignJustify.isSelected = false">
                 <i class="fas fa-align-center"></i>
             </div>
 
 
             <!-- Right align -->
             <div class="icon-container" title="Right align (Ctrl+Shift+R)"
-                [ngClass]="{'selected': text.alignRight.isSelected}" (click)="text.alignRight.applyStyle();
-            text.alignLeft.isSelected = false;
-            text.alignJustify.isSelected = false;
-            text.alignCenter.isSelected = false">
+                [ngClass]="{'selected': textWidget.textBox.alignRight.isSelected}" (click)="textWidget.textBox.alignRight.applyStyle();
+            textWidget.textBox.alignLeft.isSelected = false;
+            textWidget.textBox.alignJustify.isSelected = false;
+            textWidget.textBox.alignCenter.isSelected = false">
                 <i class="fas fa-align-right"></i>
             </div>
 
 
             <!-- Justify -->
             <div class="icon-container" title="Justify (Ctrl+Shift+J)"
-                [ngClass]="{'selected': text.alignJustify.isSelected}" (click)="text.alignJustify.applyStyle();
-            text.alignLeft.isSelected = false;
-            text.alignCenter.isSelected = false;
-            text.alignRight.isSelected = false">
+                [ngClass]="{'selected': textWidget.textBox.alignJustify.isSelected}" (click)="textWidget.textBox.alignJustify.applyStyle();
+            textWidget.textBox.alignLeft.isSelected = false;
+            textWidget.textBox.alignCenter.isSelected = false;
+            textWidget.textBox.alignRight.isSelected = false">
                 <i class="fas fa-align-justify"></i>
             </div>
         </div>
@@ -106,20 +103,20 @@
             <div class="icon-container" style="cursor: default;"></div>
 
             <!-- Bold -->
-            <div class="style-icon" [ngClass]="{'selected': text.fontWeight == 'bold'}"
-                (click)="text.fontWeight = text.fontWeight == 'normal' ? 'bold' : 'normal'">
+            <div class="style-icon" [ngClass]="{'selected': textWidget.textBox.bold.isSelected}"
+                (click)="textWidget.textBox.bold.applyStyle()">
                 <i class="fas fa-bold"></i>
             </div>
 
             <!-- Italic -->
-            <div class="style-icon" [ngClass]="{'selected': text.fontStyle == 'italic'}"
-                (click)="text.fontStyle = text.fontStyle == 'normal' ? 'italic' : 'normal'">
+            <div class="style-icon" [ngClass]="{'selected': textWidget.textBox.italic.isSelected}"
+                (click)="textWidget.textBox.italic.applyStyle()">
                 <i class="fas fa-italic"></i>
             </div>
 
             <!-- Underline -->
-            <div class="style-icon" [ngClass]="{'selected': text.textDecoration == 'underline'}"
-                (click)="text.textDecoration = text.textDecoration == 'none' ? 'underline' : 'none'">
+            <div class="style-icon" [ngClass]="{'selected': textWidget.textBox.underline.isSelected}"
+                (click)="textWidget.textBox.underline.applyStyle()">
                 <i class="fas fa-underline"></i>
             </div>
         </div>
@@ -136,18 +133,18 @@
 
             <!-- Spacer -->
             <div class="icon-container" style="cursor: default;"></div>
-                
+
             <!-- Numbered list -->
             <div class="icon-container" title="Numbered list (Ctrl+Shift+7)"
-                [ngClass]="{'selected': text.orderedList.isSelected}"
-                (click)="text.orderedList.applyStyle(); text.unorderedList.checkSelection()">
+                [ngClass]="{'selected': textWidget.textBox.orderedList.isSelected}"
+                (click)="textWidget.textBox.orderedList.applyStyle(); textWidget.textBox.unorderedList.checkSelection()">
                 <i class="fas fa-list-ol"></i>
             </div>
 
             <!-- Bulleted list -->
             <div class="icon-container" title="Bulleted list (Ctrl+Shift+8)"
-                [ngClass]="{'selected': text.unorderedList.isSelected}"
-                (click)="text.unorderedList.applyStyle(); text.orderedList.checkSelection()">
+                [ngClass]="{'selected': textWidget.textBox.unorderedList.isSelected}"
+                (click)="textWidget.textBox.unorderedList.applyStyle(); textWidget.textBox.orderedList.checkSelection()">
                 <i class="fas fa-list-ul"></i>
             </div>
         </div>
@@ -164,17 +161,17 @@
 
             <!-- Spacer -->
             <div class="icon-container" style="cursor: default;"></div>
-                
+
             <!-- Decrease indent -->
             <div class="icon-container" title="Decrease indent (ctrl+[)"
-                (click)="text.decreaseIndent.applyStyle()">
+                (click)="textWidget.textBox.decreaseIndent.applyStyle()">
                 <i class="fas fa-outdent"></i>
             </div>
 
 
             <!-- Increase indent -->
             <div class="icon-container" title="Increase indent (ctrl+])"
-                (click)="text.increaseIndent.applyStyle()">
+                (click)="textWidget.textBox.increaseIndent.applyStyle()">
                 <i class="fas fa-indent"></i>
             </div>
         </div>
@@ -185,17 +182,12 @@
     <div class="property">
         <div class="label">Link</div>
         <div style="flex: 1; display: flex; justify-content: flex-end;">
-
-            <!-- Link Icon -->
-            <div class="icon-container" showPopup [popup]="'showLinkPopup'">
-                <i class="fas fa-link"></i>
-            </div>
+            <link-icon [link]="textWidget.textBox.linkStyle.link"
+                (onInit)="textWidget.textBox.linkStyle.linkPopup = $event"
+                (onLinkPopupOpen)="textWidget.textBox.linkStyle.onLinkPopupOpen()"></link-icon>
         </div>
     </div>
 
-    
-    
-
-
-
+    <div *ngIf="!textWidget.inEditMode" class="position-absolute-identity"
+        style="user-select: none; background-color: rgba(45, 45, 45, 0.5);"></div>
 </panel>

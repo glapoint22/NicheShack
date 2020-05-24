@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TextBox } from 'projects/manager/src/app/classes/text-box';
+import { TextWidgetComponent } from '../../../designer/widgets/text-widget/text-widget.component';
 
 @Component({
   selector: 'text',
@@ -7,7 +7,7 @@ import { TextBox } from 'projects/manager/src/app/classes/text-box';
   styleUrls: ['./text.component.scss']
 })
 export class TextComponent implements OnInit {
-  @Input() text: TextBox;
+  @Input() textWidget: TextWidgetComponent;
 
   constructor() { }
 

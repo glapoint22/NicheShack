@@ -1,12 +1,34 @@
 import { Color } from './color';
 import { PersistentStyle } from './persistent-style';
-import { Subject, Subscription } from 'rxjs';
-import { Selection } from './selection';
+import { Subscription } from 'rxjs';
+import { ColorPickerPopupComponent } from '../shared-components/popups/color-picker-popup/color-picker-popup.component';
 
 export class ColorStyle extends PersistentStyle {
     public defaultColor: Color;
     private colorPickerOpen: boolean;
-    
+    private colorPickerSubscription: Subscription;
+
+
+    // ColorPicker
+    public set colorPicker(colorPicker: ColorPickerPopupComponent) {
+        if (this.colorPickerSubscription) this.colorPickerSubscription.unsubscribe();
+
+        this.colorPickerSubscription = colorPicker.onPopupClose.subscribe(() => {
+            if (this.colorPickerOpen) {
+                // Restore the selection
+                this.contentDocument.getSelection().removeAllRanges();
+                this.contentDocument.getSelection().addRange(this.selectedRange);
+
+
+                // Flag that the color picker is closed
+                this.colorPickerOpen = false;
+
+                this.setFocus();
+            }
+        });
+    }
+
+
 
     // This is the color value
     private _value: Color = new Color();
@@ -32,55 +54,18 @@ export class ColorStyle extends PersistentStyle {
         this._value = v;
     }
 
-    onShowColorPicker(onColorPickerClose: Subject<boolean>) {
-        // Get the current selection
-        let selection: Selection = this.getSelection();
 
-        // Get a snapshot of all the contents
-        // this will be used if the user does not commit to the changes
-        let template = document.createElement('template');
-        template.innerHTML = this.contentParentNode.innerHTML;
-
-        // Clear the selection from the text
-        this.contentDocument.getSelection().removeAllRanges();
-
+    onColorPickerOpen() {
         // If the color value is zero, assign the default color
         if (this.value.isEqual(Color.zero)) {
             this.value.copy(this.defaultColor);
         }
 
+        // Clear the selection from the text
+        this.contentDocument.getSelection().removeAllRanges();
 
         // Flag that the color picker is open
         this.colorPickerOpen = true;
-
-
-        // Subscribe for when the color picker closes
-        let subscription: Subscription = onColorPickerClose.subscribe((canceled: boolean) => {
-            // Restore the selection
-            this.contentDocument.getSelection().addRange(this.selectedRange);
-
-
-            // Flag that the color picker is closed
-            this.colorPickerOpen = false;
-
-            // If there was no change, remove the style
-            if (canceled) {
-                // Remove all contents
-                this.contentParentNode.innerHTML = '';
-
-                // Replace the contents with the previous contents
-                this.contentParentNode.appendChild(template.content);
-                this.setSelection(selection);
-            } else {
-                // Remove the start and end attributes
-                this.removeSelectAttribute(this.contentParentNode as HTMLElement, 'start');
-                this.removeSelectAttribute(this.contentParentNode as HTMLElement, 'end');
-            }
-
-            this.setFocus();
-
-            subscription.unsubscribe();
-        });
     }
 
 

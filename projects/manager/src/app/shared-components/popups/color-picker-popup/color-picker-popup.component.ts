@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Color } from '../../../classes/color';
 import { HSL } from '../../../classes/hsl';
 import { HSB } from '../../../classes/hsb';
@@ -10,7 +10,8 @@ import { PopupComponent } from '../popup/popup.component';
   styleUrls: ['./color-picker-popup.component.scss', '../popup/popup.component.scss'],
 })
 
-export class ColorPickerPopupComponent extends PopupComponent {
+export class ColorPickerPopupComponent extends PopupComponent implements OnInit {
+  public color: Color;
   public hue: number;
   public red: number;
   public hex: string;
@@ -27,20 +28,26 @@ export class ColorPickerPopupComponent extends PopupComponent {
   @ViewChild('colorPalette', { static: false }) colorPalette: ElementRef;
 
 
+
+  // --------------------------------( NG ON INIT )-------------------------------- \\
+  ngOnInit() {
+    this.popupService.colorPickerPopup = this;
+  }
+
+
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
 
     window.setTimeout(() => {
-      let color: Color = this.popupService.colorPickerColor;
       // Set the ring position
-      this.setRingPosition(new Color((color.r), (color.g), (color.b), 1).toHSB());
+      this.setRingPosition(this.color.toHSB());
       // Set the hue slider position
-      this.setHueSliderPosition(new Color((color.r), (color.g), (color.b), 1).toHSL());
+      this.setHueSliderPosition(this.color.toHSL());
       // Set the RGB
       this.setRGB();
       // Set the alpha
-      this.alpha = color.a;
+      this.alpha = this.color.a;
     })
   }
 
@@ -118,11 +125,11 @@ export class ColorPickerPopupComponent extends PopupComponent {
 
     //Update the input fields
     if (activeElement != "hex") this.hex = rgbColor.toHex();
-    this.popupService.colorPickerColor.r = rgbColor.r;
+    this.color.r = rgbColor.r;
     if (activeElement != "red") this.red = Math.round(((rgbColor.r / 2.55) / 100) * 100) / 100;
-    this.popupService.colorPickerColor.g = rgbColor.g;
+    this.color.g = rgbColor.g;
     if (activeElement != "green") this.green = Math.round(((rgbColor.g / 2.55) / 100) * 100) / 100;
-    this.popupService.colorPickerColor.b = rgbColor.b;
+    this.color.b = rgbColor.b;
     if (activeElement != "blue") this.blue = Math.round(((rgbColor.b / 2.55) / 100) * 100) / 100;
 
     //Set the ring color

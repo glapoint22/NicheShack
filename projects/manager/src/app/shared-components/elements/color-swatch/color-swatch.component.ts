@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Color } from '../../../classes/color';
 import { PopupService } from '../../../services/popup.service';
+import { ColorPickerPopupComponent } from '../../popups/color-picker-popup/color-picker-popup.component';
 
 @Component({
   selector: 'color-swatch',
@@ -8,14 +9,23 @@ import { PopupService } from '../../../services/popup.service';
   styleUrls: ['./color-swatch.component.scss']
 })
 
-export class ColorSwatchComponent{
-  constructor(public popupService: PopupService) {}
+export class ColorSwatchComponent implements OnInit {
   @Input() color: Color;
+  @Output() onColorPickerOpen: EventEmitter<void> = new EventEmitter();
+  @Output() onInit: EventEmitter<ColorPickerPopupComponent> = new EventEmitter();
 
+  constructor(public popupService: PopupService) { }
   
+
+  ngOnInit() {
+    this.onInit.emit(this.popupService.colorPickerPopup);
+  }
+
+
   onClick(sourceElement: HTMLElement) {
-    this.popupService.colorPickerColor = this.color;
+    this.popupService.colorPickerPopup.color = this.color;
     this.popupService.sourceElement = sourceElement;
-    this.popupService.showColorPickerPopup = !this.popupService.showColorPickerPopup;
+    this.popupService.colorPickerPopup.show = !this.popupService.colorPickerPopup.show;
+    this.onColorPickerOpen.emit();
   }
 }

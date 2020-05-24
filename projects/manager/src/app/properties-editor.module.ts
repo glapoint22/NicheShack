@@ -61,6 +61,7 @@ import { PopupComponent } from './shared-components/popups/popup/popup.component
 import { BackgroundComponent } from './shared-components/properties/background/background.component';
 import { ShowPopupDirective } from './directives/show-popup/show-popup.directive';
 import { MediaItemListComponent } from './shared-components/item-lists/media-item-list/media-item-list.component';
+import { LinkIconComponent } from './shared-components/link-icon/link-icon.component';
 
 
 @NgModule({
@@ -121,6 +122,7 @@ import { MediaItemListComponent } from './shared-components/item-lists/media-ite
     CoverComponent,
     PopupComponent,
     BackgroundComponent,
+    LinkIconComponent,
     ShowPopupDirective,
     MediaItemListComponent
   ],
@@ -187,6 +189,7 @@ import { MediaItemListComponent } from './shared-components/item-lists/media-ite
     CoverComponent,
     PopupComponent,
     BackgroundComponent,
+    LinkIconComponent,
     ShowPopupDirective,
     MediaItemListComponent
   ]

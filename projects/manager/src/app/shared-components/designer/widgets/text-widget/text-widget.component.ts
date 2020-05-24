@@ -12,6 +12,7 @@ import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
 import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
 import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
+import { Background } from 'projects/manager/src/app/classes/background';
 
 @Component({
   selector: 'text-widget',
@@ -32,8 +33,9 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
   public paddingRight: PaddingRight = new PaddingRight();
   public paddingBottom: PaddingBottom = new PaddingBottom();
   public paddingLeft: PaddingLeft = new PaddingLeft();
-
   public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
+  public background: Background = new Background();
+  public inEditMode: boolean;
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService,
@@ -44,6 +46,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
     this.fixedHeight = this.height;
     this.name = 'Text';
     this.type = WidgetType.Text;
+    this.background.color = new Color(255, 255, 255, 1);
     super.ngOnInit();
   }
 
@@ -54,6 +57,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
       this.content = contentDocument.body.firstElementChild as HTMLElement;
 
       this.textBox = new TextBox(contentDocument, this.applicationRef, this.defaultColor);
+      this.textBox.removeSelection();
       this.textBox.onChange.subscribe(() => {
         let contentHeight = this.getContentHeight();
         let previousHeight = this.height;
@@ -102,17 +106,16 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
     return Math.max(this.getContentHeight(), 22);
   }
 
-  showCover() {
-    if (this.widgetService.selectedWidget != this) {
 
-      this.textBox.removeSelection();
-    }
-
-    return this.handleMove || document.body.id == 'column-resize' || document.body.id == 'widget-cursor' || this.widgetService.selectedWidget != this;
-  }
 
   ngDoCheck() {
     this.iframeHeight = Math.max(this.height, this.getContentHeight());
+
+    // Set to be out of edit mode & remove selection
+    if (this.widgetService.selectedWidget != this) {
+      this.textBox.removeSelection();
+      this.inEditMode = false
+    }
 
     // Set the padding
     if (this.content) {
@@ -121,6 +124,17 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
       this.content.style.paddingBottom = this.padding.bottom.value;
       this.content.style.paddingLeft = this.padding.left.value;
     }
+  }
+
+  setEditMode() {
+    if (this.inEditMode) {
+      this.inEditMode = false;
+      this.textBox.removeSelection();
+    } else {
+      this.inEditMode = true;
+      this.textBox.selectContents();
+    }
+
   }
 
 
@@ -133,9 +147,12 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
     text.style.fontSize = '14px';
     text.style.color = this.defaultColor.toRGBString();
     if (this.width) text.style.maxWidth = this.width + 'px';
-    // this.horizontalAlignment.applyStyle(text);
     text.style.width = '100%';
+    text.style.minHeight = this.height + 'px';
     text.style.lineHeight = 'normal';
+
+    // Background
+    this.background.applyStyles(text);
 
     // The content
     text.innerHTML = this.content.innerHTML;

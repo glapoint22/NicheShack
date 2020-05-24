@@ -11,6 +11,6 @@ export class ShackIconComponent {
 
   onShackClick(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
-    this.popupService.showHierarchyPopup = !this.popupService.showHierarchyPopup;
+    this.popupService.hierarchyPopup.show = !this.popupService.hierarchyPopup.show;
   }
 }

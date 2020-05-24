@@ -6,8 +6,7 @@ import { ButtonText } from 'projects/manager/src/app/classes/button-text';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
-import { Link } from 'projects/manager/src/app/classes/link';
-import { LinkSource } from 'projects/manager/src/app/classes/link-source';
+import { Link, LinkOption } from 'projects/manager/src/app/classes/link';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { PageService } from 'projects/manager/src/app/services/page.service';
 import { Padding } from 'projects/manager/src/app/classes/padding';
@@ -19,14 +18,15 @@ import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
 import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
 import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
+import { Background } from 'projects/manager/src/app/classes/background';
 
 @Component({
   selector: 'button-widget',
   templateUrl: './button-widget.component.html',
   styleUrls: ['./button-widget.component.scss']
 })
-export class ButtonWidgetComponent extends FreeformWidgetComponent implements OnInit, LinkSource, BreakpointsPaddingComponent {
-  public fill: FillColor = new FillColor();
+export class ButtonWidgetComponent extends FreeformWidgetComponent implements OnInit, BreakpointsPaddingComponent {
+  public background: Background = new Background();
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public text: ButtonText = new ButtonText();
@@ -70,6 +70,8 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     this.name = 'Button';
     this.type = WidgetType.Button;
     this.currentState = ButtonState.Normal;
+    this.background.color = new Color(128, 128, 128, 1);
+    this.link.selectedOption = LinkOption.None;
     super.ngOnInit();
   }
 
@@ -84,7 +86,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
     switch (this.currentState) {
       case ButtonState.Normal:
-        color = this.fill.color.toRGBString();
+        color = this.background.color.toRGBString();
         break;
 
       case ButtonState.Hover:
@@ -153,7 +155,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     let button: any = document.createElement(this.link.url ? 'a' : 'div');
     let className = this.createClassName();
     let css = '.' + className + ' {' +
-      this.fill.getStyle() +
+      this.background.getStyle() +
       this.border.getStyle() +
       this.corners.getStyle() +
       this.shadow.getStyle() +

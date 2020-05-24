@@ -4,6 +4,9 @@ import { delay } from 'rxjs/operators';
 import { Page } from 'projects/manager/src/app/classes/page';
 import { PageService } from 'projects/manager/src/app/services/page.service';
 import { Color } from 'projects/manager/src/app/classes/color';
+import { Background } from 'projects/manager/src/app/classes/background';
+import { Image } from 'projects/manager/src/app/classes/image';
+import { BackgroundImage } from 'projects/manager/src/app/classes/background-image';
 
 @Component({
   selector: 'lead-page-editor',
@@ -21,28 +24,18 @@ export class LeadPageEditorComponent implements OnChanges {
   // ---------------------Temp-----------------------------
   public getTempLeadPages(): Observable<Array<Page>> {
     return new Observable<Array<Page>>(subscriber => {
+      let background = new Background();
+      background.color = new Color(255, 255, 255, 1);
+      let image = new BackgroundImage();
+      image.url = 'campland-background.jpg';
+      image.title = 'Campland';
+      
+      background.image = image;
       subscriber.next([
         {
           name: 'campland',
           width: 1600,
-          background: {
-            color: new Color(255, 255, 255, 1),
-            image: {
-              url: 'campland-background.jpg',
-              title: 'Campland',
-              position: null,
-              repeat: null,
-              attachment: null
-            }
-          }
-        },
-        {
-          name: 'gumpys',
-          width: 1400,
-          background: {
-            color: new Color(255, 0, 255, 1),
-            image: null
-          }
+          background: background
         }
       ]);
     }).pipe(delay(1000));
