@@ -10,7 +10,7 @@
     <div class="right-handle-bar" (mousedown)="onHandleMousedown('right', $event)"></div>
 
 
-    <div style=" width: 100%;" [style.borderBottom]="border.width + 'px ' + border.style + ' ' + fill.color.toHexA()"
+    <div style=" width: 100%;" [style.borderBottom]="border.width + 'px ' + border.style + ' ' + border.color.toHexA()"
         [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHexA() : 'none'">
     </div>
 </div>

@@ -9,7 +9,7 @@
 
 
         <!-- Remove image icon -->
-        <div class="icon-container" (click)="image.url = null" title="Remove Image"
+        <div class="icon-container" (click)="image ? image.url = null: null" title="Remove Image"
             [ngClass]="{'icon-disabled':  !image || !image.url}">
             <i class="fas fa-trash-alt"></i>
         </div>

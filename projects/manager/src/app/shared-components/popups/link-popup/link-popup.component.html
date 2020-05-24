@@ -1,42 +1,65 @@
 <!-- Popup Base -->
-<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)" *show="popupService.showLinkPopup">
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)"
+    *show="popupService.linkPopup.show">
 
     <!-- Arrow -->
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
 
 
+    <!-- None -->
+    <div class="radio-button-option">
+        <radio-button [name]="'link-option'" [label]="'None'"
+            (change)="link.selectedOption = linkOption.None; link.url = ''"
+            [checked]="link.selectedOption == linkOption.None"></radio-button>
+    </div>
+
     <!-- Page -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Page'"></radio-button>
+        <radio-button [name]="'link-option'" [label]="'Page'" (change)="link.selectedOption = linkOption.Page"
+            [checked]="link.selectedOption == linkOption.Page"></radio-button>
     </div>
 
     <!-- Category -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Category'"></radio-button>
+        <radio-button [name]="'link-option'" [label]="'Category'" (change)="link.selectedOption = linkOption.Category"
+            [checked]="link.selectedOption == linkOption.Category">
+        </radio-button>
     </div>
 
     <!-- Niche -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Niche'"></radio-button>
+        <radio-button [name]="'link-option'" [label]="'Niche'" (change)="link.selectedOption = linkOption.Niche"
+            [checked]="link.selectedOption == linkOption.Niche">
+        </radio-button>
     </div>
 
     <!-- Product -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Product'"></radio-button>
+        <radio-button [name]="'link-option'" [label]="'Product'" (change)="link.selectedOption = linkOption.Product"
+            [checked]="link.selectedOption == linkOption.Product">
+        </radio-button>
     </div>
 
     <!-- Web Address -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Web Address'"></radio-button>
+        <radio-button [name]="'link-option'" [label]="'Web Address'"
+            (change)="link.selectedOption = linkOption.WebAddress"
+            [checked]="link.selectedOption == linkOption.WebAddress"></radio-button>
     </div>
 
     <!-- On Click() -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'On Click()'"></radio-button>
+        <radio-button [name]="'link-option'" [label]="'On Click()'" (change)="link.selectedOption = linkOption.OnClick"
+            [checked]="link.selectedOption == linkOption.OnClick">
+        </radio-button>
     </div>
 
-    
 
-    <input class="txt-20">
+
+    <input class="txt-20" [(ngModel)]="link.url">
+
+
+    <!-- Disabled cover -->
+    <div *ngIf="link.disabled" class="disable-cover"></div>
 
 </div>

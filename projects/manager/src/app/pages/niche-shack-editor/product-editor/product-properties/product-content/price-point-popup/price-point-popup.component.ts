@@ -1,4 +1,4 @@
-import { Component, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import { Component, ViewChildren, ElementRef, QueryList, OnInit } from '@angular/core';
 import { PopupComponent } from 'projects/manager/src/app/shared-components/popups/popup/popup.component';
 
 @Component({
@@ -6,8 +6,14 @@ import { PopupComponent } from 'projects/manager/src/app/shared-components/popup
   templateUrl: './price-point-popup.component.html',
   styleUrls: ['./price-point-popup.component.scss', '../../../../../../shared-components/popups/popup/popup.component.scss']
 })
-export class PricePointPopupComponent extends PopupComponent {
+export class PricePointPopupComponent extends PopupComponent implements OnInit {
   @ViewChildren('txtInput') txtInput: QueryList<ElementRef>;
+
+
+  // --------------------------------( NG ON INIT )-------------------------------- \\
+  ngOnInit() {
+    this.popupService.pricePointPopup = this;
+  }
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\

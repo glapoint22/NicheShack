@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    
+
 
 
     <!-- Font Color -->
@@ -67,7 +67,7 @@
 
             <!-- Center align -->
             <div class="icon-container" title="Center align (Ctrl+Shift+E)"
-            [ngClass]="{'selected': text.alignCenter.isSelected}" (click)="text.alignCenter.applyStyle(); 
+                [ngClass]="{'selected': text.alignCenter.isSelected}" (click)="text.alignCenter.applyStyle(); 
             text.alignLeft.isSelected = false;
             text.alignRight.isSelected = false; 
             text.alignJustify.isSelected = false">
@@ -136,7 +136,7 @@
 
             <!-- Spacer -->
             <div class="icon-container" style="cursor: default;"></div>
-                
+
             <!-- Numbered list -->
             <div class="icon-container" title="Numbered list (Ctrl+Shift+7)"
                 [ngClass]="{'selected': text.orderedList.isSelected}"
@@ -164,17 +164,15 @@
 
             <!-- Spacer -->
             <div class="icon-container" style="cursor: default;"></div>
-                
+
             <!-- Decrease indent -->
-            <div class="icon-container" title="Decrease indent (ctrl+[)"
-                (click)="text.decreaseIndent.applyStyle()">
+            <div class="icon-container" title="Decrease indent (ctrl+[)" (click)="text.decreaseIndent.applyStyle()">
                 <i class="fas fa-outdent"></i>
             </div>
 
 
             <!-- Increase indent -->
-            <div class="icon-container" title="Increase indent (ctrl+])"
-                (click)="text.increaseIndent.applyStyle()">
+            <div class="icon-container" title="Increase indent (ctrl+])" (click)="text.increaseIndent.applyStyle()">
                 <i class="fas fa-indent"></i>
             </div>
         </div>
@@ -185,14 +183,8 @@
     <div class="property">
         <div class="label">Link</div>
         <div style="flex: 1; display: flex; justify-content: flex-end;">
-
-            <link-icon></link-icon>
+            <link-icon [link]="text.linkStyle.link" (onInit)="text.linkStyle.linkPopup = $event"
+                (onLinkPopupOpen)="text.linkStyle.onLinkPopupOpen()"></link-icon>
         </div>
     </div>
-
-    
-    
-
-
-
 </panel>

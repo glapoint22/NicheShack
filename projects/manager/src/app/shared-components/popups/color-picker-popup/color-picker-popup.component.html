@@ -3,7 +3,7 @@
      transitionClass="fade-end"
      class="popup-base fade-start"
      (onShow)="onPopupShow(popup, arrow)"
-     *show="popupService.showColorPickerPopup">
+     *show="show">
 
      <!-- Arrow -->
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
@@ -82,7 +82,7 @@
             <normalized-number-field
                 [value]="alpha"
                 (onSliderDown)="cover.showResizeCover = $event"
-                (onValueChange)="alpha = $event; popupService.colorPickerColor.a = $event">
+                (onValueChange)="alpha = $event; color.a = $event">
             </normalized-number-field>
         </div>
 

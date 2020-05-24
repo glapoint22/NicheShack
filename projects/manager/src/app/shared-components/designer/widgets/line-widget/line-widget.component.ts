@@ -14,7 +14,7 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
   styleUrls: ['./line-widget.component.scss']
 })
 export class LineWidgetComponent extends FreeformWidgetComponent implements BreakpointsComponent {
-  public fill: FillColor = new FillColor();
+  // public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public shadow: Shadow = new Shadow();
 
@@ -41,7 +41,7 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
     // Create the line and set styles
     let line = document.createElement('div');
     line.style.width = '100%';
-    line.style.borderBottom = this.border.width + 'px ' + this.border.style + ' ' + this.fill.color.toHexA();
+    line.style.borderBottom = this.border.width + 'px ' + this.border.style + ' ' + this.border.color.toHexA();
     this.shadow.applyStyle(line);
 
     // Set the classes

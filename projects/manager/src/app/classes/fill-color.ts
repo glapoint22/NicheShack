@@ -11,6 +11,6 @@ export class FillColor implements Enableable {
     }
 
     getStyle() {
-        return '\n\tbackground: ' + this.color.toRGBString() + ';';
+        return '\n\tbackground-color: ' + this.color.toRGBString() + ';';
     }
 }

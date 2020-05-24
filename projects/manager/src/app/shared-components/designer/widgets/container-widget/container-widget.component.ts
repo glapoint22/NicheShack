@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
@@ -14,6 +13,8 @@ import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Padding } from 'projects/manager/src/app/classes/padding';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
+import { Background } from 'projects/manager/src/app/classes/background';
+import { Color } from 'projects/manager/src/app/classes/color';
 
 @Component({
   selector: 'container-widget',
@@ -22,7 +23,7 @@ import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/br
 })
 export class ContainerWidgetComponent extends FreeformWidgetComponent implements BreakpointsPaddingComponent {
   @ViewChild('container', { static: false }) container: ContainerComponent;
-  public fill: FillColor = new FillColor();
+  public background: Background = new Background();
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
@@ -39,6 +40,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
     this.height = 250
     this.name = 'Container';
     this.type = WidgetType.Container;
+    this.background.color = new Color(128, 128, 128, 1);
     super.ngOnInit();
   }
 
@@ -87,7 +89,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
     container.style.minHeight = this.height + 'px';
 
     // Add fill if applied
-    if (this.fill.enable) this.fill.applyColor(container);
+    if (this.background.enable) this.background.applyStyles(container);
 
     // Other styles
     this.border.applyStyle(container);

@@ -13,7 +13,6 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   @Output() showItemProperties: EventEmitter<HierarchyItem> = new EventEmitter();
   public items: Array<HierarchyItem> = [];
   public selectedItem: HierarchyItem;
-  // public isCollapsed: boolean;
   public showMenu: boolean;
   public filterType: string = 'Product';
   public searchResultsCount: number;
@@ -134,6 +133,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   // ------------------------------------------------------
 
   ngOnInit() {
+    this.popupService.hierarchyPopup = this;
 
     this.getTempItems('Category')
       .subscribe(result => {

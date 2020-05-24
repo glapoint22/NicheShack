@@ -57,8 +57,9 @@ export class PageService {
     previewWindow.document.head.appendChild(pageStyles);
     previewWindow.document.head.appendChild(this.buttonStylesDocumentFragment);
 
-    // Page color
-    // previewWindow.document.body.style.background =
-    //   this.page.background.backgroundType == PageBackgroundType.Color ? this.page.background.color.toRGBString() : 'url("images/' + this.page.background.image + '")';
+    // Clear the background
+    previewWindow.document.body.style.background = 'none';
+
+    this.page.background.applyStyles(previewWindow.document.body);
   }
 }

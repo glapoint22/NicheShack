@@ -4,7 +4,6 @@ import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { ProportionalWidgetComponent } from '../proportional-widget/proportional-widget.component';
-import { LinkSource } from 'projects/manager/src/app/classes/link-source';
 import { Link } from 'projects/manager/src/app/classes/link';
 import { Image } from 'projects/manager/src/app/classes/image';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
@@ -16,7 +15,7 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
   templateUrl: './image-widget.component.html',
   styleUrls: ['./image-widget.component.scss']
 })
-export class ImageWidgetComponent extends ProportionalWidgetComponent implements LinkSource, BreakpointsComponent {
+export class ImageWidgetComponent extends ProportionalWidgetComponent implements BreakpointsComponent {
   @ViewChild('svg', { static: false }) placeholder: ElementRef;
   public border: Border = new Border();
   public corners: Corners = new Corners();

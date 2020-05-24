@@ -1,4 +1,4 @@
-<panel [title]="'Description'">
+<panel #panel [title]="'Description'">
 
 
     <!-- Property Box -->
@@ -30,7 +30,7 @@
             <!-- Font dropdowns -->
             <div>
                 <!-- Font -->
-                <div style="margin: 0 4px;">
+                <div style="margin: 0 4px; width: 140px;">
                     <dropdown [height]="24" [title]="'Font'" [keyValue]="description.font.options"
                         [selectedIndex]="description.font.selectedIndex"
                         (onChange)="description.font.setStyleValue($event)">
@@ -40,9 +40,9 @@
 
 
                 <!-- Font size -->
-                <div style="margin: 0 4px;">
-                    <editable-dropdown [height]="24" [title]="'Font Size'"
-                        [keyValue]="description.fontSize.options" [selectedIndex]="description.fontSize.selectedIndex"
+                <div style="margin: 0 4px; width: 45px;">
+                    <editable-dropdown [height]="24" [title]="'Font Size'" [keyValue]="description.fontSize.options"
+                        [selectedIndex]="description.fontSize.selectedIndex"
                         (onChange)="description.fontSize.setStyleValue($event)">
                     </editable-dropdown>
                 </div>
@@ -82,17 +82,21 @@
 
             <div>
                 <!-- Text color -->
-                <color-icon [color]="description.fontColor.value" [icon]="'fa-font'" [title]="'Text color'">
+                <color-icon [color]="description.fontColor.value" [icon]="'fa-font'" [title]="'Text color'"
+                    (onInit)="description.fontColor.colorPicker = $event"
+                    (onColorPickerOpen)="description.fontColor.onColorPickerOpen()">
                 </color-icon>
-                <!-- (onShowColorPicker)="description.fontColor.onShowColorPicker(_FormService.onColorPickerClose)" -->
+
 
 
                 <!-- Highlight color -->
                 <color-icon [color]="description.highlightColor.value" [icon]="'fa-highlighter'"
                     [title]="'Highlight color'" [removable]="true"
-                    (onRemoveColor)="description.highlightColor.removeColor()">
+                    (onRemoveColor)="description.highlightColor.removeColor()"
+                    (onInit)="description.highlightColor.colorPicker = $event"
+                    (onColorPickerOpen)="description.highlightColor.onColorPickerOpen()">
                 </color-icon>
-                <!-- (onShowColorPicker)="description.highlightColor.onShowColorPicker(_FormService.onColorPickerClose)" -->
+
             </div>
 
 
@@ -100,11 +104,8 @@
 
             <div>
                 <!-- Link -->
-                <div class="icon-container" title="Insert link (Ctrl+K)"
-                    [ngClass]="{'selected': description.linkStyle.isSelected}">
-                    <i class="fas fa-link"></i>
-                </div>
-                <!-- (click)="_FormService.showLinkForm = true" -->
+                <link-icon [link]="description.linkStyle.link" (onInit)="description.linkStyle.linkPopup = $event"
+                    (onLinkPopupOpen)="description.linkStyle.onLinkPopupOpen()"></link-icon>
             </div>
 
 

@@ -1,4 +1,4 @@
-<div #popup *show="popupService.showPricePointPopup" class="popup-base fade-start" transitionClass="fade-end"
+<div #popup *show="popupService.pricePointPopup.show" class="popup-base fade-start" transitionClass="fade-end"
     (onShow)="onPopupShow(popup, arrow)">
 
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
