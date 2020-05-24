@@ -1,0 +1,48 @@
+.media-type-container {
+    display: flex;
+    height: 18px;
+    margin-bottom: 10px;
+}
+
+.media-type-label {
+    font-size: 12px;
+    color: #bbbbbb;
+    margin-right: 5px;
+}
+
+.dropdown {
+    width: 159px;
+}
+
+.search-container {
+    display: flex;
+    width: 100%;
+    height: 19px;
+    border: 1px solid #444444;
+    border-bottom: none; 
+}
+
+.search-icon-container {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    width: 20px; 
+    outline: none;
+}
+
+.input-container {
+    outline: none;
+    font-size: 12px;
+    width: 100%;
+    height: 100%;
+}
+
+input {
+    width: 100%;
+    background: none;
+    border: none;
+    height: 100%;
+    font-size: 11px;
+    padding-right: 4px;
+}

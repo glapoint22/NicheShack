@@ -59,6 +59,8 @@ import { NormalizedNumberFieldComponent } from './shared-components/elements/num
 import { CoverComponent } from './shared-components/cover/cover.component';
 import { PopupComponent } from './shared-components/popups/popup/popup.component';
 import { BackgroundComponent } from './shared-components/properties/background/background.component';
+import { ShowPopupDirective } from './directives/show-popup/show-popup.directive';
+import { MediaItemListComponent } from './shared-components/item-lists/media-item-list/media-item-list.component';
 import { LinkIconComponent } from './shared-components/link-icon/link-icon.component';
 
 
@@ -120,7 +122,9 @@ import { LinkIconComponent } from './shared-components/link-icon/link-icon.compo
     CoverComponent,
     PopupComponent,
     BackgroundComponent,
-    LinkIconComponent
+    LinkIconComponent,
+    ShowPopupDirective,
+    MediaItemListComponent
   ],
   imports: [
     CommonModule,
@@ -185,7 +189,9 @@ import { LinkIconComponent } from './shared-components/link-icon/link-icon.compo
     CoverComponent,
     PopupComponent,
     BackgroundComponent,
-    LinkIconComponent
+    LinkIconComponent,
+    ShowPopupDirective,
+    MediaItemListComponent
   ]
 })
 export class PropertiesEditorModule { }
