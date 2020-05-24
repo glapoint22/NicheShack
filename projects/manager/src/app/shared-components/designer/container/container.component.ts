@@ -78,6 +78,13 @@ export class ContainerComponent {
   }
 
 
+  deleteRow(row: RowComponent) {
+    let rowIndex = this.rows.findIndex(x => x.component == row);
+    this.viewContainerRef.remove(rowIndex);
+    this.rows.splice(rowIndex, 1);
+  }
+
+
   getBoundingClientTop(row: Row) {
     return row.element.getBoundingClientRect().top - this.containerElement.nativeElement.getBoundingClientRect().top;
   }

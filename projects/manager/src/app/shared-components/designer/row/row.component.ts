@@ -188,10 +188,11 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
   addColumn(columnElement?: HTMLElement) {
     let componentFactory = this.resolver.resolveComponentFactory(ColumnComponent);
-    let columnComponentRef = this.viewContainerRef.createComponent(componentFactory, this.getColumnIndex(columnElement));
+    let newColumnIndex = this.getColumnIndex(columnElement);
+    let columnComponentRef = this.viewContainerRef.createComponent(componentFactory, newColumnIndex);
 
     // Add this column to the column array
-    this.columns.push(new Column(columnComponentRef.instance, columnComponentRef.location.nativeElement));
+    this.columns.splice(newColumnIndex, 0, new Column(columnComponentRef.instance, columnComponentRef.location.nativeElement));
 
 
     // Set the column's row as this row
@@ -213,33 +214,32 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     this.container.selectedRow = this;
 
     // Add or update each column with the correct column span based on the number of columns in this row
+    this.setColumnSpans();
+  }
+
+
+
+  deleteColumn(column: ColumnComponent) {
+    let columnIndex = this.columns.findIndex(x => x.component == column);
+    this.viewContainerRef.remove(columnIndex);
+    this.columns.splice(columnIndex, 1);
+    this.widgetService.selectedWidget = null;
+
+    if (this.columns.length > 0) {
+      this.setColumnSpans();
+    } else {
+      this.container.deleteRow(this);
+    }
+  }
+
+
+
+
+  setColumnSpans() {
     this.columns.forEach((column: Column) => {
       column.component.columnSpan.value = Math.max(2, Math.floor(12 / this.columns.length));
-      // column.component.widget.width = this.rowElement.nativeElement.getBoundingClientRect().width / this.columns.length;
-      // column.component.widget.height = column.element.getBoundingClientRect().height;
-    });
-
-
-    // Wait a frame to sort the column
-    window.setTimeout(() => {
-      this.sortColumns();
     });
   }
-
-
-
-
-
-
-  sortColumns() {
-    // Sort the columns from left to right based on their position
-    this.columns.sort((a: Column, b: Column) => {
-      if (a.element.offsetLeft > b.element.offsetLeft) return 1;
-      return -1;
-    });
-  }
-
-
 
 
 
