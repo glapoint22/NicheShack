@@ -3,6 +3,7 @@ import { ColorPickerPopupComponent } from '../shared-components/popups/color-pic
 import { PricePointPopupComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-content/price-point-popup/price-point-popup.component';
 import { HierarchyPopupComponent } from '../shared-components/menu-bar/hierarchy-popup/hierarchy-popup.component';
 import { LinkPopupComponent } from '../shared-components/popups/link-popup/link-popup.component';
+import { MediaBrowserPopupComponent } from '../shared-components/popups/media-browser-popup/media-browser-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -13,4 +14,5 @@ export class PopupService {
   public pricePointPopup: PricePointPopupComponent;
   public hierarchyPopup: HierarchyPopupComponent;
   public linkPopup: LinkPopupComponent;
+  public mediaBrowserPopup: MediaBrowserPopupComponent;
 }

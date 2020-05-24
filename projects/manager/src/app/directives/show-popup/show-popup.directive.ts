@@ -12,6 +12,6 @@ export class ShowPopupDirective {
   @HostListener('click')
   onClick() {
     this.popupService.sourceElement = this.sourceElement.nativeElement;
-    this.popupService[this.popup] = !this.popupService[this.popup];
+    this.popupService[this.popup].show = !this.popupService[this.popup].show;
   }
 }

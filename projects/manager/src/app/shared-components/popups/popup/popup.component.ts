@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
 import { Subject } from 'rxjs';
+import { MenuService } from '../../../services/menu.service';
 
 @Component({
   selector: 'popup',
@@ -15,7 +16,7 @@ export class PopupComponent {
   private arrow;
   private popupTop: number;
   private arrowOnTop: boolean = false;
-  constructor(public popupService: PopupService, public cover: CoverService) { }
+  constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService) { }
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
@@ -33,6 +34,10 @@ export class PopupComponent {
 
   // --------------------------------( ON MOUSE MOVE )-------------------------------- \\
   onMouseMove = (e: MouseEvent) => {
+
+
+
+
     if (!this.cover.showCover && this.popup.getBoundingClientRect().left != 0) {
       // If the mouse is to the left of the popup
       if (e.clientX < this.popup.getBoundingClientRect().left - 20 ||
@@ -51,13 +56,13 @@ export class PopupComponent {
               // Or the mouse is below the bottom of the source element
               (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + 20))))) {
 
-
-        // Close this popup
-        this.show = false;
-        this.onPopupClose.next();
-
-
-        window.removeEventListener('mousemove', this.onMouseMove);
+        // As long as a menu is NOT open
+        if (!this.menuService.showMenu) {
+          // Close this popup
+          this.show = false;
+          this.onPopupClose.next();
+          window.removeEventListener('mousemove', this.onMouseMove);
+        }
       }
     }
   }

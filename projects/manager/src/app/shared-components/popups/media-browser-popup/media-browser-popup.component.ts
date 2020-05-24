@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PopupComponent } from '../popup/popup.component';
 
 @Component({
@@ -6,7 +6,12 @@ import { PopupComponent } from '../popup/popup.component';
   templateUrl: './media-browser-popup.component.html',
   styleUrls: ['./media-browser-popup.component.scss', '../popup/popup.component.scss']
 })
-export class MediaBrowserPopupComponent extends PopupComponent {
+export class MediaBrowserPopupComponent extends PopupComponent implements OnInit {
+
+  // --------------------------------( NG ON INIT )-------------------------------- \\
+  ngOnInit() {
+    this.popupService.mediaBrowserPopup = this;
+  }
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
   onPopupShow(popup, arrow) {
