@@ -25,4 +25,13 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   onDropdownOptionSelect() {
 
   }
+
+
+  onMediaSelect(event, mediaItemList) {
+
+
+    mediaItemList.getFile(event.target.files[0].name)
+
+    
+  }
 }

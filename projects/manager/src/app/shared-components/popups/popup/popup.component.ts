@@ -34,10 +34,6 @@ export class PopupComponent {
 
   // --------------------------------( ON MOUSE MOVE )-------------------------------- \\
   onMouseMove = (e: MouseEvent) => {
-
-
-
-
     if (!this.cover.showCover && this.popup.getBoundingClientRect().left != 0) {
       // If the mouse is to the left of the popup
       if (e.clientX < this.popup.getBoundingClientRect().left - 20 ||

@@ -41,7 +41,11 @@
     <!-- Search -->
     <div class="search-container" >
         <div class="search-icon-container">
-            <i class="fas fa-search"></i>
+            
+
+            <input style="width: 0; height: 0;" #mediaSelectInput type="file" (change)="onMediaSelect($event, mediaItemList)">
+            <i style="position: relative; left: -5px;" class="fas fa-search"></i>
+
         </div>
 
         <div class="input-container">
@@ -51,7 +55,9 @@
 
         
     <!-- Media Item LIst -->
-    <media-item-list
+    <media-item-list #mediaItemList
+        (onAddMedia)="mediaSelectInput.click()"
+
         [mediaList]="['2f119b657c194b32a88b0f0051d525be.png', 
                       '6c048ea442b646b59970f907a4d3ce61.jpg', 
                       '6e1659b63e5643e0a9039064b4a52e12.png', 

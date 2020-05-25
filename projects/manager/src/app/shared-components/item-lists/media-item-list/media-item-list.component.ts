@@ -1,4 +1,4 @@
-import { Component, Input, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, Input, ViewChildren, QueryList, ElementRef, Output, EventEmitter } from '@angular/core';
 import { EditableItemListComponent } from '../editable-item-list/editable-item-list.component';
 
 @Component({
@@ -9,6 +9,7 @@ import { EditableItemListComponent } from '../editable-item-list/editable-item-l
 export class MediaItemListComponent extends EditableItemListComponent {
   @Input() mediaList: Array<string>;
   @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
+  @Output() onAddMedia: EventEmitter<void> = new EventEmitter();
 
 
   // -----------------------------( SET FOCUS TO LIST ITEM )------------------------------ \\
@@ -23,7 +24,7 @@ export class MediaItemListComponent extends EditableItemListComponent {
     // Build the context menu
     this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
       // Add
-      this.menuService.option(this.menuOptions[0], "Ctrl+Alt+A", this.isAddDisabled, this.setListItemAdd),
+      this.menuService.option(this.menuOptions[0], "Ctrl+Alt+A", this.isAddDisabled, this.openFileExplorer),
       // Edit
       this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.isEditDisabled, this.editListItem),
       // Delete
@@ -39,10 +40,21 @@ export class MediaItemListComponent extends EditableItemListComponent {
   }
 
 
+  openFileExplorer() {
+    this.onAddMedia.emit();
+  }
+
+
+  getFile(file) {
+    this.mediaList.unshift(file);
+      super.setListItemAdd();
+  }
+
+
   // -----------------------------( SET LIST ITEM ADD )------------------------------ \\
   setListItemAdd() {
-      this.mediaList.unshift('81af3c1dcb6745ae932883d2f69e0b66.png');
-      super.setListItemAdd();
+      // this.mediaList.unshift('81af3c1dcb6745ae932883d2f69e0b66.png');
+      // super.setListItemAdd();
   }
 
 
