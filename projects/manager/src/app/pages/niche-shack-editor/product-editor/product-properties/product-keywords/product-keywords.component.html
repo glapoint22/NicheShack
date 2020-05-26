@@ -9,9 +9,9 @@
 
             <!-- Delete -->
             <div class="icon-container"
-                    [attr.title]="itemList.isDeleteDisabled ? 'Delete Keyword (Delete)' : itemList.isEditDisabled ? 'Delete Keywords (Delete)' : 'Delete Keyword (Delete)'"
-                    [ngClass]="{'icon-disabled': itemList.isDeleteDisabled}"
-                    (mouseover)="itemList.overIconButton = true"
+                    [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Keyword (Delete)' : itemList.editIcon.isDisabled ? 'Delete Keywords (Delete)' : 'Delete Keyword (Delete)'"
+                    [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                    (mouseover)="itemList.isOverIconButton = true"
                     (mouseout)="itemList.onIconButtonMouseOut()"
                     (click)="itemList.deleteListItem()">
                 <i class="fas fa-trash-alt"></i>
@@ -20,8 +20,8 @@
             <!-- Edit -->
             <div class="icon-container"
                     [attr.title]="'Edit Keyword (Ctrl+Alt+E)'" 
-                    [ngClass]="{'icon-disabled': itemList.isEditDisabled}"
-                    (mouseover)="itemList.overIconButton = true"
+                    [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
+                    (mouseover)="itemList.isOverIconButton = true"
                     (mouseout)="itemList.onIconButtonMouseOut()"
                     (click)="itemList.editListItem()">
                 <i class="fas fa-edit"></i>
@@ -30,8 +30,8 @@
             <!-- Add -->
             <div class="icon-container"
                     [attr.title]="'Add Keyword (Ctrl+Alt+A)'" 
-                    [ngClass]="{'icon-disabled': itemList.isAddDisabled}"
-                    (mouseover)="itemList.overIconButton = true"
+                    [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                    (mouseover)="itemList.isOverIconButton = true"
                     (mouseout)="itemList.onIconButtonMouseOut()"
                     (click)="itemList.addListItem()">
                 <i class="fas fa-plus-circle"></i>

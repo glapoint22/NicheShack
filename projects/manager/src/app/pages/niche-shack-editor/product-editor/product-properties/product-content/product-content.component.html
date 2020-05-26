@@ -70,9 +70,9 @@
 
                     <!-- Delete -->
                     <div class="icon-container"
-                            [attr.title]="itemList.isDeleteDisabled ? 'Delete Price Point (Delete)' : itemList.isEditDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
-                            [ngClass]="{'icon-disabled': itemList.isDeleteDisabled}"
-                            (mouseover)="itemList.overIconButton = true"
+                            [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Price Point (Delete)' : itemList.editIcon.isDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
+                            [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                            (mouseover)="itemList.isOverIconButton = true"
                             (mouseout)="itemList.onIconButtonMouseOut()"
                             (click)="itemList.deleteListItem()">
                         <i class="fas fa-trash-alt"></i>
@@ -81,20 +81,20 @@
                     <!-- Edit -->
                     <div class="icon-container"
                             [attr.title]="'Edit Price Point (Ctrl+Alt+E)'" 
-                            [ngClass]="{'icon-disabled': itemList.isEditDisabled}"
-                            (mouseover)="itemList.overIconButton = true"
+                            [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
+                            (mouseover)="itemList.isOverIconButton = true"
                             (mouseout)="itemList.onIconButtonMouseOut()"
-                            (click)="!itemList.isEditDisabled ? editPricePoint($event.target) : null">
+                            (click)="!itemList.editIcon.isDisabled ? editPricePoint($event.target) : null">
                         <i class="fas fa-edit"></i>
                     </div>
 
                     <!-- Add -->
                     <div class="icon-container"
                             [attr.title]="'Add Price Point (Ctrl+Alt+A)'" 
-                            [ngClass]="{'icon-disabled': itemList.isAddDisabled}"
-                            (mouseover)="itemList.overIconButton = true"
+                            [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                            (mouseover)="itemList.isOverIconButton = true"
                             (mouseout)="itemList.onIconButtonMouseOut()"
-                            (click)="!itemList.isAddDisabled ? addPricePoint($event.target) : null">
+                            (click)="!itemList.addIcon.isDisabled ? addPricePoint($event.target) : null">
                         <i class="fas fa-plus-circle"></i>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
     <div style="display: flex;">
         <div>
             <div *ngFor="let listItem of listItems; let listItemIndex = index" style="width: 22px; height: 22px; padding-top: 5px; padding-left: 5px;">
-                <checkbox (mouseover)="overIconButton = true" 
+                <checkbox (mouseover)="isOverIconButton = true" 
                           (mouseout)="onIconButtonMouseOut()" 
                           [checked]="checkList[listItemIndex]">
                 </checkbox>
@@ -22,10 +22,10 @@
                     [ngClass]="{'edited-listItem': indexOfEditedListItem == listItemIndex,
                                 'selected-listItem': selectedListItemIndex == listItemIndex,
                                 'unselected-listItem': unselectedListItemIndex == listItemIndex,
-                                'selected-listItem-top': listItems[listItemIndex].selectType == 'top',
-                                'selected-listItem-whole': listItems[listItemIndex].selectType == 'whole',
-                                'selected-listItem-middle': listItems[listItemIndex].selectType == 'middle',
-                                'selected-listItem-bottom': listItems[listItemIndex].selectType == 'bottom',
+                                'selected-listItem-top': listItems[listItemIndex].selectType == selectType.Top,
+                                'selected-listItem-whole': listItems[listItemIndex].selectType == selectType.Whole,
+                                'selected-listItem-middle': listItems[listItemIndex].selectType == selectType.Middle,
+                                'selected-listItem-bottom': listItems[listItemIndex].selectType == selectType.Bottom,
                                 'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
                 </td>
             </tr>
