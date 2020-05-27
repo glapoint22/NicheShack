@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ItemListComponent } from '../item-list/item-list.component';
+import { SelectType } from '../../../classes/list-item-select-type';
 
 @Component({
   selector: 'editable-item-list',
@@ -8,12 +9,12 @@ import { ItemListComponent } from '../item-list/item-list.component';
 })
 export class EditableItemListComponent extends ItemListComponent {
   public indexOfEditedListItem: number = null;
-
+  public selectType: typeof SelectType = SelectType;
 
   // -----------------------------( SET SHORTCUT KEYS )------------------------------ \\
   setShortcutKeys(event: KeyboardEvent) {
     if (event.keyCode === 13) this.enter();
-    if (!this.isEditDisabled && event.ctrlKey && event.altKey && event.keyCode === 69) this.editListItem()
+    if (!this.editIcon.isDisabled && event.ctrlKey && event.altKey && event.keyCode === 69) this.editListItem()
     super.setShortcutKeys(event);
   }
 
@@ -43,9 +44,9 @@ export class EditableItemListComponent extends ItemListComponent {
       // Commit the edit
       this.selectedListItemIndex = this.indexOfEditedListItem;
       this.newListItem = false;
-      this.isAddDisabled = false;
-      this.isEditDisabled = false;
-      this.isDeleteDisabled = false;
+      this.addIcon.isDisabled = false;
+      this.editIcon.isDisabled = false;
+      this.deleteIcon.isDisabled = false;
       this.indexOfEditedListItem = null;
       this.unselectedListItemIndex = null;
       this.pivotIndex = this.selectedListItemIndex;
@@ -67,13 +68,13 @@ export class EditableItemListComponent extends ItemListComponent {
       } else {
 
         // Reset the list item back to the way it was before the edit
-        this.isEditDisabled = false;
-        this.isDeleteDisabled = false;
+        this.editIcon.isDisabled = false;
+        this.deleteIcon.isDisabled = false;
         this.selectedListItemIndex = this.indexOfEditedListItem;
         this.listItems[this.selectedListItemIndex].selected = true;
         listItem.textContent = this.listItems[this.indexOfEditedListItem].name;
       }
-      this.isAddDisabled = false;
+      this.addIcon.isDisabled = false;
       this.indexOfEditedListItem = null;
     }
   }
@@ -154,9 +155,9 @@ export class EditableItemListComponent extends ItemListComponent {
   setListItemAdd() {
     this.addEventListeners();
     this.newListItem = true;
-    this.isAddDisabled = true;
-    this.isEditDisabled = true;
-    this.isDeleteDisabled = true;
+    this.addIcon.isDisabled = true;
+    this.editIcon.isDisabled = true;
+    this.deleteIcon.isDisabled = true;
     this.indexOfEditedListItem = 0;
     this.selectedListItemIndex = null;
     this.listItems.unshift({ name: "", selected: false, selectType: null });
@@ -175,9 +176,9 @@ export class EditableItemListComponent extends ItemListComponent {
   // -----------------------------( SET LIST ITEM EDIT )------------------------------ \\
   setListItemEdit() {
     this.indexOfEditedListItem = this.selectedListItemIndex;
-    this.isAddDisabled = true;
-    this.isEditDisabled = true;
-    this.isDeleteDisabled = true;
+    this.addIcon.isDisabled = true;
+    this.editIcon.isDisabled = true;
+    this.deleteIcon.isDisabled = true;
     this.selectedListItemIndex = null;
 
     for (let i = 0; i < this.listItems.length; i++) {

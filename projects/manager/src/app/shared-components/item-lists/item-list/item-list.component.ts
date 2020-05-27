@@ -1,6 +1,8 @@
 import { Component, ViewChildren, ElementRef, QueryList, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { MenuService } from '../../../services/menu.service';
 import { ListItem } from '../../../classes/list-item';
+import { icon } from '../../../classes/icon';
+import { SelectType } from '../../../classes/list-item-select-type';
 
 @Component({
   selector: 'item-list',
@@ -9,19 +11,20 @@ import { ListItem } from '../../../classes/list-item';
 })
 export class ItemListComponent implements OnChanges {
   public listItems: ListItem[] = [];
-  public lastFocusedListItem: any;
   public pivotIndex: number = null;
   public ctrlDown: boolean = false;
   public shiftDown: boolean = false;
   public newListItem: boolean = false;
   public itemDeleted: boolean = false;
-  public isAddDisabled: boolean = false;
-  public isEditDisabled: boolean = true;
-  public overIconButton: boolean = false;
-  public isDeleteDisabled: boolean = true;
+  public lastFocusedListItem: Element;
+  public addIcon: icon = new icon(false);
+  public editIcon: icon = new icon(true);
+  public deleteIcon: icon = new icon(true);
+  public isOverIconButton: boolean = false;
   public eventListenersAdded: boolean = false;
   public selectedListItemIndex: number = null;
   public unselectedListItemIndex: number = null;
+  public selectType: typeof SelectType = SelectType;
   constructor(public menuService: MenuService) { }
   @Input() list: Array<string>;
   @Input() menuOptions: Array<string>;
@@ -29,7 +32,7 @@ export class ItemListComponent implements OnChanges {
   @Output() onAddItem: EventEmitter<void> = new EventEmitter();
   @Output() onEditItem: EventEmitter<void> = new EventEmitter();
 
-
+  
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
     if (this.list) {
@@ -69,7 +72,7 @@ export class ItemListComponent implements OnChanges {
   // -----------------------------( ON KEY DOWN )------------------------------ \\
   onKeyDown = (event: KeyboardEvent) => {
     this.setShortcutKeys(event)
-    if (!this.isEditDisabled && event.ctrlKey && event.altKey && event.keyCode === 69) this.onEditItem.emit();
+    if (!this.editIcon.isDisabled && event.ctrlKey && event.altKey && event.keyCode === 69) this.onEditItem.emit();
   };
 
 
@@ -108,7 +111,7 @@ export class ItemListComponent implements OnChanges {
     // As long as the context menu IS open
     if (this.menuService.showMenu
       // and we're NOT clicking on an icon button
-      && !this.overIconButton) {
+      && !this.isOverIconButton) {
 
       window.setTimeout(() => {
         // check to see if the context menu is now closed, if it is
@@ -132,7 +135,7 @@ export class ItemListComponent implements OnChanges {
         // and the context menu is NOT open
         && !this.menuService.showMenu
         // and we're NOT clicking on an icon button
-        && !this.overIconButton) {
+        && !this.isOverIconButton) {
         // Determine what happens when a list item loses focus 
         this.setListItemBlur();
       }
@@ -154,7 +157,7 @@ export class ItemListComponent implements OnChanges {
 
   // -----------------------------( ON ICON BUTTON MOUSE OUT )------------------------------ \\
   onIconButtonMouseOut() {
-    this.overIconButton = false;
+    this.isOverIconButton = false;
 
     // * A fail safe that puts the focus back to the selected list item if a mouseup occurs outside the click bounds of an icon button * \\ 
 
@@ -183,8 +186,8 @@ export class ItemListComponent implements OnChanges {
   // -----------------------------( SET LIST ITEM SELECTION )------------------------------ \\
   setListItemSelection(index: number) {
     this.addEventListeners();
-    this.isEditDisabled = false;
-    this.isDeleteDisabled = false;
+    this.editIcon.isDisabled = false;
+    this.deleteIcon.isDisabled = false;
     this.selectedListItemIndex = index;
     this.unselectedListItemIndex = null;
     // Define what list items are selected
@@ -209,7 +212,7 @@ export class ItemListComponent implements OnChanges {
       this.listItemDownNoModifierKey(index);
     }
     // Set edit on or off
-    this.isEditDisabled = this.listItems.map(e => e.selected).indexOf(true) == this.listItems.map(e => e.selected).lastIndexOf(true) && this.unselectedListItemIndex == null ? false : true;
+    this.editIcon.isDisabled = this.listItems.map(e => e.selected).indexOf(true) == this.listItems.map(e => e.selected).lastIndexOf(true) && this.unselectedListItemIndex == null ? false : true;
   }
 
 
@@ -218,13 +221,13 @@ export class ItemListComponent implements OnChanges {
     // If there is only one list item in the list
     if (this.listItems.length == 1) {
       // Set the type to whole
-      this.listItems[0].selectType = "whole";
+      this.listItems[0].selectType = SelectType.Whole;
 
       // If there is more than one list item
     } else {
 
       // First list item
-      this.listItems[0].selectType = this.listItems[0].selected ? this.listItems[1].selected ? "top" : this.unselectedListItemIndex == 1 ? "top" : "whole" : null;
+      this.listItems[0].selectType = this.listItems[0].selected ? this.listItems[1].selected ? SelectType.Top : this.unselectedListItemIndex == 1 ? SelectType.Top : SelectType.Whole : null;
 
       // Every list item in between
       for (let i = 1; i < this.listItems.length - 1; i++) {
@@ -236,37 +239,37 @@ export class ItemListComponent implements OnChanges {
 
             // If the list item before is NOT selected and the list item after IS selected
             !this.listItems[i - 1].selected && this.listItems[i + 1].selected ?
-              "top" :
+              SelectType.Top :
 
               // If the list item before IS selected and the list item after is NOT selected
               this.listItems[i - 1].selected && !this.listItems[i + 1].selected ?
 
                 // And that list item after is unselected with the unselect
                 i + 1 == this.unselectedListItemIndex ?
-                  "middle" :
+                  SelectType.Middle :
 
                   // But if its just NOT selected
-                  "bottom" :
+                  SelectType.Bottom :
 
                 // If the list item before is NOT selected and the list item after is also NOT selected
                 !this.listItems[i - 1].selected && !this.listItems[i + 1].selected ?
 
                   // And that list item after is unselected with the unselect
                   i + 1 == this.unselectedListItemIndex ?
-                    "top" :
+                    SelectType.Top :
 
                     // But if its just NOT selected
-                    "whole" :
+                    SelectType.Whole :
 
                   // If the list item before IS selected and the list item after is also selected
-                  "middle" :
+                  SelectType.Middle :
 
             // If a list item is NOT selected
             null;
       }
 
       // Last list item
-      this.listItems[this.listItems.length - 1].selectType = this.listItems[this.listItems.length - 1].selected ? this.listItems[this.listItems.length - 2].selected ? "bottom" : "whole" : null;
+      this.listItems[this.listItems.length - 1].selectType = this.listItems[this.listItems.length - 1].selected ? this.listItems[this.listItems.length - 2].selected ? SelectType.Bottom : SelectType.Whole : null;
     }
   }
 
@@ -309,12 +312,12 @@ export class ItemListComponent implements OnChanges {
       // If no other list item is selected
       if (this.listItems.map(e => e.selected).indexOf(true) == -1) {
         // Then there is nothing to delete, so disable the ability to delete
-        this.isDeleteDisabled = true;
+        this.deleteIcon.isDisabled = true;
 
         // But if there is still a list item that is selected
       } else {
         // Then enable the ability to delete a list item
-        this.isDeleteDisabled = false;
+        this.deleteIcon.isDisabled = false;
       }
 
       // If the list item we are pressing down on is NOT yet selected
@@ -353,8 +356,8 @@ export class ItemListComponent implements OnChanges {
   // -----------------------------( REMOVE FOCUS )------------------------------ \\
   removeFocus() {
     this.pivotIndex = null;
-    this.isEditDisabled = true;
-    this.isDeleteDisabled = true;
+    this.editIcon.isDisabled = true;
+    this.deleteIcon.isDisabled = true;
     this.selectedListItemIndex = null;
     this.unselectedListItemIndex = null;
 
@@ -367,7 +370,7 @@ export class ItemListComponent implements OnChanges {
 
   // -----------------------------( ADD LIST ITEM )------------------------------ \\
   addListItem() {
-    if (!this.isAddDisabled) {
+    if (!this.addIcon.isDisabled) {
       this.setListItemAdd();
     }
   }
@@ -381,7 +384,7 @@ export class ItemListComponent implements OnChanges {
 
   // -----------------------------( EDIT LIST ITEM )------------------------------ \\
   editListItem() {
-    if (!this.isEditDisabled) {
+    if (!this.editIcon.isDisabled) {
       this.setListItemEdit();
     }
   }
@@ -395,7 +398,7 @@ export class ItemListComponent implements OnChanges {
 
   // -----------------------------( DELETE LIST ITEM )------------------------------ \\
   deleteListItem() {
-    if (!this.isDeleteDisabled) {
+    if (!this.deleteIcon.isDisabled) {
       let listItemCopy: any;
       let deletedListItemIndex: number;
 
@@ -447,7 +450,7 @@ export class ItemListComponent implements OnChanges {
             // Re-establish the pivot index
             this.pivotIndex = this.selectedListItemIndex;
             // Allow the selected list item to be edited
-            this.isEditDisabled = false;
+            this.editIcon.isDisabled = false;
             // Set focus to that selected list item
             this.listItem.find((item, index) => index == this.selectedListItemIndex).nativeElement.focus();
           }, 20);
@@ -456,7 +459,7 @@ export class ItemListComponent implements OnChanges {
         } else {
           // Make no list item marked as selected
           this.selectedListItemIndex = null;
-          this.isDeleteDisabled = true;
+          this.deleteIcon.isDisabled = true;
           this.pivotIndex = null;
           this.removeEventListeners();
         }
@@ -467,7 +470,7 @@ export class ItemListComponent implements OnChanges {
         window.setTimeout(() => {
           // Unselect that list item again
           this.unselectedListItemIndex = newSelectedListItemIndex;
-          this.isDeleteDisabled = true;
+          this.deleteIcon.isDisabled = true;
           // Re-establish the pivot index
           this.pivotIndex = this.unselectedListItemIndex;
 
@@ -502,11 +505,11 @@ export class ItemListComponent implements OnChanges {
     // Build the context menu
     this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
       // Add
-      this.menuService.option(this.menuOptions[0], "Ctrl+Alt+A", this.isAddDisabled, this.addListItem),
+      this.menuService.option(this.menuOptions[0], "Ctrl+Alt+A", this.addIcon.isDisabled, this.addListItem),
       // Edit
-      this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.isEditDisabled, this.editListItem),
+      this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.editListItem),
       // Delete
-      this.menuService.option(this.isDeleteDisabled ? this.menuOptions[2] : this.isEditDisabled ? this.menuOptions[3] : this.menuOptions[2], "Delete", this.isDeleteDisabled, this.deleteListItem));
+      this.menuService.option(this.deleteIcon.isDisabled ? this.menuOptions[2] : this.editIcon.isDisabled ? this.menuOptions[3] : this.menuOptions[2], "Delete", this.deleteIcon.isDisabled, this.deleteListItem));
   }
 
 
