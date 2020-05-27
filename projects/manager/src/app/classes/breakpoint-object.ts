@@ -1,4 +1,4 @@
-export interface BreakpointType {
+export interface BreakpointObject {
     value: any;
     defaultValue: any;
     breakpointSet: boolean;

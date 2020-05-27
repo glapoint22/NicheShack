@@ -7,10 +7,6 @@ import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Padding } from 'projects/manager/src/app/classes/padding';
-import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
-import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
-import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
-import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
 
@@ -29,11 +25,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
   public document: Document = document;
   public iframeHeight: number;
   private defaultColor: Color = new Color(0, 0, 0, 1);
-  public paddingTop: PaddingTop = new PaddingTop();
-  public paddingRight: PaddingRight = new PaddingRight();
-  public paddingBottom: PaddingBottom = new PaddingBottom();
-  public paddingLeft: PaddingLeft = new PaddingLeft();
-  public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
+  public padding: Padding = new Padding();
   public background: Background = new Background();
   public inEditMode: boolean;
 
@@ -112,7 +104,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
     this.iframeHeight = Math.max(this.height, this.getContentHeight());
 
     // Set to be out of edit mode & remove selection
-    if (this.widgetService.selectedWidget != this) {
+    if (this.textBox && this.widgetService.selectedWidget != this) {
       this.textBox.removeSelection();
       this.inEditMode = false
     }
@@ -166,6 +158,9 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
       link.attributes.removeNamedItem('href');
       link.setAttribute('href', url);
     }
+
+    // This will add padding positions to this component (ie. top, right, bottom, left)
+    this.padding.setPaddingComponent(this);
 
     // Set the classes
     this.breakpointService.setBreakpointClasses(this, text);

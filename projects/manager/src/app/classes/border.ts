@@ -1,12 +1,10 @@
+import { BorderData } from './border-data';
 import { Color } from './color';
 import { Enableable } from './enableable';
 
-export class Border implements Enableable {
-    enable: boolean;
-    width: number = 1;
-    style: string = 'solid';
+export class Border extends BorderData implements Enableable {
 
-    constructor(public color: Color = new Color(190, 190, 190, 1)) { }
+    constructor(public color: Color = new Color(190, 190, 190, 1)) { super(); }
 
     applyStyle(element: HTMLElement) {
         if (this.enable) {
@@ -23,5 +21,15 @@ export class Border implements Enableable {
 
     getColorStyle() {
         return '\n\tborder-color: ' + this.color.toRGBString() + ';';
+    }
+
+    load(borderData: BorderData) {
+        if (borderData) {
+            this.enable = borderData.enable;
+            this.width = borderData.width;
+            this.style = borderData.style;
+            this.color = Color.hexToRGB(borderData.hexColor);
+        }
+
     }
 }

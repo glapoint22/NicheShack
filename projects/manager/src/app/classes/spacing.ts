@@ -1,7 +1,7 @@
-import { BreakpointType } from './breakpoint-type';
+import { BreakpointObject } from './breakpoint-object';
 import { BreakpointSpacing } from './breakpoint';
 
-export class Spacing implements BreakpointType {
+export class Spacing implements BreakpointObject {
     public value: string = BreakpointSpacing._0px;
     public defaultValue: string = BreakpointSpacing._0px;
     public position: string;

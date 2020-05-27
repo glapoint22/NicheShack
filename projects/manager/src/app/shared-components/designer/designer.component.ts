@@ -39,42 +39,42 @@ export class DesignerComponent implements OnInit, AfterViewInit {
     this.widgetCursors = [
       {
         title: 'Button',
-        component: ButtonWidgetComponent,
+        widget: ButtonWidgetComponent,
         icon: '<i class="fab fa-bootstrap"></i>',
         allowed: 'button-widget-allowed.png',
         notAllowed: 'button-widget-not-allowed.png'
       },
       {
         title: 'Text',
-        component: TextWidgetComponent,
+        widget: TextWidgetComponent,
         icon: '<div class="text-icon">T</div>',
         allowed: 'text-widget-allowed.png',
         notAllowed: 'text-widget-not-allowed.png'
       },
       {
         title: 'Image',
-        component: ImageWidgetComponent,
+        widget: ImageWidgetComponent,
         icon: '<i class="fas fa-image"></i>',
         allowed: 'image-widget-allowed.png',
         notAllowed: 'image-widget-not-allowed.png'
       },
       {
         title: 'Container',
-        component: ContainerWidgetComponent,
+        widget: ContainerWidgetComponent,
         icon: '<img class="image-icon" src="assets/container-widget-icon.png">',
         allowed: 'container-widget-allowed.png',
         notAllowed: 'container-widget-not-allowed.png'
       },
       {
         title: 'Line',
-        component: LineWidgetComponent,
+        widget: LineWidgetComponent,
         icon: '<i class="fas fa-slash"></i>',
         allowed: 'line-widget-allowed.png',
         notAllowed: 'line-widget-not-allowed.png'
       },
       {
         title: 'Video',
-        component: VideoWidgetComponent,
+        widget: VideoWidgetComponent,
         icon: '<i class="fas fa-film"></i>',
         allowed: 'video-widget-allowed.png',
         notAllowed: 'video-widget-not-allowed.png'
@@ -82,21 +82,21 @@ export class DesignerComponent implements OnInit, AfterViewInit {
       ,
       {
         title: 'Product Group',
-        component: ProductGroupWidgetComponent,
+        widget: ProductGroupWidgetComponent,
         icon: '<img class="image-icon" src="assets/product-group-widget-icon.png">',
         allowed: 'product-group-widget-allowed.png',
         notAllowed: 'product-group-widget-not-allowed.png'
       },
       {
         title: 'Categories',
-        component: CategoriesWidgetComponent,
+        widget: CategoriesWidgetComponent,
         icon: '<img class="categories-icon" src="assets/categories-widget-icon.png">',
         allowed: 'categories-widget-allowed.png',
         notAllowed: 'categories-widget-not-allowed.png'
       },
       {
         title: 'Carousel',
-        component: CarouselWidgetComponent,
+        widget: CarouselWidgetComponent,
         icon: '<img class="carousel-icon" src="assets/carousel-widget-icon.png">',
         allowed: 'carousel-widget-allowed.png',
         notAllowed: 'carousel-widget-not-allowed.png'

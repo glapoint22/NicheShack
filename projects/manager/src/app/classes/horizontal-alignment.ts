@@ -1,8 +1,8 @@
 import { BreakpointHorizontalAlignment } from './breakpoint';
-import { BreakpointType } from './breakpoint-type';
+import { BreakpointObject } from './breakpoint-object';
 import { Alignment } from './alignment';
 
-export class HorizontalAlignment extends Alignment implements BreakpointType {
+export class HorizontalAlignment extends Alignment implements BreakpointObject {
     public value: string = BreakpointHorizontalAlignment.Left;
     public defaultValue: string = BreakpointHorizontalAlignment.Left;
     public breakpointSet: boolean;

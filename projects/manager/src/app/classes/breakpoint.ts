@@ -1,7 +1,7 @@
-import { BreakpointType } from './breakpoint-type';
+import { BreakpointObject } from './breakpoint-object';
 
 export class Breakpoint {
-    constructor(public type: BreakpointType, public screenSize: string, public value: any) {}
+    constructor(public breakpointObject: BreakpointObject, public screenSize: string, public value: any) {}
 }
 
 export enum BreakpointScreenSize {
@@ -47,4 +47,12 @@ export enum BreakpointVerticalAlignment {
     Top = 'flex-start',
     Middle = 'center',
     Bottom = 'flex-end'
+}
+
+export enum BreakpointType {
+    PaddingTop,
+    PaddingRight,
+    PaddingBottom,
+    PaddingLeft,
+    VerticalAlignment
 }

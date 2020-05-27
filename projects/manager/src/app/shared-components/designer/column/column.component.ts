@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, Type } from '@angular/core';
 import { RowComponent } from '../row/row.component';
 import { WidgetService } from '../../../services/widget.service';
 import { WidgetComponent } from '../widgets/widget/widget.component';
@@ -13,10 +13,6 @@ import { Shadow } from '../../../classes/shadow';
 import { Border } from '../../../classes/border';
 import { HorizontalAlignment } from '../../../classes/horizontal-alignment';
 import { Column } from '../../../classes/column';
-import { PaddingTop } from '../../../classes/padding-top';
-import { PaddingRight } from '../../../classes/padding-right';
-import { PaddingBottom } from '../../../classes/padding-bottom';
-import { PaddingLeft } from '../../../classes/padding-left';
 import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-padding-component';
 
 @Component({
@@ -35,14 +31,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   private resizeButtonMousedown: boolean;
   public columnSpan: ColumnSpan;
   public border: Border = new Border();
-  public paddingTop: PaddingTop = new PaddingTop();
-  public paddingRight: PaddingRight = new PaddingRight();
-  public paddingBottom: PaddingBottom = new PaddingBottom();
-  public paddingLeft: PaddingLeft = new PaddingLeft();
-
-  public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
-
-  
+  public padding: Padding = new Padding();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
   public horizontalAlignment: HorizontalAlignment = new HorizontalAlignment();
@@ -128,25 +117,43 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
     }
   }
 
-  addWidget() {
-    let componentFactory = this.resolver.resolveComponentFactory(this.widgetService.currentWidgetCursor.component);
-    let componentRef = this.viewContainerRef.createComponent(componentFactory);
+  addWidget(widget: Type<WidgetComponent>) {
+    // Create the new widget
+    this.createWidget(widget);
+    
 
-    // Set this component as the selected component
-    this.widgetService.selectedWidget = this.widget = componentRef.instance;
-
-    // Set the widget's column as this column
-    this.widget.column = this;
+    // Set this widget as the selected widget
+    this.widgetService.selectedWidget = this.widget;
 
 
     // Remove all column span breakpoints
-    this.row.columns.forEach((column: Column)=> {
+    this.row.columns.forEach((column: Column) => {
       this.breakpointService.removeAllBreakpoints(column.component.breakpoints, column.component.columnSpan);
     })
 
     // We need to flag that there is a breakpoint change
     this.breakpointService.onBreakpointChange.next();
   }
+
+
+
+  createWidget(widget: Type<WidgetComponent>): WidgetComponent {
+    let componentFactory = this.resolver.resolveComponentFactory(widget);
+    let widgetComponentRef = this.viewContainerRef.createComponent(componentFactory);
+
+    // Assign this widget as the new created widget
+    this.widget = widgetComponentRef.instance;
+
+    // Set the widget's column as this column
+    this.widget.column = this;
+
+    // Detect changes
+    widgetComponentRef.hostView.detectChanges();
+
+    return widgetComponentRef.instance;
+  }
+
+
 
   onDropIndicatorEnter() {
     // Show the allowed cursor when entering the drop indicator
@@ -166,7 +173,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   onDropIndicatorMouseup(element: HTMLElement) {
     // Add a new column to the row with a new widget
     if (this.widgetService.currentWidgetCursor) {
-      this.row.addColumn(element);
+      this.row.addColumn(this.widgetService.currentWidgetCursor.widget, element);
     }
   }
 
@@ -303,9 +310,12 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
     let col = document.createElement('div');
 
     // If there are not any breakpoints set, set the class with the current col class
-    if (!this.breakpoints.find(x => x.type == this.columnSpan)) {
+    if (!this.breakpoints.find(x => x.breakpointObject == this.columnSpan)) {
       col.className = this.columnElement.className;
     }
+
+    // This will add padding positions to this component (ie. top, right, bottom, left)
+    this.padding.setPaddingComponent(this);
 
     // Set the classes
     this.breakpointService.setBreakpointClasses(this, col);

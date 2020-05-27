@@ -1,10 +1,6 @@
-export class Corners {
-    constrain: boolean = true;
-    topLeft: number = 0;
-    topRight: number = 0;
-    bottomLeft: number = 0;
-    bottomRight: number = 0;
+import { CornersData } from './corners-data';
 
+export class Corners extends CornersData {
     applyStyle(element: HTMLElement) {
         if (this.topLeft > 0) {
             element.style.borderTopLeftRadius = this.topLeft + 'px';
@@ -43,5 +39,15 @@ export class Corners {
         }
 
         return style;
+    }
+
+    load(cornersData: CornersData) {
+        if (cornersData) {
+            this.constrain = cornersData.constrain;
+            this.topLeft = cornersData.topLeft;
+            this.topRight = cornersData.topRight;
+            this.bottomLeft = cornersData.bottomLeft;
+            this.bottomRight = cornersData.bottomRight;
+        }
     }
 }

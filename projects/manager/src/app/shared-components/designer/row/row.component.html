@@ -1,7 +1,7 @@
 <div #row class="row" (mousedown)="onMousedown(); $event.stopPropagation()"
     [ngClass]="{'flex-10': columns.length == 5}"
     (mousemove)="widgetService.currentWidgetCursor ? $event.stopPropagation(): null" [style.marginTop.px]="top"
-    [style.background]="fill.enable ? 'rgba(' + fill.color.r + ',' +  fill.color.g + ',' + fill.color.b + ',' + fill.color.a + ')' : 'transparent'"
+    [style.backgroundColor]="background.enable ? background.color.toRGBString(): null"
     [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHexA() : 'none'"
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHexA() : 'none'"
@@ -9,7 +9,11 @@
     [style.paddingRight]="padding.right.value"
     [style.paddingBottom]="padding.bottom.value"
     [style.paddingLeft]="padding.left.value"
-    [style.alignItems]="verticalAlignment.value">
+    [style.alignItems]="verticalAlignment.value"
+    [ngStyle]="{ 'background-image': background.image && background.enable && background.image.url ? 'url(images/' + background.image.url + ')' : null,
+                        'background-position': background.image && background.enable ? background.image.position : null,
+                        'background-repeat': background.image && background.enable ? background.image.repeat : null,
+                        'background-attachment': background.image && background.enable ? background.image.attachment : null}">
 
     <ng-template #viewContainerRef>
         <!-- Columns go here -->

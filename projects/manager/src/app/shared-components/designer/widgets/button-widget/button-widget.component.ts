@@ -8,15 +8,10 @@ import { WidgetService } from 'projects/manager/src/app/services/widget.service'
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { Link, LinkOption } from 'projects/manager/src/app/classes/link';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
-import { PageService } from 'projects/manager/src/app/services/page.service';
 import { Padding } from 'projects/manager/src/app/classes/padding';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { ButtonState } from 'projects/manager/src/app/classes/button-state';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
-import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
-import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
-import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
-import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
 
@@ -34,11 +29,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   public link: Link = new Link();
 
   // Padding
-  public paddingTop: PaddingTop = new PaddingTop();
-  public paddingRight: PaddingRight = new PaddingRight();
-  public paddingBottom: PaddingBottom = new PaddingBottom();
-  public paddingLeft: PaddingLeft = new PaddingLeft();
-  public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
+  public padding: Padding = new Padding();
 
   // Background Hover & Active
   public backgroundHover: FillColor = new FillColor(new Color(150, 150, 150, 1));
@@ -57,8 +48,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
 
   constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService,
-    private pageService: PageService) { super(widgetService, breakpointService) }
+    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
 
 
@@ -199,6 +189,10 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
       button.style.textDecoration = 'none';
     }
 
+    // This will add padding positions to this component (ie. top, right, bottom, left)
+    this.padding.setPaddingComponent(this);
+
+
     // Set the breakpoint classes
     this.breakpointService.setBreakpointClasses(this, button);
 
@@ -208,7 +202,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
 
     // Add this button style
-    this.pageService.buttonStylesDocumentFragment.firstElementChild.appendChild(document.createTextNode(css));
+    this.widgetService.buttonStylesDocumentFragment.firstElementChild.appendChild(document.createTextNode(css));
 
     // Append this button to the parent
     parent.appendChild(button);

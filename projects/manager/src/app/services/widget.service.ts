@@ -13,6 +13,7 @@ export class WidgetService {
   public currentColumn: HTMLElement;
   public currentColumnSet: boolean;
   public overColumn: boolean;
+  public buttonStylesDocumentFragment: DocumentFragment;
 
 
   constructor() { }
