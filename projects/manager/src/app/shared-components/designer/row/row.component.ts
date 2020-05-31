@@ -15,7 +15,6 @@ import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-paddin
 import { WidgetComponent } from '../widgets/widget/widget.component';
 import { RowData } from '../../../classes/row-data';
 import { Background } from '../../../classes/background';
-import { BreakpointData } from '../../../classes/breakpoint-data';
 
 @Component({
   selector: 'row',
@@ -263,7 +262,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     this.shadow.load(rowData.shadow);
     this.padding.load(rowData.padding);
     this.verticalAlignment.load(rowData.verticalAlignment);
-    this.breakpointService.loadBreakpoints(rowData.breakpointData, this);
+    this.breakpointService.loadBreakpoints(rowData.breakpoints, this);
   }
 
 

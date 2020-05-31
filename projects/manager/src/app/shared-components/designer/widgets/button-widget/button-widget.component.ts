@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { ButtonText } from 'projects/manager/src/app/classes/button-text';
@@ -14,6 +13,10 @@ import { ButtonState } from 'projects/manager/src/app/classes/button-state';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
+import { BackgroundColor } from 'projects/manager/src/app/classes/background-color';
+import { BorderColor } from 'projects/manager/src/app/classes/border-color';
+import { TextColor } from 'projects/manager/src/app/classes/text-color';
+import { ButtonWidgetData } from 'projects/manager/src/app/classes/button-widget-data';
 
 @Component({
   selector: 'button-widget',
@@ -27,21 +30,19 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   public text: ButtonText = new ButtonText();
   public shadow: Shadow = new Shadow();
   public link: Link = new Link();
-
-  // Padding
   public padding: Padding = new Padding();
 
-  // Background Hover & Active
-  public backgroundHover: FillColor = new FillColor(new Color(150, 150, 150, 1));
-  public backgroundActive: FillColor = new FillColor(new Color(135, 135, 135, 1));
+  // Background Hover & Active colors
+  public backgroundHoverColor: BackgroundColor = new BackgroundColor(new Color(150, 150, 150, 1));
+  public backgroundActiveColor: BackgroundColor = new BackgroundColor(new Color(135, 135, 135, 1));
 
-  // Border Hover & Active
-  public borderHover: Border = new Border(new Color(240, 240, 240, 1));
-  public borderActive: Border = new Border(new Color(220, 220, 220, 1));
+  // Border Hover & Active colors
+  public borderHoverColor: BorderColor = new BorderColor(new Color(240, 240, 240, 1));
+  public borderActiveColor: BorderColor = new BorderColor(new Color(220, 220, 220, 1));
 
-  // Text Hover & Active
-  public textHover: ButtonText = new ButtonText(new Color(255, 255, 255, 1));
-  public textActive: ButtonText = new ButtonText(new Color(225, 225, 225, 1));
+  // Text Hover & Active colors
+  public textHoverColor: TextColor = new TextColor(new Color(255, 255, 255, 1));
+  public textActiveColor: TextColor = new TextColor(new Color(225, 225, 225, 1));
 
   // Current state of the button (ie. normal, hover, active)
   public currentState: ButtonState;
@@ -80,11 +81,11 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
         break;
 
       case ButtonState.Hover:
-        color = this.backgroundHover.color.toRGBString();
+        color = this.backgroundHoverColor.value.toRGBString();
         break;
 
       case ButtonState.Active:
-        color = this.backgroundActive.color.toRGBString();
+        color = this.backgroundActiveColor.value.toRGBString();
         break;
     }
 
@@ -105,11 +106,11 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
         break;
 
       case ButtonState.Hover:
-        color = this.borderHover.color.toHexA();
+        color = this.borderHoverColor.value.toHexA();
         break;
 
       case ButtonState.Active:
-        color = this.borderActive.color.toHexA();
+        color = this.borderActiveColor.value.toHexA();
         break;
     }
 
@@ -127,17 +128,34 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
         break;
 
       case ButtonState.Hover:
-        color = this.textHover.color.toRGBString();
+        color = this.textHoverColor.value.toRGBString();
         break;
 
       case ButtonState.Active:
-        color = this.textActive.color.toRGBString();
+        color = this.textActiveColor.value.toRGBString();
         break;
     }
 
     return color;
   }
 
+
+  load(widgetData: ButtonWidgetData) {
+    this.background.load(widgetData.background);
+    this.border.load(widgetData.border);
+    this.text.load(widgetData.text);
+    this.corners.load(widgetData.corners);
+    this.shadow.load(widgetData.shadow);
+    this.padding.load(widgetData.padding);
+    this.link.load(widgetData.link);
+    this.backgroundHoverColor.load(widgetData.backgroundHoverColor);
+    this.backgroundActiveColor.load(widgetData.backgroundActiveColor);
+    this.borderHoverColor.load(widgetData.borderHoverColor);
+    this.borderActiveColor.load(widgetData.borderActiveColor);
+    this.textHoverColor.load(widgetData.textHoverColor);
+    this.textActiveColor.load(widgetData.textActiveColor);
+    super.load(widgetData);
+  }
 
 
   // ------------------------------------------------------------------- Build HTML -----------------------------------------------------------
@@ -156,16 +174,16 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
       // Hover
       '\n.' + className + ':hover {' +
-      this.backgroundHover.getStyle() +
-      (this.border.enable ? this.borderHover.getColorStyle() : '') +
-      this.textHover.getColorStyle() +
+      this.backgroundHoverColor.getStyle() +
+      (this.border.enable ? this.borderHoverColor.getStyle() : '') +
+      this.textHoverColor.getStyle() +
       '\n}' +
 
       // Active
       '\n.' + className + ':active {' +
-      this.backgroundActive.getStyle() +
-      (this.border.enable ? this.borderActive.getColorStyle() : '') +
-      this.textActive.getColorStyle() +
+      this.backgroundActiveColor.getStyle() +
+      (this.border.enable ? this.borderActiveColor.getStyle() : '') +
+      this.textActiveColor.getStyle() +
       '\n}';
 
     // Added the classes

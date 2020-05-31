@@ -2,8 +2,13 @@ import { Color } from './color';
 import { Enableable } from './enableable';
 import { ShadowData } from './shadow-data';
 
-export class Shadow extends ShadowData implements Enableable {
-    color: Color = new Color(0, 0, 0, 0.75);
+export class Shadow implements Enableable {
+    public enable: boolean;
+    public x: number = 5;
+    public y: number = 5;
+    public blur: number = 5;
+    public size: number = 5;
+    public color: Color = new Color(0, 0, 0, 0.75);
 
     applyStyle(element: HTMLElement) {
         if (this.enable) {
@@ -19,12 +24,11 @@ export class Shadow extends ShadowData implements Enableable {
     load(shadowData: ShadowData) {
         if (shadowData) {
             this.enable = shadowData.enable;
-            this.x = shadowData.x;
-            this.y = shadowData.y;
-            this.blur = shadowData.blur;
-            this.size = shadowData.size;
-            this.color = Color.hexToRGB(shadowData.hexColor);
+            if (shadowData.x) this.x = shadowData.x;
+            if (shadowData.y) this.y = shadowData.y;
+            if (shadowData.blur) this.blur = shadowData.blur;
+            if (shadowData.size) this.size = shadowData.size;
+            if (shadowData.color) this.color = Color.hexToRGB(shadowData.color);
         }
-
     }
 }

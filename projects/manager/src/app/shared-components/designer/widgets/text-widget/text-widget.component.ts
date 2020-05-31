@@ -9,6 +9,8 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Padding } from 'projects/manager/src/app/classes/padding';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
+import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
+import { TextWidgetData } from 'projects/manager/src/app/classes/text-widget-data';
 
 @Component({
   selector: 'text-widget',
@@ -28,6 +30,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
   public padding: Padding = new Padding();
   public background: Background = new Background();
   public inEditMode: boolean;
+  private htmlContent: string;
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService,
@@ -49,6 +52,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
       this.content = contentDocument.body.firstElementChild as HTMLElement;
 
       this.textBox = new TextBox(contentDocument, this.applicationRef, this.defaultColor);
+      if (this.htmlContent) this.textBox.content.innerHTML = this.htmlContent;
       this.textBox.removeSelection();
       this.textBox.onChange.subscribe(() => {
         let contentHeight = this.getContentHeight();
@@ -127,6 +131,16 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
       this.textBox.selectContents();
     }
 
+  }
+
+
+  load(widgetData: TextWidgetData) {
+    this.htmlContent = widgetData.htmlContent;
+    this.fixedHeight = widgetData.height;
+    this.background.load(widgetData.background);
+    this.padding.load(widgetData.padding);
+
+    super.load(widgetData);
   }
 
 

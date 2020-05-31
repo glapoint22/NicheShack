@@ -160,7 +160,7 @@ export class BreakpointService {
 
     properties.forEach((property: string) => {
       // If the type of property is a BreakpointType
-      if (typeof (breakpointsComponent[property]) == 'object' && 'setClass' in breakpointsComponent[property]) {
+      if (breakpointsComponent[property] && typeof (breakpointsComponent[property]) == 'object' && 'setClass' in breakpointsComponent[property]) {
 
 
         // If the current property has breakpoints applied to it
@@ -290,9 +290,9 @@ export class BreakpointService {
 
 
   // -------------------------------------------------------------- Load Breakpoints ----------------------------------------------------------------------
-  loadBreakpoints(breakpointData: Array<BreakpointData>, breakpointsComponent: BreakpointsComponent) {
-    breakpointData.forEach((breakpointData: BreakpointData) => {
-      this.addBreakpoint(breakpointsComponent.breakpoints, this.getBreakpointObject(breakpointData.breakpointType, breakpointsComponent), breakpointData.value, breakpointData.screenSize);
+  loadBreakpoints(breakpoints: Array<BreakpointData>, breakpointsComponent: BreakpointsComponent) {
+    breakpoints.forEach((breakpoint: BreakpointData) => {
+      this.addBreakpoint(breakpointsComponent.breakpoints, this.getBreakpointObject(breakpoint.breakpointType, breakpointsComponent), breakpoint.value, breakpoint.screenSize);
     });
   }
 

@@ -24,7 +24,8 @@ export class VerticalAlignment extends Alignment implements BreakpointObject {
     }
 
     load(value: string) {
-        let key = Object.keys(BreakpointVerticalAlignment)[Object.values(BreakpointVerticalAlignment).findIndex(x => x == value)];
-        this.value = BreakpointVerticalAlignment[key];
+        if (value) {
+            this.value = value as BreakpointVerticalAlignment;
+        }
     }
 }

@@ -21,10 +21,10 @@
 
 
 <!-- Hover Colors -->
-<button-color *ngIf="buttonWidget.currentState == buttonState.Hover" [backgroundColor]="buttonWidget.backgroundHover.color"
-    [borderColor]="buttonWidget.borderHover.color" [textColor]="buttonWidget.textHover.color"></button-color>
+<button-color *ngIf="buttonWidget.currentState == buttonState.Hover" [backgroundColor]="buttonWidget.backgroundHoverColor.value"
+    [borderColor]="buttonWidget.borderHoverColor.value" [textColor]="buttonWidget.textHoverColor.value"></button-color>
 
 
 <!-- Active Colors -->
-<button-color *ngIf="buttonWidget.currentState == buttonState.Active" [backgroundColor]="buttonWidget.backgroundActive.color"
-    [borderColor]="buttonWidget.borderActive.color" [textColor]="buttonWidget.textActive.color"></button-color>
+<button-color *ngIf="buttonWidget.currentState == buttonState.Active" [backgroundColor]="buttonWidget.backgroundActiveColor.value"
+    [borderColor]="buttonWidget.borderActiveColor.value" [textColor]="buttonWidget.textActiveColor.value"></button-color>

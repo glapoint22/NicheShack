@@ -1,7 +1,7 @@
-export class CornersData {
-    constrain: boolean = true;
-    topLeft: number = 0;
-    topRight: number = 0;
-    bottomLeft: number = 0;
-    bottomRight: number = 0;
+export interface CornersData {
+    constrain: boolean;
+    topLeft: number;
+    topRight: number;
+    bottomLeft: number;
+    bottomRight: number;
 }

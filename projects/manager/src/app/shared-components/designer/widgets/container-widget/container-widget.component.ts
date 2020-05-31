@@ -11,6 +11,7 @@ import { Padding } from 'projects/manager/src/app/classes/padding';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
 import { Color } from 'projects/manager/src/app/classes/color';
+import { ContainerWidgetData } from 'projects/manager/src/app/classes/container-widget-data';
 
 @Component({
   selector: 'container-widget',
@@ -67,6 +68,16 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
     }
   }
 
+
+  load(widgetData: ContainerWidgetData) {
+    this.background.load(widgetData.background);
+    this.border.load(widgetData.border);
+    this.corners.load(widgetData.corners);
+    this.shadow.load(widgetData.shadow);
+    this.padding.load(widgetData.padding);
+
+    super.load(widgetData);
+  }
 
 
   buildHTML(parent: HTMLElement) {

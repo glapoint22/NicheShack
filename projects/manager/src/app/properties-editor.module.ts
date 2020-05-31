@@ -14,7 +14,6 @@ import { EnableablePanelComponent } from './shared-components/panels/enableable-
 import { PanelComponent } from './shared-components/panels/panel/panel.component';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 import { LinkComponent } from './shared-components/properties/link/link.component';
-import { FillComponent } from './shared-components/properties/fill/fill.component';
 import { BorderComponent } from './shared-components/properties/border/border.component';
 import { CornersComponent } from './shared-components/properties/corners/corners.component';
 import { ShadowComponent } from './shared-components/properties/shadow/shadow.component';
@@ -83,7 +82,6 @@ import { LinkIconComponent } from './shared-components/link-icon/link-icon.compo
     EnableablePanelComponent,
     PanelComponent,
     LinkComponent,
-    FillComponent,
     BorderComponent,
     CornersComponent,
     ShadowComponent,
@@ -150,7 +148,6 @@ import { LinkIconComponent } from './shared-components/link-icon/link-icon.compo
     EnableablePanelComponent,
     PanelComponent,
     LinkComponent,
-    FillComponent,
     BorderComponent,
     CornersComponent,
     ShadowComponent,

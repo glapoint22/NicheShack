@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { Page } from '../classes/page';
 import { ContainerComponent } from '../shared-components/designer/container/container.component';
 import { ButtonWidgetComponent } from '../shared-components/designer/widgets/button-widget/button-widget.component';
@@ -9,16 +9,23 @@ import { RowComponent } from '../shared-components/designer/row/row.component';
 import { ColumnComponent } from '../shared-components/designer/column/column.component';
 import { PageData } from '../classes/page-data';
 import { BreakpointService } from './breakpoint.service';
+import { WidgetType } from '../classes/widget-type';
+import { WidgetComponent } from '../shared-components/designer/widgets/widget/widget.component';
+import { TextWidgetComponent } from '../shared-components/designer/widgets/text-widget/text-widget.component';
+import { ImageWidgetComponent } from '../shared-components/designer/widgets/image-widget/image-widget.component';
+import { ContainerWidgetComponent } from '../shared-components/designer/widgets/container-widget/container-widget.component';
+import { Background } from '../classes/background';
+import { ContainerWidgetData } from '../classes/container-widget-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageService {
   public page: Page = new Page();
-  
+
   public rootContainer: ContainerComponent;
 
-  constructor(private widgetService: WidgetService, private breakpointService: BreakpointService){}
+  constructor(private widgetService: WidgetService, private breakpointService: BreakpointService) { }
 
   // -----------------------------( PREVIEW )------------------------------ \\
   preview() {
@@ -73,37 +80,86 @@ export class PageService {
     this.page.background.applyStyles(previewWindow.document.body);
   }
 
-  loadPage(pageData: PageData) {
+  loadPage(page: PageData) {
     // Clear the page
     this.rootContainer.viewContainerRef.clear();
     this.rootContainer.rows = [];
+    this.page.background = new Background();
 
     // Set the name and width of the page
-    this.page.name = pageData.name;
-    this.page.width = pageData.width ? pageData.width : 1600;
+    this.page.name = page.name;
+    this.page.width = page.width ? page.width : 1600;
 
     // Load the background
-    this.page.background.load(pageData.background);
+    this.page.background.load(page.background);
 
-    // Loop through each row
-    pageData.rows.forEach((rowData: RowData, index: number) => {
-      
+    // Load the widgets
+    this.loadWidgets(this.rootContainer, page.rows);
+    
+
+    this.breakpointService.onBreakpointChange.next();
+  }
+
+
+  loadWidgets(container: ContainerComponent, rows: Array<RowData>) {
+    // Loop through all the container's rows
+    rows.forEach((rowData: RowData, index: number) => {
+
       // Create the row and load the row data
-      let rowComponent: RowComponent = this.rootContainer.createRow(index, rowData.top);
+      let rowComponent: RowComponent = container.createRow(index, rowData.top);
       rowComponent.load(rowData);
 
       // Loop through each column
       rowData.columns.forEach((columnData: ColumnData, index: number) => {
-       let columnComponent: ColumnComponent = rowComponent.createColumn(index);
 
-       let buttonwidget = columnComponent.createWidget(ButtonWidgetComponent);
+        // Create the column and load the column data
+        let columnComponent: ColumnComponent = rowComponent.createColumn(index);
+        columnComponent.load(columnData);
 
-       rowComponent.setColumnSpans();
+
+        // Create the widget and load the widget data
+        let widgetComponent = columnComponent.createWidget(this.getWidget(columnData.widgetData.widgetType));
+        widgetComponent.load(columnData.widgetData);
+
+        // If this widget is a container
+        if (columnData.widgetData.widgetType == WidgetType.Container) {
+          let containerWidget = widgetComponent as ContainerWidgetComponent;
+          let containerWidgetData = columnData.widgetData as ContainerWidgetData;
+
+          this.loadWidgets(containerWidget.container, containerWidgetData.rows);
+        }
       })
-
     });
+  }
 
-    this.breakpointService.onBreakpointChange.next();
+  getWidget(widgetType: WidgetType) {
+    let widget: Type<WidgetComponent>
 
+    switch (widgetType) {
+
+      // Button
+      case WidgetType.Button:
+        widget = ButtonWidgetComponent;
+        break;
+
+
+      // Text
+      case WidgetType.Text:
+        widget = TextWidgetComponent;
+        break;
+
+      // Image
+      case WidgetType.Image:
+        widget = ImageWidgetComponent;
+        break;
+
+
+      // Container
+      case WidgetType.Container:
+        widget = ContainerWidgetComponent;
+        break;
+    }
+
+    return widget;
   }
 }

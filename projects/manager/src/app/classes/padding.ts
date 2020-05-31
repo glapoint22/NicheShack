@@ -22,10 +22,10 @@ export class Padding {
     load(paddingData: PaddingData) {
         if (paddingData) {
             this.constrain = paddingData.constrain;
-            this.top.value = paddingData.top ? paddingData.top : this.top.defaultValue;
-            this.right.value = paddingData.right ? paddingData.right : this.right.defaultValue;
-            this.bottom.value = paddingData.bottom ? paddingData.bottom : this.bottom.defaultValue;
-            this.left.value = paddingData.left ? paddingData.left : this.left.defaultValue;
+            if (paddingData.top) this.top.value = paddingData.top;
+            if (paddingData.right) this.right.value = paddingData.right;
+            if (paddingData.bottom) this.bottom.value = paddingData.bottom;
+            if (paddingData.left) this.left.value = paddingData.left;
         }
     }
 }

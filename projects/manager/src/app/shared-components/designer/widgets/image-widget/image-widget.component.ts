@@ -9,6 +9,8 @@ import { Image } from 'projects/manager/src/app/classes/image';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
+import { ImageWidgetData } from 'projects/manager/src/app/classes/image-widget-data';
 
 @Component({
   selector: 'image-widget',
@@ -36,9 +38,21 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
   }
 
   onImageLoad(event) {
-    this.width = event.srcElement.naturalWidth;
-    this.height = event.srcElement.naturalHeight;
+    if (!this.width && !this.height) {
+      this.width = event.srcElement.naturalWidth;
+      this.height = event.srcElement.naturalHeight;
+    }
+
     this.imageLoaded = true;
+  }
+
+  load(widgetData: ImageWidgetData) {
+    this.border.load(widgetData.border);
+    this.corners.load(widgetData.corners);
+    this.shadow.load(widgetData.shadow);
+    this.link.load(widgetData.link);
+    this.image.load(widgetData.image);
+    super.load(widgetData);
   }
 
 

@@ -1,9 +1,9 @@
-import { RowData } from './row-data';
 import { BackgroundData } from './background-data';
+import { RowData } from './row-data';
 
-export class PageData {
+export interface PageData {
     name: string;
     width: number;
     background: BackgroundData;
-    rows: Array<RowData>;
+    rows: Array<RowData>
 }

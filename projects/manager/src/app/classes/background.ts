@@ -1,9 +1,12 @@
 import { BackgroundData } from './background-data';
 import { Color } from './color';
 import { Enableable } from './enableable';
+import { BackgroundImage } from './background-image';
 
-export class Background extends BackgroundData implements Enableable {
+export class Background implements Enableable {
     public color: Color = new Color(0, 0, 0, 0);
+    public image: BackgroundImage = new BackgroundImage();
+    public enable: boolean;
 
 
     applyStyles(element: HTMLElement) {
@@ -41,11 +44,14 @@ export class Background extends BackgroundData implements Enableable {
 
     load(backgroundData: BackgroundData) {
         if (backgroundData) {
+            // Enable
             this.enable = backgroundData.enable;
-            if (backgroundData.hexColor)
-                this.color = Color.hexToRGB(backgroundData.hexColor);
-            this.image = backgroundData.image;
-        }
 
+            // Background color
+            if (backgroundData.color) this.color = Color.hexToRGB(backgroundData.color);
+
+            // Background image
+            if (backgroundData.image) this.image.load(backgroundData.image);
+        }
     }
 }

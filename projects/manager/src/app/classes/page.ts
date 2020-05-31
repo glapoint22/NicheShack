@@ -1,6 +1,7 @@
 import { Background } from './background';
-import { PageData } from './page-data';
 
-export class Page extends PageData {
+export class Page {
+    name: string;
+    width: number;
     background: Background = new Background();
 }
