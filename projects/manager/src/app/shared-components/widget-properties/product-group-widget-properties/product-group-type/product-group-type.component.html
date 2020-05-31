@@ -1,64 +1,44 @@
 <!-- Panel -->
-<panel [title]="'Product Group Type'">
+<panel #panel [title]="'Product Group Type'">
 
-    <dropdown 
-        [height]="22"
-        [title]="''"
-        [keyValue]="[
-                    {key: 'Featured Products', value: 'Featured Products'}, 
-                    {key: 'Browsed Products', value: 'Browsed Products'}, 
-                    {key: 'Related Browsed Products', value: 'Related Browsed Products'},
-                    {key: 'Related Bought Products', value: 'Related Bought Products'},
-                    {key: 'Related Wishlist Products', value: 'Related Wishlist Products'},
-                    {key: 'Related Subscribed Products', value: 'Related Subscribed Products'},
-                    {key: 'Related Browsed Niche Products', value: 'Related Browsed Niche Products'}
-                    ]"
-        [selectedIndex]="0"
+    <dropdown [height]="22" [title]="''" [keyValue]="productGroupTypes" [selectedIndex]="productGroupWidget.productGroupType"
         (onChange)="onDropdownOptionSelect($event)">
     </dropdown>
 
     <!-- Property Box -->
-    <div *ngIf="showFeaturedProductsPropertyBox" class="property-box-dark" style="margin-top: 10px;">
+    <div *ngIf="productGroupWidget.productGroupType == productGroupType.FeaturedProducts" class="property-box-dark" style="margin-top: 10px;">
 
         <!-- Icons -->
         <div class="icons">
 
             <!-- Delete -->
             <div class="icon-container"
-                    [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Featured Product (Delete)' : itemList.editIcon.isDisabled ? 'Delete Featured Products (Delete)' : 'Delete Featured Product (Delete)'"
-                    [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
-                    (mouseover)="itemList.isOverIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="itemList.deleteListItem()">
+                [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Featured Product (Delete)' : itemList.editIcon.isDisabled ? 'Delete Featured Products (Delete)' : 'Delete Featured Product (Delete)'"
+                [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                (click)="itemList.deleteListItem()">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
             <!-- Edit -->
-            <div class="icon-container"
-                    [attr.title]="'Edit Featured Product (Ctrl+Alt+E)'" 
-                    [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
-                    (mouseover)="itemList.isOverIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="!itemList.editIcon.isDisabled ? editFeaturedProduct() : null">
+            <div class="icon-container" [attr.title]="'Edit Featured Product (Ctrl+Alt+E)'"
+                [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
+                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                (click)="!itemList.editIcon.isDisabled ? editFeaturedProduct() : null">
                 <i class="fas fa-edit"></i>
             </div>
 
             <!-- Add -->
-            <div class="icon-container"
-                    [attr.title]="'Add Featured Product (Ctrl+Alt+A)'" 
-                    [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
-                    (mouseover)="itemList.isOverIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="!itemList.addIcon.isDisabled ? addFeaturedProduct() : null">
+            <div class="icon-container" [attr.title]="'Add Featured Product (Ctrl+Alt+A)'"
+                [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                (click)="!itemList.addIcon.isDisabled ? addFeaturedProduct() : null">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>
 
         <!-- Item LIst -->
-        <item-list 
-            #itemList 
-            [list]="featuredProducts"
-            (onAddItem)="addFeaturedProduct()"
+        <item-list #itemList [list]="featuredProducts" (onAddItem)="addFeaturedProduct()"
             (onEditItem)="editFeaturedProduct()"
             [menuOptions]="['Add Featured Product', 'Edit Featured Product', 'Delete Featured Product', 'Delete Featured Products']">
         </item-list>

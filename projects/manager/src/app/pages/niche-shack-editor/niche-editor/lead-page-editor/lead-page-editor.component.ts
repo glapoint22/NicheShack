@@ -7,6 +7,11 @@ import { ButtonWidgetData } from 'projects/manager/src/app/classes/button-widget
 import { TextWidgetData } from 'projects/manager/src/app/classes/text-widget-data';
 import { ImageWidgetData } from 'projects/manager/src/app/classes/image-widget-data';
 import { ContainerWidgetData } from 'projects/manager/src/app/classes/container-widget-data';
+import { LineWidgetData } from 'projects/manager/src/app/classes/line-widget-data';
+import { VideoWidgetData } from 'projects/manager/src/app/classes/video-widget-data';
+import { ProductGroupWidgetData } from 'projects/manager/src/app/classes/product-group-widget-data';
+import { CategoriesWidgetData } from 'projects/manager/src/app/classes/categories-widget-data';
+import { CarouselWidgetData } from 'projects/manager/src/app/classes/carousel-widget-data';
 
 @Component({
   selector: 'lead-page-editor',
@@ -67,7 +72,7 @@ export class LeadPageEditorComponent implements OnChanges {
                     shadow: null,
                     padding: null,
                     breakpoints: [],
-                    columnSpan: 3,
+                    columnSpan: 2,
                     widgetData: {
                       widgetType: 0,
                       name: 'My Button',
@@ -142,7 +147,7 @@ export class LeadPageEditorComponent implements OnChanges {
                     shadow: null,
                     padding: null,
                     breakpoints: [],
-                    columnSpan: 3,
+                    columnSpan: 2,
                     widgetData: {
                       widgetType: 1,
                       name: 'My Text',
@@ -175,7 +180,7 @@ export class LeadPageEditorComponent implements OnChanges {
                     shadow: null,
                     padding: null,
                     breakpoints: [],
-                    columnSpan: 3,
+                    columnSpan: 2,
                     widgetData: {
                       widgetType: 2,
                       name: 'My Image',
@@ -220,7 +225,7 @@ export class LeadPageEditorComponent implements OnChanges {
                     shadow: null,
                     padding: null,
                     breakpoints: [],
-                    columnSpan: 3,
+                    columnSpan: 2,
                     widgetData: {
                       widgetType: 3,
                       name: 'My Container',
@@ -245,10 +250,10 @@ export class LeadPageEditorComponent implements OnChanges {
                           verticalAlignment: null,
                           breakpoints: [],
                           columns: [
-          
-          
-          
-          
+
+
+
+
                             // Button
                             {
                               name: 'My Column',
@@ -280,26 +285,216 @@ export class LeadPageEditorComponent implements OnChanges {
                                 textHoverColor: null,
                                 textActiveColor: null
                               } as ButtonWidgetData
-                            },
-          
-          
-          
-          
-                            
-          
-          
-          
+                            }
                           ]
                         }
                       ]
 
                     } as ContainerWidgetData
+                  },
+
+
+
+
+
+
+
+                  // Line
+                  {
+                    name: 'My Column5',
+                    background: null,
+                    border: null,
+                    corners: null,
+                    shadow: null,
+                    padding: null,
+                    breakpoints: [],
+                    columnSpan: 2,
+                    widgetData: {
+                      widgetType: 4,
+                      name: 'My Line',
+                      width: null,
+                      height: null,
+                      breakpoints: [],
+                      horizontalAlignment: null,
+                      border: null,
+                      shadow: null,
+                    } as LineWidgetData
+                  },
+
+
+
+
+
+
+
+
+
+                  // Video
+                  {
+                    name: 'My Column6',
+                    background: null,
+                    border: null,
+                    corners: null,
+                    shadow: null,
+                    padding: null,
+                    breakpoints: [],
+                    columnSpan: 2,
+                    widgetData: {
+                      widgetType: 5,
+                      name: 'My Video',
+                      width: null,
+                      height: null,
+                      breakpoints: [],
+                      horizontalAlignment: null,
+                      border: null,
+                      video: {
+                        url: '//player.vimeo.com/video/173192945?muted=false',
+                        thumbnail: 'thumbnail1.png'
+                      },
+                      corners: null,
+                      shadow: null
+
+                    } as VideoWidgetData
                   }
+                ]
+              },
 
 
 
+              // Product Group
+              {
+                name: 'My Row2',
+                top: 400,
+                background: null,
+                border: null,
+                corners: null,
+                shadow: null,
+                padding: null,
+                verticalAlignment: null,
+                breakpoints: [],
+                columns: [
+                  {
+                    name: 'My Column',
+                    background: null,
+                    border: null,
+                    corners: null,
+                    shadow: null,
+                    padding: null,
+                    breakpoints: [],
+                    columnSpan: 4,
+                    widgetData: {
+                      widgetType: 6,
+                      name: 'My Product Group',
+                      width: null,
+                      height: null,
+                      breakpoints: [],
+                      horizontalAlignment: null,
+                      caption: 'Browse These Great Products',
+                      productGroupType: 0,
+                      featuredProducts: [
+                        {
+                          id: 'FA24GDSETG',
+                          title: 'How To Be a Gumpy'
+                        },
+                        {
+                          id: '8RTIOFGBHE',
+                          title: 'Alita: Battle Angel'
+                        }
+                      ]
+
+                    } as ProductGroupWidgetData
+                  },
+
+
+
+
+
+                  // Categories
+                  {
+                    name: 'My Column2',
+                    background: null,
+                    border: null,
+                    corners: null,
+                    shadow: null,
+                    padding: null,
+                    breakpoints: [],
+                    columnSpan: 4,
+                    widgetData: {
+                      widgetType: 7,
+                      name: 'My Categories',
+                      width: null,
+                      height: null,
+                      breakpoints: [],
+                      horizontalAlignment: null,
+                      caption: 'Shop by category',
+                      categories: [
+                        {
+                          name: 'Health & Fitness',
+                          id: 0
+                        },
+                        {
+                          name: 'Self-Help',
+                          id: 1
+                        }
+                      ]
+                    } as CategoriesWidgetData
+                  },
+
+
+
+
+
+
+
+
+
+
+                  // Carousel
+                  {
+                    name: 'My Column3',
+                    background: null,
+                    border: null,
+                    corners: null,
+                    shadow: null,
+                    padding: null,
+                    breakpoints: [],
+                    columnSpan: 4,
+                    widgetData: {
+                      widgetType: 8,
+                      name: 'My Carousel',
+                      width: null,
+                      height: null,
+                      breakpoints: [],
+                      horizontalAlignment: null,
+                      banners: [
+                        {
+                          image: {
+                            url: '13912b12e08343ef9f797289d39d189c.jpg',
+                            title: 'Keto'
+                          },
+                          link: {
+                            selectedOption: 'webAddress',
+                            url: 'http://www.alitamovie.com',
+                          }
+                        },
+                        {
+                          image: {
+                            url: '5d989ab13cee41f0bd48d5070713404f.png',
+                            title: 'Hyperbolic Stretching'
+                          },
+                          link: {
+                            selectedOption: 'page',
+                            url: 'http://www.tama.com',
+                          }
+                        }
+                      ]
+                    } as CarouselWidgetData
+                  }
                 ]
               }
+
+
+
             ]
           });
           break;

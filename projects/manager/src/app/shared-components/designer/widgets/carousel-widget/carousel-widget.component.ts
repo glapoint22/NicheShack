@@ -4,6 +4,8 @@ import { WidgetService } from 'projects/manager/src/app/services/widget.service'
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { CarouselBanner } from 'projects/manager/src/app/classes/carousel-banner';
+import { CarouselWidgetData } from 'projects/manager/src/app/classes/carousel-widget-data';
+import { CarouselBannerData } from 'projects/manager/src/app/classes/carousel-banner-data';
 
 @Component({
   selector: 'carousel-widget',
@@ -22,23 +24,13 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
     this.height = 250
     this.name = 'Carousel';
     this.type = WidgetType.Carousel;
-
-    // this.banners = [
-    //   {
-    //     image: {
-    //       url: '13912b12e08343ef9f797289d39d189c.jpg',
-    //       title: 'Keto'
-    //     },
-    //     link: {
-    //       selectedOption: 'Page',
-    //       url: 'http://www.alitamovie.com',
-    //       disabled: false,
-    //       linkDataChanged: false
-    //     }
-    //   }
-    // ]
-
     super.ngOnInit();
   }
 
+  load(widgetData: CarouselWidgetData) {
+    widgetData.banners.forEach((banner: CarouselBannerData) => {
+      this.banners.push(new CarouselBanner(banner));
+    });
+    super.load(widgetData);
+  }
 }

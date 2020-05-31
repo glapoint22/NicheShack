@@ -5,7 +5,7 @@
     <div class="property-box-light-icon-bar">
 
         <!-- Paginator -->
-        <paginator [itemCount]="carouselWidget.banners.length"></paginator>
+        <paginator [itemCount]="carouselWidget.banners.length" (onItemChange)="currentIndex = $event"></paginator>
 
         <!-- Icons -->
         <div class="icons">
@@ -25,28 +25,25 @@
 
     <!-- Content -->
     <div class="content" *ngIf="carouselWidget.banners.length > 0; else placeholder">
-
-        <ng-container *ngFor="let banner of carouselWidget.banners">
-            <!-- Banner label -->
-            <div class="property">
-                <div class="label">Banner:</div>
-            </div>
+        <!-- Banner label -->
+        <div class="property">
+            <div class="label">Banner:</div>
+        </div>
 
 
-            <!-- Banner Image -->
-            <image [image]="banner.image"></image>
+        <!-- Banner Image -->
+        <image [image]="carouselWidget.banners[currentIndex].image"></image>
 
 
 
-            <!-- Link label -->
-            <div class="property">
-                <div class="label">Link:</div>
-            </div>
+        <!-- Link label -->
+        <div class="property">
+            <div class="label">Link:</div>
+        </div>
 
-            
-            <!-- Link -->
-            <link-property [link]="banner.link"></link-property>
-        </ng-container>
+
+        <!-- Link -->
+        <link-property [link]="carouselWidget.banners[currentIndex].link"></link-property>
 
 
     </div>

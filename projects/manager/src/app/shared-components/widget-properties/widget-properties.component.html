@@ -37,12 +37,14 @@
 
 
     <!-- Product Group -->
-    <product-group-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.ProductGroup">
+    <product-group-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.ProductGroup"
+        [productGroupWidget]="widgetService.selectedWidget">
     </product-group-widget-properties>
 
 
     <!-- Categories -->
-    <categories-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Categories">
+    <categories-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Categories"
+        [categoriesWidget]="widgetService.selectedWidget">
     </categories-widget-properties>
 
 

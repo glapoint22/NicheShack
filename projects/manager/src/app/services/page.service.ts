@@ -16,6 +16,11 @@ import { ImageWidgetComponent } from '../shared-components/designer/widgets/imag
 import { ContainerWidgetComponent } from '../shared-components/designer/widgets/container-widget/container-widget.component';
 import { Background } from '../classes/background';
 import { ContainerWidgetData } from '../classes/container-widget-data';
+import { LineWidgetComponent } from '../shared-components/designer/widgets/line-widget/line-widget.component';
+import { VideoWidgetComponent } from '../shared-components/designer/widgets/video-widget/video-widget.component';
+import { ProductGroupWidgetComponent } from '../shared-components/designer/widgets/product-group-widget/product-group-widget.component';
+import { CategoriesWidgetComponent } from '../shared-components/designer/widgets/categories-widget/categories-widget.component';
+import { CarouselWidgetComponent } from '../shared-components/designer/widgets/carousel-widget/carousel-widget.component';
 
 @Injectable({
   providedIn: 'root'
@@ -80,22 +85,22 @@ export class PageService {
     this.page.background.applyStyles(previewWindow.document.body);
   }
 
-  loadPage(page: PageData) {
+  loadPage(pageData: PageData) {
     // Clear the page
     this.rootContainer.viewContainerRef.clear();
     this.rootContainer.rows = [];
     this.page.background = new Background();
 
     // Set the name and width of the page
-    this.page.name = page.name;
-    this.page.width = page.width ? page.width : 1600;
+    this.page.name = pageData.name;
+    this.page.width = pageData.width ? pageData.width : 1600;
 
     // Load the background
-    this.page.background.load(page.background);
+    this.page.background.load(pageData.background);
 
     // Load the widgets
-    this.loadWidgets(this.rootContainer, page.rows);
-    
+    this.loadWidgets(this.rootContainer, pageData.rows);
+
 
     this.breakpointService.onBreakpointChange.next();
   }
@@ -126,6 +131,7 @@ export class PageService {
           let containerWidget = widgetComponent as ContainerWidgetComponent;
           let containerWidgetData = columnData.widgetData as ContainerWidgetData;
 
+          // Load this container's widgets
           this.loadWidgets(containerWidget.container, containerWidgetData.rows);
         }
       })
@@ -157,6 +163,36 @@ export class PageService {
       // Container
       case WidgetType.Container:
         widget = ContainerWidgetComponent;
+        break;
+
+
+      // Line
+      case WidgetType.Line:
+        widget = LineWidgetComponent;
+        break;
+        
+
+      // Video
+      case WidgetType.Video:
+        widget = VideoWidgetComponent;
+        break;
+
+
+      // Product Group
+      case WidgetType.ProductGroup:
+        widget = ProductGroupWidgetComponent;
+        break;
+
+
+      // Categories
+      case WidgetType.Categories:
+        widget = CategoriesWidgetComponent;
+        break;
+
+
+      // Carousel
+      case WidgetType.Carousel:
+        widget = CarouselWidgetComponent;
         break;
     }
 
