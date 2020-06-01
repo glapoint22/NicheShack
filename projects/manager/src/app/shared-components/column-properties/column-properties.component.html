@@ -1,14 +1,19 @@
 <ng-container *ngIf="widgetService.selectedWidget">
-    <!-- Row ID -->
+    <!-- Column ID -->
     <div class="grooved-container">
         <div class="label">Name:</div>
         <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.column.name">
     </div>
 
-    <!-- Background -->
+    <!-- background -->
+    <div id="first-property">
+        <enableable-panel [title]="'Background'" [enableableProperty]="widgetService.selectedWidget.column.background">
+            <background [background]="widgetService.selectedWidget.column.background"></background>
+        </enableable-panel>
+    </div>
 
     <!-- Border -->
-    <border id="first-property" [border]="widgetService.selectedWidget.column.border"></border>
+    <border [border]="widgetService.selectedWidget.column.border"></border>
 
     <!-- Corners -->
     <corners [corners]="widgetService.selectedWidget.column.corners"></corners>

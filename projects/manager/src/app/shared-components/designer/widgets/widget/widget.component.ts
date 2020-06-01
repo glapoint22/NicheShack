@@ -6,6 +6,7 @@ import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.
 import { Breakpoint, BreakpointVerticalAlignment } from 'projects/manager/src/app/classes/breakpoint';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
 
 @Component({
   template: '',
@@ -79,4 +80,12 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
   }
 
   buildHTML(parent: HTMLElement) { }
+
+  load(widgetData: WidgetData) {
+    if (widgetData.name) this.name = widgetData.name;
+    if (widgetData.width) this.width = widgetData.width;
+    if (widgetData.height) this.height = widgetData.height;
+    this.horizontalAlignment.load(widgetData.horizontalAlignment);
+    this.breakpointService.loadBreakpoints(widgetData.breakpoints, this);
+  }
 }

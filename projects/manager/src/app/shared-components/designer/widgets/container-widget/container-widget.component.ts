@@ -6,15 +6,12 @@ import { WidgetService } from 'projects/manager/src/app/services/widget.service'
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { ContainerComponent } from '../../container/container.component';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
-import { PaddingTop } from 'projects/manager/src/app/classes/padding-top';
-import { PaddingRight } from 'projects/manager/src/app/classes/padding-right';
-import { PaddingBottom } from 'projects/manager/src/app/classes/padding-bottom';
-import { PaddingLeft } from 'projects/manager/src/app/classes/padding-left';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Padding } from 'projects/manager/src/app/classes/padding';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
 import { Color } from 'projects/manager/src/app/classes/color';
+import { ContainerWidgetData } from 'projects/manager/src/app/classes/container-widget-data';
 
 @Component({
   selector: 'container-widget',
@@ -27,11 +24,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public paddingTop: PaddingTop = new PaddingTop();
-  public paddingRight: PaddingRight = new PaddingRight();
-  public paddingBottom: PaddingBottom = new PaddingBottom();
-  public paddingLeft: PaddingLeft = new PaddingLeft();
-  public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
+  public padding: Padding = new Padding();
 
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService) { super(widgetService, breakpointService) }
@@ -76,6 +69,16 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
   }
 
 
+  load(widgetData: ContainerWidgetData) {
+    this.background.load(widgetData.background);
+    this.border.load(widgetData.border);
+    this.corners.load(widgetData.corners);
+    this.shadow.load(widgetData.shadow);
+    this.padding.load(widgetData.padding);
+
+    super.load(widgetData);
+  }
+
 
   buildHTML(parent: HTMLElement) {
     // Build the grid
@@ -88,13 +91,16 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
     if (this.width) container.style.maxWidth = this.width + 'px';
     container.style.minHeight = this.height + 'px';
 
-    // Add fill if applied
+    // Add background if enabled
     if (this.background.enable) this.background.applyStyles(container);
 
     // Other styles
     this.border.applyStyle(container);
     this.corners.applyStyle(container);
     this.shadow.applyStyle(container);
+
+    // This will add padding positions to this component (ie. top, right, bottom, left)
+    this.padding.setPaddingComponent(this);
 
     // Set the breakpoint classes
     this.breakpointService.setBreakpointClasses(this, container);

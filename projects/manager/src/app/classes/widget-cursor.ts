@@ -3,7 +3,7 @@ import { Type } from '@angular/core';
 
 export interface WidgetCursor {
     title: string;
-    component: Type<WidgetComponent>;
+    widget: Type<WidgetComponent>;
     icon: string;
     allowed: string;
     notAllowed: string;

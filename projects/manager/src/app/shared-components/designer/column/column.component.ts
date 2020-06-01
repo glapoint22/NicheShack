@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, Type } from '@angular/core';
 import { RowComponent } from '../row/row.component';
 import { WidgetService } from '../../../services/widget.service';
 import { WidgetComponent } from '../widgets/widget/widget.component';
@@ -11,13 +11,10 @@ import { Padding } from '../../../classes/padding';
 import { Corners } from '../../../classes/corners';
 import { Shadow } from '../../../classes/shadow';
 import { Border } from '../../../classes/border';
-import { HorizontalAlignment } from '../../../classes/horizontal-alignment';
 import { Column } from '../../../classes/column';
-import { PaddingTop } from '../../../classes/padding-top';
-import { PaddingRight } from '../../../classes/padding-right';
-import { PaddingBottom } from '../../../classes/padding-bottom';
-import { PaddingLeft } from '../../../classes/padding-left';
 import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-padding-component';
+import { Background } from '../../../classes/background';
+import { ColumnData } from '../../../classes/column-data';
 
 @Component({
   selector: '[column]',
@@ -33,19 +30,12 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   public rowTop: number;
   public columnElement: HTMLElement;
   private resizeButtonMousedown: boolean;
+  public background: Background = new Background();
   public columnSpan: ColumnSpan;
   public border: Border = new Border();
-  public paddingTop: PaddingTop = new PaddingTop();
-  public paddingRight: PaddingRight = new PaddingRight();
-  public paddingBottom: PaddingBottom = new PaddingBottom();
-  public paddingLeft: PaddingLeft = new PaddingLeft();
-
-  public padding: Padding = new Padding(this.paddingTop, this.paddingRight, this.paddingBottom, this.paddingLeft);
-
-  
+  public padding: Padding = new Padding();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public horizontalAlignment: HorizontalAlignment = new HorizontalAlignment();
   public visibility = new Visibility();
   public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();
   public name: string = 'Column';
@@ -62,59 +52,11 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
 
   ngAfterViewInit() {
     // Get the html column element
-    this.columnElement = this.viewContainerRef.element.nativeElement.parentElement;
+    this.columnElement = this.viewContainerRef.element.nativeElement.parentElement.parentElement;
     this.columnSpan = new ColumnSpan(this.columnElement);
   }
 
   ngDoCheck() {
-    // This will add or remove the "column-indicator-container" class to the column.
-    // By adding this class, it will enable the column indicators to be visible
-    if (this.columnElement) {
-      if (this.widgetService.currentWidgetCursor && this.widgetService.currentColumn == this.columnElement && this.row.columns.length < 6) {
-        this.columnElement.classList.add('column-indicator-container');
-      } else {
-        this.columnElement.classList.remove('column-indicator-container');
-      }
-
-      // Update padding for the column
-      this.columnElement.style.paddingTop = this.padding.top.value;
-      this.columnElement.style.paddingRight = this.padding.right.value;
-      this.columnElement.style.paddingBottom = this.padding.bottom.value;
-      this.columnElement.style.paddingLeft = this.padding.left.value;
-
-      // If border is enabled, update the border properties
-      if (this.border.enable) {
-        this.columnElement.style.borderWidth = this.border.width + 'px';
-        this.columnElement.style.borderStyle = this.border.style;
-        this.columnElement.style.borderColor = this.border.color.toHexA();
-      } else {
-        this.columnElement.style.border = 'none';
-      }
-
-
-      // Update the corners
-      this.columnElement.style.borderTopLeftRadius = this.corners.topLeft + 'px';
-      this.columnElement.style.borderTopRightRadius = this.corners.topRight + 'px';
-      this.columnElement.style.borderBottomRightRadius = this.corners.bottomRight + 'px';
-      this.columnElement.style.borderBottomLeftRadius = this.corners.bottomLeft + 'px';
-
-
-      // If shadow is enabled, update the shadow properties
-      if (this.shadow.enable) {
-        this.columnElement.style.boxShadow = this.shadow.x + 'px ' +
-          this.shadow.y + 'px ' +
-          this.shadow.blur + 'px ' +
-          this.shadow.size + 'px ' +
-          this.shadow.color.toHexA();
-      } else {
-        this.columnElement.style.boxShadow = 'none';
-      }
-
-
-      // Update visibility for the column
-      this.columnElement.style.display = this.visibility.value;
-    }
-
     // Used to size the column divider & column indicators
     this.rowHeight = this.row.rowElement.nativeElement.clientHeight;
 
@@ -128,25 +70,43 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
     }
   }
 
-  addWidget() {
-    let componentFactory = this.resolver.resolveComponentFactory(this.widgetService.currentWidgetCursor.component);
-    let componentRef = this.viewContainerRef.createComponent(componentFactory);
+  addWidget(widget: Type<WidgetComponent>) {
+    // Create the new widget
+    this.createWidget(widget);
+    
 
-    // Set this component as the selected component
-    this.widgetService.selectedWidget = this.widget = componentRef.instance;
-
-    // Set the widget's column as this column
-    this.widget.column = this;
+    // Set this widget as the selected widget
+    this.widgetService.selectedWidget = this.widget;
 
 
     // Remove all column span breakpoints
-    this.row.columns.forEach((column: Column)=> {
+    this.row.columns.forEach((column: Column) => {
       this.breakpointService.removeAllBreakpoints(column.component.breakpoints, column.component.columnSpan);
     })
 
     // We need to flag that there is a breakpoint change
     this.breakpointService.onBreakpointChange.next();
   }
+
+
+
+  createWidget(widget: Type<WidgetComponent>): WidgetComponent {
+    let componentFactory = this.resolver.resolveComponentFactory(widget);
+    let widgetComponentRef = this.viewContainerRef.createComponent(componentFactory);
+
+    // Assign this widget as the new created widget
+    this.widget = widgetComponentRef.instance;
+
+    // Set the widget's column as this column
+    this.widget.column = this;
+
+    // Detect changes
+    widgetComponentRef.hostView.detectChanges();
+
+    return widgetComponentRef.instance;
+  }
+
+
 
   onDropIndicatorEnter() {
     // Show the allowed cursor when entering the drop indicator
@@ -166,7 +126,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   onDropIndicatorMouseup(element: HTMLElement) {
     // Add a new column to the row with a new widget
     if (this.widgetService.currentWidgetCursor) {
-      this.row.addColumn(element);
+      this.row.addColumn(this.widgetService.currentWidgetCursor.widget, element);
     }
   }
 
@@ -299,13 +259,29 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
     window.addEventListener("mouseup", onMouseup);
   }
 
+
+  load(columnData: ColumnData) {
+    this.name = columnData.name;
+    this.background.load(columnData.background);
+    this.border.load(columnData.border);
+    this.corners.load(columnData.corners);
+    this.shadow.load(columnData.shadow);
+    this.padding.load(columnData.padding);
+    this.breakpointService.loadBreakpoints(columnData.breakpoints, this);
+    this.columnSpan.value = columnData.columnSpan;
+  }
+
+
   buildHTML(parent: HTMLElement) {
     let col = document.createElement('div');
 
     // If there are not any breakpoints set, set the class with the current col class
-    if (!this.breakpoints.find(x => x.type == this.columnSpan)) {
+    if (!this.breakpoints.find(x => x.breakpointObject == this.columnSpan)) {
       col.className = this.columnElement.className;
     }
+
+    // This will add padding positions to this component (ie. top, right, bottom, left)
+    this.padding.setPaddingComponent(this);
 
     // Set the classes
     this.breakpointService.setBreakpointClasses(this, col);

@@ -178,9 +178,9 @@ export class ColorPickerPopupComponent extends PopupComponent implements OnInit 
     // Update the hex variable from the hex input
     this.hex = hexInput.value;
     // Move the ring
-    this.setRingPosition(Color.HexToRGB("#" + this.hex).toHSB());
+    this.setRingPosition(Color.hexToRGB("#" + this.hex).toHSB());
     // Move the hue slider 
-    this.setHueSliderPosition(Color.HexToRGB("#" + this.hex).toHSL());
+    this.setHueSliderPosition(Color.hexToRGB("#" + this.hex).toHSL());
     // Set the rgb
     this.setRGB("hex");
   }

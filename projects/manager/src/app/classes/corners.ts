@@ -1,9 +1,11 @@
+import { CornersData } from './corners-data';
+
 export class Corners {
-    constrain: boolean = true;
-    topLeft: number = 0;
-    topRight: number = 0;
-    bottomLeft: number = 0;
-    bottomRight: number = 0;
+    public constrain: boolean = true;
+    public topLeft: number = 0;
+    public topRight: number = 0;
+    public bottomLeft: number = 0;
+    public bottomRight: number = 0;
 
     applyStyle(element: HTMLElement) {
         if (this.topLeft > 0) {
@@ -43,5 +45,15 @@ export class Corners {
         }
 
         return style;
+    }
+
+    load(cornersData: CornersData) {
+        if (cornersData) {
+            this.constrain = cornersData.constrain;
+            if (cornersData.topLeft) this.topLeft = cornersData.topLeft;
+            if (cornersData.topRight) this.topRight = cornersData.topRight;
+            if (cornersData.bottomLeft) this.bottomLeft = cornersData.bottomLeft;
+            if (cornersData.bottomRight) this.bottomRight = cornersData.bottomRight;
+        }
     }
 }

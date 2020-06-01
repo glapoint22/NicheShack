@@ -1,8 +1,8 @@
 import { BreakpointVerticalAlignment } from './breakpoint';
-import { BreakpointType } from './breakpoint-type';
+import { BreakpointObject } from './breakpoint-object';
 import { Alignment } from './alignment';
 
-export class VerticalAlignment extends Alignment implements BreakpointType{
+export class VerticalAlignment extends Alignment implements BreakpointObject {
     public value: BreakpointVerticalAlignment = BreakpointVerticalAlignment.Top;
     public defaultValue: BreakpointVerticalAlignment = BreakpointVerticalAlignment.Top;
     public breakpointSet: boolean;
@@ -20,6 +20,12 @@ export class VerticalAlignment extends Alignment implements BreakpointType{
             case BreakpointVerticalAlignment.Bottom:
                 this.applyClass(element, screenSize, 'vertical-align-bottom');
                 break;
+        }
+    }
+
+    load(value: string) {
+        if (value) {
+            this.value = value as BreakpointVerticalAlignment;
         }
     }
 }

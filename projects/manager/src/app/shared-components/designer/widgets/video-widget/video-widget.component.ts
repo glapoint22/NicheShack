@@ -8,6 +8,7 @@ import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Video } from 'projects/manager/src/app/classes/video';
+import { VideoWidgetData } from 'projects/manager/src/app/classes/video-widget-data';
 
 @Component({
   selector: 'video-widget',
@@ -40,6 +41,15 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
     // this.video.url = 'https://www.youtube.com/embed/1AI6RS1st2E';
     // this.video.url = '//player.vimeo.com/video/173192945?muted=false';
     
+  }
+
+
+  load(widgetData: VideoWidgetData) {
+    this.border.load(widgetData.border);
+    this.corners.load(widgetData.corners);
+    this.shadow.load(widgetData.shadow);
+    this.video.load(widgetData.video);
+    super.load(widgetData);
   }
 
 

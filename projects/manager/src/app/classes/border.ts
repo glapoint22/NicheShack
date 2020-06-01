@@ -1,10 +1,11 @@
+import { BorderData } from './border-data';
 import { Color } from './color';
 import { Enableable } from './enableable';
 
 export class Border implements Enableable {
-    enable: boolean;
-    width: number = 1;
-    style: string = 'solid';
+    public enable: boolean;
+    public width: number = 1;
+    public style: string = 'solid';
 
     constructor(public color: Color = new Color(190, 190, 190, 1)) { }
 
@@ -21,7 +22,13 @@ export class Border implements Enableable {
         return '\n\tborder: ' + this.width + 'px ' + this.style + ' ' + this.color.toRGBString() + ';';
     }
 
-    getColorStyle() {
-        return '\n\tborder-color: ' + this.color.toRGBString() + ';';
+
+    load(borderData: BorderData) {
+        if (borderData) {
+            this.enable = borderData.enable;
+            if (borderData.width) this.width = borderData.width;
+            if (borderData.style) this.style = borderData.style;
+            if (borderData.color) this.color = Color.hexToRGB(borderData.color);
+        }
     }
 }

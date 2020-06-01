@@ -1,5 +1,6 @@
 import Player from '@vimeo/player';
 import YouTubePlayer from 'youtube-player';
+import { VideoData } from './video-data';
 
 export class Video {
     // Url
@@ -54,6 +55,15 @@ export class Video {
                 this.player.pause();
                 this.playing = false;
             }
+        }
+    }
+
+
+
+    load(videoData: VideoData) {
+        if(videoData) {
+            this.url = videoData.url;
+            this.thumbnail = videoData.thumbnail;
         }
     }
 }

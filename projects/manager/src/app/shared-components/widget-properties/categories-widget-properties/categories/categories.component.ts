@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { CategoriesWidgetComponent } from '../../../designer/widgets/categories-widget/categories-widget.component';
 
 @Component({
   selector: 'categories',
@@ -6,7 +7,15 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent {
-  @Input() categories: Array<string>;
+  @Input() categoriesWidget: CategoriesWidgetComponent;
+  public categories: Array<string>;
+
+  ngOnChanges() {
+    if (this.categoriesWidget.categories) {
+      this.categories = this.categoriesWidget.categories.map(x => x.name);
+    }
+
+  }
 
 
   // -----------------------------( ADD CATEGORY )------------------------------ \\

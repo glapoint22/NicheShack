@@ -5,11 +5,15 @@
         <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.column.row.name">
     </div>
 
-    <!-- Background -->
-    <!-- <fill [fill]="widgetService.selectedWidget.column.row.fill"></fill> -->
+    <!-- background -->
+    <div id="first-property">
+        <enableable-panel [title]="'Background'" [enableableProperty]="widgetService.selectedWidget.column.row.background">
+            <background [background]="widgetService.selectedWidget.column.row.background"></background>
+        </enableable-panel>
+    </div>
 
     <!-- Border -->
-    <border id="first-property" [border]="widgetService.selectedWidget.column.row.border"></border>
+    <border [border]="widgetService.selectedWidget.column.row.border"></border>
 
     <!-- Corners -->
     <corners [corners]="widgetService.selectedWidget.column.row.corners"></corners>

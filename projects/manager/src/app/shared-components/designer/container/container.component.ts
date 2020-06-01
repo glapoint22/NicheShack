@@ -1,7 +1,8 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, ElementRef, Output, EventEmitter, Type } from '@angular/core';
 import { RowComponent } from '../row/row.component';
 import { WidgetService } from '../../../services/widget.service';
 import { Row } from '../../../classes/row';
+import { WidgetComponent } from '../widgets/widget/widget.component';
 
 @Component({
   selector: 'container',
@@ -15,7 +16,7 @@ export class ContainerComponent {
   public rows: Array<Row> = new Array<Row>();
   public selectedRowIndex: number;
   public width: number;
-  
+
   // SelectedRow property
   private _selectedRow: RowComponent;
   public set selectedRow(row: RowComponent) {
@@ -34,47 +35,59 @@ export class ContainerComponent {
 
 
   onMouseup(event) {
-    if (this.widgetService.currentWidgetCursor) this.addRow(event.y - event.currentTarget.getBoundingClientRect().y);
+    if (this.widgetService.currentWidgetCursor) this.addRow(event.y - event.currentTarget.getBoundingClientRect().y, this.widgetService.currentWidgetCursor.widget);
   }
 
 
 
-  addRow(position: number) {
+  addRow(top: number, widget: Type<WidgetComponent>) {
     // Get the new row index based on the position
-    let newRowIndex = this.rows.findIndex(x => this.getBoundingClientTop(x) > position);
-    if (newRowIndex == -1) newRowIndex = this.rows.length;
+    let rowIndex = this.rows.findIndex(x => this.getBoundingClientTop(x) > top);
+    if (rowIndex == -1) rowIndex = this.rows.length;
 
     // Create the new row
-    let rowComponentFactory: ComponentFactory<RowComponent> = this.resolver.resolveComponentFactory(RowComponent);
-    let rowComponentRef: ComponentRef<RowComponent> = this.viewContainerRef.createComponent(rowComponentFactory, newRowIndex);
+    let rowComponent = this.createRow(rowIndex, top);
 
-    // Add this new row to the rows array
-    this.rows.splice(newRowIndex, 0, new Row(rowComponentRef.instance, rowComponentRef.location.nativeElement.firstElementChild));
-
-    // Set the position of the row
-    if (newRowIndex == 0) {
-      rowComponentRef.instance.top = position;
-    } else {
-      rowComponentRef.instance.top = position - this.getBoundingClientTop(this.rows[newRowIndex - 1]) - this.rows[newRowIndex - 1].element.clientHeight;
-    }
-
-
-    // Set that the row's container is this container
-    rowComponentRef.instance.container = this;
+    // Set the selected row as this row
+    this.selectedRow = rowComponent;
 
 
     // Add the column
-    rowComponentRef.hostView.detectChanges();
-    rowComponentRef.instance.addColumn();
+    rowComponent.addColumn(widget);
 
 
-    // Set the selected row as this row
-    this.selectedRow = rowComponentRef.instance;
 
+    // This will adjust the top to prevent rows below from moving
     if (this.selectedRowIndex != this.rows.length - 1) {
       let rowBottom = this.rows[this.selectedRowIndex].component.top + this.rows[this.selectedRowIndex].element.clientHeight;
       this.rows[this.selectedRowIndex + 1].component.top -= rowBottom;
     }
+  }
+
+
+
+  createRow(index: number, top: number): RowComponent {
+    // Create the new row
+    let rowComponentFactory: ComponentFactory<RowComponent> = this.resolver.resolveComponentFactory(RowComponent);
+    let rowComponentRef: ComponentRef<RowComponent> = this.viewContainerRef.createComponent(rowComponentFactory, index);
+
+    // Add this new row to the rows array
+    this.rows.splice(index, 0, new Row(rowComponentRef.instance, rowComponentRef.location.nativeElement.firstElementChild));
+
+    // Set the position of the row
+    if (index == 0) {
+      rowComponentRef.instance.top = top;
+    } else {
+      rowComponentRef.instance.top = top - this.getBoundingClientTop(this.rows[index - 1]) - this.rows[index - 1].element.clientHeight;
+    }
+
+    // Detect changes
+    rowComponentRef.hostView.detectChanges();
+
+    // Set the row's container as this container
+    rowComponentRef.instance.container = this;
+
+    return rowComponentRef.instance;
   }
 
 

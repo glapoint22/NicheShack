@@ -228,7 +228,7 @@ export class ColumnsComponent implements OnInit {
   // ----------------------------------------------------------Add Breakpoint ----------------------------------------------------------------------
   addBreakpoint() {
     this.column.row.columns.forEach((column: Column) => {
-      this.breakpointService.addBreakpoint(column.component.breakpoints, column.component.columnSpan, column.component.columnSpan.value);
+      this.breakpointService.addBreakpoint(column.component.breakpoints, column.component.columnSpan, column.component.columnSpan.value, this.breakpointService.currentBreakpointScreenSize);
       column.component.columnSpan.breakpointSet = true;
     });
   }

@@ -1,6 +1,6 @@
-import { BreakpointType } from './breakpoint-type';
+import { BreakpointObject } from './breakpoint-object';
 
-export class ColumnSpan implements BreakpointType {
+export class ColumnSpan implements BreakpointObject {
     private _value: number;
     public get value(): number {
         return this._value;

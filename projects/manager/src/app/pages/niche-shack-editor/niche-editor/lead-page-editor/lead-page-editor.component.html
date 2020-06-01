@@ -3,7 +3,7 @@
     <!-- Container for paginator & icons -->
     <div class="container">
 
-        <paginator [itemCount]="leadPages.length" (onItemChange)="onPageChange($event)"></paginator>
+        <paginator [itemCount]="leadPageIds.length" (onItemChange)="onPageChange($event)"></paginator>
 
         <!-- Icons -->
         <div class="icons">
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <ng-container *ngIf="leadPages.length > 0">
+    <ng-container *ngIf="leadPageIds.length > 0">
         <!-- Preview & Publish buttons -->
         <div class="grooved-container">
             <div class="button-left" (click)="pageService.preview()">Preview</div>

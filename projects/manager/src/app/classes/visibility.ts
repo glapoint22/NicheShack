@@ -1,7 +1,7 @@
-import { BreakpointType } from './breakpoint-type';
+import { BreakpointObject } from './breakpoint-object';
 import { BreakpointVisibility } from './breakpoint';
 
-export class Visibility implements BreakpointType {
+export class Visibility implements BreakpointObject {
     public value: string = BreakpointVisibility.Visible;
     public defaultValue: string = BreakpointVisibility.Visible;
     public breakpointSet: boolean;

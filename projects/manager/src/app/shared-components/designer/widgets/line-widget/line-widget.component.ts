@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FillColor } from 'projects/manager/src/app/classes/fill-color';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
@@ -7,6 +6,7 @@ import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.comp
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { LineWidgetData } from 'projects/manager/src/app/classes/line-widget-data';
 
 @Component({
   selector: 'line-widget',
@@ -14,7 +14,6 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
   styleUrls: ['./line-widget.component.scss']
 })
 export class LineWidgetComponent extends FreeformWidgetComponent implements BreakpointsComponent {
-  // public fill: FillColor = new FillColor();
   public border: Border = new Border();
   public shadow: Shadow = new Shadow();
 
@@ -25,6 +24,12 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
     this.name = 'Line';
     this.type = WidgetType.Line;
     super.ngOnInit();
+  }
+
+  load(widgetData: LineWidgetData) {
+    this.border.load(widgetData.border);
+    this.shadow.load(widgetData.shadow);
+    super.load(widgetData);
   }
 
 

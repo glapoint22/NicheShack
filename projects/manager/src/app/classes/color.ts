@@ -65,46 +65,53 @@ export class Color {
     }
 
 
-    static HexToRGB(h): Color {
-        let r: any = 0, g: any = 0, b: any = 0;
+    static hexToRGB(hex: string): Color {
+        let r: any = 0, g: any = 0, b: any = 0, a: any;
 
         // 1 digit
-        if (h.length == 2) {
-            r = "0x" + h[1] + 0;
+        if (hex.length == 2) {
+            r = "0x" + hex[1] + 0;
             g = "0x" + 0 + 0;
             b = "0x" + 0 + 0;
 
             // 2 digits
-        } else if (h.length == 3) {
-            r = "0x" + h[1] + h[1];
+        } else if (hex.length == 3) {
+            r = "0x" + hex[1] + hex[1];
             g = "0x" + 0 + 0;
             b = "0x" + 0 + 0;
 
             // 3 digits
-        } else if (h.length == 4) {
-            r = "0x" + h[1] + h[1];
-            g = "0x" + h[2] + h[2];
-            b = "0x" + h[3] + h[3];
+        } else if (hex.length == 4) {
+            r = "0x" + hex[1] + hex[1];
+            g = "0x" + hex[2] + hex[2];
+            b = "0x" + hex[3] + hex[3];
 
             // 4 digits
-        } else if (h.length == 5) {
-            r = "0x" + h[1] + h[2];
-            g = "0x" + h[3] + h[4];
+        } else if (hex.length == 5) {
+            r = "0x" + hex[1] + hex[2];
+            g = "0x" + hex[3] + hex[4];
             b = "0x" + 0 + 0;
 
             // 5 digits
-        } else if (h.length == 6) {
-            r = "0x" + h[1] + h[2];
-            g = "0x" + h[3] + h[4];
-            b = "0x" + h[5] + 0;
+        } else if (hex.length == 6) {
+            r = "0x" + hex[1] + hex[2];
+            g = "0x" + hex[3] + hex[4];
+            b = "0x" + hex[5] + 0;
 
             // 6 digits
-        } else if (h.length == 7) {
-            r = "0x" + h[1] + h[2];
-            g = "0x" + h[3] + h[4];
-            b = "0x" + h[5] + h[6];
+        } else if (hex.length == 7) {
+            r = "0x" + hex[1] + hex[2];
+            g = "0x" + hex[3] + hex[4];
+            b = "0x" + hex[5] + hex[6];
+
+            // 8 digits
+        } else if (hex.length == 9) {
+            r = "0x" + hex[1] + hex[2];
+            g = "0x" + hex[3] + hex[4];
+            b = "0x" + hex[5] + hex[6];
+            a = "0x" + hex[7] + hex[8];
         }
-        return new Color(+r, +g, +b, 1);
+        return new Color(+r, +g, +b, a ? Math.round(((+a / 255) + Number.EPSILON) * 100) / 100 : 1);
     }
 
 
@@ -139,7 +146,7 @@ export class Color {
 
 
 
-    
+
 
 
 
@@ -184,7 +191,7 @@ export class Color {
 
 
 
-    
+
 
     toHexA(): string {
         let r: string = this.r.toString(16);

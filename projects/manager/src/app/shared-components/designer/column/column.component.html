@@ -1,29 +1,48 @@
-<!-- Column area (Used for mouse events for the column) -->
-<div class="column-area" [style.height.px]="rowHeight" [style.top.px]="rowTop"></div>
+<div [ngClass]="{'column-indicator-container' : widgetService.currentWidgetCursor && 
+widgetService.currentColumn == columnElement && 
+row.columns.length < 6}" [style.paddingTop]="padding.top.value" [style.paddingRight]="padding.right.value"
+    [style.paddingBottom]="padding.bottom.value" [style.paddingLeft]="padding.left.value"
+    [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHexA() : 'none'"
+    [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
+    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHexA() : 'none'"
+    [style.display]="visibility.value"
+    [style.backgroundColor]="background.enable ? background.color.toRGBString(): null"
+    [ngStyle]="{ 'background-image': background.image && background.enable && background.image.url ? 'url(images/' + background.image.url + ')' : null,
+                        'background-position': background.image && background.enable ? background.image.position : null,
+                        'background-repeat': background.image && background.enable ? background.image.repeat : null,
+                        'background-attachment': background.image && background.enable ? background.image.attachment : null}">
 
 
-<ng-template #viewContainerRef>
-    <!-- Widgets go here -->
-</ng-template>
+
+    <!-- Column area (Used for mouse events for the column) -->
+    <div class="column-area" [style.height.px]="rowHeight" [style.top.px]="rowTop"></div>
+
+
+    <ng-template #viewContainerRef>
+        <!-- Widgets go here -->
+    </ng-template>
 
 
 
-<!-- Column divider -->
-<div class="column-divider" [style.height.px]="rowHeight" [style.top.px]="rowTop">
+    <!-- Column divider -->
+    <div class="column-divider" [style.height.px]="rowHeight" [style.top.px]="rowTop">
 
-    <!-- Resize column button -->
-    <div (mousedown)="onResizeButtonMousedown()" (mouseover)="onResizeButtonMouseover()"
-        (mouseleave)="onResizeButtonMouseleave()" class="resize-button">
-        <i class="fas fa-arrows-alt-h"></i>
+        <!-- Resize column button -->
+        <div (mousedown)="onResizeButtonMousedown()" (mouseover)="onResizeButtonMouseover()"
+            (mouseleave)="onResizeButtonMouseleave()" class="resize-button">
+            <i class="fas fa-arrows-alt-h"></i>
+        </div>
     </div>
+
+
+
+    <!-- Column indicators -->
+    <div #leftIndicator class="column-indicator" (mouseenter)="onDropIndicatorEnter()"
+        (mouseleave)="onDropIndicatorLeave()"
+        (mouseup)="onDropIndicatorMouseup(leftIndicator.parentElement.parentElement.previousElementSibling)"
+        [style.height.px]="rowHeight" [style.top.px]="rowTop"></div>
+    <div #rightIndicator class="column-indicator" (mouseenter)="onDropIndicatorEnter()"
+        (mouseleave)="onDropIndicatorLeave()"
+        (mouseup)="onDropIndicatorMouseup(rightIndicator.parentElement.parentElement)" [style.height.px]="rowHeight"
+        [style.top.px]="rowTop"></div>
 </div>
-
-
-
-<!-- Column indicators -->
-<div #leftIndicator class="column-indicator" (mouseenter)="onDropIndicatorEnter()" (mouseleave)="onDropIndicatorLeave()"
-    (mouseup)="onDropIndicatorMouseup(leftIndicator.parentElement.previousElementSibling)"
-    [style.height.px]="rowHeight" [style.top.px]="rowTop"></div>
-<div #rightIndicator class="column-indicator" (mouseenter)="onDropIndicatorEnter()"
-    (mouseleave)="onDropIndicatorLeave()" (mouseup)="onDropIndicatorMouseup(rightIndicator.parentElement)"
-    [style.height.px]="rowHeight" [style.top.px]="rowTop"></div>

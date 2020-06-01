@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CarouselWidgetComponent } from '../../designer/widgets/carousel-widget/carousel-widget.component';
 
 @Component({
@@ -6,12 +6,7 @@ import { CarouselWidgetComponent } from '../../designer/widgets/carousel-widget/
   templateUrl: './carousel-widget-properties.component.html',
   styleUrls: ['./carousel-widget-properties.component.scss']
 })
-export class CarouselWidgetPropertiesComponent implements OnInit {
+export class CarouselWidgetPropertiesComponent {
   @Input() carouselWidget: CarouselWidgetComponent;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  public currentIndex: number = 0;
 }

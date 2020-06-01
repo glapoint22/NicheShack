@@ -1,11 +1,13 @@
+import { BackgroundData } from './background-data';
 import { Color } from './color';
-import { BackgroundImage } from './background-image';
 import { Enableable } from './enableable';
+import { BackgroundImage } from './background-image';
 
 export class Background implements Enableable {
-    public color: Color;
-    public image: BackgroundImage;
+    public color: Color = new Color(0, 0, 0, 0);
+    public image: BackgroundImage = new BackgroundImage();
     public enable: boolean;
+
 
     applyStyles(element: HTMLElement) {
         // Background Color
@@ -38,5 +40,18 @@ export class Background implements Enableable {
             (this.image && this.image.position ? '\n\tbackground-position: ' + this.image.position + ';' : '') +
             (this.image && this.image.repeat ? '\n\tbackground-repeat: ' + this.image.repeat + ';' : '') +
             (this.image && this.image.attachment ? '\n\tbackground-attachment: ' + this.image.attachment + ';' : '');
+    }
+
+    load(backgroundData: BackgroundData) {
+        if (backgroundData) {
+            // Enable
+            this.enable = backgroundData.enable;
+
+            // Background color
+            if (backgroundData.color) this.color = Color.hexToRGB(backgroundData.color);
+
+            // Background image
+            if (backgroundData.image) this.image.load(backgroundData.image);
+        }
     }
 }
