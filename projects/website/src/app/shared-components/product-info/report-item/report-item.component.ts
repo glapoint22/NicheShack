@@ -45,8 +45,8 @@ export class ReportItemComponent implements OnInit {
             value: 'not-match-image'
           },
           {
-            name: 'Incorrect/Misleading information',
-            value: 'incorrect-info'
+            name: 'Other',
+            value: 'other'
           }
         ]
       },
@@ -163,8 +163,12 @@ export class ReportItemComponent implements OnInit {
             value: 'inactive'
           },
           {
-            name: 'Product site is no longer in service or has been disabled' ,
+            name: 'Product site is no longer in service' ,
             value: 'site-down'
+          },
+          {
+            name: 'Other',
+            value: 'other'
           }
         ]
       }
