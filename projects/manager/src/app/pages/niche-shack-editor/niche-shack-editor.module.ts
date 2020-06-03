@@ -24,6 +24,7 @@ import { ContextMenuModule } from '../../shared-components/context-menu/context-
 import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/dropdown-menu/dropdown-menu.module';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
+import { PromptModule } from '../../shared-components/prompt/prompt.module';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { DesignerModule } from '../../shared-components/designer/designer.module
     ContextMenuModule,
     DropdownMenuModule,
     CustomInputModule,
-    DesignerModule
+    DesignerModule,
+    PromptModule
   ]
 })
 export class NicheShackEditorModule { }

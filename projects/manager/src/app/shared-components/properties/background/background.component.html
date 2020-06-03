@@ -9,8 +9,6 @@
 
 
 
-
-
 <!-- Image label -->
 <div class="property">
     <div class="label">Image:</div>
@@ -22,41 +20,43 @@
 
 
 <!-- Image Options -->
-<div class="image-options-container" *ngIf="background.image">
-    <!-- Position -->
-    <div class="property">
-        <div class="label">Position</div>
-        <div style="flex: 1;">
-            <dropdown [height]="20" [keyValue]="positionOptions" [selectedIndex]="selectedPositionIndex"
-                (onChange)="background.image.position = $event">
-            </dropdown>
+<ng-container *ngIf="background.image.url">
+    <div class="image-options-container">
+        <!-- Position -->
+        <div class="property">
+            <div class="label">Position</div>
+            <div style="flex: 1;">
+                <dropdown [height]="20" [keyValue]="positionOptions" [selectedIndex]="selectedPositionIndex"
+                    (onChange)="background.image.position = $event">
+                </dropdown>
+            </div>
+        </div>
+
+
+
+
+        <!-- Repeat -->
+        <div class="property">
+            <div class="label">Repeat</div>
+            <div style="flex: 1;">
+                <dropdown [height]="20" [keyValue]="repeatOptions" [selectedIndex]="selectedRepeatIndex"
+                    (onChange)="background.image.repeat = $event">
+                </dropdown>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Attachment -->
+        <div class="property">
+            <div class="label">Attachment</div>
+            <div style="flex: 1;">
+                <dropdown [height]="20" [keyValue]="attachmentOptions" [selectedIndex]="selectedAttachmentIndex"
+                    (onChange)="background.image.attachment = $event">
+                </dropdown>
+            </div>
         </div>
     </div>
-
-
-
-
-    <!-- Repeat -->
-    <div class="property">
-        <div class="label">Repeat</div>
-        <div style="flex: 1;">
-            <dropdown [height]="20" [keyValue]="repeatOptions" [selectedIndex]="selectedRepeatIndex"
-                (onChange)="background.image.repeat = $event">
-            </dropdown>
-        </div>
-    </div>
-
-
-
-
-
-    <!-- Attachment -->
-    <div class="property">
-        <div class="label">Attachment</div>
-        <div style="flex: 1;">
-            <dropdown [height]="20" [keyValue]="attachmentOptions" [selectedIndex]="selectedAttachmentIndex"
-                (onChange)="background.image.attachment = $event">
-            </dropdown>
-        </div>
-    </div>
-</div>
+</ng-container>

@@ -85,12 +85,16 @@
         position: relative;
         overflow: auto;
         padding: 5px;
-        border-left: 1px dashed rgb(77, 77, 77);
-        border-right: 1px dashed rgb(77, 77, 77);
+        
         &::-webkit-scrollbar {
             width: 0;
         }
     }
+}
+
+.content-border {
+    border-left: 1px dashed rgb(77, 77, 77);
+    border-right: 1px dashed rgb(77, 77, 77);
 }
 
 .text-icon {

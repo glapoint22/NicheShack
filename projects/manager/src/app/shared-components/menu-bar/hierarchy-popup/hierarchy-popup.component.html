@@ -5,22 +5,6 @@
     <!-- Arrow -->
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
 
-
-
-
-
-
-
-
-
-
-
-
-    <!-- <div class="hierarchy-container">
-        <div class="base"> -->
-
-
-
     <!-- Search bar & filter menu -->
     <div class="position-relative">
         <!-- Search bar -->
@@ -91,7 +75,7 @@
 
         <!-- Delete -->
         <div class="icon-container" [title]="selectedItem ? 'Delete ' + selectedItem.type : 'Delete'"
-            [ngClass]="{'icon-disabled': !selectedItem}" (click)="selectedItem ? prompt.show = true: null">
+            [ngClass]="{'icon-disabled': !selectedItem}" (click)="onDeleteClick()">
             <i class="fas fa-trash-alt"></i>
         </div>
     </div>
@@ -107,36 +91,4 @@
 
         <hierarchy-content [items]="items" [hierarchy]="this"></hierarchy-content>
     </div>
-
-    <prompt #prompt [promptTitle]="'Delete ' + (selectedItem ? selectedItem.type : '')"
-        [message]="'Are you sure you want to delete ' + (selectedItem ? selectedItem.name : '') + '?'"
-        (onYes)="deleteItem()"></prompt>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
