@@ -5,8 +5,7 @@
 
 .overflow-container {
     overflow: auto;
-    border: 1px solid #373737;
-    height: 255px;
+    height: 100%;
 }
 
 .img {
@@ -119,12 +118,6 @@ table {
         
     }
 
-    td:first-child {
-        width: 42px;
-        
-
-       
-    }
 
 
     .highlight-image {

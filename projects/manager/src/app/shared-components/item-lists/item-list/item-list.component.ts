@@ -32,7 +32,9 @@ export class ItemListComponent implements OnChanges {
   @Output() onAddItem: EventEmitter<void> = new EventEmitter();
   @Output() onEditItem: EventEmitter<void> = new EventEmitter();
 
-  
+  @Input() multiSelect: boolean = true;
+
+
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
     if (this.list) {
@@ -85,8 +87,11 @@ export class ItemListComponent implements OnChanges {
     if (event.keyCode === 27) this.escape();
     if (event.keyCode === 38) this.arrowUp();
     if (event.keyCode === 40) this.arrowDown();
-    if (event.ctrlKey) this.ctrlDown = true;
-    if (event.shiftKey) this.shiftDown = true;
+
+    if (this.multiSelect) {
+      if (event.ctrlKey) this.ctrlDown = true;
+      if (event.shiftKey) this.shiftDown = true;
+    }
   }
 
 
@@ -492,8 +497,9 @@ export class ItemListComponent implements OnChanges {
 
   // -----------------------------( SET CONTEXT MENU )------------------------------ \\
   setContextMenu(e: MouseEvent) {
+
     // As long as the right mouse button is being pressed
-    if (e.which == 3) {
+    if (e.which == 3 && this.menuOptions != null) {
       // Build the context menu
       this.buildContextMenu(e)
     }

@@ -1,0 +1,62 @@
+<!-- Popup Base -->
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)" *show="true">
+    <!-- Arrow -->
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
+
+
+    <!-- Header -->
+    <div class="product-report-header">
+        <div class="product-container">
+            <div class="img" [ngStyle]="{ 'background-image': 'url(images/b4fa43f207d7420cbb2c72d0fe9c64ba.jpg)'}"></div>
+            <div class="product-name">How to seduce out of your league</div>
+        </div>
+        <div #ellipsis class="icon-container" (mousedown)="showContextMenu()">
+            <i class="fas fa-ellipsis-v"></i>
+        </div>
+    </div>
+
+
+    <!-- Product Report Title -->
+    <div class="header-line"></div>
+    <div class="product-report-title">Videos & Images (Other)</div>
+    <div class="header-line"></div>
+
+
+    <!-- Property Box -->
+    <div class="property-box-label">User Comment:</div>
+    <div class="property-box">
+        <div class="property-box-icon-bar">
+            <paginator [itemCount]="3"></paginator>
+            <div class="icons">
+                <div style="width: 20px; height: 20px;" class="img" [ngStyle]="{'background-image': 'url(images/no-account-pic.png)'}"></div>
+                <div class="time-stamp">5/21/2020  3:29 PM</div>
+            </div>
+        </div>
+        <div class="description-text">
+            This is a comment that was written by the user that is displayed above.
+        </div>
+    </div>
+
+
+    <!-- Property Box -->
+    <div class="property-box-label">Notes:</div>
+    <div class="property-box">
+        <div class="property-box-icon-bar">
+            <paginator [itemCount]="3"></paginator>
+            <div class="icons">
+                <div style="width: 20px; height: 20px;" class="img" [ngStyle]="{'background-image': 'url(images/no-account-pic.png)'}"></div>
+                <div class="time-stamp">5/22/2020  5:22 PM</div>
+            </div>
+        </div>
+        <div class="description-text">
+            I contacted the vendor via email and I’m waiting for a reply back from them.
+        </div>
+    </div>
+
+
+    <!-- Buttons -->
+    <div class="button-container">
+        <button>Dismiss</button>
+        <button>Publish</button>
+    </div>
+</div>
