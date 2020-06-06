@@ -103,6 +103,9 @@ export class PageService {
     // Clear the page
     this.clearPage();
 
+    // Assign the page id
+    this.page.id = pageData.id;
+
     // Set the name and width of the page
     this.page.name = pageData.name;
     this.page.width = pageData.width ? pageData.width : this.defaultWidth;
@@ -115,6 +118,31 @@ export class PageService {
 
 
     this.breakpointService.onBreakpointChange.next();
+  }
+
+
+  savePage() {
+    let pageData: PageData = new PageData();
+
+    // Assign the page id
+    pageData.id = this.page.id;
+
+    // Set the name and width of the page
+    pageData.name = this.page.name;
+    pageData.width = this.page.width;
+
+    // Save the background
+    this.page.background.save(pageData.background);
+
+    this.rootContainer.save(pageData.rows);
+
+    let stringifiedPageData = JSON.stringify(pageData, (k, v) => {
+      if(typeof v == 'object' && Object.values(v).length == 0) {
+        return undefined;
+      } else {
+        return v;
+      }
+    });
   }
 
 

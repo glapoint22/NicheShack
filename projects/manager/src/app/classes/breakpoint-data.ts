@@ -1,7 +1,5 @@
 import { BreakpointType } from './breakpoint';
 
-export interface BreakpointData {
-    breakpointType: BreakpointType;
-    screenSize: string;
-    value: any;
+export class BreakpointData {
+    constructor(public breakpointType: BreakpointType, public screenSize: string, public value: any) { }
 }

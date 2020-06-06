@@ -3,6 +3,7 @@ import { RowComponent } from '../row/row.component';
 import { WidgetService } from '../../../services/widget.service';
 import { Row } from '../../../classes/row';
 import { WidgetComponent } from '../widgets/widget/widget.component';
+import { RowData } from '../../../classes/row-data';
 
 @Component({
   selector: 'container',
@@ -160,5 +161,15 @@ export class ContainerComponent {
     // Append to the parent and add the rows
     parent.appendChild(div);
     this.rows.forEach((row: Row) => row.component.buildHTML(div));
+  }
+
+  save(rows: Array<RowData>) {
+    if (this.rows.length > 0) {
+      this.rows.forEach((row: Row) => {
+        rows.push(new RowData());
+        let rowData: RowData = rows[rows.length - 1];
+        row.component.save(rowData);
+      });
+    }
   }
 }

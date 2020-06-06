@@ -5,6 +5,7 @@ import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Category } from 'projects/manager/src/app/classes/category';
 import { CategoriesWidgetData } from 'projects/manager/src/app/classes/categories-widget-data';
+import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'categories-widget',
@@ -16,7 +17,7 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
     breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
     public caption: string;
-    public categories: Array<Category>;
+    public categories: Array<Category> = [];
 
 
     ngOnInit() {
@@ -30,5 +31,21 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
       this.caption = widgetData.caption;
       this.categories = widgetData.categories;
       super.load(widgetData);
+    }
+    
+
+    save(columnData: ColumnData) {
+      let categoriesWidgetData = columnData.widgetData = new CategoriesWidgetData();
+  
+      // Name
+      if (this.name != 'Categories') categoriesWidgetData.name = this.name;
+      
+      // Caption
+      if (this.caption) categoriesWidgetData.caption = this.caption;
+
+      // Categories
+      if (this.categories.length > 0) categoriesWidgetData.categories = this.categories;
+  
+      super.save(columnData);
     }
 }

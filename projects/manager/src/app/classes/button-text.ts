@@ -42,7 +42,7 @@ export class ButtonText {
             // If we have text size data
             if (buttonTextData.fontSize) {
                 // Assign the style
-                this.fontSize.styleValue = buttonTextData.fontSize + 'px';
+                this.fontSize.styleValue = buttonTextData.fontSize;
 
                 // Get the index of the font size from the options list
                 let index = this.fontSize.options.findIndex(x => x.value == this.fontSize.styleValue);
@@ -69,5 +69,31 @@ export class ButtonText {
             // Color
             if (buttonTextData.color) this.color = Color.hexToRGB(buttonTextData.color);
         }
+    }
+
+
+
+
+    save(buttonTextData: ButtonTextData) {
+        // Font
+        if (this.font.styleValue != this.font.options[0].value) buttonTextData.font = this.font.styleValue;
+
+        // Font Size
+        if (this.fontSize.styleValue != this.fontSize.options[7].value) buttonTextData.fontSize = this.fontSize.styleValue;
+
+        // caption
+        if (this.caption != 'Button') buttonTextData.caption = this.caption;
+
+        // Font Weight
+        if (this.fontWeight != 'normal') buttonTextData.fontWeight = this.fontWeight;
+
+        // Font Style
+        if (this.fontStyle != 'normal') buttonTextData.fontStyle = this.fontStyle;
+
+        // Text Decoration
+        if (this.textDecoration != 'none') buttonTextData.textDecoration = this.textDecoration;
+
+        // Color
+        if (!this.color.isEqual(new Color(200, 200, 200, 1))) buttonTextData.color = this.color.toHex();
     }
 }

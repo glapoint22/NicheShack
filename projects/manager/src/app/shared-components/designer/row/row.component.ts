@@ -15,6 +15,7 @@ import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-paddin
 import { WidgetComponent } from '../widgets/widget/widget.component';
 import { RowData } from '../../../classes/row-data';
 import { Background } from '../../../classes/background';
+import { ColumnData } from '../../../classes/column-data';
 
 @Component({
   selector: 'row',
@@ -92,6 +93,10 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     window.addEventListener("mouseup", onMouseup);
   }
 
+  getPosition() {
+    return this.rowElement.nativeElement.getBoundingClientRect().y -
+      this.container.containerElement.nativeElement.getBoundingClientRect().y;
+  }
 
 
   setPosition(delta: number) {
@@ -266,6 +271,48 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
   }
 
 
+  save(rowData: RowData) {
+    // Name
+    if (this.name != 'Row') rowData.name = this.name;
+
+    // Top
+    rowData.top = this.getPosition();
+
+    // Background
+    this.background.save(rowData.background);
+
+    // Border
+    this.border.save(rowData.border);
+
+    // Corners
+    this.corners.save(rowData.corners);
+
+    // Shadow
+    this.shadow.save(rowData.shadow);
+
+    // Padding
+    this.padding.save(rowData.padding, this.breakpoints);
+    this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.top);
+    this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.right);
+    this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.bottom);
+    this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.left);
+
+    // Vertical Alignment
+    if (!this.breakpoints.some(x => x.breakpointObject == this.verticalAlignment)) {
+      this.verticalAlignment.save(rowData);
+    } else {
+      this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.verticalAlignment);
+    }
+
+    // Save the column data for each column
+    this.columns.forEach((column: Column) => {
+      rowData.columns.push(new ColumnData());
+      let columnData = rowData.columns[rowData.columns.length - 1];
+      column.component.save(columnData);
+    });
+  }
+
+
 
   buildHTML(parent: HTMLElement) {
     let row = document.createElement('div');
@@ -274,7 +321,6 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     row.classList.add('row');
     if (this.columns.length == 5) row.classList.add('flex-10');
 
-    // row.style.position = 'relative';
     row.style.marginTop = this.top + 'px';
 
     // Add background if enabled

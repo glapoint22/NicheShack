@@ -1,4 +1,5 @@
 import { BreakpointObject } from './breakpoint-object';
+import { BreakpointType } from './breakpoint';
 
 export class ColumnSpan implements BreakpointObject {
     private _value: number;
@@ -20,6 +21,7 @@ export class ColumnSpan implements BreakpointObject {
 
     public defaultValue: number = 12;
     public breakpointSet: boolean;
+    public breakpointType: BreakpointType = BreakpointType.ColumnSpan;
 
     constructor(private columnElement: HTMLElement) { }
 

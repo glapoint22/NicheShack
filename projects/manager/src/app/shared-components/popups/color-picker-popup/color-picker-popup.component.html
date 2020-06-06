@@ -94,7 +94,7 @@
                    spellcheck="false"
                    (select)="editMode = true"
                    (focus)="hexFocus = true;"
-                   [value]="hexFocus ? hex : '#' + hex"
+                   [value]="hexFocus ? hex : hex"
                    (input)="updateHexInput($event.target)"
                    (click)="onHexInputClick($event.target)"
                    (blur)="hexFocus = false; editMode = false">

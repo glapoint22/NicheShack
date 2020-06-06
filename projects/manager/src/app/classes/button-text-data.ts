@@ -1,4 +1,4 @@
-export interface ButtonTextData {
+export class ButtonTextData {
     caption: string;
     fontWeight: string;
     fontStyle: string;

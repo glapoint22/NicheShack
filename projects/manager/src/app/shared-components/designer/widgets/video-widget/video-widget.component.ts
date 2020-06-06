@@ -9,6 +9,7 @@ import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Video } from 'projects/manager/src/app/classes/video';
 import { VideoWidgetData } from 'projects/manager/src/app/classes/video-widget-data';
+import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'video-widget',
@@ -50,6 +51,29 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
     this.shadow.load(widgetData.shadow);
     this.video.load(widgetData.video);
     super.load(widgetData);
+  }
+
+
+
+  save(columnData: ColumnData) {
+    let videoWidgetData = columnData.widgetData = new VideoWidgetData();
+
+    // Name
+    if (this.name != 'Video') videoWidgetData.name = this.name;
+    
+    // Border
+    this.border.save(videoWidgetData.border);
+
+    // Corners
+    this.corners.save(videoWidgetData.corners);
+
+    // Shadow
+    this.shadow.save(videoWidgetData.shadow);
+
+    // Video
+    this.video.save(videoWidgetData.video);
+
+    super.save(columnData);
   }
 
 

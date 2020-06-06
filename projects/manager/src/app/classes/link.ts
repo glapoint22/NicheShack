@@ -10,7 +10,12 @@ export class Link {
             if (linkData.selectedOption) this.selectedOption = linkData.selectedOption as LinkOption;
             if (linkData.url) this.url = linkData.url;
         }
+    }
 
+
+    save(linkData: LinkData) {
+        if (this.selectedOption != LinkOption.None) linkData.selectedOption = this.selectedOption;
+        if (this.url) linkData.url = this.url;
     }
 }
 

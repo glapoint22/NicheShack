@@ -54,16 +54,6 @@ export class Color {
     }
 
 
-    toHex(): string {
-        return this.componentToHex(this.r) + this.componentToHex(this.g) + this.componentToHex(this.b);
-    }
-
-
-    private componentToHex(component: number): string {
-        let hex = component.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
-    }
-
 
     static hexToRGB(hex: string): Color {
         let r: any = 0, g: any = 0, b: any = 0, a: any;
@@ -193,11 +183,11 @@ export class Color {
 
 
 
-    toHexA(): string {
+    toHex(): string {
         let r: string = this.r.toString(16);
         let g: string = this.g.toString(16);
         let b: string = this.b.toString(16);
-        let a: string = Math.round(this.a * 255).toString(16);
+        let a: string = this.a < 1 ? Math.round(this.a * 255).toString(16) : '';
 
         if (r.length == 1)
             r = "0" + r;

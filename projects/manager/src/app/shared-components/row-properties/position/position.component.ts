@@ -13,8 +13,7 @@ export class PositionComponent {
 
   getPosition() {
     // Get the current position
-    this.position = this.row.rowElement.nativeElement.getBoundingClientRect().y -
-      this.row.container.containerElement.nativeElement.getBoundingClientRect().y;
+    this.position = this.row.getPosition();
       
     return Math.round(this.position);
   }

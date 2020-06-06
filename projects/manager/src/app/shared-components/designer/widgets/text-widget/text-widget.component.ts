@@ -11,6 +11,7 @@ import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/br
 import { Background } from 'projects/manager/src/app/classes/background';
 import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
 import { TextWidgetData } from 'projects/manager/src/app/classes/text-widget-data';
+import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'text-widget',
@@ -142,6 +143,36 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
 
     super.load(widgetData);
   }
+
+
+
+
+  save(columnData: ColumnData) {
+    let textWidgetData = columnData.widgetData = new TextWidgetData();
+
+    // Name
+    if (this.name != 'Text') textWidgetData.name = this.name;
+
+    // Background
+    this.background.save(textWidgetData.background);
+
+
+    // Padding
+    this.padding.save(textWidgetData.padding, this.breakpoints);
+    this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.top);
+    this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.right);
+    this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.bottom);
+    this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.left);
+
+    // HTML Content
+    if (this.htmlContent) textWidgetData.htmlContent = this.htmlContent;
+
+
+    super.save(columnData);
+  }
+
+
+
 
 
   buildHTML(parent: HTMLElement) {

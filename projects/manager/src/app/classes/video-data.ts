@@ -1,4 +1,4 @@
-export interface VideoData {
+export class VideoData {
     url: string;
     thumbnail: string;
 }

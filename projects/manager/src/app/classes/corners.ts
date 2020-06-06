@@ -56,4 +56,15 @@ export class Corners {
             if (cornersData.bottomRight) this.bottomRight = cornersData.bottomRight;
         }
     }
+
+
+    save(cornersData: CornersData) {
+        if (this.topLeft > 0 || this.topRight > 0 || this.bottomRight > 0 || this.bottomLeft > 0) {
+            if (this.constrain) cornersData.constrain = this.constrain;
+            if (this.topLeft > 0) cornersData.topLeft = this.topLeft;
+            if (this.topRight > 0) cornersData.topRight = this.topRight;
+            if (this.bottomLeft > 0) cornersData.bottomLeft = this.bottomLeft;
+            if (this.bottomRight > 0) cornersData.bottomRight = this.bottomRight;
+        }
+    }
 }

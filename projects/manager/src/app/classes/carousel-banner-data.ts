@@ -1,7 +1,7 @@
 import { ImageData } from './image-data';
 import { LinkData } from './link-data';
 
-export interface CarouselBannerData {
+export class CarouselBannerData {
     image: ImageData;
     link: LinkData;
 }

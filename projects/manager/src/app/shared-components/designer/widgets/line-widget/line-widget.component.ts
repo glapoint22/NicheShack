@@ -7,6 +7,7 @@ import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { LineWidgetData } from 'projects/manager/src/app/classes/line-widget-data';
+import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'line-widget',
@@ -33,6 +34,22 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
   }
 
 
+  save(columnData: ColumnData) {
+    let lineWidgetData = columnData.widgetData = new LineWidgetData();
+
+    // Name
+    if (this.name != 'Line') lineWidgetData.name = this.name;
+    
+    // Border
+    this.border.save(lineWidgetData.border);
+
+    // Shadow
+    this.shadow.save(lineWidgetData.shadow);
+
+    super.save(columnData);
+  }
+
+
   buildHTML(parent: HTMLElement) {
     let lineContainer = document.createElement('div');
 
@@ -46,7 +63,7 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
     // Create the line and set styles
     let line = document.createElement('div');
     line.style.width = '100%';
-    line.style.borderBottom = this.border.width + 'px ' + this.border.style + ' ' + this.border.color.toHexA();
+    line.style.borderBottom = this.border.width + 'px ' + this.border.style + ' ' + this.border.color.toHex();
     this.shadow.applyStyle(line);
 
     // Set the classes

@@ -1,7 +1,7 @@
-export interface CornersData {
-    constrain: boolean;
-    topLeft: number;
-    topRight: number;
-    bottomLeft: number;
-    bottomRight: number;
+export class CornersData {
+    public constrain: boolean;
+    public topLeft: number;
+    public topRight: number;
+    public bottomLeft: number;
+    public bottomRight: number;
 }

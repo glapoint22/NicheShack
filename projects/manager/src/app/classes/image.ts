@@ -5,9 +5,14 @@ export class Image {
     url: string;
 
     load(imageData: ImageData) {
-        if(imageData) {
+        if (imageData) {
             this.url = imageData.url;
             this.title = imageData.title;
         }
+    }
+
+    save(imageData: ImageData) {
+        if (this.url) imageData.url = this.url;
+        if (this.title) imageData.title = this.title;
     }
 }

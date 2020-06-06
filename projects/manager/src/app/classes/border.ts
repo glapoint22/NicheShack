@@ -31,4 +31,14 @@ export class Border implements Enableable {
             if (borderData.color) this.color = Color.hexToRGB(borderData.color);
         }
     }
+
+    save(borderData: BorderData) {
+        if (this.enable) {
+            borderData.enable = this.enable;
+            if (this.width > 1) borderData.width = this.width;
+            if (this.style != 'solid') borderData.style = this.style;
+            if (!this.color.isEqual(new Color(190, 190, 190, 1))) borderData.color = this.color.toHex();
+        }
+
+    }
 }

@@ -61,9 +61,16 @@ export class Video {
 
 
     load(videoData: VideoData) {
-        if(videoData) {
+        if (videoData) {
             this.url = videoData.url;
             this.thumbnail = videoData.thumbnail;
         }
+    }
+
+
+
+    save(videoData: VideoData) {
+        if (this.url) videoData.url = this.url;
+        if (this.thumbnail) videoData.thumbnail = this.thumbnail;
     }
 }

@@ -6,14 +6,14 @@ import { ShadowData } from './shadow-data';
 import { PaddingData } from './padding-data';
 import { BreakpointData } from './breakpoint-data';
 
-export interface ColumnData {
-    name: string;
-    background: BackgroundData;
-    border: BorderData;
-    corners: CornersData;
-    shadow: ShadowData;
-    padding: PaddingData;
-    breakpoints: Array<BreakpointData>;
-    columnSpan: number;
-    widgetData: WidgetData;
+export class ColumnData {
+    public name: string;
+    public background: BackgroundData = new BackgroundData();
+    public border: BorderData = new BorderData();
+    public corners: CornersData = new CornersData();
+    public shadow: ShadowData = new ShadowData();
+    public padding: PaddingData = new PaddingData;
+    public breakpoints: Array<BreakpointData> = [];
+    public columnSpan: number;
+    public widgetData: WidgetData = new WidgetData();
 }

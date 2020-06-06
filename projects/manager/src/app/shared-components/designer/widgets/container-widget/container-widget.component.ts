@@ -12,6 +12,7 @@ import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/br
 import { Background } from 'projects/manager/src/app/classes/background';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { ContainerWidgetData } from 'projects/manager/src/app/classes/container-widget-data';
+import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'container-widget',
@@ -78,6 +79,44 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
 
     super.load(widgetData);
   }
+
+
+
+
+  save(columnData: ColumnData) {
+    let containerWidgetData = columnData.widgetData = new ContainerWidgetData();
+
+    // Name
+    if (this.name != 'Container') containerWidgetData.name = this.name;
+
+    // Background
+    this.background.save(containerWidgetData.background);
+
+    // Border
+    this.border.save(containerWidgetData.border);
+
+    // Corners
+    this.corners.save(containerWidgetData.corners);
+
+    // Shadow
+    this.shadow.save(containerWidgetData.shadow);
+
+    // Padding
+    this.padding.save(containerWidgetData.padding, this.breakpoints);
+    this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.top);
+    this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.right);
+    this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.bottom);
+    this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.left);
+
+    
+
+    super.save(columnData);
+
+
+    this.container.save(containerWidgetData.rows);
+  }
+
+
 
 
   buildHTML(parent: HTMLElement) {

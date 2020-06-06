@@ -11,6 +11,7 @@ import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoin
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
 import { ImageWidgetData } from 'projects/manager/src/app/classes/image-widget-data';
+import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'image-widget',
@@ -54,6 +55,34 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
     this.image.load(widgetData.image);
     super.load(widgetData);
   }
+
+
+
+
+  save(columnData: ColumnData) {
+    let imageWidgetData = columnData.widgetData = new ImageWidgetData();
+
+    // Name
+    if (this.name != 'Image') imageWidgetData.name = this.name;
+    
+    // Border
+    this.border.save(imageWidgetData.border);
+
+    // Corners
+    this.corners.save(imageWidgetData.corners);
+
+    // Shadow
+    this.shadow.save(imageWidgetData.shadow);
+
+    // Image
+    this.image.save(imageWidgetData.image);
+
+    // Link
+    this.link.save(imageWidgetData.link);
+
+    super.save(columnData);
+  }
+
 
 
   buildHTML(parent: HTMLElement) {

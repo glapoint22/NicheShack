@@ -1,11 +1,13 @@
-import { BreakpointHorizontalAlignment } from './breakpoint';
+import { BreakpointHorizontalAlignment, BreakpointType } from './breakpoint';
 import { BreakpointObject } from './breakpoint-object';
 import { Alignment } from './alignment';
+import { WidgetData } from './widget-data';
 
 export class HorizontalAlignment extends Alignment implements BreakpointObject {
     public value: BreakpointHorizontalAlignment = BreakpointHorizontalAlignment.Left;
     public defaultValue: string = BreakpointHorizontalAlignment.Left;
     public breakpointSet: boolean;
+    public breakpointType: BreakpointType = BreakpointType.HorizontalAlignment;
 
     setClass(value: string, element: HTMLElement, screenSize?: string) {
         switch (value) {
@@ -27,5 +29,9 @@ export class HorizontalAlignment extends Alignment implements BreakpointObject {
         if (value) {
             this.value = value as BreakpointHorizontalAlignment;
         }
+    }
+
+    save(widgetData: WidgetData) {
+        if (this.value != this.defaultValue) widgetData.horizontalAlignment = this.value;
     }
 }

@@ -1,11 +1,13 @@
-import { BreakpointVerticalAlignment } from './breakpoint';
+import { BreakpointVerticalAlignment, BreakpointType } from './breakpoint';
 import { BreakpointObject } from './breakpoint-object';
 import { Alignment } from './alignment';
+import { RowData } from './row-data';
 
 export class VerticalAlignment extends Alignment implements BreakpointObject {
     public value: BreakpointVerticalAlignment = BreakpointVerticalAlignment.Top;
     public defaultValue: BreakpointVerticalAlignment = BreakpointVerticalAlignment.Top;
     public breakpointSet: boolean;
+    public breakpointType: BreakpointType = BreakpointType.VerticalAlignment;
 
     setClass(value: string, element: HTMLElement, screenSize?: string) {
         switch (value) {
@@ -27,5 +29,10 @@ export class VerticalAlignment extends Alignment implements BreakpointObject {
         if (value) {
             this.value = value as BreakpointVerticalAlignment;
         }
+    }
+
+
+    save(rowData: RowData) {
+        if (this.value != this.defaultValue) rowData.verticalAlignment = this.value;
     }
 }

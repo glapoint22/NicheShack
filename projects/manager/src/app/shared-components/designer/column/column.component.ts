@@ -73,7 +73,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   addWidget(widget: Type<WidgetComponent>) {
     // Create the new widget
     this.createWidget(widget);
-    
+
 
     // Set this widget as the selected widget
     this.widgetService.selectedWidget = this.widget;
@@ -269,6 +269,41 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
     this.padding.load(columnData.padding);
     this.breakpointService.loadBreakpoints(columnData.breakpoints, this);
     this.columnSpan.value = columnData.columnSpan;
+  }
+
+
+  save(columnData: ColumnData) {
+    // Name
+    if (this.name != 'Column') columnData.name = this.name;
+
+    // Background
+    this.background.save(columnData.background);
+
+    // Border
+    this.border.save(columnData.border);
+
+    // Corners
+    this.corners.save(columnData.corners);
+
+    // Shadow
+    this.shadow.save(columnData.shadow);
+
+    // Padding
+    this.padding.save(columnData.padding, this.breakpoints);
+    this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.top);
+    this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.right);
+    this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.bottom);
+    this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.left);
+
+    // Column Span
+    columnData.columnSpan = this.columnSpan.value;
+
+
+    // Visibility
+    this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.visibility);
+
+    // Save the widget data
+    this.widget.save(columnData);
   }
 
 

@@ -2,9 +2,9 @@
 widgetService.currentColumn == columnElement && 
 row.columns.length < 6}" [style.paddingTop]="padding.top.value" [style.paddingRight]="padding.right.value"
     [style.paddingBottom]="padding.bottom.value" [style.paddingLeft]="padding.left.value"
-    [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHexA() : 'none'"
+    [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHex() : 'none'"
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
-    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHexA() : 'none'"
+    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : 'none'"
     [style.display]="visibility.value"
     [style.backgroundColor]="background.enable ? background.color.toRGBString(): null"
     [ngStyle]="{ 'background-image': background.image && background.enable && background.image.url ? 'url(images/' + background.image.url + ')' : null,

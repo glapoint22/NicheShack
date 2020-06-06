@@ -7,6 +7,7 @@ import { Breakpoint, BreakpointVerticalAlignment } from 'projects/manager/src/ap
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
+import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   template: '',
@@ -87,5 +88,24 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
     if (widgetData.height) this.height = widgetData.height;
     this.horizontalAlignment.load(widgetData.horizontalAlignment);
     this.breakpointService.loadBreakpoints(widgetData.breakpoints, this);
+  }
+
+
+  save(columnData: ColumnData) {
+    // Type
+    columnData.widgetData.widgetType = this.type;
+
+    // Width
+    if (this.width) columnData.widgetData.width = this.width;
+
+    // Height
+    if (this.height) columnData.widgetData.height = this.height;
+
+    // Horizontal Alignment
+    if (!this.breakpoints.some(x => x.breakpointObject == this.horizontalAlignment)) {
+      this.horizontalAlignment.save(columnData.widgetData);
+    } else {
+      this.breakpointService.saveBreakpoints(this.breakpoints, columnData.widgetData.breakpoints, this.horizontalAlignment);
+    }
   }
 }

@@ -291,11 +291,27 @@ export class BreakpointService {
 
   // -------------------------------------------------------------- Load Breakpoints ----------------------------------------------------------------------
   loadBreakpoints(breakpoints: Array<BreakpointData>, breakpointsComponent: BreakpointsComponent) {
-    breakpoints.forEach((breakpoint: BreakpointData) => {
-      this.addBreakpoint(breakpointsComponent.breakpoints, this.getBreakpointObject(breakpoint.breakpointType, breakpointsComponent), breakpoint.value, breakpoint.screenSize);
-    });
+    if (breakpoints) {
+      breakpoints.forEach((breakpoint: BreakpointData) => {
+        this.addBreakpoint(breakpointsComponent.breakpoints, this.getBreakpointObject(breakpoint.breakpointType, breakpointsComponent), breakpoint.value, breakpoint.screenSize);
+      });
+    }
   }
 
+
+
+
+
+
+
+  // -------------------------------------------------------------- Save Breakpoints ----------------------------------------------------------------------
+  saveBreakpoints(breakpoints: Array<Breakpoint>, breakpointsData: Array<BreakpointData>, breakpointObject: BreakpointObject) {
+    breakpoints.forEach((breakpoint: Breakpoint) => {
+      if (breakpoint.breakpointObject == breakpointObject) {
+        breakpointsData.push(new BreakpointData(breakpoint.breakpointObject.breakpointType, breakpoint.screenSize, breakpoint.value));
+      }
+    });
+  }
 
 
 
@@ -324,11 +340,17 @@ export class BreakpointService {
         breakpointObject = breakpointsComponent.padding.left;
         break;
 
+      case BreakpointType.HorizontalAlignment:
+        breakpointObject = breakpointsComponent.horizontalAlignment;
+        break;
+
       case BreakpointType.VerticalAlignment:
         breakpointObject = breakpointsComponent.verticalAlignment;
         break;
 
-
+      case BreakpointType.ColumnSpan:
+        breakpointObject = breakpointsComponent.columnSpan;
+        break;
     }
 
     return breakpointObject;

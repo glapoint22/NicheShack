@@ -1,6 +1,6 @@
-export interface BorderData {
-    enable: boolean;
-    width: number;
-    style: string;
-    color: string;
+export class BorderData {
+    public enable: boolean;
+    public width: number;
+    public style: string;
+    public color: string;
 }

@@ -54,5 +54,8 @@ export enum BreakpointType {
     PaddingRight,
     PaddingBottom,
     PaddingLeft,
-    VerticalAlignment
+    HorizontalAlignment,
+    VerticalAlignment,
+    Visibility,
+    ColumnSpan
 }

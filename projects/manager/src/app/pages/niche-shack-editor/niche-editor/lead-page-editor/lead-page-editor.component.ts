@@ -99,7 +99,7 @@ export class LeadPageEditorComponent implements OnChanges {
                       text: {
                         caption: 'Alita',
                         font: '"Comic Sans MS", cursive, sans-serif',
-                        fontSize: '22',
+                        fontSize: '22px',
                         fontWeight: 'bold',
                         fontStyle: 'italic',
                         textDecoration: 'underline',
@@ -730,7 +730,7 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
 
-  public getTempDuplicateLeadPage(): Observable<PageData> {
+  public getTempDuplicateLeadPage(leadPageId: string): Observable<PageData> {
     return new Observable<PageData>(subscriber => {
       subscriber.next({
         id: 'L2D8IEG9WL',
@@ -919,7 +919,7 @@ export class LeadPageEditorComponent implements OnChanges {
     if (!this.currentLeadPageId) return;
 
     this.loadingService.loading = true;
-    this.getTempDuplicateLeadPage().subscribe((pageData: PageData) => {
+    this.getTempDuplicateLeadPage(this.currentLeadPageId).subscribe((pageData: PageData) => {
       // Load the lead page
       this.loadPage('leadPage', pageData);
 

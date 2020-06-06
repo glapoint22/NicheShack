@@ -6,6 +6,7 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { ProductGroupType } from 'projects/manager/src/app/classes/product-group-type';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { ProductGroupWidgetData } from 'projects/manager/src/app/classes/product-group-widget-data';
+import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'product-group-widget',
@@ -17,8 +18,8 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
   public caption: string;
-  public productGroupType: ProductGroupType = 0;
-  public featuredProducts: Array<Product>;
+  public productGroupType: ProductGroupType = ProductGroupType.FeaturedProducts;
+  public featuredProducts: Array<Product> = [];
 
   ngOnInit() {
     this.height = 250
@@ -32,6 +33,26 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     this.productGroupType = widgetData.productGroupType;
     this.featuredProducts = widgetData.featuredProducts;
     super.load(widgetData);
+  }
+
+
+
+  save(columnData: ColumnData) {
+    let productGroupWidgetData = columnData.widgetData = new ProductGroupWidgetData();
+
+    // Name
+    if (this.name != 'Product Group') productGroupWidgetData.name = this.name;
+
+    // Caption
+    if (this.caption) productGroupWidgetData.caption = this.caption;
+
+    // Product Group Type
+    if (this.productGroupType != ProductGroupType.FeaturedProducts) productGroupWidgetData.productGroupType = this.productGroupType;
+
+    // Featured Products
+    if (this.featuredProducts.length > 0) productGroupWidgetData.featuredProducts = this.featuredProducts;
+
+    super.save(columnData);
   }
 
 }

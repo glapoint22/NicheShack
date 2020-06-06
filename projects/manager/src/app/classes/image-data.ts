@@ -1,4 +1,4 @@
-export interface ImageData {
-    title: string;
-    url: string;
+export class ImageData {
+    public title: string;
+    public url: string;
 }

@@ -17,6 +17,7 @@ import { BackgroundColor } from 'projects/manager/src/app/classes/background-col
 import { BorderColor } from 'projects/manager/src/app/classes/border-color';
 import { TextColor } from 'projects/manager/src/app/classes/text-color';
 import { ButtonWidgetData } from 'projects/manager/src/app/classes/button-widget-data';
+import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'button-widget',
@@ -102,15 +103,15 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
     switch (this.currentState) {
       case ButtonState.Normal:
-        color = this.border.color.toHexA();
+        color = this.border.color.toHex();
         break;
 
       case ButtonState.Hover:
-        color = this.borderHoverColor.value.toHexA();
+        color = this.borderHoverColor.value.toHex();
         break;
 
       case ButtonState.Active:
-        color = this.borderActiveColor.value.toHexA();
+        color = this.borderActiveColor.value.toHex();
         break;
     }
 
@@ -155,6 +156,64 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     this.textHoverColor.load(widgetData.textHoverColor);
     this.textActiveColor.load(widgetData.textActiveColor);
     super.load(widgetData);
+  }
+
+
+  save(columnData: ColumnData) {
+    let buttonWidgetData = columnData.widgetData = new ButtonWidgetData();
+
+    // Name
+    if (this.name != 'Button') buttonWidgetData.name = this.name;
+
+    // Background
+    this.background.save(buttonWidgetData.background);
+
+    // Border
+    this.border.save(buttonWidgetData.border);
+
+    // Corners
+    this.corners.save(buttonWidgetData.corners);
+
+    // Shadow
+    this.shadow.save(buttonWidgetData.shadow);
+
+    // Padding
+    this.padding.save(buttonWidgetData.padding, this.breakpoints);
+    this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.top);
+    this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.right);
+    this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.bottom);
+    this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.left);
+
+    // Text
+    this.text.save(buttonWidgetData.text);
+
+    // Link
+    this.link.save(buttonWidgetData.link);
+
+    // Background Hover Color
+    buttonWidgetData.backgroundHoverColor = this.backgroundHoverColor.value.toHex();
+
+    // Background Active Color
+    buttonWidgetData.backgroundActiveColor = this.backgroundActiveColor.value.toHex();
+
+
+
+    // Border Hover Color
+    buttonWidgetData.borderHoverColor = this.borderHoverColor.value.toHex();
+
+    // Border Active Color
+    buttonWidgetData.borderActiveColor = this.borderActiveColor.value.toHex();
+
+
+
+
+    // Text Hover Color
+    buttonWidgetData.textHoverColor = this.textHoverColor.value.toHex();
+
+    // Text Active Color
+    buttonWidgetData.textActiveColor = this.textActiveColor.value.toHex();
+
+    super.save(columnData);
   }
 
 

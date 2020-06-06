@@ -12,10 +12,17 @@ export class BackgroundImage extends Image {
             this.repeat = backgroundImageData.repeat;
             this.attachment = backgroundImageData.attachment;
 
-            super.load({
-                url: backgroundImageData.url,
-                title: backgroundImageData.title
-            })
+            super.load(backgroundImageData);
         }
+    }
+
+
+
+    save(backgroundImageData: BackgroundImageData) {
+        if (this.position) backgroundImageData.position = this.position;
+        if (this.repeat) backgroundImageData.repeat = this.repeat;
+        if (this.attachment) backgroundImageData.attachment = this.attachment;
+
+        super.save(backgroundImageData)
     }
 }

@@ -1,4 +1,4 @@
-export interface LinkData {
+export class LinkData {
     selectedOption: string;
     url: string;
 }
