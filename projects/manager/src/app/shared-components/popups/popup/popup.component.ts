@@ -18,7 +18,7 @@ export class PopupComponent {
   private arrow;
   private popupTop: number;
   private arrowOnTop: boolean = false;
-  constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService, public notificationService: NotificationService) { }
+  constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService) { }
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\

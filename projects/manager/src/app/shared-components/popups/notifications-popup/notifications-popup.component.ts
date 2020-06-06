@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupComponent } from '../popup/popup.component';
-import { ProductNotification } from '../../../classes/product-notification';
-import { NotificationType } from '../../../classes/notification';
+import { PopupService } from '../../../services/popup.service';
+import { CoverService } from '../../../services/cover.service';
+import { MenuService } from '../../../services/menu.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'notifications-popup',
@@ -11,7 +13,7 @@ import { NotificationType } from '../../../classes/notification';
 export class NotificationsPopupComponent extends PopupComponent implements OnInit {
   public mediaList = [];
 
-
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, public notificationService: NotificationService) { super(popupService, cover, menuService) }
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
   ngOnInit() {
@@ -24,7 +26,7 @@ export class NotificationsPopupComponent extends PopupComponent implements OnIni
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
 
-    
+
 
 
 
