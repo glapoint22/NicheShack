@@ -1,16 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, AfterViewInit, HostListener } from '@angular/core';
-import { ButtonWidgetComponent } from './widgets/button-widget/button-widget.component';
-import { ContainerWidgetComponent } from './widgets/container-widget/container-widget.component';
-import { ImageWidgetComponent } from './widgets/image-widget/image-widget.component';
-import { LineWidgetComponent } from './widgets/line-widget/line-widget.component';
-import { TextWidgetComponent } from './widgets/text-widget/text-widget.component';
+import { Component, ViewChild, ElementRef, ViewEncapsulation, AfterViewInit, HostListener } from '@angular/core';
 import { WidgetCursor } from '../../classes/widget-cursor';
 import { WidgetService } from '../../services/widget.service';
 import { ContainerComponent } from './container/container.component';
-import { VideoWidgetComponent } from './widgets/video-widget/video-widget.component';
-import { ProductGroupWidgetComponent } from './widgets/product-group-widget/product-group-widget.component';
-import { CategoriesWidgetComponent } from './widgets/categories-widget/categories-widget.component';
-import { CarouselWidgetComponent } from './widgets/carousel-widget/carousel-widget.component';
 import { PageService } from '../../services/page.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 
@@ -20,7 +11,7 @@ import { BreakpointService } from '../../services/breakpoint.service';
   styleUrls: ['./designer.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DesignerComponent implements OnInit, AfterViewInit {
+export class DesignerComponent implements AfterViewInit {
   @ViewChild('contentElement', { static: false }) contentElement: ElementRef;
   @ViewChild('canvasElement', { static: false }) canvasElement: ElementRef;
   @ViewChild('designAreaDropdown', { static: false }) designAreaDropdown: ElementRef;
@@ -34,75 +25,7 @@ export class DesignerComponent implements OnInit, AfterViewInit {
   constructor(private widgetService: WidgetService, public pageService: PageService, private breakpointService: BreakpointService) { }
 
 
-  // -----------------------------( NG ON INIT )------------------------------ \\
-  ngOnInit() {
-    this.widgetCursors = [
-      {
-        title: 'Button',
-        widget: ButtonWidgetComponent,
-        icon: '<i class="fab fa-bootstrap"></i>',
-        allowed: 'button-widget-allowed.png',
-        notAllowed: 'button-widget-not-allowed.png'
-      },
-      {
-        title: 'Text',
-        widget: TextWidgetComponent,
-        icon: '<div class="text-icon">T</div>',
-        allowed: 'text-widget-allowed.png',
-        notAllowed: 'text-widget-not-allowed.png'
-      },
-      {
-        title: 'Image',
-        widget: ImageWidgetComponent,
-        icon: '<i class="fas fa-image"></i>',
-        allowed: 'image-widget-allowed.png',
-        notAllowed: 'image-widget-not-allowed.png'
-      },
-      {
-        title: 'Container',
-        widget: ContainerWidgetComponent,
-        icon: '<img class="image-icon" src="assets/container-widget-icon.png">',
-        allowed: 'container-widget-allowed.png',
-        notAllowed: 'container-widget-not-allowed.png'
-      },
-      {
-        title: 'Line',
-        widget: LineWidgetComponent,
-        icon: '<i class="fas fa-slash"></i>',
-        allowed: 'line-widget-allowed.png',
-        notAllowed: 'line-widget-not-allowed.png'
-      },
-      {
-        title: 'Video',
-        widget: VideoWidgetComponent,
-        icon: '<i class="fas fa-film"></i>',
-        allowed: 'video-widget-allowed.png',
-        notAllowed: 'video-widget-not-allowed.png'
-      }
-      ,
-      {
-        title: 'Product Group',
-        widget: ProductGroupWidgetComponent,
-        icon: '<img class="image-icon" src="assets/product-group-widget-icon.png">',
-        allowed: 'product-group-widget-allowed.png',
-        notAllowed: 'product-group-widget-not-allowed.png'
-      },
-      {
-        title: 'Categories',
-        widget: CategoriesWidgetComponent,
-        icon: '<img class="categories-icon" src="assets/categories-widget-icon.png">',
-        allowed: 'categories-widget-allowed.png',
-        notAllowed: 'categories-widget-not-allowed.png'
-      },
-      {
-        title: 'Carousel',
-        widget: CarouselWidgetComponent,
-        icon: '<img class="carousel-icon" src="assets/carousel-widget-icon.png">',
-        allowed: 'carousel-widget-allowed.png',
-        notAllowed: 'carousel-widget-not-allowed.png'
-      }
-    ]
-  }
+
 
   ngAfterViewInit() {
     this.pageService.rootContainer = this.rootContainer;

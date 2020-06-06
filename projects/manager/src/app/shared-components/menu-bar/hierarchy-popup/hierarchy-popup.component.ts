@@ -3,6 +3,10 @@ import { Observable, fromEvent } from 'rxjs';
 import { delay, debounceTime, switchMap, tap } from 'rxjs/operators';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
 import { PopupComponent } from '../../popups/popup/popup.component';
+import { PromptService } from '../../../services/prompt.service';
+import { PopupService } from '../../../services/popup.service';
+import { CoverService } from '../../../services/cover.service';
+import { MenuService } from '../../../services/menu.service';
 
 @Component({
   selector: 'hierarchy-popup',
@@ -17,6 +21,11 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   public filterType: string = 'Product';
   public searchResultsCount: number;
   private searchInput: any;
+
+  constructor(popupService: PopupService,
+    cover: CoverService,
+    menuService: MenuService,
+    private promptService: PromptService) { super(popupService, cover, menuService) }
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
@@ -170,7 +179,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   @HostListener('document:keydown', ['$event'])
   onKeydown(event: KeyboardEvent) {
     // If the escape key was pressed and prompt is not enabled
-    if (event.keyCode == 27 && !document.getElementById('prompt')) {
+    if (event.keyCode == 27 && !this.promptService.show) {
       if (this.selectedItem) {
         let el: HTMLElement = this.getItemElement();
 
@@ -414,13 +423,18 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
   }
 
+  onDeleteClick() {
+    let promptTitle = 'Delete ' + (this.selectedItem ? this.selectedItem.type : '');
+    let promptMessage = 'Are you sure you want to delete ' + (this.selectedItem ? this.selectedItem.name : '') + '?';
+
+    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteItem, this);
+  }
+
   getItemElement() {
     return document.getElementById(this.selectedItem.type + '-' + this.selectedItem.id);
   }
 
   onItemClick() {
-    // if (!this.selectedItem || this.selectedItem.type == 'Category') return;
-
     this.showItemProperties.emit(this.selectedItem);
   }
 

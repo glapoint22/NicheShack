@@ -2,14 +2,14 @@
     <!-- Page Name -->
     <div class="property">
         <div class="label" style="margin-right: 9px;">Name:</div>
-        <input class="txt-20" [value]="page.name">
+        <input class="txt-20" [value]="page.name ? page.name : ''">
     </div>
 
     <!-- Page Width -->
     <div class="property">
         <div class="label">Width:</div>
         <div style="flex: 1;">
-            <editable-number-field [value]="page.width" (onValueChange)="page.width = $event"></editable-number-field>
+            <editable-number-field [value]="page.width ? page.width : ''" (onValueChange)="page.width = $event"></editable-number-field>
         </div>
     </div>
 

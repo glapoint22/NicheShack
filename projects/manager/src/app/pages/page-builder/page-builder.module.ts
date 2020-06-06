@@ -9,6 +9,7 @@ import { SearchPopupComponent } from './search-popup/search-popup.component';
 import { PropertiesEditorModule } from '../../properties-editor.module';
 import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
 import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/dropdown-menu/dropdown-menu.module';
+import { PromptModule } from '../../shared-components/prompt/prompt.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/d
     DesignerModule,
     PropertiesEditorModule,
     ContextMenuModule,
-    DropdownMenuModule
+    DropdownMenuModule,
+    PromptModule
   ]
 })
 export class PageBuilderModule { }

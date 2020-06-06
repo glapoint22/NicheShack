@@ -9,7 +9,6 @@ import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { RouterModule } from '@angular/router';
 import { HierarchyPopupComponent } from './hierarchy-popup/hierarchy-popup.component';
 import { HierarchyContentComponent } from './hierarchy-popup/hierarchy-content/hierarchy-content.component';
-import { PromptModule } from '../prompt/prompt.module';
 import { ShackIconComponent } from '../shack-icon/shack-icon.component';
 
 
@@ -28,8 +27,7 @@ import { ShackIconComponent } from '../shack-icon/shack-icon.component';
   imports: [
     CommonModule,
     ShowHideModule,
-    RouterModule,
-    PromptModule
+    RouterModule
   ],
   exports: [
     MenuBarComponent,

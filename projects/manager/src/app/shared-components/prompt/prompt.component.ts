@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
+import { PromptService } from '../../services/prompt.service';
 
 @Component({
   selector: 'prompt',
@@ -6,15 +7,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./prompt.component.scss']
 })
 export class PromptComponent {
-  public show: boolean;
-  @Input() promptTitle: string;
-  @Input() message: string;
-  @Output() onYes: EventEmitter<void> = new EventEmitter();
+
+  constructor(private promptService: PromptService) { }
 
 
   onKeydown(event: KeyboardEvent) {
     if (event.keyCode == 27) {
-      this.show = false;
+      this.promptService.show = false;
     }
   }
 }

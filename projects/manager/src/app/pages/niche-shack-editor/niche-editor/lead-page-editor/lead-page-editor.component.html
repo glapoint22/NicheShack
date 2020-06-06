@@ -1,52 +1,60 @@
 <!-- Property Box -->
-<div class="property-box-light">
+<div class="property-box-light" *ngIf="initialPageLoaded">
     <!-- Container for paginator & icons -->
     <div class="container">
 
-        <paginator [itemCount]="leadPageIds.length" (onItemChange)="onPageChange($event)"></paginator>
+        <paginator #paginator [itemCount]="leadPageIds.length" (onItemChange)="onPageChange($event)"></paginator>
 
         <!-- Icons -->
         <div class="icons">
 
             <!-- Delete Page Icon -->
-            <div class="icon-container">
+            <div class="icon-container" title="Delete Lead Page" [ngClass]="{'icon-disabled': !currentLeadPageId}" (click)="onDeleteClick(paginator)">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
             <!-- Duplicate Page Icon -->
-            <div class="icon-container">
+            <div class="icon-container" title="Duplicate Lead Page" [ngClass]="{'icon-disabled': !currentLeadPageId}"
+                (click)="duplicateLeadPage(paginator)">
                 <i class="fas fa-clone"></i>
             </div>
 
             <!-- Add Page Icon -->
-            <div class="icon-container">
+            <div class="icon-container" title="Add Lead Page" (click)="addLeadPage(paginator)">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>
     </div>
 
-    <ng-container *ngIf="leadPageIds.length > 0">
+    <ng-container *ngIf="currentLeadPageId">
         <!-- Preview & Publish buttons -->
         <div class="grooved-container">
             <div class="button-left" (click)="pageService.preview()">Preview</div>
             <div class="button-right">Publish</div>
         </div>
 
+        <!-- Tabs -->
         <div class="light-tabs-container">
-            <div class="light-tab selected-light-tab">Lead Page</div>
-            <div class="light-tab">Email</div>
+            <div class="light-tab" [ngClass]="{'selected-light-tab': selectedTab == 'leadPage'}"
+                (click)="onLeadPageTabClick()">Lead Page</div>
+            <div class="light-tab" [ngClass]="{'selected-light-tab': selectedTab == 'email'}"
+                (click)="onEmailTabClick()">Email</div>
         </div>
 
 
         <!-- Page, Row, Column, and Widget buttons -->
         <div class="grooved-container-bottom">
-            <div class="button-left" [ngClass]="{'button-selected': view == 'page'}" (click)="view = 'page'">Lead Page</div>
+            <div class="button-left" [ngClass]="{'button-selected': view == 'page'}" (click)="view = 'page'">
+                Page
+            </div>
             <div class="button-center" [ngClass]="{'button-selected': view == 'row'}" (click)="view = 'row'">Row</div>
-            <div class="button-center" [ngClass]="{'button-selected': view == 'column'}" (click)="view = 'column'">Column</div>
-            <div class="button-right" [ngClass]="{'button-selected': view == 'widget'}" (click)="view = 'widget'">Widget</div>
+            <div class="button-center" [ngClass]="{'button-selected': view == 'column'}" (click)="view = 'column'">
+                Column</div>
+            <div class="button-right" [ngClass]="{'button-selected': view == 'widget'}" (click)="view = 'widget'">Widget
+            </div>
         </div>
 
-        
+
         <!-- Page Properties -->
         <page-properties *ngIf="view == 'page'" [page]="pageService.page"></page-properties>
 
@@ -59,4 +67,5 @@
         <!-- Widget Properties -->
         <widget-properties *ngIf="view == 'widget'"></widget-properties>
     </ng-container>
+
 </div>

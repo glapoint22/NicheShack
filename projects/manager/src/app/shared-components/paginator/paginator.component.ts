@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class PaginatorComponent {
   @Input() itemCount: number;
   @Output() onItemChange: EventEmitter<number> = new EventEmitter();
-  private currentIndex: number = 0;
+  public currentIndex: number = 0;
 
   
   onArrowClick(direction: number) {

@@ -21,14 +21,17 @@ import { VideoWidgetComponent } from '../shared-components/designer/widgets/vide
 import { ProductGroupWidgetComponent } from '../shared-components/designer/widgets/product-group-widget/product-group-widget.component';
 import { CategoriesWidgetComponent } from '../shared-components/designer/widgets/categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from '../shared-components/designer/widgets/carousel-widget/carousel-widget.component';
+import { WidgetCursor } from '../classes/widget-cursor';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageService {
   public page: Page = new Page();
-
   public rootContainer: ContainerComponent;
+  public widgetCursors: Array<WidgetCursor>;
+  private defaultWidth: number;
+
 
   constructor(private widgetService: WidgetService, private breakpointService: BreakpointService) { }
 
@@ -85,15 +88,24 @@ export class PageService {
     this.page.background.applyStyles(previewWindow.document.body);
   }
 
+  clearPage() {
+    if (this.rootContainer) {
+      this.rootContainer.viewContainerRef.clear();
+      this.rootContainer.rows = [];
+      this.page.name = '';
+      this.page.width = this.defaultWidth;
+      this.page.background = new Background();
+      this.widgetService.selectedWidget = null;
+    }
+  }
+
   loadPage(pageData: PageData) {
     // Clear the page
-    this.rootContainer.viewContainerRef.clear();
-    this.rootContainer.rows = [];
-    this.page.background = new Background();
+    this.clearPage();
 
     // Set the name and width of the page
     this.page.name = pageData.name;
-    this.page.width = pageData.width ? pageData.width : 1600;
+    this.page.width = pageData.width ? pageData.width : this.defaultWidth;
 
     // Load the background
     this.page.background.load(pageData.background);
@@ -107,7 +119,7 @@ export class PageService {
 
 
   loadWidgets(container: ContainerComponent, rows: Array<RowData>) {
-    // Loop through all the container's rows
+    // Loop through all the rows
     rows.forEach((rowData: RowData, index: number) => {
 
       // Create the row and load the row data
@@ -170,7 +182,7 @@ export class PageService {
       case WidgetType.Line:
         widget = LineWidgetComponent;
         break;
-        
+
 
       // Video
       case WidgetType.Video:
@@ -197,5 +209,99 @@ export class PageService {
     }
 
     return widget;
+  }
+
+  setDesigner(type: string) {
+    this.widgetCursors = [
+      {
+        title: 'Text',
+        widget: TextWidgetComponent,
+        icon: '<div class="text-icon">T</div>',
+        allowed: 'text-widget-allowed.png',
+        notAllowed: 'text-widget-not-allowed.png'
+      },
+      {
+        title: 'Container',
+        widget: ContainerWidgetComponent,
+        icon: '<img class="image-icon" src="assets/container-widget-icon.png">',
+        allowed: 'container-widget-allowed.png',
+        notAllowed: 'container-widget-not-allowed.png'
+      },
+      {
+        title: 'Image',
+        widget: ImageWidgetComponent,
+        icon: '<i class="fas fa-image"></i>',
+        allowed: 'image-widget-allowed.png',
+        notAllowed: 'image-widget-not-allowed.png'
+      },
+      {
+        title: 'Button',
+        widget: ButtonWidgetComponent,
+        icon: '<i class="fab fa-bootstrap"></i>',
+        allowed: 'button-widget-allowed.png',
+        notAllowed: 'button-widget-not-allowed.png'
+      },
+      {
+        title: 'Line',
+        widget: LineWidgetComponent,
+        icon: '<i class="fas fa-slash"></i>',
+        allowed: 'line-widget-allowed.png',
+        notAllowed: 'line-widget-not-allowed.png'
+      }
+    ]
+
+
+    switch (type) {
+      case 'email':
+      this.defaultWidth = 600;
+      break;
+
+      case 'leadPage':
+        this.defaultWidth = 1600;
+        this.widgetCursors.push({
+          title: 'Video',
+          widget: VideoWidgetComponent,
+          icon: '<i class="fas fa-film"></i>',
+          allowed: 'video-widget-allowed.png',
+          notAllowed: 'video-widget-not-allowed.png'
+        })
+        break;
+
+      case 'page':
+        this.defaultWidth = 1600;
+        this.widgetCursors.push.apply(this.widgetCursors,
+          [
+            {
+              title: 'Video',
+              widget: VideoWidgetComponent,
+              icon: '<i class="fas fa-film"></i>',
+              allowed: 'video-widget-allowed.png',
+              notAllowed: 'video-widget-not-allowed.png'
+            },
+            {
+              title: 'Product Group',
+              widget: ProductGroupWidgetComponent,
+              icon: '<img class="image-icon" src="assets/product-group-widget-icon.png">',
+              allowed: 'product-group-widget-allowed.png',
+              notAllowed: 'product-group-widget-not-allowed.png'
+            },
+            {
+              title: 'Categories',
+              widget: CategoriesWidgetComponent,
+              icon: '<img class="categories-icon" src="assets/categories-widget-icon.png">',
+              allowed: 'categories-widget-allowed.png',
+              notAllowed: 'categories-widget-not-allowed.png'
+            },
+            {
+              title: 'Carousel',
+              widget: CarouselWidgetComponent,
+              icon: '<img class="carousel-icon" src="assets/carousel-widget-icon.png">',
+              allowed: 'carousel-widget-allowed.png',
+              notAllowed: 'carousel-widget-not-allowed.png'
+            }
+          ]
+        )
+        break;
+    }
   }
 }
