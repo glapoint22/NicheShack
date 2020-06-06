@@ -3,6 +3,7 @@ import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
 import { Subject } from 'rxjs';
 import { MenuService } from '../../../services/menu.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'popup',
@@ -11,12 +12,13 @@ import { MenuService } from '../../../services/menu.service';
 })
 export class PopupComponent {
   public show: boolean;
+  public preventNoShow: boolean = false;
   public onPopupClose = new Subject<void>();
   private popup;
   private arrow;
   private popupTop: number;
   private arrowOnTop: boolean = false;
-  constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService) { }
+  constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService, public notificationService: NotificationService) { }
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
@@ -53,7 +55,7 @@ export class PopupComponent {
               (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + 20))))) {
 
         // As long as a menu is NOT open
-        if (!this.menuService.showMenu) {
+        if (!this.menuService.showMenu && !this.preventNoShow) {
           // Close this popup
           this.show = false;
           this.onPopupClose.next();

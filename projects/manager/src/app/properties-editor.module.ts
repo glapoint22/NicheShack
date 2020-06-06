@@ -61,6 +61,9 @@ import { BackgroundComponent } from './shared-components/properties/background/b
 import { ShowPopupDirective } from './directives/show-popup/show-popup.directive';
 import { MediaItemListComponent } from './shared-components/item-lists/media-item-list/media-item-list.component';
 import { LinkIconComponent } from './shared-components/link-icon/link-icon.component';
+import { ProductReportPopupComponent } from './shared-components/popups/product-report-popups/product-report-popup.component';
+import { ProductReportOtherPopupComponent } from './shared-components/popups/product-report-popups/product-report-other-popup/product-report-other-popup.component';
+import { NotificationsPopupComponent } from './shared-components/popups/notifications-popup/notifications-popup.component';
 
 
 @NgModule({
@@ -122,7 +125,10 @@ import { LinkIconComponent } from './shared-components/link-icon/link-icon.compo
     BackgroundComponent,
     LinkIconComponent,
     ShowPopupDirective,
-    MediaItemListComponent
+    MediaItemListComponent,
+    ProductReportPopupComponent,
+    ProductReportOtherPopupComponent,
+    NotificationsPopupComponent
   ],
   imports: [
     CommonModule,
@@ -188,7 +194,10 @@ import { LinkIconComponent } from './shared-components/link-icon/link-icon.compo
     BackgroundComponent,
     LinkIconComponent,
     ShowPopupDirective,
-    MediaItemListComponent
+    MediaItemListComponent,
+    ProductReportPopupComponent,
+    ProductReportOtherPopupComponent,
+    NotificationsPopupComponent
   ]
 })
 export class PropertiesEditorModule { }

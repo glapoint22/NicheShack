@@ -175,5 +175,5 @@
 }
 
 // Dark & Light tabs
-@include tabs('dark', 72px, 20px, 23px, false, #323232, #3c3c3c, #282828, #2d2d2d, #686868, #c2c2c2);
+@include tabs('dark', 120px, 20px, 23px, true, #282828, #363636, rgba(25, 25, 25, 0.95), rgba(25, 25, 25, 0.95), #686868, #c2c2c2);
 @include tabs('light', 65px, 25px, 25px, true, #3f3f3f, #4d4d4d, #313131, #343434, #7a7a7a, #cfcfcf);

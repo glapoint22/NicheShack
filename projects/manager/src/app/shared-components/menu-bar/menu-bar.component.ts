@@ -1,14 +1,43 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
+import { Observable } from 'rxjs';
+import { Notification } from '../../classes/notification';
+import { PopupService } from '../../services/popup.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'menu-bar',
   templateUrl: './menu-bar.component.html',
   styleUrls: ['./menu-bar.component.scss']
 })
-export class MenuBarComponent {
-  constructor(public menuService: MenuService) { }
+export class MenuBarComponent implements OnInit {
+  constructor(public menuService: MenuService, public popupService: PopupService, public notificationService: NotificationService) { }
   @ViewChild('navigationDropdown', { static: false }) navigationDropdown: ElementRef;
+
+
+  // -----------------------------( NG ON INIT )------------------------------ \\
+  ngOnInit() {
+    this.getNotifications().subscribe((notification: Notification) => {
+      this.notificationService.notifications.unshift(notification)
+      this.notificationService.updateNotificationProductImageList();
+      this.notificationService.updateNotificationTypeList();
+      
+    })
+  }
+
+
+  // -----------------------------( GET NOTIFICATIONS )------------------------------ \\
+  getNotifications(): Observable<Notification> {
+    return this.notificationService.tempData() 
+  }
+
+
+  // -----------------------------( SHOW NOTIFICATIONS POPUP )------------------------------ \\
+  showNotificationsPopup(sourceElement: HTMLElement) {
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.notificationsPopup.show = !this.popupService.notificationsPopup.show;
+  }
+
 
   // -----------------------------( SHOW NAVIGATION MENU )------------------------------ \\
   showNavigationMenu() {

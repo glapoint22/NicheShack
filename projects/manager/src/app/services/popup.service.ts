@@ -4,6 +4,8 @@ import { PricePointPopupComponent } from '../pages/niche-shack-editor/product-ed
 import { HierarchyPopupComponent } from '../shared-components/menu-bar/hierarchy-popup/hierarchy-popup.component';
 import { LinkPopupComponent } from '../shared-components/popups/link-popup/link-popup.component';
 import { MediaBrowserPopupComponent } from '../shared-components/popups/media-browser-popup/media-browser-popup.component';
+import { ProductReportOtherPopupComponent } from '../shared-components/popups/product-report-popups/product-report-other-popup/product-report-other-popup.component';
+import { NotificationsPopupComponent } from '../shared-components/popups/notifications-popup/notifications-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -15,4 +17,6 @@ export class PopupService {
   public hierarchyPopup: HierarchyPopupComponent;
   public linkPopup: LinkPopupComponent;
   public mediaBrowserPopup: MediaBrowserPopupComponent;
+  public notificationsPopup: NotificationsPopupComponent;
+  public productReportOtherPopup: ProductReportOtherPopupComponent;
 }
