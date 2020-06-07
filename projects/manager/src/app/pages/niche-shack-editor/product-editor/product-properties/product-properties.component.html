@@ -1,6 +1,6 @@
 <div class="container" *ngIf="!loadingService.loading">
     <!-- Hoplink -->
-    <product-hoplink [hoplink]="productProperties.hoplink"></product-hoplink>
+    <product-hoplink [productProperties]="productProperties"></product-hoplink>
 
     <!-- Image -->
     <panel [title]="'Image'">

@@ -55,8 +55,8 @@
     </div>
 
 
-
-    <input class="txt-20" [(ngModel)]="link.url">
+    <!-- Link -->
+    <input class="txt-20" [(ngModel)]="link.url" (click)="$event.target.select()">
 
 
     <!-- Disabled cover -->
