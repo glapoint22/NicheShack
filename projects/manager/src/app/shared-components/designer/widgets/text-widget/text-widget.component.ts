@@ -137,7 +137,8 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
 
   load(widgetData: TextWidgetData) {
     this.htmlContent = widgetData.htmlContent;
-    this.fixedHeight = widgetData.height;
+    if (widgetData.height) this.fixedHeight = widgetData.height;
+
     this.background.load(widgetData.background);
     this.padding.load(widgetData.padding);
 

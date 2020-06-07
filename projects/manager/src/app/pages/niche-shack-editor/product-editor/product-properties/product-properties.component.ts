@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { ProductMediaType } from 'projects/manager/src/app/classes/product-media';
 import { ProductProperties } from 'projects/manager/src/app/classes/product-properties';
+import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 
 @Component({
   selector: 'product-properties',
@@ -13,7 +14,7 @@ export class ProductPropertiesComponent implements OnChanges {
   @Input() productId: string;
   public productProperties: ProductProperties = new ProductProperties();
 
-  constructor() { }
+  constructor(public loadingService: LoadingService) { }
 
   // ---------------------Temp-----------------------------
   public getTempProductProperties(): Observable<ProductProperties> {
@@ -198,8 +199,12 @@ export class ProductPropertiesComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.productId) {
+      // Display the loading screen
+      this.loadingService.loading = true;
+
       this.getTempProductProperties().subscribe((productProperties: ProductProperties) => {
         this.productProperties = productProperties;
+        this.loadingService.loading = false;
       });
     }
 

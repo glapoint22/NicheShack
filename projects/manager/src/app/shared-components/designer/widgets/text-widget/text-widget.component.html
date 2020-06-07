@@ -20,7 +20,7 @@
         [style.height.px]="iframeHeight"></iframe>
 
     <!-- Cover -->
-    <div *ngIf="!inEditMode" class="position-absolute-identity" style="user-select: none;"
+    <div *ngIf="!inEditMode || handleMove" class="position-absolute-identity" style="user-select: none;"
         (dblclick)="setEditMode()">
     </div>
 </div>

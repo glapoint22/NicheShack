@@ -98,7 +98,6 @@ export class TextBox {
         this.content.style.bottom = '0';
         this.content.style.left = '0';
         this.content.style.outline = "none";
-        // this.contentParent.innerHTML = '<div>' + (this.text ? this.text : '&#8203;') + '</div>';
         this.content.innerHTML = '<div>&#8203;</div>';
 
 
@@ -108,13 +107,11 @@ export class TextBox {
         let selection = this.contentDocument.getSelection();
         let range = selection.getRangeAt(0);
 
-        // If there is no text
-        // if (!this.text) {
-            // Set the start and end of the range
-            range.setStart(range.startContainer, 1);
-            range.setEnd(range.startContainer, 1);
-        // }
-        
+        // Set the start and end of the range
+        range.setStart(range.startContainer, 1);
+        range.setEnd(range.startContainer, 1);
+
+
         // This will basically initialize the properties (ie. bold, fontSize, fontColor etc.)
         this.onSelectionChange(range);
 

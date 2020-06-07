@@ -994,7 +994,7 @@ export class LeadPageEditorComponent implements OnChanges {
         this.loadingService.loading = false;
         this.view = 'page';
         this.pageService.widgetCursors = [];
-        this.pageService.page.width = 1600;
+        this.pageService.page.width = this.pageService.pageDefaultWidth;
       }
     });
   }

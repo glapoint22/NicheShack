@@ -10,10 +10,15 @@
 
     <!-- Buttons -->
     <div class="buttons-container">
-        <div class="button-left">Properties</div>
-        <div class="button-right">Email</div>
+        <div class="button-left" [ngClass]="{'button-selected': mode == 'properties'}"
+            (click)="mode = 'properties'; ; onModeChange.emit('properties')">Properties</div>
+        <div class="button-right" [ngClass]="{'button-selected': mode == 'email'}"
+            (click)="mode = 'email'; onModeChange.emit('email')">Email</div>
     </div>
 
     <!-- Product Properties -->
-    <product-properties [productId]="product.id"></product-properties>
+    <product-properties [productId]="product.id" *ngIf="mode == 'properties'"></product-properties>
+
+    <!-- Product Email -->
+    <product-email [productId]="product.id" *ngIf="mode == 'email'"></product-email>
 </div>
