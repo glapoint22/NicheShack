@@ -12,8 +12,6 @@ export class HierarchyContentComponent {
   @Input() hierarchy: HierarchyPopupComponent;
 
   onItemButtonClick(item: HierarchyItem, input: HTMLInputElement) {
-    this.hierarchy.selectedItem = item;
-
     if (item.children.length == 0) {
       // Prevent the arrow button from rotating while loading its children
       window.setTimeout(() => {
