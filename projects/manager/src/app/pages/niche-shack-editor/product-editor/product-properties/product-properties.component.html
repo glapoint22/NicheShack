@@ -1,4 +1,7 @@
 <div class="container" *ngIf="!loadingService.loading">
+    <!-- Vendor -->
+    <product-vendor [vendor]="productProperties.vendor"></product-vendor>
+
     <!-- Hoplink -->
     <product-hoplink [productProperties]="productProperties"></product-hoplink>
 

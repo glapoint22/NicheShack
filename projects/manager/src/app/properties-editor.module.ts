@@ -65,6 +65,7 @@ import { ProductReportPopupComponent } from './shared-components/popups/product-
 import { ProductReportOtherPopupComponent } from './shared-components/popups/product-report-popups/product-report-other-popup/product-report-other-popup.component';
 import { NotificationsPopupComponent } from './shared-components/popups/notifications-popup/notifications-popup.component';
 import { HoplinkPopupComponent } from './shared-components/popups/hoplink-popup/hoplink-popup.component';
+import { SearchPopupComponent } from './shared-components/popups/search-popup/search-popup.component';
 
 
 @NgModule({
@@ -130,7 +131,8 @@ import { HoplinkPopupComponent } from './shared-components/popups/hoplink-popup/
     ProductReportPopupComponent,
     ProductReportOtherPopupComponent,
     NotificationsPopupComponent,
-    HoplinkPopupComponent
+    HoplinkPopupComponent,
+    SearchPopupComponent
   ],
   imports: [
     CommonModule,
@@ -200,7 +202,8 @@ import { HoplinkPopupComponent } from './shared-components/popups/hoplink-popup/
     ProductReportPopupComponent,
     ProductReportOtherPopupComponent,
     NotificationsPopupComponent,
-    HoplinkPopupComponent
+    HoplinkPopupComponent,
+    SearchPopupComponent
   ]
 })
 export class PropertiesEditorModule { }

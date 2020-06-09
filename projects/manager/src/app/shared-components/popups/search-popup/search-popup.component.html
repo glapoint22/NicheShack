@@ -1,0 +1,26 @@
+<!-- Popup Base -->
+<div #popup *show="popupService.searchPopup.show" transitionClass="fade-end" class="popup-base fade-start"
+    (onShow)="onPopupShow(popup, arrow)">
+
+    <!-- Arrow -->
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
+
+    <!-- Search input -->
+    <div style="position: relative;">
+        <i class="fas fa-search"></i>
+        <input autocomplete="off" id="search-input">
+    </div>
+
+
+    <!-- Results -->
+    <div class="results-container" [ngClass]="{'no-results': searchResults.length == 0}">
+        <div class="search-item" *ngFor="let searchItem of searchResults" (click)="onSearchItemClick(searchItem)">
+            {{searchItem.name}}
+        </div>
+
+        <!-- No results -->
+        <div *ngIf="searchResults.length == 0">
+            No results available.
+        </div>
+    </div>
+</div>

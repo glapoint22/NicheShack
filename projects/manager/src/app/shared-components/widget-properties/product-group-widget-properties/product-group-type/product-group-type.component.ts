@@ -1,20 +1,28 @@
-import { Component, Input, ViewChild, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { ProductGroupType } from 'projects/manager/src/app/classes/product-group-type';
 import { PanelComponent } from '../../../panels/panel/panel.component';
 import { KeyValue } from '@angular/common';
 import { ProductGroupWidgetComponent } from '../../../designer/widgets/product-group-widget/product-group-widget.component';
+import { Searchable } from 'projects/manager/src/app/classes/searchable';
+import { PopupService } from 'projects/manager/src/app/services/popup.service';
+import { PromptService } from 'projects/manager/src/app/services/prompt.service';
+import { ItemListComponent } from '../../../item-lists/item-list/item-list.component';
 
 @Component({
   selector: 'product-group-type',
   templateUrl: './product-group-type.component.html',
   styleUrls: ['./product-group-type.component.scss']
 })
-export class ProductGroupTypeComponent implements OnInit, OnChanges {
+export class ProductGroupTypeComponent implements OnInit, Searchable {
   @Input() productGroupWidget: ProductGroupWidgetComponent;
   @ViewChild('panel', { static: false }) panel: PanelComponent;
+  @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
   public productGroupTypes: Array<KeyValue<string, string>>;
   public productGroupType = ProductGroupType;
-  public featuredProducts: Array<string>;
+  public searchUrl: string = 'api/Products';
+
+
+  constructor(private popupService: PopupService, private promptService: PromptService) { }
 
   ngOnInit() {
     this.productGroupTypes = [
@@ -28,11 +36,6 @@ export class ProductGroupTypeComponent implements OnInit, OnChanges {
     ]
   }
 
-  ngOnChanges() {
-    if (this.productGroupWidget.featuredProducts) {
-      this.featuredProducts = this.productGroupWidget.featuredProducts.map(x => x.title);
-    }
-  }
 
   // -------------------------( ON DROPDOWN OPTION SELECT )------------------------ \\
   onDropdownOptionSelect(selectedOptionValue: string) {
@@ -45,14 +48,38 @@ export class ProductGroupTypeComponent implements OnInit, OnChanges {
   }
 
 
-  // -----------------------------( ADD CATEGORY )------------------------------ \\
-  addFeaturedProduct() {
-    console.log("Add Featured Product");
+  // -----------------------------( ADD FEATURED PRODUCT )------------------------------ \\
+  addFeaturedProduct(sourceElement: HTMLElement) {
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.searchPopup.searchable = this;
+    this.popupService.searchPopup.show = !this.popupService.searchPopup.show;
   }
 
 
-  // -----------------------------( EDIT CATEGORY )------------------------------ \\
-  editFeaturedProduct() {
-    console.log("Edit Featured Product");
+
+  // -----------------------------( SET SEARCH ITEM )------------------------------ \\
+  setSearchItem(searchItem: any) {
+    // Add the item to the list
+    // this.itemList.addListItem(searchItem);
+    this.productGroupWidget.featuredProducts.push(searchItem)
+    this.panel.onContentLoad();
+  }
+
+
+
+
+  // -----------------------------( ON REMOVE PRODUCT CLICK )------------------------------ \\
+  onRemoveProductClick() {
+    if (!this.itemList.deleteIcon.isDisabled) {
+      this.promptService.showPrompt('Remove Product', 'Are you sure you want to remove this product?', this.removeProduct, this);
+    }
+
+  }
+
+
+
+  // -----------------------------( REMOVE PRODUCT )------------------------------ \\
+  removeProduct() {
+    this.itemList.deleteListItem();
   }
 }

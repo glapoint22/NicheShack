@@ -1,0 +1,44 @@
+@import '../../../../scss/variables';
+
+.results-container {
+    width: 100%;
+    height: 182px;
+    border: 1px solid #373737;
+    margin-top: 10px; font-size: 12px;
+}
+
+.search-item {
+    cursor: pointer;
+    padding: 0 5px;
+    &:hover {
+        background: $hover-fill-color;
+    }
+}
+
+input {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-color: #373737;
+    height: 18px;
+    width: 170px;
+    font-size: 12px;
+    padding-left: 20px;
+    color: #aaaaaa;
+}
+
+.fa-search {
+    position: absolute;
+    font-size: 11px;
+    top: 5px;
+    left: 5px;
+    color: #aaaaaa;
+}
+
+.no-results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #797979;
+}

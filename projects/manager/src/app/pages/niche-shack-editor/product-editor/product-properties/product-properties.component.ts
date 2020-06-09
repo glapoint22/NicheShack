@@ -21,6 +21,10 @@ export class ProductPropertiesComponent implements OnChanges {
 
     return new Observable<ProductProperties>(subscriber => {
       subscriber.next({
+        vendor: {
+          id: 'LWDT6IQHNX',
+          name: 'Gumpy\'s',
+        },
         image: {
           url: '8307dc287c6147bcaddbfc921411eece.png',
           title: 'The Skinny Asian Diet'

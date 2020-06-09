@@ -7,6 +7,7 @@ import { MediaBrowserPopupComponent } from '../shared-components/popups/media-br
 import { ProductReportOtherPopupComponent } from '../shared-components/popups/product-report-popups/product-report-other-popup/product-report-other-popup.component';
 import { NotificationsPopupComponent } from '../shared-components/popups/notifications-popup/notifications-popup.component';
 import { HoplinkPopupComponent } from '../shared-components/popups/hoplink-popup/hoplink-popup.component';
+import { SearchPopupComponent } from '../shared-components/popups/search-popup/search-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -21,4 +22,5 @@ export class PopupService {
   public notificationsPopup: NotificationsPopupComponent;
   public productReportOtherPopup: ProductReportOtherPopupComponent;
   public hoplinkPopup: HoplinkPopupComponent;
+  public searchPopup: SearchPopupComponent;
 }

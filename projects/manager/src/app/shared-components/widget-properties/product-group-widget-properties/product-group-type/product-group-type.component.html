@@ -13,26 +13,19 @@
 
             <!-- Delete -->
             <div class="icon-container"
-                [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Featured Product (Delete)' : itemList.editIcon.isDisabled ? 'Delete Featured Products (Delete)' : 'Delete Featured Product (Delete)'"
+                [attr.title]="'Remove Featured Product'"
                 [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
                 (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                (click)="itemList.deleteListItem()">
+                (click)="onRemoveProductClick()">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
-            <!-- Edit -->
-            <div class="icon-container" [attr.title]="'Edit Featured Product (Ctrl+Alt+E)'"
-                [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
-                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                (click)="!itemList.editIcon.isDisabled ? editFeaturedProduct() : null">
-                <i class="fas fa-edit"></i>
-            </div>
-
+            
             <!-- Add -->
             <div class="icon-container" [attr.title]="'Add Featured Product (Ctrl+Alt+A)'"
                 [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
                 (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                (click)="!itemList.addIcon.isDisabled ? addFeaturedProduct() : null">
+                (click)="!itemList.addIcon.isDisabled ? addFeaturedProduct($event.target) : null">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>
