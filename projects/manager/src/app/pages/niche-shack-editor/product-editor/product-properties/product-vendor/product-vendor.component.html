@@ -1,0 +1,33 @@
+<panel [title]="'Vendor'" [rounded]="true">
+    <!-- Property Box -->
+    <div class="property-box-dark">
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Add Vendor Icon -->
+            <div class="icon-container" title="Add / Replace Vendor" (click)="onVendorSearchClick($event.target)">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+
+
+            <!-- Vendor Info Icon -->
+            <div class="icon-container" title="Vendor Info" (click)="onVendorInfoClick()">
+                <i class="fas fa-info-circle"></i>
+            </div>
+        </div>
+
+        <!-- Link -->
+        <ng-container *ngIf="vendor; else placeholder">
+            <div class="vendor">
+                {{vendor.name}}
+            </div>
+        </ng-container>
+
+
+        <!-- Placeholder -->
+        <ng-template #placeholder>
+            <div class="no-property">No vendor available</div>
+        </ng-template>
+    </div>
+</panel>

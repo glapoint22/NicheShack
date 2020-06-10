@@ -8,4 +8,5 @@ import { HierarchyItem } from '../../classes/hierarchy-item';
 })
 export class NicheShackEditorComponent {
   public selectedItem: HierarchyItem = new HierarchyItem();
+  public productEditorMode: string;
 }

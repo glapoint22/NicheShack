@@ -23,14 +23,14 @@ export class ProductDescriptionComponent implements AfterViewInit {
     this.iframe.nativeElement.srcdoc = document.createElement('div').outerHTML;
     this.iframe.nativeElement.onload = (event) => {
       this.description = new Description(event.currentTarget.contentDocument, this.applicationRef, new Color(218, 218, 218, 1));
-    }
-  }
 
-  ngOnChanges() {
-    if (this.text) {
-      this.description.content.innerHTML = this.text;
-      this.iframe.nativeElement.style.height = this.description.content.scrollHeight + 'px';
-      this.panel.onContentLoad();
+      if (this.text) {
+        this.description.content.innerHTML = this.text;
+        this.iframe.nativeElement.style.height = this.description.content.scrollHeight + 'px';
+        this.panel.onContentLoad();
+        this.description.selectContents();
+        this.description.removeSelection();
+      }
     }
   }
 }

@@ -1,0 +1,210 @@
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" (onShow)="onShow()">
+    <div class="form">
+        <!-- Bar -->
+        <div class="form-bar">
+            Vendor
+            <div class="form-x-button" (click)="show = false">X</div>
+        </div>
+
+        <!-- Panel -->
+        <div class="panel-light">
+
+            <!-- Ellipsis -->
+            <div class="ellipsis-container">
+                <div class="ellipsis" (click)="showMenu($event.target)">
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+            </div>
+
+
+            <!-- General -->
+            <fieldset>
+                <legend>General</legend>
+                <div class="property-row">
+                    <!-- Company Name -->
+                    <div class="txt-property">
+                        <div class="label">Company Name</div>
+                        <input [(ngModel)]="vendor.name" [readonly]="!editMode">
+                    </div>
+
+                    <!-- Web Page -->
+                    <div class="txt-property">
+                        <div class="label">Web Page</div>
+                        <input [(ngModel)]="vendor.webPage" [readonly]="!editMode">
+                    </div>
+                </div>
+            </fieldset>
+
+
+
+            <!-- Adress -->
+            <fieldset>
+                <legend>Address</legend>
+                <div class="property-row">
+                    <!-- Street -->
+                    <div class="txt-property">
+                        <div class="label">Street</div>
+                        <input [(ngModel)]="vendor.address.street" [readonly]="!editMode">
+                    </div>
+
+                    <!-- P.O. Box -->
+                    <div class="txt-property">
+                        <div class="label">P.O Box</div>
+                        <input [(ngModel)]="vendor.address.poBox" [readonly]="!editMode">
+                    </div>
+                </div>
+
+
+
+                <div class="property-row">
+                    <!-- City -->
+                    <div class="txt-property">
+                        <div class="label">City</div>
+                        <input [(ngModel)]="vendor.address.city" [readonly]="!editMode">
+                    </div>
+
+                    <!-- State -->
+                    <div class="txt-property">
+                        <div class="label">State</div>
+                        <input [(ngModel)]="vendor.address.state" [readonly]="!editMode">
+                    </div>
+                </div>
+
+
+
+                <div class="property-row">
+                    <!-- Zip -->
+                    <div class="txt-property">
+                        <div class="label">Zip</div>
+                        <input [(ngModel)]="vendor.address.zip" [readonly]="!editMode">
+                    </div>
+
+                    <!-- Country -->
+                    <div class="txt-property">
+                        <div class="label">Country</div>
+                        <input [(ngModel)]="vendor.address.country" [readonly]="!editMode">
+                    </div>
+                </div>
+            </fieldset>
+
+
+            <!-- Contacts -->
+            <div class="contacts">
+
+                <!-- Primary Contact -->
+                <fieldset>
+                    <legend>Primary Contact</legend>
+                    <div class="property-row">
+                        <!-- First Name -->
+                        <div class="txt-property">
+                            <div class="label">First Name</div>
+                            <input [(ngModel)]="vendor.primaryContact.firstName" [readonly]="!editMode">
+                        </div>
+                    </div>
+
+
+                    <div class="property-row">
+                        <!-- Last Name -->
+                        <div class="txt-property">
+                            <div class="label">Last Name</div>
+                            <input [(ngModel)]="vendor.primaryContact.lastName" [readonly]="!editMode">
+                        </div>
+                    </div>
+
+
+
+                    <div class="property-row">
+                        <!-- Office Phone -->
+                        <div class="txt-property">
+                            <div class="label">Office Phone</div>
+                            <input [(ngModel)]="vendor.primaryContact.officePhone" [readonly]="!editMode">
+                        </div>
+                    </div>
+
+
+                    <div class="property-row">
+                        <!-- Mobile Phone -->
+                        <div class="txt-property">
+                            <div class="label">Mobile Phone</div>
+                            <input [(ngModel)]="vendor.primaryContact.mobilePhone" [readonly]="!editMode">
+                        </div>
+                    </div>
+
+
+                    <div class="property-row">
+                        <!-- Email -->
+                        <div class="txt-property">
+                            <div class="label">Email</div>
+                            <input [(ngModel)]="vendor.primaryContact.email" [readonly]="!editMode">
+                        </div>
+                    </div>
+                </fieldset>
+
+
+
+
+
+                <!-- Secondary Contact -->
+                <fieldset>
+                    <legend>Secondary Contact</legend>
+                    <div class="property-row">
+                        <!-- First Name -->
+                        <div class="txt-property">
+                            <div class="label">First Name</div>
+                            <input [(ngModel)]="vendor.secondaryContact.firstName" [readonly]="!editMode">
+                        </div>
+                    </div>
+
+
+
+                    <div class="property-row">
+                        <!-- Last Name -->
+                        <div class="txt-property">
+                            <div class="label">Last Name</div>
+                            <input [(ngModel)]="vendor.secondaryContact.lastName" [readonly]="!editMode">
+                        </div>
+                    </div>
+
+
+
+                    <div class="property-row">
+                        <!-- Office Phone -->
+                        <div class="txt-property">
+                            <div class="label">Office Phone</div>
+                            <input [(ngModel)]="vendor.secondaryContact.officePhone" [readonly]="!editMode">
+                        </div>
+                    </div>
+
+                    <div class="property-row">
+                        <!-- Mobile Phone -->
+                        <div class="txt-property">
+                            <div class="label">Mobile Phone</div>
+                            <input [(ngModel)]="vendor.secondaryContact.mobilePhone" [readonly]="!editMode">
+                        </div>
+                    </div>
+
+
+                    <div class="property-row">
+                        <!-- Email -->
+                        <div class="txt-property">
+                            <div class="label">Email</div>
+                            <input [(ngModel)]="vendor.secondaryContact.email" [readonly]="!editMode">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+
+            <!-- Notes -->
+            <fieldset [style.marginBottom]="newVendor ? initial : 0">
+                <legend>Notes</legend>
+                <textarea [(ngModel)]="vendor.notes" [readonly]="!editMode"></textarea>
+            </fieldset>
+
+            <div *ngIf="newVendor" class="button-container">
+                <button (click)="onSubmitClick()" [disabled]="!vendor.name">Submit</button>
+            </div>
+
+        </div>
+    </div>
+</div>

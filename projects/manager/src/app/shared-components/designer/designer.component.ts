@@ -24,7 +24,9 @@ export class DesignerComponent implements AfterViewInit {
 
   constructor(private widgetService: WidgetService, public pageService: PageService, private breakpointService: BreakpointService) { }
 
-
+  ngOnInit() {
+    this.pageService.clearPage();
+  }
 
 
   ngAfterViewInit() {

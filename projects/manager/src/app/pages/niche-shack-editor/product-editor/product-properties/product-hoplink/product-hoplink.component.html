@@ -1,3 +1,25 @@
 <panel [title]="'Hoplink'" [rounded]="true">
-    <input class="txt-20" [(ngModel)]="hoplink">
+    <!-- Property Box -->
+    <div class="property-box-dark">
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Link Icon -->
+            <div class="icon-container" (click)="onHoplinkIconClick($event.target)">
+                <i class="fas fa-link"></i>
+            </div>
+        </div>
+
+        <!-- Link -->
+        <div *ngIf="productProperties.hoplink; else placeholder" class="link text-truncate">
+            <a [href]="productProperties.hoplink" target="_blank">{{productProperties.hoplink}}</a>
+        </div>
+
+
+        <!-- Placeholder -->
+        <ng-template #placeholder>
+            <div class="no-property">No hoplink available</div>
+        </ng-template>
+    </div>
 </panel>

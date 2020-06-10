@@ -13,7 +13,7 @@
 
             <!-- Item -->
             <div [id]="item.type + '-' + item.id" class="item" (click)="hierarchy.selectedItem = item"
-                (dblclick)="hierarchy.onItemClick()" [ngClass]="{'selected': hierarchy.selectedItem == item}">
+                (click)="hierarchy.onItemClick()" [ngClass]="{'selected': hierarchy.selectedItem == item}">
                 {{item.name}}
             </div>
 

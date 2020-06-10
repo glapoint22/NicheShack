@@ -4,7 +4,8 @@
     width: 100%;
     cursor: pointer;
     user-select: none;
-    padding-left: 3px;
+    padding: 0 3px;
+    font-size: 12px;
     &:hover:not(.selected) {
         background: $hover-fill-color;
     }
@@ -15,6 +16,41 @@
     outline: 1px solid $selected-border-color;
     color: white;
 }
+
+
+.arrow-button-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+    .arrow-button {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: rotate(0);
+        transition: transform 0.25s ease-in-out;
+        &:after {
+            content: '';
+            width: 0; 
+            height: 0; 
+            color: #aaaaaa;
+            border-top: solid 3px transparent;
+            border-bottom: solid 3px transparent;
+            border-left: solid 6px;
+            display: inline-block;
+        }
+    }
+
+    & input {
+        display: none;
+        &:checked ~ .arrow-button {
+            transform: rotate(90deg);
+        }
+    }
+}
+
+
 
 
 .child {
@@ -38,5 +74,11 @@
 
 .fa-spinner {
     position: absolute;
-    right: 10px;
+    right: 14px;
+    font-size: 10px;
+}
+
+[contenteditable="true"].item {
+    outline: 1px solid #326796;
+    cursor: initial;
 }

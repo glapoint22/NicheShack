@@ -16,12 +16,4 @@ export class LinkPopupComponent extends PopupComponent implements OnInit {
   ngOnInit() {
     this.popupService.linkPopup = this;
   }
-
-
-
-  // -----------------------------( ON POPUP SHOW )------------------------------ \\
-  onPopupShow(popup, arrow) {
-    super.onPopupShow(popup, arrow);
-
-  }
 }

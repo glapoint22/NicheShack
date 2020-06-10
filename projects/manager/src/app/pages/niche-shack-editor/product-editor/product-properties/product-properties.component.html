@@ -1,27 +1,32 @@
-<div class="container">
-    <!-- Hoplink -->
-    <product-hoplink [hoplink]="productProperties.hoplink"></product-hoplink>
+<div class="container" *ngIf="productProperties">
+    <!-- Vendor -->
+    <product-vendor [vendor]="productProperties.vendor"></product-vendor>
 
-    
+    <!-- Hoplink -->
+    <product-hoplink [productProperties]="productProperties"></product-hoplink>
 
     <!-- Image -->
     <panel [title]="'Image'">
         <image [image]="productProperties.image"></image>
     </panel>
-    
+
 
     <!-- Filter -->
     <product-filters [filters]="productProperties.filters"></product-filters>
+
 
     <!-- Content -->
     <product-content [content]="productProperties.content" [pricePoints]="productProperties.pricePoints">
     </product-content>
 
+
     <!-- Media -->
     <product-media [media]="productProperties.media"></product-media>
 
+
     <!-- Keywords -->
     <product-keywords [keywords]="productProperties.keywords"></product-keywords>
+
 
     <!-- Description -->
     <product-description [text]="productProperties.description"></product-description>

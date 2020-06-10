@@ -25,6 +25,7 @@ import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/d
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { PromptModule } from '../../shared-components/prompt/prompt.module';
+import { ProductVendorComponent } from './product-editor/product-properties/product-vendor/product-vendor.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { PromptModule } from '../../shared-components/prompt/prompt.module';
     ProductMediaComponent,
     ProductEmailComponent,
     ColorIconComponent,
-    PricePointPopupComponent
+    PricePointPopupComponent,
+    ProductVendorComponent
   ],
   imports: [
     CommonModule,

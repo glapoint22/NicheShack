@@ -1,14 +1,16 @@
 <menu-bar></menu-bar>
 
 <div style="position: absolute; top: 33px; right: 0; bottom: 0; left: 0; display: flex; justify-content: flex-end;">
-    <div style="flex: 1; position: relative;" *ngIf="selectedItem.type == 'Niche'">
+    <div style="flex: 1; position: relative;"
+        *ngIf="selectedItem.type == 'Niche' || (selectedItem.type == 'Product' && productEditorMode == 'email')">
         <designer></designer>
     </div>
     <div style="flex-basis: 15%; max-width: 15%; background: #252525; overflow: auto;">
 
         <category-editor *ngIf="selectedItem.type == 'Category'" [hierarchyItem]="selectedItem"></category-editor>
         <niche-editor *ngIf="selectedItem.type == 'Niche'" [hierarchyItem]="selectedItem"></niche-editor>
-        <product-editor *ngIf="selectedItem.type == 'Product'" [hierarchyItem]="selectedItem"></product-editor>
+        <product-editor *ngIf="selectedItem.type == 'Product'" [hierarchyItem]="selectedItem"
+            (onModeChange)="productEditorMode = $event"></product-editor>
 
 
     </div>
@@ -32,6 +34,9 @@
 
 
 <notifications-popup></notifications-popup>
+<hoplink-popup></hoplink-popup>
+
+<search-popup></search-popup>
 
 <cover></cover>
 

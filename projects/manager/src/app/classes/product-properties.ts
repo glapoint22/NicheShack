@@ -3,8 +3,10 @@ import { ProductPricePoint } from './product-price-point';
 import { ProductContent } from './product-content';
 import { ProductMedia } from './product-media';
 import { ImageData } from './image-data';
+import { Item } from './item';
 
 export class ProductProperties {
+    vendor: Item;
     image: ImageData;
     rating: number;
     totalReviews: number;

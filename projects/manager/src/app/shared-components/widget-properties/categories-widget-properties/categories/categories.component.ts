@@ -1,31 +1,56 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { CategoriesWidgetComponent } from '../../../designer/widgets/categories-widget/categories-widget.component';
+import { Searchable } from 'projects/manager/src/app/classes/searchable';
+import { PopupService } from 'projects/manager/src/app/services/popup.service';
+import { PromptService } from 'projects/manager/src/app/services/prompt.service';
+import { PanelComponent } from '../../../panels/panel/panel.component';
+import { ItemListComponent } from '../../../item-lists/item-list/item-list.component';
 
 @Component({
   selector: 'categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss']
 })
-export class CategoriesComponent {
+export class CategoriesComponent implements Searchable {
   @Input() categoriesWidget: CategoriesWidgetComponent;
-  public categories: Array<string>;
+  @ViewChild('panel', { static: false }) panel: PanelComponent;
+  @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
 
-  ngOnChanges() {
-    if (this.categoriesWidget.categories) {
-      this.categories = this.categoriesWidget.categories.map(x => x.name);
+  public searchUrl: string = 'api/Categories';
+
+  constructor(private popupService: PopupService, private promptService: PromptService) { }
+
+
+
+  // -----------------------------( ADD CATEGORY )------------------------------ \\
+  addCategory(sourceElement: HTMLElement) {
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.searchPopup.searchable = this;
+    this.popupService.searchPopup.show = !this.popupService.searchPopup.show;
+  }
+  
+
+
+  // -----------------------------( SET SEARCH ITEM )------------------------------ \\
+  setSearchItem(searchItem: any) {
+    // Add the item to the list
+    // this.itemList.addListItem(searchItem);
+    this.categoriesWidget.categories.push(searchItem)
+    this.panel.onContentLoad();
+  }
+
+
+  // -----------------------------( ON REMOVE CATEGORY CLICK )------------------------------ \\
+  onRemoveCategoryClick() {
+    if (!this.itemList.deleteIcon.isDisabled) {
+      this.promptService.showPrompt('Remove Category', 'Are you sure you want to remove this category?', this.removeCategory, this);
     }
 
   }
 
 
-  // -----------------------------( ADD CATEGORY )------------------------------ \\
-  addCategory() {
-    console.log("Add Category");
-  }
-
-
-  // -----------------------------( EDIT CATEGORY )------------------------------ \\
-  editCategory() {
-    console.log("Edit Category");
+  // -----------------------------( REMOVE CATEGORY )------------------------------ \\
+  removeCategory() {
+    this.itemList.deleteListItem();
   }
 }

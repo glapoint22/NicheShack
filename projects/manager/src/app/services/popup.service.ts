@@ -11,6 +11,8 @@ import { ProductReportImagePopupComponent } from '../shared-components/popups/pr
 import { ProductReportMediaPopupComponent } from '../shared-components/popups/product-report-popups/product-report-media-popup/product-report-media-popup.component';
 import { ProductReportContentPopupComponent } from '../shared-components/popups/product-report-popups/product-report-content-popup/product-report-content-popup.component';
 import { MessageNotificationPopupComponent } from '../shared-components/popups/notifications-popup/message-notification-popup/message-notification-popup.component';
+import { HoplinkPopupComponent } from '../shared-components/popups/hoplink-popup/hoplink-popup.component';
+import { SearchPopupComponent } from '../shared-components/popups/search-popup/search-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -29,4 +31,6 @@ export class PopupService {
   public productReportImagePopup: ProductReportImagePopupComponent;
   public productReportMediaPopup: ProductReportMediaPopupComponent;
   public productReportContentPopup: ProductReportContentPopupComponent;
+  public hoplinkPopup: HoplinkPopupComponent;
+  public searchPopup: SearchPopupComponent;
 }

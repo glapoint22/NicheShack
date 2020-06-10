@@ -30,6 +30,8 @@ export class PageService {
   public page: Page = new Page();
   public rootContainer: ContainerComponent;
   public widgetCursors: Array<WidgetCursor>;
+  public pageDefaultWidth: number = 1600;
+  public emailDefaultWidth: number = 600;
   private defaultWidth: number;
 
 
@@ -281,11 +283,11 @@ export class PageService {
 
     switch (type) {
       case 'email':
-      this.defaultWidth = 600;
+      this.defaultWidth = this.emailDefaultWidth;
       break;
 
       case 'leadPage':
-        this.defaultWidth = 1600;
+        this.defaultWidth = this.pageDefaultWidth;
         this.widgetCursors.push({
           title: 'Video',
           widget: VideoWidgetComponent,
@@ -296,7 +298,7 @@ export class PageService {
         break;
 
       case 'page':
-        this.defaultWidth = 1600;
+        this.defaultWidth = this.pageDefaultWidth;
         this.widgetCursors.push.apply(this.widgetCursors,
           [
             {

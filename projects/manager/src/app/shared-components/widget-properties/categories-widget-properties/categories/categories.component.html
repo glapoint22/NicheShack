@@ -1,5 +1,5 @@
 <!-- Panel -->
-<panel [title]="'Categories'">
+<panel #panel [title]="'Categories'">
 
     <!-- Property Box -->
     <div class="property-box-dark">
@@ -13,19 +13,10 @@
                     [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
                     (mouseover)="itemList.isOverIconButton = true"
                     (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="itemList.deleteListItem()">
+                    (click)="onRemoveCategoryClick()">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
-            <!-- Edit -->
-            <div class="icon-container"
-                    [attr.title]="'Edit Category (Ctrl+Alt+E)'" 
-                    [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
-                    (mouseover)="itemList.isOverIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="!itemList.editIcon.isDisabled ? editCategory() : null">
-                <i class="fas fa-edit"></i>
-            </div>
 
             <!-- Add -->
             <div class="icon-container"
@@ -33,7 +24,7 @@
                     [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
                     (mouseover)="itemList.isOverIconButton = true"
                     (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="!itemList.addIcon.isDisabled ? addCategory() : null">
+                    (click)="!itemList.addIcon.isDisabled ? addCategory($event.target) : null">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>
