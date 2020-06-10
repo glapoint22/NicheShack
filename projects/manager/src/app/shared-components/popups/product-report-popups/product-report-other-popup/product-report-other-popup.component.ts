@@ -7,10 +7,17 @@ import { ProductReportPopupComponent } from '../product-report-popup.component';
   styleUrls: ['./product-report-other-popup.component.scss', '../../popup/popup.component.scss', '../../product-report-popups/product-report-popup.component.scss']
 })
 export class ProductReportOtherPopupComponent extends ProductReportPopupComponent implements OnInit{
-
-
+  
   // --------------------------------( NG ON INIT )-------------------------------- \\
   ngOnInit() {
     this.popupService.productReportOtherPopup = this;
+    super.ngOnInit();
+  }
+
+
+  // -----------------------------( ON POPUP SHOW )------------------------------ \\
+  onPopupShow(popup, arrow) {
+    super.onPopupShow(popup, arrow);
+    this.paginatorIndex = this.notificationService.productNotification.customerText.length - 1;
   }
 }

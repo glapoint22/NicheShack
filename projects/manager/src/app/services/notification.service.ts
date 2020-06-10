@@ -1,145 +1,43 @@
 import { Injectable } from '@angular/core';
 import { Notification, NotificationType } from '../classes/notification';
 import { ProductNotification } from '../classes/product-notification';
-import { merge, of } from 'rxjs';
+import { merge, of, concat } from 'rxjs';
 import { ReviewComplaintNotification } from '../classes/review-complaint-notification';
 import { ProductNotificationDescription } from '../classes/product-notification-description';
 import { ProductNotificationImage } from '../classes/product-notification-image';
 import { ProductNotificationContent } from '../classes/product-notification-content';
 import { ProductNotificationMedia } from '../classes/product-notification-media';
 import { ProductMediaType } from '../classes/product-media';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
   public notificationTypeList: Array<string> = [];
-  public notificationProductImageList: Array<string> = [];
+  public notificationImageList: Array<string> = [];
   public notifications: Array<Notification> = [];
+  public message: Notification;
+  public productNotification: ProductNotification;
+  public productNotificationDescription: ProductNotificationDescription;
+  public productNotificationImage: ProductNotificationImage;
+  public productNotificationMedia: ProductNotificationMedia
+  public productNotificationContent: ProductNotificationContent;
 
 
-  updateNotificationTypeList() {
-    let notificationTypes: Array<string>;
-
-
-    notificationTypes = this.notifications.map(x => {
-      let notificationType: string;
-
-      switch (x.type) {
-        case 0: {
-          notificationType = 'Message';
-          break;
-        }
-        case 1: {
-          notificationType = 'Review Complaint'
-          break;
-        }
-        case 2: {
-          notificationType = 'Product Name Doesn\'t Match With Product Description'
-          break;
-        }
-        case 3: {
-          notificationType = 'Product Name Doesn\'t Match With Product Image'
-          break;
-        }
-        case 4: {
-          notificationType = 'Product Name (Other)'
-          break;
-        }
-        case 5: {
-          notificationType = 'Product Price Too High'
-          break;
-        }
-        case 6: {
-          notificationType = 'Product Price Not Correct'
-          break;
-        }
-        case 7: {
-          notificationType = 'Product Price (Other)'
-          break;
-        }
-        case 8: {
-          notificationType = 'Videos & Images are Different From Product'
-          break;
-        }
-        case 9: {
-          notificationType = 'Not Enough Videos & Images'
-          break;
-        }
-        case 10: {
-          notificationType = 'Videos & Images Not Clear'
-          break;
-        }
-        case 11: {
-          notificationType = 'Videos & Images Misleading'
-          break;
-        }
-        case 12: {
-          notificationType = 'Videos & Images (Other)'
-          break;
-        }
-        case 13: {
-          notificationType = 'Product Description Incorrect'
-          break;
-        }
-        case 14: {
-          notificationType = 'Product Description Too Vague'
-          break;
-        }
-        case 15: {
-          notificationType = 'Product Description Misleading'
-          break;
-        }
-        case 16: {
-          notificationType = 'Product Description (Other)'
-          break;
-        }
-        case 17: {
-          notificationType = 'Product Reported As Illegal'
-          break;
-        }
-        case 18: {
-          notificationType = 'Product Reported As Having Adult Content'
-          break;
-        }
-        case 19: {
-          notificationType = 'Offensive Product (Other)'
-          break;
-        }
-        case 20: {
-          notificationType = 'Product Inactive'
-          break;
-        }
-        case 21: {
-          notificationType = 'Product site no longer in service'
-          break;
-        }
-        case 22: {
-          notificationType = 'Missing Product (Other)'
-          break;
-        }
-      }
-      return notificationType;
-    })
-
-    this.notificationTypeList = notificationTypes;
-  }
-
-
-
-  updateNotificationProductImageList() {
+  getNotificationImageList(notifications) {
     let notificationImages: Array<string>;
 
-    notificationImages = this.notifications.map(x => {
+    notificationImages = notifications.map(x => {
       let notificationProductImage: string;
 
       if (x.type == NotificationType.Message) {
-        notificationProductImage = 'bc9ce0cc860e422aa7c9cafaaf61fc8a.png'
+        notificationProductImage = 'bc9ce0cc860e422aa7c9cafaaf61fc8a.png';
 
       } else if (x.type == NotificationType.ReviewComplaint) {
 
 
-        notificationProductImage = '143968bba73642898bb4a6715a1efd3d.png'
+        notificationProductImage = '143968bba73642898bb4a6715a1efd3d.png';
 
       } else {
         notificationProductImage = (x as ProductNotification).productThumbnail
@@ -149,8 +47,126 @@ export class NotificationService {
     });
 
 
-    this.notificationProductImageList = notificationImages;
+    return notificationImages;
   }
+
+
+  getNotificationDescription(type: number) {
+    let description: string;
+
+    switch (type) {
+      case 0: {
+        description = 'Message';
+        break;
+      }
+      case 1: {
+        description = 'Review Complaint'
+        break;
+      }
+      case 2: {
+        description = 'Product Name Doesn\'t Match With Product Description'
+        break;
+      }
+      case 3: {
+        description = 'Product Name Doesn\'t Match With Product Image'
+        break;
+      }
+      case 4: {
+        description = 'Product Name (Other)'
+        break;
+      }
+      case 5: {
+        description = 'Product Price Too High'
+        break;
+      }
+      case 6: {
+        description = 'Product Price Not Correct'
+        break;
+      }
+      case 7: {
+        description = 'Product Price (Other)'
+        break;
+      }
+      case 8: {
+        description = 'Videos & Images are Different From Product'
+        break;
+      }
+      case 9: {
+        description = 'Not Enough Videos & Images'
+        break;
+      }
+      case 10: {
+        description = 'Videos & Images Not Clear'
+        break;
+      }
+      case 11: {
+        description = 'Videos & Images Misleading'
+        break;
+      }
+      case 12: {
+        description = 'Videos & Images (Other)'
+        break;
+      }
+      case 13: {
+        description = 'Product Description Incorrect'
+        break;
+      }
+      case 14: {
+        description = 'Product Description Too Vague'
+        break;
+      }
+      case 15: {
+        description = 'Product Description Misleading'
+        break;
+      }
+      case 16: {
+        description = 'Product Description (Other)'
+        break;
+      }
+      case 17: {
+        description = 'Product Reported As Illegal'
+        break;
+      }
+      case 18: {
+        description = 'Product Reported As Having Adult Content'
+        break;
+      }
+      case 19: {
+        description = 'Offensive Product (Other)'
+        break;
+      }
+      case 20: {
+        description = 'Product Inactive'
+        break;
+      }
+      case 21: {
+        description = 'Product site no longer in service'
+        break;
+      }
+      case 22: {
+        description = 'Missing Product (Other)'
+        break;
+      }
+    }
+
+    return description;
+  }
+
+
+  convertNotificationTypeToDescription(notifications) {
+    let notificationTypes: Array<string>;
+
+
+    notificationTypes = notifications.map(x => {
+      return this.getNotificationDescription(x.type);
+    })
+
+    return notificationTypes;
+  }
+
+
+
+
 
 
 
@@ -232,17 +248,31 @@ export class NotificationService {
     // ================================= MESSAGE ================================ \\
     let message = of({
       type: NotificationType.Message,
-      customerText: [{
-        timeStamp: new Date(),
-        thumbnail: 'no-account-pic.png',
-        text: 'Hi,\nI was wondering if your company was hiring. I would love to be part of your team. Please get back to me as sson as you possibly can. Thank you and have a wonderful day.\nKaitlin'
-      }],
-      notesText: [{
-        timeStamp: new Date(),
-        thumbnail: 'no-account-pic.png',
-        text: 'Hi Kaitlin,\nSorry, but we are not hiring at this time, but please reach out to us next year and maybe we will be then. Thank you for your interest in Niche Shack.\nBron'
-      }]
-    } as Notification)
+      customerText: [
+        {
+          timeStamp: '11/24/2018  10:33 PM',
+          thumbnail: 'no-account-pic.png',
+          text: 'Hi, I was wondering if your company was hiring. I would love to be part of your team. Please get back to me as sson as you possibly can. Thank you and have a wonderful day.\nKaitlin'
+        },
+        {
+          timeStamp: '9/21/2019  11:11 AM',
+          thumbnail: 'no-account-pic.png',
+          text: 'Blah blah blah'
+        }
+      ],
+      notesText: [
+        {
+          timeStamp: '3/6/2017  8:45 PM',
+          thumbnail: 'bron-account-pic.png',
+          text: 'Hi Kaitlin,\nSorry, but we are not hiring at this time, but please reach out to us next year and maybe we will be then. Thank you for your interest in Niche Shack.\nBron'
+        },
+        {
+          timeStamp: '4/1/2017  9:13 PM',
+          thumbnail: 'gabe-account-pic.png',
+          text: 'jkdfjklsd ioerioure jhzxjksd opopityiopty uweiuwe jhdsjsdf wyuqwwq'
+        }
+      ]
+    } as Notification).pipe(delay(0));
 
 
 
@@ -254,24 +284,24 @@ export class NotificationService {
       isChecked: [true, false, true],
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'This product really fucking sucks. I was so fucking pissed off when I used this product, only to find out that it didn’t work. I would advise no one to buy this fucking product from this site or any other product for that matter. Fuck you Niche Shack, fuck you!!!'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Everytime I go to order a product, I never get it in time. Then when I finally do get it, the product is no good',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Why does this fucking site suck? Fuck you Niche Shack!!! I fucking hate this fucking site!'
         }
       ]
-    } as ReviewComplaintNotification)
+    } as ReviewComplaintNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT NAME DOES NOT MATCH WITH PRODUCT DESCRIPTION ================================ \\
@@ -281,19 +311,19 @@ export class NotificationService {
       productName: 'How to seduce out of your league',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product name does not match with the product description 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product name does not match with the product description 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product name does not match with the product description 3'
         }
@@ -303,24 +333,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product name does not match with the product description 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product name does not match with the product description 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product name does not match with the product description 3'
         }
       ]
-    } as ProductNotificationDescription)
+    } as ProductNotificationDescription).pipe(delay(0));
 
 
 
@@ -332,46 +362,49 @@ export class NotificationService {
       productName: 'How to make ice cream like a Gumpy',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product name does not match with the product image 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product name does not match with the product image 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product name does not match with the product image 3'
         }
       ],
 
-      productImage: 'b212b69728ee4f3b9473831bb4f7ace9.png',
+      image: {
+        url: 'b212b69728ee4f3b9473831bb4f7ace9.png',
+        title: 'Bigger Better Butt'
+      },
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product name does not match with the product image 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product name does not match with the product image 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product name does not match with the product image 3'
         }
       ]
-    } as ProductNotificationImage)
+    } as ProductNotificationImage).pipe(delay(0));
 
 
     // ================================= PRODUCT NAME (OTHER) ================================ \\
@@ -381,19 +414,19 @@ export class NotificationService {
       productName: '14 Day Perfect Body',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product name other 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product name other 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product name other 3'
         }
@@ -401,24 +434,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product name other 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product name other 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product name other 3'
         }
       ]
-    } as ProductNotification)
+    } as ProductNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT PRICE TOO HIGH ================================ \\
@@ -428,19 +461,19 @@ export class NotificationService {
       productName: 'Erase Your Stretch Mark',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product price too high 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product price too high 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product price too high 3'
         }
@@ -475,7 +508,7 @@ export class NotificationService {
             1
           ]
         }
-      ], 
+      ],
 
       pricePoints: [
         {
@@ -506,24 +539,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product price too high 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product price too high 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product price too high 3'
         }
       ]
-    } as ProductNotificationContent)
+    } as ProductNotificationContent).pipe(delay(0));
 
 
     // ================================= PRODUCT PRICE NOT CORRECT ================================ \\
@@ -533,19 +566,19 @@ export class NotificationService {
       productName: 'Attract Hotter Women',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product price not correct 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product price not correct 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product price not correct 3'
         }
@@ -580,7 +613,7 @@ export class NotificationService {
             1
           ]
         }
-      ], 
+      ],
 
       pricePoints: [
         {
@@ -611,24 +644,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product price not correct 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product price not correct 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product price not correct 3'
         }
       ]
-    } as ProductNotificationContent)
+    } as ProductNotificationContent).pipe(delay(0));
 
 
     // ================================= PRODUCT PRICE (OTHER) ================================ \\
@@ -638,19 +671,19 @@ export class NotificationService {
       productName: 'The Collection Of Confidence',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product price other 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product price other 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product price other 3'
         }
@@ -685,7 +718,7 @@ export class NotificationService {
             1
           ]
         }
-      ], 
+      ],
 
       pricePoints: [
         {
@@ -716,24 +749,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product price other 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product price other 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product price other 3'
         }
       ]
-    } as ProductNotificationContent)
+    } as ProductNotificationContent).pipe(delay(0));
 
 
     // ================================= VIDEOS AND IMAGES ARE DIFFERENT FROM PRODUCT ================================ \\
@@ -743,19 +776,19 @@ export class NotificationService {
       productName: 'The Lean Belly Secret',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images are different from product 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images are different from product 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images are different from product 3'
         }
@@ -812,24 +845,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images are different from product 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images are different from product 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images are different from product 3'
         }
       ]
-    } as ProductNotificationMedia)
+    } as ProductNotificationMedia).pipe(delay(0));
 
 
     // ================================= NOT ENOUGH VIDEOS AND IMAGES ================================ \\
@@ -839,19 +872,19 @@ export class NotificationService {
       productName: 'Acne No More',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning not enough videos and images 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning not enough videos and images 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning not enough videos and images 3'
         }
@@ -908,24 +941,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning not enough videos and images 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning not enough videos and images 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning not enough videos and images 3'
         }
       ]
-    } as ProductNotificationMedia)
+    } as ProductNotificationMedia).pipe(delay(0));
 
 
     // ================================= VIDEOS AND IMAGES NOT CLEAR ================================ \\
@@ -935,19 +968,19 @@ export class NotificationService {
       productName: 'My Bikini Belly',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images not clear 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images not clear 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images not clear 3'
         }
@@ -1004,24 +1037,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images not clear 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images not clear 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images not clear 3'
         }
       ]
-    } as ProductNotificationMedia)
+    } as ProductNotificationMedia).pipe(delay(0));
 
 
     // ================================= VIDEOS AND IMAGES MISLEADING ================================ \\
@@ -1031,19 +1064,19 @@ export class NotificationService {
       productName: 'How To Date An Asian Women',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images misleading 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images misleading 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images misleading 3'
         }
@@ -1100,24 +1133,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images misleading 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images misleading 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images misleading 3'
         }
       ]
-    } as ProductNotificationMedia)
+    } as ProductNotificationMedia).pipe(delay(0));
 
 
     // ================================= VIDEOS AND IMAGES (OTHER) ================================ \\
@@ -1127,19 +1160,19 @@ export class NotificationService {
       productName: 'Sex Lust and Lies',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images other 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images other 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning videos and images other 3'
         }
@@ -1196,24 +1229,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images other 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images other 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning videos and images other 3'
         }
       ]
-    } as ProductNotificationMedia)
+    } as ProductNotificationMedia).pipe(delay(0));
 
 
     // ================================= PRODUCT DESCRIPTION INCORRECT ================================ \\
@@ -1223,19 +1256,19 @@ export class NotificationService {
       productName: 'How To Grow Hair Long',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description incorrect 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description incorrect 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description incorrect 3'
         }
@@ -1245,24 +1278,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description incorrect 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description incorrect 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description incorrect 3'
         }
       ]
-    } as ProductNotificationDescription)
+    } as ProductNotificationDescription).pipe(delay(0));
 
 
     // ================================= PRODUCT DESCRIPTION TOO VAGUE ================================ \\
@@ -1272,19 +1305,19 @@ export class NotificationService {
       productName: 'Fat Shrinking Signal',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description incorrect 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description incorrect 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description incorrect 3'
         }
@@ -1294,24 +1327,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description incorrect 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description incorrect 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description incorrect 3'
         }
       ]
-    } as ProductNotificationDescription)
+    } as ProductNotificationDescription).pipe(delay(0));
 
 
     // ================================= PRODUCT DESCRIPTION MISLEADING ================================ \\
@@ -1321,19 +1354,19 @@ export class NotificationService {
       productName: 'Gluteus To The Maximus',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description misleading 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description misleading 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description misleading 3'
         }
@@ -1343,24 +1376,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description misleading 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description misleading 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description misleading 3'
         }
       ]
-    } as ProductNotificationDescription)
+    } as ProductNotificationDescription).pipe(delay(0));
 
 
     // ================================= PRODUCT DESCRIPTION (OTHER) ================================ \\
@@ -1370,19 +1403,19 @@ export class NotificationService {
       productName: 'ABS',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description other 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description other 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product description other 3'
         }
@@ -1392,24 +1425,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description other 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description other 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product description other 3'
         }
       ]
-    } as ProductNotificationDescription)
+    } as ProductNotificationDescription).pipe(delay(0));
 
 
     // ================================= PRODUCT REPORTED AS ILLEGAL ================================ \\
@@ -1419,19 +1452,19 @@ export class NotificationService {
       productName: 'The 21 Day Flat Belly Fix System',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product reported as illegal 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product reported as illegal 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product reported as illegal 3'
         }
@@ -1439,24 +1472,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product reported as illegal 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product reported as illegal 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product reported as illegal 3'
         }
       ]
-    } as ProductNotification)
+    } as ProductNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT REPORTED AS HAVING ADULT CONTENT ================================ \\
@@ -1466,19 +1499,19 @@ export class NotificationService {
       productName: '7 Day Super Slim',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product reported as having adult content 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product reported as having adult content 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product reported as having adult content 3'
         }
@@ -1486,24 +1519,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product reported as having adult content 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product reported as having adult content 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product reported as having adult content 3'
         }
       ]
-    } as ProductNotification)
+    } as ProductNotification).pipe(delay(0));
 
 
     // ================================= OFFENSIVE PRODUCT OTHER ================================ \\
@@ -1513,19 +1546,19 @@ export class NotificationService {
       productName: 'Yoga Burn Booty Challenge',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning offensive product other content 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning offensive product other content 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning offensive product other content 3'
         }
@@ -1533,24 +1566,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning offensive product other content 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning offensive product other content 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning offensive product other content 3'
         }
       ]
-    } as ProductNotification)
+    } as ProductNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT INACTIVE ================================ \\
@@ -1560,19 +1593,19 @@ export class NotificationService {
       productName: 'The 8 Week Booty',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product inactive 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product inactive 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product inactive 3'
         }
@@ -1580,24 +1613,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product inactive 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product inactive 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product inactive 3'
         }
       ]
-    } as ProductNotification)
+    } as ProductNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT SITE NO LONGER IN SERVICE ================================ \\
@@ -1607,19 +1640,19 @@ export class NotificationService {
       productName: 'The Thyroid Factor',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product site no longer in service 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product site no longer in service 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning product site no longer in service 3'
         }
@@ -1627,24 +1660,24 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product site no longer in service 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product site no longer in service 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning product site no longer in service 3'
         }
       ]
-    } as ProductNotification)
+    } as ProductNotification).pipe(delay(0));
 
 
     // ================================= MISSING PRODUCT OTHER ================================ \\
@@ -1654,19 +1687,19 @@ export class NotificationService {
       productName: 'What Husbands Can\'t Resist',
       customerText: [
         {
-          timeStamp: new Date(2018, 11, 24, 10, 33, 30),
+          timeStamp: '11/24/2018  10:33 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning missing product other 1'
         },
 
         {
-          timeStamp: new Date(2019, 7, 5, 4, 19, 6),
+          timeStamp: '7/5/2019  4:19 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning missing product other 2',
         },
 
         {
-          timeStamp: new Date(2020, 5, 22, 5, 22, 32),
+          timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Here are some user comments concerning missing product other 3'
         }
@@ -1674,29 +1707,29 @@ export class NotificationService {
 
       notesText: [
         {
-          timeStamp: new Date(2018, 10, 24, 7, 14, 46),
+          timeStamp: '10/24/2018  7:14 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning missing product other 1'
         },
 
         {
-          timeStamp: new Date(2019, 6, 15, 1, 36, 28),
+          timeStamp: '6/15/2019  1:36 PM',
           thumbnail: 'gabe-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning missing product other 2',
         },
 
         {
-          timeStamp: new Date(2020, 3, 10, 3, 4, 17),
+          timeStamp: '3/10/2020  3:04 PM',
           thumbnail: 'bron-account-pic.png',
           text: 'Here are some notes that describe how I took action concerning missing product other 3'
         }
       ]
-    } as ProductNotification)
+    } as ProductNotification).pipe(delay(0));
 
 
 
 
-    return merge(message,
+    return concat(message,
       reviewComplaint,
       productNameDoesNotMatchWithProductDescription,
       productNameDoesNotMatchWithProductImage,
@@ -1719,8 +1752,8 @@ export class NotificationService {
       productInactive,
       productSiteNoLongerInService,
       missingProductOther
-      
-      )
+
+    )
   }
 
 

@@ -6,35 +6,27 @@
             
         <tr #rowItem *ngFor="let listItem of listItems; let listItemIndex = index"
                 (mousedown)="onListItemDown(listItemIndex)"
-                (dblclick)="onListItemDoubleClick(listItemIndex)"
+                (click)="onListItemClick(listItemIndex)"
                 [ngClass]="{
-                            'edited-listItem': indexOfEditedListItem == listItemIndex,
                             'selected-listItem': selectedListItemIndex == listItemIndex,
                             'unselected-listItem': unselectedListItemIndex == listItemIndex,
                             'selected-listItem-top': listItem.selectType == selectType.Top,
                             'selected-listItem-whole': listItem.selectType == selectType.Whole,
                             'selected-listItem-middle': listItem.selectType == selectType.Middle,
-                            'selected-listItem-bottom': listItem.selectType == selectType.Bottom,
-                            'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
-
-
-
-
+                            'selected-listItem-bottom': listItem.selectType == selectType.Bottom}">
+                            
             <td>
                  <div class="img"
-                      [ngStyle]="{ 'background-image': 'url(images/' + mediaList[listItemIndex] + ')'}"
-                      [ngClass]="{'highlight-image': selectedListItemIndex == listItemIndex,
-                                  'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
+                      [ngStyle]="{ 'background-image': 'url(images/' + notificationImageList[listItemIndex] + ')'}"
+                      [ngClass]="{'highlight-image': selectedListItemIndex == listItemIndex }">
                 </div>   
             </td>
 
 
-            <td #listItem
+            <td 
                 tabindex="-1"
                 (blur)="onListItemBlur()"
-                [textContent]="listItems[listItemIndex].name"
-                [contentEditable]="indexOfEditedListItem == listItemIndex"
-                [ngClass]="{'edited-listItem': indexOfEditedListItem == listItemIndex}">
+                [textContent]="listItem.name">
             </td>
         </tr>
     </table>

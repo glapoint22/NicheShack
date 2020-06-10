@@ -6,13 +6,6 @@
         <div class="icon-container" showPopup [popup]="'mediaBrowserPopup'">
             <i class="fas fa-image"></i>
         </div>
-
-
-        <!-- Remove image icon -->
-        <div class="icon-container" (click)="image ? image.url = null: null" title="Remove Image"
-            [ngClass]="{'icon-disabled':  !image || !image.url}">
-            <i class="fas fa-trash-alt"></i>
-        </div>
     </div>
 
 

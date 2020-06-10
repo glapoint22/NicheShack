@@ -1,46 +1,34 @@
 <!-- Popup Base -->
-<div #popup
-     transitionClass="fade-end"
-     class="popup-base fade-start"
-     (onShow)="onPopupShow(popup, arrow)"
-     *show="show">
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)" *show="show">
 
-     <!-- Arrow -->
+    <!-- Arrow -->
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
-
-    <!-- <div style="width: 100%; height: 30px;"></div> -->
 
     <div class="dark-tabs-container">
         <!-- Normal Tab -->
         <div class="dark-tab" [ngClass]="{'selected-dark-tab': true}"
-            (click)="buttonWidget.currentState = buttonState.Normal">Notifications (999)</div>
+            (click)="buttonWidget.currentState = buttonState.Normal">New (999)</div>
 
         <!-- Hover Tab -->
         <div class="dark-tab" [ngClass]="{'selected-dark-tab': false}"
             (click)="buttonWidget.currentState = buttonState.Hover">Pending (999)</div>
 
         <!-- Active Tab -->
-        <div id="active" class="dark-tab"
-            [ngClass]="{'selected-dark-tab': false}"
+        <div id="active" class="dark-tab" [ngClass]="{'selected-dark-tab': false}"
             (click)="buttonWidget.currentState = buttonState.Active">Archive</div>
     </div>
 
     <div style="width: 100%; height: 423px; border: 1px solid #373737; border-top: none;">
-    
-    
+
+
         <!-- Media Item LIst -->
-    <media-item-list #mediaItemList
-    
-    [multiSelect]="false"
-
-    [mediaList]="notificationService.notificationProductImageList"
-
-    [list]="notificationService.notificationTypeList">
+        <notifications-item-list 
+            [multiSelect]="false"
+            
+            [list]="notificationService.notifications">
+        </notifications-item-list>
 
 
-</media-item-list>
-    
-    
     </div>
 
 </div>

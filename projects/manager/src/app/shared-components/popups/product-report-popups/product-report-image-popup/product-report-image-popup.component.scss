@@ -1,0 +1,35 @@
+.property-box-dark {
+    background: #222222;
+    border: 1px solid #373737;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 2px;
+    .icons {
+        margin: 2px;
+        background: #292929;
+        height: 22px;
+        padding: 0 3px;
+        display: flex;
+        flex-direction: row-reverse;
+
+        & > div {
+            margin-left: 10px;
+        }
+    }
+}
+
+
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 122px;
+
+    .img {
+        width: -webkit-fill-available;
+        height: 116px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}

@@ -14,12 +14,12 @@
 
             <!-- Product Thumbnail -->
             <div class="thumbnail" 
-                 [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productNotification.productThumbnail + ')'}">
+                 [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productNotificationDescription.productThumbnail + ')'}">
             </div>
 
             <!-- Product Name -->
             <div class="product-name">
-                {{notificationService.productNotification.productName}}
+                {{notificationService.productNotificationDescription.productName}}
             </div>
         </div>
 
@@ -35,7 +35,7 @@
     <!-- Notification Description -->
     <div class="header-line"></div>
     <div class="product-report-title">
-        {{notificationService.getNotificationDescription(notificationService.productNotification.type)}}
+        {{notificationService.getNotificationDescription(notificationService.productNotificationDescription.type)}}
     </div>
     <div class="header-line"></div>
 
@@ -45,7 +45,7 @@
 
         <!-- Paginator -->
         <div class="paginator-bar">
-            <paginator [itemCount]="notificationService.productNotification.customerText.length"
+            <paginator [itemCount]="notificationService.productNotificationDescription.customerText.length"
                        (onItemChange)="paginatorIndex = $event">
             </paginator>
         </div>
@@ -58,19 +58,31 @@
 
                 <!-- Customer Thumbnail -->
                 <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productNotification.customerText[paginatorIndex].thumbnail + ')'}">
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productNotificationDescription.customerText[paginatorIndex].thumbnail + ')'}">
                 </div>
 
                 <!-- Time Stamp -->
                 <div class="time-stamp">
-                    {{notificationService.productNotification.customerText[paginatorIndex].timeStamp}}
+                    {{notificationService.productNotificationDescription.customerText[paginatorIndex].timeStamp}}
                 </div>
             </div>
 
             <!-- Customer Text -->
             <div class="user-text">
-                {{notificationService.productNotification.customerText[paginatorIndex].text}}
+                {{notificationService.productNotificationDescription.customerText[paginatorIndex].text}}
             </div>
+        </div>
+
+
+        <!-- Customer Property Box -->
+        <div class="property-box-label">Product Description:</div>
+        <div class="property-box">
+            <div class="property-box-bar">
+                <!-- Textbox icons go here -->
+            </div>
+
+    
+            <textarea style="width: 100%; height: 100px; padding: 5px; color: #e4e4e4;font-size: 12px;border: 0px solid #373737; background: #222222; border-radius: 0;">{{notificationService.productNotificationDescription.productDescription}}</textarea>
         </div>
 
 
@@ -81,18 +93,18 @@
 
                 <!-- Employee Thumbnail -->
                 <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productNotification.notesText[paginatorIndex].thumbnail + ')'}">
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productNotificationDescription.notesText[paginatorIndex].thumbnail + ')'}">
                 </div>
 
                 <!-- Time Stamp -->
                 <div class="time-stamp">
-                    {{notificationService.productNotification.notesText[paginatorIndex].timeStamp}}
+                    {{notificationService.productNotificationDescription.notesText[paginatorIndex].timeStamp}}
                 </div>
             </div>
 
             <!-- Employee Text -->
             <div class="user-text">
-                {{notificationService.productNotification.notesText[paginatorIndex].text}}
+                {{notificationService.productNotificationDescription.notesText[paginatorIndex].text}}
             </div>
         </div>
     </div>
@@ -104,3 +116,20 @@
         <button>Publish</button>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

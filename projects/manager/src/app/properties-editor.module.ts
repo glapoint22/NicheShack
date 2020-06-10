@@ -64,6 +64,12 @@ import { LinkIconComponent } from './shared-components/link-icon/link-icon.compo
 import { ProductReportPopupComponent } from './shared-components/popups/product-report-popups/product-report-popup.component';
 import { ProductReportOtherPopupComponent } from './shared-components/popups/product-report-popups/product-report-other-popup/product-report-other-popup.component';
 import { NotificationsPopupComponent } from './shared-components/popups/notifications-popup/notifications-popup.component';
+import { NotificationsItemListComponent } from './shared-components/item-lists/notifications-item-list/notifications-item-list.component';
+import { ProductReportDescriptionPopupComponent } from './shared-components/popups/product-report-popups/product-report-description-popup/product-report-description-popup.component';
+import { ProductReportImagePopupComponent } from './shared-components/popups/product-report-popups/product-report-image-popup/product-report-image-popup.component';
+import { ProductReportMediaPopupComponent } from './shared-components/popups/product-report-popups/product-report-media-popup/product-report-media-popup.component';
+import { ProductReportContentPopupComponent } from './shared-components/popups/product-report-popups/product-report-content-popup/product-report-content-popup.component';
+import { MessageNotificationPopupComponent } from './shared-components/popups/notifications-popup/message-notification-popup/message-notification-popup.component';
 
 
 @NgModule({
@@ -128,7 +134,13 @@ import { NotificationsPopupComponent } from './shared-components/popups/notifica
     MediaItemListComponent,
     ProductReportPopupComponent,
     ProductReportOtherPopupComponent,
-    NotificationsPopupComponent
+    NotificationsPopupComponent,
+    NotificationsItemListComponent,
+    ProductReportDescriptionPopupComponent,
+    ProductReportImagePopupComponent,
+    ProductReportMediaPopupComponent,
+    ProductReportContentPopupComponent,
+    MessageNotificationPopupComponent
   ],
   imports: [
     CommonModule,
@@ -197,7 +209,13 @@ import { NotificationsPopupComponent } from './shared-components/popups/notifica
     MediaItemListComponent,
     ProductReportPopupComponent,
     ProductReportOtherPopupComponent,
-    NotificationsPopupComponent
+    NotificationsPopupComponent,
+    NotificationsItemListComponent,
+    ProductReportDescriptionPopupComponent,
+    ProductReportImagePopupComponent,
+    ProductReportMediaPopupComponent,
+    ProductReportContentPopupComponent,
+    MessageNotificationPopupComponent
   ]
 })
 export class PropertiesEditorModule { }

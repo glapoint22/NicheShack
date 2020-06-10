@@ -11,14 +11,12 @@ import { NotificationService } from '../../../services/notification.service';
   styleUrls: ['./notifications-popup.component.scss', '../popup/popup.component.scss']
 })
 export class NotificationsPopupComponent extends PopupComponent implements OnInit {
-  public mediaList = [];
-
   constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, public notificationService: NotificationService) { super(popupService, cover, menuService) }
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
   ngOnInit() {
     this.popupService.notificationsPopup = this;
-    this.preventNoShow = true;
+    
   }
 
 
@@ -31,7 +29,4 @@ export class NotificationsPopupComponent extends PopupComponent implements OnIni
 
 
   }
-
-
-
 }

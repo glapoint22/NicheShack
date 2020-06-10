@@ -18,10 +18,8 @@ export class MenuBarComponent implements OnInit {
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     this.getNotifications().subscribe((notification: Notification) => {
-      this.notificationService.notifications.unshift(notification)
-      this.notificationService.updateNotificationProductImageList();
-      this.notificationService.updateNotificationTypeList();
-      
+      this.notificationService.notifications.unshift(notification);
+      this.notificationService.notifications = this.notificationService.notifications.slice();
     })
   }
 

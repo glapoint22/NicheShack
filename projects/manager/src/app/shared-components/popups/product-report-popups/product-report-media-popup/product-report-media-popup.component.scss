@@ -1,0 +1,44 @@
+.property-box-dark {
+    background: #222222;
+    border: 1px solid #373737;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 2px;
+}
+
+.container {
+    margin: 2px;
+    background: #292929;
+    height: 22px;
+    display: flex;
+    justify-content: space-between;
+
+    .icons {
+        margin: 0;
+        background: #292929;
+    }
+}
+
+.media-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+
+    .media-content {
+        width: 220px; 
+        height: 125px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 70px;
+        color: white;
+
+        i {
+            -webkit-text-stroke: 1px #808080;
+        }
+    }
+}

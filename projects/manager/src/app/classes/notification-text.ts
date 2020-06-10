@@ -1,5 +1,5 @@
 export interface NotificationText {
-    timeStamp: Date;
+    timeStamp: string;
     text: string;
     thumbnail: string;
 }

@@ -3,7 +3,6 @@ import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
 import { Subject } from 'rxjs';
 import { MenuService } from '../../../services/menu.service';
-import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'popup',
