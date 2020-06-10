@@ -12,7 +12,7 @@ import { LoadingService } from 'projects/manager/src/app/services/loading.servic
 })
 export class ProductPropertiesComponent implements OnChanges {
   @Input() productId: string;
-  public productProperties: ProductProperties = new ProductProperties();
+  public productProperties: ProductProperties;
 
   constructor(public loadingService: LoadingService) { }
 

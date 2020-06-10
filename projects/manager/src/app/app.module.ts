@@ -5,16 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoadingComponent } from './shared-components/loading/loading.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
+import { VendorFormComponent } from './shared-components/forms/vendor-form/vendor-form.component';
+import { FormComponent } from './shared-components/forms/form/form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoadingComponent
+    LoadingComponent,
+    FormComponent,
+    VendorFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ShowHideModule
+    ShowHideModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

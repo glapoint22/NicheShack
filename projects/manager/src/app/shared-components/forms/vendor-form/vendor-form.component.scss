@@ -1,0 +1,38 @@
+.form {
+    max-width: 600px;
+}
+
+.ellipsis-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+
+    .ellipsis {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+
+        &:hover {
+            color: #dbdbdb;
+        }
+    
+        .fa-ellipsis-v {
+            font-size: 13px;
+        }
+    }
+}
+
+.contacts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
