@@ -10,6 +10,7 @@ import { ProductNotificationDescription } from '../../../classes/product-notific
 import { ProductNotificationImage } from '../../../classes/product-notification-image';
 import { ProductNotificationMedia } from '../../../classes/product-notification-media';
 import { ProductNotificationContent } from '../../../classes/product-notification-content';
+import { ReviewComplaintNotification } from '../../../classes/review-complaint-notification';
 
 @Component({
   selector: 'notifications-item-list',
@@ -59,7 +60,13 @@ export class NotificationsItemListComponent extends ItemListComponent implements
     // Message
     if (this.notificationService.notifications[i].type == NotificationType.Message) {
       this.popupService.messageNotificationPopup.show = true;
-      this.notificationService.message = this.notificationService.notifications[i];
+      this.notificationService.messageNotification = this.notificationService.notifications[i];
+    }
+
+    // Review Complaint
+    if (this.notificationService.notifications[i].type == NotificationType.ReviewComplaint) {
+      this.popupService.reviewComplaintNotificationPopup.show = true;
+      this.notificationService.reviewComplaintNotification = this.notificationService.notifications[i] as ReviewComplaintNotification;
     }
 
     // Product Notification

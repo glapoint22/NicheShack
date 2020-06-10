@@ -72,6 +72,7 @@ import { ProductReportContentPopupComponent } from './shared-components/popups/p
 import { MessageNotificationPopupComponent } from './shared-components/popups/notifications-popup/message-notification-popup/message-notification-popup.component';
 import { HoplinkPopupComponent } from './shared-components/popups/hoplink-popup/hoplink-popup.component';
 import { SearchPopupComponent } from './shared-components/popups/search-popup/search-popup.component';
+import { ReviewComplaintNotificationPopupComponent } from './shared-components/popups/notifications-popup/review-complaint-notification-popup/review-complaint-notification-popup.component';
 
 
 @NgModule({
@@ -143,6 +144,7 @@ import { SearchPopupComponent } from './shared-components/popups/search-popup/se
     ProductReportMediaPopupComponent,
     ProductReportContentPopupComponent,
     MessageNotificationPopupComponent,
+    ReviewComplaintNotificationPopupComponent,
     HoplinkPopupComponent,
     SearchPopupComponent
   ],
@@ -220,6 +222,7 @@ import { SearchPopupComponent } from './shared-components/popups/search-popup/se
     ProductReportMediaPopupComponent,
     ProductReportContentPopupComponent,
     MessageNotificationPopupComponent,
+    ReviewComplaintNotificationPopupComponent,
     HoplinkPopupComponent,
     SearchPopupComponent
   ]
