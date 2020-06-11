@@ -1,5 +1,7 @@
 .caption {
     text-align: center;
+    word-break: break-word; // IE & < Edge 18
+    overflow-wrap: break-word;
 }
 
 .product-group {

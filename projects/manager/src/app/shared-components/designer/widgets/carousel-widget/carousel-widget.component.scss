@@ -1,0 +1,16 @@
+@import '../../../../../scss/variables';
+
+img {
+    cursor: inherit;
+    width: 100%;
+    max-width: 1496px;
+    max-height: 451px;
+    -webkit-user-drag: none;
+}
+
+svg {
+    width: 100%;
+    max-width: 1496px;
+    max-height: 451px;
+    fill: $selected-border-color;
+}

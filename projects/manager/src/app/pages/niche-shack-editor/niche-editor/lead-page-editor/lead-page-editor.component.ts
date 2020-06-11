@@ -508,7 +508,7 @@ export class LeadPageEditorComponent implements OnChanges {
                       banners: [
                         {
                           image: {
-                            url: '13912b12e08343ef9f797289d39d189c.jpg',
+                            url: 'banner1.jpg',
                             title: 'Keto'
                           },
                           link: {
@@ -518,14 +518,51 @@ export class LeadPageEditorComponent implements OnChanges {
                         },
                         {
                           image: {
-                            url: '5d989ab13cee41f0bd48d5070713404f.png',
+                            url: 'banner2.jpg',
                             title: 'Hyperbolic Stretching'
                           },
                           link: {
                             selectedOption: 'page',
                             url: 'http://www.tama.com',
                           }
+                        },
+
+                        {
+                          image: {
+                            url: 'banner3.jpg',
+                            title: 'Google'
+                          },
+                          link: {
+                            selectedOption: 'page',
+                            url: 'http://www.google.com',
+                          }
+                        },
+
+
+                        {
+                          image: {
+                            url: 'banner4.jpg',
+                            title: 'YouTube'
+                          },
+                          link: {
+                            selectedOption: 'page',
+                            url: 'http://www.youtube.com',
+                          }
+                        },
+
+
+                        {
+                          image: {
+                            url: 'banner5.jpg',
+                            title: 'Avatar'
+                          },
+                          link: {
+                            selectedOption: 'page',
+                            url: 'http://www.avatarmovie.com',
+                          }
                         }
+
+
                       ]
                     } as CarouselWidgetData
                   }
