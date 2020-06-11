@@ -1,0 +1,149 @@
+<!-- Popup Base -->
+<div #popup transitionClass="fade-end"
+     class="popup-base fade-start"
+     (onShow)="onPopupShow(popup, arrow)"
+     *show="show">
+     
+    <!-- Arrow -->
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
+
+
+    <!-- Header -->
+    <div class="product-report-header">
+        <div class="product-container">
+
+            <!-- Product Thumbnail -->
+            <div class="thumbnail" 
+                 [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productMediaNotification.productThumbnail + ')'}">
+            </div>
+
+            <!-- Product Name -->
+            <div class="product-name">
+                {{notificationService.productMediaNotification.productName}}
+            </div>
+        </div>
+
+        <!-- Ellipsis -->
+        <div #ellipsis 
+             class="icon-container"
+             (mousedown)="showContextMenu()">
+            <i class="fas fa-ellipsis-v"></i>
+        </div>
+    </div>
+
+
+    <!-- Notification Description -->
+    <div class="header-line"></div>
+    <div class="product-report-title">
+        {{notificationService.getNotificationDescription(notificationService.productMediaNotification.type)}}
+    </div>
+    <div class="header-line"></div>
+
+    
+    <!-- Main Property Box -->
+    <div class="main-property-box">
+
+        <!-- Paginator -->
+        <div class="paginator-bar">
+            <paginator [itemCount]="notificationService.productMediaNotification.customerText.length"
+                       (onItemChange)="paginatorIndex = $event">
+            </paginator>
+        </div>
+
+
+        <!-- Customer Property Box -->
+        <div class="property-box-label">User Comment:</div>
+        <div class="property-box">
+            <div class="property-box-bar">
+
+                <!-- Customer Thumbnail -->
+                <div class="account-thumbnail"
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productMediaNotification.customerText[paginatorIndex].thumbnail + ')'}">
+                </div>
+
+                <!-- Time Stamp -->
+                <div class="time-stamp">
+                    {{notificationService.productMediaNotification.customerText[paginatorIndex].timeStamp}}
+                </div>
+            </div>
+
+            <!-- Customer Text -->
+            <div class="user-text">
+                {{notificationService.productMediaNotification.customerText[paginatorIndex].text}}
+            </div>
+        </div>
+
+
+        <!-- Media Property Box -->
+        <div class="property-box-label">Product Media:</div>
+        <div class="property-box-dark">
+            <div class="container">
+                <paginator [itemCount]="notificationService.productMediaNotification.media ? notificationService.productMediaNotification.media.length: 0" 
+                           (onItemChange)="currentIndex = $event">
+                </paginator>
+
+                <!-- Icons -->
+                <div class="icons">
+
+                    <!-- Delete Media Icon -->
+                    <div class="icon-container">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+
+                    <!-- Add Image Icon -->
+                    <div class="icon-container" showPopup [popup]="'showMediaBrowserPopup'">
+                        <i class="fas fa-image"></i>
+                    </div>
+
+                    <!-- Add Video Icon -->
+                    <div class="icon-container" showPopup [popup]="'showMediaBrowserPopup'">
+                        <i class="fas fa-film"></i>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Media -->
+            <div class="media-container">
+                <div *ngIf="notificationService.productMediaNotification.media.length > 0"
+                     class="media-content" 
+                     [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productMediaNotification.media[currentIndex].thumbnail + ')'}">
+                    <!-- Display a play icon if media type is video -->
+                    <i *ngIf="notificationService.productMediaNotification.media[currentIndex].type == 0"
+                       class="far fa-play-circle">
+                    </i>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Employee Property Box -->
+        <div class="property-box-label">Notes:</div>
+        <div class="property-box">
+            <div class="property-box-bar">
+
+                <!-- Employee Thumbnail -->
+                <div class="account-thumbnail"
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productMediaNotification.notesText[paginatorIndex].thumbnail + ')'}">
+                </div>
+
+                <!-- Time Stamp -->
+                <div class="time-stamp">
+                    {{notificationService.productMediaNotification.notesText[paginatorIndex].timeStamp}}
+                </div>
+            </div>
+
+            <!-- Employee Text -->
+            <div class="user-text">
+                {{notificationService.productMediaNotification.notesText[paginatorIndex].text}}
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Buttons -->
+    <div class="button-container">
+        <button (click)="onLeftButtonClick()">Dismiss</button>
+        <button (click)="onRightButtonClick()">Publish</button>
+    </div>
+</div>

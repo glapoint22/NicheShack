@@ -60,19 +60,18 @@ import { BackgroundComponent } from './shared-components/properties/background/b
 import { ShowPopupDirective } from './directives/show-popup/show-popup.directive';
 import { MediaItemListComponent } from './shared-components/item-lists/media-item-list/media-item-list.component';
 import { LinkIconComponent } from './shared-components/link-icon/link-icon.component';
-import { ProductReportPopupComponent } from './shared-components/popups/product-report-popups/product-report-popup.component';
-import { ProductReportOtherPopupComponent } from './shared-components/popups/product-report-popups/product-report-other-popup/product-report-other-popup.component';
-import { NotificationsPopupComponent } from './shared-components/popups/notifications-popup/notifications-popup.component';
-import { NotificationsItemListComponent } from './shared-components/item-lists/notifications-item-list/notifications-item-list.component';
-import { ProductReportDescriptionPopupComponent } from './shared-components/popups/product-report-popups/product-report-description-popup/product-report-description-popup.component';
-import { ProductReportImagePopupComponent } from './shared-components/popups/product-report-popups/product-report-image-popup/product-report-image-popup.component';
-import { ProductReportMediaPopupComponent } from './shared-components/popups/product-report-popups/product-report-media-popup/product-report-media-popup.component';
-import { ProductReportContentPopupComponent } from './shared-components/popups/product-report-popups/product-report-content-popup/product-report-content-popup.component';
-import { MessageNotificationPopupComponent } from './shared-components/popups/notifications-popup/message-notification-popup/message-notification-popup.component';
 import { HoplinkPopupComponent } from './shared-components/popups/hoplink-popup/hoplink-popup.component';
 import { SearchPopupComponent } from './shared-components/popups/search-popup/search-popup.component';
 import { ColorComponent } from './shared-components/properties/color/color.component';
-import { ReviewComplaintNotificationPopupComponent } from './shared-components/popups/notifications-popup/review-complaint-notification-popup/review-complaint-notification-popup.component';
+import { NotificationsItemListComponent } from './shared-components/item-lists/notifications-item-list/notifications-item-list.component';
+import { NotificationListPopupComponent } from './shared-components/popups/notification-popups/notification-list-popup/notification-list-popup.component';
+import { MessageNotificationPopupComponent } from './shared-components/popups/notification-popups/message-notification-popup/message-notification-popup.component';
+import { GeneralNotificationPopupComponent } from './shared-components/popups/notification-popups/general-notification-popup/general-notification-popup.component';
+import { ReviewComplaintNotificationPopupComponent } from './shared-components/popups/notification-popups/review-complaint-notification-popup/review-complaint-notification-popup.component';
+import { ProductDescriptionNotificationPopupComponent } from './shared-components/popups/notification-popups/product-description-notification-popup/product-description-notification-popup.component';
+import { ProductImageNotificationPopupComponent } from './shared-components/popups/notification-popups/product-image-notification-popup/product-image-notification-popup.component';
+import { ProductMediaNotificationPopupComponent } from './shared-components/popups/notification-popups/product-media-notification-popup/product-media-notification-popup.component';
+import { ProductContentNotificationPopupComponent } from './shared-components/popups/notification-popups/product-content-notification-popup/product-content-notification-popup.component';
 
 
 @NgModule({
@@ -134,19 +133,18 @@ import { ReviewComplaintNotificationPopupComponent } from './shared-components/p
     LinkIconComponent,
     ShowPopupDirective,
     MediaItemListComponent,
-    ProductReportPopupComponent,
-    ProductReportOtherPopupComponent,
-    NotificationsPopupComponent,
-    NotificationsItemListComponent,
-    ProductReportDescriptionPopupComponent,
-    ProductReportImagePopupComponent,
-    ProductReportMediaPopupComponent,
-    ProductReportContentPopupComponent,
-    MessageNotificationPopupComponent,
-    ReviewComplaintNotificationPopupComponent,
     HoplinkPopupComponent,
     SearchPopupComponent,
-    ColorComponent
+    ColorComponent,
+    NotificationsItemListComponent,
+    NotificationListPopupComponent,
+    MessageNotificationPopupComponent,
+    GeneralNotificationPopupComponent,
+    ReviewComplaintNotificationPopupComponent,
+    ProductDescriptionNotificationPopupComponent,
+    ProductImageNotificationPopupComponent,
+    ProductMediaNotificationPopupComponent,
+    ProductContentNotificationPopupComponent
   ],
   imports: [
     CommonModule,
@@ -212,19 +210,18 @@ import { ReviewComplaintNotificationPopupComponent } from './shared-components/p
     LinkIconComponent,
     ShowPopupDirective,
     MediaItemListComponent,
-    ProductReportPopupComponent,
-    ProductReportOtherPopupComponent,
-    NotificationsPopupComponent,
-    NotificationsItemListComponent,
-    ProductReportDescriptionPopupComponent,
-    ProductReportImagePopupComponent,
-    ProductReportMediaPopupComponent,
-    ProductReportContentPopupComponent,
-    MessageNotificationPopupComponent,
-    ReviewComplaintNotificationPopupComponent,
     HoplinkPopupComponent,
     SearchPopupComponent,
-    ColorComponent
+    ColorComponent,
+    NotificationsItemListComponent,
+    NotificationListPopupComponent,
+    MessageNotificationPopupComponent,
+    GeneralNotificationPopupComponent,
+    ReviewComplaintNotificationPopupComponent,
+    ProductDescriptionNotificationPopupComponent,
+    ProductImageNotificationPopupComponent,
+    ProductMediaNotificationPopupComponent,
+    ProductContentNotificationPopupComponent
   ]
 })
 export class PropertiesEditorModule { }

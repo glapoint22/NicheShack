@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Notification, NotificationType } from '../classes/notification';
-import { ProductNotification } from '../classes/product-notification';
+import { GeneralNotification } from '../classes/general-notification';
 import { of, concat } from 'rxjs';
 import { ReviewComplaintNotification } from '../classes/review-complaint-notification';
-import { ProductNotificationDescription } from '../classes/product-notification-description';
-import { ProductNotificationImage } from '../classes/product-notification-image';
-import { ProductNotificationContent } from '../classes/product-notification-content';
-import { ProductNotificationMedia } from '../classes/product-notification-media';
+import { ProductDescriptionNotification } from '../classes/product-description-notification';
+import { ProductImageNotification } from '../classes/product-image-notification';
+import { ProductContentNotification } from '../classes/product-content-notification';
+import { ProductMediaNotification } from '../classes/product-media-notification';
 import { ProductMediaType } from '../classes/product-media';
 import { delay } from 'rxjs/operators';
 
@@ -19,13 +19,15 @@ export class NotificationService {
   public archiveNotifications: Array<Notification> = [];
   public notificationTypeList: Array<string> = [];
   public notificationImageList: Array<string> = [];
+
+
   public messageNotification: Notification;
+  public generalNotification: GeneralNotification;
   public reviewComplaintNotification: ReviewComplaintNotification
-  public productNotification: ProductNotification;
-  public productNotificationDescription: ProductNotificationDescription;
-  public productNotificationImage: ProductNotificationImage;
-  public productNotificationMedia: ProductNotificationMedia
-  public productNotificationContent: ProductNotificationContent;
+  public productDescriptionNotification: ProductDescriptionNotification;
+  public productImageNotification: ProductImageNotification;
+  public productMediaNotification: ProductMediaNotification
+  public productContentNotification: ProductContentNotification;
 
 
   getNotificationImageList(notifications) {
@@ -43,7 +45,7 @@ export class NotificationService {
         notificationProductImage = '143968bba73642898bb4a6715a1efd3d.png';
 
       } else {
-        notificationProductImage = (x as ProductNotification).productThumbnail
+        notificationProductImage = (x as GeneralNotification).productThumbnail
       }
 
       return notificationProductImage;
@@ -373,7 +375,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product name does not match with the product description 3'
         }
       ]
-    } as ProductNotificationDescription).pipe(delay(0));
+    } as ProductDescriptionNotification).pipe(delay(0));
 
 
 
@@ -427,7 +429,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product name does not match with the product image 3'
         }
       ]
-    } as ProductNotificationImage).pipe(delay(0));
+    } as ProductImageNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT NAME (OTHER) ================================ \\
@@ -474,7 +476,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product name other 3'
         }
       ]
-    } as ProductNotification).pipe(delay(0));
+    } as GeneralNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT PRICE TOO HIGH ================================ \\
@@ -579,7 +581,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product price too high 3'
         }
       ]
-    } as ProductNotificationContent).pipe(delay(0));
+    } as ProductContentNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT PRICE NOT CORRECT ================================ \\
@@ -684,7 +686,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product price not correct 3'
         }
       ]
-    } as ProductNotificationContent).pipe(delay(0));
+    } as ProductContentNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT PRICE (OTHER) ================================ \\
@@ -789,7 +791,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product price other 3'
         }
       ]
-    } as ProductNotificationContent).pipe(delay(0));
+    } as ProductContentNotification).pipe(delay(0));
 
 
     // ================================= VIDEOS AND IMAGES ARE DIFFERENT FROM PRODUCT ================================ \\
@@ -885,7 +887,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning videos and images are different from product 3'
         }
       ]
-    } as ProductNotificationMedia).pipe(delay(0));
+    } as ProductMediaNotification).pipe(delay(0));
 
 
     // ================================= NOT ENOUGH VIDEOS AND IMAGES ================================ \\
@@ -981,7 +983,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning not enough videos and images 3'
         }
       ]
-    } as ProductNotificationMedia).pipe(delay(0));
+    } as ProductMediaNotification).pipe(delay(0));
 
 
     // ================================= VIDEOS AND IMAGES NOT CLEAR ================================ \\
@@ -1077,7 +1079,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning videos and images not clear 3'
         }
       ]
-    } as ProductNotificationMedia).pipe(delay(0));
+    } as ProductMediaNotification).pipe(delay(0));
 
 
     // ================================= VIDEOS AND IMAGES MISLEADING ================================ \\
@@ -1173,7 +1175,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning videos and images misleading 3'
         }
       ]
-    } as ProductNotificationMedia).pipe(delay(0));
+    } as ProductMediaNotification).pipe(delay(0));
 
 
     // ================================= VIDEOS AND IMAGES (OTHER) ================================ \\
@@ -1269,7 +1271,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning videos and images other 3'
         }
       ]
-    } as ProductNotificationMedia).pipe(delay(0));
+    } as ProductMediaNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT DESCRIPTION INCORRECT ================================ \\
@@ -1318,7 +1320,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product description incorrect 3'
         }
       ]
-    } as ProductNotificationDescription).pipe(delay(0));
+    } as ProductDescriptionNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT DESCRIPTION TOO VAGUE ================================ \\
@@ -1367,7 +1369,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product description incorrect 3'
         }
       ]
-    } as ProductNotificationDescription).pipe(delay(0));
+    } as ProductDescriptionNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT DESCRIPTION MISLEADING ================================ \\
@@ -1416,7 +1418,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product description misleading 3'
         }
       ]
-    } as ProductNotificationDescription).pipe(delay(0));
+    } as ProductDescriptionNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT DESCRIPTION (OTHER) ================================ \\
@@ -1465,7 +1467,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product description other 3'
         }
       ]
-    } as ProductNotificationDescription).pipe(delay(0));
+    } as ProductDescriptionNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT REPORTED AS ILLEGAL ================================ \\
@@ -1512,7 +1514,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product reported as illegal 3'
         }
       ]
-    } as ProductNotification).pipe(delay(0));
+    } as GeneralNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT REPORTED AS HAVING ADULT CONTENT ================================ \\
@@ -1559,7 +1561,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product reported as having adult content 3'
         }
       ]
-    } as ProductNotification).pipe(delay(0));
+    } as GeneralNotification).pipe(delay(0));
 
 
     // ================================= OFFENSIVE PRODUCT OTHER ================================ \\
@@ -1606,7 +1608,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning offensive product other content 3'
         }
       ]
-    } as ProductNotification).pipe(delay(0));
+    } as GeneralNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT INACTIVE ================================ \\
@@ -1653,7 +1655,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product inactive 3'
         }
       ]
-    } as ProductNotification).pipe(delay(0));
+    } as GeneralNotification).pipe(delay(0));
 
 
     // ================================= PRODUCT SITE NO LONGER IN SERVICE ================================ \\
@@ -1700,7 +1702,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product site no longer in service 3'
         }
       ]
-    } as ProductNotification).pipe(delay(0));
+    } as GeneralNotification).pipe(delay(0));
 
 
     // ================================= MISSING PRODUCT OTHER ================================ \\
@@ -1747,7 +1749,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning missing product other 3'
         }
       ]
-    } as ProductNotification).pipe(delay(0));
+    } as GeneralNotification).pipe(delay(0));
 
 
 

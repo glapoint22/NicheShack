@@ -1,0 +1,81 @@
+<!-- Popup Base -->
+<div #popup transitionClass="fade-end"
+     class="popup-base fade-start"
+     (onShow)="onPopupShow(popup, arrow)"
+     *show="show">
+     
+    <!-- Arrow -->
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
+
+
+    <!-- Notification Description -->
+    <div class="header-line"></div>
+    <div class="product-report-title">
+        {{notificationService.getNotificationDescription(notificationService.messageNotification.type)}}
+    </div>
+    <div class="header-line"></div>
+
+    <!-- Main Property Box -->
+    <div class="main-property-box">
+
+        <!-- Paginator -->
+        <div class="paginator-bar">
+            <paginator [itemCount]="notificationService.messageNotification.customerText.length"
+                       (onItemChange)="paginatorIndex = $event">
+            </paginator>
+        </div>
+
+
+        <!-- Message Property Box -->
+        <div class="property-box-label">Message:</div>
+        <div class="property-box">
+            <div class="property-box-bar">
+
+                <!-- Customer Thumbnail -->
+                <div class="account-thumbnail"
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.messageNotification.customerText[paginatorIndex].thumbnail + ')'}">
+                </div>
+
+                <!-- Time Stamp -->
+                <div class="time-stamp">
+                    {{notificationService.messageNotification.customerText[paginatorIndex].timeStamp}}
+                </div>
+            </div>
+
+            <!-- Customer Text -->
+            <div class="user-text">
+                {{notificationService.messageNotification.customerText[paginatorIndex].text}}
+            </div>
+        </div>
+
+
+        <!-- Reply Property Box -->
+        <div class="property-box-label">Reply:</div>
+        <div class="property-box">
+            <div class="property-box-bar">
+
+                <!-- Employee Thumbnail -->
+                <div class="account-thumbnail"
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.messageNotification.notesText[paginatorIndex].thumbnail + ')'}">
+                </div>
+
+                <!-- Time Stamp -->
+                <div class="time-stamp">
+                    {{notificationService.messageNotification.notesText[paginatorIndex].timeStamp}}
+                </div>
+            </div>
+
+            <!-- Employee Text -->
+            <div class="user-text">
+                {{notificationService.messageNotification.notesText[paginatorIndex].text}}
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Buttons -->
+    <div class="button-container">
+        <button (click)="onLeftButtonClick()">Close</button>
+        <button (click)="onRightButtonClick()">Send</button>
+    </div>
+</div>
