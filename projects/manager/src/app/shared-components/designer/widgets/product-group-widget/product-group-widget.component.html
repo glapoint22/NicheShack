@@ -1,22 +1,14 @@
-<div #widget class="widget" (mousedown)="onMousedown()"
-    style="border: 1px solid white; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center;"
+<div #widget class="widget" (mousedown)="onMousedown()" style="border: 1px solid white; width: 100%;"
     [ngClass]="{'widget-selected': widgetService.selectedWidget == this}">
 
+    <!-- Caption -->
+    <div class="caption" [style.fontFamily]="caption.font.styleValue" [style.fontSize]="caption.fontSize.styleValue"
+        [style.fontWeight]="caption.fontWeight" [style.fontStyle]="caption.fontStyle"
+        [style.textDecoration]="caption.textDecoration" [style.color]="caption.color.toRGBString()">{{caption.text}}
+    </div>
 
-    <!-- Handles -->
-    <div id="handle" class="top-center-handle"></div>
-    <div id="handle" class="left-handle"></div>
-    <div id="handle" class="bottom-center-handle"></div>
-    <div id="handle" class="right-handle"></div>
-    <div id="handle" class="top-left-handle" (mousedown)="onHandleMousedown('top-left', $event)"></div>
-    <div id="handle" class="top-handle-bar" (mousedown)="onHandleMousedown('top', $event)"></div>
-    <div id="handle" class="top-right-handle" (mousedown)="onHandleMousedown('top-right', $event)"></div>
-    <div id="handle" class="right-handle-bar" (mousedown)="onHandleMousedown('right', $event)"></div>
-    <div id="handle" class="bottom-right-handle" (mousedown)="onHandleMousedown('bottom-right', $event)"></div>
-    <div id="handle" class="bottom-handle-bar" (mousedown)="onHandleMousedown('bottom', $event)"></div>
-    <div id="handle" class="bottom-left-handle" (mousedown)="onHandleMousedown('bottom-left', $event)"></div>
-    <div id="handle" class="left-handle-bar" (mousedown)="onHandleMousedown('left', $event)"></div>
-
-    Product Group
-
+    <!-- Product group -->
+    <div class="product-group">
+        Product Group
+    </div>
 </div>

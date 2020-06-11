@@ -52,7 +52,7 @@ export class Caption {
             // If we have text size data
             if (captionData.fontSize) {
                 // Assign the style
-                this.fontSize.styleValue = captionData.fontSize;
+                this.fontSize.styleValue = captionData.fontSize + 'px';
 
                 // Get the index of the font size from the options list
                 let index = this.fontSize.options.findIndex(x => x.value == this.fontSize.styleValue);
@@ -89,7 +89,11 @@ export class Caption {
         if (this.font.styleValue != this.font.options[0].value) captionData.font = this.font.styleValue;
 
         // Font Size
-        if (this.fontSize.styleValue != this.fontSize.options[7].value) captionData.fontSize = this.fontSize.styleValue;
+        if (this.fontSize.styleValue != this.fontSize.options[7].value) {
+            let index = this.fontSize.options.findIndex(x => x.value == this.fontSize.styleValue);
+            captionData.fontSize = this.fontSize.options[index].key;
+        }
+        
 
         // Text
         if (this.text) captionData.text = this.text;
