@@ -99,8 +99,8 @@
 
 
     <!-- Buttons -->
-    <div class="button-container">
-        <button>Dismiss</button>
-        <button>Publish</button>
+    <div class="button-container" [ngClass]="{'resize-button': notificationService.productNotification.type == notificationType.ProductReportedAsIllegal || notificationService.productNotification.type == notificationType.ProductReportedAsHavingAdultContent}">
+        <button (click)="onDismissButtonClick()">Dismiss</button>
+        <button>{{notificationService.productNotification.type == notificationType.ProductReportedAsIllegal || notificationService.productNotification.type == notificationType.ProductReportedAsHavingAdultContent ? 'Remove Product' : 'Publish'}}</button>
     </div>
 </div>

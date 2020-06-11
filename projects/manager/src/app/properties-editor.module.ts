@@ -72,6 +72,7 @@ import { MessageNotificationPopupComponent } from './shared-components/popups/no
 import { HoplinkPopupComponent } from './shared-components/popups/hoplink-popup/hoplink-popup.component';
 import { SearchPopupComponent } from './shared-components/popups/search-popup/search-popup.component';
 import { ColorComponent } from './shared-components/properties/color/color.component';
+import { ReviewComplaintNotificationPopupComponent } from './shared-components/popups/notifications-popup/review-complaint-notification-popup/review-complaint-notification-popup.component';
 
 
 @NgModule({
@@ -142,6 +143,7 @@ import { ColorComponent } from './shared-components/properties/color/color.compo
     ProductReportMediaPopupComponent,
     ProductReportContentPopupComponent,
     MessageNotificationPopupComponent,
+    ReviewComplaintNotificationPopupComponent,
     HoplinkPopupComponent,
     SearchPopupComponent,
     ColorComponent
@@ -219,6 +221,7 @@ import { ColorComponent } from './shared-components/properties/color/color.compo
     ProductReportMediaPopupComponent,
     ProductReportContentPopupComponent,
     MessageNotificationPopupComponent,
+    ReviewComplaintNotificationPopupComponent,
     HoplinkPopupComponent,
     SearchPopupComponent,
     ColorComponent

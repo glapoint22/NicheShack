@@ -18,7 +18,7 @@ export class ProductReportPopupComponent extends PopupComponent implements OnIni
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
   ngOnInit() {
-    // this.preventNoShow = true;
+    this.preventNoShow = true;
   }
 
 

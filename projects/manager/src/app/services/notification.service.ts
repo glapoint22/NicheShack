@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Notification, NotificationType } from '../classes/notification';
 import { ProductNotification } from '../classes/product-notification';
-import { merge, of, concat } from 'rxjs';
+import { of, concat } from 'rxjs';
 import { ReviewComplaintNotification } from '../classes/review-complaint-notification';
 import { ProductNotificationDescription } from '../classes/product-notification-description';
 import { ProductNotificationImage } from '../classes/product-notification-image';
@@ -14,10 +14,13 @@ import { delay } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class NotificationService {
+  public newNotifications: Array<Notification> = [];
+  public pendingNotifications: Array<Notification> = [];
+  public archiveNotifications: Array<Notification> = [];
   public notificationTypeList: Array<string> = [];
   public notificationImageList: Array<string> = [];
-  public notifications: Array<Notification> = [];
-  public message: Notification;
+  public messageNotification: Notification;
+  public reviewComplaintNotification: ReviewComplaintNotification
   public productNotification: ProductNotification;
   public productNotificationDescription: ProductNotificationDescription;
   public productNotificationImage: ProductNotificationImage;
@@ -299,6 +302,26 @@ export class NotificationService {
           timeStamp: '5/22/2020  5:22 PM',
           thumbnail: 'no-account-pic.png',
           text: 'Why does this fucking site suck? Fuck you Niche Shack!!! I fucking hate this fucking site!'
+        }
+      ],
+
+      notesText: [
+        {
+          timeStamp: '10/24/2018  7:14 PM',
+          thumbnail: 'no-account-pic.png',
+          text: 'Here are some notes that describe how I took action concerning product name does not match with the product description 1'
+        },
+
+        {
+          timeStamp: '6/15/2019  1:36 PM',
+          thumbnail: 'no-account-pic.png',
+          text: 'Here are some notes that describe how I took action concerning product name does not match with the product description 2',
+        },
+
+        {
+          timeStamp: '3/10/2020  3:04 PM',
+          thumbnail: 'no-account-pic.png',
+          text: 'Here are some notes that describe how I took action concerning product name does not match with the product description 3'
         }
       ]
     } as ReviewComplaintNotification).pipe(delay(0));

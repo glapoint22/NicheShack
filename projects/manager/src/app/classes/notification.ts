@@ -32,3 +32,9 @@ export enum NotificationType {
     ProductSiteNoLongerInService,
     MissingProductOther
 } 
+
+export enum NotificationTab {
+    NewNotifications,
+    PendingNotifications,
+    ArchiveNotifications
+}

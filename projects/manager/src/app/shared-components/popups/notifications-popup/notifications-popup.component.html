@@ -6,29 +6,40 @@
 
     <div class="dark-tabs-container">
         <!-- Normal Tab -->
-        <div class="dark-tab" [ngClass]="{'selected-dark-tab': true}"
-            (click)="buttonWidget.currentState = buttonState.Normal">New (999)</div>
+        <div class="dark-tab" [ngClass]="{'selected-dark-tab': selectedTab == notificationTab.NewNotifications}"
+            (click)="selectedTab = notificationTab.NewNotifications">{{'New (' + notificationService.newNotifications.length + ')'}}</div>
 
         <!-- Hover Tab -->
-        <div class="dark-tab" [ngClass]="{'selected-dark-tab': false}"
-            (click)="buttonWidget.currentState = buttonState.Hover">Pending (999)</div>
+        <div class="dark-tab" [ngClass]="{'selected-dark-tab': selectedTab == notificationTab.PendingNotifications}"
+            (click)="selectedTab = notificationTab.PendingNotifications">{{'Pending ('+ notificationService.pendingNotifications.length + ')'}}</div>
 
         <!-- Active Tab -->
-        <div id="active" class="dark-tab" [ngClass]="{'selected-dark-tab': false}"
-            (click)="buttonWidget.currentState = buttonState.Active">Archive</div>
+        <div id="active" class="dark-tab" [ngClass]="{'selected-dark-tab': selectedTab == notificationTab.ArchiveNotifications}"
+            (click)="selectedTab = notificationTab.ArchiveNotifications">Archive</div>
     </div>
 
     <div style="width: 100%; height: 423px; border: 1px solid #373737; border-top: none;">
 
 
-        <!-- Media Item LIst -->
+        <!-- New Notifications -->
         <notifications-item-list 
+            *ngIf="selectedTab == notificationTab.NewNotifications"
             [multiSelect]="false"
-            
-            [list]="notificationService.notifications">
+            [list]="notificationService.newNotifications">
         </notifications-item-list>
 
+        <!-- Pending Notifications -->
+        <notifications-item-list 
+            *ngIf="selectedTab == notificationTab.PendingNotifications"
+            [multiSelect]="false"
+            [list]="notificationService.pendingNotifications">
+        </notifications-item-list>
 
+        <!-- Archive Notifications -->
+        <notifications-item-list 
+            *ngIf="selectedTab == notificationTab.ArchiveNotifications"
+            [multiSelect]="false"
+            [list]="notificationService.archiveNotifications">
+        </notifications-item-list>
     </div>
-
 </div>

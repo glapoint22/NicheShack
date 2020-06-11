@@ -11,7 +11,7 @@
     <!-- Notification Description -->
     <div class="header-line"></div>
     <div class="product-report-title">
-        {{notificationService.getNotificationDescription(notificationService.message.type)}}
+        {{notificationService.getNotificationDescription(notificationService.messageNotification.type)}}
     </div>
     <div class="header-line"></div>
 
@@ -20,7 +20,7 @@
 
         <!-- Paginator -->
         <div class="paginator-bar">
-            <paginator [itemCount]="notificationService.message.customerText.length"
+            <paginator [itemCount]="notificationService.messageNotification.customerText.length"
                        (onItemChange)="paginatorIndex = $event">
             </paginator>
         </div>
@@ -33,18 +33,18 @@
 
                 <!-- Customer Thumbnail -->
                 <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.message.customerText[paginatorIndex].thumbnail + ')'}">
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.messageNotification.customerText[paginatorIndex].thumbnail + ')'}">
                 </div>
 
                 <!-- Time Stamp -->
                 <div class="time-stamp">
-                    {{notificationService.message.customerText[paginatorIndex].timeStamp}}
+                    {{notificationService.messageNotification.customerText[paginatorIndex].timeStamp}}
                 </div>
             </div>
 
             <!-- Customer Text -->
             <div class="user-text">
-                {{notificationService.message.customerText[paginatorIndex].text}}
+                {{notificationService.messageNotification.customerText[paginatorIndex].text}}
             </div>
         </div>
 
@@ -56,18 +56,18 @@
 
                 <!-- Employee Thumbnail -->
                 <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.message.notesText[paginatorIndex].thumbnail + ')'}">
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.messageNotification.notesText[paginatorIndex].thumbnail + ')'}">
                 </div>
 
                 <!-- Time Stamp -->
                 <div class="time-stamp">
-                    {{notificationService.message.notesText[paginatorIndex].timeStamp}}
+                    {{notificationService.messageNotification.notesText[paginatorIndex].timeStamp}}
                 </div>
             </div>
 
             <!-- Employee Text -->
             <div class="user-text">
-                {{notificationService.message.notesText[paginatorIndex].text}}
+                {{notificationService.messageNotification.notesText[paginatorIndex].text}}
             </div>
         </div>
     </div>

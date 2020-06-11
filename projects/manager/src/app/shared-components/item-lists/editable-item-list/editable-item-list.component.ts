@@ -9,7 +9,7 @@ import { SelectType } from '../../../classes/list-item-select-type';
 })
 export class EditableItemListComponent extends ItemListComponent {
   public indexOfEditedListItem: number = null;
-  public selectType: typeof SelectType = SelectType;
+  public selectType = SelectType;
 
   // -----------------------------( SET SHORTCUT KEYS )------------------------------ \\
   setShortcutKeys(event: KeyboardEvent) {

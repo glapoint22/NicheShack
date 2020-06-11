@@ -24,7 +24,7 @@ export class ItemListComponent implements OnChanges {
   public eventListenersAdded: boolean = false;
   public selectedListItemIndex: number = null;
   public unselectedListItemIndex: number = null;
-  public selectType: typeof SelectType = SelectType;
+  public selectType = SelectType;
   constructor(public menuService: MenuService) { }
   @Input() list: Array<string>;
   @Input() menuOptions: Array<string>;
