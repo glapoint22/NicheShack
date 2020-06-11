@@ -1,0 +1,135 @@
+.popup-base {
+    max-width: 400px;
+    width: 100%;
+}
+
+
+.product-report-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.product-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.product-name {
+    color: #d0d0d0;
+    font-size: 12px;
+    margin-left: 5px;
+    width: 100%;
+}
+
+.icon-container {
+    margin-left: 10px;
+}
+
+.thumbnail {
+    width: -webkit-fill-available;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    max-width: 30px; max-height: 30px; border: 1px solid #373737;
+}
+
+.account-thumbnail {
+    @extend .thumbnail;
+    width: 20px;
+    height: 20px;
+    margin-left: 6px;
+}
+
+.header-line {
+    background: #272727;
+    width: 100%;
+    height: 1px;
+}
+
+
+.product-report-title {
+    color: white;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    padding: 7px;
+}
+
+.main-property-box {
+    border: 1px solid #292929;
+    margin-top: 10px;
+    margin-bottom: 17px;
+    background: #1d1d1d;
+}
+
+.paginator-bar {
+    display: flex;
+    height: 30px;
+    background: #292929;
+    border: 2px solid #1d1d1d;
+    margin-bottom: 2px;
+    align-items: center;
+    padding-top: 2px;
+}
+
+.property-box-label {
+    margin-left: 12px;
+    color: #bbbbbb;
+    font-size: 12px;
+    margin-top: 13px;
+}
+
+
+
+.property-box {
+    border: 1px solid #373737;
+    background: #222222;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+
+    .property-box-bar {
+        background: #292929;
+        margin: 2px;
+        padding-right: 2px;
+        height: 26px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+}
+
+.time-stamp {
+    color: #dbdbdb;
+    font-size: 12px;
+}
+
+
+.user-text {
+    width: 100%;
+    height: 99px;
+    overflow: auto;
+    padding: 5px;
+    color: #e4e4e4;
+    font-size: 12px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 7px;
+    
+    button {
+        width: 80px;
+        height: 22px;
+        font-size: 13px;
+
+        &:first-child{
+            margin-right: 40px;
+        }
+    }
+}

@@ -5,11 +5,11 @@ import { MenuService } from '../../../services/menu.service';
 import { NotificationService } from '../../../services/notification.service';
 import { PopupService } from '../../../services/popup.service';
 import { NotificationType } from '../../../classes/notification';
-import { ProductNotification } from '../../../classes/product-notification';
-import { ProductNotificationDescription } from '../../../classes/product-notification-description';
-import { ProductNotificationImage } from '../../../classes/product-notification-image';
-import { ProductNotificationMedia } from '../../../classes/product-notification-media';
-import { ProductNotificationContent } from '../../../classes/product-notification-content';
+import { GeneralNotification } from '../../../classes/general-notification';
+import { ProductDescriptionNotification } from '../../../classes/product-description-notification';
+import { ProductImageNotification } from '../../../classes/product-image-notification';
+import { ProductMediaNotification } from '../../../classes/product-media-notification';
+import { ProductContentNotification } from '../../../classes/product-content-notification';
 import { ReviewComplaintNotification } from '../../../classes/review-complaint-notification';
 
 @Component({
@@ -56,20 +56,13 @@ export class NotificationsItemListComponent extends ItemListComponent implements
 
 
   onListItemClick(i: number) {
-
     // Message
     if (this.notificationService.newNotifications[i].type == NotificationType.Message) {
       this.popupService.messageNotificationPopup.show = true;
       this.notificationService.messageNotification = this.notificationService.newNotifications[i];
     }
 
-    // Review Complaint
-    if (this.notificationService.newNotifications[i].type == NotificationType.ReviewComplaint) {
-      this.popupService.reviewComplaintNotificationPopup.show = true;
-      this.notificationService.reviewComplaintNotification = this.notificationService.newNotifications[i] as ReviewComplaintNotification;
-    }
-
-    // Product Notification
+    // General Notification
     if (this.notificationService.newNotifications[i].type == NotificationType.ProductNameOther
       || this.notificationService.newNotifications[i].type == NotificationType.ProductReportedAsIllegal
       || this.notificationService.newNotifications[i].type == NotificationType.ProductReportedAsHavingAdultContent
@@ -77,45 +70,50 @@ export class NotificationsItemListComponent extends ItemListComponent implements
       || this.notificationService.newNotifications[i].type == NotificationType.ProductInactive
       || this.notificationService.newNotifications[i].type == NotificationType.ProductSiteNoLongerInService
       || this.notificationService.newNotifications[i].type == NotificationType.MissingProductOther) {
-      this.popupService.productReportOtherPopup.show = true;
-      this.notificationService.productNotification = this.notificationService.newNotifications[i] as ProductNotification;
+      this.popupService.generalNotificationPopup.show = true;
+      this.notificationService.generalNotification = this.notificationService.newNotifications[i] as GeneralNotification;
     }
 
-    // Product Notification Description
+    // Review Complaint Notification
+    if (this.notificationService.newNotifications[i].type == NotificationType.ReviewComplaint) {
+      this.popupService.reviewComplaintNotificationPopup.show = true;
+      this.notificationService.reviewComplaintNotification = this.notificationService.newNotifications[i] as ReviewComplaintNotification;
+    }
+
+    // Product Description Notification
     if (this.notificationService.newNotifications[i].type == NotificationType.ProductNameDoesNotMatchWithProductDescription
       || this.notificationService.newNotifications[i].type == NotificationType.ProductDescriptionIncorrect
       || this.notificationService.newNotifications[i].type == NotificationType.ProductDescriptionTooVague
       || this.notificationService.newNotifications[i].type == NotificationType.ProductDescriptionMisleading
       || this.notificationService.newNotifications[i].type == NotificationType.ProductDescriptionOther) {
-      this.popupService.productReportDescriptionPopup.show = true;
-      this.notificationService.productNotificationDescription = this.notificationService.newNotifications[i] as ProductNotificationDescription;
+      this.popupService.productDescriptionNotificationPopup.show = true;
+      this.notificationService.productDescriptionNotification = this.notificationService.newNotifications[i] as ProductDescriptionNotification;
     }
 
-    // Product Notification Image
+    // Product Image Notification
     if (this.notificationService.newNotifications[i].type == NotificationType.ProductNameDoesNotMatchWithProductImage) {
-      this.popupService.productReportImagePopup.show = true;
-      this.notificationService.productNotificationImage = this.notificationService.newNotifications[i] as ProductNotificationImage;
+      this.popupService.productImageNotificationPopup.show = true;
+      this.notificationService.productImageNotification = this.notificationService.newNotifications[i] as ProductImageNotification;
     }
 
-    // Product Notification Media
+    // Product Media Notification
     if (this.notificationService.newNotifications[i].type == NotificationType.VideosAndImagesAreDifferentFromProduct
       || this.notificationService.newNotifications[i].type == NotificationType.NotEnoughVideosAndImages
       || this.notificationService.newNotifications[i].type == NotificationType.VideosAndImagesNotClear
       || this.notificationService.newNotifications[i].type == NotificationType.VideosAndImagesMisleading
       || this.notificationService.newNotifications[i].type == NotificationType.VideosAndImagesOther) {
-      this.popupService.productReportMediaPopup.show = true;
-      this.notificationService.productNotificationMedia = this.notificationService.newNotifications[i] as ProductNotificationMedia;
+      this.popupService.productMediaNotificationPopup.show = true;
+      this.notificationService.productMediaNotification = this.notificationService.newNotifications[i] as ProductMediaNotification;
     }
 
-    // Product Notification Content
+    // Product Content Notification
     if (this.notificationService.newNotifications[i].type == NotificationType.ProductPriceTooHigh
       || this.notificationService.newNotifications[i].type == NotificationType.ProductPriceNotCorrect
       || this.notificationService.newNotifications[i].type == NotificationType.ProductPriceOther) {
-      this.popupService.productReportContentPopup.show = true;
-      this.notificationService.productNotificationContent = this.notificationService.newNotifications[i] as ProductNotificationContent;
+      this.popupService.productContentNotificationPopup.show = true;
+      this.notificationService.productContentNotification = this.notificationService.newNotifications[i] as ProductContentNotification;
     }
-
-    this.popupService.notificationsPopup.show = false;
+    this.popupService.notificationListPopup.show = false;
   }
 
 

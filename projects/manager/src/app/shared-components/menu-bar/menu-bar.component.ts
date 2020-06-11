@@ -33,7 +33,7 @@ export class MenuBarComponent implements OnInit {
   // -----------------------------( SHOW NOTIFICATIONS POPUP )------------------------------ \\
   showNotificationsPopup(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
-    this.popupService.notificationsPopup.show = !this.popupService.notificationsPopup.show;
+    this.popupService.notificationListPopup.show = !this.popupService.notificationListPopup.show;
   }
 
 
