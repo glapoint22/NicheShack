@@ -1,22 +1,26 @@
-<div #widget class="widget" (mousedown)="onMousedown()"
-    style="border: 1px solid white; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center;"
-    [ngClass]="{'widget-selected': widgetService.selectedWidget == this}">
+<div #widget class="widget" (mousedown)="onMousedown()" [style.maxWidth.px]="width ? width : null"
+    [style.margin]="horizontalAlignment.value" [ngClass]="{'widget-selected': widgetService.selectedWidget == this}">
 
 
     <!-- Handles -->
-    <div id="handle" class="top-center-handle"></div>
     <div id="handle" class="left-handle"></div>
-    <div id="handle" class="bottom-center-handle"></div>
     <div id="handle" class="right-handle"></div>
-    <div id="handle" class="top-left-handle" (mousedown)="onHandleMousedown('top-left', $event)"></div>
-    <div id="handle" class="top-handle-bar" (mousedown)="onHandleMousedown('top', $event)"></div>
-    <div id="handle" class="top-right-handle" (mousedown)="onHandleMousedown('top-right', $event)"></div>
     <div id="handle" class="right-handle-bar" (mousedown)="onHandleMousedown('right', $event)"></div>
-    <div id="handle" class="bottom-right-handle" (mousedown)="onHandleMousedown('bottom-right', $event)"></div>
-    <div id="handle" class="bottom-handle-bar" (mousedown)="onHandleMousedown('bottom', $event)"></div>
-    <div id="handle" class="bottom-left-handle" (mousedown)="onHandleMousedown('bottom-left', $event)"></div>
     <div id="handle" class="left-handle-bar" (mousedown)="onHandleMousedown('left', $event)"></div>
 
-    Categories
-
+    <!-- Categories -->
+    <div class="categories-container">
+        <div class="caption" [style.fontFamily]="caption.font.styleValue" [style.fontSize]="caption.fontSize.styleValue"
+            [style.fontWeight]="caption.fontWeight" [style.fontStyle]="caption.fontStyle"
+            [style.textDecoration]="caption.textDecoration" [style.color]="caption.color.toRGBString()">{{caption.text}}
+        </div>
+        <div class="categories">
+            <div class="category" *ngFor="let category of categories">
+                <img *ngIf="category.icon" src="images/{{category.icon.url}}"
+                    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : 'none'"
+                    [style.backgroundColor]="backgroundColor.value.toRGBString()">
+                <div class="title" [style.color]="textColor.value.toRGBString()">{{category.name}}</div>
+            </div>
+        </div>
+    </div>
 </div>

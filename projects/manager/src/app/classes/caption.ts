@@ -1,12 +1,12 @@
 import { Color } from './color';
-import { ButtonTextData } from './button-text-data';
+import { CaptionData } from './caption-data';
 import { Font } from './font';
 import { FontSize } from './font-size';
 
-export class ButtonText {
+export class Caption {
     public font: Font = new Font();
     public fontSize: FontSize = new FontSize();
-    public caption: string = 'Button';
+    public text: string;
     public fontWeight: string = 'normal';
     public fontStyle: string = 'normal';
     public textDecoration: string = 'none';
@@ -19,6 +19,16 @@ export class ButtonText {
         this.fontSize.styleValue = this.fontSize.options[this.fontSize.selectedIndex].value;
     }
 
+
+    applyStyle(element: HTMLElement) {
+        element.style.fontFamily = this.font.styleValue;
+        element.style.fontSize = this.fontSize.styleValue;
+        element.style.fontWeight = this.fontWeight;
+        element.style.fontStyle = this.fontStyle;
+        element.style.textDecoration = this.textDecoration;
+        element.style.color = this.color.toRGBString();
+    }
+
     getStyle() {
         return '\n\tfont-family: ' + this.font.styleValue + ';' +
             '\n\tfont-size: ' + this.fontSize.styleValue + ';' +
@@ -29,20 +39,20 @@ export class ButtonText {
     }
 
 
-    load(buttonTextData: ButtonTextData) {
-        if (buttonTextData) {
-            if (buttonTextData.caption) this.caption = buttonTextData.caption;
+    load(captionData: CaptionData) {
+        if (captionData) {
+            if (captionData.text) this.text = captionData.text;
 
             // If we have font family data
-            if (buttonTextData.font) {
-                this.font.styleValue = buttonTextData.font;
+            if (captionData.font) {
+                this.font.styleValue = captionData.font;
                 this.font.applyStyle();
             }
 
             // If we have text size data
-            if (buttonTextData.fontSize) {
+            if (captionData.fontSize) {
                 // Assign the style
-                this.fontSize.styleValue = buttonTextData.fontSize;
+                this.fontSize.styleValue = captionData.fontSize;
 
                 // Get the index of the font size from the options list
                 let index = this.fontSize.options.findIndex(x => x.value == this.fontSize.styleValue);
@@ -50,7 +60,7 @@ export class ButtonText {
                 // The font size was not found in the list so we need to update it with a custom size
                 if (index == -1) {
                     // Set the custom font size as the first option
-                    this.fontSize.options[0].key = buttonTextData.fontSize;
+                    this.fontSize.options[0].key = captionData.fontSize;
                     this.fontSize.options[0].value = this.fontSize.styleValue;
 
                     // select the custom size
@@ -62,38 +72,38 @@ export class ButtonText {
             }
 
             // Styles
-            if (buttonTextData.fontWeight) this.fontWeight = buttonTextData.fontWeight;
-            if (buttonTextData.fontStyle) this.fontStyle = buttonTextData.fontStyle;
-            if (buttonTextData.textDecoration) this.textDecoration = buttonTextData.textDecoration;
+            if (captionData.fontWeight) this.fontWeight = captionData.fontWeight;
+            if (captionData.fontStyle) this.fontStyle = captionData.fontStyle;
+            if (captionData.textDecoration) this.textDecoration = captionData.textDecoration;
 
             // Color
-            if (buttonTextData.color) this.color = Color.hexToRGB(buttonTextData.color);
+            if (captionData.color) this.color = Color.hexToRGB(captionData.color);
         }
     }
 
 
 
 
-    save(buttonTextData: ButtonTextData) {
+    save(captionData: CaptionData) {
         // Font
-        if (this.font.styleValue != this.font.options[0].value) buttonTextData.font = this.font.styleValue;
+        if (this.font.styleValue != this.font.options[0].value) captionData.font = this.font.styleValue;
 
         // Font Size
-        if (this.fontSize.styleValue != this.fontSize.options[7].value) buttonTextData.fontSize = this.fontSize.styleValue;
+        if (this.fontSize.styleValue != this.fontSize.options[7].value) captionData.fontSize = this.fontSize.styleValue;
 
-        // caption
-        if (this.caption != 'Button') buttonTextData.caption = this.caption;
+        // Text
+        if (this.text) captionData.text = this.text;
 
         // Font Weight
-        if (this.fontWeight != 'normal') buttonTextData.fontWeight = this.fontWeight;
+        if (this.fontWeight != 'normal') captionData.fontWeight = this.fontWeight;
 
         // Font Style
-        if (this.fontStyle != 'normal') buttonTextData.fontStyle = this.fontStyle;
+        if (this.fontStyle != 'normal') captionData.fontStyle = this.fontStyle;
 
         // Text Decoration
-        if (this.textDecoration != 'none') buttonTextData.textDecoration = this.textDecoration;
+        if (this.textDecoration != 'none') captionData.textDecoration = this.textDecoration;
 
         // Color
-        if (!this.color.isEqual(new Color(200, 200, 200, 1))) buttonTextData.color = this.color.toHex();
+        if (!this.color.isEqual(new Color(200, 200, 200, 1))) captionData.color = this.color.toHex();
     }
 }

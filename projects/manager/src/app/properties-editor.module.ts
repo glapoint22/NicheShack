@@ -41,7 +41,6 @@ import { PagePropertiesComponent } from './shared-components/properties/page-pro
 import { RowPropertiesComponent } from './shared-components/row-properties/row-properties.component';
 import { FormsModule } from '@angular/forms';
 import { WidgetPropertiesComponent } from './shared-components/widget-properties/widget-properties.component';
-import { ButtonTextComponent } from './shared-components/widget-properties/button-widget-properties/button-widget-normal-properties/button-text/button-text.component';
 import { ButtonWidgetPropertiesComponent } from './shared-components/widget-properties/button-widget-properties/button-widget-properties.component';
 import { ButtonWidgetNormalPropertiesComponent } from './shared-components/widget-properties/button-widget-properties/button-widget-normal-properties/button-widget-normal-properties.component';
 import { ButtonWidgetHoverPropertiesComponent } from './shared-components/widget-properties/button-widget-properties/button-widget-hover-properties/button-widget-hover-properties.component';
@@ -72,6 +71,7 @@ import { ProductReportContentPopupComponent } from './shared-components/popups/p
 import { MessageNotificationPopupComponent } from './shared-components/popups/notifications-popup/message-notification-popup/message-notification-popup.component';
 import { HoplinkPopupComponent } from './shared-components/popups/hoplink-popup/hoplink-popup.component';
 import { SearchPopupComponent } from './shared-components/popups/search-popup/search-popup.component';
+import { ColorComponent } from './shared-components/properties/color/color.component';
 
 
 @NgModule({
@@ -83,7 +83,6 @@ import { SearchPopupComponent } from './shared-components/popups/search-popup/se
     HorizontalAlignmentComponent,
     WidgetPropertiesComponent,
     ButtonColorComponent,
-    ButtonTextComponent,
     TextComponent,
     StyleComponent,
     BannersComponent,
@@ -144,7 +143,8 @@ import { SearchPopupComponent } from './shared-components/popups/search-popup/se
     ProductReportContentPopupComponent,
     MessageNotificationPopupComponent,
     HoplinkPopupComponent,
-    SearchPopupComponent
+    SearchPopupComponent,
+    ColorComponent
   ],
   imports: [
     CommonModule,
@@ -160,7 +160,6 @@ import { SearchPopupComponent } from './shared-components/popups/search-popup/se
     HorizontalAlignmentComponent,
     WidgetPropertiesComponent,
     ButtonColorComponent,
-    ButtonTextComponent,
     TextComponent,
     StyleComponent,
     BannersComponent,
@@ -221,7 +220,8 @@ import { SearchPopupComponent } from './shared-components/popups/search-popup/se
     ProductReportContentPopupComponent,
     MessageNotificationPopupComponent,
     HoplinkPopupComponent,
-    SearchPopupComponent
+    SearchPopupComponent,
+    ColorComponent
   ]
 })
 export class PropertiesEditorModule { }

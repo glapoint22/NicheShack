@@ -6,6 +6,11 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Category } from 'projects/manager/src/app/classes/category';
 import { CategoriesWidgetData } from 'projects/manager/src/app/classes/categories-widget-data';
 import { ColumnData } from 'projects/manager/src/app/classes/column-data';
+import { Caption } from 'projects/manager/src/app/classes/caption';
+import { Color } from 'projects/manager/src/app/classes/color';
+import { TextColor } from 'projects/manager/src/app/classes/text-color';
+import { BackgroundColor } from 'projects/manager/src/app/classes/background-color';
+import { Shadow } from 'projects/manager/src/app/classes/shadow';
 
 @Component({
   selector: 'categories-widget',
@@ -16,36 +21,110 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
-    public caption: string;
-    public categories: Array<Category> = [];
+  public caption: Caption = new Caption();
+  public categories: Array<Category> = [];
+  public textColor: TextColor = new TextColor(new Color(255, 255, 255, 1));
+  public backgroundColor: BackgroundColor = new BackgroundColor(new Color(66, 0, 51, 1));
+  public shadow: Shadow = new Shadow();
 
 
-    ngOnInit() {
-      this.height = 250
-      this.name = 'Categories';
-      this.type = WidgetType.Categories;
-      super.ngOnInit();
-    }
+  ngOnInit() {
+    this.height = 250
+    this.name = 'Categories';
+    this.type = WidgetType.Categories;
+    this.caption.text = 'Shop by category';
+    this.caption.color = new Color(255, 187, 0, 1);
+    this.caption.fontSize.selectedIndex = 9;
+    this.caption.fontSize.styleValue = this.caption.fontSize.options[this.caption.fontSize.selectedIndex].value;
+    super.ngOnInit();
+  }
 
-    load(widgetData: CategoriesWidgetData) {
-      this.caption = widgetData.caption;
-      this.categories = widgetData.categories;
-      super.load(widgetData);
-    }
-    
+  load(widgetData: CategoriesWidgetData) {
+    this.caption.load(widgetData.caption);
+    this.categories = widgetData.categories;
+    this.textColor.load(widgetData.textColor);
+    this.backgroundColor.load(widgetData.backgroundColor);
+    this.shadow.load(widgetData.shadow);
+    super.load(widgetData);
+  }
 
-    save(columnData: ColumnData) {
-      let categoriesWidgetData = columnData.widgetData = new CategoriesWidgetData();
-  
-      // Name
-      if (this.name != 'Categories') categoriesWidgetData.name = this.name;
-      
-      // Caption
-      if (this.caption) categoriesWidgetData.caption = this.caption;
 
-      // Categories
-      if (this.categories.length > 0) categoriesWidgetData.categories = this.categories;
-  
-      super.save(columnData);
-    }
+  save(columnData: ColumnData) {
+    let categoriesWidgetData = columnData.widgetData = new CategoriesWidgetData();
+
+    // Name
+    if (this.name != 'Categories') categoriesWidgetData.name = this.name;
+
+    // Caption
+    this.caption.save(categoriesWidgetData.caption);
+
+    // Categories
+    if (this.categories.length > 0) categoriesWidgetData.categories = this.categories;
+
+    // Text Color
+    categoriesWidgetData.textColor = this.textColor.value.toHex();
+
+    // Background Color
+    categoriesWidgetData.backgroundColor = this.backgroundColor.value.toHex();
+
+    // Shadow
+    this.shadow.save(categoriesWidgetData.shadow);
+
+    super.save(columnData);
+  }
+
+  buildHTML(parent: HTMLElement) {
+    // Categories container
+    let categoriesContainer = document.createElement('div');
+    categoriesContainer.classList.add('categories-container');
+
+    // Set width
+    if (this.width) categoriesContainer.style.maxWidth = this.width + 'px';
+
+    // Caption
+    let caption = document.createElement('div');
+    caption.classList.add('caption');
+    caption.innerText = this.caption.text;
+    this.caption.applyStyle(caption);
+
+    // Categories
+    let categories = document.createElement('div');
+    categories.classList.add('categories');
+
+    // Loop through each category
+    this.categories.forEach((category: Category) => {
+      // Category
+      let categoryElement = document.createElement('div');
+      categoryElement.classList.add('category');
+
+      // Image
+      let img = document.createElement('img');
+      img.src = 'images/' + category.icon.url;
+
+      // Shadow
+      this.shadow.applyStyle(img);
+      this.backgroundColor.applyStyle(img);
+
+      // title
+      let title = document.createElement('div');
+      title.innerText = category.name;
+      title.classList.add('title');
+      this.textColor.applyStyle(title);
+
+      // Append
+      categoryElement.appendChild(img);
+      categoryElement.appendChild(title);
+      categories.appendChild(categoryElement);
+    });
+
+    // Append
+    categoriesContainer.appendChild(caption);
+    categoriesContainer.appendChild(categories);
+
+
+    // Set the classes
+    this.breakpointService.setBreakpointClasses(this, categoriesContainer);
+
+    parent.appendChild(categoriesContainer);
+  }
 }

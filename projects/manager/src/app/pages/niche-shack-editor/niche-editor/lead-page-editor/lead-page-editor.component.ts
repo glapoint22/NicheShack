@@ -96,8 +96,8 @@ export class LeadPageEditorComponent implements OnChanges {
                         style: null,
                         color: '#00ff00'
                       },
-                      text: {
-                        caption: 'Alita',
+                      caption: {
+                        text: 'Alita',
                         font: '"Comic Sans MS", cursive, sans-serif',
                         fontSize: '22px',
                         fontWeight: 'bold',
@@ -278,7 +278,7 @@ export class LeadPageEditorComponent implements OnChanges {
                                 horizontalAlignment: null,
                                 background: null,
                                 border: null,
-                                text: null,
+                                caption: null,
                                 corners: null,
                                 shadow: null,
                                 padding: null,
@@ -431,15 +431,41 @@ export class LeadPageEditorComponent implements OnChanges {
                       height: null,
                       breakpoints: [],
                       horizontalAlignment: null,
-                      caption: 'Shop by category',
+                      caption: {
+                        text: 'Welcome to Gumpy\'s',
+                        fontWeight: 'bold',
+                        fontSize: '44',
+                        fontStyle: 'italic',
+                        font: 'Impact, Charcoal, sans-serif',
+                        textDecoration: 'underline',
+                        color: '#ff0000'
+                      },
+                      backgroundColor: '#0000ff',
+                      textColor: '#00ff00',
+                      shadow: {
+                        enable: true,
+                        x: 10,
+                        y: 10,
+                        blur: 10,
+                        size: 10,
+                        color: '#3f573f70'
+                      },
                       categories: [
                         {
                           name: 'Health & Fitness',
-                          id: 0
+                          id: 0,
+                          icon: {
+                            url: '44d71fbf43904ffdbdece40a45bdf9db.png',
+                            title: 'Health & Fitness'
+                          }
                         },
                         {
                           name: 'Self-Help',
-                          id: 1
+                          id: 1,
+                          icon:  {
+                            url: '143968bba73642898bb4a6715a1efd3d.png',
+                            title: 'self-help'
+                          }
                         }
                       ]
                     } as CategoriesWidgetData

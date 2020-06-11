@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Caption } from '../../../classes/caption';
 
 @Component({
   selector: 'caption-property',
@@ -6,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./caption.component.scss']
 })
 export class CaptionComponent {
-  @Input() caption: string;
+  @Input() caption: Caption;
 }

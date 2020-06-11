@@ -1,5 +1,5 @@
-export class ButtonTextData {
-    caption: string;
+export class CaptionData {
+    text: string;
     fontWeight: string;
     fontStyle: string;
     textDecoration: string;

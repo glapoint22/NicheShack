@@ -9,7 +9,6 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Padding } from 'projects/manager/src/app/classes/padding';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
-import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
 import { TextWidgetData } from 'projects/manager/src/app/classes/text-widget-data';
 import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
-import { ButtonText } from 'projects/manager/src/app/classes/button-text';
+import { Caption } from 'projects/manager/src/app/classes/caption';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
@@ -28,7 +28,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   public background: Background = new Background();
   public border: Border = new Border();
   public corners: Corners = new Corners();
-  public text: ButtonText = new ButtonText();
+  public caption: Caption = new Caption();
   public shadow: Shadow = new Shadow();
   public link: Link = new Link();
   public padding: Padding = new Padding();
@@ -59,7 +59,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   // ---------------------------------------------------------------- Ng On Init --------------------------------------------------------------
   ngOnInit() {
     this.height = 40;
-    this.name = 'Button';
+    this.caption.text = this.name = 'Button';
     this.type = WidgetType.Button;
     this.currentState = ButtonState.Normal;
     this.background.color = new Color(128, 128, 128, 1);
@@ -125,7 +125,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
     switch (this.currentState) {
       case ButtonState.Normal:
-        color = this.text.color.toRGBString();
+        color = this.caption.color.toRGBString();
         break;
 
       case ButtonState.Hover:
@@ -144,7 +144,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   load(widgetData: ButtonWidgetData) {
     this.background.load(widgetData.background);
     this.border.load(widgetData.border);
-    this.text.load(widgetData.text);
+    this.caption.load(widgetData.caption);
     this.corners.load(widgetData.corners);
     this.shadow.load(widgetData.shadow);
     this.padding.load(widgetData.padding);
@@ -185,7 +185,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.left);
 
     // Text
-    this.text.save(buttonWidgetData.text);
+    this.caption.save(buttonWidgetData.caption);
 
     // Link
     this.link.save(buttonWidgetData.link);
@@ -226,7 +226,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
       this.border.getStyle() +
       this.corners.getStyle() +
       this.shadow.getStyle() +
-      this.text.getStyle() +
+      this.caption.getStyle() +
       '\n\tmin-height: ' + this.height + 'px;' +
       (this.width ? '\n\tmax-width: ' + this.width + 'px;' : '') +
       '\n}' +
@@ -275,7 +275,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
 
     // Button caption
-    button.appendChild(document.createTextNode(this.text.caption));
+    button.appendChild(document.createTextNode(this.caption.text));
 
 
     // Add this button style
