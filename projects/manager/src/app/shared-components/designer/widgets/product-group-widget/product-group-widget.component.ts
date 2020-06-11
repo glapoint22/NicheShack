@@ -7,6 +7,8 @@ import { ProductGroupType } from 'projects/manager/src/app/classes/product-group
 import { Product } from 'projects/manager/src/app/classes/product';
 import { ProductGroupWidgetData } from 'projects/manager/src/app/classes/product-group-widget-data';
 import { ColumnData } from 'projects/manager/src/app/classes/column-data';
+import { Caption } from 'projects/manager/src/app/classes/caption';
+import { Color } from 'projects/manager/src/app/classes/color';
 
 @Component({
   selector: 'product-group-widget',
@@ -17,7 +19,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
   constructor(widgetService: WidgetService,
     breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
-  public caption: string;
+    public caption: Caption = new Caption();
   public productGroupType: ProductGroupType = ProductGroupType.FeaturedProducts;
   public featuredProducts: Array<Product> = [];
 
@@ -25,11 +27,15 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     this.height = 250
     this.name = 'Product Group';
     this.type = WidgetType.ProductGroup;
+    this.caption.text = 'Check out these products';
+    this.caption.color = new Color(255, 187, 0, 1);
+    this.caption.fontSize.selectedIndex = 9;
+    this.caption.fontSize.styleValue = this.caption.fontSize.options[this.caption.fontSize.selectedIndex].value;
     super.ngOnInit();
   }
 
   load(widgetData: ProductGroupWidgetData) {
-    this.caption = widgetData.caption;
+    this.caption.load(widgetData.caption);
     this.productGroupType = widgetData.productGroupType;
     this.featuredProducts = widgetData.featuredProducts;
     super.load(widgetData);
@@ -44,7 +50,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     if (this.name != 'Product Group') productGroupWidgetData.name = this.name;
 
     // Caption
-    if (this.caption) productGroupWidgetData.caption = this.caption;
+    this.caption.save(productGroupWidgetData.caption);
 
     // Product Group Type
     if (this.productGroupType != ProductGroupType.FeaturedProducts) productGroupWidgetData.productGroupType = this.productGroupType;
@@ -55,4 +61,37 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     super.save(columnData);
   }
 
+
+  buildHTML(parent: HTMLElement) {
+    // Product Group Container
+    let productGroupContainer = document.createElement('div');
+    productGroupContainer.style.width = '100%';
+    productGroupContainer.style.border = '1px solid #747474';
+
+    // Caption
+    let caption = document.createElement('div');
+    caption.style.textAlign = 'center';
+    caption.innerText = this.caption.text;
+    this.caption.applyStyle(caption);
+    
+    // Product Group
+    let productGroup = document.createElement('div');
+    productGroup.innerText = 'Product Group';
+    productGroup.style.display = 'flex';
+    productGroup.style.justifyContent = 'center';
+    productGroup.style.alignItems = 'center';
+    productGroup.style.width = '100%';
+    productGroup.style.height = '272px';
+    productGroup.style.fontSize = '22px';
+    productGroup.style.textAlign = 'center';
+
+    // Append
+    productGroupContainer.appendChild(caption);
+    productGroupContainer.appendChild(productGroup);
+
+    // Set the classes
+    this.breakpointService.setBreakpointClasses(this, productGroupContainer);
+
+    parent.appendChild(productGroupContainer);
+  }
 }

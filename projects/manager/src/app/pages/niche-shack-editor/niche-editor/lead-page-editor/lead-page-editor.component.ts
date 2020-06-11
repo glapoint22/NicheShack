@@ -99,7 +99,7 @@ export class LeadPageEditorComponent implements OnChanges {
                       caption: {
                         text: 'Alita',
                         font: '"Comic Sans MS", cursive, sans-serif',
-                        fontSize: '22px',
+                        fontSize: '24',
                         fontWeight: 'bold',
                         fontStyle: 'italic',
                         textDecoration: 'underline',
@@ -394,7 +394,15 @@ export class LeadPageEditorComponent implements OnChanges {
                       height: null,
                       breakpoints: [],
                       horizontalAlignment: null,
-                      caption: 'Browse These Great Products',
+                      caption: {
+                        text: 'Check out our featured products',
+                        fontWeight: 'bold',
+                        fontSize: '44',
+                        fontStyle: 'italic',
+                        font: 'Impact, Charcoal, sans-serif',
+                        textDecoration: 'underline',
+                        color: '#ff0000'
+                      },
                       productGroupType: 0,
                       featuredProducts: [
                         {
