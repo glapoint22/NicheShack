@@ -8,7 +8,7 @@ import { SelectType } from '../../../classes/list-item-select-type';
   styleUrls: ['./media-item-list.component.scss']
 })
 export class MediaItemListComponent extends EditableItemListComponent {
-  public selectType: typeof SelectType = SelectType;
+  public selectType = SelectType;
   @Input() mediaList: Array<string>;
   @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
   @Output() onAddMedia: EventEmitter<void> = new EventEmitter();

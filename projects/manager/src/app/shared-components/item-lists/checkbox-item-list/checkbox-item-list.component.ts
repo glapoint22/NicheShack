@@ -9,5 +9,5 @@ import { SelectType } from '../../../classes/list-item-select-type';
 })
 export class CheckboxItemListComponent extends ItemListComponent {
   @Input() checkList: Array<boolean>;
-  public selectType: typeof SelectType = SelectType;
+  public selectType = SelectType;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Notification, NotificationType } from '../classes/notification';
 import { ProductNotification } from '../classes/product-notification';
-import { merge, of, concat } from 'rxjs';
+import { of, concat } from 'rxjs';
 import { ReviewComplaintNotification } from '../classes/review-complaint-notification';
 import { ProductNotificationDescription } from '../classes/product-notification-description';
 import { ProductNotificationImage } from '../classes/product-notification-image';
@@ -14,9 +14,11 @@ import { delay } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class NotificationService {
+  public newNotifications: Array<Notification> = [];
+  public pendingNotifications: Array<Notification> = [];
+  public archiveNotifications: Array<Notification> = [];
   public notificationTypeList: Array<string> = [];
   public notificationImageList: Array<string> = [];
-  public notifications: Array<Notification> = [];
   public messageNotification: Notification;
   public reviewComplaintNotification: ReviewComplaintNotification
   public productNotification: ProductNotification;
