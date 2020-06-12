@@ -60,8 +60,10 @@ export class PageService {
     this.rootContainer.buildHTML(parent);
 
     // Add the grid class
-    (parent.firstElementChild as HTMLElement).style.height = '100%';
-    (parent.firstElementChild as HTMLElement).classList.add('grid');
+    let grid = parent.firstElementChild as HTMLElement;
+    grid.style.height = '100%';
+    grid.classList.add('grid');
+    grid.style.maxWidth = this.page.width + 'px';
 
     // Write out the html to the preview window
     previewWindow.document.write(parent.outerHTML);
