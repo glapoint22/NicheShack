@@ -4,8 +4,8 @@ import { Font } from './font';
 import { FontSize } from './font-size';
 
 export class Caption {
-    public font: Font = new Font();
-    public fontSize: FontSize = new FontSize();
+    public font: Font = new Font(null, null);
+    public fontSize: FontSize = new FontSize(null, null);
     public text: string;
     public fontWeight: string = 'normal';
     public fontStyle: string = 'normal';
@@ -93,7 +93,7 @@ export class Caption {
             let index = this.fontSize.options.findIndex(x => x.value == this.fontSize.styleValue);
             captionData.fontSize = this.fontSize.options[index].key;
         }
-        
+
 
         // Text
         if (this.text) captionData.text = this.text;

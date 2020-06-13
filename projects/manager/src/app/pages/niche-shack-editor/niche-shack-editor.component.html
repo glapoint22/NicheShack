@@ -5,6 +5,15 @@
         *ngIf="selectedItem.type == 'Niche' || (selectedItem.type == 'Product' && productEditorMode == 'email')">
         <designer></designer>
     </div>
+
+
+    <div style="flex: 1; position: relative;"
+        *ngIf="selectedItem.type == 'Product' && productEditorMode == 'properties'">
+        <product-info></product-info>
+    </div>
+
+
+
     <div style="flex-basis: 15%; max-width: 15%; background: #252525; overflow: auto;">
 
         <category-editor *ngIf="selectedItem.type == 'Category'" [hierarchyItem]="selectedItem"></category-editor>

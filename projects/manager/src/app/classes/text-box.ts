@@ -42,22 +42,22 @@ export class TextBox {
 
     constructor(private contentDocument: HTMLDocument, private applicationRef: ApplicationRef, defaultFontColor: Color) {
         // Styles
-        this.bold = new Bold(contentDocument);
-        this.italic = new Italic(contentDocument);
-        this.underline = new Underline(contentDocument);
-        this.font = new Font(contentDocument);
-        this.fontSize = new FontSize(contentDocument);
-        this.fontColor = new FontColor(contentDocument, defaultFontColor);
-        this.highlightColor = new HighlightColor(contentDocument);
-        this.alignLeft = new AlignLeft(contentDocument);
-        this.alignCenter = new AlignCenter(contentDocument);
-        this.alignRight = new AlignRight(contentDocument);
-        this.alignJustify = new AlignJustify(contentDocument);
-        this.increaseIndent = new IncreaseIndent(contentDocument);
-        this.decreaseIndent = new DecreaseIndent(contentDocument);
-        this.orderedList = new OrderedList(contentDocument);
-        this.unorderedList = new UnorderedList(contentDocument);
-        this.linkStyle = new LinkStyle(contentDocument);
+        this.bold = new Bold(contentDocument, this.onChange);
+        this.italic = new Italic(contentDocument, this.onChange);
+        this.underline = new Underline(contentDocument, this.onChange);
+        this.font = new Font(contentDocument, this.onChange);
+        this.fontSize = new FontSize(contentDocument, this.onChange);
+        this.fontColor = new FontColor(contentDocument, defaultFontColor, this.onChange);
+        this.highlightColor = new HighlightColor(contentDocument, this.onChange);
+        this.alignLeft = new AlignLeft(contentDocument, this.onChange);
+        this.alignCenter = new AlignCenter(contentDocument, this.onChange);
+        this.alignRight = new AlignRight(contentDocument, this.onChange);
+        this.alignJustify = new AlignJustify(contentDocument, this.onChange);
+        this.increaseIndent = new IncreaseIndent(contentDocument, this.onChange);
+        this.decreaseIndent = new DecreaseIndent(contentDocument, this.onChange);
+        this.orderedList = new OrderedList(contentDocument, this.onChange);
+        this.unorderedList = new UnorderedList(contentDocument, this.onChange);
+        this.linkStyle = new LinkStyle(contentDocument, this.onChange);
         this.content = contentDocument.body.firstElementChild as HTMLElement;
 
 
@@ -135,7 +135,7 @@ export class TextBox {
             // If we have no selection, return
             if (!selection.anchorNode || clipboardText == '') return;
 
-            let style = new Style(this.contentDocument);
+            let style = new Style(this.contentDocument, this.onChange);
 
             let range = selection.getRangeAt(0);
             let text: Text = document.createTextNode(clipboardText);
@@ -215,7 +215,7 @@ export class TextBox {
 
             // Backspace or delete was pressed
             if (event.keyCode == 8 || event.keyCode == 46) {
-                let style = new Style(this.contentDocument);
+                let style = new Style(this.contentDocument, this.onChange);
 
                 // If range is collapsed
                 if (range.collapsed) {
@@ -373,7 +373,7 @@ export class TextBox {
 
         let selection = this.contentDocument.getSelection();
         let range = selection.getRangeAt(0);
-        let style = new Style(this.contentDocument);
+        let style = new Style(this.contentDocument, this.onChange);
         let firstTextChild = style.getFirstTextChild(this.content);
 
         if (firstTextChild) {

@@ -10,7 +10,7 @@
         <div (mousedown)="$event.stopPropagation()">
             <!-- Close header -->
             <div class="background-color-dark-gray padding-top-8 padding-bottom-8 overflow-auto">
-                <i (click)="showListsMenu = false" class="fas fa-times margin-right-8 alt-color float-right"></i>
+                <i (click)="showListsMenu = false" class="fas fa-times margin-right-8 niche-shack-gold float-right"></i>
             </div>
 
 
@@ -19,7 +19,7 @@
 
                     <!-- Lists -->
                     <div class="width-100">
-                        <h2 class="alt-color">Your Lists</h2>
+                        <h2 class="niche-shack-gold">Your Lists</h2>
 
                         <!-- Each List -->
                         <div class="margin-bottom-24 cursor-pointer padding-8" *ngFor="let list of lists"
@@ -27,7 +27,7 @@
                             (click)="onListClick(list, lists); showListsMenu = false">
                             <h3>{{list.name}}</h3>
 
-                            <div class="alt-color">
+                            <div class="niche-shack-gold">
                                 Owner: {{list.owner}}
                             </div>
                             <div>
@@ -122,7 +122,7 @@
                         <div class="display-flex">
                             <!-- Lists -->
                             <div class="width-100 show-sm" style="max-width: 210px;">
-                                <h2 class="alt-color">Your Lists</h2>
+                                <h2 class="niche-shack-gold">Your Lists</h2>
 
                                 <!-- Each List -->
                                 <div class="margin-bottom-24 cursor-pointer padding-8" *ngFor="let list of lists"
@@ -130,7 +130,7 @@
                                     (click)="onListClick(list, lists)">
                                     <h3>{{list.name}}</h3>
 
-                                    <div class="alt-color">
+                                    <div class="niche-shack-gold">
                                         Owner: {{list.owner}}
                                     </div>
                                     <div>
@@ -203,7 +203,7 @@
 
 
                                                                     <!-- Price -->
-                                                                    <div class="alt-color">
+                                                                    <div class="niche-shack-gold">
                                                                         <div *ngIf="product.maxPrice === 0">
                                                                             {{product.minPrice | currency:'USD'}}
                                                                         </div>
@@ -223,7 +223,7 @@
                                                                 <div class="margin-bottom-4 gray-color">Item added
                                                                     {{product.dateAdded}}
                                                                 </div>
-                                                                <div class="margin-bottom-4 alt-color">
+                                                                <div class="margin-bottom-4 niche-shack-gold">
                                                                     Added by {{product.collaborator}}
                                                                 </div>
                                                                 <button class="alt-button margin-bottom-8"

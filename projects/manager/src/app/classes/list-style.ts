@@ -30,6 +30,8 @@ export class ListStyle extends NodeStyle {
         this.checkSelection();
 
         this.setFocus();
+
+        this.onChange.next();
     }
 
 

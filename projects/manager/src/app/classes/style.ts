@@ -1,4 +1,5 @@
 import { Selection } from './selection';
+import { Subject } from 'rxjs';
 
 export class Style {
     public style: string;
@@ -12,7 +13,7 @@ export class Style {
     public contentParentNode: HTMLElement;
 
 
-    constructor(public contentDocument: HTMLDocument) {
+    constructor(public contentDocument: HTMLDocument, public onChange: Subject<void> = new Subject<void>()) {
         this.contentParentNode = contentDocument.body.firstElementChild as HTMLElement;
     }
 
@@ -175,6 +176,7 @@ export class Style {
         }
 
         this.finalizeStyle();
+        this.onChange.next();
     }
 
 

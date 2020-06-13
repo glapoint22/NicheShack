@@ -1,7 +1,7 @@
 import { Link, LinkOption } from './link';
 import { NodeStyle } from './node-style';
 import { LinkPopupComponent } from '../shared-components/popups/link-popup/link-popup.component';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 
 export class LinkStyle extends NodeStyle {
     public link: Link = new Link();
@@ -34,8 +34,8 @@ export class LinkStyle extends NodeStyle {
         });
     }
 
-    constructor(contentDocument: HTMLDocument) {
-        super(contentDocument);
+    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+        super(contentDocument, onChange);
 
         this.style = 'A';
     }

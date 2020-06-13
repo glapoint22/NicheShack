@@ -407,11 +407,11 @@ export class LeadPageEditorComponent implements OnChanges {
                       featuredProducts: [
                         {
                           id: 'FA24GDSETG',
-                          title: 'How To Be a Gumpy'
+                          name: 'How To Be a Gumpy'
                         },
                         {
                           id: '8RTIOFGBHE',
-                          title: 'Alita: Battle Angel'
+                          name: 'Alita: Battle Angel'
                         }
                       ]
 

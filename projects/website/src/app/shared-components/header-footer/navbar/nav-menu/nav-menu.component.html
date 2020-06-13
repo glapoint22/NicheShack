@@ -5,7 +5,7 @@
         
         <!-- Close -->
         <div class="background-color-dark-gray padding-top-8 padding-bottom-8 overflow-auto">
-            <i (click)="show = false" class="fas fa-times margin-right-8 alt-color float-right"></i>
+            <i (click)="show = false" class="fas fa-times margin-right-8 niche-shack-gold float-right"></i>
         </div>
 
 
@@ -16,13 +16,13 @@
                 <!-- Account & Categories -->
                 <div *ngIf="!nicheView">
                     <!-- Account Heading -->
-                    <h3 class="padding-left-8 alt-color">Account</h3>
+                    <h3 class="padding-left-8 niche-shack-gold">Account</h3>
 
                     <!-- Account Navigation -->
                     <account-navigation></account-navigation>
 
                     <!-- Heading -->
-                    <h3 class="padding-left-8 alt-color margin-top-24">Categories</h3>
+                    <h3 class="padding-left-8 niche-shack-gold margin-top-24">Categories</h3>
 
 
                     <!-- Categories -->
@@ -46,7 +46,7 @@
                     </div>
 
                     <!-- Category Heading -->
-                    <h3 class="padding-left-8 alt-color margin-top-24">{{currentCategory.name}}</h3>
+                    <h3 class="padding-left-8 niche-shack-gold margin-top-24">{{currentCategory.name}}</h3>
 
                     <!-- Niches -->
                     <div *ngFor="let niche of niches"

@@ -4,6 +4,7 @@ import { delay } from 'rxjs/operators';
 import { ProductMediaType } from 'projects/manager/src/app/classes/product-media';
 import { ProductProperties } from 'projects/manager/src/app/classes/product-properties';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
+import { ProductService } from 'projects/manager/src/app/services/product.service';
 
 @Component({
   selector: 'product-properties',
@@ -14,20 +15,24 @@ export class ProductPropertiesComponent implements OnChanges {
   @Input() productId: string;
   public productProperties: ProductProperties;
 
-  constructor(public loadingService: LoadingService) { }
+  constructor(public loadingService: LoadingService, public productService: ProductService) { }
 
   // ---------------------Temp-----------------------------
   public getTempProductProperties(): Observable<ProductProperties> {
 
     return new Observable<ProductProperties>(subscriber => {
       subscriber.next({
+        id: 'TGHUQ7OWNK',
+        name: 'Booty Type Training',
         vendor: {
           id: 'LWDT6IQHNX',
           name: 'Gumpy\'s',
         },
         image: {
-          url: '8307dc287c6147bcaddbfc921411eece.png',
-          title: 'The Skinny Asian Diet'
+          url: '8d5741456a824e8981efdfa348d2cb0d.jpg',
+          title: 'Booty Type Training',
+          load: null,
+          save: null
         },
         rating: 2.8,
         totalReviews: 60,
@@ -115,24 +120,28 @@ export class ProductPropertiesComponent implements OnChanges {
         ],
         pricePoints: [
           {
+            id: 'HGAFDSDFAF',
             textBefore: "Single Payment of",
             wholeNumber: "5",
             decimal: "16",
             textAfter: ""
           },
           {
+            id: 'ASFSDAFFSDF',
             textBefore: "",
             wholeNumber: "7",
             decimal: "12",
             textAfter: "per Week"
           },
           {
+            id: 'AFHHTRETET',
             textBefore: "3 Easy Payments of",
             wholeNumber: "15",
             decimal: "59",
             textAfter: "per Month"
           },
           {
+            id: 'J34ERGFGG',
             textBefore: "",
             wholeNumber: "16",
             decimal: "80",
@@ -188,14 +197,38 @@ export class ProductPropertiesComponent implements OnChanges {
           }
         ],
         keywords: [
-          'Gumpy',
-          'Ice Cream',
-          'Chocolate',
-          'Vanilla',
-          'Strawberry',
-          'Sundae',
-          'Ice Cream Cone',
-          'Mint Chocolate Chip'
+          {
+            id: 'AFSDFFDSFS',
+            name: 'Gumpy'
+          },
+          {
+            id: 'GGFSDFGFSDAF',
+            name: 'Ice Cream'
+          },
+          {
+            id: 'WFWFASF',
+            name: 'Chocolate'
+          },
+          {
+            id: 'HYTREYREY',
+            name: 'Vanilla'
+          },
+          {
+            id: 'UYTUYRUY',
+            name: 'Strawberry'
+          },
+          {
+            id: 'YTRYRE',
+            name: 'Sundae'
+          },
+          {
+            id: 'AFSDFFDSFS',
+            name: 'Ice Cream Cone'
+          },
+          {
+            id: 'AFSDFFDSFS',
+            name: 'Mint Chocolate Chip'
+          }
         ]
       });
     }).pipe(delay(1000));
@@ -207,7 +240,16 @@ export class ProductPropertiesComponent implements OnChanges {
       this.loadingService.loading = true;
 
       this.getTempProductProperties().subscribe((productProperties: ProductProperties) => {
+        if(productProperties.media.length > 0) {
+          productProperties.media.unshift({
+            thumbnail: productProperties.image.url,
+            type: ProductMediaType.Image
+          })
+        }
+        this.productService.currentSelectedMedia = productProperties.media[0];
+
         this.productProperties = productProperties;
+        this.productService.product = productProperties;
         this.loadingService.loading = false;
       });
     }

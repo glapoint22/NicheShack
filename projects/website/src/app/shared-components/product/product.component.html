@@ -4,7 +4,7 @@
     <div class="margin-bottom-8 text-center img-container">
         <img [src]="'images/' + product.image">
         <!-- Quick Look -->
-        <div class="quick-look alt-background-color alt-color-darkest"
+        <div class="quick-look alt-background-color niche-shack-gold-darkest"
             (click)="onQuickLookClick(); $event.stopPropagation()">
             Quick Look
         </div>
@@ -27,7 +27,7 @@
 
 
         <!-- Price -->
-        <div class="alt-color">
+        <div class="niche-shack-gold">
             <div *ngIf="product.maxPrice == 0">
                 {{product.minPrice | currency:'USD'}}
             </div>
