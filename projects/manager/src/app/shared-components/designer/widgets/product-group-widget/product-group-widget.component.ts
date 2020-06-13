@@ -71,6 +71,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     // Caption
     let caption = document.createElement('div');
     caption.style.textAlign = 'center';
+    caption.style.wordBreak = 'break-word';
     caption.innerText = this.caption.text;
     this.caption.applyStyle(caption);
     

@@ -5,17 +5,22 @@ import { PageData } from '../../../classes/page-data';
 import { delay } from 'rxjs/operators';
 import { LoadingService } from '../../../services/loading.service';
 import { PromptService } from '../../../services/prompt.service';
+import { PopupService } from '../../../services/popup.service';
+import { Searchable } from '../../../classes/searchable';
 
 @Component({
   selector: 'page-editor',
   templateUrl: './page-editor.component.html',
   styleUrls: ['./page-editor.component.scss']
 })
-export class PageEditorComponent {
+export class PageEditorComponent implements Searchable {
   public view: string = 'page';
   public currentPageId: string;
+  public searchUrl: string;
 
-  constructor(public pageService: PageService, private loadingService: LoadingService, private promptService: PromptService) { }
+  constructor(public pageService: PageService, private loadingService: LoadingService, private promptService: PromptService, private popupService: PopupService) { }
+  
+  
 
   //                                                                 TEMP!!!!!!
   // ******************************************************************************************************************************************
@@ -134,5 +139,21 @@ export class PageEditorComponent {
       this.pageService.widgetCursors = [];
       this.pageService.page.width = 1600;
     });
+  }
+
+
+  // ---------------------------------------------------------------- On Page Search Click --------------------------------------------------------
+  onPageSearchClick(sourceElement: HTMLElement) {
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.searchPopup.searchable = this;
+    this.popupService.searchPopup.show = !this.popupService.searchPopup.show;
+  }
+
+
+
+
+  // ---------------------------------------------------------------- Set Search Item --------------------------------------------------------
+  setSearchItem(searchItem: any): void {
+    
   }
 }

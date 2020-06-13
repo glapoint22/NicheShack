@@ -5,7 +5,7 @@
     <div class="property-box-light-icon-bar">
 
         <!-- Paginator -->
-        <paginator [itemCount]="carouselWidget.banners.length" (onItemChange)="currentIndex = $event"></paginator>
+        <paginator [itemCount]="carouselWidget.banners.length" (onItemChange)="carouselWidget.currentBannerIndex = currentIndex = $event"></paginator>
 
         <!-- Icons -->
         <div class="icons">

@@ -26,6 +26,7 @@ export class DesignerComponent implements AfterViewInit {
 
   ngOnInit() {
     this.pageService.clearPage();
+    this.pageService.widgetCursors = []
   }
 
 
