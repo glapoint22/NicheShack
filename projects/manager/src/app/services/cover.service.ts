@@ -7,4 +7,5 @@ export class CoverService {
   public showCover: boolean = false;
   public showPointerCover: boolean = false;
   public showResizeCover: boolean = false;
+  public showNormalCover: boolean = false;
 }

@@ -13,7 +13,6 @@ import { NotificationTab } from 'projects/manager/src/app/classes/notification';
 })
 export class NotificationListPopupComponent extends PopupComponent implements OnInit {
   constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, public notificationService: NotificationService) { super(popupService, cover, menuService) }
-  public selectedTab: NotificationTab;
   public notificationTab = NotificationTab;
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
@@ -25,6 +24,6 @@ export class NotificationListPopupComponent extends PopupComponent implements On
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
-    this.selectedTab = NotificationTab.NewNotifications;
+    this.notificationService.selectedNotificationsTab = NotificationTab.NewNotifications;
   }
 }

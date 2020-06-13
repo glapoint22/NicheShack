@@ -1,6 +1,7 @@
 .popup-base {
     max-width: 400px;
     width: 100%;
+    z-index: 201;
 }
 
 
@@ -62,7 +63,7 @@
 .main-property-box {
     border: 1px solid #292929;
     margin-top: 10px;
-    margin-bottom: 17px;
+    // margin-bottom: 17px;
     background: #1d1d1d;
 }
 
@@ -121,6 +122,7 @@
 .button-container {
     display: flex;
     justify-content: center;
+    margin-top: 17px;
     margin-bottom: 7px;
     
     button {
@@ -128,8 +130,8 @@
         height: 22px;
         font-size: 13px;
 
-        &:first-child{
-            margin-right: 40px;
+        &:nth-child(2){
+            margin-left: 40px;
         }
     }
 }

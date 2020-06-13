@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
+import { Notification } from 'projects/manager/src/app/classes/notification';
 
 @Component({
   selector: 'product-image-notification-popup',
@@ -17,5 +18,11 @@ export class ProductImageNotificationPopupComponent extends GeneralNotificationP
   // --------------------------------( SET POPUP )-------------------------------- \\
   setPopup() {
     this.paginatorIndex = this.notificationService.productImageNotification.customerText.length - 1;
+  }
+
+
+  // -----------------------------(ON SUBMIT )------------------------------ \\
+  onSubmit(notification: Notification) {
+
   }
 }

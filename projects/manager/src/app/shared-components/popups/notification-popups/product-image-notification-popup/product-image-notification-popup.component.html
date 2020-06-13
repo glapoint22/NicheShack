@@ -26,7 +26,7 @@
         <!-- Ellipsis -->
         <div #ellipsis 
              class="icon-container"
-             (mousedown)="showContextMenu()">
+             (mousedown)="showContextMenu(notificationService.productImageNotification)">
             <i class="fas fa-ellipsis-v"></i>
         </div>
     </div>
@@ -123,9 +123,12 @@
     </div>
 
 
-    <!-- Buttons -->
-    <div class="button-container">
-        <button (click)="onLeftButtonClick()">Dismiss</button>
-        <button (click)="onRightButtonClick()">Publish</button>
+    <!-- Button Container -->
+    <div *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
+         class="button-container">
+
+         <!-- Buttons -->
+        <button (click)="onDismissButtonClick(notificationService.productImageNotification)">Dismiss</button>
+        <button (click)="onRightButtonClick(notificationService.productImageNotification)">Publish</button>
     </div>
 </div>

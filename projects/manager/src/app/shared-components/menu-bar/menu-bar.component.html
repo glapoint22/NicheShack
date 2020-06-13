@@ -11,8 +11,8 @@
         <!-- Notifications Dropdown -->
         <div class="icon-container position-relative" (click)="showNotificationsPopup(bell)">
             <i #bell class="fas fa-bell font-size-4"></i>
-            <div *ngIf="notificationService.newNotifications.length > 0" class="notification-circle">
-                <div>{{notificationService.newNotifications.length}}</div>
+            <div *ngIf="notificationService.newNotifications.length + notificationService.pendingNotifications.length > 0" class="notification-circle">
+                <div>{{notificationService.newNotifications.length + notificationService.pendingNotifications.length}}</div>
             </div>
         </div>
 

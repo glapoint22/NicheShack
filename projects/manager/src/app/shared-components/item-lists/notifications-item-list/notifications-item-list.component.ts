@@ -4,7 +4,7 @@ import { SelectType } from '../../../classes/list-item-select-type';
 import { MenuService } from '../../../services/menu.service';
 import { NotificationService } from '../../../services/notification.service';
 import { PopupService } from '../../../services/popup.service';
-import { NotificationType } from '../../../classes/notification';
+import { NotificationType, NotificationTab, Notification } from '../../../classes/notification';
 import { GeneralNotification } from '../../../classes/general-notification';
 import { ProductDescriptionNotification } from '../../../classes/product-description-notification';
 import { ProductImageNotification } from '../../../classes/product-image-notification';
@@ -56,62 +56,82 @@ export class NotificationsItemListComponent extends ItemListComponent implements
 
 
   onListItemClick(i: number) {
+    let notificationArray: Notification[];
+    
+
+    switch (this.notificationService.selectedNotificationsTab) {
+      case NotificationTab.NewNotifications: {
+        notificationArray = this.notificationService.newNotifications;
+        break;
+      }
+      case NotificationTab.PendingNotifications: {
+        notificationArray = this.notificationService.pendingNotifications;
+        break;
+      }
+      case NotificationTab.ArchiveNotifications: {
+        notificationArray = this.notificationService.archiveNotifications;
+        break;
+      }
+    }
+
+
+
     // Message
-    if (this.notificationService.newNotifications[i].type == NotificationType.Message) {
+    if (notificationArray[i].type == NotificationType.Message) {
       this.popupService.messageNotificationPopup.show = true;
-      this.notificationService.messageNotification = this.notificationService.newNotifications[i];
+      this.notificationService.messageNotification = notificationArray[i];
     }
 
     // General Notification
-    if (this.notificationService.newNotifications[i].type == NotificationType.ProductNameOther
-      || this.notificationService.newNotifications[i].type == NotificationType.ProductReportedAsIllegal
-      || this.notificationService.newNotifications[i].type == NotificationType.ProductReportedAsHavingAdultContent
-      || this.notificationService.newNotifications[i].type == NotificationType.OffensiveProductOther
-      || this.notificationService.newNotifications[i].type == NotificationType.ProductInactive
-      || this.notificationService.newNotifications[i].type == NotificationType.ProductSiteNoLongerInService
-      || this.notificationService.newNotifications[i].type == NotificationType.MissingProductOther) {
+    if (notificationArray[i].type == NotificationType.ProductNameOther
+      || notificationArray[i].type == NotificationType.ProductReportedAsIllegal
+      || notificationArray[i].type == NotificationType.ProductReportedAsHavingAdultContent
+      || notificationArray[i].type == NotificationType.OffensiveProductOther
+      || notificationArray[i].type == NotificationType.ProductInactive
+      || notificationArray[i].type == NotificationType.ProductSiteNoLongerInService
+      || notificationArray[i].type == NotificationType.MissingProductOther) {
       this.popupService.generalNotificationPopup.show = true;
-      this.notificationService.generalNotification = this.notificationService.newNotifications[i] as GeneralNotification;
+      this.notificationService.generalNotification = notificationArray[i] as GeneralNotification;
     }
 
     // Review Complaint Notification
-    if (this.notificationService.newNotifications[i].type == NotificationType.ReviewComplaint) {
+    if (notificationArray[i].type == NotificationType.ReviewComplaint) {
       this.popupService.reviewComplaintNotificationPopup.show = true;
-      this.notificationService.reviewComplaintNotification = this.notificationService.newNotifications[i] as ReviewComplaintNotification;
+      this.notificationService.reviewComplaintNotification = notificationArray[i] as ReviewComplaintNotification;
     }
 
     // Product Description Notification
-    if (this.notificationService.newNotifications[i].type == NotificationType.ProductNameDoesNotMatchWithProductDescription
-      || this.notificationService.newNotifications[i].type == NotificationType.ProductDescriptionIncorrect
-      || this.notificationService.newNotifications[i].type == NotificationType.ProductDescriptionTooVague
-      || this.notificationService.newNotifications[i].type == NotificationType.ProductDescriptionMisleading
-      || this.notificationService.newNotifications[i].type == NotificationType.ProductDescriptionOther) {
+    if (notificationArray[i].type == NotificationType.ProductNameDoesNotMatchWithProductDescription
+      || notificationArray[i].type == NotificationType.ProductDescriptionIncorrect
+      || notificationArray[i].type == NotificationType.ProductDescriptionTooVague
+      || notificationArray[i].type == NotificationType.ProductDescriptionMisleading
+      || notificationArray[i].type == NotificationType.ProductDescriptionOther) {
       this.popupService.productDescriptionNotificationPopup.show = true;
-      this.notificationService.productDescriptionNotification = this.notificationService.newNotifications[i] as ProductDescriptionNotification;
+      this.notificationService.productDescriptionNotification = notificationArray[i] as ProductDescriptionNotification;
     }
 
     // Product Image Notification
-    if (this.notificationService.newNotifications[i].type == NotificationType.ProductNameDoesNotMatchWithProductImage) {
+    if (notificationArray[i].type == NotificationType.ProductNameDoesNotMatchWithProductImage) {
       this.popupService.productImageNotificationPopup.show = true;
-      this.notificationService.productImageNotification = this.notificationService.newNotifications[i] as ProductImageNotification;
+      this.notificationService.productImageNotification = notificationArray[i] as ProductImageNotification;
     }
 
     // Product Media Notification
-    if (this.notificationService.newNotifications[i].type == NotificationType.VideosAndImagesAreDifferentFromProduct
-      || this.notificationService.newNotifications[i].type == NotificationType.NotEnoughVideosAndImages
-      || this.notificationService.newNotifications[i].type == NotificationType.VideosAndImagesNotClear
-      || this.notificationService.newNotifications[i].type == NotificationType.VideosAndImagesMisleading
-      || this.notificationService.newNotifications[i].type == NotificationType.VideosAndImagesOther) {
+    if (notificationArray[i].type == NotificationType.VideosAndImagesAreDifferentFromProduct
+      || notificationArray[i].type == NotificationType.NotEnoughVideosAndImages
+      || notificationArray[i].type == NotificationType.VideosAndImagesNotClear
+      || notificationArray[i].type == NotificationType.VideosAndImagesMisleading
+      || notificationArray[i].type == NotificationType.VideosAndImagesOther) {
       this.popupService.productMediaNotificationPopup.show = true;
-      this.notificationService.productMediaNotification = this.notificationService.newNotifications[i] as ProductMediaNotification;
+      this.notificationService.productMediaNotification = notificationArray[i] as ProductMediaNotification;
     }
 
     // Product Content Notification
-    if (this.notificationService.newNotifications[i].type == NotificationType.ProductPriceTooHigh
-      || this.notificationService.newNotifications[i].type == NotificationType.ProductPriceNotCorrect
-      || this.notificationService.newNotifications[i].type == NotificationType.ProductPriceOther) {
+    if (notificationArray[i].type == NotificationType.ProductPriceTooHigh
+      || notificationArray[i].type == NotificationType.ProductPriceNotCorrect
+      || notificationArray[i].type == NotificationType.ProductPriceOther) {
       this.popupService.productContentNotificationPopup.show = true;
-      this.notificationService.productContentNotification = this.notificationService.newNotifications[i] as ProductContentNotification;
+      this.notificationService.productContentNotification = notificationArray[i] as ProductContentNotification;
     }
     this.popupService.notificationListPopup.show = false;
   }
