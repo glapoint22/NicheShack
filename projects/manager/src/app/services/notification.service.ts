@@ -540,24 +540,28 @@ export class NotificationService {
 
       pricePoints: [
         {
+          id: '0',
           textBefore: "Single Payment of",
           wholeNumber: "5",
           decimal: "16",
           textAfter: ""
         },
         {
+          id: '1',
           textBefore: "",
           wholeNumber: "7",
           decimal: "12",
           textAfter: "per Week"
         },
         {
+          id: '2',
           textBefore: "3 Easy Payments of",
           wholeNumber: "15",
           decimal: "59",
           textAfter: "per Month"
         },
         {
+          id: '3',
           textBefore: "",
           wholeNumber: "16",
           decimal: "80",
@@ -645,24 +649,28 @@ export class NotificationService {
 
       pricePoints: [
         {
+          id: '0',
           textBefore: "Single Payment of",
           wholeNumber: "5",
           decimal: "16",
           textAfter: ""
         },
         {
+          id: '1',
           textBefore: "",
           wholeNumber: "7",
           decimal: "12",
           textAfter: "per Week"
         },
         {
+          id: '2',
           textBefore: "3 Easy Payments of",
           wholeNumber: "15",
           decimal: "59",
           textAfter: "per Month"
         },
         {
+          id: '3',
           textBefore: "",
           wholeNumber: "16",
           decimal: "80",
@@ -750,24 +758,28 @@ export class NotificationService {
 
       pricePoints: [
         {
+          id: '0',
           textBefore: "Single Payment of",
           wholeNumber: "5",
           decimal: "16",
           textAfter: ""
         },
         {
+          id: '1',
           textBefore: "",
           wholeNumber: "7",
           decimal: "12",
           textAfter: "per Week"
         },
         {
+          id: '2',
           textBefore: "3 Easy Payments of",
           wholeNumber: "15",
           decimal: "59",
           textAfter: "per Month"
         },
         {
+          id: '3',
           textBefore: "",
           wholeNumber: "16",
           decimal: "80",

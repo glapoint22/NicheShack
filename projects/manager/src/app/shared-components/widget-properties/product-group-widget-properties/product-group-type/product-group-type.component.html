@@ -31,7 +31,9 @@
         </div>
 
         <!-- Item LIst -->
-        <item-list #itemList [list]="featuredProducts" (onAddItem)="addFeaturedProduct()"
+        <item-list #itemList 
+            [list]="productGroupWidget.featuredProducts" 
+            (onAddItem)="addFeaturedProduct()"
             (onEditItem)="editFeaturedProduct()"
             [menuOptions]="['Add Featured Product', 'Edit Featured Product', 'Delete Featured Product', 'Delete Featured Products']">
         </item-list>

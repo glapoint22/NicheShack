@@ -3,6 +3,7 @@ import { ProductPricePoint } from 'projects/manager/src/app/classes/product-pric
 import { ProductContent } from 'projects/manager/src/app/classes/product-content';
 import { PanelComponent } from 'projects/manager/src/app/shared-components/panels/panel/panel.component';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
+import { Item } from 'projects/manager/src/app/classes/item';
 
 @Component({
   selector: 'product-content',
@@ -12,7 +13,7 @@ import { PopupService } from 'projects/manager/src/app/services/popup.service';
 export class ProductContentComponent implements OnChanges {
   public checkList = [];
   public contentIndex: number = 0;
-  public pricePointList: Array<string>;
+  public pricePointList: Array<Item>;
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
   constructor(public popupService: PopupService) { }
@@ -31,13 +32,16 @@ export class ProductContentComponent implements OnChanges {
 
     // Combine all the price point properties into one string
     if (this.pricePoints) {
-      this.pricePointList = this.pricePoints.map(x => (
-        // Text Before
-        ((x.textBefore.length == 0 ? "" : x.textBefore) + " " +
-          // Price
-          (formatter.format(parseFloat(x.wholeNumber + "." + x.decimal))) +
-          // Text After
-          (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()));
+
+      this.pricePointList = this.pricePoints.map(x => ({
+        id: x.id,
+              // Text Before
+        name: ((x.textBefore.length == 0 ? "" : x.textBefore) + " " +
+              // Price
+              (formatter.format(parseFloat(x.wholeNumber + "." + x.decimal))) +
+              // Text After
+              (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()
+      }));
     }
 
     // Convert the price indices into boolean values

@@ -3,6 +3,7 @@ import { MenuService } from '../../../services/menu.service';
 import { ListItem } from '../../../classes/list-item';
 import { icon } from '../../../classes/icon';
 import { SelectType } from '../../../classes/list-item-select-type';
+import { Item } from '../../../classes/item';
 
 @Component({
   selector: 'item-list',
@@ -10,9 +11,12 @@ import { SelectType } from '../../../classes/list-item-select-type';
   styleUrls: ['./item-list.component.scss']
 })
 export class ItemListComponent implements OnChanges {
-  public listItems: ListItem[] = [];
+  constructor(public menuService: MenuService) { }
+  // Public
+  public selectType = SelectType;
   public pivotIndex: number = null;
   public ctrlDown: boolean = false;
+  public listItems: ListItem[] = [];
   public shiftDown: boolean = false;
   public newListItem: boolean = false;
   public itemDeleted: boolean = false;
@@ -24,23 +28,21 @@ export class ItemListComponent implements OnChanges {
   public eventListenersAdded: boolean = false;
   public selectedListItemIndex: number = null;
   public unselectedListItemIndex: number = null;
-  public selectType = SelectType;
-  constructor(public menuService: MenuService) { }
-  @Input() list: Array<string>;
+  // Decorators
+  @Input() list: Array<Item>;
   @Input() menuOptions: Array<string>;
+  @Input() multiSelect: boolean = true;
   @ViewChildren('listItem') listItem: QueryList<ElementRef>;
   @Output() onAddItem: EventEmitter<void> = new EventEmitter();
   @Output() onEditItem: EventEmitter<void> = new EventEmitter();
-
-  @Input() multiSelect: boolean = true;
-
-
+  
+  
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
     if (this.list) {
-
       this.listItems = this.list.map(x => ({
-        name: x,
+        id: x.id,
+        name: x.name,
         selected: false,
         selectType: null
       }));

@@ -31,9 +31,12 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
   onPopupShow(popup, arrow) {
-    this.cover.showNormalCover = true;
     super.onPopupShow(popup, arrow);
-    this.setPopup(); 
+    this.setPopup();
+
+    window.setTimeout(()=> {
+      this.cover.showNormalCover = true;
+    })
   }
 
 

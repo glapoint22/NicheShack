@@ -160,7 +160,7 @@ export class EditableItemListComponent extends ItemListComponent {
     this.deleteIcon.isDisabled = true;
     this.indexOfEditedListItem = 0;
     this.selectedListItemIndex = null;
-    this.listItems.unshift({ name: "", selected: false, selectType: null });
+    this.listItems.unshift({id: "", name: "", selected: false, selectType: null });
 
     for (let i = 0; i < this.listItems.length; i++) {
       this.listItems[i].selected = false;
