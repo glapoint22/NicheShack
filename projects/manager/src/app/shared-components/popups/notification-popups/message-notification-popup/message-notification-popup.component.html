@@ -72,10 +72,12 @@
         </div>
     </div>
 
-
-    <!-- Buttons -->
+    <!-- Button Container -->
     <div class="button-container">
-        <button (click)="onLeftButtonClick()">Close</button>
-        <button (click)="onRightButtonClick()">Send</button>
+
+        <!-- Buttons -->
+        <button (click)="onClose(notificationService.messageNotification)">Close</button>
+        <button *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
+                (click)="onRightButtonClick(notificationService.messageNotification)">Send</button>
     </div>
 </div>

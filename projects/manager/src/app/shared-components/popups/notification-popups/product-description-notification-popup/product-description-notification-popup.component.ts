@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
+import { Notification, NotificationType } from 'projects/manager/src/app/classes/notification';
 
 @Component({
   selector: 'product-description-notification-popup',
@@ -17,5 +18,33 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
   // --------------------------------( SET POPUP )-------------------------------- \\
   setPopup() {
     this.paginatorIndex = this.notificationService.productDescriptionNotification.customerText.length - 1;
+  }
+
+
+  // -----------------------------( ON SUBMIT )------------------------------ \\
+  onSubmit(notification: Notification) {
+    switch (notification.type) {
+
+      case NotificationType.ProductNameDoesNotMatchWithProductDescription: {
+        
+        break;
+      }
+      case NotificationType.ProductDescriptionIncorrect: {
+        
+        break;
+      }
+      case NotificationType.ProductDescriptionTooVague: {
+        
+        break;
+      }
+      case NotificationType.ProductDescriptionMisleading: {
+        
+        break;
+      }
+      case NotificationType.ProductDescriptionOther: {
+        
+        break;
+      }
+    }
   }
 }

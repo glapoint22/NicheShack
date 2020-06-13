@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
+import { Notification } from 'projects/manager/src/app/classes/notification';
 
 @Component({
   selector: 'product-content-notification-popup',
@@ -64,5 +65,11 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   editPricePoint(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
     this.popupService.pricePointPopup.show = true;
+  }
+
+
+  // -----------------------------(ON SUBMIT )------------------------------ \\
+  onSubmit(notification: Notification) {
+
   }
 }

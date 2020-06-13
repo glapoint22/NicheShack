@@ -12,7 +12,7 @@ export class CoverComponent {
   showCover(): boolean {
     let result: boolean;
 
-    if (this.coverService.showPointerCover || this.coverService.showResizeCover) {
+    if (this.coverService.showPointerCover || this.coverService.showResizeCover || this.coverService.showNormalCover) {
       result = true;
       this.coverService.showCover = true;
 

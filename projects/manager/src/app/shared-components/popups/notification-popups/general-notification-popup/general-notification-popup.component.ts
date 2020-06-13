@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { MessageNotificationPopupComponent } from '../message-notification-popup/message-notification-popup.component';
-import { NotificationType } from 'projects/manager/src/app/classes/notification';
+import { NotificationType, Notification, NotificationTab } from 'projects/manager/src/app/classes/notification';
 
 @Component({
   selector: 'general-notification-popup',
@@ -23,17 +23,35 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
   }
 
   // --------------------------------( SHOW CONTEXT MENU )-------------------------------- \\
-  showContextMenu() {
-    // Build the menu
-    this.menuService.buildMenu(this, this.ellipsis.nativeElement.getBoundingClientRect().right - 20, this.ellipsis.nativeElement.getBoundingClientRect().top + 22,
-      this.menuService.option("Go To Product Page", null, false, this.goToProductPage),
-      this.menuService.divider(),
-      this.menuService.option("Go To Vendor Product Page", null, false, this.goToVendorProductPage),
-      this.menuService.option("View Vendor Info", null, false, this.viewVendorInfo),
-      this.menuService.option("Contact Vendor", null, true, this.contactVendor),
-      this.menuService.divider(),
-      this.menuService.option("Close", null, false, this.close)
-    );
+  showContextMenu(notification: Notification) {
+
+    if(this.notificationService.selectedNotificationsTab == NotificationTab.ArchiveNotifications) {
+
+      // Build the menu
+      this.menuService.buildMenu(this, this.ellipsis.nativeElement.getBoundingClientRect().right - 20, this.ellipsis.nativeElement.getBoundingClientRect().top + 22,
+        this.menuService.option("Go To Product Page", null, false, this.goToProductPage),
+        this.menuService.divider(),
+        this.menuService.option("Go To Vendor Product Page", null, false, this.goToVendorProductPage),
+        this.menuService.option("View Vendor Info", null, false, this.viewVendorInfo),
+        this.menuService.option("Contact Vendor", null, true, this.contactVendor),
+        this.menuService.divider(),
+        this.menuService.option("Close", null, false, this.onClose, notification),
+        this.menuService.divider(),
+        this.menuService.option("Restore", null, false, this.sendNotificationToPending, notification)
+      );
+
+    }else {
+      // Build the menu
+      this.menuService.buildMenu(this, this.ellipsis.nativeElement.getBoundingClientRect().right - 20, this.ellipsis.nativeElement.getBoundingClientRect().top + 22,
+        this.menuService.option("Go To Product Page", null, false, this.goToProductPage),
+        this.menuService.divider(),
+        this.menuService.option("Go To Vendor Product Page", null, false, this.goToVendorProductPage),
+        this.menuService.option("View Vendor Info", null, false, this.viewVendorInfo),
+        this.menuService.option("Contact Vendor", null, true, this.contactVendor),
+        this.menuService.divider(),
+        this.menuService.option("Close", null, false, this.onClose, notification)
+      );
+    }
   }
 
 
@@ -61,8 +79,45 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
   }
 
 
-  // --------------------------------( CONTACT VENDOR )-------------------------------- \\
-  close() {
 
+  // -----------------------------( ON DISMISS BUTTON CLICK )------------------------------ \\
+  onDismissButtonClick(notification: Notification) {
+    this.archiveNotification(notification);
+  }
+
+
+  // -----------------------------( ON SUBMIT )------------------------------ \\
+  onSubmit(notification: Notification) {
+    switch (notification.type) {
+      
+      case NotificationType.ProductNameOther: {
+        
+        break;
+      }
+      case NotificationType.ProductReportedAsIllegal: {
+        
+        break;
+      }
+      case NotificationType.ProductReportedAsHavingAdultContent: {
+        
+        break;
+      }
+      case NotificationType.OffensiveProductOther: {
+        
+        break;
+      }
+      case NotificationType.ProductInactive: {
+        
+        break;
+      }
+      case NotificationType.ProductSiteNoLongerInService: {
+        
+        break;
+      }
+      case NotificationType.MissingProductOther: {
+        
+        break;
+      }
+    }
   }
 }

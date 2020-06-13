@@ -22,9 +22,10 @@
             </div>
         </div>
 
-        <!-- Ellipsis -->
+        <!-- X -->
         <div
-             class="icon-container">
+             class="icon-container"
+             (click)="sendNotificationToPending(notificationService.reviewComplaintNotification)">
             X
         </div>
     </div>
@@ -105,9 +106,12 @@
     </div>
 
 
-    <!-- Buttons -->
-    <div class="button-container">
-        <button (click)="onLeftButtonClick()">Dismiss</button>
-        <button (click)="onRightButtonClick()">Remove Review</button>
+    <!-- Button Container -->
+    <div *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
+         class="button-container">
+         
+         <!-- Buttons -->
+        <button (click)="onDismissButtonClick(notificationService.reviewComplaintNotification)">Dismiss</button>
+        <button (click)="onRightButtonClick(notificationService.reviewComplaintNotification)">Remove Review</button>
     </div>
 </div>
