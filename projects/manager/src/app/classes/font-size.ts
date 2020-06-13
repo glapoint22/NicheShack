@@ -1,11 +1,12 @@
 import { DropdownStyle } from './dropdown-style';
+import { Subject } from 'rxjs';
 
 export class FontSize extends DropdownStyle {
 
-    constructor(contentDocument?: HTMLDocument) {
+    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
         contentDocument = contentDocument != null ? contentDocument : document.implementation.createHTMLDocument();
 
-        super(contentDocument);
+        super(contentDocument, onChange);
 
         this.options = [
             {

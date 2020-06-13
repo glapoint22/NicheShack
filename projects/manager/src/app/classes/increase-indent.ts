@@ -1,9 +1,10 @@
 import { Indent } from './indent';
+import { Subject } from 'rxjs';
 
 export class IncreaseIndent extends Indent {
 
-    constructor(contentDocument: HTMLDocument) {
-        super(contentDocument);
+    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+        super(contentDocument, onChange);
 
         this.indentDirection = 1;
     }

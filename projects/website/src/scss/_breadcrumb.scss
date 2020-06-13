@@ -3,10 +3,10 @@
     margin-bottom: 3rem;
 
     a {
-        color: $alt-color;
+        color: $niche-shack-gold;
         text-decoration: underline;
         &:hover {
-            color: map-get($alt-color-map, light);
+            color: map-get($niche-shack-gold-map, light);
         }
     }
 

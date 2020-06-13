@@ -1,0 +1,65 @@
+<div *ngIf="productService.product" class="container">
+    <div class="product-container">
+
+        <!-- Media -->
+        <div *ngIf="productService.product.media.length > 0" class="media">
+
+            <!-- Thumbnail -->
+            <div *ngFor="let media of productService.product.media" class="thumbnail"
+                [ngStyle]="{ 'background-image': 'url(images/' + media.thumbnail + ')'}"
+                (click)="productService.setCurrentSelectedMedia(media)">
+                <i *ngIf="media.type == 0" class="far fa-play-circle"></i>
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="img-container">
+            <img *ngIf="productService.currentSelectedMedia.type == 1"
+                [src]="'/images/' + productService.currentSelectedMedia.thumbnail">
+
+            <iframe *ngIf="productService.currentSelectedMedia.type == 0" frameborder="0"
+                [src]="productService.currentSelectedMedia.safeUrl" allowfullscreen></iframe>
+        </div>
+
+
+        <!-- Product -->
+        <div class="product-info">
+            <!-- Title -->
+            <div class="title">{{productService.product.name}}</div>
+
+            <!-- Rating -->
+            <stars class="margin-right-4" [rating]="productService.product.rating"></stars>
+
+            <!-- Reviews -->
+            <span class="reviews" *ngIf="productService.product.rating > 0">
+                {{productService.product.totalReviews | number}} reviews
+            </span>
+
+            <!-- Price -->
+            <div class="price">
+                <!-- <div *ngIf="productService.product.maxPrice == 0">
+                {{productService.product.minPrice | currency:'USD'}}
+            </div>
+            <div *ngIf="productService.product.maxPrice > 0">
+                {{productService.product.minPrice | currency:'USD'}} -
+                {{productService.product.maxPrice | currency:'USD'}}
+            </div> -->
+
+                {{'9.99' | currency:'USD'}} -
+                {{'20.99' | currency:'USD'}}
+            </div>
+
+            <div class="product-button"
+                (click)="onBuyClick(productService.product.hoplink)">Visit Product Page To Buy</div>
+
+            <!-- Description -->
+            <div class="description" [innerHTML]="productService.product.safeDescription"></div>
+
+
+
+        </div>
+    </div>
+
+
+
+</div>

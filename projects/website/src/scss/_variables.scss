@@ -6,7 +6,7 @@ $default-font-color: #dadada;
 $default-background-color: #1b1b1b;
 $default-background-color-dark: #121212;
 $primary-color: #8a0077;
-$alt-color: #ffba00;
+
 $default-button-colors: #919191, #696969;
 $dark-gray-color: #242424;
 $gray-color: #acacac;
@@ -14,11 +14,11 @@ $border-color: #3d3d3d;
 $white-color: white;
 $input-background-color: #282828;
 $input-color: $default-font-color;
-$validation-form-color: $alt-color;
+$validation-form-color: $niche-shack-gold;
 
 // Color Maps
 $primary-color-map: generate-color-map($primary-color);
-$alt-color-map: generate-color-map($alt-color);
+$niche-shack-gold-map: generate-color-map($niche-shack-gold);
 
 
 // Custom Input

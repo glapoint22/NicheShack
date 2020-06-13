@@ -23,7 +23,7 @@
         <!-- Password -->
         <div *ngIf="valid(password); else invalidPassword" class="margin-auto" style="width: 88%">
             <h4 class="display-inline">Password:</h4>
-            <a class="alt-color float-right font-size-2" style="text-decoration: underline;" tabindex="10"
+            <a class="niche-shack-gold float-right font-size-2" style="text-decoration: underline;" tabindex="10"
                 routerLink="/forgot-password">Forgot your password?</a>
         </div>
 
@@ -31,7 +31,7 @@
         <!-- Invalid password -->
         <ng-template #invalidPassword>
             <h4 class="error">Passwords must be at least 6 characters.</h4>
-            <a class="alt-color font-size-2 margin-auto display-block"
+            <a class="niche-shack-gold font-size-2 margin-auto display-block"
                 style="text-decoration: underline; width: 88%; margin-bottom: 5px;" tabindex="10"
                 routerLink="/forgot-password">Forgot your password?</a>
         </ng-template>

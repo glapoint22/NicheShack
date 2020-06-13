@@ -1,8 +1,8 @@
 .primary-color-gradient {
     @include gradient($primary-color-map);
 }
-.alt-color-gradient {
-    @include gradient($alt-color-map);
+.niche-shack-gold-gradient {
+    @include gradient($niche-shack-gold-map);
 }
 
 .background-color {
@@ -13,7 +13,7 @@
 }
 
 @include generate-colors($primary-color-map, 'primary');
-@include generate-colors($alt-color-map, 'alt');
+@include generate-colors($niche-shack-gold-map, 'alt');
 
 .background-color-dark-gray {
     background-color: $dark-gray-color;

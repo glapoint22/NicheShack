@@ -1,12 +1,13 @@
 import { LineStyle } from './line-style';
 import { Selection } from './selection';
+import { Subject } from 'rxjs';
 
 export class Indent extends LineStyle {
     public indentDirection: number;
     private selection: Selection;
 
-    constructor(contentDocument: HTMLDocument) {
-        super(contentDocument);
+    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+        super(contentDocument, onChange);
 
         this.style = 'marginLeft';
     }

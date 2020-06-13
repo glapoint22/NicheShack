@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef, ApplicationRef, AfterViewInit, Input 
 import { Description } from 'projects/manager/src/app/classes/description';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { PanelComponent } from 'projects/manager/src/app/shared-components/panels/panel/panel.component';
+import { ProductService } from 'projects/manager/src/app/services/product.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'product-description',
@@ -15,7 +17,7 @@ export class ProductDescriptionComponent implements AfterViewInit {
   public description: Description;
 
 
-  constructor(private applicationRef: ApplicationRef) { }
+  constructor(private applicationRef: ApplicationRef, private productService: ProductService, private sanitizer: DomSanitizer) { }
 
 
   // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
@@ -30,7 +32,12 @@ export class ProductDescriptionComponent implements AfterViewInit {
         this.panel.onContentLoad();
         this.description.selectContents();
         this.description.removeSelection();
+        this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
       }
+
+      this.description.onChange.subscribe(() => {
+        this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
+      });
     }
   }
 }

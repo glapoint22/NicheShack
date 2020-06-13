@@ -26,6 +26,8 @@ import { CustomInputModule } from 'shared-components/custom-input/custom-input.m
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { PromptModule } from '../../shared-components/prompt/prompt.module';
 import { ProductVendorComponent } from './product-editor/product-properties/product-vendor/product-vendor.component';
+import { ProductInfoComponent } from './product-info/product-info.component';
+import { StarsModule } from 'shared-components/stars/stars.module';
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import { ProductVendorComponent } from './product-editor/product-properties/prod
     ProductEmailComponent,
     ColorIconComponent,
     PricePointPopupComponent,
-    ProductVendorComponent
+    ProductVendorComponent,
+    ProductInfoComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +61,8 @@ import { ProductVendorComponent } from './product-editor/product-properties/prod
     DropdownMenuModule,
     CustomInputModule,
     DesignerModule,
-    PromptModule
+    PromptModule,
+    StarsModule
   ]
 })
 export class NicheShackEditorModule { }

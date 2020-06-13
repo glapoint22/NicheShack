@@ -1,11 +1,12 @@
 import { ColorStyle } from './color-style';
 import { Color } from './color';
+import { Subject } from 'rxjs';
 
 export class HighlightColor extends ColorStyle {
     private isRemoveColor: boolean;
 
-    constructor(contentDocument: HTMLDocument) {
-        super(contentDocument);
+    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+        super(contentDocument, onChange);
 
         this.style = 'backgroundColor';
         this.defaultColor = new Color(255, 255, 0, 1);
@@ -31,7 +32,7 @@ export class HighlightColor extends ColorStyle {
     }
 
     setStyle(range: Range) {
-        if(this.isRemoveColor) {
+        if (this.isRemoveColor) {
             this.removeStyle(range);
         } else {
             super.setStyle(range);

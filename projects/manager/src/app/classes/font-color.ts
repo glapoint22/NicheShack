@@ -2,11 +2,12 @@ import { ColorStyle } from './color-style';
 import { Color } from './color';
 import { Underline } from './underline';
 import { Style } from './style';
+import { Subject } from 'rxjs';
 
 export class FontColor extends ColorStyle {
 
-    constructor(contentDocument: HTMLDocument, defaultColor: Color) {
-        super(contentDocument);
+    constructor(contentDocument: HTMLDocument, defaultColor: Color, onChange: Subject<void>) {
+        super(contentDocument, onChange);
 
         this.style = 'color';
         this.defaultColor = defaultColor;
@@ -39,7 +40,7 @@ export class FontColor extends ColorStyle {
 
 
     extractContents(range: Range): DocumentFragment {
-        let underlineStyle = new Underline(this.contentDocument);
+        let underlineStyle = new Underline(this.contentDocument, null);
         let underlineParent = underlineStyle.getStyleParent(this.getFirstTextChild(range.startContainer));
 
         // If there is an underline parent, we have to include it within the contents

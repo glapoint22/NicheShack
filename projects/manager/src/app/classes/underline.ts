@@ -1,8 +1,9 @@
 import { ToggleableStyle } from './toggleable-style';
+import { Subject } from 'rxjs';
 
 export class Underline extends ToggleableStyle {
-    constructor(contentDocument: HTMLDocument) {
-        super(contentDocument);
+    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+        super(contentDocument, onChange);
 
         this.style = 'textDecorationLine';
         this.styleValue = 'underline';
