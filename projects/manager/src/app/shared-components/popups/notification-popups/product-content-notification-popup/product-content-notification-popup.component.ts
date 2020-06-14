@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
 import { Notification } from 'projects/manager/src/app/classes/notification';
+import { Item } from 'projects/manager/src/app/classes/item';
 
 @Component({
   selector: 'product-content-notification-popup',
@@ -10,7 +11,7 @@ import { Notification } from 'projects/manager/src/app/classes/notification';
 export class ProductContentNotificationPopupComponent extends GeneralNotificationPopupComponent {
   public checkList = [];
   public contentIndex: number = 0;
-  public pricePointList: Array<string>;
+  public pricePointList: Array<Item>;
 
   // --------------------------------( INITIALIZE POPUP )-------------------------------- \\
   initializePopup() {
@@ -23,7 +24,6 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
     let priceIndices: Array<Array<number>>;
     let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
     this.paginatorIndex = this.notificationService.productContentNotification.customerText.length - 1;
-    this.paginatorIndex = this.notificationService.productContentNotification.customerText.length - 1;
     
     // Map the content's price indices into a stand alone array
     if (this.notificationService.productContentNotification.content) {
@@ -32,13 +32,17 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
 
     // Combine all the price point properties into one string
     if (this.notificationService.productContentNotification.pricePoints) {
-      this.pricePointList = this.notificationService.productContentNotification.pricePoints.map(x => (
-        // Text Before
-        ((x.textBefore.length == 0 ? "" : x.textBefore) + " " +
-          // Price
-          (formatter.format(parseFloat(x.wholeNumber + "." + x.decimal))) +
-          // Text After
-          (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()));
+      this.pricePointList = this.notificationService.productContentNotification.pricePoints.map(x => ({
+
+        id: x.id,
+              // Text Before
+        name: ((x.textBefore.length == 0 ? "" : x.textBefore) + " " +
+              // Price
+              (formatter.format(parseFloat(x.wholeNumber + "." + x.decimal))) +
+              // Text After
+              (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()
+          
+        }));
     }
 
     // Convert the price indices into boolean values

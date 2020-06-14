@@ -88,7 +88,7 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
   onSubmit(notification: Notification) {
-    switch (notification.type) {
+    switch (notification.name) {
       
       case NotificationType.ProductNameOther: {
         
