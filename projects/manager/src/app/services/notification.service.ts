@@ -14,16 +14,10 @@ import { delay } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class NotificationService {
-
   public selectedNotificationsTab: NotificationTab;
-
-
   public newNotifications: Array<Notification> = [];
   public pendingNotifications: Array<Notification> = [];
   public archiveNotifications: Array<Notification> = [];
-  
-
-
   public messageNotification: Notification;
   public generalNotification: GeneralNotification;
   public reviewComplaintNotification: ReviewComplaintNotification
@@ -33,229 +27,16 @@ export class NotificationService {
   public productContentNotification: ProductContentNotification;
 
 
-  getNotificationImageList(notifications) {
-    let notificationImages: Array<string>;
+  
 
-    notificationImages = notifications.map(x => {
-      let notificationProductImage: string;
 
-      if (x.type == NotificationType.Message) {
-        notificationProductImage = 'bc9ce0cc860e422aa7c9cafaaf61fc8a.png';
-
-      } else if (x.type == NotificationType.ReviewComplaint) {
-
-
-        notificationProductImage = '143968bba73642898bb4a6715a1efd3d.png';
-
-      } else {
-        notificationProductImage = (x as GeneralNotification).productThumbnail
-      }
-
-      return notificationProductImage;
-    });
-
-
-    return notificationImages;
-  }
-
-
-  getNotificationDescription(type: number) {
-    let description: string;
-
-    switch (type) {
-      case 0: {
-        description = 'Message';
-        break;
-      }
-      case 1: {
-        description = 'Review Complaint'
-        break;
-      }
-      case 2: {
-        description = 'Product Name Doesn\'t Match With Product Description'
-        break;
-      }
-      case 3: {
-        description = 'Product Name Doesn\'t Match With Product Image'
-        break;
-      }
-      case 4: {
-        description = 'Product Name (Other)'
-        break;
-      }
-      case 5: {
-        description = 'Product Price Too High'
-        break;
-      }
-      case 6: {
-        description = 'Product Price Not Correct'
-        break;
-      }
-      case 7: {
-        description = 'Product Price (Other)'
-        break;
-      }
-      case 8: {
-        description = 'Videos & Images are Different From Product'
-        break;
-      }
-      case 9: {
-        description = 'Not Enough Videos & Images'
-        break;
-      }
-      case 10: {
-        description = 'Videos & Images Not Clear'
-        break;
-      }
-      case 11: {
-        description = 'Videos & Images Misleading'
-        break;
-      }
-      case 12: {
-        description = 'Videos & Images (Other)'
-        break;
-      }
-      case 13: {
-        description = 'Product Description Incorrect'
-        break;
-      }
-      case 14: {
-        description = 'Product Description Too Vague'
-        break;
-      }
-      case 15: {
-        description = 'Product Description Misleading'
-        break;
-      }
-      case 16: {
-        description = 'Product Description (Other)'
-        break;
-      }
-      case 17: {
-        description = 'Product Reported As Illegal'
-        break;
-      }
-      case 18: {
-        description = 'Product Reported As Having Adult Content'
-        break;
-      }
-      case 19: {
-        description = 'Offensive Product (Other)'
-        break;
-      }
-      case 20: {
-        description = 'Product Inactive'
-        break;
-      }
-      case 21: {
-        description = 'Product site no longer in service'
-        break;
-      }
-      case 22: {
-        description = 'Missing Product (Other)'
-        break;
-      }
-    }
-
-    return description;
-  }
-
-
-  convertNotificationTypeToDescription(notifications) {
-    let notificationTypes: Array<string>;
-
-
-    notificationTypes = notifications.map(x => {
-      return this.getNotificationDescription(x.type);
-    })
-
-    return notificationTypes;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // ---------------------------------------------------------------------------( TEMP DATA )--------------------------------------------------------------------------- \\
   tempData() {
-
-
 
     // ================================= MESSAGE ================================ \\
     let message = of({
-      type: NotificationType.Message,
+      id: 'oiweoiuwer',
+      name: NotificationType.Message,
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -286,7 +67,8 @@ export class NotificationService {
 
     // ================================= REVIEW COMPLAINT ================================ \\
     let reviewComplaint = of({
-      type: NotificationType.ReviewComplaint,
+      id: 'iouuioiuouio',
+      name: NotificationType.ReviewComplaint,
       productThumbnail: 'b212b69728ee4f3b9473831bb4f7ace9.png',
       productName: 'Bigger Better Butt',
       isChecked: [true, false, true],
@@ -334,7 +116,8 @@ export class NotificationService {
 
     // ================================= PRODUCT NAME DOES NOT MATCH WITH PRODUCT DESCRIPTION ================================ \\
     let productNameDoesNotMatchWithProductDescription = of({
-      type: NotificationType.ProductNameDoesNotMatchWithProductDescription,
+      id: 'qweqweqwe',
+      name: NotificationType.ProductNameDoesNotMatchWithProductDescription,
       productThumbnail: 'b4fa43f207d7420cbb2c72d0fe9c64ba.jpg',
       productName: 'How to seduce out of your league',
       customerText: [
@@ -385,7 +168,8 @@ export class NotificationService {
 
     // ================================= PRODUCT NAME DOES NOT MATCH WITH PRODUCT IMAGE ================================ \\
     let productNameDoesNotMatchWithProductImage = of({
-      type: NotificationType.ProductNameDoesNotMatchWithProductImage,
+      id: 'zzxcvcxbxcvbn',
+      name: NotificationType.ProductNameDoesNotMatchWithProductImage,
       productThumbnail: 'b212b69728ee4f3b9473831bb4f7ace9.png',
       productName: 'How to make ice cream like a Gumpy',
       customerText: [
@@ -437,7 +221,8 @@ export class NotificationService {
 
     // ================================= PRODUCT NAME (OTHER) ================================ \\
     let productNameOther = of({
-      type: NotificationType.ProductNameOther,
+      id: 'mnbcbvcmnbccv',
+      name: NotificationType.ProductNameOther,
       productThumbnail: '6e1659b63e5643e0a9039064b4a52e12.png',
       productName: '14 Day Perfect Body',
       customerText: [
@@ -484,7 +269,8 @@ export class NotificationService {
 
     // ================================= PRODUCT PRICE TOO HIGH ================================ \\
     let ProductPriceTooHigh = of({
-      type: NotificationType.ProductPriceTooHigh,
+      id: 'asdffdsagdasdfg',
+      name: NotificationType.ProductPriceTooHigh,
       productThumbnail: '2f119b657c194b32a88b0f0051d525be.png',
       productName: 'Erase Your Stretch Mark',
       customerText: [
@@ -593,7 +379,8 @@ export class NotificationService {
 
     // ================================= PRODUCT PRICE NOT CORRECT ================================ \\
     let productPriceNotCorrect = of({
-      type: NotificationType.ProductPriceNotCorrect,
+      id: 'sdfgiuylwerkj',
+      name: NotificationType.ProductPriceNotCorrect,
       productThumbnail: '0018ffd4eca34b6eb4fdc9bcdb0d329e.png',
       productName: 'Attract Hotter Women',
       customerText: [
@@ -702,7 +489,8 @@ export class NotificationService {
 
     // ================================= PRODUCT PRICE (OTHER) ================================ \\
     let productPriceOther = of({
-      type: NotificationType.ProductPriceOther,
+      id: 'dfgoiuqexz',
+      name: NotificationType.ProductPriceOther,
       productThumbnail: '9e4ffc59141f44349a0c9d60502e84d1.png',
       productName: 'The Collection Of Confidence',
       customerText: [
@@ -811,7 +599,8 @@ export class NotificationService {
 
     // ================================= VIDEOS AND IMAGES ARE DIFFERENT FROM PRODUCT ================================ \\
     let videosAndImagesAreDifferentFromProduct = of({
-      type: NotificationType.VideosAndImagesAreDifferentFromProduct,
+      id: 'uiolkjuiolkj',
+      name: NotificationType.VideosAndImagesAreDifferentFromProduct,
       productThumbnail: '2a08e8f8bc7940b087f7e29d2e80a106.png',
       productName: 'The Lean Belly Secret',
       customerText: [
@@ -907,7 +696,8 @@ export class NotificationService {
 
     // ================================= NOT ENOUGH VIDEOS AND IMAGES ================================ \\
     let notEnoughVideosAndImages = of({
-      type: NotificationType.NotEnoughVideosAndImages,
+      id: 'hjrtyhryhj',
+      name: NotificationType.NotEnoughVideosAndImages,
       productThumbnail: 'bcddc0a43cdc41b0a0b86c6a2a56bacd.png',
       productName: 'Acne No More',
       customerText: [
@@ -1003,7 +793,8 @@ export class NotificationService {
 
     // ================================= VIDEOS AND IMAGES NOT CLEAR ================================ \\
     let videosAndImagesNotClear = of({
-      type: NotificationType.VideosAndImagesNotClear,
+      id: 'cvbrwdsfio',
+      name: NotificationType.VideosAndImagesNotClear,
       productThumbnail: '42066b13a02c4a019c9a4b3fedd40b66.png',
       productName: 'My Bikini Belly',
       customerText: [
@@ -1099,7 +890,8 @@ export class NotificationService {
 
     // ================================= VIDEOS AND IMAGES MISLEADING ================================ \\
     let videosAndImagesMisleading = of({
-      type: NotificationType.VideosAndImagesMisleading,
+      id: 'jkasdasiooiasdhjad',
+      name: NotificationType.VideosAndImagesMisleading,
       productThumbnail: '69b301fc34a1431e97851991a73a441c.png',
       productName: 'How To Date An Asian Women',
       customerText: [
@@ -1195,7 +987,8 @@ export class NotificationService {
 
     // ================================= VIDEOS AND IMAGES (OTHER) ================================ \\
     let videosAndImagesOther = of({
-      type: NotificationType.VideosAndImagesOther,
+      id: 'cbeiudsjktyiwjduiekd',
+      name: NotificationType.VideosAndImagesOther,
       productThumbnail: '724db7642d584175aa3630ab9a6cc5d9.jpg',
       productName: 'Sex Lust and Lies',
       customerText: [
@@ -1291,7 +1084,8 @@ export class NotificationService {
 
     // ================================= PRODUCT DESCRIPTION INCORRECT ================================ \\
     let productDescriptionIncorrect = of({
-      type: NotificationType.ProductDescriptionIncorrect,
+      id: 'vbmasdfuiwer',
+      name: NotificationType.ProductDescriptionIncorrect,
       productThumbnail: 'd7f8ac43d31e49edaefb55eda385b468.png',
       productName: 'How To Grow Hair Long',
       customerText: [
@@ -1340,7 +1134,8 @@ export class NotificationService {
 
     // ================================= PRODUCT DESCRIPTION TOO VAGUE ================================ \\
     let productDescriptionTooVague = of({
-      type: NotificationType.ProductDescriptionTooVague,
+      id: 'xcvcvbfghtyuser',
+      name: NotificationType.ProductDescriptionTooVague,
       productThumbnail: 'ce662a813987430a9b2b0b17cb4bda72.png',
       productName: 'Fat Shrinking Signal',
       customerText: [
@@ -1389,7 +1184,8 @@ export class NotificationService {
 
     // ================================= PRODUCT DESCRIPTION MISLEADING ================================ \\
     let productDescriptionMisleading = of({
-      type: NotificationType.ProductDescriptionMisleading,
+      id: 'jhsasaduiweu',
+      name: NotificationType.ProductDescriptionMisleading,
       productThumbnail: 'c28764b0fd6f4cad80be85f047422fe1.png',
       productName: 'Gluteus To The Maximus',
       customerText: [
@@ -1438,7 +1234,8 @@ export class NotificationService {
 
     // ================================= PRODUCT DESCRIPTION (OTHER) ================================ \\
     let productDescriptionOther = of({
-      type: NotificationType.ProductDescriptionOther,
+      id: 'cvbdsfqweru',
+      name: NotificationType.ProductDescriptionOther,
       productThumbnail: '6c048ea442b646b59970f907a4d3ce61.jpg',
       productName: 'ABS',
       customerText: [
@@ -1487,7 +1284,8 @@ export class NotificationService {
 
     // ================================= PRODUCT REPORTED AS ILLEGAL ================================ \\
     let productReportedAsIllegal = of({
-      type: NotificationType.ProductReportedAsIllegal,
+      id: 'tyutytygfgfsdsdf',
+      name: NotificationType.ProductReportedAsIllegal,
       productThumbnail: '899c7b6deb544dd28a7ec3055c5196a1.jpg',
       productName: 'The 21 Day Flat Belly Fix System',
       customerText: [
@@ -1534,7 +1332,8 @@ export class NotificationService {
 
     // ================================= PRODUCT REPORTED AS HAVING ADULT CONTENT ================================ \\
     let ProductReportedAsHavingAdultContent = of({
-      type: NotificationType.ProductReportedAsHavingAdultContent,
+      id: 'ljkgkhjhf',
+      name: NotificationType.ProductReportedAsHavingAdultContent,
       productThumbnail: '17a40d16e5d8454da45ed3d5683e0ab6.png',
       productName: '7 Day Super Slim',
       customerText: [
@@ -1581,7 +1380,8 @@ export class NotificationService {
 
     // ================================= OFFENSIVE PRODUCT OTHER ================================ \\
     let offensiveProductOther = of({
-      type: NotificationType.OffensiveProductOther,
+      id: 'piouylkjhg',
+      name: NotificationType.OffensiveProductOther,
       productThumbnail: 'f5ca6bd2ac0549d3b7f0609c534eb182.png',
       productName: 'Yoga Burn Booty Challenge',
       customerText: [
@@ -1628,7 +1428,8 @@ export class NotificationService {
 
     // ================================= PRODUCT INACTIVE ================================ \\
     let productInactive = of({
-      type: NotificationType.ProductInactive,
+      id: 'hgdgfffaszxcv',
+      name: NotificationType.ProductInactive,
       productThumbnail: '429928f0e88045318dbae00b5a90df12.png',
       productName: 'The 8 Week Booty',
       customerText: [
@@ -1675,7 +1476,8 @@ export class NotificationService {
 
     // ================================= PRODUCT SITE NO LONGER IN SERVICE ================================ \\
     let productSiteNoLongerInService = of({
-      type: NotificationType.ProductSiteNoLongerInService,
+      id: 'bnmfhjruuiytr',
+      name: NotificationType.ProductSiteNoLongerInService,
       productThumbnail: '1d21c8846a464c989eb6914c224a3324.png',
       productName: 'The Thyroid Factor',
       customerText: [
@@ -1722,7 +1524,8 @@ export class NotificationService {
 
     // ================================= MISSING PRODUCT OTHER ================================ \\
     let missingProductOther = of({
-      type: NotificationType.MissingProductOther,
+      id: 'hggggfsrt',
+      name: NotificationType.MissingProductOther,
       productThumbnail: '1b4f02a0b8ad491e950a94eade1df05f.png',
       productName: 'What Husbands Can\'t Resist',
       customerText: [
@@ -1795,13 +1598,4 @@ export class NotificationService {
 
     )
   }
-
-
-
-
-
-
-
-
-
 }

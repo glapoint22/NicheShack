@@ -24,7 +24,7 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
   
   // -----------------------------( ON SUBMIT )------------------------------ \\
   onSubmit(notification: Notification) {
-    switch (notification.type) {
+    switch (notification.name) {
 
       case NotificationType.VideosAndImagesAreDifferentFromProduct: {
         

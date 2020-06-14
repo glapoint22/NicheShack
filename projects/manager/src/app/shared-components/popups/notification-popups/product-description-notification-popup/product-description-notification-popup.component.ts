@@ -23,7 +23,7 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
   onSubmit(notification: Notification) {
-    switch (notification.type) {
+    switch (notification.name) {
 
       case NotificationType.ProductNameDoesNotMatchWithProductDescription: {
         
