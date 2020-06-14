@@ -11,6 +11,7 @@ export class ProductInfoComponent implements OnInit {
   constructor(public productService: ProductService) { }
 
   ngOnInit() {
+    this.productService.product = null;
   }
 
   onBuyClick(url: string) {

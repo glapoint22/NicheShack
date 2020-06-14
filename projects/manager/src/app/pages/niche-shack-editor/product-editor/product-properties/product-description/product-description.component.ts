@@ -11,7 +11,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./product-description.component.scss']
 })
 export class ProductDescriptionComponent implements AfterViewInit {
-  @Input() text: string;
   @ViewChild('iframe', { static: false }) iframe: ElementRef;
   @ViewChild('panel', { static: false }) panel: PanelComponent;
   public description: Description;
@@ -26,17 +25,25 @@ export class ProductDescriptionComponent implements AfterViewInit {
     this.iframe.nativeElement.onload = (event) => {
       this.description = new Description(event.currentTarget.contentDocument, this.applicationRef, new Color(218, 218, 218, 1));
 
-      if (this.text) {
-        this.description.content.innerHTML = this.text;
-        this.iframe.nativeElement.style.height = this.description.content.scrollHeight + 'px';
-        this.panel.onContentLoad();
+      if (this.productService.product.description) {
+        this.description.content.innerHTML = this.productService.product.description;
+        this.iframe.nativeElement.style.height = this.description.getContentHeight() + 'px';
+
         this.description.selectContents();
         this.description.removeSelection();
         this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
+        window.setTimeout(() => {
+          this.panel.onContentLoad();
+        });
+
       }
 
       this.description.onChange.subscribe(() => {
         this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
+
+        this.iframe.nativeElement.style.height = Math.max(18, this.description.getContentHeight()) + 'px';
+        this.panel.onContentLoad();
+
       });
     }
   }

@@ -27,13 +27,13 @@
 }
 
 iframe {
-    // height: 280px;
     width: 100%;
     border: none;
     user-select: none;
     background: #1b1b1b;
     margin-bottom: 0;
     display: block;
+    overflow: hidden;
 }
 
 

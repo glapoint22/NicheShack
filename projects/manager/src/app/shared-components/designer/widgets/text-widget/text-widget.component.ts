@@ -56,7 +56,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
       this.textBox.removeSelection();
       window.focus();
       this.textBox.onChange.subscribe(() => {
-        let contentHeight = this.getContentHeight();
+        let contentHeight = this.textBox.getContentHeight();
         let previousHeight = this.height;
 
         this.height = Math.max(contentHeight, this.fixedHeight);
@@ -83,30 +83,17 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
     }
   }
 
-  getContentHeight() {
-    let height: number = 0;
-
-    if (this.content) {
-      for (let i = 0; i < this.content.childElementCount; i++) {
-        let child = this.content.children[i];
-
-        height += child.clientHeight;
-      }
-    }
-
-
-    return height;
-  }
 
 
   getMinHeight(): number {
-    return Math.max(this.getContentHeight(), 22);
+    return Math.max(this.textBox.getContentHeight(), 22);
   }
 
 
 
   ngDoCheck() {
-    this.iframeHeight = Math.max(this.height, this.getContentHeight());
+    if(this.textBox) this.iframeHeight = Math.max(this.height, this.textBox.getContentHeight());
+    
 
     // Set to be out of edit mode & remove selection
     if (this.textBox && this.widgetService.selectedWidget != this) {

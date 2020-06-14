@@ -98,6 +98,7 @@ export class TextBox {
         this.content.style.bottom = '0';
         this.content.style.left = '0';
         this.content.style.outline = "none";
+        this.content.style.overflow = 'hidden';
         this.content.innerHTML = '<div>&#8203;</div>';
 
 
@@ -287,6 +288,8 @@ export class TextBox {
                                 selection.addRange(range);
                                 event.preventDefault();
                             }
+
+                            this.onChange.next();
                         }
                     }
 
@@ -404,4 +407,20 @@ export class TextBox {
     removeSelection() {
         this.contentDocument.getSelection().removeAllRanges();
     }
+
+
+    getContentHeight() {
+        let height: number = 0;
+    
+        if (this.content) {
+          for (let i = 0; i < this.content.childElementCount; i++) {
+            let child = this.content.children[i];
+    
+            height += child.clientHeight;
+          }
+        }
+    
+    
+        return height;
+      }
 }

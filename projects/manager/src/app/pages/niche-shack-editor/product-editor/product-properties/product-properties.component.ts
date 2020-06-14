@@ -1,10 +1,11 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { ProductMediaType } from 'projects/manager/src/app/classes/product-media';
 import { ProductProperties } from 'projects/manager/src/app/classes/product-properties';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
+import { ProductDescriptionComponent } from './product-description/product-description.component';
 
 @Component({
   selector: 'product-properties',
@@ -13,6 +14,7 @@ import { ProductService } from 'projects/manager/src/app/services/product.servic
 })
 export class ProductPropertiesComponent implements OnChanges {
   @Input() productId: string;
+  @ViewChild('description', { static: false }) productDescription: ProductDescriptionComponent;
   public productProperties: ProductProperties;
 
   constructor(public loadingService: LoadingService, public productService: ProductService) { }
@@ -251,6 +253,11 @@ export class ProductPropertiesComponent implements OnChanges {
         this.productProperties = productProperties;
         this.productService.product = productProperties;
         this.loadingService.loading = false;
+
+        if(this.productDescription && this.productDescription.description) {
+          this.productDescription.description.content.innerHTML = productProperties.description;
+          this.productDescription.description.onChange.next();
+        }
       });
     }
 
