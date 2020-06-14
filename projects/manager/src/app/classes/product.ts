@@ -1,7 +1,7 @@
 import { Image } from './image';
 import { ProductContent } from './product-content';
 import { ProductPricePoint } from './product-price-point';
-import { ProductMedia } from './product-media';
+import { Media } from './media';
 import { SafeHtml } from '@angular/platform-browser';
 
 export class Product {
@@ -14,6 +14,6 @@ export class Product {
     description: string;
     content: Array<ProductContent> = [];
     pricePoints: Array<ProductPricePoint> = [];
-    media: Array<ProductMedia> = [];
+    media: Array<Media> = [];
     safeDescription?: SafeHtml;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../classes/product';
-import { ProductMedia, ProductMediaType } from '../classes/product-media';
+import { Media, ProductMediaType } from '../classes/media';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
@@ -8,11 +8,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class ProductService {
   public product: Product;
-  public currentSelectedMedia: ProductMedia;
+  public currentSelectedMedia: Media;
 
   constructor(private sanitizer: DomSanitizer) { }
 
-  setCurrentSelectedMedia(media: ProductMedia) {
+  setCurrentSelectedMedia(media: Media) {
     if(media.type == ProductMediaType.Video) {
       media.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(media.url);
     }

@@ -7,7 +7,7 @@ import { ProductDescriptionNotification } from '../classes/product-description-n
 import { ProductImageNotification } from '../classes/product-image-notification';
 import { ProductContentNotification } from '../classes/product-content-notification';
 import { ProductMediaNotification } from '../classes/product-media-notification';
-import { ProductMediaType } from '../classes/product-media';
+import { ProductMediaType } from '../classes/media';
 import { delay } from 'rxjs/operators';
 
 @Injectable({
@@ -625,50 +625,110 @@ export class NotificationService {
 
       media: [
         {
-          thumbnail: 'thumbnail1.png',
+          id: 'AFSDFFASDFSD',
+          image: {
+            url: 'thumbnail1.png',
+            title: 'Gumpy\'s',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
-          thumbnail: 'thumbnail2.png',
+          id: 'RGDFVFGHJTGFSA',
+          image: {
+            url: 'thumbnail2.png',
+            title: 'fsdassdaf',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
-          thumbnail: 'thumbnail3.png',
+          id: 'JKYUJSGDFA',
+          image: {
+            url: 'thumbnail3.png',
+            title: 'hgfdhafsda',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
-          thumbnail: 'thumbnail4.png',
+          id: 'UYTREYRHJGHJSDF',
+          image: {
+            url: 'thumbnail4.png',
+            title: 'FSDFSADFSGFFD',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
-          thumbnail: 'thumbnail5.png',
+          id: 'AFSDFHJJKEG',
+          image: {
+            url: 'thumbnail5.png',
+            title: 'pooiouiouyi',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
-          thumbnail: 'thumbnail6.png',
+          id: '345HSDDGFDSFSDD',
+          image: {
+            url: 'thumbnail6.png',
+            title: 'kjfgdfsg',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
-          thumbnail: '0a2b8633118d4719bddfe468521d8a39.png',
-          type: ProductMediaType.Image,
+          id: '4GFDSFSDFSAA',
+          image: {
+            url: '0a2b8633118d4719bddfe468521d8a39.png',
+            title: 'jfgdfsdd',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '2a08e8f8bc7940b087f7e29d2e80a106.png',
-          type: ProductMediaType.Image,
+          id: '4DSASFSDFSDFSD',
+          image: {
+            url: '2a08e8f8bc7940b087f7e29d2e80a106.png',
+            title: 'tretewtwefsa',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '4ea6699537b04c7db407052d58d3bccb.png',
-          type: ProductMediaType.Image,
+          id: 'UUEYTGGSSDFGG',
+          image: {
+            url: '4ea6699537b04c7db407052d58d3bccb.png',
+            title: 'utyruyttraf',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '0037b470cdef401a94195bc5c391c404.png',
-          type: ProductMediaType.Image,
+          id: 'UTYDGDFSGJHTG',
+          image: {
+            url: '0037b470cdef401a94195bc5c391c404.png',
+            title: 'bdfgsdfafgqfg',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         }
       ],
 
@@ -722,50 +782,110 @@ export class NotificationService {
 
       media: [
         {
-          thumbnail: 'thumbnail1.png',
+          id: 'AFSDFFASDFSD',
+          image: {
+            url: 'thumbnail1.png',
+            title: 'Gumpy\'s',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
-          thumbnail: 'thumbnail2.png',
+          id: 'RGDFVFGHJTGFSA',
+          image: {
+            url: 'thumbnail2.png',
+            title: 'fsdassdaf',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
-          thumbnail: 'thumbnail3.png',
+          id: 'JKYUJSGDFA',
+          image: {
+            url: 'thumbnail3.png',
+            title: 'hgfdhafsda',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
-          thumbnail: 'thumbnail4.png',
+          id: 'UYTREYRHJGHJSDF',
+          image: {
+            url: 'thumbnail4.png',
+            title: 'FSDFSADFSGFFD',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
-          thumbnail: 'thumbnail5.png',
+          id: 'AFSDFHJJKEG',
+          image: {
+            url: 'thumbnail5.png',
+            title: 'pooiouiouyi',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
-          thumbnail: 'thumbnail6.png',
+          id: '345HSDDGFDSFSDD',
+          image: {
+            url: 'thumbnail6.png',
+            title: 'kjfgdfsg',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
-          thumbnail: '0a2b8633118d4719bddfe468521d8a39.png',
-          type: ProductMediaType.Image,
+          id: '4GFDSFSDFSAA',
+          image: {
+            url: '0a2b8633118d4719bddfe468521d8a39.png',
+            title: 'jfgdfsdd',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '2a08e8f8bc7940b087f7e29d2e80a106.png',
-          type: ProductMediaType.Image,
+          id: '4DSASFSDFSDFSD',
+          image: {
+            url: '2a08e8f8bc7940b087f7e29d2e80a106.png',
+            title: 'tretewtwefsa',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '4ea6699537b04c7db407052d58d3bccb.png',
-          type: ProductMediaType.Image,
+          id: 'UUEYTGGSSDFGG',
+          image: {
+            url: '4ea6699537b04c7db407052d58d3bccb.png',
+            title: 'utyruyttraf',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '0037b470cdef401a94195bc5c391c404.png',
-          type: ProductMediaType.Image,
+          id: 'UTYDGDFSGJHTG',
+          image: {
+            url: '0037b470cdef401a94195bc5c391c404.png',
+            title: 'bdfgsdfafgqfg',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         }
       ],
 
@@ -819,50 +939,110 @@ export class NotificationService {
 
       media: [
         {
-          thumbnail: 'thumbnail1.png',
+          id: 'AFSDFFASDFSD',
+          image: {
+            url: 'thumbnail1.png',
+            title: 'Gumpy\'s',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
-          thumbnail: 'thumbnail2.png',
+          id: 'RGDFVFGHJTGFSA',
+          image: {
+            url: 'thumbnail2.png',
+            title: 'fsdassdaf',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
-          thumbnail: 'thumbnail3.png',
+          id: 'JKYUJSGDFA',
+          image: {
+            url: 'thumbnail3.png',
+            title: 'hgfdhafsda',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
-          thumbnail: 'thumbnail4.png',
+          id: 'UYTREYRHJGHJSDF',
+          image: {
+            url: 'thumbnail4.png',
+            title: 'FSDFSADFSGFFD',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
-          thumbnail: 'thumbnail5.png',
+          id: 'AFSDFHJJKEG',
+          image: {
+            url: 'thumbnail5.png',
+            title: 'pooiouiouyi',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
-          thumbnail: 'thumbnail6.png',
+          id: '345HSDDGFDSFSDD',
+          image: {
+            url: 'thumbnail6.png',
+            title: 'kjfgdfsg',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
-          thumbnail: '0a2b8633118d4719bddfe468521d8a39.png',
-          type: ProductMediaType.Image,
+          id: '4GFDSFSDFSAA',
+          image: {
+            url: '0a2b8633118d4719bddfe468521d8a39.png',
+            title: 'jfgdfsdd',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '2a08e8f8bc7940b087f7e29d2e80a106.png',
-          type: ProductMediaType.Image,
+          id: '4DSASFSDFSDFSD',
+          image: {
+            url: '2a08e8f8bc7940b087f7e29d2e80a106.png',
+            title: 'tretewtwefsa',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '4ea6699537b04c7db407052d58d3bccb.png',
-          type: ProductMediaType.Image,
+          id: 'UUEYTGGSSDFGG',
+          image: {
+            url: '4ea6699537b04c7db407052d58d3bccb.png',
+            title: 'utyruyttraf',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '0037b470cdef401a94195bc5c391c404.png',
-          type: ProductMediaType.Image,
+          id: 'UTYDGDFSGJHTG',
+          image: {
+            url: '0037b470cdef401a94195bc5c391c404.png',
+            title: 'bdfgsdfafgqfg',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         }
       ],
 
@@ -916,50 +1096,110 @@ export class NotificationService {
 
       media: [
         {
-          thumbnail: 'thumbnail1.png',
+          id: 'AFSDFFASDFSD',
+          image: {
+            url: 'thumbnail1.png',
+            title: 'Gumpy\'s',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
-          thumbnail: 'thumbnail2.png',
+          id: 'RGDFVFGHJTGFSA',
+          image: {
+            url: 'thumbnail2.png',
+            title: 'fsdassdaf',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
-          thumbnail: 'thumbnail3.png',
+          id: 'JKYUJSGDFA',
+          image: {
+            url: 'thumbnail3.png',
+            title: 'hgfdhafsda',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
-          thumbnail: 'thumbnail4.png',
+          id: 'UYTREYRHJGHJSDF',
+          image: {
+            url: 'thumbnail4.png',
+            title: 'FSDFSADFSGFFD',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
-          thumbnail: 'thumbnail5.png',
+          id: 'AFSDFHJJKEG',
+          image: {
+            url: 'thumbnail5.png',
+            title: 'pooiouiouyi',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
-          thumbnail: 'thumbnail6.png',
+          id: '345HSDDGFDSFSDD',
+          image: {
+            url: 'thumbnail6.png',
+            title: 'kjfgdfsg',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
-          thumbnail: '0a2b8633118d4719bddfe468521d8a39.png',
-          type: ProductMediaType.Image,
+          id: '4GFDSFSDFSAA',
+          image: {
+            url: '0a2b8633118d4719bddfe468521d8a39.png',
+            title: 'jfgdfsdd',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '2a08e8f8bc7940b087f7e29d2e80a106.png',
-          type: ProductMediaType.Image,
+          id: '4DSASFSDFSDFSD',
+          image: {
+            url: '2a08e8f8bc7940b087f7e29d2e80a106.png',
+            title: 'tretewtwefsa',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '4ea6699537b04c7db407052d58d3bccb.png',
-          type: ProductMediaType.Image,
+          id: 'UUEYTGGSSDFGG',
+          image: {
+            url: '4ea6699537b04c7db407052d58d3bccb.png',
+            title: 'utyruyttraf',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '0037b470cdef401a94195bc5c391c404.png',
-          type: ProductMediaType.Image,
+          id: 'UTYDGDFSGJHTG',
+          image: {
+            url: '0037b470cdef401a94195bc5c391c404.png',
+            title: 'bdfgsdfafgqfg',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         }
       ],
 
@@ -1013,50 +1253,110 @@ export class NotificationService {
 
       media: [
         {
-          thumbnail: 'thumbnail1.png',
+          id: 'AFSDFFASDFSD',
+          image: {
+            url: 'thumbnail1.png',
+            title: 'Gumpy\'s',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
-          thumbnail: 'thumbnail2.png',
+          id: 'RGDFVFGHJTGFSA',
+          image: {
+            url: 'thumbnail2.png',
+            title: 'fsdassdaf',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
-          thumbnail: 'thumbnail3.png',
+          id: 'JKYUJSGDFA',
+          image: {
+            url: 'thumbnail3.png',
+            title: 'hgfdhafsda',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
-          thumbnail: 'thumbnail4.png',
+          id: 'UYTREYRHJGHJSDF',
+          image: {
+            url: 'thumbnail4.png',
+            title: 'FSDFSADFSGFFD',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
-          thumbnail: 'thumbnail5.png',
+          id: 'AFSDFHJJKEG',
+          image: {
+            url: 'thumbnail5.png',
+            title: 'pooiouiouyi',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
-          thumbnail: 'thumbnail6.png',
+          id: '345HSDDGFDSFSDD',
+          image: {
+            url: 'thumbnail6.png',
+            title: 'kjfgdfsg',
+            load: null,
+            save: null
+          },
           type: ProductMediaType.Video,
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
-          thumbnail: '0a2b8633118d4719bddfe468521d8a39.png',
-          type: ProductMediaType.Image,
+          id: '4GFDSFSDFSAA',
+          image: {
+            url: '0a2b8633118d4719bddfe468521d8a39.png',
+            title: 'jfgdfsdd',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '2a08e8f8bc7940b087f7e29d2e80a106.png',
-          type: ProductMediaType.Image,
+          id: '4DSASFSDFSDFSD',
+          image: {
+            url: '2a08e8f8bc7940b087f7e29d2e80a106.png',
+            title: 'tretewtwefsa',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '4ea6699537b04c7db407052d58d3bccb.png',
-          type: ProductMediaType.Image,
+          id: 'UUEYTGGSSDFGG',
+          image: {
+            url: '4ea6699537b04c7db407052d58d3bccb.png',
+            title: 'utyruyttraf',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         },
         {
-          thumbnail: '0037b470cdef401a94195bc5c391c404.png',
-          type: ProductMediaType.Image,
+          id: 'UTYDGDFSGJHTG',
+          image: {
+            url: '0037b470cdef401a94195bc5c391c404.png',
+            title: 'bdfgsdfafgqfg',
+            load: null,
+            save: null
+          },
+          type: ProductMediaType.ProductImage,
         }
       ],
 
