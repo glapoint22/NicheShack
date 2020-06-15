@@ -10,7 +10,7 @@
         <!-- Search bar -->
         <div class="search-bar">
             <input #searchInput id="search-input" class="border-oval-left" autocomplete="off">
-            <div (mousedown)="showMenu = true">{{filterType}}</div>
+            <div (mousedown)="showMenu = true">{{getTypeName(filterType)}}</div>
         </div>
 
 
@@ -23,23 +23,23 @@
                 <!-- Category -->
                 <div style="margin-bottom: 10px">
                     <radio-button [name]="'filter'" [label]="'Filter by Category'"
-                        (change)="filterType = 'Category'; showMenu = false; searchInput.value = ''"
-                        [checked]="filterType == 'Category'"></radio-button>
+                        (change)="filterType = hierarchyItemType.Category; showMenu = false; searchInput.value = ''"
+                        [checked]="filterType == hierarchyItemType.Category"></radio-button>
                 </div>
 
 
                 <!-- Niche -->
                 <div style="margin-bottom: 10px">
                     <radio-button [name]="'filter'" [label]="'Filter by Niche'"
-                        (change)="filterType = 'Niche'; showMenu = false; searchInput.value = ''"
-                        [checked]="filterType == 'Niche'"></radio-button>
+                        (change)="filterType = hierarchyItemType.Niche; showMenu = false; searchInput.value = ''"
+                        [checked]="filterType == hierarchyItemType.Niche"></radio-button>
                 </div>
 
 
                 <!-- Product -->
                 <radio-button [name]="'filter'" [label]="'Filter by Product'"
-                    (change)="filterType = 'Product'; showMenu = false; searchInput.value = ''"
-                    [checked]="filterType == 'Product'"></radio-button>
+                    (change)="filterType = hierarchyItemType.Product; showMenu = false; searchInput.value = ''"
+                    [checked]="filterType == hierarchyItemType.Product"></radio-button>
             </div>
         </div>
     </div>
@@ -60,14 +60,14 @@
         </div>
 
         <!-- Rename -->
-        <div class="icon-container" [title]="selectedItem ? 'Rename ' + selectedItem.type : 'Rename'"
-            [ngClass]="{'icon-disabled': !selectedItem}" (click)="editItem()">
+        <div class="icon-container" [title]="selectedItem ? 'Rename ' + getTypeName(selectedItem.type) : 'Rename'"
+            [ngClass]="{'icon-disabled': !selectedItem}" (click)="onEditItemClick()">
             <i class="fas fa-pencil-alt"></i>
         </div>
 
 
         <!-- Delete -->
-        <div class="icon-container" [title]="selectedItem ? 'Delete ' + selectedItem.type : 'Delete'"
+        <div class="icon-container" [title]="selectedItem ? 'Delete ' + getTypeName(selectedItem.type) : 'Delete'"
             [ngClass]="{'icon-disabled': !selectedItem}" (click)="onDeleteClick()">
             <i class="fas fa-trash-alt"></i>
         </div>

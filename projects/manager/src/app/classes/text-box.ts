@@ -411,16 +411,22 @@ export class TextBox {
 
     getContentHeight() {
         let height: number = 0;
-    
+
         if (this.content) {
-          for (let i = 0; i < this.content.childElementCount; i++) {
-            let child = this.content.children[i];
-    
-            height += child.clientHeight;
-          }
+            for (let i = 0; i < this.content.childElementCount; i++) {
+                let child = this.content.children[i];
+
+                height += child.clientHeight;
+            }
         }
-    
-    
+
+
         return height;
-      }
+    }
+
+
+    initialize() {
+        this.selectContents();
+        this.removeSelection();
+    }
 }

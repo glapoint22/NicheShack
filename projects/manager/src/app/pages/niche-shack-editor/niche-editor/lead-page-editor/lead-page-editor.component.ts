@@ -461,7 +461,7 @@ export class LeadPageEditorComponent implements OnChanges {
                       categories: [
                         {
                           name: 'Health & Fitness',
-                          id: 0,
+                          id: 'fdsfafsdfdsds',
                           icon: {
                             url: '44d71fbf43904ffdbdece40a45bdf9db.png',
                             title: 'Health & Fitness'

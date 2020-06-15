@@ -17,7 +17,7 @@ export class CategoryEditorComponent implements OnChanges {
   constructor(public loadingService: LoadingService) {}
 
   // ---------------------Temp-----------------------------
-  public getTempCategoryIcon(id: number): Observable<string> {
+  public getTempCategoryIcon(id: string): Observable<string> {
     return new Observable<string>(subscriber => {
       subscriber.next('44d71fbf43904ffdbdece40a45bdf9db.png');
     }).pipe(delay(1000));

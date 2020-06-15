@@ -21,30 +21,52 @@ export class ProductDescriptionComponent implements AfterViewInit {
 
   // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
   ngAfterViewInit() {
+    // Create the DIV that will hold the content and assign it to the srcDoc of the iframe
     this.iframe.nativeElement.srcdoc = document.createElement('div').outerHTML;
+
+
+    // On Load of the iframe
     this.iframe.nativeElement.onload = (event) => {
+      // This is the object that basically is the content
       this.description = new Description(event.currentTarget.contentDocument, this.applicationRef, new Color(218, 218, 218, 1));
 
+
+      // If we have text
       if (this.productService.product.description) {
         this.description.content.innerHTML = this.productService.product.description;
-        this.iframe.nativeElement.style.height = this.description.getContentHeight() + 'px';
 
-        this.description.selectContents();
-        this.description.removeSelection();
+
+        // Initialize
+        this.description.initialize();
+
+        // This will display the description in the product info window
         this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
-        window.setTimeout(() => {
-          this.panel.onContentLoad();
-        });
-
       }
 
+
+      // Set the height of the iframe and panel
+      this.setIframeHeight();
+
+      window.setTimeout(() => {
+        this.panel.onContentLoad();
+      });
+
+
+      // Update the description in the product info window and update the height of the iframe and panel
       this.description.onChange.subscribe(() => {
         this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
 
-        this.iframe.nativeElement.style.height = Math.max(18, this.description.getContentHeight()) + 'px';
+        this.setIframeHeight();
         this.panel.onContentLoad();
-
       });
     }
+  }
+
+
+
+
+  // -----------------------------( SET IFRAME HEIGHT )------------------------------ \\
+  setIframeHeight() {
+    this.iframe.nativeElement.style.height = Math.max(64, this.description.getContentHeight()) + 'px';
   }
 }

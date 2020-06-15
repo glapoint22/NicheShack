@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
-import { ProductMediaType } from '../../../classes/media';
+import { MediaType } from '../../../classes/media';
 
 @Component({
   selector: 'product-info',
@@ -8,7 +8,7 @@ import { ProductMediaType } from '../../../classes/media';
   styleUrls: ['./product-info.component.scss']
 })
 export class ProductInfoComponent implements OnInit {
-  public productMediaType = ProductMediaType;
+  public mediaType = MediaType;
 
   constructor(public productService: ProductService) { }
 

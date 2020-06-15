@@ -4,12 +4,12 @@ import { Image } from './image';
 export interface Media {
     id: string;
     image: Image;
-    type: ProductMediaType;
+    type: MediaType;
     url?: string;
     safeUrl?: SafeUrl;
 }
 
-export enum ProductMediaType {
+export enum MediaType {
     Image,
     BackgroundImage,
     BannerImage,

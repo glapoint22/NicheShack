@@ -1,9 +1,15 @@
 export class HierarchyItem {
-    id: any;
-    name: string;
-    type: string;
-    showChildren: boolean;
-    loadingChildren: boolean;
-    children: Array<HierarchyItem>;
-    parent: HierarchyItem;
+    public showChildren: boolean;
+    public loadingChildren: boolean;
+    public children: Array<HierarchyItem> = [];
+    public parent: HierarchyItem;
+
+    constructor(public id: string = null, public name: string = null, public type: HierarchyItemType = null) { }
+}
+
+
+export enum HierarchyItemType {
+    Category,
+    Niche,
+    Product
 }

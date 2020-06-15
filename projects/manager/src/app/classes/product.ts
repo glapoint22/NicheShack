@@ -1,4 +1,3 @@
-import { Image } from './image';
 import { ProductContent } from './product-content';
 import { ProductPricePoint } from './product-price-point';
 import { Media } from './media';
@@ -8,7 +7,6 @@ export class Product {
     id: string;
     hoplink: string;
     name: string;
-    image: Image;
     rating: number;
     totalReviews: number;
     description: string;
