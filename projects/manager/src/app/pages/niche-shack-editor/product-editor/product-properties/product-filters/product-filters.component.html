@@ -6,7 +6,7 @@
         <div class="icons">
 
             <!-- Delete filter Icon -->
-            <div class="icon-container">
+            <div class="icon-container" [ngClass]="{'icon-disabled': filters.length == 0}">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="filters-container">
+        <div *ngIf="filters.length > 0; else placeholder" class="filters-container">
 
             <!-- Filters -->
             <div *ngFor="let filter of filters" class="filter">
@@ -28,5 +28,11 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Placeholder -->
+        <ng-template #placeholder>
+            <div class="no-property">No filters available</div>
+        </ng-template>
     </div>
 </panel>

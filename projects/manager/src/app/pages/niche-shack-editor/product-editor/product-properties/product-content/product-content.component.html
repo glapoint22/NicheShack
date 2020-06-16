@@ -27,7 +27,7 @@
 
 
         <!-- Content -->
-        <div *ngIf="content[0]" class="content">
+        <div *ngIf="content.length > 0; else placeholder" class="content">
 
 
             <!-- Title -->
@@ -110,5 +110,10 @@
                 </checkbox-item-list>
             </div>
         </div>
+
+        <!-- Placeholder -->
+        <ng-template #placeholder>
+            <div class="no-property">No content available</div>
+        </ng-template>
     </div>
 </panel>
