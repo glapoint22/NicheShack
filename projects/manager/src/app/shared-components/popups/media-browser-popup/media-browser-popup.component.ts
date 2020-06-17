@@ -3,7 +3,7 @@ import { PopupComponent } from '../popup/popup.component';
 import { MediaItem } from '../../../classes/media-item';
 import { Observable, of, merge } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { ProductMediaType } from '../../../classes/media';
+import { MediaType } from '../../../classes/media';
 
 @Component({
   selector: 'media-browser-popup',
@@ -11,7 +11,7 @@ import { ProductMediaType } from '../../../classes/media';
   styleUrls: ['./media-browser-popup.component.scss', '../popup/popup.component.scss']
 })
 export class MediaBrowserPopupComponent extends PopupComponent implements OnInit {
-  public mediaType = ProductMediaType;
+  public mediaType = MediaType;
   public loading: boolean;
   public indexOfSelectedMediaList: number;
   public mediaLists: MediaItem[][] = [[], [], [], [], [], [], []];
@@ -36,10 +36,10 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
-    this.indexOfSelectedMediaList = ProductMediaType.Image;
+    this.indexOfSelectedMediaList = MediaType.Image;
     this.noMedia = false;
 
-    if (this.mediaLists[ProductMediaType.Image].length == 0) {
+    if (this.mediaLists[MediaType.Image].length == 0) {
       this.loading = true;
 
 
@@ -105,65 +105,65 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
   loadMedia(): Observable<MediaItem[]> {
-    if (this.indexOfSelectedMediaList == ProductMediaType.Image) {
+    if (this.indexOfSelectedMediaList == MediaType.Image) {
 
-      let image1: MediaItem = new MediaItem('oiweoiuwer', '2f119b657c194b32a88b0f0051d525be.png', ProductMediaType.Image); image1.name = image1.image.title = 'Image 1';
-      let image2: MediaItem = new MediaItem('qweuywesdo', '6c048ea442b646b59970f907a4d3ce61.jpg', ProductMediaType.Image); image2.name = image2.image.title = 'Image 2';
-      let image3: MediaItem = new MediaItem('potyuoptuw', '6e1659b63e5643e0a9039064b4a52e12.png', ProductMediaType.Image); image3.name = image3.image.title = 'Image 3';
+      let image1: MediaItem = new MediaItem('oiweoiuwer', '2f119b657c194b32a88b0f0051d525be.png', MediaType.Image); image1.name = image1.image.title = 'Image 1';
+      let image2: MediaItem = new MediaItem('qweuywesdo', '6c048ea442b646b59970f907a4d3ce61.jpg', MediaType.Image); image2.name = image2.image.title = 'Image 2';
+      let image3: MediaItem = new MediaItem('potyuoptuw', '6e1659b63e5643e0a9039064b4a52e12.png', MediaType.Image); image3.name = image3.image.title = 'Image 3';
       return of([image1, image2, image3]).pipe(delay(1000));
       // return of([])
     }
 
 
-    if (this.indexOfSelectedMediaList == ProductMediaType.BackgroundImage) {
-      let image1: MediaItem = new MediaItem('oiweoiuwer', 'campland-background.jpg', ProductMediaType.BackgroundImage); image1.name = image1.image.title = 'Campland';
-      let image2: MediaItem = new MediaItem('qweuywesdo', 'a29f28773e154adaab48a6355f2f4e5d.png', ProductMediaType.BackgroundImage); image2.name = image2.image.title = 'Background Image 2';
-      let image3: MediaItem = new MediaItem('potyuoptuw', 'cfb7358d797d484eab24bd2a57d2b850.png', ProductMediaType.BackgroundImage); image3.name = image3.image.title = 'Background Image 3';
+    if (this.indexOfSelectedMediaList == MediaType.BackgroundImage) {
+      let image1: MediaItem = new MediaItem('oiweoiuwer', 'campland-background.jpg', MediaType.BackgroundImage); image1.name = image1.image.title = 'Campland';
+      let image2: MediaItem = new MediaItem('qweuywesdo', 'a29f28773e154adaab48a6355f2f4e5d.png', MediaType.BackgroundImage); image2.name = image2.image.title = 'Background Image 2';
+      let image3: MediaItem = new MediaItem('potyuoptuw', 'cfb7358d797d484eab24bd2a57d2b850.png', MediaType.BackgroundImage); image3.name = image3.image.title = 'Background Image 3';
       // return of([image1, image2, image3]).pipe(delay(1000));
       return of([])
     }
 
 
-    if (this.indexOfSelectedMediaList == ProductMediaType.BannerImage) {
-      let image1: MediaItem = new MediaItem('oiweoiuwer', 'frozen.jpg', ProductMediaType.BannerImage); image1.name = image1.image.title = 'Frozen';
-      let image2: MediaItem = new MediaItem('qweuywesdo', 'a1d9302640ae40a989e9d23e06b5afae.png', ProductMediaType.BannerImage); image2.name = image2.image.title = 'Banner Image 2';
-      let image3: MediaItem = new MediaItem('potyuoptuw', '07989637795744629a0e979416b6586d.jpg', ProductMediaType.BannerImage); image3.name = image3.image.title = 'Banner Image 3';
+    if (this.indexOfSelectedMediaList == MediaType.BannerImage) {
+      let image1: MediaItem = new MediaItem('oiweoiuwer', 'frozen.jpg', MediaType.BannerImage); image1.name = image1.image.title = 'Frozen';
+      let image2: MediaItem = new MediaItem('qweuywesdo', 'a1d9302640ae40a989e9d23e06b5afae.png', MediaType.BannerImage); image2.name = image2.image.title = 'Banner Image 2';
+      let image3: MediaItem = new MediaItem('potyuoptuw', '07989637795744629a0e979416b6586d.jpg', MediaType.BannerImage); image3.name = image3.image.title = 'Banner Image 3';
       // return of([image1, image2, image3]).pipe(delay(1000));
       return of([])
     }
 
 
-    if (this.indexOfSelectedMediaList == ProductMediaType.CategoryImage) {
-      let image1: MediaItem = new MediaItem('oiweoiuwer', '44d71fbf43904ffdbdece40a45bdf9db.png', ProductMediaType.CategoryImage); image1.name = image1.image.title = 'Health & Fitness';
-      let image2: MediaItem = new MediaItem('qweuywesdo', 'abc61d06435c4a29833a089271fe128a.png', ProductMediaType.CategoryImage); image2.name = image2.image.title = 'Brain Power';
-      let image3: MediaItem = new MediaItem('potyuoptuw', 'ab0bda0d51a5408788359471b337662f.png', ProductMediaType.CategoryImage); image3.name = image3.image.title = 'Camping';
+    if (this.indexOfSelectedMediaList == MediaType.CategoryImage) {
+      let image1: MediaItem = new MediaItem('oiweoiuwer', '44d71fbf43904ffdbdece40a45bdf9db.png', MediaType.CategoryImage); image1.name = image1.image.title = 'Health & Fitness';
+      let image2: MediaItem = new MediaItem('qweuywesdo', 'abc61d06435c4a29833a089271fe128a.png', MediaType.CategoryImage); image2.name = image2.image.title = 'Brain Power';
+      let image3: MediaItem = new MediaItem('potyuoptuw', 'ab0bda0d51a5408788359471b337662f.png', MediaType.CategoryImage); image3.name = image3.image.title = 'Camping';
       // return of([image1, image2, image3]).pipe(delay(1000));
       return of([])
     }
 
 
-    if (this.indexOfSelectedMediaList == ProductMediaType.ProductImage) {
+    if (this.indexOfSelectedMediaList == MediaType.ProductImage) {
       return of([])
     }
 
 
-    if (this.indexOfSelectedMediaList == ProductMediaType.Icon) {
-      let image1: MediaItem = new MediaItem('oiweoiuwer', 'pdf.png', ProductMediaType.Icon); image1.name = image1.image.title = 'PDF';
-      let image2: MediaItem = new MediaItem('qweuywesdo', 'audio.png', ProductMediaType.Icon); image2.name = image2.image.title = 'Audio';
-      let image3: MediaItem = new MediaItem('potyuoptuw', 'video.png', ProductMediaType.Icon); image3.name = image3.image.title = 'Video';
-      let image4: MediaItem = new MediaItem('potyuoptuw', 'software.png', ProductMediaType.Icon); image4.name = image4.image.title = 'Software';
+    if (this.indexOfSelectedMediaList == MediaType.Icon) {
+      let image1: MediaItem = new MediaItem('oiweoiuwer', 'pdf.png', MediaType.Icon); image1.name = image1.image.title = 'PDF';
+      let image2: MediaItem = new MediaItem('qweuywesdo', 'audio.png', MediaType.Icon); image2.name = image2.image.title = 'Audio';
+      let image3: MediaItem = new MediaItem('potyuoptuw', 'video.png', MediaType.Icon); image3.name = image3.image.title = 'Video';
+      let image4: MediaItem = new MediaItem('potyuoptuw', 'software.png', MediaType.Icon); image4.name = image4.image.title = 'Software';
       // return of([image1, image2, image3, image4]).pipe(delay(1000));
       return of([])
     }
 
 
-    if (this.indexOfSelectedMediaList == ProductMediaType.Video) {
-      let image1: MediaItem = new MediaItem('oiweoiuwer', 'thumbnail1.png', ProductMediaType.Video); image1.name = image1.image.title = 'Video 1';
-      let image2: MediaItem = new MediaItem('qweuywesdo', 'thumbnail2.png', ProductMediaType.Video); image2.name = image2.image.title = 'Video 2';
-      let image3: MediaItem = new MediaItem('potyuoptuw', 'thumbnail3.png', ProductMediaType.Video); image3.name = image3.image.title = 'Video 3';
-      let image4: MediaItem = new MediaItem('potyuoptuw', 'thumbnail4.png', ProductMediaType.Video); image4.name = image4.image.title = 'Video 4';
-      let image5: MediaItem = new MediaItem('potyuoptuw', 'thumbnail5.png', ProductMediaType.Video); image5.name = image5.image.title = 'Video 5';
-      let image6: MediaItem = new MediaItem('potyuoptuw', 'thumbnail6.png', ProductMediaType.Video); image6.name = image6.image.title = 'Video 6';
+    if (this.indexOfSelectedMediaList == MediaType.Video) {
+      let image1: MediaItem = new MediaItem('oiweoiuwer', 'thumbnail1.png', MediaType.Video); image1.name = image1.image.title = 'Video 1';
+      let image2: MediaItem = new MediaItem('qweuywesdo', 'thumbnail2.png', MediaType.Video); image2.name = image2.image.title = 'Video 2';
+      let image3: MediaItem = new MediaItem('potyuoptuw', 'thumbnail3.png', MediaType.Video); image3.name = image3.image.title = 'Video 3';
+      let image4: MediaItem = new MediaItem('potyuoptuw', 'thumbnail4.png', MediaType.Video); image4.name = image4.image.title = 'Video 4';
+      let image5: MediaItem = new MediaItem('potyuoptuw', 'thumbnail5.png', MediaType.Video); image5.name = image5.image.title = 'Video 5';
+      let image6: MediaItem = new MediaItem('potyuoptuw', 'thumbnail6.png', MediaType.Video); image6.name = image6.image.title = 'Video 6';
       // return of([image1, image2, image3, image4, image5, image6]).pipe(delay(1000));
       return of([])
     }
