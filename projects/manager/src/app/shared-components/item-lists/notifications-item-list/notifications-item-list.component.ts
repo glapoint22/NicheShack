@@ -17,122 +17,71 @@ import { ReviewComplaintNotification } from '../../../classes/review-complaint-n
   templateUrl: './notifications-item-list.component.html',
   styleUrls: ['./notifications-item-list.component.scss', '../media-item-list/media-item-list.component.scss']
 })
-export class NotificationsItemListComponent extends ItemListComponent implements OnChanges {
+export class NotificationsItemListComponent extends ItemListComponent {
   constructor(menuService: MenuService, private notificationService: NotificationService, public popupService: PopupService) { super(menuService) }
   public selectType = SelectType;
   public notificationImageList: Array<string>;
-  @Input() list: Array<Notification>;
-
-
-  // -----------------------------( NG ON CHANGES )------------------------------ \\
-  ngOnChanges() {
-    if (this.list) {
-
-      // Set the notification image
-      this.notificationImageList = this.list.map(x => {
-        // If the notification is a message
-        if (x.name == NotificationType.Message) {
-          return 'message.png';
-
-          // If the notification is a review complaint
-        } else if (x.name == NotificationType.ReviewComplaint) {
-          return 'review-complaint.png';
-
-          // For all other notifications
-        } else {
-          return (x as GeneralNotification).productThumbnail
-        }
-      });
-
-
-      // Set the notification name
-      this.listItems = this.list.map(x => ({
-        id: x.id,
-        name: x.name,
-        selected: false,
-        selectType: null
-      }));
-    }
-  }
+  @Input() listItems: Array<Notification>;
 
 
   // -----------------------------( ON LIST ITEM CLICK )------------------------------ \\
-  onListItemClick(i: number) {
-    let notificationArray: Notification[];
-
-    // Set the notification array based on which notification tab is selected
-    switch (this.notificationService.selectedNotificationsTab) {
-      case NotificationTab.NewNotifications: {
-        notificationArray = this.notificationService.newNotifications;
-        break;
-      }
-      case NotificationTab.PendingNotifications: {
-        notificationArray = this.notificationService.pendingNotifications;
-        break;
-      }
-      case NotificationTab.ArchiveNotifications: {
-        notificationArray = this.notificationService.archiveNotifications;
-        break;
-      }
-    }
-
-
+  onListItemClick(listItem: Notification) {
     // Message
-    if (notificationArray[i].name == NotificationType.Message) {
+    if (listItem.name == NotificationType.Message) {
       this.popupService.messageNotificationPopup.show = true;
-      this.notificationService.messageNotification = notificationArray[i];
+      this.notificationService.messageNotification = listItem;
     }
 
     // General Notification
-    if (notificationArray[i].name == NotificationType.ProductNameOther
-      || notificationArray[i].name == NotificationType.ProductReportedAsIllegal
-      || notificationArray[i].name == NotificationType.ProductReportedAsHavingAdultContent
-      || notificationArray[i].name == NotificationType.OffensiveProductOther
-      || notificationArray[i].name == NotificationType.ProductInactive
-      || notificationArray[i].name == NotificationType.ProductSiteNoLongerInService
-      || notificationArray[i].name == NotificationType.MissingProductOther) {
+    if (listItem.name == NotificationType.ProductNameOther
+      || listItem.name == NotificationType.ProductReportedAsIllegal
+      || listItem.name == NotificationType.ProductReportedAsHavingAdultContent
+      || listItem.name == NotificationType.OffensiveProductOther
+      || listItem.name == NotificationType.ProductInactive
+      || listItem.name == NotificationType.ProductSiteNoLongerInService
+      || listItem.name == NotificationType.MissingProductOther) {
       this.popupService.generalNotificationPopup.show = true;
-      this.notificationService.generalNotification = notificationArray[i] as GeneralNotification;
+      this.notificationService.generalNotification = listItem as GeneralNotification;
     }
 
     // Review Complaint Notification
-    if (notificationArray[i].name == NotificationType.ReviewComplaint) {
+    if (listItem.name == NotificationType.ReviewComplaint) {
       this.popupService.reviewComplaintNotificationPopup.show = true;
-      this.notificationService.reviewComplaintNotification = notificationArray[i] as ReviewComplaintNotification;
+      this.notificationService.reviewComplaintNotification = listItem as ReviewComplaintNotification;
     }
 
     // Product Description Notification
-    if (notificationArray[i].name == NotificationType.ProductNameDoesNotMatchWithProductDescription
-      || notificationArray[i].name == NotificationType.ProductDescriptionIncorrect
-      || notificationArray[i].name == NotificationType.ProductDescriptionTooVague
-      || notificationArray[i].name == NotificationType.ProductDescriptionMisleading
-      || notificationArray[i].name == NotificationType.ProductDescriptionOther) {
+    if (listItem.name == NotificationType.ProductNameDoesNotMatchWithProductDescription
+      || listItem.name == NotificationType.ProductDescriptionIncorrect
+      || listItem.name == NotificationType.ProductDescriptionTooVague
+      || listItem.name == NotificationType.ProductDescriptionMisleading
+      || listItem.name == NotificationType.ProductDescriptionOther) {
       this.popupService.productDescriptionNotificationPopup.show = true;
-      this.notificationService.productDescriptionNotification = notificationArray[i] as ProductDescriptionNotification;
+      this.notificationService.productDescriptionNotification = listItem as ProductDescriptionNotification;
     }
 
     // Product Image Notification
-    if (notificationArray[i].name == NotificationType.ProductNameDoesNotMatchWithProductImage) {
+    if (listItem.name == NotificationType.ProductNameDoesNotMatchWithProductImage) {
       this.popupService.productImageNotificationPopup.show = true;
-      this.notificationService.productImageNotification = notificationArray[i] as ProductImageNotification;
+      this.notificationService.productImageNotification = listItem as ProductImageNotification;
     }
 
     // Product Media Notification
-    if (notificationArray[i].name == NotificationType.VideosAndImagesAreDifferentFromProduct
-      || notificationArray[i].name == NotificationType.NotEnoughVideosAndImages
-      || notificationArray[i].name == NotificationType.VideosAndImagesNotClear
-      || notificationArray[i].name == NotificationType.VideosAndImagesMisleading
-      || notificationArray[i].name == NotificationType.VideosAndImagesOther) {
+    if (listItem.name == NotificationType.VideosAndImagesAreDifferentFromProduct
+      || listItem.name == NotificationType.NotEnoughVideosAndImages
+      || listItem.name == NotificationType.VideosAndImagesNotClear
+      || listItem.name == NotificationType.VideosAndImagesMisleading
+      || listItem.name == NotificationType.VideosAndImagesOther) {
       this.popupService.productMediaNotificationPopup.show = true;
-      this.notificationService.productMediaNotification = notificationArray[i] as ProductMediaNotification;
+      this.notificationService.productMediaNotification = listItem as ProductMediaNotification;
     }
 
     // Product Content Notification
-    if (notificationArray[i].name == NotificationType.ProductPriceTooHigh
-      || notificationArray[i].name == NotificationType.ProductPriceNotCorrect
-      || notificationArray[i].name == NotificationType.ProductPriceOther) {
+    if (listItem.name == NotificationType.ProductPriceTooHigh
+      || listItem.name == NotificationType.ProductPriceNotCorrect
+      || listItem.name == NotificationType.ProductPriceOther) {
       this.popupService.productContentNotificationPopup.show = true;
-      this.notificationService.productContentNotification = notificationArray[i] as ProductContentNotification;
+      this.notificationService.productContentNotification = listItem as ProductContentNotification;
     }
     this.popupService.notificationListPopup.show = false;
   }

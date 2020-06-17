@@ -1,22 +1,20 @@
-import { Component, ViewChildren, ElementRef, QueryList, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChildren, ElementRef, QueryList, Input, Output, EventEmitter } from '@angular/core';
 import { MenuService } from '../../../services/menu.service';
 import { ListItem } from '../../../classes/list-item';
 import { icon } from '../../../classes/icon';
 import { SelectType } from '../../../classes/list-item-select-type';
-import { Item } from '../../../classes/item';
 
 @Component({
   selector: 'item-list',
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.scss']
 })
-export class ItemListComponent implements OnChanges {
+export class ItemListComponent {
   constructor(public menuService: MenuService) { }
   // Public
   public selectType = SelectType;
   public pivotIndex: number = null;
   public ctrlDown: boolean = false;
-  public listItems: ListItem[] = [];
   public shiftDown: boolean = false;
   public newListItem: boolean = false;
   public itemDeleted: boolean = false;
@@ -29,27 +27,14 @@ export class ItemListComponent implements OnChanges {
   public selectedListItemIndex: number = null;
   public unselectedListItemIndex: number = null;
   // Decorators
-  @Input() list: Array<Item>;
+  @Input() listItems: Array<ListItem>;
   @Input() menuOptions: Array<string>;
   @Input() multiSelect: boolean = true;
-  @ViewChildren('listItem') listItem: QueryList<ElementRef>;
+  @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
   @Output() onAddItem: EventEmitter<void> = new EventEmitter();
   @Output() onEditItem: EventEmitter<void> = new EventEmitter();
   
   
-  // -----------------------------( NG ON CHANGES )------------------------------ \\
-  ngOnChanges() {
-    if (this.list) {
-      this.listItems = this.list.map(x => ({
-        id: x.id,
-        name: x.name,
-        selected: false,
-        selectType: null
-      }));
-    }
-  }
-
-
   // -----------------------------( ADD EVENT LISTENERS )------------------------------ \\
   addEventListeners() {
     if (!this.eventListenersAdded) {
@@ -173,7 +158,7 @@ export class ItemListComponent implements OnChanges {
       // If a list item is selected
       if (this.selectedListItemIndex != null) {
         // Set focus to that list item
-        this.listItem.find((item, index) => index == this.selectedListItemIndex).nativeElement.focus();
+        this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement.focus();
       }
     }
   }
@@ -459,7 +444,7 @@ export class ItemListComponent implements OnChanges {
             // Allow the selected list item to be edited
             this.editIcon.isDisabled = false;
             // Set focus to that selected list item
-            this.listItem.find((item, index) => index == this.selectedListItemIndex).nativeElement.focus();
+            this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement.focus();
           }, 20);
 
           // If there is NOT a next available list item that can be selected
@@ -484,7 +469,7 @@ export class ItemListComponent implements OnChanges {
           this.itemDeleted = false;
 
           // Set focus to that unselected list item
-          this.listItem.find((item, index) => index == this.unselectedListItemIndex).nativeElement.focus();
+          this.rowItem.find((item, index) => index == this.unselectedListItemIndex).nativeElement.focus();
         }, 20);
       }
     }

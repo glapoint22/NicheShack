@@ -9,7 +9,7 @@ import { Notification, NotificationTab } from 'projects/manager/src/app/classes/
 @Component({
   selector: 'message-notification-popup',
   templateUrl: './message-notification-popup.component.html',
-  styleUrls: ['./message-notification-popup.component.scss', '../../popup/popup.component.scss']
+  styleUrls: ['../../popup/popup.component.scss', './message-notification-popup.component.scss']
 })
 export class MessageNotificationPopupComponent extends PopupComponent implements OnInit {
   public paginatorIndex: number;

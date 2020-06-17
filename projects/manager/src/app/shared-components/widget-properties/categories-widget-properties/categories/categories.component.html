@@ -32,7 +32,7 @@
         <!-- Item LIst -->
         <item-list 
             #itemList 
-            [list]="categoriesWidget.categories"
+            [listItems]="categoriesWidget.categories"
             (onAddItem)="addCategory()"
             (onEditItem)="editCategory()"
             [menuOptions]="['Add Category', 'Edit Category', 'Delete Category', 'Delete Categories']">

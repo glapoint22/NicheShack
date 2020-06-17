@@ -25,21 +25,21 @@
         <notifications-item-list 
             *ngIf="notificationService.selectedNotificationsTab == notificationTab.NewNotifications"
             [multiSelect]="false"
-            [list]="notificationService.newNotifications">
+            [listItems]="notificationService.newNotifications">
         </notifications-item-list>
 
         <!-- Pending Notifications -->
         <notifications-item-list 
             *ngIf="notificationService.selectedNotificationsTab == notificationTab.PendingNotifications"
             [multiSelect]="false"
-            [list]="notificationService.pendingNotifications">
+            [listItems]="notificationService.pendingNotifications">
         </notifications-item-list>
 
         <!-- Archive Notifications -->
         <notifications-item-list 
             *ngIf="notificationService.selectedNotificationsTab == notificationTab.ArchiveNotifications"
             [multiSelect]="false"
-            [list]="notificationService.archiveNotifications">
+            [listItems]="notificationService.archiveNotifications">
         </notifications-item-list>
     </div>
 </div>

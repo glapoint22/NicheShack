@@ -14,19 +14,19 @@
                (mouseup)="setContextMenu($event)">
                
             <tr *ngFor="let listItem of listItems; let listItemIndex = index">
-                <td #listItem
+                <td #rowItem
                     tabindex="-1"
                     (blur)="onListItemBlur()"
                     (mousedown)="onListItemDown(listItemIndex)"
-                    [textContent]="listItems[listItemIndex].name"
+                    [textContent]="listItem.name"
                     (dblclick)="onListItemDoubleClick(listItemIndex)"
                     [ngClass]="{'edited-listItem': indexOfEditedListItem == listItemIndex,
                                 'selected-listItem': selectedListItemIndex == listItemIndex,
                                 'unselected-listItem': unselectedListItemIndex == listItemIndex,
-                                'selected-listItem-top': listItems[listItemIndex].selectType == selectType.Top,
-                                'selected-listItem-whole': listItems[listItemIndex].selectType == selectType.Whole,
-                                'selected-listItem-middle': listItems[listItemIndex].selectType == selectType.Middle,
-                                'selected-listItem-bottom': listItems[listItemIndex].selectType == selectType.Bottom,
+                                'selected-listItem-top': listItem.selectType == selectType.Top,
+                                'selected-listItem-whole': listItem.selectType == selectType.Whole,
+                                'selected-listItem-middle': listItem.selectType == selectType.Middle,
+                                'selected-listItem-bottom': listItem.selectType == selectType.Bottom,
                                 'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
                 </td>
             </tr>
