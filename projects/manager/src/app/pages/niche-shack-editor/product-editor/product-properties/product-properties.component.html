@@ -1,6 +1,11 @@
 <div class="container" *ngIf="productProperties">
+    <!-- Publish button -->
+    <div class="grooved-container">
+        <div class="button-center">Publish</div>
+    </div>
+
     <!-- Vendor -->
-    <product-vendor [vendor]="productProperties.vendor"></product-vendor>
+    <product-vendor id="first-property" [vendor]="productProperties.vendor"></product-vendor>
 
     <!-- Hoplink -->
     <product-hoplink [productProperties]="productProperties"></product-hoplink>

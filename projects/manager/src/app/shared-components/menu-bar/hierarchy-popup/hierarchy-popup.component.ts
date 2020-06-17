@@ -132,22 +132,19 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
           // Replace with this.dataService.get(...)
           return this.getTempItems(event.target.value == '' ? 'Category' : this.getTypeName(this.filterType));
-        }),
-        tap(items => {
-          // Set the item properties
-          items.map(item => {
-            item.type = this.searchInput.value == '' ? HierarchyItemType.Category : this.filterType;
-            item.children = [];
-          })
         }))
-      .subscribe((result: any) => {
-        this.items = result;
+      .subscribe((items: Array<HierarchyItem>) => {
+        // Set the new items
+        this.items = [];
+        items.forEach((item: HierarchyItem) => {
+          this.items.push(new HierarchyItem(item.id, item.name, this.searchInput.value == '' ? HierarchyItemType.Category : this.filterType));
+        });
+
+
         this.selectedItem = null;
         this.searchResultsCount = this.searchInput.value == '' ? null : this.items.length;
       });
   }
-
-
 
 
 
@@ -227,10 +224,10 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
 
   // -----------------------------( ON KEYDOWN )------------------------------ \\
-  @HostListener('document:keydown', ['$event'])
-  onKeydown(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape')
+  onKeydown() {
     // If the escape key was pressed and prompt is not enabled
-    if (event.keyCode == 27 && !this.promptService.show) {
+    if (this.show) {
       if (this.selectedItem) {
         let el: HTMLElement = this.getItemElement();
 
@@ -240,6 +237,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
         } else {
           // Deselect the selected item
           this.selectedItem = null;
+          this.showItemProperties.emit(this.selectedItem);
         }
       }
     }
@@ -728,7 +726,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   onDeleteClick() {
     if (!this.selectedItem) return;
 
-    let promptTitle = 'Delete ' + (this.selectedItem ? this.selectedItem.type : '');
+    let promptTitle = 'Delete ' + (this.selectedItem ? this.getTypeName(this.selectedItem.type) : '');
     let promptMessage = 'Are you sure you want to delete ' + (this.selectedItem ? this.selectedItem.name : '') + '?';
 
     this.promptService.showPrompt(promptTitle, promptMessage, this.deleteItem, this);
@@ -742,13 +740,13 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
 
 
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
   // -----------------------------( DELETE ITEM )------------------------------ \\
   deleteItem() {
     let items: Array<HierarchyItem>;
@@ -783,11 +781,11 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
 
 
-  
-  
-  
-  
-  
+
+
+
+
+
   // -----------------------------( GET ITEM ELEMENT )------------------------------ \\
   getItemElement() {
     return document.getElementById(this.getTypeName(this.selectedItem.type) + '-' + this.selectedItem.id);
@@ -801,12 +799,12 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
 
 
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   // -----------------------------( ON ITEM CLICK )------------------------------ \\
   onItemClick() {
     if (!this.editMode && this.selectedItem.id)

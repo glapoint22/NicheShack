@@ -21,14 +21,14 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
 
   // --------------------------------( SET POPUP )-------------------------------- \\
   setPopup() {
-    let priceIndices: Array<Array<number>>;
+    // let priceIndices: Array<Array<number>>;
     let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
     this.paginatorIndex = this.notificationService.productContentNotification.customerText.length - 1;
     
     // Map the content's price indices into a stand alone array
-    if (this.notificationService.productContentNotification.content) {
-      priceIndices = this.notificationService.productContentNotification.content.map(x => (x.priceIndices));
-    }
+    // if (this.notificationService.productContentNotification.content) {
+    //   priceIndices = this.notificationService.productContentNotification.content.map(x => (x.priceIndices));
+    // }
 
     // Combine all the price point properties into one string
     if (this.notificationService.productContentNotification.pricePoints) {
@@ -46,15 +46,15 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
     }
 
     // Convert the price indices into boolean values
-    if (this.notificationService.productContentNotification.content && this.notificationService.productContentNotification.pricePoints) {
-      for (let i = 0; i < priceIndices.length; i++) {
-        this.checkList[i] = [];
+    // if (this.notificationService.productContentNotification.content && this.notificationService.productContentNotification.pricePoints) {
+    //   for (let i = 0; i < priceIndices.length; i++) {
+    //     this.checkList[i] = [];
 
-        for (let j = 0; j < this.notificationService.productContentNotification.pricePoints.length; j++) {
-          this.checkList[i].push(priceIndices[i].indexOf(j) != -1 ? true : false)
-        }
-      }
-    }
+    //     for (let j = 0; j < this.notificationService.productContentNotification.pricePoints.length; j++) {
+    //       this.checkList[i].push(priceIndices[i].indexOf(j) != -1 ? true : false)
+    //     }
+    //   }
+    // }
   }
 
 

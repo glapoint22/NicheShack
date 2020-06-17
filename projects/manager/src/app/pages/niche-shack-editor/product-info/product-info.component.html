@@ -43,18 +43,11 @@
 
 
             <!-- Price -->
-            <!-- <div class="price">
-                <div *ngIf="productService.product.maxPrice == 0">
-                {{productService.product.minPrice | currency:'USD'}}
-            </div>
-            <div *ngIf="productService.product.maxPrice > 0">
-                {{productService.product.minPrice | currency:'USD'}} -
-                {{productService.product.maxPrice | currency:'USD'}}
-            </div>
+            <div class="price">
+                {{productService.product.price}}
 
-                {{'9.99' | currency:'USD'}} -
-                {{'20.99' | currency:'USD'}}
-            </div> -->
+                
+            </div>
 
             <div *ngIf="productService.product.hoplink" class="product-button"
                 (click)="onBuyClick(productService.product.hoplink)">Visit Product Page To Buy
@@ -66,7 +59,60 @@
 
 
         </div>
+
+
+
+
+
+
+
+
+
     </div>
+
+
+
+    <!-- Product Conent -->
+    <ng-container *ngIf="productService.product.content.length > 1">
+        <!-- Heading -->
+        <h3 class="margin-top-48 white-color"
+            [ngClass]="{'text-center margin-left-8': productService.product.pricePoints.length > 1}">
+            {{productService.product.pricePoints.length > 1 ? 'Payment options' : 'Included with your purchase'}}
+        </h3>
+
+
+        <!-- Content -->
+        <div
+            [ngClass]="{'display-flex justify-content-center flex-wrap': productService.product.pricePoints.length > 1}">
+
+            <!-- Price Points -->
+            <div *ngFor="let pricePoint of productService.product.pricePoints; let i = index"
+                [ngClass]="{'margin-bottom-24 margin-right-8 margin-left-8 border': productService.product.pricePoints.length > 1}">
+                
+                
+                <div *ngIf="productService.product.pricePoints.length > 1"
+                    class="niche-shack-gold font-size-3 font-bold border-bottom  text-center padding-8 background-color-dark-gray">
+                    {{pricePoint.textBefore}} {{productService.getPricePointPrice(pricePoint) | currency:'USD'}}
+                    {{pricePoint.textAfter}}
+                </div>
+
+                <!-- Content Item -->
+                <div [ngClass]="{'padding-8': productService.product.pricePoints.length > 1}">
+                    <ng-container *ngFor="let content of productService.product.content">
+
+                        <div *ngIf="content.priceIndices[i]">
+                            <img [src]="'images/' + content.icon">
+                            <span class="margin-left-4">
+                                {{content.title}}
+                            </span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+
 
 
 

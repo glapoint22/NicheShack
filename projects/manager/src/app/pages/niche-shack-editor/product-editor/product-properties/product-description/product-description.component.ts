@@ -48,6 +48,7 @@ export class ProductDescriptionComponent implements AfterViewInit {
       this.setIframeHeight();
 
       window.setTimeout(() => {
+        window.focus();
         this.panel.onContentLoad();
       });
 

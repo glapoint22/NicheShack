@@ -427,6 +427,14 @@ export class TextBox {
 
     initialize() {
         this.selectContents();
+        
+        let selection = this.contentDocument.getSelection();
+        let range = selection.getRangeAt(0);
+
+        // Set the start and end of the range
+        range.setStart(range.startContainer, 0);
+        range.setEnd(range.startContainer, 0);
+
         this.removeSelection();
     }
 }

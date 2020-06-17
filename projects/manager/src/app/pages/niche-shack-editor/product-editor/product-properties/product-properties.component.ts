@@ -6,6 +6,7 @@ import { ProductProperties } from 'projects/manager/src/app/classes/product-prop
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { ProductDescriptionComponent } from './product-description/product-description.component';
+import { ProductPricePoint } from 'projects/manager/src/app/classes/product-price-point';
 
 @Component({
   selector: 'product-properties',
@@ -89,64 +90,69 @@ export class ProductPropertiesComponent implements OnChanges {
           // }
         ],
         content: [
-          // {
-          //   id: '0006C245A7',
-          //   title: 'Cooking Tips',
-          //   icon: 'video.png',
-          //   priceIndices: [
-          //     0,
-          //     3
-          //   ]
-          // },
-          // {
-          //   id: '0004B385G7',
-          //   title: 'Audio Cooking methods',
-          //   icon: 'audio.png',
-          //   priceIndices: [
-          //     1,
-          //     2,
-          //     3
-          //   ]
-          // },
-          // {
-          //   id: '0008R755Y2',
-          //   title: 'Recipes',
-          //   icon: 'pdf.png',
-          //   priceIndices: [
-          //     0,
-          //     1
-          //   ]
-          // }
+          {
+            id: '0006C245A7',
+            title: 'Cooking Tips',
+            icon: 'video.png',
+            priceIndices: [
+              true,
+              false,
+              false,
+              true
+            ]
+          },
+          {
+            id: '0004B385G7',
+            title: 'Audio Cooking methods',
+            icon: 'audio.png',
+            priceIndices: [
+              false,
+              true,
+              true,
+              true
+            ]
+          },
+          {
+            id: '0008R755Y2',
+            title: 'Recipes',
+            icon: 'pdf.png',
+            priceIndices: [
+              true,
+              true,
+              false,
+              false
+            ]
+          }
         ],
         pricePoints: [
-          // {
-          //   id: 'HGAFDSDFAF',
-          //   textBefore: "Single Payment of",
-          //   wholeNumber: "5",
-          //   decimal: "16",
-          //   textAfter: ""
-          // },
-          // {
-          //   id: 'ASFSDAFFSDF',
-          //   textBefore: "",
-          //   wholeNumber: "7",
-          //   decimal: "12",
-          //   textAfter: "per Week"
-          // },
-          // {
-          //   id: 'AFHHTRETET',
-          //   textBefore: "3 Easy Payments of",
-          //   wholeNumber: "15",
-          //   decimal: "59",
-          //   textAfter: "per Month"
-          // },
-          // {
-          //   id: 'J34ERGFGG',
-          //   textBefore: "",
-          //   wholeNumber: "16",
-          //   decimal: "80",
-          //   textAfter: "a Year"
-          // }
+          {
+            id: 'HGAFDSDFAF',
+            textBefore: "Single Payment of",
+            wholeNumber: 5,
+            decimal: 16,
+            textAfter: ""
+          },
+          {
+            id: 'ASFSDAFFSDF',
+            textBefore: "",
+            wholeNumber: 7,
+            decimal: 12,
+            textAfter: "per Week"
+          },
+          {
+            id: 'AFHHTRETET',
+            textBefore: "3 Easy Payments of",
+            wholeNumber: 15,
+            decimal: 59,
+            textAfter: "per Month"
+          },
+          {
+            id: 'J34ERGFGG',
+            textBefore: "",
+            wholeNumber: 16,
+            decimal: 80,
+            textAfter: "a Year"
+          }
         ],
         media: [
           // {
@@ -299,7 +305,8 @@ export class ProductPropertiesComponent implements OnChanges {
           //   id: 'AFSDFFDSFS',
           //   name: 'Mint Chocolate Chip'
           // }
-        ]
+        ],
+        price: '$5.16 - $16.80'
       });
     }).pipe(delay(1000));
   }

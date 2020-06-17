@@ -2,5 +2,5 @@ export interface ProductContent {
     id: string;
     title: string;
     icon: string;
-    priceIndices: Array<number>;
+    priceIndices: Array<boolean>;
 }

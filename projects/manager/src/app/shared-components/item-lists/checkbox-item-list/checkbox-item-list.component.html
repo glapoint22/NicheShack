@@ -4,7 +4,8 @@
             <div *ngFor="let listItem of listItems; let listItemIndex = index" style="width: 22px; height: 22px; padding-top: 5px; padding-left: 5px;">
                 <checkbox (mouseover)="isOverIconButton = true" 
                           (mouseout)="onIconButtonMouseOut()" 
-                          [checked]="checkList[listItemIndex]">
+                          [checked]="checkList[listItemIndex]"
+                          (change)="checkList[listItemIndex] = $event.target.checked">
                 </checkbox>
             </div>
         </div>

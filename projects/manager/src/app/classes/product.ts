@@ -13,5 +13,6 @@ export class Product {
     content: Array<ProductContent> = [];
     pricePoints: Array<ProductPricePoint> = [];
     media: Array<Media> = [];
+    price: string;
     safeDescription?: SafeHtml;
 }

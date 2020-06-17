@@ -299,8 +299,10 @@ export class NotificationService {
           title: 'Cooking Tips',
           icon: 'video.png',
           priceIndices: [
-            0,
-            3
+            true,
+            false,
+            false,
+            true
           ]
         },
         {
@@ -308,9 +310,10 @@ export class NotificationService {
           title: 'Audio Cooking methods',
           icon: 'audio.png',
           priceIndices: [
-            1,
-            2,
-            3
+            false,
+            true,
+            true,
+            true
           ]
         },
         {
@@ -318,39 +321,41 @@ export class NotificationService {
           title: 'Recipes',
           icon: 'pdf.png',
           priceIndices: [
-            0,
-            1
+            true,
+            true,
+            false,
+            false
           ]
         }
       ],
 
       pricePoints: [
         {
-          id: '0',
+          id: 'HGAFDSDFAF',
           textBefore: "Single Payment of",
-          wholeNumber: "5",
-          decimal: "16",
+          wholeNumber: 5,
+          decimal: 16,
           textAfter: ""
         },
         {
-          id: '1',
+          id: 'ASFSDAFFSDF',
           textBefore: "",
-          wholeNumber: "7",
-          decimal: "12",
+          wholeNumber: 7,
+          decimal: 12,
           textAfter: "per Week"
         },
         {
-          id: '2',
+          id: 'AFHHTRETET',
           textBefore: "3 Easy Payments of",
-          wholeNumber: "15",
-          decimal: "59",
+          wholeNumber: 15,
+          decimal: 59,
           textAfter: "per Month"
         },
         {
-          id: '3',
+          id: 'J34ERGFGG',
           textBefore: "",
-          wholeNumber: "16",
-          decimal: "80",
+          wholeNumber: 16,
+          decimal: 80,
           textAfter: "a Year"
         }
       ],
@@ -409,8 +414,10 @@ export class NotificationService {
           title: 'Cooking Tips',
           icon: 'video.png',
           priceIndices: [
-            0,
-            3
+            true,
+            false,
+            false,
+            true
           ]
         },
         {
@@ -418,9 +425,10 @@ export class NotificationService {
           title: 'Audio Cooking methods',
           icon: 'audio.png',
           priceIndices: [
-            1,
-            2,
-            3
+            false,
+            true,
+            true,
+            true
           ]
         },
         {
@@ -428,39 +436,41 @@ export class NotificationService {
           title: 'Recipes',
           icon: 'pdf.png',
           priceIndices: [
-            0,
-            1
+            true,
+            true,
+            false,
+            false
           ]
         }
       ],
 
       pricePoints: [
         {
-          id: '0',
+          id: 'HGAFDSDFAF',
           textBefore: "Single Payment of",
-          wholeNumber: "5",
-          decimal: "16",
+          wholeNumber: 5,
+          decimal: 16,
           textAfter: ""
         },
         {
-          id: '1',
+          id: 'ASFSDAFFSDF',
           textBefore: "",
-          wholeNumber: "7",
-          decimal: "12",
+          wholeNumber: 7,
+          decimal: 12,
           textAfter: "per Week"
         },
         {
-          id: '2',
+          id: 'AFHHTRETET',
           textBefore: "3 Easy Payments of",
-          wholeNumber: "15",
-          decimal: "59",
+          wholeNumber: 15,
+          decimal: 59,
           textAfter: "per Month"
         },
         {
-          id: '3',
+          id: 'J34ERGFGG',
           textBefore: "",
-          wholeNumber: "16",
-          decimal: "80",
+          wholeNumber: 16,
+          decimal: 80,
           textAfter: "a Year"
         }
       ],
@@ -519,8 +529,10 @@ export class NotificationService {
           title: 'Cooking Tips',
           icon: 'video.png',
           priceIndices: [
-            0,
-            3
+            true,
+            false,
+            false,
+            true
           ]
         },
         {
@@ -528,9 +540,10 @@ export class NotificationService {
           title: 'Audio Cooking methods',
           icon: 'audio.png',
           priceIndices: [
-            1,
-            2,
-            3
+            false,
+            true,
+            true,
+            true
           ]
         },
         {
@@ -538,39 +551,41 @@ export class NotificationService {
           title: 'Recipes',
           icon: 'pdf.png',
           priceIndices: [
-            0,
-            1
+            true,
+            true,
+            false,
+            false
           ]
         }
       ],
 
       pricePoints: [
         {
-          id: '0',
+          id: 'HGAFDSDFAF',
           textBefore: "Single Payment of",
-          wholeNumber: "5",
-          decimal: "16",
+          wholeNumber: 5,
+          decimal: 16,
           textAfter: ""
         },
         {
-          id: '1',
+          id: 'ASFSDAFFSDF',
           textBefore: "",
-          wholeNumber: "7",
-          decimal: "12",
+          wholeNumber: 7,
+          decimal: 12,
           textAfter: "per Week"
         },
         {
-          id: '2',
+          id: 'AFHHTRETET',
           textBefore: "3 Easy Payments of",
-          wholeNumber: "15",
-          decimal: "59",
+          wholeNumber: 15,
+          decimal: 59,
           textAfter: "per Month"
         },
         {
-          id: '3',
+          id: 'J34ERGFGG',
           textBefore: "",
-          wholeNumber: "16",
-          decimal: "80",
+          wholeNumber: 16,
+          decimal: 80,
           textAfter: "a Year"
         }
       ],

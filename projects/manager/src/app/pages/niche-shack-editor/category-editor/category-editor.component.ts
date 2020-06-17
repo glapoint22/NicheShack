@@ -12,9 +12,9 @@ import { LoadingService } from '../../../services/loading.service';
 })
 export class CategoryEditorComponent implements OnChanges {
   @Input() hierarchyItem: HierarchyItem;
-  public category: Category = new Category();
+  public category: Category;
 
-  constructor(public loadingService: LoadingService) {}
+  constructor(public loadingService: LoadingService) { }
 
   // ---------------------Temp-----------------------------
   public getTempCategoryIcon(id: string): Observable<string> {
@@ -25,11 +25,12 @@ export class CategoryEditorComponent implements OnChanges {
 
 
   ngOnChanges() {
-    this.category.id = this.hierarchyItem.id;
     this.loadingService.loading = true;
 
     // Get the category icon based on the category Id
-    this.getTempCategoryIcon(this.category.id).subscribe((icon: string) => {
+    this.getTempCategoryIcon(this.hierarchyItem.id).subscribe((icon: string) => {
+      this.category = new Category();
+      this.category.id = this.hierarchyItem.id;
       this.category.icon.url = icon;
       this.loadingService.loading = false;
     });

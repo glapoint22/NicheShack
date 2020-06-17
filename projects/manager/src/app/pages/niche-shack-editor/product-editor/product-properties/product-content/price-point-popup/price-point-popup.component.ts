@@ -1,5 +1,7 @@
 import { Component, ViewChildren, ElementRef, QueryList, OnInit } from '@angular/core';
 import { PopupComponent } from 'projects/manager/src/app/shared-components/popups/popup/popup.component';
+import { ProductPricePoint } from 'projects/manager/src/app/classes/product-price-point';
+import { Item } from 'projects/manager/src/app/classes/item';
 
 @Component({
   selector: 'price-point-popup',
@@ -8,6 +10,7 @@ import { PopupComponent } from 'projects/manager/src/app/shared-components/popup
 })
 export class PricePointPopupComponent extends PopupComponent implements OnInit {
   @ViewChildren('txtInput') txtInput: QueryList<ElementRef>;
+  public pricePoint: ProductPricePoint;
 
 
   // --------------------------------( NG ON INIT )-------------------------------- \\

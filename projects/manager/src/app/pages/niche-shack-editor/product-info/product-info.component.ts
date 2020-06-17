@@ -19,5 +19,4 @@ export class ProductInfoComponent implements OnInit {
   onBuyClick(url: string) {
     window.open(url);
   }
-
 }

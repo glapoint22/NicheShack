@@ -34,7 +34,7 @@
             <div class="property">
                 <div class="label" >Title:</div>
             </div>
-            <input class="txt-20" [value]="content[contentIndex].title">
+            <input class="txt-20" [(ngModel)]="content[contentIndex].title">
             
 
 
@@ -103,7 +103,7 @@
                 <checkbox-item-list
                     #itemList 
                     [list]="pricePointList"
-                    [checkList]="checkList[contentIndex]"
+                    [checkList]="content[contentIndex].priceIndices"
                     (onAddItem)="addPricePoint()"
                     (onEditItem)="editPricePoint()"
                     [menuOptions]="['Add Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">
