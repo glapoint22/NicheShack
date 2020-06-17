@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HierarchyItem } from '../../classes/hierarchy-item';
+import { HierarchyItem, HierarchyItemType } from '../../classes/hierarchy-item';
 
 @Component({
   selector: 'niche-shack-editor',
@@ -9,4 +9,5 @@ import { HierarchyItem } from '../../classes/hierarchy-item';
 export class NicheShackEditorComponent {
   public selectedItem: HierarchyItem = new HierarchyItem();
   public productEditorMode: string;
+  public hierarchyItemType = HierarchyItemType;
 }

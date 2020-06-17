@@ -7,7 +7,7 @@ import { ProductDescriptionNotification } from '../classes/product-description-n
 import { ProductImageNotification } from '../classes/product-image-notification';
 import { ProductContentNotification } from '../classes/product-content-notification';
 import { ProductMediaNotification } from '../classes/product-media-notification';
-import { ProductMediaType } from '../classes/media';
+import { MediaType } from '../classes/media';
 import { delay } from 'rxjs/operators';
 
 @Injectable({
@@ -659,7 +659,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
@@ -670,7 +670,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
@@ -681,7 +681,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
@@ -692,7 +692,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
@@ -703,7 +703,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
@@ -714,7 +714,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
@@ -725,7 +725,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: '4DSASFSDFSDFSD',
@@ -735,7 +735,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: 'UUEYTGGSSDFGG',
@@ -745,7 +745,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: 'UTYDGDFSGJHTG',
@@ -755,7 +755,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         }
       ],
 
@@ -819,7 +819,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
@@ -830,7 +830,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
@@ -841,7 +841,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
@@ -852,7 +852,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
@@ -863,7 +863,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
@@ -874,7 +874,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
@@ -885,7 +885,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: '4DSASFSDFSDFSD',
@@ -895,7 +895,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: 'UUEYTGGSSDFGG',
@@ -905,7 +905,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: 'UTYDGDFSGJHTG',
@@ -915,7 +915,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         }
       ],
 
@@ -979,7 +979,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
@@ -990,7 +990,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
@@ -1001,7 +1001,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
@@ -1012,7 +1012,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
@@ -1023,7 +1023,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
@@ -1034,7 +1034,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
@@ -1045,7 +1045,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: '4DSASFSDFSDFSD',
@@ -1055,7 +1055,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: 'UUEYTGGSSDFGG',
@@ -1065,7 +1065,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: 'UTYDGDFSGJHTG',
@@ -1075,7 +1075,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         }
       ],
 
@@ -1139,7 +1139,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
@@ -1150,7 +1150,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
@@ -1161,7 +1161,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
@@ -1172,7 +1172,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
@@ -1183,7 +1183,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
@@ -1194,7 +1194,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
@@ -1205,7 +1205,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: '4DSASFSDFSDFSD',
@@ -1215,7 +1215,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: 'UUEYTGGSSDFGG',
@@ -1225,7 +1225,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: 'UTYDGDFSGJHTG',
@@ -1235,7 +1235,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         }
       ],
 
@@ -1299,7 +1299,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
@@ -1310,7 +1310,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
@@ -1321,7 +1321,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
@@ -1332,7 +1332,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
@@ -1343,7 +1343,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
@@ -1354,7 +1354,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.Video,
+          type: MediaType.Video,
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
@@ -1365,7 +1365,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: '4DSASFSDFSDFSD',
@@ -1375,7 +1375,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: 'UUEYTGGSSDFGG',
@@ -1385,7 +1385,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         },
         {
           id: 'UTYDGDFSGJHTG',
@@ -1395,7 +1395,7 @@ export class NotificationService {
             load: null,
             save: null
           },
-          type: ProductMediaType.ProductImage,
+          type: MediaType.ProductImage,
         }
       ],
 

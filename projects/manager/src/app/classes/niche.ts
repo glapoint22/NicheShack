@@ -1,4 +1,4 @@
 export class Niche {
-    id: number;
+    id: string;
     name: string;
 }

@@ -69,7 +69,10 @@
         }
     
         .product-info {
-            flex: 0.4;
+            &:not(:first-child) {
+                flex: 0.4;
+            }
+            
             .title {
                 word-break: break-word;
                 overflow-wrap: break-word;

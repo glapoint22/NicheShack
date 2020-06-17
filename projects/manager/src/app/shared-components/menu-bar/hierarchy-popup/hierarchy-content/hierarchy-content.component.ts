@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { HierarchyItem } from 'projects/manager/src/app/classes/hierarchy-item';
+import { HierarchyItem, HierarchyItemType } from 'projects/manager/src/app/classes/hierarchy-item';
 import { HierarchyPopupComponent } from '../hierarchy-popup.component';
 
 @Component({
@@ -10,6 +10,7 @@ import { HierarchyPopupComponent } from '../hierarchy-popup.component';
 export class HierarchyContentComponent {
   @Input() items: Array<HierarchyItem>;
   @Input() hierarchy: HierarchyPopupComponent;
+  public hierarchyItemType = HierarchyItemType;
 
   onItemButtonClick(item: HierarchyItem, input: HTMLInputElement) {
     if (item.children.length == 0) {

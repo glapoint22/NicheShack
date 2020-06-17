@@ -9,7 +9,7 @@ import { PromptService } from '../../../services/prompt.service';
 })
 export class ImageComponent {
   @Input() image: Image;
-  @Input() loading: boolean;
+  
 
   constructor(private promptService: PromptService) { }
 

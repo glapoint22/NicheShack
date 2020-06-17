@@ -1,12 +1,15 @@
 import { Component, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
-import { Observable, fromEvent } from 'rxjs';
+import { Observable, fromEvent, of } from 'rxjs';
 import { delay, debounceTime, switchMap, tap } from 'rxjs/operators';
-import { HierarchyItem } from '../../../classes/hierarchy-item';
+import { HierarchyItem, HierarchyItemType } from '../../../classes/hierarchy-item';
 import { PopupComponent } from '../../popups/popup/popup.component';
 import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
 import { MenuService } from '../../../services/menu.service';
+import { ProductService } from '../../../services/product.service';
+import { LoadingService } from '../../../services/loading.service';
+import { Item } from '../../../classes/item';
 
 @Component({
   selector: 'hierarchy-popup',
@@ -18,14 +21,102 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   public items: Array<HierarchyItem> = [];
   public selectedItem: HierarchyItem;
   public showMenu: boolean;
-  public filterType: string = 'Product';
+  public filterType: HierarchyItemType;
   public searchResultsCount: number;
   private searchInput: any;
+  private editMode: boolean;
+  public hierarchyItemType = HierarchyItemType;
 
   constructor(popupService: PopupService,
     cover: CoverService,
     menuService: MenuService,
-    private promptService: PromptService) { super(popupService, cover, menuService) }
+    private promptService: PromptService, private productService: ProductService, private loadingService: LoadingService) { super(popupService, cover, menuService) }
+
+
+
+
+  //                                                                 TEMP!!!!!!
+  // ******************************************************************************************************************************************
+  public getTempItems(type: string): Observable<any> {
+    if (type == 'Category') {
+      return of([
+        {
+          id: 'fdsafdfds',
+          name: 'Health & Fitness'
+        },
+        {
+          id: 'hgfdhfhhgf',
+          name: 'Self-Help'
+        },
+        {
+          id: 'rewqrewer',
+          name: 'E-business & E-marketing'
+        }
+      ]).pipe(delay(1000));
+
+
+    } else if (type == 'Niche') {
+      return of([
+        {
+          id: 'fsdfafsdf',
+          name: 'Diets & Weight Loss'
+        },
+        {
+          id: 'yttrtr',
+          name: 'Exercise & Fitness'
+        },
+        {
+          id: 'rewqerweer',
+          name: 'Remedies'
+        },
+        {
+          id: 'hffgdhfggh',
+          name: 'Nutrition'
+        }
+      ]).pipe(delay(1000));
+    } else {
+      return of([
+        {
+          id: '102B896BF0',
+          name: 'Booty Type Training'
+        },
+        {
+          id: '10C45610AF',
+          name: 'SocialSaleRep'
+        },
+        {
+          id: '10F6F95D3F',
+          name: 'Crunch Cholesterol'
+        },
+        {
+          id: '112298D096',
+          name: 'Wealth Trigger 360'
+        }
+      ]).pipe(delay(1000))
+    }
+  }
+
+  public updateTempItem(url: string, item: Item): Observable<any> {
+    return of({}).pipe(delay(1000));
+  }
+
+
+  public postTempItem(url: string, name: string): Observable<string> {
+    return of('GFDGDFSASF').pipe(delay(1000));
+  }
+
+
+  public deleteTempItem(id: string): Observable<any> {
+    return of({}).pipe(delay(1000));
+  }
+  // ******************************************************************************************************************************************
+
+
+
+
+
+
+
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
@@ -40,12 +131,12 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
         switchMap((event: any) => {
 
           // Replace with this.dataService.get(...)
-          return this.getTempItems(event.target.value == '' ? 'Category' : this.filterType);
+          return this.getTempItems(event.target.value == '' ? 'Category' : this.getTypeName(this.filterType));
         }),
         tap(items => {
           // Set the item properties
           items.map(item => {
-            item.type = this.searchInput.value == '' ? 'Category' : this.filterType;
+            item.type = this.searchInput.value == '' ? HierarchyItemType.Category : this.filterType;
             item.children = [];
           })
         }))
@@ -57,104 +148,41 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   }
 
 
-  // ---------------------Temp-----------------------------
-  public getTempItems(type: string): Observable<any> {
-    if (type == 'Category') {
-      return new Observable(subscriber => {
-        subscriber.next([
-          {
-            id: 0,
-            name: 'Health & Fitness',
-            type: 'Category',
-            showChildren: false,
-            loadingChildren: false,
-            children: [],
-            parent: null
-          },
-          {
-            id: 1,
-            name: 'Self-Help',
-            type: 'Category',
-            showChildren: false,
-            loadingChildren: false,
-            children: [],
-            parent: null
-          },
-          {
-            id: 2,
-            name: 'E-business & E-marketing',
-            type: 'Category',
-            showChildren: false,
-            loadingChildren: false,
-            children: [],
-            parent: null
-          }
-        ]);
-      }).pipe(delay(1000));
 
 
-    } else if (type == 'Niche') {
-      return new Observable(subscriber => {
-        subscriber.next([
-          {
-            id: 0,
-            name: 'Diets & Weight Loss'
-          },
-          {
-            id: 1,
-            name: 'Exercise & Fitness'
-          },
-          {
-            id: 2,
-            name: 'Remedies'
-          },
-          {
-            id: 3,
-            name: 'Nutrition'
-          }
-        ]);
 
-      }).pipe(delay(1000));
-    } else {
-      return new Observable(subscriber => {
-        subscriber.next([
-          {
-            id: '102B896BF0',
-            name: 'The Paruresis Treatment System'
-          },
-          {
-            id: '10C45610AF',
-            name: 'SocialSaleRep'
-          },
-          {
-            id: '10F6F95D3F',
-            name: 'Crunch Cholesterol'
-          },
-          {
-            id: '112298D096',
-            name: 'Wealth Trigger 360'
-          }
-        ]);
 
-      }).pipe(delay(1000))
-    }
-  }
-  // ------------------------------------------------------
 
+
+
+
+
+  // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     this.popupService.hierarchyPopup = this;
+    this.filterType = HierarchyItemType.Product;
 
     this.getTempItems('Category')
-      .subscribe(result => {
-        this.items = result;
+      .subscribe((items: Array<HierarchyItem>) => {
+        items.forEach((item: HierarchyItem) => {
+          this.items.push(new HierarchyItem(item.id, item.name, HierarchyItemType.Category));
+        });
       });
-
   }
 
 
 
 
 
+
+
+
+
+
+
+
+
+  // -----------------------------( ON COLLAPSE BUTTON CLICK )------------------------------ \\
   onCollapseButtonClick() {
     if (!this.items.some(x => x.showChildren)) return;
 
@@ -171,11 +199,34 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
     });
   }
 
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( IS COLLAPSE BUTTON DISABLED )------------------------------ \\
   isCollapseButtonDisabled() {
     return !this.items.some(x => x.showChildren);
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( ON KEYDOWN )------------------------------ \\
   @HostListener('document:keydown', ['$event'])
   onKeydown(event: KeyboardEvent) {
     // If the escape key was pressed and prompt is not enabled
@@ -195,24 +246,35 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   }
 
 
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( GET ADD BUTTON TITLE )------------------------------ \\
   getAddButtonTitle() {
     let title: string;
 
     switch (this.selectedItem && this.selectedItem.type) {
-      case 'Category':
+      case HierarchyItemType.Category:
         title = 'Add Niche';
         break;
 
-      case 'Niche':
+      case HierarchyItemType.Niche:
         title = 'Add Product';
         break;
 
-      case 'Product':
+      case HierarchyItemType.Product:
         title = 'Add (Not Available)';
         break;
 
       default:
-        if (this.searchResultsCount != null && this.items.length > 0 && this.items[0].type != 'Category') {
+        if (this.searchResultsCount != null && this.items.length > 0 && this.items[0].type != HierarchyItemType.Category) {
           title = 'Add (Not Available)'
         } else {
           title = 'Add Category';
@@ -225,24 +287,43 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( IS ADD BUTTON DISABLED )------------------------------ \\
   isAddButtonDisabled() {
     let result: boolean;
 
     switch (this.selectedItem && this.selectedItem.type) {
-      case 'Category':
+      case HierarchyItemType.Category:
         result = false;
         break;
 
-      case 'Niche':
+      case HierarchyItemType.Niche:
         result = false;
         break;
 
-      case 'Product':
+      case HierarchyItemType.Product:
         result = true;
         break;
 
       default:
-        if (this.searchResultsCount != null && this.items.length > 0 && this.items[0].type != 'Category') {
+        if (this.searchResultsCount != null && this.items.length > 0 && this.items[0].type != HierarchyItemType.Category) {
           result = true;
         } else {
           result = false;
@@ -256,6 +337,20 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( LOAD CHILDREN )------------------------------ \\
   loadChildren(parent: HierarchyItem): Observable<Array<HierarchyItem>> {
     return new Observable(subscriber => {
       // If already in the process of loading children, return
@@ -264,12 +359,12 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
       // Flag that we are loading children
       parent.loadingChildren = true;
 
-      this.getTempItems((parent.type == 'Category' ? 'Niche' : 'Product')) // <- Replace with this.dataService.get(...)
+      this.getTempItems((parent.type == HierarchyItemType.Category ? 'Niche' : 'Product')) // <- Replace with this.dataService.get(...)
         .subscribe((items: Array<HierarchyItem>) => {
 
           // Set the item's properties
           items.map(x => {
-            x.type = (parent.type == 'Category' ? 'Niche' : 'Product');
+            x.type = (parent.type == HierarchyItemType.Category ? HierarchyItemType.Niche : HierarchyItemType.Product);
             x.parent = parent;
             x.children = [];
           });
@@ -290,6 +385,24 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( ON ADD BUTTON CLICK )------------------------------ \\
   onAddItemButtonClick() {
     if (this.isAddButtonDisabled()) return;
 
@@ -311,21 +424,35 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( ADD ITEM )------------------------------ \\
   addItem(children: Array<HierarchyItem>) {
-    let type: string;
+    let type: HierarchyItemType;
 
     if (!this.selectedItem) {
-      type = 'Category';
-    } else if (this.selectedItem.type == 'Category') {
-      type = 'Niche';
+      type = HierarchyItemType.Category;
+    } else if (this.selectedItem.type == HierarchyItemType.Category) {
+      type = HierarchyItemType.Niche;
     } else {
-      type = 'Product';
+      type = HierarchyItemType.Product;
     }
 
 
     let newItem: HierarchyItem = {
-      id: Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase(),
-      name: 'New ' + type,
+      id: null,
+      name: null,
       type: type,
       showChildren: false,
       loadingChildren: false,
@@ -342,6 +469,45 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( ON EDIT ITEM CLICK )------------------------------ \\
+  onEditItemClick() {
+    this.editMode = true;
+    this.editItem();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( EDIT ITEM )------------------------------ \\
   editItem() {
     if (!this.selectedItem) return;
 
@@ -376,27 +542,49 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
         // Escape was pressed
         if (event.keyCode == 27) {
-          el.innerText = this.selectedItem.name;
+          if (this.editMode) {
+            el.innerText = this.selectedItem.name;
+
+          } else {
+            this.deleteItem();
+          }
+
 
           // Enter was pressed
         } else {
           event.preventDefault();
-          this.selectedItem.name = el.innerText;
+
           el.contentEditable = 'false';
+
           // Save
+          this.saveItem(el, true);
         }
 
         // remove the listeners
         removeKeydownListener();
         removeBlurListener();
+
+        this.editMode = false;
       }
     }
 
 
     // On Blur
     let onBlur = () => {
+      if (el.contentEditable == 'false') return;
+
       el.contentEditable = 'false';
-      if (el.innerText != this.selectedItem.name) el.innerText = this.selectedItem.name;
+      if (el.innerText == '') {
+        if (!this.selectedItem.name) {
+          this.deleteItem();
+        } else {
+          el.innerText = this.selectedItem.name;
+        }
+
+      } else {
+        // Save
+        this.saveItem(el, false);
+      }
 
       removeBlurListener();
       removeKeydownListener();
@@ -408,6 +596,160 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
     el.addEventListener('blur', onBlur)
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( SAVE ITEM )------------------------------ \\
+  saveItem(element: HTMLElement, showProperties: boolean) {
+    let apiUrl: string;
+
+    this.loadingService.loading = true;
+
+    switch (this.selectedItem.type) {
+
+      // Cateogry
+      case HierarchyItemType.Category:
+        // If we have an Id, get the update url
+        if (this.selectedItem.id) {
+          apiUrl = 'api/categories/update...';
+
+          // Get the post url
+        } else {
+          apiUrl = 'api/categories/post...';
+        }
+        break;
+
+
+      // Niche
+      case HierarchyItemType.Niche:
+
+        // If we have an Id, get the update url
+        if (this.selectedItem.id) {
+          apiUrl = 'api/Niches/update...';
+
+          // Get the post url
+        } else {
+          apiUrl = 'api/Niches/post...';
+        }
+        break;
+
+
+
+      // Product
+      case HierarchyItemType.Product:
+        // If we have an Id, get the update url
+        if (this.selectedItem.id) {
+          apiUrl = 'api/Products/update...';
+
+          // Get the post url
+        } else {
+          apiUrl = 'api/Products/post...';
+        }
+        break;
+
+    }
+
+
+
+    // If we have an Id, update the item
+    if (this.selectedItem.id) {
+
+      // Update
+      this.updateTempItem(apiUrl, {
+        id: this.selectedItem.id,
+        name: element.innerText
+      })
+        .subscribe(() => {
+          // Set the new name
+          element.innerText = this.selectedItem.name = element.innerText;
+
+          if (this.selectedItem.type == HierarchyItemType.Product) {
+            if (this.productService.product) {
+              this.productService.product.name = this.selectedItem.name;
+            }
+          }
+
+          // Hide the loading screen
+          this.loadingService.loading = false;
+        });
+
+      // This is a new item
+    } else {
+      // Post new item
+      this.postTempItem(apiUrl, element.innerText)
+        .subscribe((id: string) => {
+          // Assign the new id and name to the new item
+          this.selectedItem.id = id;
+          element.innerText = this.selectedItem.name = element.innerText;
+
+          // Show the item's properties
+          if (showProperties) {
+            if (this.selectedItem.type == HierarchyItemType.Product) {
+              if (this.productService.product) {
+                this.productService.product.name = this.selectedItem.name;
+              }
+            }
+
+
+            this.showItemProperties.emit(this.selectedItem);
+
+            // Don't show the item's properties
+          } else {
+            this.loadingService.loading = false;
+          }
+
+        });
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( ON DELETE CLICK )------------------------------ \\
+  onDeleteClick() {
+    if (!this.selectedItem) return;
+
+    let promptTitle = 'Delete ' + (this.selectedItem ? this.selectedItem.type : '');
+    let promptMessage = 'Are you sure you want to delete ' + (this.selectedItem ? this.selectedItem.name : '') + '?';
+
+    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteItem, this);
+  }
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  // -----------------------------( DELETE ITEM )------------------------------ \\
   deleteItem() {
     let items: Array<HierarchyItem>;
 
@@ -419,25 +761,77 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
     items.splice(items.findIndex(x => x == this.selectedItem), 1);
 
+
+
+    if (this.selectedItem.id) {
+      this.loadingService.loading = true;
+
+      this.deleteTempItem(this.selectedItem.id).subscribe(() => {
+        this.loadingService.loading = false;
+        this.showItemProperties.emit(this.selectedItem);
+      });
+
+    }
+
     this.selectedItem = null;
-
   }
 
-  onDeleteClick() {
-    let promptTitle = 'Delete ' + (this.selectedItem ? this.selectedItem.type : '');
-    let promptMessage = 'Are you sure you want to delete ' + (this.selectedItem ? this.selectedItem.name : '') + '?';
 
-    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteItem, this);
-  }
 
+
+
+
+
+
+  
+  
+  
+  
+  
+  // -----------------------------( GET ITEM ELEMENT )------------------------------ \\
   getItemElement() {
-    return document.getElementById(this.selectedItem.type + '-' + this.selectedItem.id);
+    return document.getElementById(this.getTypeName(this.selectedItem.type) + '-' + this.selectedItem.id);
   }
 
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  // -----------------------------( ON ITEM CLICK )------------------------------ \\
   onItemClick() {
-    this.showItemProperties.emit(this.selectedItem);
+    if (!this.editMode && this.selectedItem.id)
+      this.showItemProperties.emit(this.selectedItem);
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( CLEAR SEARCH RESULTS )------------------------------ \\
   clearSearchResults() {
     this.searchResultsCount = null;
     this.selectedItem = null;
@@ -448,31 +842,35 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
         this.items = result;
       });
   }
+
+
+
+
+
+
+
+
+
+
+  // -----------------------------( GET TYPE NAME )------------------------------ \\
+  getTypeName(type: HierarchyItemType): string {
+    let name: string;
+
+    switch (type) {
+      case HierarchyItemType.Category:
+        name = 'Category';
+        break;
+
+      case HierarchyItemType.Niche:
+        name = 'Niche';
+        break;
+
+
+      case HierarchyItemType.Product:
+        name = 'Product';
+        break;
+    }
+
+    return name;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

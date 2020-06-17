@@ -9,34 +9,31 @@
 
             <!-- Delete -->
             <div class="icon-container"
-                    [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Keyword (Delete)' : itemList.editIcon.isDisabled ? 'Delete Keywords (Delete)' : 'Delete Keyword (Delete)'"
-                    [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
-                    (mouseover)="itemList.isOverIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="itemList.deleteListItem()">
+                [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Keyword (Delete)' : itemList.editIcon.isDisabled ? 'Delete Keywords (Delete)' : 'Delete Keyword (Delete)'"
+                [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                (click)="itemList.deleteListItem()">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
             <!-- Edit -->
-            <div class="icon-container"
-                    [attr.title]="'Edit Keyword (Ctrl+Alt+E)'" 
-                    [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
-                    (mouseover)="itemList.isOverIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="itemList.editListItem()">
+            <div class="icon-container" [attr.title]="'Edit Keyword (Ctrl+Alt+E)'"
+                [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
+                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                (click)="itemList.editListItem()">
                 <i class="fas fa-edit"></i>
             </div>
 
             <!-- Add -->
-            <div class="icon-container"
-                    [attr.title]="'Add Keyword (Ctrl+Alt+A)'" 
-                    [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
-                    (mouseover)="itemList.isOverIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="itemList.addListItem()">
+            <div class="icon-container" [attr.title]="'Add Keyword (Ctrl+Alt+A)'"
+                [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                (click)="itemList.addListItem()">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>
+
+
 
         <!-- Editable Item LIst -->
         <editable-item-list 
@@ -46,5 +43,9 @@
             (onEditItem)="editKeyword()"
             [menuOptions]="['Add Keyword', 'Edit Keyword', 'Delete Keyword', 'Delete Keywords']">
         </editable-item-list>
+
+
+        <!-- Placeholder -->
+        <div *ngIf="keywords.length == 0" class="no-property">No keywords available</div>
     </div>
 </panel>

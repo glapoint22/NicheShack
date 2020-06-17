@@ -2,24 +2,27 @@
     <div class="product-container">
 
         <!-- Media -->
-        <div *ngIf="productService.product.media.length > 0" class="media">
-
-            <!-- Thumbnail -->
-            <div *ngFor="let media of productService.product.media" class="thumbnail"
-                [ngStyle]="{ 'background-image': 'url(images/' + media.image.url + ')'}"
-                (click)="productService.setCurrentSelectedMedia(media)">
-                <i *ngIf="media.type == productMediaType.Video" class="far fa-play-circle"></i>
+        <ng-container *ngIf="productService.product.media.length > 0">
+            <!-- Thumbnails -->
+            <div *ngIf="productService.product.media.length > 1" class="media">
+                <div *ngFor="let media of productService.product.media" class="thumbnail"
+                    [ngStyle]="{ 'background-image': 'url(images/' + media.image.url + ')'}"
+                    (click)="productService.setCurrentSelectedMedia(media)">
+                    <i *ngIf="media.type == mediaType.Video" class="far fa-play-circle"></i>
+                </div>
             </div>
-        </div>
 
-        <!-- Image -->
-        <div class="img-container">
-            <img *ngIf="productService.currentSelectedMedia.type == productMediaType.ProductImage"
-                [src]="'/images/' + productService.currentSelectedMedia.image.url">
+            <!-- Media display -->
+            <div class="img-container">
+                <img *ngIf="productService.currentSelectedMedia.type == mediaType.ProductImage"
+                    [src]="'/images/' + productService.currentSelectedMedia.image.url">
 
-            <iframe *ngIf="productService.currentSelectedMedia.type == productMediaType.Video" frameborder="0"
-                [src]="productService.currentSelectedMedia.safeUrl" allowfullscreen></iframe>
-        </div>
+                <iframe *ngIf="productService.currentSelectedMedia.type == mediaType.Video" frameborder="0"
+                    [src]="productService.currentSelectedMedia.safeUrl" allowfullscreen></iframe>
+            </div>
+        </ng-container>
+
+
 
 
         <!-- Product -->
@@ -27,30 +30,35 @@
             <!-- Title -->
             <div class="title">{{productService.product.name}}</div>
 
-            <!-- Rating -->
-            <stars class="margin-right-4" [rating]="productService.product.rating"></stars>
+            <ng-container *ngIf="productService.product.totalReviews > 0">
+                <!-- Rating -->
+                <stars class="margin-right-4" [rating]="productService.product.rating"></stars>
 
-            <!-- Reviews -->
-            <span class="reviews" *ngIf="productService.product.rating > 0">
-                {{productService.product.totalReviews | number}} reviews
-            </span>
+                <!-- Reviews -->
+                <span class="reviews" *ngIf="productService.product.rating > 0">
+                    {{productService.product.totalReviews | number}} reviews
+                </span>
+            </ng-container>
+
+
 
             <!-- Price -->
-            <div class="price">
-                <!-- <div *ngIf="productService.product.maxPrice == 0">
+            <!-- <div class="price">
+                <div *ngIf="productService.product.maxPrice == 0">
                 {{productService.product.minPrice | currency:'USD'}}
             </div>
             <div *ngIf="productService.product.maxPrice > 0">
                 {{productService.product.minPrice | currency:'USD'}} -
                 {{productService.product.maxPrice | currency:'USD'}}
-            </div> -->
+            </div>
 
                 {{'9.99' | currency:'USD'}} -
                 {{'20.99' | currency:'USD'}}
-            </div>
+            </div> -->
 
-            <div class="product-button"
-                (click)="onBuyClick(productService.product.hoplink)">Visit Product Page To Buy</div>
+            <div *ngIf="productService.product.hoplink" class="product-button"
+                (click)="onBuyClick(productService.product.hoplink)">Visit Product Page To Buy
+            </div>
 
             <!-- Description -->
             <div class="description" [innerHTML]="productService.product.safeDescription"></div>
