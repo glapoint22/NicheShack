@@ -32,7 +32,7 @@ export class EditableItemListComponent extends ItemListComponent {
 
   // -----------------------------( EVALUATE EDIT )------------------------------ \\
   evaluateEdit(isEscape?: boolean) {
-    let listItem = this.listItem.find((item, index) => index == this.indexOfEditedListItem).nativeElement;
+    let listItem = this.rowItem.find((item, index) => index == this.indexOfEditedListItem).nativeElement;
     let listItemTrimmed = listItem.textContent.trim();
 
     // If the list item is NOT empty
@@ -51,8 +51,9 @@ export class EditableItemListComponent extends ItemListComponent {
       this.unselectedListItemIndex = null;
       this.pivotIndex = this.selectedListItemIndex;
       this.listItems[this.selectedListItemIndex].selected = true;
-      if (!isEscape) this.listItems[this.selectedListItemIndex].name = listItemTrimmed;
-      listItem.textContent = this.listItems[this.selectedListItemIndex].name;
+
+      // Name the list item
+      this.nameListItem(listItem, listItemTrimmed, isEscape);
 
       // If the list item is empty
     } else {
@@ -83,6 +84,15 @@ export class EditableItemListComponent extends ItemListComponent {
   // -----------------------------( SET FOCUS TO LIST ITEM )------------------------------ \\
   setFocusToListItem(listItem) {
     listItem.focus();
+  }
+
+
+  // -----------------------------( NAME LIST ITEM )------------------------------ \\
+  nameListItem(listItem, listItemTrimmed, isEscape?: boolean) {
+    // As long as we did NOT press the (Escape) key, update the name property
+    if (!isEscape) this.listItems[this.selectedListItemIndex].name = listItemTrimmed;
+    // Update the name in the list
+    listItem.textContent = this.listItems[this.selectedListItemIndex].name;
   }
 
 
@@ -160,7 +170,7 @@ export class EditableItemListComponent extends ItemListComponent {
     this.deleteIcon.isDisabled = true;
     this.indexOfEditedListItem = 0;
     this.selectedListItemIndex = null;
-    this.listItems.unshift({id: "", name: "", selected: false, selectType: null });
+    this.listItems.unshift({ id: "", name: "", selected: false, selectType: null });
 
     for (let i = 0; i < this.listItems.length; i++) {
       this.listItems[i].selected = false;
@@ -168,7 +178,7 @@ export class EditableItemListComponent extends ItemListComponent {
     }
 
     window.setTimeout(() => {
-      this.listItem.find((item, index) => index == this.indexOfEditedListItem).nativeElement.focus();
+      this.rowItem.find((item, index) => index == this.indexOfEditedListItem).nativeElement.focus();
     });
   }
 
@@ -187,7 +197,7 @@ export class EditableItemListComponent extends ItemListComponent {
     }
 
     window.setTimeout(() => {
-      let listItem = this.listItem.find((item, index) => index == this.indexOfEditedListItem);
+      let listItem = this.rowItem.find((item, index) => index == this.indexOfEditedListItem);
       listItem.nativeElement.focus();
       let range = document.createRange();
       range.selectNodeContents(listItem.nativeElement);

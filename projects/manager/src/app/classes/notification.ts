@@ -1,7 +1,8 @@
 import { NotificationText } from './notification-text';
-import { Item } from './item';
+import { ListItem } from './list-item';
 
-export interface Notification extends Item {
+export interface Notification extends ListItem {
+    listIcon: string;
     customerText: NotificationText[];
     notesText?: NotificationText[];
 }

@@ -32,7 +32,7 @@
 
         <!-- Item LIst -->
         <item-list #itemList 
-            [list]="productGroupWidget.featuredProducts" 
+            [listItems]="productGroupWidget.featuredProducts" 
             (onAddItem)="addFeaturedProduct()"
             (onEditItem)="editFeaturedProduct()"
             [menuOptions]="['Add Featured Product', 'Edit Featured Product', 'Delete Featured Product', 'Delete Featured Products']">

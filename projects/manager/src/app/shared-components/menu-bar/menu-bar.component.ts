@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
-import { Observable } from 'rxjs';
 import { Notification } from '../../classes/notification';
 import { PopupService } from '../../services/popup.service';
 import { NotificationService } from '../../services/notification.service';
@@ -17,16 +16,9 @@ export class MenuBarComponent implements OnInit {
 
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
-    this.getNotifications().subscribe((notification: Notification) => {
+    this.notificationService.getNotifications().subscribe((notification: Notification) => {
       this.notificationService.newNotifications.unshift(notification);
-      this.notificationService.newNotifications = this.notificationService.newNotifications.slice();
     })
-  }
-
-
-  // -----------------------------( GET NOTIFICATIONS )------------------------------ \\
-  getNotifications(): Observable<Notification> {
-    return this.notificationService.tempData() 
   }
 
 

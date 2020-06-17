@@ -41,7 +41,7 @@
         <!-- Editable Item LIst -->
         <editable-item-list 
             #itemList 
-            [list]="keywords"
+            [listItems]="keywords"
             (onAddItem)="addKeyword()"
             (onEditItem)="editKeyword()"
             [menuOptions]="['Add Keyword', 'Edit Keyword', 'Delete Keyword', 'Delete Keywords']">
