@@ -33,8 +33,9 @@ export class ItemListComponent {
   @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
   @Output() onAddItem: EventEmitter<void> = new EventEmitter();
   @Output() onEditItem: EventEmitter<void> = new EventEmitter();
-  
-  
+  @Output() onDeleteItem: EventEmitter<void> = new EventEmitter();
+
+
   // -----------------------------( ADD EVENT LISTENERS )------------------------------ \\
   addEventListeners() {
     if (!this.eventListenersAdded) {
@@ -391,94 +392,99 @@ export class ItemListComponent {
   // -----------------------------( DELETE LIST ITEM )------------------------------ \\
   deleteListItem() {
     if (!this.deleteIcon.isDisabled) {
-      let listItemCopy: any;
-      let deletedListItemIndex: number;
 
-      // If a list item is selected
-      if (this.selectedListItemIndex != null) {
-        // Loop through the list of list items starting with the selected list item
-        for (let i = this.selectedListItemIndex + 1; i < this.listItems.length; i++) {
-          // If we come across a list item that is NOT selected
-          if (!this.listItems[i].selected) {
-            // Make a copy of that list item so it can be used as the newly selected list item when all the other list items are deleted
-            listItemCopy = this.listItems[i];
-            break;
-          }
-        }
-      }
-
-      // But if a list item is unselected
-      if (this.unselectedListItemIndex != null) {
-        // Make a copy of that list item so it can remain as the unselected list item when all the other list items are deleted
-        listItemCopy = this.listItems[this.unselectedListItemIndex];
-      }
+      this.onDeleteItem.emit()
 
 
-      // Now delete all the selected list items
-      do {
-        // Find a list item in the list that is marked as selected
-        deletedListItemIndex = this.listItems.map(e => e.selected).indexOf(true);
-        // As long as a list item that is marked as selected is found
-        if (deletedListItemIndex != -1) {
-          // Remove that list item
-          this.removeListItem(deletedListItemIndex)
-        }
-      }
-      // Loop until all the list items marked as selected are deleted
-      while (deletedListItemIndex != -1);
 
-
-      // Now get the new index by finding what index the coppied list item resides at
-      let newSelectedListItemIndex = this.listItems.indexOf(listItemCopy);
-
-      // If a list item was selected
-      if (this.selectedListItemIndex != null) {
-        // And there is a next available list item that can be selected
-        if (newSelectedListItemIndex != -1) {
-          window.setTimeout(() => {
-            // Select that list item
-            this.selectedListItemIndex = newSelectedListItemIndex;
-            this.listItems[this.selectedListItemIndex].selected = true;
-            // Re-establish the pivot index
-            this.pivotIndex = this.selectedListItemIndex;
-            // Allow the selected list item to be edited
-            this.editIcon.isDisabled = false;
-            // Set focus to that selected list item
-            this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement.focus();
-          }, 20);
-
-          // If there is NOT a next available list item that can be selected
-        } else {
-          // Make no list item marked as selected
-          this.selectedListItemIndex = null;
-          this.deleteIcon.isDisabled = true;
-          this.pivotIndex = null;
-          this.removeEventListeners();
-        }
-      }
-
-      // If a list item was unselected
-      if (this.unselectedListItemIndex != null) {
-        window.setTimeout(() => {
-          // Unselect that list item again
-          this.unselectedListItemIndex = newSelectedListItemIndex;
-          this.deleteIcon.isDisabled = true;
-          // Re-establish the pivot index
-          this.pivotIndex = this.unselectedListItemIndex;
-
-          this.itemDeleted = false;
-
-          // Set focus to that unselected list item
-          this.rowItem.find((item, index) => index == this.unselectedListItemIndex).nativeElement.focus();
-        }, 20);
-      }
     }
   }
 
 
+
   // -----------------------------( REMOVE LIST ITEM )------------------------------ \\
-  removeListItem(deletedListItemIndex: number) {
-    this.listItems.splice(deletedListItemIndex, 1);
+  removeListItem() {
+    let listItemCopy: any;
+    let deletedListItemIndex: number;
+
+    // If a list item is selected
+    if (this.selectedListItemIndex != null) {
+      // Loop through the list of list items starting with the selected list item
+      for (let i = this.selectedListItemIndex + 1; i < this.listItems.length; i++) {
+        // If we come across a list item that is NOT selected
+        if (!this.listItems[i].selected) {
+          // Make a copy of that list item so it can be used as the newly selected list item when all the other list items are deleted
+          listItemCopy = this.listItems[i];
+          break;
+        }
+      }
+    }
+
+    // But if a list item is unselected
+    if (this.unselectedListItemIndex != null) {
+      // Make a copy of that list item so it can remain as the unselected list item when all the other list items are deleted
+      listItemCopy = this.listItems[this.unselectedListItemIndex];
+    }
+
+
+    // Now delete all the selected list items
+    do {
+      // Find a list item in the list that is marked as selected
+      deletedListItemIndex = this.listItems.map(e => e.selected).indexOf(true);
+      // As long as a list item that is marked as selected is found
+      if (deletedListItemIndex != -1) {
+        // Remove that list item
+        this.listItems.splice(deletedListItemIndex, 1);
+      }
+    }
+    // Loop until all the list items marked as selected are deleted
+    while (deletedListItemIndex != -1);
+
+
+    // Now get the new index by finding what index the coppied list item resides at
+    let newSelectedListItemIndex = this.listItems.indexOf(listItemCopy);
+
+    // If a list item was selected
+    if (this.selectedListItemIndex != null) {
+      // And there is a next available list item that can be selected
+      if (newSelectedListItemIndex != -1) {
+        window.setTimeout(() => {
+          // Select that list item
+          this.selectedListItemIndex = newSelectedListItemIndex;
+          this.listItems[this.selectedListItemIndex].selected = true;
+          // Re-establish the pivot index
+          this.pivotIndex = this.selectedListItemIndex;
+          // Allow the selected list item to be edited
+          this.editIcon.isDisabled = false;
+          // Set focus to that selected list item
+          this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement.focus();
+        }, 20);
+
+        // If there is NOT a next available list item that can be selected
+      } else {
+        // Make no list item marked as selected
+        this.selectedListItemIndex = null;
+        this.deleteIcon.isDisabled = true;
+        this.pivotIndex = null;
+        this.removeEventListeners();
+      }
+    }
+
+    // If a list item was unselected
+    if (this.unselectedListItemIndex != null) {
+      window.setTimeout(() => {
+        // Unselect that list item again
+        this.unselectedListItemIndex = newSelectedListItemIndex;
+        this.deleteIcon.isDisabled = true;
+        // Re-establish the pivot index
+        this.pivotIndex = this.unselectedListItemIndex;
+
+        this.itemDeleted = false;
+
+        // Set focus to that unselected list item
+        this.rowItem.find((item, index) => index == this.unselectedListItemIndex).nativeElement.focus();
+      }, 20);
+    }
   }
 
 

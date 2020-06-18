@@ -112,12 +112,44 @@
     }
 
     
-
+    h3 {
+        color: $niche-shack-gold;
+        margin-top: 48px;
+    }
     
+    .price-points-container {
+        margin-bottom: 24px;
+        margin-right: 8px;
+        margin-left: 8px;
+        border: 1px solid #464646;
+        background: #1f1f1f;
+
+        .price-points {
+            color: #bababa;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            padding: 8px;
+            background: #242424;
+            border-bottom: 1px solid #464646;
+        }
+
+        .content-item {
+            display: flex;
+            align-items: center;
+
+            .img-container {
+                width: 16px;
+                height :16px;
+
+                img {
+                    display: block;
+                }
+            }
+
+            .content-title {
+                margin-left: 5px;
+            }
+        }
+    }
 }
-
-
-
-
-
-

@@ -21,9 +21,17 @@ export class ProductService {
     this.currentSelectedMedia = media;
   }
 
-  getPricePointPrice(pricePoint: ProductPricePoint): number {
-    return pricePoint.wholeNumber + (pricePoint.decimal * 0.01);
-  }
 
-  
+  setPrice() {
+    let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+    let prices: Array<number> = this.product.pricePoints.map(x => x.wholeNumber + (x.decimal * 0.01));
+    let minPrice = Math.min(...prices);
+    let maxPrice = Math.max(...prices);
+
+    if(minPrice == maxPrice) {
+      this.product.price = formatter.format(minPrice);
+    } else {
+      this.product.price = formatter.format(minPrice) + ' - ' + formatter.format(maxPrice);
+    }
+  }
 }

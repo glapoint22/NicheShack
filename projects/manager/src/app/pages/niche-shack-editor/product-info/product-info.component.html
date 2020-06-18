@@ -46,7 +46,7 @@
             <div class="price">
                 {{productService.product.price}}
 
-                
+
             </div>
 
             <div *ngIf="productService.product.hoplink" class="product-button"
@@ -55,28 +55,15 @@
 
             <!-- Description -->
             <div class="description" [innerHTML]="productService.product.safeDescription"></div>
-
-
-
         </div>
-
-
-
-
-
-
-
-
-
     </div>
 
 
 
     <!-- Product Conent -->
-    <ng-container *ngIf="productService.product.content.length > 1">
+    <ng-container *ngIf="productService.product.content.length > 0">
         <!-- Heading -->
-        <h3 class="margin-top-48 white-color"
-            [ngClass]="{'text-center margin-left-8': productService.product.pricePoints.length > 1}">
+        <h3 [ngClass]="{'text-center margin-left-8': productService.product.pricePoints.length > 1}">
             {{productService.product.pricePoints.length > 1 ? 'Payment options' : 'Included with your purchase'}}
         </h3>
 
@@ -87,33 +74,30 @@
 
             <!-- Price Points -->
             <div *ngFor="let pricePoint of productService.product.pricePoints; let i = index"
-                [ngClass]="{'margin-bottom-24 margin-right-8 margin-left-8 border': productService.product.pricePoints.length > 1}">
-                
-                
-                <div *ngIf="productService.product.pricePoints.length > 1"
-                    class="niche-shack-gold font-size-3 font-bold border-bottom  text-center padding-8 background-color-dark-gray">
-                    {{pricePoint.textBefore}} {{productService.getPricePointPrice(pricePoint) | currency:'USD'}}
+                [ngClass]="{'price-points-container': productService.product.pricePoints.length > 1}">
+
+
+                <div *ngIf="productService.product.pricePoints.length > 1" class="price-points">
+                    {{pricePoint.textBefore}} {{pricePoint.wholeNumber + (pricePoint.decimal * 0.01) | currency:'USD'}}
                     {{pricePoint.textAfter}}
                 </div>
 
                 <!-- Content Item -->
-                <div [ngClass]="{'padding-8': productService.product.pricePoints.length > 1}">
+                <div [style.padding.px]="productService.product.pricePoints.length > 1 ? 8 : 0">
                     <ng-container *ngFor="let content of productService.product.content">
 
-                        <div *ngIf="content.priceIndices[i]">
-                            <img [src]="'images/' + content.icon">
-                            <span class="margin-left-4">
+                        <div *ngIf="content.priceIndices[i]" class="content-item">
+                            <div class="img-container">
+                                <img *ngIf="content.icon" [src]="'images/' + content.icon">
+                            </div>
+
+                            <div class="content-title">
                                 {{content.title}}
-                            </span>
+                            </div>
                         </div>
                     </ng-container>
                 </div>
             </div>
         </div>
     </ng-container>
-
-
-
-
-
 </div>
