@@ -33,8 +33,9 @@ export class ItemListComponent {
   @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
   @Output() onAddItem: EventEmitter<void> = new EventEmitter();
   @Output() onEditItem: EventEmitter<void> = new EventEmitter();
-  
-  
+  @Output() onDeleteItem: EventEmitter<void> = new EventEmitter();
+
+
   // -----------------------------( ADD EVENT LISTENERS )------------------------------ \\
   addEventListeners() {
     if (!this.eventListenersAdded) {

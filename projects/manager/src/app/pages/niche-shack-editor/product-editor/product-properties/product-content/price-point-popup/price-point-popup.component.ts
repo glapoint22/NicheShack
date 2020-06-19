@@ -2,6 +2,10 @@ import { Component, ViewChildren, ElementRef, QueryList, OnInit } from '@angular
 import { PopupComponent } from 'projects/manager/src/app/shared-components/popups/popup/popup.component';
 import { ProductPricePoint } from 'projects/manager/src/app/classes/product-price-point';
 import { Item } from 'projects/manager/src/app/classes/item';
+import { PopupService } from 'projects/manager/src/app/services/popup.service';
+import { CoverService } from 'projects/manager/src/app/services/cover.service';
+import { MenuService } from 'projects/manager/src/app/services/menu.service';
+import { ProductService } from 'projects/manager/src/app/services/product.service';
 
 @Component({
   selector: 'price-point-popup',
@@ -11,11 +15,16 @@ import { Item } from 'projects/manager/src/app/classes/item';
 export class PricePointPopupComponent extends PopupComponent implements OnInit {
   @ViewChildren('txtInput') txtInput: QueryList<ElementRef>;
   public pricePoint: ProductPricePoint;
+  public pricePointListItem: Item;
+
+
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, private productService: ProductService) {super(popupService, cover, menuService)}
 
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
   ngOnInit() {
     this.popupService.pricePointPopup = this;
+    this.preventNoShow = true;
   }
 
 
@@ -28,7 +37,7 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
 
   // -----------------------------( ON KEY DOWN )------------------------------ \\
   private onKeydown = (event: KeyboardEvent) => {
-    if (event.keyCode === 13) this.blurInput();
+    if (event.keyCode === 13) this.show = false;
     if (event.keyCode === 27) this.blurInput();
     if (event.keyCode === 9 && !event.shiftKey) this.tab();
     if (event.shiftKey && event.keyCode === 9) this.shiftTab();
@@ -39,6 +48,10 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
   numbersOnly(index: number) {
     let txtInput = this.txtInput.toArray();
     !(/^[0-9]*$/i).test(txtInput[index].nativeElement.value) ? txtInput[index].nativeElement.value = txtInput[index].nativeElement.value.replace(/[^0-9]/ig, '') : null;
+    if (index == 1) this.pricePoint.wholeNumber = this.pricePoint.wholeNumber? parseInt(txtInput[index].nativeElement.value) : 0;
+    if (index == 2) this.pricePoint.decimal = this.pricePoint.decimal ? parseInt(txtInput[index].nativeElement.value): 0;
+    
+    this.productService.setPrice();
   }
 
 
@@ -84,5 +97,19 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
     for (let i = 0; i < txtInput.length; i++) {
       txtInput[i].nativeElement.blur();
     }
+  }
+
+
+
+  // -----------------------------( SET PRICE POINT LIST ITEM )------------------------------ \\
+  setPricePointListItem() {
+    let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+    this.pricePointListItem.name = this.pricePoint.textBefore +
+      ' ' +
+      formatter.format(parseFloat((this.pricePoint.wholeNumber ? this.pricePoint.wholeNumber : 0) + '.' +
+        (this.pricePoint.decimal ? this.pricePoint.decimal : 0))) +
+      ' ' +
+      this.pricePoint.textAfter;
   }
 }
