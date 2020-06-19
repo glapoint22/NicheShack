@@ -420,8 +420,14 @@ export class ItemListComponent {
         deletedListItemIndex = this.listItems.map(e => e.selected).indexOf(true);
         // As long as a list item that is marked as selected is found
         if (deletedListItemIndex != -1) {
+
+          // Clear the selection properties
+          // (In case the list item is still being referenced i.e. in media List where a media item gets moved)
+          this.listItems[deletedListItemIndex].selected = false;
+          this.listItems[deletedListItemIndex].selectType = null;
+
           // Remove that list item
-          this.removeListItem(deletedListItemIndex)
+          this.listItems.splice(deletedListItemIndex, 1);
         }
       }
       // Loop until all the list items marked as selected are deleted
@@ -473,12 +479,6 @@ export class ItemListComponent {
         }, 20);
       }
     }
-  }
-
-
-  // -----------------------------( REMOVE LIST ITEM )------------------------------ \\
-  removeListItem(deletedListItemIndex: number) {
-    this.listItems.splice(deletedListItemIndex, 1);
   }
 
 

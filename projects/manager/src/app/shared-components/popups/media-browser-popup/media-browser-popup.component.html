@@ -25,11 +25,13 @@
                                   {key: 'Videos', value: 6}
                                   ]">
             </dropdown>
-            <div *ngIf="loading"
+            <div *ngIf="loadingMediaInProgress || addingMediaInProgress || movingMediaInProgress"
                 style="position: relative; top: -20px; background: rgba(25, 25, 25, 0.6); width: 100%; height: 20px;">
             </div>
         </div>
     </div>
+
+    
 
 
     <!-- Search -->
@@ -47,18 +49,18 @@
         </div>
     </div>
 
-    <div style="width: 100%; height: 423px; border: 1px solid #373737;">
+    <div style="width: 100%; height: 423px; border: 1px solid #373737; position: relative;">
+
 
         <!--   -->
-        <div
-            style="background: rgba(0, 132, 255, 0.404); width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
-            <i *ngIf="loading" class="fas fa-spinner fa-pulse font-size-5"></i>
+        <div *show="loadingMediaInProgress" class="fade-start" transitionClass="fade-end"
+            style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: absolute; top: 0px;">
+            <i  class="fas fa-spinner fa-pulse font-size-5"></i>
         </div>
 
-        <!-- *ngIf="noMedia"  -->
 
-        <div
-            style="background: rgba(255, 251, 0, 0.459); width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; color: #888888; font-size: 13px; position: relative; top: -421px;">
+        <div *ngIf="noMedia"
+            style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; color: #888888; font-size: 13px; position: absolute; top: 0px;">
             <div *ngIf="indexOfSelectedMediaList == mediaType.Image">No images available</div>
             <div *ngIf="indexOfSelectedMediaList == mediaType.BackgroundImage">No background images available</div>
             <div *ngIf="indexOfSelectedMediaList == mediaType.BannerImage">No banner images available</div>
@@ -68,11 +70,19 @@
             <div *ngIf="indexOfSelectedMediaList == mediaType.Video">No videos available</div>
         </div>
 
-        <div style="background: rgba(255, 0, 0, 0.466); width: 100%; height: 100%; position: relative; top: -842px;">
+        <div style="width: 100%; height: 100%; position: absolute; top: 0px;">
 
             <!-- Images -->
-            <media-item-list *ngIf="!loading" (onAddMedia)="mediaSelectInput.click()"
+            <media-item-list 
+                #mediaItemList
+                *ngIf="!loadingMediaInProgress"
+                (onAddMedia)="mediaSelectInput.click()"
+                (onMoveMedia)="onMoveMedia($event)"
+                (onMediaSelect)="onMediaSelect($event)"
                 [listItems]="mediaLists[indexOfSelectedMediaList]"
+                [mediaType]="indexOfSelectedMediaList"
+                [addingMediaInProgress]="addingMediaInProgress"
+                [movingMediaInProgress]="movingMediaInProgress"
                 [menuOptions]="[menuOptions[indexOfSelectedMediaList].add, menuOptions[indexOfSelectedMediaList].edit, menuOptions[indexOfSelectedMediaList].delete, menuOptions[indexOfSelectedMediaList].deletes]">
             </media-item-list>
 

@@ -196,6 +196,8 @@ export class EditableItemListComponent extends ItemListComponent {
       this.listItems[i].selectType = null;
     }
 
+    
+
     window.setTimeout(() => {
       let listItem = this.rowItem.find((item, index) => index == this.indexOfEditedListItem);
       listItem.nativeElement.focus();
