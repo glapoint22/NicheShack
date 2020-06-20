@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NicheShackEditorRoutingModule } from './niche-shack-editor-routing.module';
 import { NicheShackEditorComponent } from './niche-shack-editor.component';
-import { MenuBarModule } from '../../shared-components/menu-bar/menu-bar.module';
 import { CategoryEditorComponent } from './category-editor/category-editor.component';
 import { NicheEditorComponent } from './niche-editor/niche-editor.component';
 import { LeadPageEditorComponent } from './niche-editor/lead-page-editor/lead-page-editor.component';
@@ -53,7 +52,6 @@ import { StarsModule } from 'shared-components/stars/stars.module';
   imports: [
     CommonModule,
     NicheShackEditorRoutingModule,
-    MenuBarModule,
     ShowHideModule,
     PropertiesEditorModule,
     FormsModule,

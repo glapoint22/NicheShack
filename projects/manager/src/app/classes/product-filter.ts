@@ -5,3 +5,8 @@ export interface productFilter {
     name: string;
     options: Array<ProductFilterOption>;
 }
+
+export enum FilterType {
+    Filter,
+    FilterOption
+}

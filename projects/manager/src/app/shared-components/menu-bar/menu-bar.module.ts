@@ -7,12 +7,10 @@ import { ReviewComplaintFormComponent } from './review-complaint-form/review-com
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { RouterModule } from '@angular/router';
-import { HierarchyPopupComponent } from './hierarchy-popup/hierarchy-popup.component';
-import { HierarchyContentComponent } from './hierarchy-popup/hierarchy-content/hierarchy-content.component';
 import { ShackIconComponent } from '../shack-icon/shack-icon.component';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
-
-
+import { NicheShackHierarchyPopupComponent } from '../popups/niche-shack-hierarchy-popup/niche-shack-hierarchy-popup.component';
+import { HierarchyModule } from '../hierarchy/hierarchy.module';
 
 @NgModule({
   declarations: [
@@ -21,15 +19,15 @@ import { CustomInputModule } from 'shared-components/custom-input/custom-input.m
     ProductReportFormComponent,
     ReviewComplaintFormComponent,
     NotificationsComponent,
-    HierarchyPopupComponent,
-    HierarchyContentComponent,
-    ShackIconComponent
+    ShackIconComponent,
+    NicheShackHierarchyPopupComponent
   ],
   imports: [
     CommonModule,
     ShowHideModule,
     RouterModule,
-    CustomInputModule
+    CustomInputModule,
+    HierarchyModule
   ],
   exports: [
     MenuBarComponent,
@@ -37,8 +35,6 @@ import { CustomInputModule } from 'shared-components/custom-input/custom-input.m
     ProductReportFormComponent,
     ReviewComplaintFormComponent,
     NotificationsComponent,
-    HierarchyPopupComponent,
-    HierarchyContentComponent,
     ShackIconComponent
   ]
 })

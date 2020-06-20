@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
 import { Observable, fromEvent, of } from 'rxjs';
 import { delay, debounceTime, switchMap, tap } from 'rxjs/operators';
-import { HierarchyItem, HierarchyItemType } from '../../../classes/hierarchy-item';
+import { HierarchyItem, NicheShackHierarchyItemType } from '../../../classes/hierarchy-item';
 import { PopupComponent } from '../../popups/popup/popup.component';
 import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
@@ -17,15 +17,17 @@ import { Item } from '../../../classes/item';
   styleUrls: ['./hierarchy-popup.component.scss', '../../popups/popup/popup.component.scss']
 })
 export class HierarchyPopupComponent extends PopupComponent implements OnInit {
-  @Output() showItemProperties: EventEmitter<HierarchyItem> = new EventEmitter();
   public items: Array<HierarchyItem> = [];
   public selectedItem: HierarchyItem;
-  public showMenu: boolean;
-  public filterType: HierarchyItemType;
-  public searchResultsCount: number;
-  private searchInput: any;
   private editMode: boolean;
-  public hierarchyItemType = HierarchyItemType;
+  
+  public currentParent: HierarchyItem;
+  private searchInput: any;
+  public hierarchyItemType = NicheShackHierarchyItemType;
+  public searchResultsCount: number;
+  @Output() showItemProperties: EventEmitter<HierarchyItem> = new EventEmitter();
+  public filterType: NicheShackHierarchyItemType;
+  public showMenu: boolean;
 
   constructor(popupService: PopupService,
     cover: CoverService,
@@ -134,11 +136,8 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
           return this.getTempItems(event.target.value == '' ? 'Category' : this.getTypeName(this.filterType));
         }))
       .subscribe((items: Array<HierarchyItem>) => {
-        // Set the new items
-        this.items = [];
-        items.forEach((item: HierarchyItem) => {
-          this.items.push(new HierarchyItem(item.id, item.name, this.searchInput.value == '' ? HierarchyItemType.Category : this.filterType));
-        });
+
+        this.items = items;
 
 
         this.selectedItem = null;
@@ -156,21 +155,24 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
-    this.popupService.hierarchyPopup = this;
-    this.filterType = HierarchyItemType.Product;
+    // this.popupService.hierarchyPopup = this;
+    this.filterType = NicheShackHierarchyItemType.Product;
 
     this.getTempItems('Category')
+      .pipe(tap((items: Array<HierarchyItem>) => {
+        this.mapItems(items);
+      }))
       .subscribe((items: Array<HierarchyItem>) => {
-        items.forEach((item: HierarchyItem) => {
-          this.items.push(new HierarchyItem(item.id, item.name, HierarchyItemType.Category));
-        });
+        this.items = items;
       });
   }
 
 
 
 
-
+  mapItems(items: Array<HierarchyItem>) {
+    items.map((item: HierarchyItem) => item.type = NicheShackHierarchyItemType.Category);
+  }
 
 
 
@@ -185,17 +187,21 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
     if (this.selectedItem && this.selectedItem.parent) this.selectedItem = null;
 
-    this.items.forEach(item => {
+    this.collapseItems(this.items);
+  }
+
+
+
+
+  collapseItems(items: Array<HierarchyItem>) {
+    items.forEach((item: HierarchyItem) => {
       item.showChildren = false;
 
       if (item.children) {
-        item.children.forEach(item => {
-          item.showChildren = false;
-        });
+        this.collapseItems(item.children);
       }
     });
   }
-
 
 
 
@@ -259,20 +265,20 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
     let title: string;
 
     switch (this.selectedItem && this.selectedItem.type) {
-      case HierarchyItemType.Category:
+      case NicheShackHierarchyItemType.Category:
         title = 'Add Niche';
         break;
 
-      case HierarchyItemType.Niche:
+      case NicheShackHierarchyItemType.Niche:
         title = 'Add Product';
         break;
 
-      case HierarchyItemType.Product:
+      case NicheShackHierarchyItemType.Product:
         title = 'Add (Not Available)';
         break;
 
       default:
-        if (this.searchResultsCount != null && this.items.length > 0 && this.items[0].type != HierarchyItemType.Category) {
+        if (this.searchResultsCount != null && this.items.length > 0 && this.items[0].type != NicheShackHierarchyItemType.Category) {
           title = 'Add (Not Available)'
         } else {
           title = 'Add Category';
@@ -308,20 +314,20 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
     let result: boolean;
 
     switch (this.selectedItem && this.selectedItem.type) {
-      case HierarchyItemType.Category:
+      case NicheShackHierarchyItemType.Category:
         result = false;
         break;
 
-      case HierarchyItemType.Niche:
+      case NicheShackHierarchyItemType.Niche:
         result = false;
         break;
 
-      case HierarchyItemType.Product:
+      case NicheShackHierarchyItemType.Product:
         result = true;
         break;
 
       default:
-        if (this.searchResultsCount != null && this.items.length > 0 && this.items[0].type != HierarchyItemType.Category) {
+        if (this.searchResultsCount != null && this.items.length > 0 && this.items[0].type != NicheShackHierarchyItemType.Category) {
           result = true;
         } else {
           result = false;
@@ -352,24 +358,24 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   loadChildren(parent: HierarchyItem): Observable<Array<HierarchyItem>> {
     return new Observable(subscriber => {
       // If already in the process of loading children, return
-      if (parent.loadingChildren) return;
+      if (parent.loading) return;
 
       // Flag that we are loading children
-      parent.loadingChildren = true;
+      parent.loading = true;
 
-      this.getTempItems((parent.type == HierarchyItemType.Category ? 'Niche' : 'Product')) // <- Replace with this.dataService.get(...)
+      this.getTempItems((parent.type == NicheShackHierarchyItemType.Category ? 'Niche' : 'Product')) // <- Replace with this.dataService.get(...)
         .subscribe((items: Array<HierarchyItem>) => {
 
           // Set the item's properties
           items.map(x => {
-            x.type = (parent.type == HierarchyItemType.Category ? HierarchyItemType.Niche : HierarchyItemType.Product);
+            x.type = (parent.type == NicheShackHierarchyItemType.Category ? NicheShackHierarchyItemType.Niche : NicheShackHierarchyItemType.Product);
             x.parent = parent;
             x.children = [];
           });
 
           // Assign the items and flag loading has completed
           parent.children = items;
-          parent.loadingChildren = false;
+          parent.loading = false;
 
           // Return the items
           subscriber.next(parent.children);
@@ -437,14 +443,14 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
   // -----------------------------( ADD ITEM )------------------------------ \\
   addItem(children: Array<HierarchyItem>) {
-    let type: HierarchyItemType;
+    let type: NicheShackHierarchyItemType;
 
     if (!this.selectedItem) {
-      type = HierarchyItemType.Category;
-    } else if (this.selectedItem.type == HierarchyItemType.Category) {
-      type = HierarchyItemType.Niche;
+      type = NicheShackHierarchyItemType.Category;
+    } else if (this.selectedItem.type == NicheShackHierarchyItemType.Category) {
+      type = NicheShackHierarchyItemType.Niche;
     } else {
-      type = HierarchyItemType.Product;
+      type = NicheShackHierarchyItemType.Product;
     }
 
 
@@ -453,9 +459,12 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
       name: null,
       type: type,
       showChildren: false,
-      loadingChildren: false,
+      loading: false,
       children: [],
-      parent: this.selectedItem
+      parent: this.selectedItem,
+      childless: false,
+      url: null,
+      childrenUrl: null
     }
 
     children.unshift(newItem);
@@ -618,7 +627,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
     switch (this.selectedItem.type) {
 
       // Cateogry
-      case HierarchyItemType.Category:
+      case NicheShackHierarchyItemType.Category:
         // If we have an Id, get the update url
         if (this.selectedItem.id) {
           apiUrl = 'api/categories/update...';
@@ -631,7 +640,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
 
       // Niche
-      case HierarchyItemType.Niche:
+      case NicheShackHierarchyItemType.Niche:
 
         // If we have an Id, get the update url
         if (this.selectedItem.id) {
@@ -646,7 +655,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
 
       // Product
-      case HierarchyItemType.Product:
+      case NicheShackHierarchyItemType.Product:
         // If we have an Id, get the update url
         if (this.selectedItem.id) {
           apiUrl = 'api/Products/update...';
@@ -673,7 +682,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
           // Set the new name
           element.innerText = this.selectedItem.name = element.innerText;
 
-          if (this.selectedItem.type == HierarchyItemType.Product) {
+          if (this.selectedItem.type == NicheShackHierarchyItemType.Product) {
             if (this.productService.product) {
               this.productService.product.name = this.selectedItem.name;
             }
@@ -694,7 +703,7 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
           // Show the item's properties
           if (showProperties) {
-            if (this.selectedItem.type == HierarchyItemType.Product) {
+            if (this.selectedItem.type == NicheShackHierarchyItemType.Product) {
               if (this.productService.product) {
                 this.productService.product.name = this.selectedItem.name;
               }
@@ -851,20 +860,20 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
 
 
   // -----------------------------( GET TYPE NAME )------------------------------ \\
-  getTypeName(type: HierarchyItemType): string {
+  getTypeName(type: NicheShackHierarchyItemType): string {
     let name: string;
 
     switch (type) {
-      case HierarchyItemType.Category:
+      case NicheShackHierarchyItemType.Category:
         name = 'Category';
         break;
 
-      case HierarchyItemType.Niche:
+      case NicheShackHierarchyItemType.Niche:
         name = 'Niche';
         break;
 
 
-      case HierarchyItemType.Product:
+      case NicheShackHierarchyItemType.Product:
         name = 'Product';
         break;
     }
