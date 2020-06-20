@@ -4,10 +4,11 @@
         <!-- Media -->
         <ng-container *ngIf="productService.product.media.length > 0">
             <!-- Thumbnails -->
-            <div *ngIf="productService.product.media.length > 1" class="media">
-                <div *ngFor="let media of productService.product.media" class="thumbnail"
+            <div *ngIf="productService.product.media.length > 1" class="media" [scrollTop]="this.productService.scrollTop">
+                <div *ngFor="let media of productService.product.media; let thumbnailIndex = index" class="thumbnail"
                     [ngStyle]="{ 'background-image': 'url(images/' + media.image.url + ')'}"
-                    (click)="productService.setCurrentSelectedMedia(media)">
+                    [ngClass]="{'selected-thumbnail': this.productService.currentSelectedMediaIndex == thumbnailIndex}"
+                    (click)="onThumbnailClick(media, thumbnailIndex)">
                     <i *ngIf="media.type == mediaType.Video" class="far fa-play-circle"></i>
                 </div>
             </div>
@@ -88,7 +89,7 @@
 
                         <div *ngIf="content.priceIndices[i]" class="content-item">
                             <div class="img-container">
-                                <img *ngIf="content.icon" [src]="'images/' + content.icon">
+                                <img *ngIf="content.icon" [src]="'images/' + content.icon.url">
                             </div>
 
                             <div class="content-title">

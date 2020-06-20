@@ -31,6 +31,7 @@
                 font-size: 40px;
                 color: white;
                 cursor: pointer;
+                
             
                 &:not(:last-child) {
                     margin-bottom: 14px;
@@ -40,6 +41,11 @@
                 i {
                     -webkit-text-stroke: 1px #808080;
                 }
+            }
+
+            .selected-thumbnail {
+                outline: 5px solid $selected-border-color;
+                outline-offset: -5px;
             }
         }
 

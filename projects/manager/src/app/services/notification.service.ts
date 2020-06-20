@@ -315,7 +315,12 @@ export class NotificationService {
         {
           id: '0006C245A7',
           title: 'Cooking Tips',
-          icon: 'video.png',
+          icon: {
+            title: 'Video',
+            url: 'video.png',
+            load: null,
+            save: null
+          },
           priceIndices: [
             true,
             false,
@@ -326,7 +331,12 @@ export class NotificationService {
         {
           id: '0004B385G7',
           title: 'Audio Cooking methods',
-          icon: 'audio.png',
+          icon: {
+            title: 'Audio',
+            url: 'audio.png',
+            load: null,
+            save: null
+          },
           priceIndices: [
             false,
             true,
@@ -337,7 +347,12 @@ export class NotificationService {
         {
           id: '0008R755Y2',
           title: 'Recipes',
-          icon: 'pdf.png',
+          icon: {
+            title: 'PDF',
+            url: 'pdf.png',
+            load: null,
+            save: null
+          },
           priceIndices: [
             true,
             true,
@@ -433,7 +448,12 @@ export class NotificationService {
         {
           id: '0006C245A7',
           title: 'Cooking Tips',
-          icon: 'video.png',
+          icon: {
+            title: 'Video',
+            url: 'video.png',
+            load: null,
+            save: null
+          },
           priceIndices: [
             true,
             false,
@@ -444,7 +464,12 @@ export class NotificationService {
         {
           id: '0004B385G7',
           title: 'Audio Cooking methods',
-          icon: 'audio.png',
+          icon: {
+            title: 'Audio',
+            url: 'audio.png',
+            load: null,
+            save: null
+          },
           priceIndices: [
             false,
             true,
@@ -455,7 +480,12 @@ export class NotificationService {
         {
           id: '0008R755Y2',
           title: 'Recipes',
-          icon: 'pdf.png',
+          icon: {
+            title: 'PDF',
+            url: 'pdf.png',
+            load: null,
+            save: null
+          },
           priceIndices: [
             true,
             true,
@@ -551,7 +581,12 @@ export class NotificationService {
         {
           id: '0006C245A7',
           title: 'Cooking Tips',
-          icon: 'video.png',
+          icon: {
+            title: 'Video',
+            url: 'video.png',
+            load: null,
+            save: null
+          },
           priceIndices: [
             true,
             false,
@@ -562,7 +597,12 @@ export class NotificationService {
         {
           id: '0004B385G7',
           title: 'Audio Cooking methods',
-          icon: 'audio.png',
+          icon: {
+            title: 'Audio',
+            url: 'audio.png',
+            load: null,
+            save: null
+          },
           priceIndices: [
             false,
             true,
@@ -573,7 +613,12 @@ export class NotificationService {
         {
           id: '0008R755Y2',
           title: 'Recipes',
-          icon: 'pdf.png',
+          icon: {
+            title: 'PDF',
+            url: 'pdf.png',
+            load: null,
+            save: null
+          },
           priceIndices: [
             true,
             true,

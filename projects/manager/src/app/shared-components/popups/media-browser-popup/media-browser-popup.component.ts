@@ -3,24 +3,36 @@ import { PopupComponent } from '../popup/popup.component';
 import { MediaItem } from '../../../classes/media-item';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { MediaType } from '../../../classes/media';
+import { MediaType, Media } from '../../../classes/media';
 import { MediaItemListComponent } from '../../item-lists/media-item-list/media-item-list.component';
 import { Image } from '../../../classes/image';
-import { asLiteral } from '@angular/compiler/src/render3/view/util';
+import { DropdownComponent } from '../../elements/dropdowns/dropdown/dropdown.component';
+import { PopupService } from '../../../services/popup.service';
+import { CoverService } from '../../../services/cover.service';
+import { MenuService } from '../../../services/menu.service';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'media-browser-popup',
   templateUrl: './media-browser-popup.component.html',
-  styleUrls: ['./media-browser-popup.component.scss', '../popup/popup.component.scss']
+  styleUrls: ['../popup/popup.component.scss', './media-browser-popup.component.scss']
 })
 export class MediaBrowserPopupComponent extends PopupComponent implements OnInit {
+
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, private productService: ProductService) {
+    super(popupService, cover, menuService);
+   }
+
+
+
+  public image: Image;
+  public media: Media;
   public noMedia: boolean;
   public mediaType = MediaType;
   public addingMediaInProgress: boolean;
   public movingMediaInProgress: boolean;
   public loadingMediaInProgress: boolean;
   public indexOfSelectedMediaList: number;
-  public image: Image;
   public mediaLists: MediaItem[][] = [[], [], [], [], [], [], []];
   public menuOptions = [
     { add: 'Add Image', edit: 'Edit Image', delete: 'Delete Image', deletes: 'Delete Images' },
@@ -31,6 +43,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     { add: 'Add Icon', edit: 'Edit Icon', delete: 'Delete Icon', deletes: 'Delete Icons' },
     { add: 'Add Video', edit: 'Edit Video', delete: 'Delete Video', deletes: 'Delete Videos' },
   ];
+  @ViewChild('dropdown', { static: false }) dropdown: DropdownComponent;
   @ViewChild('mediaItemList', { static: false }) mediaItemList: MediaItemListComponent;
 
 
@@ -43,7 +56,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
-    this.displayMedia(MediaType.Image);
+    this.displayMedia(this.popupService.mediaType);
   }
 
 
@@ -127,7 +140,17 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
   onMediaSelect(mediaItem: MediaItem) {
-    this.image.url = mediaItem.image.url;
+
+    if(mediaItem.type == MediaType.Video || mediaItem.type == MediaType.ProductImage) {
+      this.media.url = mediaItem.videoUrl;
+      this.media.type = mediaItem.type;
+      this.media.image.url = mediaItem.image.url;
+      this.media.image.title = mediaItem.image.title;
+      this.productService.setCurrentSelectedMedia(this.media);
+    }else {
+      this.image.url = mediaItem.image.url;
+      this.image.title = mediaItem.image.title;
+    }
   }
 
 
@@ -200,12 +223,12 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
     if (this.indexOfSelectedMediaList == MediaType.Video) {
-      let image1: MediaItem = new MediaItem('oiweoiuwer', 'thumbnail1.png', MediaType.Video); image1.name = image1.image.title = 'Video 1';
-      let image2: MediaItem = new MediaItem('qweuywesdo', 'thumbnail2.png', MediaType.Video); image2.name = image2.image.title = 'Video 2';
-      let image3: MediaItem = new MediaItem('potyuoptuw', 'thumbnail3.png', MediaType.Video); image3.name = image3.image.title = 'Video 3';
-      let image4: MediaItem = new MediaItem('potyuoptuw', 'thumbnail4.png', MediaType.Video); image4.name = image4.image.title = 'Video 4';
-      let image5: MediaItem = new MediaItem('potyuoptuw', 'thumbnail5.png', MediaType.Video); image5.name = image5.image.title = 'Video 5';
-      let image6: MediaItem = new MediaItem('potyuoptuw', 'thumbnail6.png', MediaType.Video); image6.name = image6.image.title = 'Video 6';
+      let image1: MediaItem = new MediaItem('oiweoiuwer', 'thumbnail1.png', MediaType.Video); image1.name = image1.image.title = 'Video 1'; image1.videoUrl = '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff';
+      let image2: MediaItem = new MediaItem('qweuywesdo', 'thumbnail2.png', MediaType.Video); image2.name = image2.image.title = 'Video 2'; image2.videoUrl = 'https://www.youtube.com/embed/1AI6RS1st2E';
+      let image3: MediaItem = new MediaItem('potyuoptuw', 'thumbnail3.png', MediaType.Video); image3.name = image3.image.title = 'Video 3'; image3.videoUrl = '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff';
+      let image4: MediaItem = new MediaItem('potyuoptuw', 'thumbnail4.png', MediaType.Video); image4.name = image4.image.title = 'Video 4'; image4.videoUrl = 'https://www.youtube.com/embed/3ZEu6ZOMhlw';
+      let image5: MediaItem = new MediaItem('potyuoptuw', 'thumbnail5.png', MediaType.Video); image5.name = image5.image.title = 'Video 5'; image5.videoUrl = 'https://player.vimeo.com/video/218732620';
+      let image6: MediaItem = new MediaItem('potyuoptuw', 'thumbnail6.png', MediaType.Video); image6.name = image6.image.title = 'Video 6'; image6.videoUrl = 'https://player.vimeo.com/video/264188894';
       return of([image1, image2, image3, image4, image5, image6]).pipe(delay(1000));
     }
   }

@@ -15,7 +15,7 @@
 
         <!-- Dropdown -->
         <div class="dropdown">
-            <dropdown [height]="20" [title]="''" [selectedIndex]="0" (onChange)="onDropdownChange($event)" [keyValue]="[
+            <dropdown [height]="20" [title]="''" [selectedIndex]="popupService.mediaType" (onChange)="onDropdownChange($event)" [keyValue]="[
                                   {key: 'Images', value: 0},
                                   {key: 'Background Images', value: 1}, 
                                   {key: 'Banner Images', value: 2}, 

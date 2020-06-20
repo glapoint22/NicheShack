@@ -10,8 +10,9 @@ import { ProductPricePoint } from '../classes/product-price-point';
 export class ProductService {
   public product: Product;
   public currentSelectedMedia: Media;
-
+  public currentSelectedMediaIndex: number = 0;
   constructor(private sanitizer: DomSanitizer) { }
+  public scrollTop: number = 0;
 
   setCurrentSelectedMedia(media: Media) {
     if (media.type == MediaType.Video) {
