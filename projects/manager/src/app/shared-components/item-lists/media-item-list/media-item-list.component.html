@@ -1,4 +1,7 @@
-<div class="overflow-container" (contextmenu)="$event.preventDefault()" 
+<div #overflowContainer class="overflow-container" (contextmenu)="$event.preventDefault()" 
+
+
+
 (mouseup)="setContextMenu($event)" >
         
 
@@ -20,14 +23,23 @@
 
 
 
-            <td tabindex="-1">
-                 <div class="img"
+            <td tabindex="-1"
+                (focus)="rowItem.focus()">
+
+                 <div *ngIf="listItemIndex != 0 || (listItemIndex == 0 && !addingMediaInProgress)" class="img"
                       [ngStyle]="{ 'background-image': 'url(images/' + listItem.image.url + ')'}"
                       [ngClass]="{'highlight-image': selectedListItemIndex == listItemIndex,
                                   'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
-                </div>   
+                </div> 
+                <div *ngIf="listItemIndex == 0 && addingMediaInProgress" style="width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;">
+                    <i  class="fas fa-spinner fa-pulse font-size-3"></i>
+                </div>  
+                
+                
+
             </td>
 
+            
 
             <td #rowItem
                 tabindex="-1"
@@ -36,6 +48,16 @@
                 [contentEditable]="indexOfEditedListItem == listItemIndex"
                 [ngClass]="{'edited-listItem': indexOfEditedListItem == listItemIndex}">
             </td>
+
+            
+
         </tr>
     </table>
 </div>
+
+<div *ngIf="movingMediaInProgress" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 42px; height: 42px; right: 12px;" [style.top.px]="(selectedListItemIndex * 42) - overflowContainer.scrollTop">
+
+    <i  class="fas fa-spinner fa-pulse font-size-3"></i>
+
+</div>
+

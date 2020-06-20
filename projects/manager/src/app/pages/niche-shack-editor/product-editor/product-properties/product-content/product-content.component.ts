@@ -11,6 +11,7 @@ import { CheckboxItemListComponent } from 'projects/manager/src/app/shared-compo
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
+import { MediaType } from 'projects/manager/src/app/classes/media';
 
 @Component({
   selector: 'product-content',
@@ -23,8 +24,6 @@ export class ProductContentComponent implements OnChanges {
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
   @ViewChild('panel', { static: false }) panel: PanelComponent;
-
-
   constructor(public popupService: PopupService, private loadingService: LoadingService, private promptService: PromptService, private productService: ProductService) { }
 
 
@@ -54,6 +53,48 @@ export class ProductContentComponent implements OnChanges {
           (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()
       }));
     }
+  }
+
+
+  // -----------------------------( ADD CONTENT )------------------------------ \\
+  addContent(paginator: PaginatorComponent) {
+    this.loadingService.loading = true;
+    this.addTemp().subscribe((id: string) => {
+      this.loadingService.loading = false;
+
+      this.productService.product.content.push({
+        id: id,
+        icon: null,
+        title: null,
+        priceIndices: []
+      });
+
+      paginator.currentIndex = this.contentIndex = this.productService.product.content.length - 1;
+    });
+  }
+
+
+  // -----------------------------( ON DELETE CONTENT )------------------------------ \\
+  onDeleteContent(paginator: PaginatorComponent) {
+    this.promptService.showPrompt('Delete Content', 'Are you sure you want to delete this content?', this.deleteContent, this, [paginator]);
+  }
+
+
+  // -----------------------------( DELETE CONTENT )------------------------------ \\
+  deleteContent(paginator: PaginatorComponent) {
+    this.productService.product.content.splice(this.contentIndex, 1);
+
+    // Set the index of the previous content
+    paginator.currentIndex = Math.max(0, this.contentIndex = Math.min(this.productService.product.content.length - 1, this.contentIndex));
+  }
+
+
+  // -----------------------------( ON IMAGE ICON CLICK )------------------------------ \\
+  onImageIconClick(sourceElement: HTMLElement) {
+    this.popupService.mediaType = MediaType.Icon;
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
+    this.popupService.mediaBrowserPopup.image = this.content[this.contentIndex].icon;
   }
 
 
@@ -120,48 +161,7 @@ export class ProductContentComponent implements OnChanges {
   // -----------------------------( DELETE PRICE POINT )------------------------------ \\
   deletePricePoint(itemList: CheckboxItemListComponent) {
     this.pricePoints.splice(itemList.selectedListItemIndex, 1);
-    itemList.removeListItem();
+    // itemList.removeListItem();????????????????????????????????????????????????????????????????????????????????????????
     this.productService.setPrice();
-  }
-
-
-
-
-
-  // -----------------------------( ADD CONTENT )------------------------------ \\
-  addContent(paginator: PaginatorComponent) {
-    this.loadingService.loading = true;
-    this.addTemp().subscribe((id: string) => {
-      this.loadingService.loading = false;
-
-      this.productService.product.content.push({
-        id: id,
-        icon: null,
-        title: null,
-        priceIndices: []
-      });
-
-      paginator.currentIndex = this.contentIndex = this.productService.product.content.length - 1;
-    });
-
-  }
-
-
-
-  // -----------------------------( ON DELETE CONTENT )------------------------------ \\
-  onDeleteContent(paginator: PaginatorComponent) {
-    this.promptService.showPrompt('Delete Content', 'Are you sure you want to delete this content?', this.deleteContent, this, [paginator]);
-  }
-
-
-
-
-
-  // -----------------------------( DELETE CONTENT )------------------------------ \\
-  deleteContent(paginator: PaginatorComponent) {
-    this.productService.product.content.splice(this.contentIndex, 1);
-
-    // Set the index of the previous content
-    paginator.currentIndex = Math.max(0, this.contentIndex = Math.min(this.productService.product.content.length - 1, this.contentIndex));
   }
 }

@@ -78,8 +78,8 @@
         <div class="property-box-label">Product Media:</div>
         <div class="property-box-dark">
             <div class="container">
-                <paginator [itemCount]="notificationService.productMediaNotification.media ? notificationService.productMediaNotification.media.length: 0" 
-                           (onItemChange)="currentIndex = $event">
+                <paginator [itemCount]="notificationService.productMediaNotification.media ? notificationService.productMediaNotification.media.length: 0"
+                        (onItemChange)="currentIndex = $event">
                 </paginator>
 
                 <!-- Icons -->
@@ -91,12 +91,12 @@
                     </div>
 
                     <!-- Add Image Icon -->
-                    <div class="icon-container" showPopup [popup]="'showMediaBrowserPopup'">
+                    <div class="icon-container" (click)="onImageIconClick($event.target)">
                         <i class="fas fa-image"></i>
                     </div>
 
                     <!-- Add Video Icon -->
-                    <div class="icon-container" showPopup [popup]="'showMediaBrowserPopup'">
+                    <div class="icon-container" (click)="onVideoIconClick($event.target)">
                         <i class="fas fa-film"></i>
                     </div>
                 </div>
@@ -104,18 +104,24 @@
 
 
             <!-- Media -->
-            <div class="media-container">
-                <div *ngIf="notificationService.productMediaNotification.media.length > 0"
-                     class="media-content" 
-                     [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productMediaNotification.media[currentIndex].image.url + ')'}">
+            <div *ngIf="notificationService.productMediaNotification.media.length > 0; else placeholder"
+                class="media-container">
+                <div class="media-content"
+
+                    [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productMediaNotification.media[currentIndex].image.url + ')'}">
                     <!-- Display a play icon if media type is video -->
-                    <i *ngIf="notificationService.productMediaNotification.media[currentIndex].type == 0"
-                       class="far fa-play-circle">
+                    <i *ngIf="notificationService.productMediaNotification.media[currentIndex].type == mediaType.Video"
+                    class="far fa-play-circle">
                     </i>
                 </div>
             </div>
-        </div>
 
+
+            <!-- Placeholder -->
+            <ng-template #placeholder>
+                <div class="no-property">No media available</div>
+            </ng-template>
+        </div>
 
         <!-- Employee Property Box -->
         <div class="property-box-label">Notes:</div>

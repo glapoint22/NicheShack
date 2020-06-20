@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Background } from '../../../classes/background';
 import { KeyValue } from '@angular/common';
+import { MediaType } from '../../../classes/media';
 
 @Component({
   selector: 'background',
@@ -15,6 +16,7 @@ export class BackgroundComponent implements OnChanges {
   public selectedPositionIndex: number;
   public selectedRepeatIndex: number;
   public selectedAttachmentIndex: number;
+  public mediaType = MediaType;
 
   ngOnChanges() {
     if(!this.background.image) return;

@@ -6,7 +6,7 @@
         <!-- Container for paginator & icons -->
         <div class="container">
 
-            <paginator [itemCount]="media ? media.length: 0" (onItemChange)="currentIndex = $event"></paginator>
+            <paginator [itemCount]="media ? media.length: 0" (onItemChange)="onPaginatorClick($event)"></paginator>
 
             <!-- Icons -->
             <div class="icons">
@@ -17,12 +17,12 @@
                 </div>
 
                 <!-- Add Image Icon -->
-                <div class="icon-container" showPopup [popup]="'showMediaBrowserPopup'">
+                <div class="icon-container" (click)="onImageIconClick($event.target)">
                     <i class="fas fa-image"></i>
                 </div>
 
                 <!-- Add Video Icon -->
-                <div class="icon-container" showPopup [popup]="'showMediaBrowserPopup'">
+                <div class="icon-container" (click)="onVideoIconClick($event.target)">
                     <i class="fas fa-film"></i>
                 </div>
             </div>
@@ -32,9 +32,9 @@
         <!-- Media -->
         <div *ngIf="media.length > 0; else placeholder" class="media-container">
             <div class="thumbnail"
-                [ngStyle]="{ 'background-image': 'url(images/' + media[currentIndex].image.url + ')'}">
+                [ngStyle]="{ 'background-image': 'url(images/' + media[productService.currentSelectedMediaIndex].image.url + ')'}">
                 <!-- Display a play icon if media type is video -->
-                <i *ngIf="media[currentIndex].type == mediaType.Video" class="far fa-play-circle"></i>
+                <i *ngIf="media[productService.currentSelectedMediaIndex].type == mediaType.Video" class="far fa-play-circle"></i>
             </div>
         </div>
 
@@ -43,5 +43,12 @@
         <ng-template #placeholder>
             <div class="no-property">No media available</div>
         </ng-template>
+
+
+
+
+
+
+        
     </div>
 </panel>

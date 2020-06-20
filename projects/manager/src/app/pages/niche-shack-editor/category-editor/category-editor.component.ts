@@ -4,6 +4,7 @@ import { Category } from '../../../classes/category';
 import { delay } from 'rxjs/operators';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
 import { LoadingService } from '../../../services/loading.service';
+import { MediaType } from '../../../classes/media';
 
 @Component({
   selector: 'category-editor',
@@ -13,6 +14,7 @@ import { LoadingService } from '../../../services/loading.service';
 export class CategoryEditorComponent implements OnChanges {
   @Input() hierarchyItem: HierarchyItem;
   public category: Category;
+  public mediaType = MediaType;
 
   constructor(public loadingService: LoadingService) { }
 
@@ -26,7 +28,7 @@ export class CategoryEditorComponent implements OnChanges {
 
   ngOnChanges() {
     this.loadingService.loading = true;
-
+    
     // Get the category icon based on the category Id
     this.getTempCategoryIcon(this.hierarchyItem.id).subscribe((icon: string) => {
       this.category = new Category();

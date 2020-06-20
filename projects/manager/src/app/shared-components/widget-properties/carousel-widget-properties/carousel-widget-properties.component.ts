@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CarouselWidgetComponent } from '../../designer/widgets/carousel-widget/carousel-widget.component';
+import { MediaType } from '../../../classes/media';
 
 @Component({
   selector: 'carousel-widget-properties',
@@ -9,4 +10,5 @@ import { CarouselWidgetComponent } from '../../designer/widgets/carousel-widget/
 export class CarouselWidgetPropertiesComponent {
   @Input() carouselWidget: CarouselWidgetComponent;
   public currentIndex: number = 0;
+  public mediaType = MediaType;
 }

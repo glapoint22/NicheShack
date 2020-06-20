@@ -53,14 +53,20 @@ export class PopupComponent {
               // Or the mouse is below the bottom of the source element
               (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + 20))))) {
 
-        // As long as a menu is NOT open
-        if (!this.menuService.showMenu && !this.preventNoShow) {
-          // Close this popup
-          this.show = false;
-          this.onPopupClose.next();
-          window.removeEventListener('mousemove', this.onMouseMove);
-        }
+        this.onPopupOut();
       }
+    }
+  }
+
+
+  // --------------------------------( ON POPUP OUT )-------------------------------- \\
+  onPopupOut() {
+    // As long as a menu is NOT open
+    if (!this.menuService.showMenu && !this.preventNoShow) {
+      // Close this popup
+      this.show = false;
+      this.onPopupClose.next();
+      window.removeEventListener('mousemove', this.onMouseMove);
     }
   }
 
@@ -74,7 +80,30 @@ export class PopupComponent {
       this.arrowOnTop = false;
       this.popupTop = this.popupService.sourceElement.getBoundingClientRect().top - this.popup.getBoundingClientRect().height - (this.arrow.getBoundingClientRect().height - 5);
     }
-    this.popup.style.top = this.popupTop + "px";
+
+
+
+      let popupTop = this.popupTop;
+      let popupBottom = popupTop + this.popup.getBoundingClientRect().height;
+      let popupOffset = popupBottom - window.innerHeight;
+
+
+      // If the menu extends beyond the bottom of the screen
+      if (popupBottom > window.innerHeight) {
+        // Re-adjust the position of the menu so that the bottom of the menu is placed at the bottom of the screen
+        this.popup.style.top = (popupTop - popupOffset) + "px";
+
+
+        // If the menu does NOT extend beyond the bottom of the screen
+      } else {
+        // Place the menu as intended
+        this.popup.style.top = popupTop + "px";
+      }
+
+
+
+
+    // this.popup.style.top = this.popupTop + "px";
   }
 
 

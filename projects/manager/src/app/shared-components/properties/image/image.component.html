@@ -3,7 +3,7 @@
     <!-- Icons -->
     <div class="icons">
         <!-- Media browser icon -->
-        <div class="icon-container" showPopup [popup]="'mediaBrowserPopup'">
+        <div class="icon-container" (click)="onClick($event.target)">
             <i class="fas fa-image"></i>
         </div>
     </div>
