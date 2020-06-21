@@ -5,6 +5,7 @@ import { CoverService } from 'projects/manager/src/app/services/cover.service';
 import { MenuService } from 'projects/manager/src/app/services/menu.service';
 import { NotificationService } from 'projects/manager/src/app/services/notification.service';
 import { NotificationTab } from 'projects/manager/src/app/classes/notification';
+import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
 
 @Component({
   selector: 'notification-list-popup',
@@ -12,7 +13,7 @@ import { NotificationTab } from 'projects/manager/src/app/classes/notification';
   styleUrls: ['./notification-list-popup.component.scss', '../../popup/popup.component.scss']
 })
 export class NotificationListPopupComponent extends PopupComponent implements OnInit {
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, public notificationService: NotificationService) { super(popupService, cover, menuService) }
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, public notificationService: NotificationService) { super(popupService, cover, menuService, dropdownMenuService) }
   public notificationTab = NotificationTab;
 
   // --------------------------------( NG ON INIT )-------------------------------- \\

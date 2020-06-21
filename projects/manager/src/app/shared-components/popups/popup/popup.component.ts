@@ -3,6 +3,7 @@ import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
 import { Subject } from 'rxjs';
 import { MenuService } from '../../../services/menu.service';
+import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 
 @Component({
   selector: 'popup',
@@ -17,7 +18,7 @@ export class PopupComponent {
   private arrow;
   private popupTop: number;
   private arrowOnTop: boolean = false;
-  constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService) { }
+  constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService, public dropdownMenuService: DropdownMenuService) { }
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
@@ -66,6 +67,7 @@ export class PopupComponent {
       // Close this popup
       this.show = false;
       this.onPopupClose.next();
+      
       window.removeEventListener('mousemove', this.onMouseMove);
     }
   }

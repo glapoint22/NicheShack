@@ -15,7 +15,11 @@
 
         <!-- Dropdown -->
         <div class="dropdown">
-            <dropdown [height]="20" [title]="''" [selectedIndex]="popupService.mediaType" (onChange)="onDropdownChange($event)" [keyValue]="[
+            <dropdown [height]="20"
+                      [title]="''"
+                      [selectedIndex]="popupService.mediaType"
+                      (onChange)="onDropdownChange($event)"
+                      [keyValue]="[
                                   {key: 'Images', value: 0},
                                   {key: 'Background Images', value: 1}, 
                                   {key: 'Banner Images', value: 2}, 
@@ -25,42 +29,42 @@
                                   {key: 'Videos', value: 6}
                                   ]">
             </dropdown>
+
+            <!-- Dropdown Cover -->
             <div *ngIf="loadingMediaInProgress || addingMediaInProgress || movingMediaInProgress"
-                style="position: relative; top: -20px; background: rgba(25, 25, 25, 0.6); width: 100%; height: 20px;">
+                 class="dropdown-cover">
             </div>
         </div>
     </div>
 
     
-
-
     <!-- Search -->
     <div class="search-container">
+        <!-- Icon -->
         <div class="search-icon-container">
-
-
-            <input style="width: 0; height: 0;" #mediaSelectInput type="file" (change)="onGetNewMedia($event)">
-            <i style="position: relative; left: -5px;" class="fas fa-search"></i>
-
+            <input class="media-select-input" #mediaSelectInput type="file" (change)="onGetNewMedia($event)">
+            <i class="fas fa-search search-icon"></i>
         </div>
 
+        <!-- Input -->
         <div class="input-container">
             <input>
         </div>
     </div>
 
-    <div style="width: 100%; height: 423px; border: 1px solid #373737; position: relative;">
+    
+    <!-- Media Container -->
+    <div class="media-container">
 
-
-        <!--   -->
-        <div *show="loadingMediaInProgress" class="fade-start" transitionClass="fade-end"
-            style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: absolute; top: 0px;">
+        <!-- Spinner -->
+        <div *show="loadingMediaInProgress"
+             class="fade-start spinner"
+             transitionClass="fade-end">
             <i  class="fas fa-spinner fa-pulse font-size-5"></i>
         </div>
 
-
-        <div *ngIf="noMedia"
-            style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; color: #888888; font-size: 13px; position: absolute; top: 0px;">
+        <!-- No Media -->
+        <div *ngIf="noMedia" class="no-media">
             <div *ngIf="indexOfSelectedMediaList == mediaType.Image">No images available</div>
             <div *ngIf="indexOfSelectedMediaList == mediaType.BackgroundImage">No background images available</div>
             <div *ngIf="indexOfSelectedMediaList == mediaType.BannerImage">No banner images available</div>
@@ -70,9 +74,8 @@
             <div *ngIf="indexOfSelectedMediaList == mediaType.Video">No videos available</div>
         </div>
 
-        <div style="width: 100%; height: 100%; position: absolute; top: 0px;">
-
-            <!-- Images -->
+        <!-- Media List -->
+        <div class="media-list">
             <media-item-list 
                 #mediaItemList
                 *ngIf="!loadingMediaInProgress"
@@ -85,13 +88,6 @@
                 [movingMediaInProgress]="movingMediaInProgress"
                 [menuOptions]="[menuOptions[indexOfSelectedMediaList].add, menuOptions[indexOfSelectedMediaList].edit, menuOptions[indexOfSelectedMediaList].delete, menuOptions[indexOfSelectedMediaList].deletes]">
             </media-item-list>
-
         </div>
-
-
-
-
-
-
     </div>
 </div>

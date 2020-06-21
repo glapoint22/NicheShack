@@ -11,6 +11,7 @@ import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
 import { MenuService } from '../../../services/menu.service';
 import { ProductService } from '../../../services/product.service';
+import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 
 @Component({
   selector: 'media-browser-popup',
@@ -19,9 +20,9 @@ import { ProductService } from '../../../services/product.service';
 })
 export class MediaBrowserPopupComponent extends PopupComponent implements OnInit {
 
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, private productService: ProductService) {
-    super(popupService, cover, menuService);
-   }
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, private productService: ProductService) {
+    super(popupService, cover, menuService, dropdownMenuService);
+  }
 
 
 
@@ -139,15 +140,20 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   }
 
 
+  // --------------------------------( ON MEDIA SELECT )-------------------------------- \\
   onMediaSelect(mediaItem: MediaItem) {
-
-    if(mediaItem.type == MediaType.Video || mediaItem.type == MediaType.ProductImage) {
+    // If the media item that is selected is either a video or a product image
+    if (mediaItem.type == MediaType.Video || mediaItem.type == MediaType.ProductImage) {
+      // Update the media property with the properties of the selected media item
       this.media.url = mediaItem.videoUrl;
       this.media.type = mediaItem.type;
       this.media.image.url = mediaItem.image.url;
       this.media.image.title = mediaItem.image.title;
       this.productService.setCurrentSelectedMedia(this.media);
-    }else {
+
+      // If the media item that is selected is anything other than a video or a product image
+    } else {
+      // Update the image property with the properties of the selected media item
       this.image.url = mediaItem.image.url;
       this.image.title = mediaItem.image.title;
     }
@@ -174,17 +180,17 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   // --------------------------------( LOAD MEDIA )-------------------------------- \\
   loadMedia(): Observable<MediaItem[]> {
     if (this.indexOfSelectedMediaList == MediaType.Image) {
-      let image1: MediaItem = new MediaItem('oiweoiuwer', '2f119b657c194b32a88b0f0051d525be.png', MediaType.Image); image1.name = image1.image.title = 'Image 1'; 
-      let image2: MediaItem = new MediaItem('qweuywesdo', '6c048ea442b646b59970f907a4d3ce61.jpg', MediaType.Image); image2.name = image2.image.title = 'Image 2'; 
-      let image3: MediaItem = new MediaItem('potyuoptuw', '6e1659b63e5643e0a9039064b4a52e12.png', MediaType.Image); image3.name = image3.image.title = 'Image 3'; 
+      let image1: MediaItem = new MediaItem('oiweoiuwer', '2f119b657c194b32a88b0f0051d525be.png', MediaType.Image); image1.name = image1.image.title = 'Image 1';
+      let image2: MediaItem = new MediaItem('qweuywesdo', '6c048ea442b646b59970f907a4d3ce61.jpg', MediaType.Image); image2.name = image2.image.title = 'Image 2';
+      let image3: MediaItem = new MediaItem('potyuoptuw', '6e1659b63e5643e0a9039064b4a52e12.png', MediaType.Image); image3.name = image3.image.title = 'Image 3';
       return of([image1, image2, image3]).pipe(delay(1000));
     }
 
 
     if (this.indexOfSelectedMediaList == MediaType.BackgroundImage) {
-      let image1: MediaItem = new MediaItem('oiweoiuwer', 'campland-background.jpg', MediaType.BackgroundImage); image1.name = image1.image.title = 'Campland'; 
-      let image2: MediaItem = new MediaItem('qweuywesdo', 'a29f28773e154adaab48a6355f2f4e5d.png', MediaType.BackgroundImage); image2.name = image2.image.title = 'Background Image 2'; 
-      let image3: MediaItem = new MediaItem('potyuoptuw', 'cfb7358d797d484eab24bd2a57d2b850.png', MediaType.BackgroundImage); image3.name = image3.image.title = 'Background Image 3'; 
+      let image1: MediaItem = new MediaItem('oiweoiuwer', 'campland-background.jpg', MediaType.BackgroundImage); image1.name = image1.image.title = 'Campland';
+      let image2: MediaItem = new MediaItem('qweuywesdo', 'a29f28773e154adaab48a6355f2f4e5d.png', MediaType.BackgroundImage); image2.name = image2.image.title = 'Background Image 2';
+      let image3: MediaItem = new MediaItem('potyuoptuw', 'cfb7358d797d484eab24bd2a57d2b850.png', MediaType.BackgroundImage); image3.name = image3.image.title = 'Background Image 3';
       return of([image1, image2, image3]).pipe(delay(1000));
     }
 
