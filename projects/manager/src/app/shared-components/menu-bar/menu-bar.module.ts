@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { ShackIconComponent } from '../shack-icon/shack-icon.component';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 import { NicheShackHierarchyPopupComponent } from '../popups/niche-shack-hierarchy-popup/niche-shack-hierarchy-popup.component';
-import { HierarchyModule } from '../hierarchy/hierarchy.module';
+import { HierarchyPopupModule } from '../popups/hierarchy-popup/hierarchy-popup.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { HierarchyModule } from '../hierarchy/hierarchy.module';
     ShowHideModule,
     RouterModule,
     CustomInputModule,
-    HierarchyModule
+    HierarchyPopupModule
   ],
   exports: [
     MenuBarComponent,

@@ -117,3 +117,17 @@
         }
     }
 }
+
+.loading-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-items {
+    font-size: 11px;
+    text-align: center;
+    padding: 10px;
+    color: #888888;
+}
