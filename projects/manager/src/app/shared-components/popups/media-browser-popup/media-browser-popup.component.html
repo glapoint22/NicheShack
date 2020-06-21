@@ -15,19 +15,11 @@
 
         <!-- Dropdown -->
         <div class="dropdown">
-            <dropdown [height]="20"
-                      [title]="''"
-                      [selectedIndex]="popupService.mediaType"
+            <dropdown [title]="''"
+                      [height]="20"
+                      [keyValue]="dropdownOptions"
                       (onChange)="onDropdownChange($event)"
-                      [keyValue]="[
-                                  {key: 'Images', value: 0},
-                                  {key: 'Background Images', value: 1}, 
-                                  {key: 'Banner Images', value: 2}, 
-                                  {key: 'Category Images', value: 3},
-                                  {key: 'Product Images', value: 4},
-                                  {key: 'Icons', value: 5},
-                                  {key: 'Videos', value: 6}
-                                  ]">
+                      [selectedIndex]="popupService.mediaType == mediaType.Video ? 0 : popupService.mediaType">
             </dropdown>
 
             <!-- Dropdown Cover -->
@@ -42,13 +34,16 @@
     <div class="search-container">
         <!-- Icon -->
         <div class="search-icon-container">
-            <input class="media-select-input" #mediaSelectInput type="file" (change)="onGetNewMedia($event)">
+            <input #mediaSelectInput
+                   type="file"
+                   class="media-select-input"
+                   (change)="onGetNewMedia($event)">
             <i class="fas fa-search search-icon"></i>
         </div>
 
         <!-- Input -->
         <div class="input-container">
-            <input>
+            <input type="text" id="search-input" autocomplete="off">
         </div>
     </div>
 

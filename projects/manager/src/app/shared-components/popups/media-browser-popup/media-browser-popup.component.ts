@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PopupComponent } from '../popup/popup.component';
 import { MediaItem } from '../../../classes/media-item';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Observable, of, fromEvent } from 'rxjs';
+import { delay, debounceTime, switchMap, tap } from 'rxjs/operators';
 import { MediaType, Media } from '../../../classes/media';
 import { MediaItemListComponent } from '../../item-lists/media-item-list/media-item-list.component';
 import { Image } from '../../../classes/image';
@@ -12,6 +12,7 @@ import { CoverService } from '../../../services/cover.service';
 import { MenuService } from '../../../services/menu.service';
 import { ProductService } from '../../../services/product.service';
 import { DropdownMenuService } from '../../../services/dropdown-menu.service';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'media-browser-popup',
@@ -19,13 +20,10 @@ import { DropdownMenuService } from '../../../services/dropdown-menu.service';
   styleUrls: ['../popup/popup.component.scss', './media-browser-popup.component.scss']
 })
 export class MediaBrowserPopupComponent extends PopupComponent implements OnInit {
-
   constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, private productService: ProductService) {
     super(popupService, cover, menuService, dropdownMenuService);
   }
-
-
-
+  public searchInput: HTMLInputElement;
   public image: Image;
   public media: Media;
   public noMedia: boolean;
@@ -34,7 +32,16 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   public movingMediaInProgress: boolean;
   public loadingMediaInProgress: boolean;
   public indexOfSelectedMediaList: number;
-  public mediaLists: MediaItem[][] = [[], [], [], [], [], [], []];
+  public dropdownOptions: Array<KeyValue<string, MediaType>>;
+  public mediaLists: MediaItem[][] = [[], [], [], [], [], [], [], []];
+  private dropdownList: Array<KeyValue<string, MediaType>> = [
+    { key: 'Images', value: MediaType.Image },
+    { key: 'Background Images', value: MediaType.BackgroundImage },
+    { key: 'Banner Images', value: MediaType.BannerImage },
+    { key: 'Category Images', value: MediaType.CategoryImage },
+    { key: 'Product Images', value: MediaType.ProductImage },
+    { key: 'Icons', value: MediaType.Icon },
+    { key: 'Videos', value: MediaType.Video }];
   public menuOptions = [
     { add: 'Add Image', edit: 'Edit Image', delete: 'Delete Image', deletes: 'Delete Images' },
     { add: 'Add Background Image', edit: 'Edit Background Image', delete: 'Delete Background Image', deletes: 'Delete Background Images' },
@@ -42,6 +49,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     { add: 'Add Category Image', edit: 'Edit Category Image', delete: 'Delete Category Image', deletes: 'Delete Category Images' },
     { add: 'Add Product Image', edit: 'Edit Product Image', delete: 'Delete Product Image', deletes: 'Delete Product Images' },
     { add: 'Add Icon', edit: 'Edit Icon', delete: 'Delete Icon', deletes: 'Delete Icons' },
+    { add: 'Add Video', edit: 'Edit Video', delete: 'Delete Video', deletes: 'Delete Videos' },
     { add: 'Add Video', edit: 'Edit Video', delete: 'Delete Video', deletes: 'Delete Videos' },
   ];
   @ViewChild('dropdown', { static: false }) dropdown: DropdownComponent;
@@ -58,6 +66,40 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
     this.displayMedia(this.popupService.mediaType);
+    this.dropdownOptions = [];
+
+    if (this.popupService.mediaType == MediaType.Video) {
+      this.dropdownOptions[0] = this.dropdownList[6];
+    } else {
+      for (let i = 0; i < 6; i++) {
+        this.dropdownOptions[i] = this.dropdownList[i];
+      }
+    }
+
+    this.searchInput = document.getElementById('search-input') as HTMLInputElement;
+
+    fromEvent(this.searchInput, 'input')
+      .pipe(
+        debounceTime(250),
+        switchMap(() => {
+          if (this.searchInput.value == '') {
+            this.loadingMediaInProgress = false;
+            this.indexOfSelectedMediaList = 3;
+
+
+            return of();
+          }
+          // Show the loading spinner
+          this.loadingMediaInProgress = true;
+          return this.searchMedia();
+
+        }))
+
+      .subscribe((mediaItems: MediaItem[]) => {
+        this.indexOfSelectedMediaList = 7;
+        this.loadingMediaInProgress = false;
+        this.mediaLists[this.indexOfSelectedMediaList] = mediaItems;
+      });
   }
 
 
@@ -173,10 +215,6 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   // ======================================================================= \ DATA / ====================================================================================== \\
 
 
-
-
-
-
   // --------------------------------( LOAD MEDIA )-------------------------------- \\
   loadMedia(): Observable<MediaItem[]> {
     if (this.indexOfSelectedMediaList == MediaType.Image) {
@@ -237,6 +275,15 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       let image6: MediaItem = new MediaItem('potyuoptuw', 'thumbnail6.png', MediaType.Video); image6.name = image6.image.title = 'Video 6'; image6.videoUrl = 'https://player.vimeo.com/video/264188894';
       return of([image1, image2, image3, image4, image5, image6]).pipe(delay(1000));
     }
+  }
+
+
+  // --------------------------------( SEARCH MEDIA )-------------------------------- \\
+  searchMedia(): Observable<MediaItem[]> {
+    let image1: MediaItem = new MediaItem('oiweoiuwer', '1f3eccf21332491c949c7ac1648945ec.jpg', MediaType.ProductImage); image1.name = image1.image.title = 'Gumpy Ice Cream secrets';
+    let image2: MediaItem = new MediaItem('qweuywesdo', '2c35cff4d5d04327af35e26f9f7ebe79.png', MediaType.ProductImage); image2.name = image2.image.title = 'A Gumpy a day keeps the doctor away';
+    let image3: MediaItem = new MediaItem('potyuoptuw', '9da5043dd53a45efb472269b2d283dac.png', MediaType.ProductImage); image3.name = image3.image.title = 'Gumpy Honey Ice Cream';
+    return of([image1, image2, image3]).pipe(delay(1000));
   }
 
 
