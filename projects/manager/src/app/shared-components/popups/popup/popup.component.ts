@@ -36,6 +36,7 @@ export class PopupComponent {
 
   // --------------------------------( ON MOUSE MOVE )-------------------------------- \\
   onMouseMove = (e: MouseEvent) => {
+    console.log(this.dropdownMenuService);
     if (!this.cover.showCover && this.popup.getBoundingClientRect().left != 0) {
       // If the mouse is to the left of the popup
       if (e.clientX < this.popup.getBoundingClientRect().left - 20 ||
@@ -67,7 +68,7 @@ export class PopupComponent {
       // Close this popup
       this.show = false;
       this.onPopupClose.next();
-      
+      this.dropdownMenuService.showMenu = false;
       window.removeEventListener('mousemove', this.onMouseMove);
     }
   }

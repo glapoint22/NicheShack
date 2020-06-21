@@ -8,6 +8,7 @@ import { CoverService } from '../../../services/cover.service';
 import { MenuService } from '../../../services/menu.service';
 import { TempDataService } from '../../../services/temp-data.service';
 import { PromptService } from '../../../services/prompt.service';
+import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 
 @Component({
   selector: 'niche-shack-hierarchy-popup',
@@ -25,7 +26,8 @@ export class NicheShackHierarchyPopupComponent extends HierarchyComponent implem
   constructor(popupService: PopupService,
     cover: CoverService,
     menuService: MenuService,
-    dataService: TempDataService, private promptService: PromptService) { super(popupService, cover, menuService, dataService) }
+    dropdownMenuService: DropdownMenuService,
+    dataService: TempDataService, private promptService: PromptService) { super(popupService, cover, menuService, dropdownMenuService, dataService,) }
 
   ngOnInit() {
     this.popupService.nicheShackHierarchyPopup = this;

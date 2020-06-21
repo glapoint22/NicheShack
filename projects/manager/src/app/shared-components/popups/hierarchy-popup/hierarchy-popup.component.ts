@@ -10,6 +10,7 @@ import { MenuService } from '../../../services/menu.service';
 import { ProductService } from '../../../services/product.service';
 import { LoadingService } from '../../../services/loading.service';
 import { Item } from '../../../classes/item';
+import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 
 @Component({
   selector: 'hierarchy-popup',
@@ -32,7 +33,8 @@ export class HierarchyPopupComponent extends PopupComponent implements OnInit {
   constructor(popupService: PopupService,
     cover: CoverService,
     menuService: MenuService,
-    private promptService: PromptService, private productService: ProductService, private loadingService: LoadingService) { super(popupService, cover, menuService) }
+    dropdownMenuService: DropdownMenuService,
+    private promptService: PromptService, private productService: ProductService,  private loadingService: LoadingService) { super(popupService, cover, menuService, dropdownMenuService) }
 
 
 

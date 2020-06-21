@@ -8,6 +8,7 @@ import { PopupService } from '../../services/popup.service';
 import { CoverService } from '../../services/cover.service';
 import { MenuService } from '../../services/menu.service';
 import { KeyValue } from '@angular/common';
+import { DropdownMenuService } from '../../services/dropdown-menu.service';
 
 @Component({
   selector: 'hierarchy',
@@ -18,7 +19,7 @@ export class HierarchyComponent extends PopupComponent {
   public items: Array<HierarchyItem> = [];
   public selectedItem: HierarchyItem;
 
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, public dataService: TempDataService) { super(popupService, cover, menuService) }
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, public dataService: TempDataService) { super(popupService, cover, menuService, dropdownMenuService) }
 
 
   // -----------------------------( LOAD )------------------------------ \\
