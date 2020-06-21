@@ -17,3 +17,8 @@ export enum NicheShackHierarchyItemType {
     Niche,
     Product
 }
+
+export enum FilterHierarchyItemType {
+    Filter,
+    FilterOption
+}

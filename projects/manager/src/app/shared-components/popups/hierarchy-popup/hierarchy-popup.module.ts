@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HierarchyComponent } from './hierarchy.component';
-import { HierarchyContentComponent } from './hierarchy-content/hierarchy-content.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
+import { HierarchyContentComponent } from './hierarchy-content/hierarchy-content.component';
+import { HierarchyPopupComponent } from './hierarchy-popup.component';
 
 
 
 @NgModule({
   declarations: [
-    HierarchyComponent,
+    HierarchyPopupComponent,
     HierarchyContentComponent
   ],
   imports: [
@@ -16,8 +16,8 @@ import { ShowHideModule } from 'directives/show-hide/show-hide.module';
     ShowHideModule
   ],
   exports: [
-    HierarchyComponent,
+    HierarchyPopupComponent,
     HierarchyContentComponent
   ]
 })
-export class HierarchyModule { }
+export class HierarchyPopupModule { }

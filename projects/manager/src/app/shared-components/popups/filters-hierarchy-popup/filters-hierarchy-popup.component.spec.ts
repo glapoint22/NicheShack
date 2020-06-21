@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FiltersPopupComponent } from './filters-popup.component';
+import { FiltersHierarchyPopupComponent } from './filters-hierarchy-popup.component';
 
 describe('FiltersPopupComponent', () => {
-  let component: FiltersPopupComponent;
-  let fixture: ComponentFixture<FiltersPopupComponent>;
+  let component: FiltersHierarchyPopupComponent;
+  let fixture: ComponentFixture<FiltersHierarchyPopupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FiltersPopupComponent ]
+      declarations: [ FiltersHierarchyPopupComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FiltersPopupComponent);
+    fixture = TestBed.createComponent(FiltersHierarchyPopupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

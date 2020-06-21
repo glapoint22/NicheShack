@@ -72,9 +72,9 @@ import { ProductDescriptionNotificationPopupComponent } from './shared-component
 import { ProductImageNotificationPopupComponent } from './shared-components/popups/notification-popups/product-image-notification-popup/product-image-notification-popup.component';
 import { ProductMediaNotificationPopupComponent } from './shared-components/popups/notification-popups/product-media-notification-popup/product-media-notification-popup.component';
 import { ProductContentNotificationPopupComponent } from './shared-components/popups/notification-popups/product-content-notification-popup/product-content-notification-popup.component';
-import { FiltersPopupComponent } from './shared-components/popups/filters-popup/filters-popup.component';
 import { FiltersHierarchyComponent } from './shared-components/filters-hierarchy/filters-hierarchy.component';
-import { HierarchyModule } from './shared-components/hierarchy/hierarchy.module';
+import { HierarchyPopupModule } from './shared-components/popups/hierarchy-popup/hierarchy-popup.module';
+import { FiltersHierarchyPopupComponent } from './shared-components/popups/filters-hierarchy-popup/filters-hierarchy-popup.component';
 
 
 @NgModule({
@@ -148,7 +148,7 @@ import { HierarchyModule } from './shared-components/hierarchy/hierarchy.module'
     ProductImageNotificationPopupComponent,
     ProductMediaNotificationPopupComponent,
     ProductContentNotificationPopupComponent,
-    FiltersPopupComponent,
+    FiltersHierarchyPopupComponent,
     FiltersHierarchyComponent,
   ],
   imports: [
@@ -156,7 +156,7 @@ import { HierarchyModule } from './shared-components/hierarchy/hierarchy.module'
     CustomInputModule,
     ShowHideModule,
     FormsModule,
-    HierarchyModule
+    HierarchyPopupModule
   ],
   exports: [
     RowPropertiesComponent,
@@ -228,7 +228,7 @@ import { HierarchyModule } from './shared-components/hierarchy/hierarchy.module'
     ProductImageNotificationPopupComponent,
     ProductMediaNotificationPopupComponent,
     ProductContentNotificationPopupComponent,
-    FiltersPopupComponent,
+    FiltersHierarchyPopupComponent,
     FiltersHierarchyComponent,
   ]
 })

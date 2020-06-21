@@ -25,6 +25,6 @@ export class ProductFiltersComponent implements OnChanges{
 
   onAddFilterClick(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
-    this.popupService.filtersPopup.show = !this.popupService.filtersPopup.show;
+    this.popupService.filtersHierarchyPopup.show = !this.popupService.filtersHierarchyPopup.show;
   }
 }

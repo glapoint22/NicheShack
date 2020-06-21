@@ -13,9 +13,9 @@ import { HoplinkPopupComponent } from '../shared-components/popups/hoplink-popup
 import { SearchPopupComponent } from '../shared-components/popups/search-popup/search-popup.component';
 import { MessageNotificationPopupComponent } from '../shared-components/popups/notification-popups/message-notification-popup/message-notification-popup.component';
 import { ReviewComplaintNotificationPopupComponent } from '../shared-components/popups/notification-popups/review-complaint-notification-popup/review-complaint-notification-popup.component';
-import { FiltersPopupComponent } from '../shared-components/popups/filters-popup/filters-popup.component';
 import { NicheShackHierarchyPopupComponent } from '../shared-components/popups/niche-shack-hierarchy-popup/niche-shack-hierarchy-popup.component';
 import { MediaType } from '../classes/media';
+import { FiltersHierarchyPopupComponent } from '../shared-components/popups/filters-hierarchy-popup/filters-hierarchy-popup.component';
 
 
 @Injectable({
@@ -38,6 +38,6 @@ export class PopupService {
   public productContentNotificationPopup: ProductContentNotificationPopupComponent;
   public hoplinkPopup: HoplinkPopupComponent;
   public searchPopup: SearchPopupComponent;
-  public filtersPopup: FiltersPopupComponent;
+  public filtersHierarchyPopup: FiltersHierarchyPopupComponent;
   public nicheShackHierarchyPopup: NicheShackHierarchyPopupComponent;
 }
