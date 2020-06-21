@@ -1,14 +1,18 @@
-export class HierarchyItem {
-    public showChildren: boolean;
-    public loadingChildren: boolean;
-    public children: Array<HierarchyItem> = [];
-    public parent: HierarchyItem;
+import { Item } from './item';
 
-    constructor(public id: string = null, public name: string = null, public type: HierarchyItemType = null) { }
+export interface HierarchyItem extends Item {
+    showChildren: boolean;
+    loading: boolean;
+    children: Array<HierarchyItem>;
+    parent: HierarchyItem;
+    type: number;
+    childless: boolean;
+    url: string;
+    childrenUrl: string;
 }
 
 
-export enum HierarchyItemType {
+export enum NicheShackHierarchyItemType {
     Category,
     Niche,
     Product

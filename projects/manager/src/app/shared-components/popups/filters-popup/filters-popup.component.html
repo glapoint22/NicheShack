@@ -1,0 +1,9 @@
+<!-- Popup Base -->
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)"
+    *show="show">
+
+    <!-- Arrow -->
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
+
+    <div>Hello</div>
+</div>

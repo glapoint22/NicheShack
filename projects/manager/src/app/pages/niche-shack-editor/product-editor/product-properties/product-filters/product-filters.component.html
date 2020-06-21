@@ -11,7 +11,7 @@
             </div>
 
             <!-- Add Filter Icon -->
-            <div class="icon-container">
+            <div class="icon-container" (click)="onAddFilterClick($event.target)">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>
@@ -19,14 +19,15 @@
         <div *ngIf="filters.length > 0; else placeholder" class="filters-container">
 
             <!-- Filters -->
-            <div *ngFor="let filter of filters" class="filter">
+            <!-- <div *ngFor="let filter of filters" class="filter">
                 {{filter.name}}
 
-                <!-- Filter Options -->
+                
                 <div *ngFor="let option of filter.options" class="filter-option">
                     <div>{{option.name}}</div>
                 </div>
-            </div>
+            </div> -->
+            <filters-hierarchy [filters]="filters" (onExpandCollapse)="panel.onContentLoad()"></filters-hierarchy>
         </div>
 
 

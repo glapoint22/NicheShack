@@ -1,0 +1,89 @@
+<!-- Popup Base -->
+<div #popup *show="show" transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)">
+
+    <!-- Arrow -->
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
+
+    <!-- Search bar & filter menu -->
+    <div class="position-relative">
+        <!-- Search bar -->
+        <div class="search-bar">
+            <input #searchInput id="search-input" class="border-oval-left" autocomplete="off">
+            <div (mousedown)="showMenu = true">{{getItemName(filterType)}}</div>
+        </div>
+
+
+        <!-- Filter menu -->
+        <div *show="showMenu" class="fade-start filter-menu" transitionClass="fade-end" tabindex="0"
+            (onHide)="showMenu = false" (blur)="showMenu = false">
+
+            <div (mousedown)="$event.stopPropagation()">
+
+                <!-- Category -->
+                <div style="margin-bottom: 10px">
+                    <radio-button [name]="'filter'" [label]="'Filter by Category'"
+                        (change)="filterType = nicheShackHierarchyItemType.Category; showMenu = false; searchInput.value = ''"
+                        [checked]="filterType == nicheShackHierarchyItemType.Category"></radio-button>
+                </div>
+
+
+                <!-- Niche -->
+                <div style="margin-bottom: 10px">
+                    <radio-button [name]="'filter'" [label]="'Filter by Niche'"
+                        (change)="filterType = nicheShackHierarchyItemType.Niche; showMenu = false; searchInput.value = ''"
+                        [checked]="filterType == nicheShackHierarchyItemType.Niche"></radio-button>
+                </div>
+
+
+                <!-- Product -->
+                <radio-button [name]="'filter'" [label]="'Filter by Product'"
+                    (change)="filterType = nicheShackHierarchyItemType.Product; showMenu = false; searchInput.value = ''"
+                    [checked]="filterType == nicheShackHierarchyItemType.Product"></radio-button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Icons -->
+    <div class="icon-bar">
+        <!-- Collapse -->
+        <div class="icon-container" title="Collapse" (click)="onCollapseButtonClick()"
+            [ngClass]="{'icon-disabled': isCollapseButtonDisabled()}">
+
+            <i class="fas fa-minus-square"></i>
+        </div>
+
+        <!-- Add -->
+        <div class="icon-container" (click)="onAddItemButtonClick()" [title]="getAddButtonTitle()"
+            [ngClass]="{'icon-disabled': isAddButtonDisabled()}">
+            <i class="fas fa-plus-circle"></i>
+        </div>
+
+        <!-- Rename -->
+        <div class="icon-container" [ngClass]="{'icon-disabled': !selectedItem}" (click)="onEditItemClick()"
+            [title]="selectedItem ? 'Rename ' + getItemName(selectedItem.type) : 'Rename'">
+
+            <i class="fas fa-pencil-alt"></i>
+        </div>
+
+
+        <!-- Delete -->
+        <div class="icon-container" [ngClass]="{'icon-disabled': !selectedItem}" (click)="onDeleteClick()"
+            [title]="selectedItem ? 'Delete ' + getItemName(selectedItem.type) : 'Delete'">
+
+            <i class="fas fa-trash-alt"></i>
+        </div>
+    </div>
+
+
+    <!-- Content -->
+    <div>
+        <!-- Search results close button -->
+        <div class="search-results" *ngIf="searchResults">
+            <div class="results">{{searchResults.length}} results</div>
+            <div class="close-button" title="Clear search results" (click)="clearSearchResults()">x</div>
+        </div>
+
+        <hierarchy-content [items]="searchResults ? searchResults : items" [hierarchy]="this"></hierarchy-content>
+    </div>
+</div>

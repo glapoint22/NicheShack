@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ColorPickerPopupComponent } from '../shared-components/popups/color-picker-popup/color-picker-popup.component';
 import { PricePointPopupComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-content/price-point-popup/price-point-popup.component';
-import { HierarchyPopupComponent } from '../shared-components/menu-bar/hierarchy-popup/hierarchy-popup.component';
 import { LinkPopupComponent } from '../shared-components/popups/link-popup/link-popup.component';
 import { MediaBrowserPopupComponent } from '../shared-components/popups/media-browser-popup/media-browser-popup.component';
 import { NotificationListPopupComponent } from '../shared-components/popups/notification-popups/notification-list-popup/notification-list-popup.component';
@@ -14,6 +13,8 @@ import { HoplinkPopupComponent } from '../shared-components/popups/hoplink-popup
 import { SearchPopupComponent } from '../shared-components/popups/search-popup/search-popup.component';
 import { MessageNotificationPopupComponent } from '../shared-components/popups/notification-popups/message-notification-popup/message-notification-popup.component';
 import { ReviewComplaintNotificationPopupComponent } from '../shared-components/popups/notification-popups/review-complaint-notification-popup/review-complaint-notification-popup.component';
+import { FiltersPopupComponent } from '../shared-components/popups/filters-popup/filters-popup.component';
+import { NicheShackHierarchyPopupComponent } from '../shared-components/popups/niche-shack-hierarchy-popup/niche-shack-hierarchy-popup.component';
 import { MediaType } from '../classes/media';
 
 
@@ -24,7 +25,6 @@ export class PopupService {
   public sourceElement: HTMLElement;
   public colorPickerPopup: ColorPickerPopupComponent;
   public pricePointPopup: PricePointPopupComponent;
-  public hierarchyPopup: HierarchyPopupComponent;
   public linkPopup: LinkPopupComponent;
   public mediaBrowserPopup: MediaBrowserPopupComponent;
   public mediaType: MediaType;
@@ -38,4 +38,6 @@ export class PopupService {
   public productContentNotificationPopup: ProductContentNotificationPopupComponent;
   public hoplinkPopup: HoplinkPopupComponent;
   public searchPopup: SearchPopupComponent;
+  public filtersPopup: FiltersPopupComponent;
+  public nicheShackHierarchyPopup: NicheShackHierarchyPopupComponent;
 }

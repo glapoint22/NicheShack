@@ -5,20 +5,20 @@
         <div class="arrow-button-container" (transitionend)="$event.stopPropagation()">
 
             <!-- Arrow button -->
-            <div *ngIf="item.type != hierarchyItemType.Product">
+            <div *ngIf="!item.childless">
                 <input #input type="checkbox" [id]="item.name" [checked]="item.showChildren">
-                <label class="arrow-button" [for]="item.name" (click)="onItemButtonClick(item, input)"></label>
+                <label class="arrow-button" [for]="item.name" (click)="showHideChildren(item, input)"></label>
             </div>
 
 
             <!-- Item -->
-            <div [id]="hierarchy.getTypeName(item.type) + '-' + item.id" class="item" (click)="hierarchy.selectedItem = item"
-                (click)="hierarchy.onItemClick()" [ngClass]="{'selected': hierarchy.selectedItem == item}">
+            <div [id]="item.id" class="item" (click)="hierarchy.selectedItem = item"
+                [ngClass]="{'selected': hierarchy.selectedItem == item}">
                 {{item.name}}
             </div>
 
             <!-- Loading spinner -->
-            <i class="fa fa-spinner fa-pulse fade-start" *show="item.loadingChildren" transitionClass="fade-end"></i>
+            <i class="fa fa-spinner fa-pulse fade-start" *show="item.loading" transitionClass="fade-end"></i>
         </div>
 
         <!-- Hierarchy Content -->

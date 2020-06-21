@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HierarchyItem, HierarchyItemType } from '../../classes/hierarchy-item';
+import { HierarchyItem, NicheShackHierarchyItemType } from '../../classes/hierarchy-item';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'niche-shack-editor',
@@ -7,7 +8,9 @@ import { HierarchyItem, HierarchyItemType } from '../../classes/hierarchy-item';
   styleUrls: ['./niche-shack-editor.component.scss']
 })
 export class NicheShackEditorComponent {
-  public selectedItem: HierarchyItem = new HierarchyItem();
+  // public selectedItem: HierarchyItem;
   public productEditorMode: string;
-  public hierarchyItemType = HierarchyItemType;
+  public hierarchyItemType = NicheShackHierarchyItemType;
+
+  constructor(public popupService: PopupService) { }
 }

@@ -72,6 +72,9 @@ import { ProductDescriptionNotificationPopupComponent } from './shared-component
 import { ProductImageNotificationPopupComponent } from './shared-components/popups/notification-popups/product-image-notification-popup/product-image-notification-popup.component';
 import { ProductMediaNotificationPopupComponent } from './shared-components/popups/notification-popups/product-media-notification-popup/product-media-notification-popup.component';
 import { ProductContentNotificationPopupComponent } from './shared-components/popups/notification-popups/product-content-notification-popup/product-content-notification-popup.component';
+import { FiltersPopupComponent } from './shared-components/popups/filters-popup/filters-popup.component';
+import { FiltersHierarchyComponent } from './shared-components/filters-hierarchy/filters-hierarchy.component';
+import { HierarchyModule } from './shared-components/hierarchy/hierarchy.module';
 
 
 @NgModule({
@@ -144,13 +147,16 @@ import { ProductContentNotificationPopupComponent } from './shared-components/po
     ProductDescriptionNotificationPopupComponent,
     ProductImageNotificationPopupComponent,
     ProductMediaNotificationPopupComponent,
-    ProductContentNotificationPopupComponent
+    ProductContentNotificationPopupComponent,
+    FiltersPopupComponent,
+    FiltersHierarchyComponent,
   ],
   imports: [
     CommonModule,
     CustomInputModule,
     ShowHideModule,
-    FormsModule
+    FormsModule,
+    HierarchyModule
   ],
   exports: [
     RowPropertiesComponent,
@@ -221,7 +227,9 @@ import { ProductContentNotificationPopupComponent } from './shared-components/po
     ProductDescriptionNotificationPopupComponent,
     ProductImageNotificationPopupComponent,
     ProductMediaNotificationPopupComponent,
-    ProductContentNotificationPopupComponent
+    ProductContentNotificationPopupComponent,
+    FiltersPopupComponent,
+    FiltersHierarchyComponent,
   ]
 })
 export class PropertiesEditorModule { }

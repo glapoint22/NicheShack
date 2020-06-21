@@ -8,6 +8,7 @@ import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { VendorFormComponent } from './shared-components/forms/vendor-form/vendor-form.component';
 import { FormComponent } from './shared-components/forms/form/form.component';
 import { FormsModule } from '@angular/forms';
+import { MenuBarModule } from './shared-components/menu-bar/menu-bar.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     ShowHideModule,
-    FormsModule
+    FormsModule,
+    MenuBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
