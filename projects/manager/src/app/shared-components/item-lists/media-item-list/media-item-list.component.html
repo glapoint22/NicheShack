@@ -7,9 +7,10 @@
 
     <table >
             
-        <tr  *ngFor="let listItem of listItems; let listItemIndex = index"
+        <tr *ngFor="let listItem of listItems; let listItemIndex = index"
                 (mousedown)="onListItemDown(listItemIndex)"
                 (dblclick)="onListItemDoubleClick(listItemIndex)"
+                style="cursor: pointer;"
                 [ngClass]="{
                             'edited-listItem': indexOfEditedListItem == listItemIndex,
                             'selected-listItem': selectedListItemIndex == listItemIndex,
@@ -55,9 +56,11 @@
     </table>
 </div>
 
-<div *ngIf="movingMediaInProgress" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 42px; height: 42px; right: 12px;" [style.top.px]="(selectedListItemIndex * 42) - overflowContainer.scrollTop">
+<ng-container *ngFor="let listItem of listItems; let listItemIndex = index">
 
-    <i  class="fas fa-spinner fa-pulse font-size-3"></i>
+    <div *ngIf="movingMediaInProgress && listItem.selected" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 42px; height: 42px; right: 12px;" [style.top.px]="(listItemIndex * 42) - overflowContainer.scrollTop">
 
-</div>
+        <i  class="fas fa-spinner fa-pulse font-size-3"></i>
 
+    </div>
+</ng-container>

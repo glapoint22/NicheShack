@@ -18,7 +18,7 @@
             <dropdown [title]="''"
                       [height]="20"
                       [keyValue]="dropdownOptions"
-                      (onChange)="onDropdownChange($event)"
+                      (onChange)="onDropdownChange($event, searchInput)"
                       [selectedIndex]="popupService.mediaType == mediaType.Video ? 0 : popupService.mediaType">
             </dropdown>
 
@@ -43,7 +43,7 @@
 
         <!-- Input -->
         <div class="input-container">
-            <input type="text" id="search-input" autocomplete="off">
+            <input #searchInput type="text" id="search-input" autocomplete="off">
         </div>
     </div>
 
@@ -81,6 +81,7 @@
                 [mediaType]="indexOfSelectedMediaList"
                 [addingMediaInProgress]="addingMediaInProgress"
                 [movingMediaInProgress]="movingMediaInProgress"
+                [selectedMediaItemIndex]="selectedMediaItemIndex"
                 [menuOptions]="[menuOptions[indexOfSelectedMediaList].add, menuOptions[indexOfSelectedMediaList].edit, menuOptions[indexOfSelectedMediaList].delete, menuOptions[indexOfSelectedMediaList].deletes]">
             </media-item-list>
         </div>

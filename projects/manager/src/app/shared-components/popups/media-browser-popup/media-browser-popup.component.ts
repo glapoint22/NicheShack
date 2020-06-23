@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { PopupComponent } from '../popup/popup.component';
 import { MediaItem } from '../../../classes/media-item';
 import { Observable, of, fromEvent } from 'rxjs';
@@ -30,6 +30,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   public mediaType = MediaType;
   public addingMediaInProgress: boolean;
   public movingMediaInProgress: boolean;
+  public selectedMediaItemIndex: number;
   public loadingMediaInProgress: boolean;
   public indexOfSelectedMediaList: number;
   public dropdownOptions: Array<KeyValue<string, MediaType>>;
@@ -49,8 +50,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     { add: 'Add Category Image', edit: 'Edit Category Image', delete: 'Delete Category Image', deletes: 'Delete Category Images' },
     { add: 'Add Product Image', edit: 'Edit Product Image', delete: 'Delete Product Image', deletes: 'Delete Product Images' },
     { add: 'Add Icon', edit: 'Edit Icon', delete: 'Delete Icon', deletes: 'Delete Icons' },
-    { add: 'Add Video', edit: 'Edit Video', delete: 'Delete Video', deletes: 'Delete Videos' },
-    { add: 'Add Video', edit: 'Edit Video', delete: 'Delete Video', deletes: 'Delete Videos' },
+    { add: 'Add Video', edit: 'Edit Video', delete: 'Delete Video', deletes: 'Delete Videos' }, {}
   ];
   @ViewChild('dropdown', { static: false }) dropdown: DropdownComponent;
   @ViewChild('mediaItemList', { static: false }) mediaItemList: MediaItemListComponent;
@@ -65,7 +65,51 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
+    this.setMediaSearch();
+    this.setDropdownOptions();
     this.displayMedia(this.popupService.mediaType);
+  }
+
+
+  // -----------------------------( SET MEDIA SEARCH )------------------------------ \\
+  setMediaSearch() {
+    let searchInput = document.getElementById('search-input') as HTMLInputElement;
+    let onInputChange = fromEvent(searchInput, 'input');
+    let searchResults = onInputChange.pipe(debounceTime(250), switchMap(() => {
+      if (searchInput.value == '') {
+        this.loadingMediaInProgress = false;
+        this.indexOfSelectedMediaList = this.popupService.mediaType;
+        // Select the appropriate media item in the list
+        this.selectedMediaItemIndex = this.mediaLists[this.indexOfSelectedMediaList].findIndex(x => x.image.url == this.image.url);
+        return of();
+      }
+      this.loadingMediaInProgress = true;
+      return this.searchMedia();
+    }));
+    searchResults.subscribe((mediaItems: MediaItem[]) => {
+      this.indexOfSelectedMediaList = MediaType.Search;
+      this.loadingMediaInProgress = false;
+      this.mediaLists[this.indexOfSelectedMediaList] = mediaItems;
+      // Select the appropriate media item in the list
+      this.selectedMediaItemIndex = this.mediaLists[this.indexOfSelectedMediaList].findIndex(x => x.image.url == this.image.url);
+    });
+  }
+
+
+  // -----------------------------( SET MEDIA SEARCH MENU OPTIONS )------------------------------ \\
+  setMediaSearchMenuOptions() {
+    let searchType: Array<string> = [];
+    this.menuOptions[7] = {
+      add: 'Add ' + searchType[this.indexOfSelectedMediaList],
+      edit: 'Edit ' + searchType[this.indexOfSelectedMediaList],
+      delete: 'Delete ' + searchType[this.indexOfSelectedMediaList],
+      deletes: 'Delete ' + searchType[this.indexOfSelectedMediaList] + 's'
+    };
+  }
+
+
+  // -----------------------------( SET DROPDOWN OPTIONS )------------------------------ \\
+  setDropdownOptions() {
     this.dropdownOptions = [];
 
     if (this.popupService.mediaType == MediaType.Video) {
@@ -75,37 +119,6 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
         this.dropdownOptions[i] = this.dropdownList[i];
       }
     }
-
-    this.searchInput = document.getElementById('search-input') as HTMLInputElement;
-
-    fromEvent(this.searchInput, 'input')
-      .pipe(
-        debounceTime(250),
-        switchMap(() => {
-          if (this.searchInput.value == '') {
-            this.loadingMediaInProgress = false;
-            this.indexOfSelectedMediaList = 3;
-
-
-            return of();
-          }
-          // Show the loading spinner
-          this.loadingMediaInProgress = true;
-          return this.searchMedia();
-
-        }))
-
-      .subscribe((mediaItems: MediaItem[]) => {
-        this.indexOfSelectedMediaList = 7;
-        this.loadingMediaInProgress = false;
-        this.mediaLists[this.indexOfSelectedMediaList] = mediaItems;
-      });
-  }
-
-
-  // -----------------------------( ON DROPDOWN CHANGE )------------------------------ \\
-  onDropdownChange(mediaType: MediaType) {
-    this.displayMedia(mediaType);
   }
 
 
@@ -133,9 +146,25 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
         } else {
           // Display the media list
           this.mediaLists[this.indexOfSelectedMediaList] = mediaItems;
+          // Select the appropriate media item in the list
+          this.selectedMediaItemIndex = this.mediaLists[this.indexOfSelectedMediaList].findIndex(x => x.image.url == this.image.url);
         }
       })
+
+      // If the list has already been loaded from the database
+    } else {
+      // Select the appropriate media item in the list
+      this.selectedMediaItemIndex = this.mediaLists[this.indexOfSelectedMediaList].findIndex(x => x.image.url == this.image.url);
     }
+    this.setMediaSearchMenuOptions();
+  }
+
+
+  // -----------------------------( ON DROPDOWN CHANGE )------------------------------ \\
+  onDropdownChange(mediaType: MediaType, searchInputValue: HTMLInputElement) {
+    this.popupService.mediaType = mediaType;
+    this.displayMedia(mediaType);
+    searchInputValue.value = "";
   }
 
 
@@ -173,8 +202,11 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
       // If the destination list has already been loaded
       if (this.mediaLists[destinationMedia].length > 0) {
-        // Prepend the media item to its new list
-        this.mediaLists[destinationMedia].unshift(this.mediaLists[this.indexOfSelectedMediaList][this.mediaItemList.selectedListItemIndex]);
+
+        // Prepend the media item to its new list if it is selected
+        for (let i = 0; i < this.mediaItemList.listItems.length; i++) {
+          if (this.mediaItemList.listItems[i].selected) this.mediaLists[destinationMedia].unshift(this.mediaLists[this.indexOfSelectedMediaList][i]);
+        }
       }
       // Remove the media item from its original list
       this.mediaItemList.deleteListItem();
@@ -184,20 +216,27 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
   // --------------------------------( ON MEDIA SELECT )-------------------------------- \\
   onMediaSelect(mediaItem: MediaItem) {
-    // If the media item that is selected is either a video or a product image
-    if (mediaItem.type == MediaType.Video || mediaItem.type == MediaType.ProductImage) {
-      // Update the media property with the properties of the selected media item
-      this.media.url = mediaItem.videoUrl;
-      this.media.type = mediaItem.type;
-      this.media.image.url = mediaItem.image.url;
-      this.media.image.title = mediaItem.image.title;
-      this.productService.setCurrentSelectedMedia(this.media);
-
-      // If the media item that is selected is anything other than a video or a product image
+    if (mediaItem == null) {
+      this.image.url = null;
+      if (this.media != null) this.media.image.url = null;
     } else {
-      // Update the image property with the properties of the selected media item
-      this.image.url = mediaItem.image.url;
-      this.image.title = mediaItem.image.title;
+
+
+      // If the media item that is selected is either a video or a product image
+      if (mediaItem.type == MediaType.Video || mediaItem.type == MediaType.ProductImage) {
+        // Update the media property with the properties of the selected media item
+        this.media.url = mediaItem.videoUrl;
+        this.media.type = mediaItem.type;
+        this.media.image.url = mediaItem.image.url;
+        this.media.image.title = mediaItem.image.title;
+        this.productService.setCurrentSelectedMedia(this.media);
+
+        // If the media item that is selected is anything other than a video or a product image
+      } else {
+        // Update the image property with the properties of the selected media item
+        this.image.url = mediaItem.image.url;
+        this.image.title = mediaItem.image.title;
+      }
     }
   }
 
@@ -280,9 +319,9 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
   // --------------------------------( SEARCH MEDIA )-------------------------------- \\
   searchMedia(): Observable<MediaItem[]> {
-    let image1: MediaItem = new MediaItem('oiweoiuwer', '1f3eccf21332491c949c7ac1648945ec.jpg', MediaType.ProductImage); image1.name = image1.image.title = 'Gumpy Ice Cream secrets';
-    let image2: MediaItem = new MediaItem('qweuywesdo', '2c35cff4d5d04327af35e26f9f7ebe79.png', MediaType.ProductImage); image2.name = image2.image.title = 'A Gumpy a day keeps the doctor away';
-    let image3: MediaItem = new MediaItem('potyuoptuw', '9da5043dd53a45efb472269b2d283dac.png', MediaType.ProductImage); image3.name = image3.image.title = 'Gumpy Honey Ice Cream';
+    let image1: MediaItem = new MediaItem('oiweoiuwer', '1f3eccf21332491c949c7ac1648945ec.jpg', this.popupService.mediaType); image1.name = image1.image.title = 'Gumpy Ice Cream secrets';
+    let image2: MediaItem = new MediaItem('qweuywesdo', '2c35cff4d5d04327af35e26f9f7ebe79.png', this.popupService.mediaType); image2.name = image2.image.title = 'A Gumpy a day keeps the doctor away';
+    let image3: MediaItem = new MediaItem('potyuoptuw', '9da5043dd53a45efb472269b2d283dac.png', this.popupService.mediaType); image3.name = image3.image.title = 'Gumpy Honey Ice Cream';
     return of([image1, image2, image3]).pipe(delay(1000));
   }
 
