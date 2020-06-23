@@ -1,7 +1,7 @@
 <!-- Title bar -->
-<div class="title-bar" (click)="expanded = !expanded; $event.stopPropagation()" [ngClass]="{'rounded': rounded}">
+<div class="title-bar" (click)="$event.stopPropagation(); click(input)" [ngClass]="{'rounded': rounded}">
     <!-- Arrow -->
-    <input type="checkbox" [checked]="expanded">
+    <input #input type="checkbox" [checked]="expanded">
     <div class="arrow"></div>
 
     <!-- Checkbox -->
@@ -17,7 +17,7 @@
 <!-- Content -->
 <div #content class="content" [ngStyle]="{'maxHeight.px': expanded ? contentMaxHeight : 0, 
         'paddingTop.px': expanded ? contentPadding : 0, 
-        'paddingBottom.px': expanded ? contentPadding : 0}">
+        'paddingBottom.px': expanded ? contentPadding : 0}" (transitionend)="transitionend($event)">
     <ng-content></ng-content>
 
     <!-- Disabled cover -->

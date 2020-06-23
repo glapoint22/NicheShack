@@ -10,45 +10,127 @@ export class TempDataService {
 
   get(url: string, parameters?: Array<KeyValue<string, string>>, responseType?: any): Observable<any> {
     switch (url) {
-      // Filter Options
+      // Filters
+      case 'api/Filters':
+
+        return of([
+          {
+            id: 'yrttretwt',
+            name: 'Product Type'
+          },
+          {
+            id: 'jhgfsdgfa',
+            name: 'Billing Type'
+          },
+          {
+            id: 'qwerghghjkjg',
+            name: 'Promotional'
+          },
+          {
+            id: 'rtewghdgfadfdsfs',
+            name: 'Media Type'
+          },
+          {
+            id: 'oiuiiytreygsgdfg',
+            name: 'Gender'
+          }
+        ]).pipe(delay(1000));
+
+
+
+
+      // Filter options
       case 'api/FilterOptions':
-        if (parameters[0].value == 'PWDHYWHSGSD') {
+        if (parameters[0].value == 'yrttretwt') {
           return of([
             {
-              id: 0,
+              id: 'hgfdhfhgfh',
               name: 'Physical',
+              checked: true
             },
             {
-              id: 1,
+              id: 'kjhgkjkhk',
               name: 'Digital Download',
+              checked: false
             },
             {
-              id: 2,
+              id: 'qwfeerwer',
               name: 'Email',
+              checked: false
             },
             {
-              id: 3,
+              id: 'hgfdfgfghfhgf',
               name: 'Online Membership',
+              checked: true
             }
           ]).pipe(delay(1000));
-        } else {
-          return of(
-            [
-              {
-                id: 4,
-                name: 'Single Payment',
-              },
-              {
-                id: 5,
-                name: 'Recurring',
-              },
-              {
-                id: 6,
-                name: 'Trial',
-              }
-            ]
-          ).pipe(delay(1000))
+        } else if (parameters[0].value == 'jhgfsdgfa') {
+          return of([
+            {
+              id: 'pouiuy',
+              name: 'Single Payment',
+              checked: false
+            },
+            {
+              id: 'nbcvnvbnn',
+              name: 'Recurring',
+              checked: true
+            },
+            {
+              id: 'kjghkhkhkgfd',
+              name: 'Trial',
+              checked: false
+            }
+          ]).pipe(delay(1000));
+        } else if (parameters[0].value == 'qwerghghjkjg') {
+          return of([
+            {
+              id: 'ldlflflfs',
+              name: 'Videos',
+              checked: false
+            }
+          ]).pipe(delay(1000));
+        } else if (parameters[0].value == 'rtewghdgfadfdsfs') {
+          return of([
+            {
+              id: 'lqrewqrwqerwre',
+              name: 'Book',
+              checked: true
+            },
+            {
+              id: 'zfzfzdfxfxffs',
+              name: 'Video',
+              checked: true
+            },
+            {
+              id: 'isgdgjhgja',
+              name: 'Audio',
+              checked: false
+            },
+            {
+              id: 'tfadghfgddhj',
+              name: 'Software',
+              checked: false
+            }
+          ]).pipe(delay(1000));
+        } else if (parameters[0].value == 'oiuiiytreygsgdfg') {
+          return of([
+            {
+              id: 'yyerwtgdsfg',
+              name: 'Men',
+              checked: false
+            },
+            {
+              id: 'aaaafdsafsdf',
+              name: 'Women',
+              checked: true
+            }
+          ]).pipe(delay(1000));
         }
+
+
+
+
 
 
 

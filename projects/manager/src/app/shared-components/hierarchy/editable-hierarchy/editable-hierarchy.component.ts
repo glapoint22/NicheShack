@@ -1,41 +1,26 @@
 import { Component, HostListener } from '@angular/core';
-import { Observable, fromEvent, of } from 'rxjs';
-import { tap, debounceTime, switchMap } from 'rxjs/operators';
+import { HierarchyComponent } from '../hierarchy.component';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
-import { PopupComponent } from '../../popups/popup/popup.component';
-import { PopupService } from '../../../services/popup.service';
-import { CoverService } from '../../../services/cover.service';
-import { MenuService } from '../../../services/menu.service';
-import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 import { TempDataService } from '../../../services/temp-data.service';
-import { KeyValue } from '@angular/common';
 import { PromptService } from '../../../services/prompt.service';
+import { fromEvent, of } from 'rxjs';
+import { debounceTime, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   template: '',
 })
-export class HierarchyPopupComponent extends PopupComponent {
-  public items: Array<HierarchyItem>;
-  public selectedItem: HierarchyItem;
+export class EditableHierarchyComponent extends HierarchyComponent {
+  public editMode: boolean;
+  public searchResults: Array<HierarchyItem>;
   public searchInput: HTMLInputElement;
   public filterType: number;
-  public searchResults: Array<HierarchyItem>;
-  public editMode: boolean;
-  public showMenu: boolean;
-
-  constructor(popupService: PopupService,
-    cover: CoverService,
-    menuService: MenuService,
-    dropdownMenuService: DropdownMenuService,
-    private dataService: TempDataService,
-    private promptService: PromptService) { super(popupService, cover, menuService, dropdownMenuService) }
 
 
+  constructor(dataService: TempDataService, private promptService: PromptService) { super(dataService) }
 
-  // -----------------------------( ON POPUP SHOW )------------------------------ \\
-  onPopupShow(popup, arrow) {
-    super.onPopupShow(popup, arrow);
 
+  // -----------------------------( INIT SEARCH )------------------------------ \\
+  initSearch() {
     this.searchInput = document.getElementById('search-input') as HTMLInputElement;
 
     fromEvent(this.searchInput, 'input')
@@ -52,83 +37,9 @@ export class HierarchyPopupComponent extends PopupComponent {
         this.mapItems(items, null, this.filterType);
       }))
       .subscribe((searchResults: Array<HierarchyItem>) => {
-        // this.selectedItem = null;
         this.searchResults = searchResults;
       });
   }
-
-
-
-
-
-  // -----------------------------( LOAD )------------------------------ \\
-  load(url: string, parameters?: Array<KeyValue<string, string>>, parent?: HierarchyItem, type?: number): Observable<Array<HierarchyItem>> {
-    return new Observable(subscriber => {
-      this.dataService.get(url, parameters)
-        .pipe(tap((items: Array<HierarchyItem>) => {
-          this.mapItems(items, parent, type);
-        }))
-        .subscribe((items: Array<HierarchyItem>) => {
-          subscriber.next(items);
-        });
-    });
-  }
-
-
-
-
-  // -----------------------------( LOAD CHILDREN )------------------------------ \\
-  loadChildren(parent: HierarchyItem) {
-    return new Observable(subscriber => {
-      // If already in the process of loading children, return
-      if (parent.loading) return;
-
-      // Flag that we are loading children
-      parent.loading = true;
-
-      // Get the item's children from the database
-      this.load(parent.childrenUrl, [{ key: 'id', value: parent.id }], parent)
-        .subscribe((items: Array<HierarchyItem>) => {
-          // Assign the items and flag loading has completed
-          parent.children = items;
-          parent.loading = false;
-
-          // Return the items
-          subscriber.next(parent.children);
-
-          // flag that we are showing children
-          window.setTimeout(() => {
-            parent.showChildren = true;
-          }, 100);
-        });
-    });
-  }
-
-
-
-
-
-  // -----------------------------( ON COLLAPSE BUTTON CLICK )------------------------------ \\
-  onCollapseButtonClick() {
-    if (!this.items.some(x => x.showChildren)) return;
-
-    this.collapseItems(this.items);
-  }
-
-
-
-
-  // -----------------------------( COLLAPSE ITEMS )------------------------------ \\
-  collapseItems(items: Array<HierarchyItem>) {
-    items.forEach((item: HierarchyItem) => {
-      item.showChildren = false;
-
-      if (item.children) {
-        this.collapseItems(item.children);
-      }
-    });
-  }
-
 
 
 
@@ -140,13 +51,14 @@ export class HierarchyPopupComponent extends PopupComponent {
 
 
 
-
-
   // -----------------------------( IS COLLAPSE BUTTON DISABLED )------------------------------ \\
   isCollapseButtonDisabled() {
     if (!this.items && !this.searchResults) return true;
-    return !this.items.some(x => x.showChildren);
+
+    return super.isCollapseButtonDisabled();
   }
+
+
 
 
   isEditItemDisabled(): boolean {
@@ -265,9 +177,21 @@ export class HierarchyPopupComponent extends PopupComponent {
 
 
 
+
+
+
+
+
+
+
+  // -----------------------------( IS DELETE ITEM DISABLED )------------------------------ \\
   isDeleteItemDisabled() {
     return !this.selectedItem || this.editMode || (this.selectedItem.parent && !this.selectedItem.parent.showChildren);
   }
+
+
+
+
 
 
 
@@ -282,6 +206,10 @@ export class HierarchyPopupComponent extends PopupComponent {
 
     this.promptService.showPrompt(promptTitle, promptMessage, this.deleteItem, this);
   }
+
+
+
+
 
 
 
@@ -329,6 +257,27 @@ export class HierarchyPopupComponent extends PopupComponent {
 
 
 
+
+
+
+
+
+
+  // -----------------------------( IS ADD BUTTON DISABLED )------------------------------ \\
+  isAddItemDisabled(): boolean {
+    if ((!this.items && !this.searchResults) ||
+      this.editMode ||
+      (this.selectedItem && this.selectedItem.parent && !this.selectedItem.parent.showChildren)) return true;
+
+    return false;
+  }
+
+
+
+
+
+
+
   // -----------------------------( ON ADD BUTTON CLICK )------------------------------ \\
   onAddItemButtonClick() {
     if (this.isAddItemDisabled()) return;
@@ -351,6 +300,23 @@ export class HierarchyPopupComponent extends PopupComponent {
       }
     }
   }
+
+
+
+
+
+  // -----------------------------( ADD ITEM )------------------------------ \\
+  addItem(children: Array<HierarchyItem>) {
+    let item: HierarchyItem = this.createItem();
+
+    children.unshift(item);
+
+    window.setTimeout(() => {
+      this.selectedItem = item;
+      this.editItem();
+    });
+  }
+
 
 
 
@@ -398,73 +364,41 @@ export class HierarchyPopupComponent extends PopupComponent {
 
 
 
-
-  // -----------------------------( IS ADD BUTTON DISABLED )------------------------------ \\
-  isAddItemDisabled(): boolean {
-    if ((!this.items && !this.searchResults) ||
-      this.editMode ||
-      (this.selectedItem && this.selectedItem.parent && !this.selectedItem.parent.showChildren)) return true;
-
-    return false;
-  }
-
-
-
-
-
-
-  // -----------------------------( ADD ITEM )------------------------------ \\
-  addItem(children: Array<HierarchyItem>) {
-    let item: HierarchyItem = this.createItem();
-
-    children.unshift(item);
-
-    window.setTimeout(() => {
-      this.selectedItem = item;
-      this.editItem();
-    });
-  }
-
-
-
-
   // -----------------------------( ON KEYDOWN )------------------------------ \\
   @HostListener('document:keydown.escape')
   onKeydown() {
-    // If the escape key was pressed and prompt is not enabled
-    if (this.show) {
-      if (this.selectedItem) {
+    // If the escape key was pressed
+    if (this.selectedItem) {
 
-        // Get the element
-        let el: HTMLElement = document.getElementById(this.selectedItem.id);
+      // Get the element
+      let el: HTMLElement = document.getElementById(this.selectedItem.id);
 
-        // Set editable to false
-        if (el && el.contentEditable == 'true') {
-          el.contentEditable = 'false';
-          this.editMode = false;
-        } else {
-          // Deselect the selected item
-          this.selectedItem = null;
-        }
+      // Set editable to false
+      if (el && el.contentEditable == 'true') {
+        el.contentEditable = 'false';
+        this.editMode = false;
+      } else {
+        // Deselect the selected item
+        this.selectedItem = null;
       }
     }
   }
 
 
 
+  // -----------------------------( CREATE ITEM )------------------------------ \\
+  createItem(): HierarchyItem { return }
 
 
 
-  // -----------------------------( MAP ITEMS )------------------------------ \\
-  mapItems(items: Array<HierarchyItem>, parent?: HierarchyItem, type?: number) { }
+  // -----------------------------( GET ITEM NAME )------------------------------ \\
+  getItemName(type: number): string { return }
 
+
+  // -----------------------------( GET ADD BUTTON TITLE )------------------------------ \\
+  getAddButtonTitle() { }
 
 
   // -----------------------------( GET URL )------------------------------ \\
   getUrl(type: number): string { return }
-
-
-
-  // -----------------------------( CREATE ITEM )------------------------------ \\
-  createItem(): HierarchyItem { return }
 }

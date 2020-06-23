@@ -1,0 +1,6 @@
+.item {
+    cursor: default;
+    &:hover:not(.selected) {
+        background: none;
+    }
+}

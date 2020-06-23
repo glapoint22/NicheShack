@@ -1,12 +1,4 @@
-import { ProductFilterOption } from './product-filter-option';
-
 export interface productFilter {
-    id: number;
-    name: string;
-    options: Array<ProductFilterOption>;
-}
-
-export enum FilterType {
-    Filter,
-    FilterOption
+    filterId: string;
+    filterOptions: Array<string>;
 }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { HierarchyItem } from 'projects/manager/src/app/classes/hierarchy-item';
-import { HierarchyPopupComponent } from '../hierarchy-popup.component';
+import { HierarchyComponent } from '../hierarchy.component';
 
 
 @Component({
@@ -10,9 +10,7 @@ import { HierarchyPopupComponent } from '../hierarchy-popup.component';
 })
 export class HierarchyContentComponent {
   @Input() items: Array<HierarchyItem>;
-  @Input() hierarchy: HierarchyPopupComponent;
-
-
+  @Input() hierarchy: HierarchyComponent
 
 
   // -----------------------------( SHOW HIDE CHILDREN )------------------------------ \\
@@ -40,8 +38,6 @@ export class HierarchyContentComponent {
       });
     }
   }
-
-
 
   
 
