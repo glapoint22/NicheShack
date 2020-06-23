@@ -29,10 +29,12 @@
         </div>
 
 
+        
+
         <!-- Media -->
         <div *ngIf="media.length > 0; else placeholder" class="media-container">
             <div class="thumbnail"
-                [ngStyle]="{ 'background-image': 'url(images/' + media[productService.currentSelectedMediaIndex].image.url + ')'}">
+                [ngStyle]="{ 'background-image': 'url(images/' + (media[productService.currentSelectedMediaIndex].type == mediaType.Video ? media[productService.currentSelectedMediaIndex].thumbnail : media[productService.currentSelectedMediaIndex].url) + ')'}">
                 <!-- Display a play icon if media type is video -->
                 <i *ngIf="media[productService.currentSelectedMediaIndex].type == mediaType.Video" class="far fa-play-circle"></i>
             </div>

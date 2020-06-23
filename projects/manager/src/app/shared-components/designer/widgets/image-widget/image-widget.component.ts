@@ -113,8 +113,8 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
     // Styles and attributes
     img.style.width = '100%';
     img.style.maxWidth = this.width + 'px';
-    img.alt = this.image.title;
-    img.title = this.image.title;
+    img.alt = this.image.name;
+    img.title = this.image.name;
 
 
     // Border, corners, and show styles

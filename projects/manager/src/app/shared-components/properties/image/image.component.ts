@@ -31,6 +31,6 @@ export class ImageComponent {
     this.popupService.mediaType = this.mediaType;
     this.popupService.sourceElement = sourceElement;
     this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
-    this.popupService.mediaBrowserPopup.image = this.image;
+    this.popupService.mediaBrowserPopup.media = this.image;
   }
 }

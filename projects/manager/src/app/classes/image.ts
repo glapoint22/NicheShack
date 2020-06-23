@@ -1,18 +1,20 @@
 import { ImageData } from './image-data';
+import { Media } from './media';
 
-export class Image {
-    title: string;
-    url: string;
+export class Image implements Media {
+    public id: string;
+    public name: string;
+    public url: string;
 
     load(imageData: ImageData) {
         if (imageData) {
             this.url = imageData.url;
-            this.title = imageData.title;
+            this.name = imageData.name;
         }
     }
 
     save(imageData: ImageData) {
         if (this.url) imageData.url = this.url;
-        if (this.title) imageData.title = this.title;
+        if (this.name) imageData.name = this.name;
     }
 }

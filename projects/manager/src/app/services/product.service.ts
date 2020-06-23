@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Product } from '../classes/product';
 import { Media, MediaType } from '../classes/media';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ProductPricePoint } from '../classes/product-price-point';
 
 @Injectable({
   providedIn: 'root'

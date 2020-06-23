@@ -1,18 +1,14 @@
-import { Media, MediaType } from './media';
+import { MediaType, Media } from './media';
 import { ListItem } from './list-item';
 import { SelectType } from './list-item-select-type';
-import { ImageData } from './image-data';
 
-export class MediaItem implements ListItem {
-    selected: boolean;
-    selectType: SelectType;
-    name: string;
-    image: ImageData = new ImageData();
-    videoUrl?: string;
+export class MediaItem implements ListItem, Media {
+    public id: string;
+    public url: string;
+    public selected: boolean;
+    public selectType: SelectType;
+    public name: string;
+    public thumbnail: string;
 
-    constructor(public id: string, imageUrl, public type: MediaType) {
-        this.image.url = imageUrl;
-
-    }
-    
+    constructor(public type: MediaType) { }
 }

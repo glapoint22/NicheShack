@@ -1,12 +1,12 @@
 import { SafeUrl } from '@angular/platform-browser';
-import { Image } from './image';
 
 export interface Media {
     id: string;
-    image: Image;
-    type: MediaType;
-    url?: string;
+    name: string;
+    url: string;
+    thumbnail?: string;
     safeUrl?: SafeUrl;
+    type?: MediaType;
 }
 
 export enum MediaType {

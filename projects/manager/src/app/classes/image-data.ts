@@ -1,4 +1,4 @@
 export class ImageData {
-    public title: string;
+    public name: string;
     public url: string;
 }

@@ -6,7 +6,7 @@
             <!-- Thumbnails -->
             <div *ngIf="productService.product.media.length > 1" class="media" [scrollTop]="this.productService.scrollTop">
                 <div *ngFor="let media of productService.product.media; let thumbnailIndex = index" class="thumbnail"
-                    [ngStyle]="{ 'background-image': 'url(images/' + media.image.url + ')'}"
+                    [ngStyle]="{ 'background-image': 'url(images/' + (media.type == mediaType.Video ? media.thumbnail : media.url) + ')'}"
                     [ngClass]="{'selected-thumbnail': this.productService.currentSelectedMediaIndex == thumbnailIndex}"
                     (click)="onThumbnailClick(media, thumbnailIndex)">
                     <i *ngIf="media.type == mediaType.Video" class="far fa-play-circle"></i>
@@ -16,7 +16,7 @@
             <!-- Media display -->
             <div class="img-container">
                 <img *ngIf="productService.currentSelectedMedia.type == mediaType.ProductImage"
-                    [src]="'/images/' + productService.currentSelectedMedia.image.url">
+                    [src]="'/images/' + productService.currentSelectedMedia.url">
 
                 <iframe *ngIf="productService.currentSelectedMedia.type == mediaType.Video" frameborder="0"
                     [src]="productService.currentSelectedMedia.safeUrl" allowfullscreen></iframe>

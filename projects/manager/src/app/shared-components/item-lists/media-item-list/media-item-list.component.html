@@ -28,7 +28,7 @@
                 (focus)="rowItem.focus()">
 
                  <div *ngIf="listItemIndex != 0 || (listItemIndex == 0 && !addingMediaInProgress)" class="img"
-                      [ngStyle]="{ 'background-image': 'url(images/' + listItem.image.url + ')'}"
+                      [ngStyle]="{ 'background-image': 'url(images/' + (listItem.type == mediaTypeEnum.Video ? listItem.thumbnail : listItem.url) + ')'}"
                       [ngClass]="{'highlight-image': selectedListItemIndex == listItemIndex,
                                   'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
                 </div> 

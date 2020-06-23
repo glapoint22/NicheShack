@@ -50,6 +50,5 @@ export class ProductMediaComponent implements OnChanges {
     this.popupService.sourceElement = sourceElement;
     this.popupService.mediaBrowserPopup.media = this.media[this.productService.currentSelectedMediaIndex];
     this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
-    this.popupService.mediaBrowserPopup.image = this.media[this.productService.currentSelectedMediaIndex].image;
   }
 }

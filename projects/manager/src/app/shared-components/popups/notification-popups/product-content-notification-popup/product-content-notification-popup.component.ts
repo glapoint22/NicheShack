@@ -105,7 +105,7 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
     this.popupService.mediaType = MediaType.Icon;
     this.popupService.sourceElement = sourceElement;
     this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
-    this.popupService.mediaBrowserPopup.image = this.notificationService.productContentNotification.content[this.contentIndex].icon;
+    this.popupService.mediaBrowserPopup.media = this.notificationService.productContentNotification.content[this.contentIndex].icon;
   }
 
 

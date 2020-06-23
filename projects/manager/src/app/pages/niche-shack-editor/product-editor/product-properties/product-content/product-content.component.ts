@@ -94,7 +94,7 @@ export class ProductContentComponent implements OnChanges {
     this.popupService.mediaType = MediaType.Icon;
     this.popupService.sourceElement = sourceElement;
     this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
-    this.popupService.mediaBrowserPopup.image = this.content[this.contentIndex].icon;
+    this.popupService.mediaBrowserPopup.media = this.content[this.contentIndex].icon;
   }
 
 

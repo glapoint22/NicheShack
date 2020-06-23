@@ -15,6 +15,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   constructor(menuService: MenuService, private popupService: PopupService) { super(menuService) }
   private moveTo = [];
   public selectType = SelectType;
+  public mediaTypeEnum = MediaType;
   @Input() listItems: Array<MediaItem>;
   @Input() mediaType: MediaType;
   @Input() addingMediaInProgress: boolean;

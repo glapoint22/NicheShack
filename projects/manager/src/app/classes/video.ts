@@ -1,8 +1,12 @@
 import Player from '@vimeo/player';
 import YouTubePlayer from 'youtube-player';
 import { VideoData } from './video-data';
+import { Media } from './media';
 
-export class Video {
+export class Video implements Media{
+    public id: string;
+    public name: string;
+
     // Url
     private _url: string;
     public get url(): string {

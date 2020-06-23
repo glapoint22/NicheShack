@@ -45,7 +45,7 @@ export class LeadPageEditorComponent implements OnChanges {
               enable: false,
               color: '#ffffff',
               image: {
-                title: 'Campland',
+                name: 'Campland',
                 url: 'campland-background.jpg',
                 position: 'center center',
                 repeat: 'no-repeat',
@@ -201,7 +201,7 @@ export class LeadPageEditorComponent implements OnChanges {
                       },
                       image: {
                         url: '0aada12f8b21471ea96aebe9a503977b.png',
-                        title: 'Alita'
+                        name: 'Alita'
                       },
                       corners: null,
                       shadow: null,
@@ -464,7 +464,7 @@ export class LeadPageEditorComponent implements OnChanges {
                           id: 'fdsfafsdfdsds',
                           icon: {
                             url: '44d71fbf43904ffdbdece40a45bdf9db.png',
-                            title: 'Health & Fitness'
+                            name: 'Health & Fitness'
                           }
                         },
                         {
@@ -472,7 +472,7 @@ export class LeadPageEditorComponent implements OnChanges {
                           id: 1,
                           icon:  {
                             url: '143968bba73642898bb4a6715a1efd3d.png',
-                            title: 'self-help'
+                            name: 'self-help'
                           }
                         }
                       ]
@@ -509,7 +509,7 @@ export class LeadPageEditorComponent implements OnChanges {
                         {
                           image: {
                             url: 'banner1.jpg',
-                            title: 'Keto'
+                            name: 'Keto'
                           },
                           link: {
                             selectedOption: 'webAddress',
@@ -519,7 +519,7 @@ export class LeadPageEditorComponent implements OnChanges {
                         {
                           image: {
                             url: 'banner2.jpg',
-                            title: 'Hyperbolic Stretching'
+                            name: 'Hyperbolic Stretching'
                           },
                           link: {
                             selectedOption: 'page',
@@ -530,7 +530,7 @@ export class LeadPageEditorComponent implements OnChanges {
                         {
                           image: {
                             url: 'banner3.jpg',
-                            title: 'Google'
+                            name: 'Google'
                           },
                           link: {
                             selectedOption: 'page',
@@ -542,7 +542,7 @@ export class LeadPageEditorComponent implements OnChanges {
                         {
                           image: {
                             url: 'banner4.jpg',
-                            title: 'YouTube'
+                            name: 'YouTube'
                           },
                           link: {
                             selectedOption: 'page',
@@ -554,7 +554,7 @@ export class LeadPageEditorComponent implements OnChanges {
                         {
                           image: {
                             url: 'banner5.jpg',
-                            title: 'Avatar'
+                            name: 'Avatar'
                           },
                           link: {
                             selectedOption: 'page',

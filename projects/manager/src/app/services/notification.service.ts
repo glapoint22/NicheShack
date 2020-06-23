@@ -206,7 +206,7 @@ export class NotificationService {
 
       image: {
         url: 'b212b69728ee4f3b9473831bb4f7ace9.png',
-        title: 'Bigger Better Butt'
+        name: 'Bigger Better Butt'
       },
 
       notesText: [
@@ -316,7 +316,8 @@ export class NotificationService {
           id: '0006C245A7',
           title: 'Cooking Tips',
           icon: {
-            title: 'Video',
+            id: 'FSDFASFFSDFA',
+            name: 'Video',
             url: 'video.png',
             load: null,
             save: null
@@ -332,7 +333,8 @@ export class NotificationService {
           id: '0004B385G7',
           title: 'Audio Cooking methods',
           icon: {
-            title: 'Audio',
+            id: 'JHFJSDRFGFFD',
+            name: 'Audio',
             url: 'audio.png',
             load: null,
             save: null
@@ -348,7 +350,8 @@ export class NotificationService {
           id: '0008R755Y2',
           title: 'Recipes',
           icon: {
-            title: 'PDF',
+            id: 'QRDFDDASFASDF',
+            name: 'PDF',
             url: 'pdf.png',
             load: null,
             save: null
@@ -449,7 +452,8 @@ export class NotificationService {
           id: '0006C245A7',
           title: 'Cooking Tips',
           icon: {
-            title: 'Video',
+            id: 'FSDFASFFSDFA',
+            name: 'Video',
             url: 'video.png',
             load: null,
             save: null
@@ -465,7 +469,8 @@ export class NotificationService {
           id: '0004B385G7',
           title: 'Audio Cooking methods',
           icon: {
-            title: 'Audio',
+            id: 'JHFJSDRFGFFD',
+            name: 'Audio',
             url: 'audio.png',
             load: null,
             save: null
@@ -481,7 +486,8 @@ export class NotificationService {
           id: '0008R755Y2',
           title: 'Recipes',
           icon: {
-            title: 'PDF',
+            id: 'QRDFDDASFASDF',
+            name: 'PDF',
             url: 'pdf.png',
             load: null,
             save: null
@@ -582,7 +588,8 @@ export class NotificationService {
           id: '0006C245A7',
           title: 'Cooking Tips',
           icon: {
-            title: 'Video',
+            id: 'FSDFASFFSDFA',
+            name: 'Video',
             url: 'video.png',
             load: null,
             save: null
@@ -598,7 +605,8 @@ export class NotificationService {
           id: '0004B385G7',
           title: 'Audio Cooking methods',
           icon: {
-            title: 'Audio',
+            id: 'JHFJSDRFGFFD',
+            name: 'Audio',
             url: 'audio.png',
             load: null,
             save: null
@@ -614,7 +622,8 @@ export class NotificationService {
           id: '0008R755Y2',
           title: 'Recipes',
           icon: {
-            title: 'PDF',
+            id: 'QRDFDDASFASDF',
+            name: 'PDF',
             url: 'pdf.png',
             load: null,
             save: null
@@ -712,110 +721,65 @@ export class NotificationService {
 
       media: [
         {
+          id: 'UTWERTFASD',
+          name: 'Booty Type Training',
+          url: '8d5741456a824e8981efdfa348d2cb0d.jpg'
+        },
+        {
           id: 'AFSDFFASDFSD',
-          image: {
-            url: 'thumbnail1.png',
-            title: 'Gumpy\'s',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Gumpy\'s',
+          thumbnail: 'thumbnail1.png',
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
           id: 'RGDFVFGHJTGFSA',
-          image: {
-            url: 'thumbnail2.png',
-            title: 'fsdassdaf',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Ice Cream',
+          thumbnail: 'thumbnail2.png',
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
           id: 'JKYUJSGDFA',
-          image: {
-            url: 'thumbnail3.png',
-            title: 'hgfdhafsda',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Chocolate',
+          thumbnail: 'thumbnail3.png',
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
           id: 'UYTREYRHJGHJSDF',
-          image: {
-            url: 'thumbnail4.png',
-            title: 'FSDFSADFSGFFD',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Vanilla',
+          thumbnail: 'thumbnail4.png',
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
           id: 'AFSDFHJJKEG',
-          image: {
-            url: 'thumbnail5.png',
-            title: 'pooiouiouyi',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Strawberry',
+          thumbnail: 'thumbnail5.png',
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
           id: '345HSDDGFDSFSDD',
-          image: {
-            url: 'thumbnail6.png',
-            title: 'kjfgdfsg',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Brownie',
+          thumbnail: 'thumbnail6.png',
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
           id: '4GFDSFSDFSAA',
-          image: {
-            url: '0a2b8633118d4719bddfe468521d8a39.png',
-            title: 'jfgdfsdd',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Cookie',
+          url: '0a2b8633118d4719bddfe468521d8a39.png'
         },
         {
           id: '4DSASFSDFSDFSD',
-          image: {
-            url: '2a08e8f8bc7940b087f7e29d2e80a106.png',
-            title: 'tretewtwefsa',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Milkshake',
+          url: '2a08e8f8bc7940b087f7e29d2e80a106.png'
         },
         {
           id: 'UUEYTGGSSDFGG',
-          image: {
-            url: '4ea6699537b04c7db407052d58d3bccb.png',
-            title: 'utyruyttraf',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Ice cream cone',
+          url: '4ea6699537b04c7db407052d58d3bccb.png'
         },
         {
           id: 'UTYDGDFSGJHTG',
-          image: {
-            url: '0037b470cdef401a94195bc5c391c404.png',
-            title: 'bdfgsdfafgqfg',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Sprinkles',
+          url: '0037b470cdef401a94195bc5c391c404.png'
         }
       ],
 
@@ -872,110 +836,65 @@ export class NotificationService {
 
       media: [
         {
+          id: 'UTWERTFASD',
+          name: 'Booty Type Training',
+          url: '8d5741456a824e8981efdfa348d2cb0d.jpg'
+        },
+        {
           id: 'AFSDFFASDFSD',
-          image: {
-            url: 'thumbnail1.png',
-            title: 'Gumpy\'s',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Gumpy\'s',
+          thumbnail: 'thumbnail1.png',
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
           id: 'RGDFVFGHJTGFSA',
-          image: {
-            url: 'thumbnail2.png',
-            title: 'fsdassdaf',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Ice Cream',
+          thumbnail: 'thumbnail2.png',
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
           id: 'JKYUJSGDFA',
-          image: {
-            url: 'thumbnail3.png',
-            title: 'hgfdhafsda',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Chocolate',
+          thumbnail: 'thumbnail3.png',
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
           id: 'UYTREYRHJGHJSDF',
-          image: {
-            url: 'thumbnail4.png',
-            title: 'FSDFSADFSGFFD',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Vanilla',
+          thumbnail: 'thumbnail4.png',
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
           id: 'AFSDFHJJKEG',
-          image: {
-            url: 'thumbnail5.png',
-            title: 'pooiouiouyi',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Strawberry',
+          thumbnail: 'thumbnail5.png',
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
           id: '345HSDDGFDSFSDD',
-          image: {
-            url: 'thumbnail6.png',
-            title: 'kjfgdfsg',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Brownie',
+          thumbnail: 'thumbnail6.png',
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
           id: '4GFDSFSDFSAA',
-          image: {
-            url: '0a2b8633118d4719bddfe468521d8a39.png',
-            title: 'jfgdfsdd',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Cookie',
+          url: '0a2b8633118d4719bddfe468521d8a39.png'
         },
         {
           id: '4DSASFSDFSDFSD',
-          image: {
-            url: '2a08e8f8bc7940b087f7e29d2e80a106.png',
-            title: 'tretewtwefsa',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Milkshake',
+          url: '2a08e8f8bc7940b087f7e29d2e80a106.png'
         },
         {
           id: 'UUEYTGGSSDFGG',
-          image: {
-            url: '4ea6699537b04c7db407052d58d3bccb.png',
-            title: 'utyruyttraf',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Ice cream cone',
+          url: '4ea6699537b04c7db407052d58d3bccb.png'
         },
         {
           id: 'UTYDGDFSGJHTG',
-          image: {
-            url: '0037b470cdef401a94195bc5c391c404.png',
-            title: 'bdfgsdfafgqfg',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Sprinkles',
+          url: '0037b470cdef401a94195bc5c391c404.png'
         }
       ],
 
@@ -1032,110 +951,65 @@ export class NotificationService {
 
       media: [
         {
+          id: 'UTWERTFASD',
+          name: 'Booty Type Training',
+          url: '8d5741456a824e8981efdfa348d2cb0d.jpg'
+        },
+        {
           id: 'AFSDFFASDFSD',
-          image: {
-            url: 'thumbnail1.png',
-            title: 'Gumpy\'s',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Gumpy\'s',
+          thumbnail: 'thumbnail1.png',
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
           id: 'RGDFVFGHJTGFSA',
-          image: {
-            url: 'thumbnail2.png',
-            title: 'fsdassdaf',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Ice Cream',
+          thumbnail: 'thumbnail2.png',
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
           id: 'JKYUJSGDFA',
-          image: {
-            url: 'thumbnail3.png',
-            title: 'hgfdhafsda',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Chocolate',
+          thumbnail: 'thumbnail3.png',
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
           id: 'UYTREYRHJGHJSDF',
-          image: {
-            url: 'thumbnail4.png',
-            title: 'FSDFSADFSGFFD',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Vanilla',
+          thumbnail: 'thumbnail4.png',
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
           id: 'AFSDFHJJKEG',
-          image: {
-            url: 'thumbnail5.png',
-            title: 'pooiouiouyi',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Strawberry',
+          thumbnail: 'thumbnail5.png',
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
           id: '345HSDDGFDSFSDD',
-          image: {
-            url: 'thumbnail6.png',
-            title: 'kjfgdfsg',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Brownie',
+          thumbnail: 'thumbnail6.png',
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
           id: '4GFDSFSDFSAA',
-          image: {
-            url: '0a2b8633118d4719bddfe468521d8a39.png',
-            title: 'jfgdfsdd',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Cookie',
+          url: '0a2b8633118d4719bddfe468521d8a39.png'
         },
         {
           id: '4DSASFSDFSDFSD',
-          image: {
-            url: '2a08e8f8bc7940b087f7e29d2e80a106.png',
-            title: 'tretewtwefsa',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Milkshake',
+          url: '2a08e8f8bc7940b087f7e29d2e80a106.png'
         },
         {
           id: 'UUEYTGGSSDFGG',
-          image: {
-            url: '4ea6699537b04c7db407052d58d3bccb.png',
-            title: 'utyruyttraf',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Ice cream cone',
+          url: '4ea6699537b04c7db407052d58d3bccb.png'
         },
         {
           id: 'UTYDGDFSGJHTG',
-          image: {
-            url: '0037b470cdef401a94195bc5c391c404.png',
-            title: 'bdfgsdfafgqfg',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Sprinkles',
+          url: '0037b470cdef401a94195bc5c391c404.png'
         }
       ],
 
@@ -1192,110 +1066,65 @@ export class NotificationService {
 
       media: [
         {
+          id: 'UTWERTFASD',
+          name: 'Booty Type Training',
+          url: '8d5741456a824e8981efdfa348d2cb0d.jpg'
+        },
+        {
           id: 'AFSDFFASDFSD',
-          image: {
-            url: 'thumbnail1.png',
-            title: 'Gumpy\'s',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Gumpy\'s',
+          thumbnail: 'thumbnail1.png',
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
           id: 'RGDFVFGHJTGFSA',
-          image: {
-            url: 'thumbnail2.png',
-            title: 'fsdassdaf',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Ice Cream',
+          thumbnail: 'thumbnail2.png',
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
           id: 'JKYUJSGDFA',
-          image: {
-            url: 'thumbnail3.png',
-            title: 'hgfdhafsda',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Chocolate',
+          thumbnail: 'thumbnail3.png',
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
           id: 'UYTREYRHJGHJSDF',
-          image: {
-            url: 'thumbnail4.png',
-            title: 'FSDFSADFSGFFD',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Vanilla',
+          thumbnail: 'thumbnail4.png',
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
           id: 'AFSDFHJJKEG',
-          image: {
-            url: 'thumbnail5.png',
-            title: 'pooiouiouyi',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Strawberry',
+          thumbnail: 'thumbnail5.png',
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
           id: '345HSDDGFDSFSDD',
-          image: {
-            url: 'thumbnail6.png',
-            title: 'kjfgdfsg',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Brownie',
+          thumbnail: 'thumbnail6.png',
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
           id: '4GFDSFSDFSAA',
-          image: {
-            url: '0a2b8633118d4719bddfe468521d8a39.png',
-            title: 'jfgdfsdd',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Cookie',
+          url: '0a2b8633118d4719bddfe468521d8a39.png'
         },
         {
           id: '4DSASFSDFSDFSD',
-          image: {
-            url: '2a08e8f8bc7940b087f7e29d2e80a106.png',
-            title: 'tretewtwefsa',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Milkshake',
+          url: '2a08e8f8bc7940b087f7e29d2e80a106.png'
         },
         {
           id: 'UUEYTGGSSDFGG',
-          image: {
-            url: '4ea6699537b04c7db407052d58d3bccb.png',
-            title: 'utyruyttraf',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Ice cream cone',
+          url: '4ea6699537b04c7db407052d58d3bccb.png'
         },
         {
           id: 'UTYDGDFSGJHTG',
-          image: {
-            url: '0037b470cdef401a94195bc5c391c404.png',
-            title: 'bdfgsdfafgqfg',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Sprinkles',
+          url: '0037b470cdef401a94195bc5c391c404.png'
         }
       ],
 
@@ -1352,110 +1181,65 @@ export class NotificationService {
 
       media: [
         {
+          id: 'UTWERTFASD',
+          name: 'Booty Type Training',
+          url: '8d5741456a824e8981efdfa348d2cb0d.jpg'
+        },
+        {
           id: 'AFSDFFASDFSD',
-          image: {
-            url: 'thumbnail1.png',
-            title: 'Gumpy\'s',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Gumpy\'s',
+          thumbnail: 'thumbnail1.png',
           url: '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
           id: 'RGDFVFGHJTGFSA',
-          image: {
-            url: 'thumbnail2.png',
-            title: 'fsdassdaf',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Ice Cream',
+          thumbnail: 'thumbnail2.png',
           url: 'https://www.youtube.com/embed/1AI6RS1st2E'
         },
         {
           id: 'JKYUJSGDFA',
-          image: {
-            url: 'thumbnail3.png',
-            title: 'hgfdhafsda',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Chocolate',
+          thumbnail: 'thumbnail3.png',
           url: '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff'
         },
         {
           id: 'UYTREYRHJGHJSDF',
-          image: {
-            url: 'thumbnail4.png',
-            title: 'FSDFSADFSGFFD',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Vanilla',
+          thumbnail: 'thumbnail4.png',
           url: 'https://www.youtube.com/embed/3ZEu6ZOMhlw'
         },
         {
           id: 'AFSDFHJJKEG',
-          image: {
-            url: 'thumbnail5.png',
-            title: 'pooiouiouyi',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Strawberry',
+          thumbnail: 'thumbnail5.png',
           url: 'https://player.vimeo.com/video/218732620'
         },
         {
           id: '345HSDDGFDSFSDD',
-          image: {
-            url: 'thumbnail6.png',
-            title: 'kjfgdfsg',
-            load: null,
-            save: null
-          },
-          type: MediaType.Video,
+          name: 'Brownie',
+          thumbnail: 'thumbnail6.png',
           url: 'https://player.vimeo.com/video/264188894'
         },
         {
           id: '4GFDSFSDFSAA',
-          image: {
-            url: '0a2b8633118d4719bddfe468521d8a39.png',
-            title: 'jfgdfsdd',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Cookie',
+          url: '0a2b8633118d4719bddfe468521d8a39.png'
         },
         {
           id: '4DSASFSDFSDFSD',
-          image: {
-            url: '2a08e8f8bc7940b087f7e29d2e80a106.png',
-            title: 'tretewtwefsa',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Milkshake',
+          url: '2a08e8f8bc7940b087f7e29d2e80a106.png'
         },
         {
           id: 'UUEYTGGSSDFGG',
-          image: {
-            url: '4ea6699537b04c7db407052d58d3bccb.png',
-            title: 'utyruyttraf',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Ice cream cone',
+          url: '4ea6699537b04c7db407052d58d3bccb.png'
         },
         {
           id: 'UTYDGDFSGJHTG',
-          image: {
-            url: '0037b470cdef401a94195bc5c391c404.png',
-            title: 'bdfgsdfafgqfg',
-            load: null,
-            save: null
-          },
-          type: MediaType.ProductImage,
+          name: 'Sprinkles',
+          url: '0037b470cdef401a94195bc5c391c404.png'
         }
       ],
 
