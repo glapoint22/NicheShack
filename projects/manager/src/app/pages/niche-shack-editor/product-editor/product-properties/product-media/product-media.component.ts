@@ -1,6 +1,5 @@
-import { Component, Input, ViewChild, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Media, MediaType } from 'projects/manager/src/app/classes/media';
-import { PanelComponent } from 'projects/manager/src/app/shared-components/panels/panel/panel.component';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 
@@ -9,22 +8,10 @@ import { ProductService } from 'projects/manager/src/app/services/product.servic
   templateUrl: './product-media.component.html',
   styleUrls: ['./product-media.component.scss']
 })
-export class ProductMediaComponent implements OnChanges {
+export class ProductMediaComponent {
   @Input() media: Array<Media>;
-  @ViewChild('panel', { static: false }) panel: PanelComponent;
   public mediaType = MediaType;
   constructor(private popupService: PopupService, private productService: ProductService){}
-
-
-  // -----------------------------( NG ON CHANGES )------------------------------ \\
-  ngOnChanges() {
-    if(this.media.length > 0) {
-      window.setTimeout(()=> {
-        this.panel.onContentLoad();
-      });
-    }
-  }
-
 
   // -----------------------------( ON PAGINATOR CLICK )------------------------------ \\
   onPaginatorClick(pageIndex: number) {

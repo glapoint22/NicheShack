@@ -1,5 +1,5 @@
 <!-- Panel -->
-<panel #panel [title]="'Content'">
+<panel [title]="'Content'">
 
     <!-- Property Box -->
     <div class="property-box-light">
@@ -8,9 +8,7 @@
         <div class="property-box-light-icon-bar">
 
             <!-- Paginator -->
-            <paginator #paginator
-                       [itemCount]="content.length"
-                       (onItemChange)="contentIndex = $event">
+            <paginator #paginator [itemCount]="content.length" (onItemChange)="contentIndex = $event">
             </paginator>
 
             <!-- Icons -->
@@ -59,7 +57,7 @@
                 <!-- Image -->
                 <div class="img-container">
                     <img *ngIf="content[contentIndex].icon.url" [src]="'images/' + content[contentIndex].icon.url"
-                        (load)="panel.onContentLoad()" style="padding: 10px;">
+                        style="padding: 10px;">
                     <div *ngIf="!content[contentIndex].icon.url" class="no-property">
                         No icon available
                     </div>
@@ -79,43 +77,33 @@
 
                     <!-- Delete -->
                     <div class="icon-container"
-                         [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Price Point (Delete)' : itemList.editIcon.isDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
-                         [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
-                         (mouseover)="itemList.isOverIconButton = true"
-                         (mouseout)="itemList.onIconButtonMouseOut()"
-                         (click)="onDeletePricePoint(itemList)">
+                        [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Price Point (Delete)' : itemList.editIcon.isDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
+                        [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                        (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                        (click)="onDeletePricePoint(itemList)">
                         <i class="fas fa-trash-alt"></i>
                     </div>
 
                     <!-- Edit -->
-                    <div #editIcon 
-                         class="icon-container" 
-                         [attr.title]="'Edit Price Point (Ctrl+Alt+E)'"
-                         [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
-                         (mouseover)="itemList.isOverIconButton = true"
-                         (mouseout)="itemList.onIconButtonMouseOut()"
-                         (click)="!itemList.editIcon.isDisabled ? editPricePoint($event.target, itemList.selectedListItemIndex) : null">
+                    <div #editIcon class="icon-container" [attr.title]="'Edit Price Point (Ctrl+Alt+E)'"
+                        [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
+                        (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                        (click)="!itemList.editIcon.isDisabled ? editPricePoint($event.target, itemList.selectedListItemIndex) : null">
                         <i class="fas fa-edit"></i>
                     </div>
 
                     <!-- Add -->
-                    <div #addIcon 
-                         class="icon-container"
-                         [attr.title]="'Add Price Point (Ctrl+Alt+A)'"
-                         [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
-                         (mouseover)="itemList.isOverIconButton = true"
-                         (mouseout)="itemList.onIconButtonMouseOut()"
-                         (click)="!itemList.addIcon.isDisabled ? addPricePoint($event.target) : null">
+                    <div #addIcon class="icon-container" [attr.title]="'Add Price Point (Ctrl+Alt+A)'"
+                        [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                        (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                        (click)="!itemList.addIcon.isDisabled ? addPricePoint($event.target) : null">
                         <i class="fas fa-plus-circle"></i>
                     </div>
                 </div>
 
                 <!-- Checkbox Item LIst -->
-                <checkbox-item-list 
-                    #itemList
-                    [listItems]="pricePointList"
-                    [checkList]="content[contentIndex].priceIndices"
-                    (onAddItem)="addPricePoint(addIcon)"
+                <checkbox-item-list #itemList [listItems]="pricePointList"
+                    [checkList]="content[contentIndex].priceIndices" (onAddItem)="addPricePoint(addIcon)"
                     (onEditItem)="editPricePoint(editIcon, itemList.selectedListItemIndex)"
                     (onDeleteItem)="onDeletePricePoint(itemList)"
                     [menuOptions]="['Add Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">

@@ -1,7 +1,6 @@
-import { Component, ViewChild, ElementRef, ApplicationRef, AfterViewInit, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, ApplicationRef, AfterViewInit } from '@angular/core';
 import { Description } from 'projects/manager/src/app/classes/description';
 import { Color } from 'projects/manager/src/app/classes/color';
-import { PanelComponent } from 'projects/manager/src/app/shared-components/panels/panel/panel.component';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -12,7 +11,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class ProductDescriptionComponent implements AfterViewInit {
   @ViewChild('iframe', { static: false }) iframe: ElementRef;
-  @ViewChild('panel', { static: false }) panel: PanelComponent;
   public description: Description;
 
 
@@ -44,12 +42,11 @@ export class ProductDescriptionComponent implements AfterViewInit {
       }
 
 
-      // Set the height of the iframe and panel
+      // Set the height of the iframe
       this.setIframeHeight();
 
       window.setTimeout(() => {
         window.focus();
-        this.panel.onContentLoad();
       });
 
 
@@ -58,7 +55,6 @@ export class ProductDescriptionComponent implements AfterViewInit {
         this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
 
         this.setIframeHeight();
-        this.panel.onContentLoad();
       });
     }
   }

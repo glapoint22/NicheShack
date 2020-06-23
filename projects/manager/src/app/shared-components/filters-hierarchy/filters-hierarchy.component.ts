@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { HierarchyComponent } from '../hierarchy/hierarchy.component';
 import { HierarchyItem, FilterHierarchyItemType } from '../../classes/hierarchy-item';
 import { PanelComponent } from '../panels/panel/panel.component';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'filters-hierarchy',
@@ -47,32 +46,8 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
         this.load('api/Filters')
           .subscribe((items: Array<HierarchyItem>) => {
             this.items = items;
-            // window.setTimeout(() => {
-            //   this.panel.onContentLoad();
-            // });
-
           });
       }
     }
   }
-
-
-  
-
-  // onShowHideChildren() {
-  //   window.setTimeout(() => {
-  //     this.panel.onContentLoad();
-  //   }, 250);
-  // }
-
-
-  // loadChildren(parent: HierarchyItem): Observable<Array<HierarchyItem>> {
-  //   return new Observable(() => {
-  //     super.loadChildren(parent).subscribe((items: Array<HierarchyItem>) => {
-  //       window.setTimeout(() => {
-  //         this.panel.onContentLoad();
-  //       }, 250);
-  //     });
-  //   });
-  // }
 }
