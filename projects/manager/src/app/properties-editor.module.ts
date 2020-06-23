@@ -55,7 +55,6 @@ import { CategoriesWidgetPropertiesComponent } from './shared-components/widget-
 import { ProductGroupWidgetPropertiesComponent } from './shared-components/widget-properties/product-group-widget-properties/product-group-widget-properties.component';
 import { NormalizedNumberFieldComponent } from './shared-components/elements/number-fields/normalized-number-field/normalized-number-field.component';
 import { CoverComponent } from './shared-components/cover/cover.component';
-import { PopupComponent } from './shared-components/popups/popup/popup.component';
 import { BackgroundComponent } from './shared-components/properties/background/background.component';
 import { ShowPopupDirective } from './directives/show-popup/show-popup.directive';
 import { MediaItemListComponent } from './shared-components/item-lists/media-item-list/media-item-list.component';
@@ -73,8 +72,7 @@ import { ProductImageNotificationPopupComponent } from './shared-components/popu
 import { ProductMediaNotificationPopupComponent } from './shared-components/popups/notification-popups/product-media-notification-popup/product-media-notification-popup.component';
 import { ProductContentNotificationPopupComponent } from './shared-components/popups/notification-popups/product-content-notification-popup/product-content-notification-popup.component';
 import { FiltersHierarchyComponent } from './shared-components/filters-hierarchy/filters-hierarchy.component';
-import { HierarchyPopupModule } from './shared-components/popups/hierarchy-popup/hierarchy-popup.module';
-import { FiltersHierarchyPopupComponent } from './shared-components/popups/filters-hierarchy-popup/filters-hierarchy-popup.component';
+import { HierarchyModule } from './shared-components/hierarchy/hierarchy.module';
 
 
 @NgModule({
@@ -131,7 +129,6 @@ import { FiltersHierarchyPopupComponent } from './shared-components/popups/filte
     CategoriesWidgetPropertiesComponent,
     NormalizedNumberFieldComponent,
     CoverComponent,
-    PopupComponent,
     BackgroundComponent,
     LinkIconComponent,
     ShowPopupDirective,
@@ -148,15 +145,14 @@ import { FiltersHierarchyPopupComponent } from './shared-components/popups/filte
     ProductImageNotificationPopupComponent,
     ProductMediaNotificationPopupComponent,
     ProductContentNotificationPopupComponent,
-    FiltersHierarchyPopupComponent,
-    FiltersHierarchyComponent,
+    FiltersHierarchyComponent
   ],
   imports: [
     CommonModule,
     CustomInputModule,
     ShowHideModule,
     FormsModule,
-    HierarchyPopupModule
+    HierarchyModule
   ],
   exports: [
     RowPropertiesComponent,
@@ -211,7 +207,6 @@ import { FiltersHierarchyPopupComponent } from './shared-components/popups/filte
     CategoriesWidgetPropertiesComponent,
     NormalizedNumberFieldComponent,
     CoverComponent,
-    PopupComponent,
     BackgroundComponent,
     LinkIconComponent,
     ShowPopupDirective,
@@ -228,8 +223,7 @@ import { FiltersHierarchyPopupComponent } from './shared-components/popups/filte
     ProductImageNotificationPopupComponent,
     ProductMediaNotificationPopupComponent,
     ProductContentNotificationPopupComponent,
-    FiltersHierarchyPopupComponent,
-    FiltersHierarchyComponent,
+    FiltersHierarchyComponent
   ]
 })
 export class PropertiesEditorModule { }

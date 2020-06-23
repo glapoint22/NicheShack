@@ -1,14 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HierarchyItem, NicheShackHierarchyItemType } from '../../../classes/hierarchy-item';
-import { HierarchyPopupComponent } from '../hierarchy-popup/hierarchy-popup.component';
+import { PopupComponent } from '../popup/popup.component';
+import { TempDataService } from '../../../services/temp-data.service';
+import { PopupService } from '../../../services/popup.service';
+import { EditableHierarchyComponent } from '../../hierarchy/editable-hierarchy/editable-hierarchy.component';
+import { PromptService } from '../../../services/prompt.service';
 
 @Component({
   selector: 'niche-shack-hierarchy-popup',
   templateUrl: './niche-shack-hierarchy-popup.component.html',
-  styleUrls: ['../hierarchy-popup/hierarchy-popup.component.scss', '../popup/popup.component.scss']
+  styleUrls: ['../../hierarchy/editable-hierarchy/editable-hierarchy.component.scss']
 })
-export class NicheShackHierarchyPopupComponent extends HierarchyPopupComponent implements OnInit {
+export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponent implements OnInit {
+  @ViewChild('popup', { static: false }) popup: PopupComponent;
   public nicheShackHierarchyItemType = NicheShackHierarchyItemType;
+  
+
+
+  private _show: boolean;
+  public get show(): boolean {
+    return this._show;
+  }
+  public set show(v: boolean) {
+    this.popup.show = v;
+    if (v) {
+      this.onPopupShow();
+    }
+    this._show = v;
+  }
+
+
+  constructor(dataService: TempDataService, promptService: PromptService, private popupService: PopupService) { super(dataService, promptService) }
 
 
 
@@ -19,7 +41,7 @@ export class NicheShackHierarchyPopupComponent extends HierarchyPopupComponent i
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
-  onPopupShow(popup, arrow) {
+  onPopupShow() {
     if (!this.items && !this.searchResults) {
       this.load(this.getUrl(NicheShackHierarchyItemType.Category))
         .subscribe((items: Array<HierarchyItem>) => {
@@ -28,8 +50,14 @@ export class NicheShackHierarchyPopupComponent extends HierarchyPopupComponent i
       this.filterType = NicheShackHierarchyItemType.Product;
     }
 
-    super.onPopupShow(popup, arrow);
+    window.setTimeout(()=> {
+      this.initSearch();
+    });
+    
   }
+
+
+
 
 
 
@@ -133,7 +161,7 @@ export class NicheShackHierarchyPopupComponent extends HierarchyPopupComponent i
 
 
   // -----------------------------( GET ITEM NAME )------------------------------ \\
-  getItemName(type: NicheShackHierarchyItemType): string {
+  getItemName(type: number): string {
     let name: string;
 
     switch (type) {
@@ -177,7 +205,7 @@ export class NicheShackHierarchyPopupComponent extends HierarchyPopupComponent i
         break;
 
       default:
-        if (this.searchResults && this.searchResults.length > 0 && this.searchResults[0].type != NicheShackHierarchyItemType.Category) {
+        if (this.searchResults && this.searchResults.length > 0 && this.filterType != NicheShackHierarchyItemType.Category) {
           title = 'Add (Not Available)'
         } else {
           title = 'Add Category';
@@ -201,7 +229,7 @@ export class NicheShackHierarchyPopupComponent extends HierarchyPopupComponent i
   isAddItemDisabled(): boolean {
     let result: boolean;
 
-    if(super.isAddItemDisabled()) return true;
+    if (super.isAddItemDisabled()) return true;
 
     switch (this.selectedItem && this.selectedItem.type) {
       case NicheShackHierarchyItemType.Category:
@@ -279,5 +307,12 @@ export class NicheShackHierarchyPopupComponent extends HierarchyPopupComponent i
     }
 
     return item;
+  }
+
+
+  onKeydown() {
+    if (this.show) {
+      super.onKeydown();
+    }
   }
 }

@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
-import { Subject } from 'rxjs';
 import { MenuService } from '../../../services/menu.service';
 import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 
@@ -13,7 +12,7 @@ import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 export class PopupComponent {
   public show: boolean;
   public preventNoShow: boolean = false;
-  public onPopupClose = new Subject<void>();
+  @Output() onPopupClose: EventEmitter<void> = new EventEmitter();
   private popup;
   private arrow;
   private popupTop: number;
@@ -65,7 +64,7 @@ export class PopupComponent {
     if (!this.menuService.showMenu && !this.preventNoShow) {
       // Close this popup
       this.show = false;
-      this.onPopupClose.next();
+      this.onPopupClose.emit();
       this.dropdownMenuService.showMenu = false;
       window.removeEventListener('mousemove', this.onMouseMove);
     }

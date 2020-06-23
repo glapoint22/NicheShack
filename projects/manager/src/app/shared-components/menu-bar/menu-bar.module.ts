@@ -10,7 +10,8 @@ import { RouterModule } from '@angular/router';
 import { ShackIconComponent } from '../shack-icon/shack-icon.component';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 import { NicheShackHierarchyPopupComponent } from '../popups/niche-shack-hierarchy-popup/niche-shack-hierarchy-popup.component';
-import { HierarchyPopupModule } from '../popups/hierarchy-popup/hierarchy-popup.module';
+import { PopupComponent } from '../popups/popup/popup.component';
+import { HierarchyModule } from '../hierarchy/hierarchy.module';
 
 @NgModule({
   declarations: [
@@ -20,14 +21,15 @@ import { HierarchyPopupModule } from '../popups/hierarchy-popup/hierarchy-popup.
     ReviewComplaintFormComponent,
     NotificationsComponent,
     ShackIconComponent,
-    NicheShackHierarchyPopupComponent
+    NicheShackHierarchyPopupComponent,
+    PopupComponent
   ],
   imports: [
     CommonModule,
     ShowHideModule,
     RouterModule,
     CustomInputModule,
-    HierarchyPopupModule
+    HierarchyModule
   ],
   exports: [
     MenuBarComponent,
@@ -35,7 +37,8 @@ import { HierarchyPopupModule } from '../popups/hierarchy-popup/hierarchy-popup.
     ProductReportFormComponent,
     ReviewComplaintFormComponent,
     NotificationsComponent,
-    ShackIconComponent
+    ShackIconComponent,
+    PopupComponent
   ]
 })
 export class MenuBarModule { }

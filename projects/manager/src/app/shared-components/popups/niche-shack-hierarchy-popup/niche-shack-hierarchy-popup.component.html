@@ -1,9 +1,4 @@
-<!-- Popup Base -->
-<div #popup *show="show" transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)">
-
-    <!-- Arrow -->
-    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
-
+<popup #popup (onPopupClose)="show = false">
     <!-- Search bar & filter menu -->
     <div class="position-relative">
         <!-- Search bar -->
@@ -60,17 +55,16 @@
         </div>
 
         <!-- Rename -->
-        <div class="icon-container"
-            [ngClass]="{'icon-disabled': isEditItemDisabled()}"
-            (click)="onEditItemClick()" [title]="selectedItem ? 'Rename ' + getItemName(selectedItem.type) : 'Rename'">
+        <div class="icon-container" [ngClass]="{'icon-disabled': isEditItemDisabled()}" (click)="onEditItemClick()"
+            [title]="selectedItem ? 'Rename ' + getItemName(selectedItem.type) : 'Rename'">
 
             <i class="fas fa-pencil-alt"></i>
         </div>
 
 
         <!-- Delete -->
-        <div class="icon-container" [ngClass]="{'icon-disabled': isDeleteItemDisabled()}"
-            (click)="onDeleteClick()" [title]="selectedItem ? 'Delete ' + getItemName(selectedItem.type) : 'Delete'">
+        <div class="icon-container" [ngClass]="{'icon-disabled': isDeleteItemDisabled()}" (click)="onDeleteClick()"
+            [title]="selectedItem ? 'Delete ' + getItemName(selectedItem.type) : 'Delete'">
 
             <i class="fas fa-trash-alt"></i>
         </div>
@@ -98,4 +92,4 @@
             No items available
         </div>
     </div>
-</div>
+</popup>
