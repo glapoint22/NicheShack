@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { SelectType } from '../../../classes/list-item-select-type';
+import { ListItem } from '../../../classes/list-item';
 
 @Component({
   selector: 'editable-item-list',
@@ -10,6 +11,8 @@ import { SelectType } from '../../../classes/list-item-select-type';
 export class EditableItemListComponent extends ItemListComponent {
   public indexOfEditedListItem: number = null;
   public selectType = SelectType;
+  @Output() postItem: EventEmitter<ListItem> = new EventEmitter();
+  @Output() updateItem: EventEmitter<ListItem> = new EventEmitter();
 
   // -----------------------------( SET SHORTCUT KEYS )------------------------------ \\
   setShortcutKeys(event: KeyboardEvent) {
@@ -41,9 +44,9 @@ export class EditableItemListComponent extends ItemListComponent {
       // Set the focus to the list item just in case it lost it on a mouse down
       this.setFocusToListItem(listItem);
 
+
       // Commit the edit
       this.selectedListItemIndex = this.indexOfEditedListItem;
-      this.newListItem = false;
       this.addIcon.isDisabled = false;
       this.editIcon.isDisabled = false;
       this.deleteIcon.isDisabled = false;
@@ -54,6 +57,8 @@ export class EditableItemListComponent extends ItemListComponent {
 
       // Name the list item
       this.nameListItem(listItem, listItemTrimmed, isEscape);
+
+      this.newListItem = false;
 
       // If the list item is empty
     } else {
@@ -90,7 +95,14 @@ export class EditableItemListComponent extends ItemListComponent {
   // -----------------------------( NAME LIST ITEM )------------------------------ \\
   nameListItem(listItem, listItemTrimmed, isEscape?: boolean) {
     // As long as we did NOT press the (Escape) key, update the name property
-    if (!isEscape) this.listItems[this.selectedListItemIndex].name = listItemTrimmed;
+    if (!isEscape) {
+      this.listItems[this.selectedListItemIndex].name = listItemTrimmed;
+      if (this.newListItem) {
+        this.postItem.emit(this.listItems[this.selectedListItemIndex]);
+      } else {
+        this.updateItem.emit(this.listItems[this.selectedListItemIndex])
+      }
+    }
     // Update the name in the list
     listItem.textContent = this.listItems[this.selectedListItemIndex].name;
   }
@@ -170,7 +182,7 @@ export class EditableItemListComponent extends ItemListComponent {
     this.deleteIcon.isDisabled = true;
     this.indexOfEditedListItem = 0;
     this.selectedListItemIndex = null;
-    this.listItems.unshift({ id: "", name: "", selected: false, selectType: null });
+    this.listItems.unshift({ id: "", name: "", selected: false, selectType: null, loading: false });
 
     for (let i = 0; i < this.listItems.length; i++) {
       this.listItems[i].selected = false;
@@ -196,7 +208,7 @@ export class EditableItemListComponent extends ItemListComponent {
       this.listItems[i].selectType = null;
     }
 
-    
+
 
     window.setTimeout(() => {
       let listItem = this.rowItem.find((item, index) => index == this.indexOfEditedListItem);

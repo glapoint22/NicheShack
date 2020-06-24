@@ -3,7 +3,6 @@ import { KeyValue } from '@angular/common';
 
 export interface HierarchyItem extends Item {
     showChildren: boolean;
-    loading: boolean;
     children: Array<HierarchyItem>;
     parent: HierarchyItem;
     type: number;

@@ -2,7 +2,7 @@
 <panel [title]="'Keywords'" (onClick)="onPanelClick($event)">
 
     <!-- Property Box -->
-    <div class="property-box-dark">
+    <div class="property-box-dark" style="position: relative;">
 
         <!-- Icons -->
         <div class="icons">
@@ -37,6 +37,8 @@
 
         <!-- Editable Item LIst -->
         <editable-item-list #itemList [listItems]="keywords"
+            (postItem)="post($event)"
+            (updateItem)="update($event)"
             [menuOptions]="['Add Keyword', 'Edit Keyword', 'Delete Keyword', 'Delete Keywords']">
         </editable-item-list>
 
