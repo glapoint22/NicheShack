@@ -14,7 +14,7 @@
 
         <!-- Content -->
         <div *ngIf="items; else loading" class="content">
-            <hierarchy-checkbox-content [items]="items" [hierarchy]="this"></hierarchy-checkbox-content>
+            <hierarchy-checkbox-content [items]="items" [hierarchy]="this" (onChange)="onChange($event)"></hierarchy-checkbox-content>
         </div>
 
 

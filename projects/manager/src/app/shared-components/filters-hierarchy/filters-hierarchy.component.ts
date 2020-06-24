@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { HierarchyComponent } from '../hierarchy/hierarchy.component';
 import { HierarchyItem, FilterHierarchyItemType } from '../../classes/hierarchy-item';
 import { PanelComponent } from '../panels/panel/panel.component';
+import { HierarchyCheckboxItem } from '../../classes/hierarchy-checkbox-item';
 
 @Component({
   selector: 'filters-hierarchy',
@@ -9,6 +10,7 @@ import { PanelComponent } from '../panels/panel/panel.component';
   styleUrls: ['./filters-hierarchy.component.scss']
 })
 export class FiltersHierarchyComponent extends HierarchyComponent {
+  @Input() productId: string;
   @ViewChild('panel', { static: false }) panel: PanelComponent;
 
   // -----------------------------( MAP ITEMS )------------------------------ \\
@@ -32,6 +34,7 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
         item.type = FilterHierarchyItemType.Filter;
         item.url = 'api/Filters';
         item.childrenUrl = 'api/FilterOptions';
+        item.childrenParameters = [{ key: 'filterId', value: item.id }, { key: 'productId', value: this.productId }];
       });
     }
   }
@@ -49,5 +52,16 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
           });
       }
     }
+  }
+
+
+
+  // -----------------------------( ON CHANGE )------------------------------ \\
+  onChange(item: HierarchyCheckboxItem) {
+    item.loading = true;
+    this.dataService.put('api/Products/Filters', { productId: this.productId, filterOptionId: item.id })
+      .subscribe(() => {
+        item.loading = false;
+      });
   }
 }

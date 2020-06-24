@@ -40,7 +40,7 @@ export class HierarchyComponent {
       parent.loading = true;
 
       // Get the item's children from the database
-      this.load(parent.childrenUrl, [{ key: 'id', value: parent.id }], parent)
+      this.load(parent.childrenUrl, parent.childrenParameters, parent)
         .subscribe((items: Array<HierarchyItem>) => {
           // Assign the items and flag loading has completed
           parent.children = items;

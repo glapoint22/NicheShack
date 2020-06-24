@@ -11,7 +11,7 @@
             </div>
 
             <ng-template #checkbox>
-                <checkbox [checked]="item.checked"></checkbox>
+                <checkbox [checked]="item.checked" (change)="onCheckboxChange(item)"></checkbox>
             </ng-template>
 
 
@@ -25,6 +25,6 @@
         </div>
 
         <!-- Hierarchy Content -->
-        <hierarchy-checkbox-content [items]="item.children" [hierarchy]="hierarchy"></hierarchy-checkbox-content>
+        <hierarchy-checkbox-content [items]="item.children" [hierarchy]="hierarchy" (onChange)="onChange.emit($event)"></hierarchy-checkbox-content>
     </div>
 </ng-container>
