@@ -272,8 +272,8 @@ export class TempDataService {
 
 
 
-      // Keywords
-      case 'api/Keywords':
+         // Keywords
+      case 'api/Products/Keywords':
 
         return of([
           {
@@ -911,7 +911,7 @@ export class TempDataService {
 
 
   post(url: string, body: any): Observable<any> {
-    return of({}).pipe(delay(1000));
+    return of('oiweriosfkjlsdf').pipe(delay(1000));
   }
 
   put(url: string, body: any): Observable<any> {

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChildren, QueryList, ElementRef, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, ViewChildren, QueryList, ElementRef, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { EditableItemListComponent } from '../editable-item-list/editable-item-list.component';
 import { SelectType } from '../../../classes/list-item-select-type';
 import { MediaItem } from '../../../classes/media-item';
@@ -36,7 +36,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
     // When a list gets loaded in the media browser popup, we want the list item associated with the targeted media to be selected, but only if target media is available
-    if (this.autoSelectedMediaItemIndex != null && this.autoSelectedMediaItemIndex != -1) {
+    if (this.autoSelectedMediaItemIndex != null && this.autoSelectedMediaItemIndex != -1 && !this.movingMediaInProgress && !this.addingMediaInProgress) {
       // Call the function that is going to select the list item
       super.onListItemDown(this.autoSelectedMediaItemIndex);
 
@@ -138,6 +138,4 @@ export class MediaItemListComponent extends EditableItemListComponent implements
       this.onMediaSelect.emit(this.listItems[this.selectedListItemIndex]);
     }, 50)
   }
-
-
 }

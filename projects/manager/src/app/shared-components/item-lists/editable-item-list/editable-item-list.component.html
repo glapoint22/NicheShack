@@ -1,4 +1,4 @@
-<div class="overflow-container">
+<div #overflowContainer class="overflow-container">
     <table (contextmenu)="$event.preventDefault()" (mouseup)="setContextMenu($event)">
         <tr *ngFor="let listItem of listItems; let listItemIndex = index">
             <td #rowItem
@@ -20,3 +20,9 @@
         </tr>
     </table>
 </div>
+
+<ng-container *ngFor="let listItem of listItems; let listItemIndex = index">
+    <div *ngIf="listItem.loading"  style="display: flex; justify-content: center; align-items: center; position: absolute; width: 22px; height: 22px; right: 5px;" [style.top.px]="(listItemIndex * 22) + 26">
+        <i  class="fas fa-spinner fa-pulse font-size-2"></i>
+    </div>
+</ng-container>

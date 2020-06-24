@@ -9,6 +9,7 @@ export class MediaItem implements ListItem, Media {
     public selectType: SelectType;
     public name: string;
     public thumbnail: string;
+    public loading: boolean;
 
     constructor(public type: MediaType) { }
 }
