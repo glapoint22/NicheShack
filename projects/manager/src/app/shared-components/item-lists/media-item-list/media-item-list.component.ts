@@ -20,7 +20,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   @Input() mediaType: MediaType;
   @Input() addingMediaInProgress: boolean;
   @Input() movingMediaInProgress: boolean;
-  @Input() selectedMediaItemIndex: number;
+  @Input() autoSelectedMediaItemIndex: number;
   @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
   @Output() onAddMedia: EventEmitter<void> = new EventEmitter();
   @Output() onMoveMedia: EventEmitter<MediaType> = new EventEmitter();
@@ -36,13 +36,13 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
     // When a list gets loaded in the media browser popup, we want the list item associated with the targeted media to be selected, but only if target media is available
-    if (this.selectedMediaItemIndex != null && this.selectedMediaItemIndex != -1) {
+    if (this.autoSelectedMediaItemIndex != null && this.autoSelectedMediaItemIndex != -1) {
       // Call the function that is going to select the list item
-      super.onListItemDown(this.selectedMediaItemIndex);
+      super.onListItemDown(this.autoSelectedMediaItemIndex);
 
       window.setTimeout(() => {
         // Once the list item is selected, we then have to set focus to it
-        this.rowItem.find((item, index) => index == this.selectedMediaItemIndex).nativeElement.focus();
+        this.rowItem.find((item, index) => index == this.autoSelectedMediaItemIndex).nativeElement.focus();
         // Then set the last focused list item as this selected list item
         this.lastFocusedListItem = document.activeElement;
       }, 20)
