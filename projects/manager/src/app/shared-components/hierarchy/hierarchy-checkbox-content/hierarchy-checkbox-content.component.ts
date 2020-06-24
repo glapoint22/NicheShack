@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { HierarchyContentComponent } from '../hierarchy-content/hierarchy-content.component';
-import { HierarchyItem } from '../../../classes/hierarchy-item';
+import { HierarchyCheckboxItem } from '../../../classes/hierarchy-checkbox-item';
 
 @Component({
   selector: 'hierarchy-checkbox-content',
@@ -8,13 +8,10 @@ import { HierarchyItem } from '../../../classes/hierarchy-item';
   styleUrls: ['../hierarchy-content/hierarchy-content.component.scss', './hierarchy-checkbox-content.component.scss']
 })
 export class HierarchyCheckboxContentComponent extends HierarchyContentComponent {
-  // @Output() onShowHideChildren: EventEmitter<void> = new EventEmitter();
+  @Output() onChange: EventEmitter<HierarchyCheckboxItem> = new EventEmitter();
 
-  // -----------------------------( SHOW HIDE CHILDREN )------------------------------ \\
-  // showHideChildren(parent: HierarchyItem, input: HTMLInputElement) {
-  //   super.showHideChildren(parent, input);
-    
-  //   this.onShowHideChildren.emit();
-  // }
-
+  onCheckboxChange(item: HierarchyCheckboxItem) {
+    item.checked = !item.checked;
+    this.onChange.emit(item);
+  }
 }

@@ -94,6 +94,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
           item.type = NicheShackHierarchyItemType.Niche;
           item.url = this.getUrl(NicheShackHierarchyItemType.Niche);
           item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Product);
+          item.childrenParameters = [{ key: 'id', value: item.id }];
         });
       } else
 
@@ -128,6 +129,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
             item.type = NicheShackHierarchyItemType.Niche;
             item.url = this.getUrl(NicheShackHierarchyItemType.Niche);
             item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Product);
+            item.childrenParameters = [{ key: 'id', value: item.id }];
           });
           break;
 
@@ -139,6 +141,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
             item.type = NicheShackHierarchyItemType.Category;
             item.url = this.getUrl(NicheShackHierarchyItemType.Category);
             item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Niche);
+            item.childrenParameters = [{ key: 'id', value: item.id }];
           });
           break;
       }
@@ -149,6 +152,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
         item.type = NicheShackHierarchyItemType.Category;
         item.url = this.getUrl(NicheShackHierarchyItemType.Category);
         item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Niche);
+        item.childrenParameters = [{ key: 'id', value: item.id }];
       });
     }
   }
@@ -275,7 +279,8 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
         parent: null,
         childless: false,
         url: this.getUrl(NicheShackHierarchyItemType.Category),
-        childrenUrl: this.getUrl(NicheShackHierarchyItemType.Niche)
+        childrenUrl: this.getUrl(NicheShackHierarchyItemType.Niche),
+        childrenParameters: null
       }
 
     } else if (this.selectedItem.type == NicheShackHierarchyItemType.Category) {
@@ -289,7 +294,8 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
         parent: this.selectedItem,
         childless: false,
         url: this.getUrl(NicheShackHierarchyItemType.Niche),
-        childrenUrl: this.getUrl(NicheShackHierarchyItemType.Product)
+        childrenUrl: this.getUrl(NicheShackHierarchyItemType.Product),
+        childrenParameters: null
       }
     } else {
       item = {
@@ -302,7 +308,8 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
         parent: this.selectedItem,
         childless: true,
         url: this.getUrl(NicheShackHierarchyItemType.Product),
-        childrenUrl: null
+        childrenUrl: null,
+        childrenParameters: null
       }
     }
 

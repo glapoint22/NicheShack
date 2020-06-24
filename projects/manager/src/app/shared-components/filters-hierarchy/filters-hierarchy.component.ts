@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { HierarchyComponent } from '../hierarchy/hierarchy.component';
 import { HierarchyItem, FilterHierarchyItemType } from '../../classes/hierarchy-item';
 import { PanelComponent } from '../panels/panel/panel.component';
-import { Observable } from 'rxjs';
+import { HierarchyCheckboxItem } from '../../classes/hierarchy-checkbox-item';
 
 @Component({
   selector: 'filters-hierarchy',
@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./filters-hierarchy.component.scss']
 })
 export class FiltersHierarchyComponent extends HierarchyComponent {
+  @Input() productId: string;
   @ViewChild('panel', { static: false }) panel: PanelComponent;
 
   // -----------------------------( MAP ITEMS )------------------------------ \\
@@ -33,6 +34,7 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
         item.type = FilterHierarchyItemType.Filter;
         item.url = 'api/Filters';
         item.childrenUrl = 'api/FilterOptions';
+        item.childrenParameters = [{ key: 'filterId', value: item.id }, { key: 'productId', value: this.productId }];
       });
     }
   }
@@ -47,32 +49,19 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
         this.load('api/Filters')
           .subscribe((items: Array<HierarchyItem>) => {
             this.items = items;
-            // window.setTimeout(() => {
-            //   this.panel.onContentLoad();
-            // });
-
           });
       }
     }
   }
 
 
-  
 
-  // onShowHideChildren() {
-  //   window.setTimeout(() => {
-  //     this.panel.onContentLoad();
-  //   }, 250);
-  // }
-
-
-  // loadChildren(parent: HierarchyItem): Observable<Array<HierarchyItem>> {
-  //   return new Observable(() => {
-  //     super.loadChildren(parent).subscribe((items: Array<HierarchyItem>) => {
-  //       window.setTimeout(() => {
-  //         this.panel.onContentLoad();
-  //       }, 250);
-  //     });
-  //   });
-  // }
+  // -----------------------------( ON CHANGE )------------------------------ \\
+  onChange(item: HierarchyCheckboxItem) {
+    item.loading = true;
+    this.dataService.put('api/Products/Filters', { productId: this.productId, filterOptionId: item.id })
+      .subscribe(() => {
+        item.loading = false;
+      });
+  }
 }

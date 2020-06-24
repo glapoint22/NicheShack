@@ -8,10 +8,9 @@ import { Component, Input, ViewChild, ElementRef, Output, EventEmitter } from '@
 export class PanelComponent {
   @Input() title: string;
   @Input() rounded: boolean;
-  @Input() expanded: boolean;
   @Output() onClick: EventEmitter<boolean> = new EventEmitter();
   @ViewChild('content', { static: false }) content: ElementRef;
-  
+  public expanded: boolean;
   public contentMaxHeight: number;
   public contentPadding: number = 14;
 
@@ -25,13 +24,12 @@ export class PanelComponent {
 
   click(input: HTMLInputElement) {
     this.onClick.emit(!input.checked);
-    if(input.checked) {
-      // window.setTimeout(()=> {
-        this.contentMaxHeight = this.content.nativeElement.scrollHeight + (this.contentPadding * 2);
-      // });
-      
-      window.setTimeout(()=> {
-        this.expanded = false; 
+    
+    if (input.checked) {
+      this.onContentLoad();
+
+      window.setTimeout(() => {
+        this.expanded = false;
       });
     } else {
       this.expanded = true;
@@ -39,7 +37,7 @@ export class PanelComponent {
   }
 
 
-  transitionend(event: any) {
-    if(this.expanded) this.contentMaxHeight = null;
+  transitionend() {
+    if (this.expanded) this.contentMaxHeight = null;
   }
 }

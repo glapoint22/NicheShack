@@ -1,7 +1,6 @@
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { ProductPricePoint } from 'projects/manager/src/app/classes/product-price-point';
 import { ProductContent } from 'projects/manager/src/app/classes/product-content';
-import { PanelComponent } from 'projects/manager/src/app/shared-components/panels/panel/panel.component';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { Item } from 'projects/manager/src/app/classes/item';
 import { Observable, of } from 'rxjs';
@@ -23,7 +22,6 @@ export class ProductContentComponent implements OnChanges {
   public pricePointList: Array<Item>;
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
-  @ViewChild('panel', { static: false }) panel: PanelComponent;
   constructor(public popupService: PopupService, private loadingService: LoadingService, private promptService: PromptService, private productService: ProductService) { }
 
 

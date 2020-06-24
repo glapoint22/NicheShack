@@ -3,7 +3,6 @@ import { CategoriesWidgetComponent } from '../../../designer/widgets/categories-
 import { Searchable } from 'projects/manager/src/app/classes/searchable';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
-import { PanelComponent } from '../../../panels/panel/panel.component';
 import { ItemListComponent } from '../../../item-lists/item-list/item-list.component';
 
 @Component({
@@ -13,7 +12,6 @@ import { ItemListComponent } from '../../../item-lists/item-list/item-list.compo
 })
 export class CategoriesComponent implements Searchable {
   @Input() categoriesWidget: CategoriesWidgetComponent;
-  @ViewChild('panel', { static: false }) panel: PanelComponent;
   @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
 
   public searchUrl: string = 'api/Categories';
@@ -36,7 +34,6 @@ export class CategoriesComponent implements Searchable {
     // Add the item to the list
     // this.itemList.addListItem(searchItem);
     this.categoriesWidget.categories.push(searchItem)
-    this.panel.onContentLoad();
   }
 
 

@@ -9,7 +9,6 @@ import { ProductEditorComponent } from './product-editor/product-editor.componen
 import { ProductPropertiesComponent } from './product-editor/product-properties/product-properties.component';
 import { ProductContentComponent } from './product-editor/product-properties/product-content/product-content.component';
 import { ProductDescriptionComponent } from './product-editor/product-properties/product-description/product-description.component';
-import { ProductFiltersComponent } from './product-editor/product-properties/product-filters/product-filters.component';
 import { ProductHoplinkComponent } from './product-editor/product-properties/product-hoplink/product-hoplink.component';
 import { ProductKeywordsComponent } from './product-editor/product-properties/product-keywords/product-keywords.component';
 import { ProductMediaComponent } from './product-editor/product-properties/product-media/product-media.component';
@@ -39,7 +38,6 @@ import { StarsModule } from 'shared-components/stars/stars.module';
     ProductPropertiesComponent,
     ProductContentComponent,
     ProductDescriptionComponent,
-    ProductFiltersComponent,
     ProductHoplinkComponent,
     ProductKeywordsComponent,
     ProductMediaComponent,

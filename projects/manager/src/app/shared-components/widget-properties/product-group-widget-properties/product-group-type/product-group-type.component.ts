@@ -1,6 +1,5 @@
 import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { ProductGroupType } from 'projects/manager/src/app/classes/product-group-type';
-import { PanelComponent } from '../../../panels/panel/panel.component';
 import { KeyValue } from '@angular/common';
 import { ProductGroupWidgetComponent } from '../../../designer/widgets/product-group-widget/product-group-widget.component';
 import { Searchable } from 'projects/manager/src/app/classes/searchable';
@@ -15,7 +14,6 @@ import { ItemListComponent } from '../../../item-lists/item-list/item-list.compo
 })
 export class ProductGroupTypeComponent implements OnInit, Searchable {
   @Input() productGroupWidget: ProductGroupWidgetComponent;
-  @ViewChild('panel', { static: false }) panel: PanelComponent;
   @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
   public productGroupTypes: Array<KeyValue<string, string>>;
   public productGroupType = ProductGroupType;
@@ -41,10 +39,6 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
   onDropdownOptionSelect(selectedOptionValue: string) {
     let index = this.productGroupTypes.findIndex(x => x.value == selectedOptionValue);
     this.productGroupWidget.productGroupType = index;
-
-    window.setTimeout(() => {
-      this.panel.onContentLoad();
-    });
   }
 
 
@@ -62,7 +56,6 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
     // Add the item to the list
     // this.itemList.addListItem(searchItem);
     this.productGroupWidget.featuredProducts.push(searchItem)
-    this.panel.onContentLoad();
   }
 
 

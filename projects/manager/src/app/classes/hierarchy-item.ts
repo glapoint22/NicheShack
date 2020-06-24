@@ -1,4 +1,5 @@
 import { Item } from './item';
+import { KeyValue } from '@angular/common';
 
 export interface HierarchyItem extends Item {
     showChildren: boolean;
@@ -9,6 +10,7 @@ export interface HierarchyItem extends Item {
     childless: boolean;
     url: string;
     childrenUrl: string;
+    childrenParameters: Array<KeyValue<string, string>>;
 }
 
 
