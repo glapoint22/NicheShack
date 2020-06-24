@@ -10,21 +10,14 @@ import { PopupService } from 'projects/manager/src/app/services/popup.service';
 })
 export class VideoComponent {
   constructor(private popupService: PopupService){}
-
-  // ******************************************************************************************************************
-  @Input() video: Video;// <======= Property type needs to change so it can work with a property on media browser popup
-  // ******************************************************************************************************************
+  @Input() video: Video;
 
   // -----------------------------( ON VIDEO ICON CLICK )------------------------------ \\
   onVideoIconClick(sourceElement: HTMLElement) {
     this.popupService.mediaType = MediaType.Video;
     this.popupService.sourceElement = sourceElement;
     this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
-
-
-    // *******************************************************
-    // this.popupService.mediaBrowserPopup.video = this.video;
-    // this.popupService.mediaBrowserPopup.video = this.video;
-    // *******************************************************
+    this.popupService.mediaBrowserPopup.media = this.video;
+    this.popupService.mediaBrowserPopup.media = this.video;
   }
 }

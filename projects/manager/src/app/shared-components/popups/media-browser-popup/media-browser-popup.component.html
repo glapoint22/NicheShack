@@ -37,7 +37,7 @@
             <input #mediaSelectInput
                    type="file"
                    class="media-select-input"
-                   (change)="onGetNewMedia($event)">
+                   (change)="setNewMedia($event)">
             <i class="fas fa-search search-icon"></i>
         </div>
 
@@ -60,13 +60,13 @@
 
         <!-- No Media -->
         <div *ngIf="noMedia" class="no-media">
-            <div *ngIf="indexOfSelectedMediaList == mediaType.Image">No images available</div>
-            <div *ngIf="indexOfSelectedMediaList == mediaType.BackgroundImage">No background images available</div>
-            <div *ngIf="indexOfSelectedMediaList == mediaType.BannerImage">No banner images available</div>
-            <div *ngIf="indexOfSelectedMediaList == mediaType.CategoryImage">No category images available</div>
-            <div *ngIf="indexOfSelectedMediaList == mediaType.ProductImage">No product images available</div>
-            <div *ngIf="indexOfSelectedMediaList == mediaType.Icon">No icons available</div>
-            <div *ngIf="indexOfSelectedMediaList == mediaType.Video">No videos available</div>
+            <div *ngIf="indexOfCurrentMediaList == mediaType.Image">No images available</div>
+            <div *ngIf="indexOfCurrentMediaList == mediaType.BackgroundImage">No background images available</div>
+            <div *ngIf="indexOfCurrentMediaList == mediaType.BannerImage">No banner images available</div>
+            <div *ngIf="indexOfCurrentMediaList == mediaType.CategoryImage">No category images available</div>
+            <div *ngIf="indexOfCurrentMediaList == mediaType.ProductImage">No product images available</div>
+            <div *ngIf="indexOfCurrentMediaList == mediaType.Icon">No icons available</div>
+            <div *ngIf="indexOfCurrentMediaList == mediaType.Video">No videos available</div>
         </div>
 
         <!-- Media List -->
@@ -74,15 +74,15 @@
             <media-item-list 
                 #mediaItemList
                 *ngIf="!loadingMediaInProgress"
-                (onAddMedia)="mediaSelectInput.click()"
+                (onAddMedia)="onAddMedia(mediaSelectInput)"
                 (onMoveMedia)="onMoveMedia($event)"
                 (onMediaSelect)="onMediaSelect($event)"
-                [listItems]="mediaLists[indexOfSelectedMediaList]"
-                [mediaType]="indexOfSelectedMediaList"
+                [listItems]="mediaLists[indexOfCurrentMediaList]"
+                [mediaType]="indexOfCurrentMediaList"
                 [addingMediaInProgress]="addingMediaInProgress"
                 [movingMediaInProgress]="movingMediaInProgress"
-                [selectedMediaItemIndex]="selectedMediaItemIndex"
-                [menuOptions]="[menuOptions[indexOfSelectedMediaList].add, menuOptions[indexOfSelectedMediaList].edit, menuOptions[indexOfSelectedMediaList].delete, menuOptions[indexOfSelectedMediaList].deletes]">
+                [autoSelectedMediaItemIndex]="autoSelectedMediaItemIndex"
+                [menuOptions]="[menuOptions[indexOfCurrentMediaList].add, menuOptions[indexOfCurrentMediaList].edit, menuOptions[indexOfCurrentMediaList].delete, menuOptions[indexOfCurrentMediaList].deletes]">
             </media-item-list>
         </div>
     </div>
