@@ -1,5 +1,5 @@
 <!-- Panel -->
-<panel [title]="'Keywords'">
+<panel [title]="'Keywords'" (onClick)="onPanelClick($event)">
 
     <!-- Property Box -->
     <div class="property-box-dark">
@@ -36,16 +36,19 @@
 
 
         <!-- Editable Item LIst -->
-        <editable-item-list 
-            #itemList 
-            [listItems]="keywords"
-            (onAddItem)="addKeyword()"
-            (onEditItem)="editKeyword()"
+        <editable-item-list #itemList [listItems]="keywords"
             [menuOptions]="['Add Keyword', 'Edit Keyword', 'Delete Keyword', 'Delete Keywords']">
         </editable-item-list>
 
 
+
+        <div class="loading" *ngIf="!keywords">
+            <i class="fas fa-spinner fa-pulse font-size-3"></i>
+        </div>
+
+
+
         <!-- Placeholder -->
-        <div *ngIf="keywords.length == 0" class="no-property">No keywords available</div>
+        <div *ngIf="keywords && keywords.length == 0" class="no-property">No keywords available</div>
     </div>
 </panel>

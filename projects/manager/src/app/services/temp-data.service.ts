@@ -272,6 +272,44 @@ export class TempDataService {
 
 
 
+         // Keywords
+      case 'api/Keywords':
+
+        return of([
+          {
+            id: 'AFSDFFDSFS',
+            name: 'Gumpy'
+          },
+          {
+            id: 'GGFSDFGFSDAF',
+            name: 'Ice Cream'
+          },
+          {
+            id: 'WFWFASF',
+            name: 'Chocolate'
+          },
+          {
+            id: 'HYTREYREY',
+            name: 'Vanilla'
+          },
+          {
+            id: 'UYTUYRUY',
+            name: 'Strawberry'
+          },
+          {
+            id: 'YTRYRE',
+            name: 'Sundae'
+          },
+          {
+            id: 'AFSDFFDSFS',
+            name: 'Ice Cream Cone'
+          },
+          {
+            id: 'AFSDFFDSFS',
+            name: 'Mint Chocolate Chip'
+          }
+        ]).pipe(delay(1000));
+
     }
 
   }

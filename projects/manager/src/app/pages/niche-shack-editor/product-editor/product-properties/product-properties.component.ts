@@ -27,68 +27,27 @@ export class ProductPropertiesComponent implements OnChanges {
       subscriber.next({
         id: 'TGHUQ7OWNK',
         name: 'Booty Type Training',
-        vendor: null
-        // {
-        //   id: 'LWDT6IQHNX',
-        //   name: 'Gumpy\'s',
-        // }
+        vendor:
+        {
+          id: 'LWDT6IQHNX',
+          name: 'Gumpy\'s',
+        }
         ,
         rating: 0,
         totalReviews: 0,
         hoplink: null,
-        description: null
-        // '<div>"The Skinny Asian Diet" Program gives you all of the incredible strategies and secret methods Asian women ' +
-        //   'are using to get super-lean, super-healthy, and super-happy without expensive fitness gear and without going hungry. And it ' +
-        //   'works even if your schedule is too busy for a single spare minute! Whether you\'re a career-oriented gal logging 60 hours a week ' +
-        //   'at the office or a stay-at-home mom who would like to finally drop that annoying post-baby fat you\'ve been carrying, the program ' +
-        //   'will get you where you want to be fast. The beauty of the program is that it works for every weight loss scenario. It doesn\'t matter ' +
-        //   'if you\'re 10 pounds overweight or 100 pounds overweight, you will achieve your goal number quickly! "The Skinny Asian Diet" works for ' +
-        //   'men too, so feel free to share the system with your husband or boyfriend if he has his own spare-tire you\'d like to see disappear. The ' +
-        //   'best part of all is that it won\'t feel like you\'re on a diet at all. It will feel like you\'re living life to the fullest, eating large ' +
-        //   'meals filled with great food that is simple to prepare, with no midnight cravings for sweets or other guilty pleasures!</div>'
+        description:
+          '<div>"The Skinny Asian Diet" Program gives you all of the incredible strategies and secret methods Asian women ' +
+          'are using to get super-lean, super-healthy, and super-happy without expensive fitness gear and without going hungry. And it ' +
+          'works even if your schedule is too busy for a single spare minute! Whether you\'re a career-oriented gal logging 60 hours a week ' +
+          'at the office or a stay-at-home mom who would like to finally drop that annoying post-baby fat you\'ve been carrying, the program ' +
+          'will get you where you want to be fast. The beauty of the program is that it works for every weight loss scenario. It doesn\'t matter ' +
+          'if you\'re 10 pounds overweight or 100 pounds overweight, you will achieve your goal number quickly! "The Skinny Asian Diet" works for ' +
+          'men too, so feel free to share the system with your husband or boyfriend if he has his own spare-tire you\'d like to see disappear. The ' +
+          'best part of all is that it won\'t feel like you\'re on a diet at all. It will feel like you\'re living life to the fullest, eating large ' +
+          'meals filled with great food that is simple to prepare, with no midnight cravings for sweets or other guilty pleasures!</div>'
         ,
-        filters: [
-          // {
-          //   id: 0,
-          //   name: 'Product Type',
-          //   options: [
-          //     {
-          //       id: 0,
-          //       name: 'Physical',
-          //     },
-          //     {
-          //       id: 1,
-          //       name: 'Digital Download',
-          //     },
-          //     {
-          //       id: 2,
-          //       name: 'Email',
-          //     },
-          //     {
-          //       id: 3,
-          //       name: 'Online Membership',
-          //     }
-          //   ]
-          // },
-          // {
-          //   id: 1,
-          //   name: 'Billing Type',
-          //   options: [
-          //     {
-          //       id: 4,
-          //       name: 'Single Payment',
-          //     },
-          //     {
-          //       id: 5,
-          //       name: 'Recurring',
-          //     },
-          //     {
-          //       id: 6,
-          //       name: 'Trial',
-          //     }
-          //   ]
-          // }
-        ],
+
         content: [
           {
             id: '0006C245A7',
@@ -245,40 +204,6 @@ export class ProductPropertiesComponent implements OnChanges {
             url: '0037b470cdef401a94195bc5c391c404.png',
             type: MediaType.ProductImage
           }
-        ],
-        keywords: [
-          // {
-          //   id: 'AFSDFFDSFS',
-          //   name: 'Gumpy'
-          // },
-          // {
-          //   id: 'GGFSDFGFSDAF',
-          //   name: 'Ice Cream'
-          // },
-          // {
-          //   id: 'WFWFASF',
-          //   name: 'Chocolate'
-          // },
-          // {
-          //   id: 'HYTREYREY',
-          //   name: 'Vanilla'
-          // },
-          // {
-          //   id: 'UYTUYRUY',
-          //   name: 'Strawberry'
-          // },
-          // {
-          //   id: 'YTRYRE',
-          //   name: 'Sundae'
-          // },
-          // {
-          //   id: 'AFSDFFDSFS',
-          //   name: 'Ice Cream Cone'
-          // },
-          // {
-          //   id: 'AFSDFFDSFS',
-          //   name: 'Mint Chocolate Chip'
-          // }
         ],
         price: '$5.16 - $16.80'
       });
