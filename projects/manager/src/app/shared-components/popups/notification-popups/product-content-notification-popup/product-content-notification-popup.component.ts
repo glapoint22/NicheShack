@@ -17,6 +17,7 @@ import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { PaginatorComponent } from '../../../paginator/paginator.component';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
+import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 
 @Component({
   selector: 'product-content-notification-popup',
@@ -28,7 +29,7 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   public pricePointList: Array<Item>;
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, notificationService: NotificationService, private loadingService: LoadingService, private promptService: PromptService, private productService: ProductService) { super(popupService, cover, menuService, dropdownMenuService, notificationService) }
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, notificationService: NotificationService, private loadingService: LoadingService, private promptService: PromptService, private productService: ProductService) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService) }
 
 
   //                                                                 TEMP!!!!!!

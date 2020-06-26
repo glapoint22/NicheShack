@@ -7,6 +7,7 @@ import { CoverService } from 'projects/manager/src/app/services/cover.service';
 import { MenuService } from 'projects/manager/src/app/services/menu.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
+import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 
 @Component({
   selector: 'price-point-popup',
@@ -19,7 +20,7 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
   public pricePointListItem: Item;
 
 
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, private productService: ProductService) {super(popupService, cover, menuService, dropdownMenuService)}
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, private productService: ProductService) {super(popupService, cover, menuService, dropdownMenuService, dataService)}
 
 
   // --------------------------------( NG ON INIT )-------------------------------- \\

@@ -16,7 +16,6 @@ export class VendorFormComponent extends FormComponent implements OnInit {
   public editMode: boolean;
   public newVendor: boolean;
   public onSubmit = new Subject<Item>();
-
   constructor(formService: FormService, private menuService: MenuService) { super(formService) }
 
   // --------------------------------( NG ON INIT )-------------------------------- \\

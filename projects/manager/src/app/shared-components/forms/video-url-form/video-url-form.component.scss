@@ -1,0 +1,28 @@
+.form {
+    max-width: 450px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+
+    button {
+        width: 90px;
+        &:nth-child(2){
+            margin-left: 40px;
+        }
+    }
+}
+
+.panel-light {
+    padding-bottom: 15px;
+    fieldset {
+        padding-bottom: 14px;
+        margin-bottom: 15px;
+    }
+    
+}
+
+input{
+    width: 100%;
+}

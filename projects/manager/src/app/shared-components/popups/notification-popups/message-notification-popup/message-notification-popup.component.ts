@@ -6,6 +6,7 @@ import { MenuService } from 'projects/manager/src/app/services/menu.service';
 import { NotificationService } from 'projects/manager/src/app/services/notification.service';
 import { Notification, NotificationTab } from 'projects/manager/src/app/classes/notification';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
+import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 
 @Component({
   selector: 'message-notification-popup',
@@ -15,7 +16,7 @@ import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-
 export class MessageNotificationPopupComponent extends PopupComponent implements OnInit {
   public paginatorIndex: number;
   public notificationTab = NotificationTab;
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, public notificationService: NotificationService) { super(popupService, cover, menuService, dropdownMenuService) }
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, public notificationService: NotificationService) { super(popupService, cover, menuService, dropdownMenuService, dataService) }
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
   ngOnInit() {

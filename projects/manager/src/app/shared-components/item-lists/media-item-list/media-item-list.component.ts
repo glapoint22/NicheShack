@@ -36,7 +36,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
     // When a list gets loaded in the media browser popup, we want the list item associated with the targeted media to be selected, but only if target media is available
-    if (this.autoSelectedMediaItemIndex != null && this.autoSelectedMediaItemIndex != -1 && !this.movingMediaInProgress && !this.addingMediaInProgress) {
+    if (this.autoSelectedMediaItemIndex != null && this.autoSelectedMediaItemIndex != -1 && !this.movingMediaInProgress && !this.addingMediaInProgress && this.indexOfEditedListItem == null) {
       // Call the function that is going to select the list item
       super.onListItemDown(this.autoSelectedMediaItemIndex);
 

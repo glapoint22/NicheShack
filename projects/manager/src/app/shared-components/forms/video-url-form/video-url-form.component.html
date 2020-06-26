@@ -1,0 +1,24 @@
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" (onShow)="onShow(urlInput)" style="z-index: 500;">
+    <div class="form">
+        <!-- Bar -->
+        <div class="form-bar">
+            Video
+            <div class="form-x-button" (click)="show = false">X</div>
+        </div>
+
+        <!-- Panel -->
+        <div class="panel-light">
+
+            <fieldset>
+                <legend>URL</legend>
+                
+                <input #urlInput (input)="onInputChange($event.target)">
+            </fieldset>
+
+            <div class="button-container">
+                <button (click)="show = false;">Close</button>
+                <button (click)="onSubmitClick(urlInput)" [disabled]="submitButtonDisabled">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

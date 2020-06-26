@@ -9,13 +9,15 @@ import { VendorFormComponent } from './shared-components/forms/vendor-form/vendo
 import { FormComponent } from './shared-components/forms/form/form.component';
 import { FormsModule } from '@angular/forms';
 import { MenuBarModule } from './shared-components/menu-bar/menu-bar.module';
+import { VideoUrlFormComponent } from './shared-components/forms/video-url-form/video-url-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoadingComponent,
     FormComponent,
-    VendorFormComponent
+    VendorFormComponent,
+    VideoUrlFormComponent
   ],
   imports: [
     BrowserModule,

@@ -74,6 +74,8 @@
             <media-item-list 
                 #mediaItemList
                 *ngIf="!loadingMediaInProgress"
+                (postItem)="post($event)"
+                (updateItem)="update($event)"
                 (onAddMedia)="onAddMedia(mediaSelectInput)"
                 (onMoveMedia)="onMoveMedia($event)"
                 (onMediaSelect)="onMediaSelect($event)"

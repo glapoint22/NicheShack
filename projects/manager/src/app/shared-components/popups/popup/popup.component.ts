@@ -3,6 +3,7 @@ import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
 import { MenuService } from '../../../services/menu.service';
 import { DropdownMenuService } from '../../../services/dropdown-menu.service';
+import { TempDataService } from '../../../services/temp-data.service';
 
 @Component({
   selector: 'popup',
@@ -17,7 +18,7 @@ export class PopupComponent {
   private arrow;
   private popupTop: number;
   private arrowOnTop: boolean = false;
-  constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService, public dropdownMenuService: DropdownMenuService) { }
+  constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService, public dropdownMenuService: DropdownMenuService, public dataService: TempDataService) { }
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
