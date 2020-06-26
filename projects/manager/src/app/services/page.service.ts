@@ -22,6 +22,8 @@ import { ProductGroupWidgetComponent } from '../shared-components/designer/widge
 import { CategoriesWidgetComponent } from '../shared-components/designer/widgets/categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from '../shared-components/designer/widgets/carousel-widget/carousel-widget.component';
 import { WidgetCursor } from '../classes/widget-cursor';
+import { TempDataService } from './temp-data.service';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +37,10 @@ export class PageService {
   private defaultWidth: number;
 
 
-  constructor(private widgetService: WidgetService, private breakpointService: BreakpointService) { }
+  constructor(private widgetService: WidgetService,
+    private breakpointService: BreakpointService,
+    private dataService: TempDataService,
+    private loadingService: LoadingService) { }
 
   // -----------------------------( PREVIEW )------------------------------ \\
   preview() {
@@ -125,7 +130,27 @@ export class PageService {
   }
 
 
-  savePage() {
+  savePage(url: string) {
+    let pageData: PageData = this.getPageData();
+
+    this.loadingService.loading = true;
+    this.dataService.put(url, pageData)
+      .subscribe(() => {
+        this.loadingService.loading = false;
+      });
+  }
+
+  // stringifyPage(pageData: PageData) {
+  //   return JSON.stringify(pageData, (k, v) => {
+  //     if(typeof v == 'object' && Object.values(v).length == 0) {
+  //       return undefined;
+  //     } else {
+  //       return v;
+  //     }
+  //   });
+  // }
+
+  getPageData(): PageData {
     let pageData: PageData = new PageData();
 
     // Assign the page id
@@ -140,13 +165,7 @@ export class PageService {
 
     this.rootContainer.save(pageData.rows);
 
-    let stringifiedPageData = JSON.stringify(pageData, (k, v) => {
-      if(typeof v == 'object' && Object.values(v).length == 0) {
-        return undefined;
-      } else {
-        return v;
-      }
-    });
+    return pageData;
   }
 
 
@@ -285,8 +304,8 @@ export class PageService {
 
     switch (type) {
       case 'email':
-      this.defaultWidth = this.emailDefaultWidth;
-      break;
+        this.defaultWidth = this.emailDefaultWidth;
+        break;
 
       case 'leadPage':
         this.defaultWidth = this.pageDefaultWidth;

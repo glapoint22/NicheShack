@@ -18,7 +18,10 @@
 
     <!-- Video -->
     <div [ngClass]="{'container': video && video.url}">
-        <iframe #iframe frameborder="0" allowfullscreen class="video" allow="autoplay"></iframe>
+        <!-- Had to add extra div here because vimeo script was adding padding -->
+        <div>
+            <iframe #iframe frameborder="0" allowfullscreen class="video" allow="autoplay"></iframe>
+        </div>
     </div>
 
 

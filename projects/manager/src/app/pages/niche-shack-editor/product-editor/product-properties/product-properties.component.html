@@ -1,31 +1,32 @@
-<div class="container" *ngIf="productProperties">
-    <!-- Publish button -->
+<div class="container" *ngIf="product">
+    <!-- Save & Publish buttons -->
     <div class="grooved-container">
-        <div class="button-center">Publish</div>
+        <div class="button-left" (click)="onSaveClick()">Save</div>
+        <div class="button-right">Publish</div>
     </div>
 
     <!-- Vendor -->
-    <product-vendor id="first-property" [vendor]="productProperties.vendor"></product-vendor>
+    <product-vendor id="first-property" [vendor]="product.vendor"></product-vendor>
 
     <!-- Hoplink -->
-    <product-hoplink [productProperties]="productProperties"></product-hoplink>
+    <product-hoplink [product]="product"></product-hoplink>
 
 
     <!-- Filters -->
-    <filters-hierarchy [productId]="productProperties.id"></filters-hierarchy>
+    <filters-hierarchy [productId]="product.id"></filters-hierarchy>
 
 
     <!-- Content -->
-    <product-content [content]="productProperties.content" [pricePoints]="productProperties.pricePoints">
+    <product-content [content]="product.content" [pricePoints]="product.pricePoints">
     </product-content>
 
 
     <!-- Media -->
-    <product-media [media]="productProperties.media"></product-media>
+    <product-media [media]="product.media"></product-media>
 
 
     <!-- Keywords -->
-    <product-keywords [productId]="productProperties.id"></product-keywords>
+    <product-keywords [productId]="product.id"></product-keywords>
 
 
     <!-- Description -->
