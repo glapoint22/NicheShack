@@ -9,6 +9,17 @@
     </div>
 
 
-    <!-- Category Icon -->
-    <image *ngIf="category" [image]="category.icon" [mediaType]="mediaType.CategoryImage"></image>
+    <ng-container *ngIf="category">
+        <!-- Save & Publish buttons -->
+        <div class="grooved-container">
+            <div class="button-left" (click)="onSaveClick()">Save</div>
+            <div class="button-right">Publish</div>
+        </div>
+
+
+        <!-- Category Icon -->
+        <image [image]="category.icon" [mediaType]="mediaType.CategoryImage"></image>
+    </ng-container>
+
+
 </div>

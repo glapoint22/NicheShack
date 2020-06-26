@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupComponent } from '../popup/popup.component';
-import { ProductProperties } from '../../../classes/product-properties';
+import { Product } from '../../../classes/product';
 
 @Component({
   selector: 'hoplink-popup',
@@ -8,7 +8,7 @@ import { ProductProperties } from '../../../classes/product-properties';
   styleUrls: ['./hoplink-popup.component.scss', '../popup/popup.component.scss']
 })
 export class HoplinkPopupComponent extends PopupComponent implements OnInit {
-  public productProperties: ProductProperties;
+  public product: Product;
 
 
   // --------------------------------( NG ON INIT )-------------------------------- \\

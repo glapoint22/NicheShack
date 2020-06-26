@@ -54,7 +54,6 @@
         .img-container {
             width: 100%;
             max-width: 880px;
-            height: 100%;
             max-height: 500px;
             display: flex;
             justify-content: center;
@@ -64,6 +63,9 @@
     
             img {
                 width: 100%;
+                max-width: 880px;
+                max-height: 500px;
+                object-fit: contain;
             }
     
     

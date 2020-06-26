@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
-import { ProductProperties } from 'projects/manager/src/app/classes/product-properties';
+import { Product } from 'projects/manager/src/app/classes/product';
 
 @Component({
   selector: 'product-hoplink',
@@ -8,13 +8,13 @@ import { ProductProperties } from 'projects/manager/src/app/classes/product-prop
   styleUrls: ['./product-hoplink.component.scss']
 })
 export class ProductHoplinkComponent {
-  @Input() productProperties: ProductProperties;
+  @Input() product: Product;
 
   constructor(private popupService: PopupService) { }
 
   onHoplinkIconClick(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
-    this.popupService.hoplinkPopup.productProperties = this.productProperties;
+    this.popupService.hoplinkPopup.product = this.product;
     this.popupService.hoplinkPopup.show = !this.popupService.hoplinkPopup.show;
   }
 }

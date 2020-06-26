@@ -17,8 +17,8 @@
     </div>
 
     <!-- Product Properties -->
-    <product-properties [productId]="product.id" *ngIf="mode == 'properties'"></product-properties>
+    <product-properties [productId]="hierarchyItem.id" *ngIf="mode == 'properties'"></product-properties>
 
     <!-- Product Email -->
-    <product-email [productId]="product.id" *ngIf="mode == 'email'"></product-email>
+    <product-email [productId]="hierarchyItem.id" *ngIf="mode == 'email'"></product-email>
 </div>

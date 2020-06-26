@@ -1,17 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Observable } from 'rxjs';
-import { delay } from 'rxjs/operators';
 import { PageService } from 'projects/manager/src/app/services/page.service';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
-import { ButtonWidgetData } from 'projects/manager/src/app/classes/button-widget-data';
-import { TextWidgetData } from 'projects/manager/src/app/classes/text-widget-data';
-import { ImageWidgetData } from 'projects/manager/src/app/classes/image-widget-data';
-import { ContainerWidgetData } from 'projects/manager/src/app/classes/container-widget-data';
-import { LineWidgetData } from 'projects/manager/src/app/classes/line-widget-data';
-import { VideoWidgetData } from 'projects/manager/src/app/classes/video-widget-data';
-import { ProductGroupWidgetData } from 'projects/manager/src/app/classes/product-group-widget-data';
-import { CategoriesWidgetData } from 'projects/manager/src/app/classes/categories-widget-data';
-import { CarouselWidgetData } from 'projects/manager/src/app/classes/carousel-widget-data';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
@@ -29,198 +18,13 @@ export class LeadPageEditorComponent implements OnChanges {
   public selectedTab: string;
   public currentLeadPageId: string;
   public initialPageLoaded: boolean;
+  public leadPageUrl: string = 'api/Niches/LeadPages';
+  public emailUrl: string = 'api/Niches/LeadPageEmails';
 
   constructor(public pageService: PageService,
     private loadingService: LoadingService,
     private promptService: PromptService,
     private dataService: TempDataService) { }
-
-  //                                                                 TEMP!!!!!!
-  // ******************************************************************************************************************************************
-  
-
-
-  public getTempEmail(id: string): Observable<PageData> {
-    return new Observable<PageData>(subscriber => {
-      switch (id) {
-        case 'FM1R8HAOEB':
-          subscriber.next({
-            id: 'FM1R8HAOEB',
-            name: 'Campland Email',
-            width: 600,
-            background: {
-              enable: false,
-              color: '#0000ff',
-              image: null
-            },
-            rows: [
-              {
-                name: 'My Row',
-                top: 200,
-                background: null,
-                border: null,
-                corners: null,
-                shadow: null,
-                padding: null,
-                verticalAlignment: null,
-                breakpoints: [],
-                columns: [
-
-
-
-
-
-
-
-
-                  // Text
-                  {
-                    name: 'My Column',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 12,
-                    widgetData: {
-                      widgetType: 1,
-                      name: 'My Text',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      background: {
-                        color: '#afafaf',
-                        image: null,
-                        enable: null
-                      },
-                      padding: null,
-                      htmlContent: '<div>Thanks for your interest in Campland!</div>'
-                    } as TextWidgetData
-                  },
-                ]
-              },
-            ]
-          });
-          break;
-
-        case '5NOQOTV6KS':
-          subscriber.next({
-            id: '5NOQOTV6KS',
-            name: 'Alita Email',
-            width: 500,
-            background: {
-              enable: false,
-              color: '00ff00',
-              image: null
-            },
-            rows: []
-          });
-
-          break;
-
-
-        case '026HJNAYPQ':
-          subscriber.next({
-            id: '026HJNAYPQ',
-            name: 'Gumpy\'s Email',
-            width: 550,
-            background: {
-              enable: false,
-              color: '#0000ff',
-              image: null
-            },
-            rows: []
-          });
-          break;
-
-
-
-
-        case '4LSN6AR0F5':
-          subscriber.next({
-            id: '4LSN6AR0F5',
-            name: 'New Lead Page Email',
-            width: 600,
-            background: {
-              color: '#ffffff',
-              image: null,
-              enable: null
-            },
-            rows: []
-          });
-
-          break;
-
-
-
-        case 'L2D8IEG9WL':
-          subscriber.next({
-            id: 'L2D8IEG9WL',
-            name: 'Alita Email',
-            width: 500,
-            background: {
-              enable: false,
-              color: '00ff00',
-              image: null
-            },
-            rows: []
-          });
-
-          break;
-      }
-    }).pipe(delay(1000));
-  }
-
-
-
-
-
-
-  public getTempNewLeadPage(): Observable<PageData> {
-    return new Observable<PageData>(subscriber => {
-      subscriber.next({
-        id: '4LSN6AR0F5',
-        name: 'New Lead Page',
-        width: 1600,
-        background: {
-          color: '#ffffff',
-          image: null,
-          enable: null
-        },
-        rows: []
-      });
-    }).pipe(delay(1000));
-  }
-
-
-
-  public getTempDuplicateLeadPage(leadPageId: string): Observable<PageData> {
-    return new Observable<PageData>(subscriber => {
-      subscriber.next({
-        id: 'L2D8IEG9WL',
-        name: 'Alita',
-        width: 1200,
-        background: {
-          enable: false,
-          color: '#ff0000',
-          image: null
-        },
-        rows: []
-      });
-    }).pipe(delay(1000));
-
-  }
-
-
-  public DeleteTempLeadPage(id: string): Observable<void> {
-    return new Observable<void>(subscriber => {
-      subscriber.next();
-    }).pipe(delay(1000));
-  }
-  // ******************************************************************************************************************************************
-
 
 
   // ----------------------------------------------------------------- Ng On Changes -----------------------------------------------------------
@@ -282,7 +86,7 @@ export class LeadPageEditorComponent implements OnChanges {
     // Display the loading screen
     this.loadingService.loading = true;
 
-    this.dataService.get('api/Niches/LeadPages', [{ key: 'leadPageId', value: leadPageId }])
+    this.dataService.get(this.leadPageUrl, [{ key: 'leadPageId', value: leadPageId }])
       .subscribe((pageData: PageData) => {
         this.initialPageLoaded = true;
 
@@ -302,11 +106,12 @@ export class LeadPageEditorComponent implements OnChanges {
   // -------------------------------------------------------------------- Load Email -----------------------------------------------------------
   loadEmail(leadPageId: string) {
     this.loadingService.loading = true;
-    this.getTempEmail(leadPageId).subscribe((pageData: PageData) => {
+    this.dataService.get(this.emailUrl, [{ key: 'leadPageId', value: leadPageId }])
+      .subscribe((pageData: PageData) => {
 
-      // Load the email
-      this.loadPage('email', pageData);
-    });
+        // Load the email
+        this.loadPage('email', pageData);
+      });
   }
 
 
@@ -366,14 +171,29 @@ export class LeadPageEditorComponent implements OnChanges {
     // Display the loading screen
     this.loadingService.loading = true;
 
+    let pageData = {
+      id: null,
+      name: 'New Lead Page',
+      width: 1600,
+      background: {
+        color: '#ffffff',
+        image: null,
+        enable: null
+      },
+      rows: []
+    }
 
-    this.getTempNewLeadPage().subscribe((pageData: PageData) => {
-      // Load the lead page
-      this.loadPage('leadPage', pageData);
 
-      // Set the new page
-      this.setNewPage(pageData, paginator);
-    });
+    this.dataService.post(this.leadPageUrl, pageData)
+      .subscribe((leadPageId: string) => {
+        pageData.id = leadPageId;
+
+        // Load the lead page
+        this.loadPage('leadPage', pageData);
+
+        // Set the new page
+        this.setNewPage(pageData, paginator);
+      });
   }
 
 
@@ -387,13 +207,18 @@ export class LeadPageEditorComponent implements OnChanges {
     if (!this.currentLeadPageId) return;
 
     this.loadingService.loading = true;
-    this.getTempDuplicateLeadPage(this.currentLeadPageId).subscribe((pageData: PageData) => {
-      // Load the lead page
-      this.loadPage('leadPage', pageData);
+    let pageData = this.pageService.getPageData();
 
-      // Set the new page
-      this.setNewPage(pageData, paginator);
-    });
+    this.dataService.post(this.leadPageUrl, pageData)
+      .subscribe((leadPageId: string) => {
+        pageData.id = leadPageId;
+
+        // Load the lead page
+        this.loadPage('leadPage', pageData);
+
+        // Set the new page
+        this.setNewPage(pageData, paginator);
+      });
   }
 
 
@@ -440,7 +265,7 @@ export class LeadPageEditorComponent implements OnChanges {
     this.loadingService.loading = true;
 
     // Delete the page in the database
-    this.DeleteTempLeadPage(this.currentLeadPageId).subscribe(() => {
+    this.dataService.delete(this.leadPageUrl, this.currentLeadPageId).subscribe(() => {
       // Remove this lead page id from the lead page ids array
       let index = this.leadPageIds.findIndex(x => x == this.currentLeadPageId);
       this.leadPageIds.splice(index, 1);
@@ -465,5 +290,13 @@ export class LeadPageEditorComponent implements OnChanges {
         this.pageService.page.width = this.pageService.pageDefaultWidth;
       }
     });
+  }
+
+
+
+
+  // --------------------------------------------------------------------- On Save Click --------------------------------------------------------
+  onSaveClick() {
+    this.pageService.savePage(this.selectedTab == 'leadPage' ? this.leadPageUrl : this.emailUrl);
   }
 }

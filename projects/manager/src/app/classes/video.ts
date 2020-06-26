@@ -6,6 +6,8 @@ import { Media } from './media';
 export class Video implements Media{
     public id: string;
     public name: string;
+    private youTubePlayerSet: boolean;
+    private isCurrentPlayerYouTube: boolean;
 
     // Url
     private _url: string;
@@ -13,25 +15,34 @@ export class Video implements Media{
         return this._url;
     }
     public set url(url: string) {
-        this._url = url;
+        
 
         // If this url is from youtube
         if (url.match(/youtube/)) {
             // We need to append this to the url for playing to work
             url += '?enablejsapi=1';
-            this.player = YouTubePlayer(this.iframe);
-            this.iframe.src = url;
+            
+            // If the youTube player is not set yet
+            if(!this.youTubePlayerSet) {
+                this.player = YouTubePlayer(this.iframe);
+                this.youTubePlayerSet = true;
+            }
+
+            this._url = this.iframe.src = url;
+            this.isCurrentPlayerYouTube = true;
 
             // Url is from vimeo
         } else {
-            this.iframe.src = url;
-            this.player = new Player(this.iframe);
+            this._url = this.iframe.src = url;
+            this.vimeoPlayer = new Player(this.iframe);
+            this.isCurrentPlayerYouTube = false;
         }
     }
 
 
     public thumbnail: string;
     private player: any;
+    private vimeoPlayer: any;
     public playing: boolean;
 
     constructor(private iframe: HTMLIFrameElement) { }
@@ -41,7 +52,7 @@ export class Video implements Media{
         if (!this.url) return;
 
         // If this video is youtube
-        if (this.player.playVideo) {
+        if (this.isCurrentPlayerYouTube) {
             if (!this.playing) {
                 this.playing = true;
                 this.player.playVideo();
@@ -53,10 +64,10 @@ export class Video implements Media{
             // This video is vimeo
         } else {
             if (!this.playing) {
-                this.player.play();
+                this.vimeoPlayer.play();
                 this.playing = true;
             } else {
-                this.player.pause();
+                this.vimeoPlayer.pause();
                 this.playing = false;
             }
         }
