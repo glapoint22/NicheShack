@@ -37,7 +37,7 @@
             <input #mediaSelectInput
                    type="file"
                    class="media-select-input"
-                   (change)="setNewMedia($event)">
+                   (change)="updatingMediaIndex == null ? setNewImage($event) : setUpdateImage($event)">
             <i class="fas fa-search search-icon"></i>
         </div>
 
@@ -74,17 +74,19 @@
             <media-item-list 
                 #mediaItemList
                 *ngIf="!loadingMediaInProgress"
-                (postItem)="post($event)"
-                (updateItem)="update($event)"
-                (onAddMedia)="onAddMedia(mediaSelectInput)"
+                (postItemName)="post($event)"
+                (updateItemName)="update($event)"
+                (onAddMedia)="openForm(mediaSelectInput)"
+                (onUpdateMedia)="openForm(mediaSelectInput, $event)"
                 (onMoveMedia)="onMoveMedia($event)"
                 (onMediaSelect)="onMediaSelect($event)"
                 [listItems]="mediaLists[indexOfCurrentMediaList]"
                 [mediaType]="indexOfCurrentMediaList"
                 [addingMediaInProgress]="addingMediaInProgress"
+                [updatingMediaInProgress]="updatingMediaInProgress"
                 [movingMediaInProgress]="movingMediaInProgress"
                 [autoSelectedMediaItemIndex]="autoSelectedMediaItemIndex"
-                [menuOptions]="[menuOptions[indexOfCurrentMediaList].add, menuOptions[indexOfCurrentMediaList].edit, menuOptions[indexOfCurrentMediaList].delete, menuOptions[indexOfCurrentMediaList].deletes]">
+                [menuOptions]="[menuOptions[indexOfCurrentMediaList].add, menuOptions[indexOfCurrentMediaList].edit, menuOptions[indexOfCurrentMediaList].update, menuOptions[indexOfCurrentMediaList].delete, menuOptions[indexOfCurrentMediaList].deletes]">
             </media-item-list>
         </div>
     </div>

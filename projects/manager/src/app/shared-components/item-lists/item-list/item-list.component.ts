@@ -523,7 +523,7 @@ export class ItemListComponent {
 
     if (index > 0) {
       index--;
-      this.setListItemSelection(index);
+      this.onListItemDown(index);
     }
   }
 
@@ -534,7 +534,7 @@ export class ItemListComponent {
 
     if (index < this.listItems.length - 1) {
       index++;
-      this.setListItemSelection(index);
+      this.onListItemDown(index);
     }
   }
 }
