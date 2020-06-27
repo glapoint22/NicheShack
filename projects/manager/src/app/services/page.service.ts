@@ -123,10 +123,10 @@ export class PageService {
     this.page.background.load(pageData.background);
 
     // Load the widgets
-    this.loadWidgets(this.rootContainer, pageData.rows);
-
-
-    this.breakpointService.onBreakpointChange.next();
+    if (pageData.rows && pageData.rows.length > 0) {
+      this.loadWidgets(this.rootContainer, pageData.rows);
+      this.breakpointService.onBreakpointChange.next();
+    }
   }
 
 

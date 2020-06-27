@@ -3,6 +3,8 @@ import { HierarchyComponent } from '../hierarchy/hierarchy.component';
 import { HierarchyItem, FilterHierarchyItemType } from '../../classes/hierarchy-item';
 import { PanelComponent } from '../panels/panel/panel.component';
 import { HierarchyCheckboxItem } from '../../classes/hierarchy-checkbox-item';
+import { Product } from '../../classes/product';
+import { ProductFilter } from '../../classes/product-filter';
 
 @Component({
   selector: 'filters-hierarchy',
@@ -10,7 +12,7 @@ import { HierarchyCheckboxItem } from '../../classes/hierarchy-checkbox-item';
   styleUrls: ['./filters-hierarchy.component.scss']
 })
 export class FiltersHierarchyComponent extends HierarchyComponent {
-  @Input() productId: string;
+  @Input() product: Product;
   @ViewChild('panel', { static: false }) panel: PanelComponent;
 
   // -----------------------------( MAP ITEMS )------------------------------ \\
@@ -34,7 +36,7 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
         item.type = FilterHierarchyItemType.Filter;
         item.url = 'api/Filters';
         item.childrenUrl = 'api/FilterOptions';
-        item.childrenParameters = [{ key: 'filterId', value: item.id }, { key: 'productId', value: this.productId }];
+        item.childrenParameters = [{ key: 'filterId', value: item.id }, { key: 'productId', value: this.product.id }];
       });
     }
   }
@@ -58,10 +60,28 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
 
   // -----------------------------( ON CHANGE )------------------------------ \\
   onChange(item: HierarchyCheckboxItem) {
-    item.loading = true;
-    this.dataService.put('api/Products/Filters', { productId: this.productId, filterOptionId: item.id })
-      .subscribe(() => {
-        item.loading = false;
+    let productFilter: ProductFilter;
+
+    // If we have any product filters
+    if (this.product.productFilters) {
+      // Find the product filter in the array
+      productFilter = this.product.productFilters.find(x => x.id == item.id);
+
+      // We have no prodcut filters so initialize new product filters with a length of zero
+    } else {
+      this.product.productFilters = [];
+    }
+
+    // If we have a product filter, update it
+    if (productFilter) {
+      productFilter.checked = item.checked;
+
+      // This product filter does not exist in the array, add it
+    } else {
+      this.product.productFilters.push({
+        id: item.id,
+        checked: item.checked
       });
+    }
   }
 }

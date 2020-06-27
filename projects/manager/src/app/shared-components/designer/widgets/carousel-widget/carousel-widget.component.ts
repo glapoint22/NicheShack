@@ -7,6 +7,7 @@ import { CarouselBanner } from 'projects/manager/src/app/classes/carousel-banner
 import { CarouselWidgetData } from 'projects/manager/src/app/classes/carousel-widget-data';
 import { CarouselBannerData } from 'projects/manager/src/app/classes/carousel-banner-data';
 import { ColumnData } from 'projects/manager/src/app/classes/column-data';
+import { Image } from 'projects/manager/src/app/classes/image';
 
 @Component({
   selector: 'carousel-widget',
@@ -64,7 +65,7 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
 
 
     let img: any;
-    let currentImage;
+    let currentImage: Image;
 
     // If we have an image
     if (this.banners.length > 0) {
@@ -72,8 +73,13 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
       img = document.createElement('img');
       img.src = 'images/' + currentImage.url;
       img.style.display = 'block';
-      img.alt = currentImage.title;
-      img.title = currentImage.title;
+      img.style.width = '100%';
+      img.style.maxWidth = '1496px';
+      img.style.maxHeight = '451px';
+      img.style.objectFit = 'cover';
+      img.alt = currentImage.name;
+      img.title = currentImage.name;
+    
 
       // We use the placehoder
     } else {

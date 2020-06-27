@@ -89,7 +89,7 @@
 
                         <div *ngIf="content.priceIndices[i]" class="content-item">
                             <div class="img-container">
-                                <img *ngIf="content.icon" [src]="'images/' + content.icon.url">
+                                <img *ngIf="content.icon.url" [src]="'images/' + content.icon.url">
                             </div>
 
                             <div class="content-title">

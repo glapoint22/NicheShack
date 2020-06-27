@@ -320,6 +320,17 @@ export class TempDataService {
         return of(['FM1R8HAOEB', '5NOQOTV6KS', '026HJNAYPQ']).pipe(delay(1000));
 
 
+      case 'api/Niches/LeadPages/Create':
+        return of({
+          id: '4LSN6AR0F5',
+          name: 'New Lead Page',
+          width: 1600,
+          background: {
+            color: '#ffffff',
+          }
+        }).pipe(delay(1000));
+
+
       // Lead Pages
       case 'api/Niches/LeadPages':
         if (parameters[0].value == 'FM1R8HAOEB') {
@@ -1337,10 +1348,54 @@ export class TempDataService {
 
 
 
-        // Category
+      // Category
       case 'api/Categories/Category':
-
         return of('44d71fbf43904ffdbdece40a45bdf9db.png').pipe(delay(1000));
+
+
+      case 'api/Pages/Create':
+        return of({
+          id: '4LSN6AR0F5',
+          name: 'New Page',
+          width: 1600,
+          background: {
+            color: '#ffffff',
+          }
+        }).pipe(delay(1000));
+
+
+
+      case 'api/Vendors':
+        return of({
+          id: 'F5TD6KOQHB',
+          name: 'Gumpy\'s',
+          webPage: 'http://www.gumpys.com',
+          address: {
+            street: '110 Feeder Dam Rd',
+            city: 'South Glens Falls',
+            zip: 12803,
+            poBox: 22,
+            state: 'NY',
+            country: 'USA'
+          },
+          primaryContact: {
+            firstName: 'Gabey',
+            lastName: 'Gump',
+            officePhone: '518-793-5555',
+            mobilePhone: '518-555-5555',
+            email: 'ggump@gmail.com'
+          },
+          secondaryContact: {
+            firstName: 'Brony',
+            lastName: 'Gump',
+            officePhone: '518-793-5555',
+            mobilePhone: '518-222-2222',
+            email: 'bgump@gmail.com'
+          },
+          notes: 'It\'s amazing that this dumb company has been around for 20 years. ' +
+            'You have to keep after Gabey Gump to do something simple. Don\'t bother emailing him because he won\'t reply. ' +
+            'He probably doesn\'t know how to check his email. I\'ve been told they are still using Windows 98 from an HP desktop with a 533 mhz processor.'
+        }).pipe(delay(1000));
     }
 
   }

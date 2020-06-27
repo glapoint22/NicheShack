@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { PageService } from '../../../services/page.service';
-import { Observable } from 'rxjs';
 import { PageData } from '../../../classes/page-data';
-import { delay } from 'rxjs/operators';
 import { LoadingService } from '../../../services/loading.service';
 import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
 import { Searchable } from '../../../classes/searchable';
+import { TempDataService } from '../../../services/temp-data.service';
 
 @Component({
   selector: 'page-editor',
@@ -18,54 +17,11 @@ export class PageEditorComponent implements Searchable {
   public currentPageId: string;
   public searchUrl: string;
 
-  constructor(public pageService: PageService, private loadingService: LoadingService, private promptService: PromptService, private popupService: PopupService) { }
-  
-  
-
-  //                                                                 TEMP!!!!!!
-  // ******************************************************************************************************************************************
-  public getTempNewPage(): Observable<PageData> {
-    return new Observable<PageData>(subscriber => {
-      subscriber.next({
-        id: '4LSN6AR0F5',
-        name: 'New Page',
-        width: 1600,
-        background: {
-          color: '#ffffff',
-          image: null,
-          enable: null
-        },
-        rows: []
-      });
-    }).pipe(delay(1000));
-  }
-
-
-  public getTempDuplicatePage(id: string): Observable<PageData> {
-    return new Observable<PageData>(subscriber => {
-      subscriber.next({
-        id: 'L2D8IEG9WL',
-        name: 'Alita',
-        width: 1200,
-        background: {
-          enable: false,
-          color: '#ff0000',
-          image: null
-        },
-        rows: []
-      });
-    }).pipe(delay(1000));
-
-  }
-
-
-  public DeleteTempPage(id: string): Observable<void> {
-    return new Observable<void>(subscriber => {
-      subscriber.next();
-    }).pipe(delay(1000));
-  }
-  // ******************************************************************************************************************************************
-
+  constructor(public pageService: PageService,
+    private loadingService: LoadingService,
+    private promptService: PromptService,
+    private popupService: PopupService,
+    private dataService: TempDataService) { }
 
 
   // ---------------------------------------------------------------------- Add Page --------------------------------------------------------
@@ -74,9 +30,10 @@ export class PageEditorComponent implements Searchable {
     this.loadingService.loading = true;
 
 
-    this.getTempNewPage().subscribe((pageData: PageData) => {
-      this.loadPage(pageData);
-    });
+    this.dataService.get('api/Pages/Create')
+      .subscribe((pageData: PageData) => {
+        this.loadPage(pageData);
+      });
   }
 
 
@@ -98,11 +55,17 @@ export class PageEditorComponent implements Searchable {
     if (!this.currentPageId) return;
 
     this.loadingService.loading = true;
-    this.getTempDuplicatePage(this.currentPageId).subscribe((pageData: PageData) => {
 
-      // Load the page
-      this.loadPage(pageData);
-    });
+    let pageData = this.pageService.getPageData();
+
+    this.dataService.post('api/Pages', pageData)
+      .subscribe((pageId: string) => {
+
+        pageData.id = pageId;
+
+        // Load the page
+        this.loadPage(pageData);
+      });
   }
 
 
@@ -131,14 +94,15 @@ export class PageEditorComponent implements Searchable {
     this.loadingService.loading = true;
 
     // Delete the page in the database
-    this.DeleteTempPage(this.currentPageId).subscribe(() => {
-      this.pageService.clearPage();
-      this.currentPageId = null;
-      this.loadingService.loading = false;
-      this.view = 'page';
-      this.pageService.widgetCursors = [];
-      this.pageService.page.width = 1600;
-    });
+    this.dataService.delete('api/Pages', this.currentPageId)
+      .subscribe(() => {
+        this.pageService.clearPage();
+        this.currentPageId = null;
+        this.loadingService.loading = false;
+        this.view = 'page';
+        this.pageService.widgetCursors = [];
+        this.pageService.page.width = 1600;
+      });
   }
 
 
@@ -154,6 +118,6 @@ export class PageEditorComponent implements Searchable {
 
   // ---------------------------------------------------------------- Set Search Item --------------------------------------------------------
   setSearchItem(searchItem: any): void {
-    
+
   }
 }

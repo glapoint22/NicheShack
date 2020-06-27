@@ -37,8 +37,8 @@
 
         <!-- Editable Item LIst -->
         <editable-item-list #itemList [listItems]="keywords"
-            (postItem)="post($event)"
-            (updateItem)="update($event)"
+            (postItem)="onChange($event)"
+            (updateItem)="onChange($event)"
             [menuOptions]="['Add Keyword', 'Edit Keyword', 'Delete Keyword', 'Delete Keywords']">
         </editable-item-list>
 

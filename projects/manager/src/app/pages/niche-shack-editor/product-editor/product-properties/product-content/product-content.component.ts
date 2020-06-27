@@ -3,14 +3,12 @@ import { ProductPricePoint } from 'projects/manager/src/app/classes/product-pric
 import { ProductContent } from 'projects/manager/src/app/classes/product-content';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { Item } from 'projects/manager/src/app/classes/item';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { CheckboxItemListComponent } from 'projects/manager/src/app/shared-components/item-lists/checkbox-item-list/checkbox-item-list.component';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { MediaType } from 'projects/manager/src/app/classes/media';
+import { Image } from 'projects/manager/src/app/classes/image';
 
 @Component({
   selector: 'product-content',
@@ -22,16 +20,8 @@ export class ProductContentComponent implements OnChanges {
   public pricePointList: Array<Item>;
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
-  constructor(public popupService: PopupService, private loadingService: LoadingService, private promptService: PromptService, private productService: ProductService) { }
+  constructor(public popupService: PopupService, private promptService: PromptService, private productService: ProductService) { }
 
-
-
-  //                                                                 TEMP!!!!!!
-  // ******************************************************************************************************************************************
-  public addTemp(): Observable<string> {
-    return of('YGFDSFSDAFW').pipe(delay(1000));
-  }
-  // ******************************************************************************************************************************************
 
 
   // -----------------------------( NG ON CHANGES )------------------------------ \\
@@ -56,19 +46,15 @@ export class ProductContentComponent implements OnChanges {
 
   // -----------------------------( ADD CONTENT )------------------------------ \\
   addContent(paginator: PaginatorComponent) {
-    this.loadingService.loading = true;
-    this.addTemp().subscribe((id: string) => {
-      this.loadingService.loading = false;
-
-      this.productService.product.content.push({
-        id: id,
-        icon: null,
-        title: null,
-        priceIndices: []
-      });
-
-      paginator.currentIndex = this.contentIndex = this.productService.product.content.length - 1;
+    this.productService.product.content.push({
+      id: null,
+      icon: new Image(),
+      title: null,
+      priceIndices: []
     });
+
+    this.contentIndex = this.productService.product.content.length - 1;
+    paginator.setPage(this.productService.product.content.length);
   }
 
 
@@ -82,8 +68,9 @@ export class ProductContentComponent implements OnChanges {
   deleteContent(paginator: PaginatorComponent) {
     this.productService.product.content.splice(this.contentIndex, 1);
 
-    // Set the index of the previous content
-    paginator.currentIndex = Math.max(0, this.contentIndex = Math.min(this.productService.product.content.length - 1, this.contentIndex));
+    // Set the page for the paginator
+    let index = Math.max(0, this.contentIndex = Math.min(this.productService.product.content.length - 1, this.contentIndex));
+    paginator.setPage(index + 1);
   }
 
 
@@ -98,39 +85,33 @@ export class ProductContentComponent implements OnChanges {
 
   // -----------------------------( ADD PRICE POINT )------------------------------ \\
   addPricePoint(sourceElement: HTMLElement) {
-    this.loadingService.loading = true;
+    // Create the new price point
+    let pricePoint: ProductPricePoint = {
+      id: null,
+      textBefore: '',
+      textAfter: '',
+      wholeNumber: 0,
+      decimal: 0
+    }
 
-    this.addTemp().subscribe((id: string) => {
-      // Create the new price point
-      let pricePoint: ProductPricePoint = {
-        id: id,
-        textBefore: '',
-        textAfter: '',
-        wholeNumber: 0,
-        decimal: 0
-      }
-
-      // Show the price point popup
-      this.popupService.sourceElement = sourceElement;
-      this.popupService.pricePointPopup.show = true;
+    // Show the price point popup
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.pricePointPopup.show = true;
 
 
-      // Push the new price point
-      this.pricePoints.push(pricePoint);
-      this.pricePointList.push({
-        id: pricePoint.id,
-        name: ''
-      });
-
-      // Set the reference to this new price point
-      this.popupService.pricePointPopup.pricePoint = pricePoint;
-      this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[this.pricePointList.length - 1];
-
-      // This will set the new price point in the product properties
-      this.popupService.pricePointPopup.setPricePointListItem();
-
-      this.loadingService.loading = false;
+    // Push the new price point
+    this.pricePoints.push(pricePoint);
+    this.pricePointList.push({
+      id: pricePoint.id,
+      name: ''
     });
+
+    // Set the reference to this new price point
+    this.popupService.pricePointPopup.pricePoint = pricePoint;
+    this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[this.pricePointList.length - 1];
+
+    // This will set the new price point in the product properties
+    this.popupService.pricePointPopup.setPricePointListItem();
   }
 
 

@@ -29,7 +29,6 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   public rowHeight: number;
   public rowTop: number;
   public columnElement: HTMLElement;
-  private resizeButtonMousedown: boolean;
   public background: Background = new Background();
   public columnSpan: ColumnSpan;
   public border: Border = new Border();
@@ -57,7 +56,6 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   }
 
   ngDoCheck() {
-    // Used to size the column divider & column indicators
     this.rowHeight = this.row.rowElement.nativeElement.clientHeight;
 
     // Used to position the column divider & column indicators
@@ -154,38 +152,9 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
       } else {
         this.widgetService.overColumn = false;
       }
-    } else {
-      let resizeButton = this.getPreiviousColumnResizeButton();
-
-      // Display the previous column's resize button when we hover over this column
-      if (resizeButton) resizeButton.style.display = 'flex';
-    }
+    } 
   }
 
-
-  getPreiviousColumnResizeButton(): HTMLElement {
-    let previousColumn = this.columnElement.previousElementSibling;
-
-    // If there is no previous column, return
-    if (!previousColumn) return null;
-
-    let resizeButtons = previousColumn.querySelectorAll('.resize-button');
-
-    // If there are no resize buttons, return
-    if (resizeButtons.length == 0) return null;
-
-    // Return the last resize button in the array, which is the previous resize button
-    return resizeButtons[resizeButtons.length - 1] as HTMLElement;
-  }
-
-  onMouseleave() {
-    if (!this.widgetService.currentWidgetCursor) {
-      let resizeButton = this.getPreiviousColumnResizeButton();
-
-      // Hide the previous column's resize button when we leave this column
-      if (resizeButton) resizeButton.removeAttribute('style');
-    }
-  }
 
   isLastColumn(element: HTMLElement): boolean {
     while (element.parentElement.getAttribute('column') == null && !element.parentElement.classList.contains('content')) {
@@ -196,68 +165,6 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   }
 
 
-  onResizeButtonMouseover() {
-    if (!this.widgetService.currentWidgetCursor) {
-      document.body.id = 'column-resize';
-    }
-  }
-
-
-  onResizeButtonMouseleave() {
-    if (!this.widgetService.currentWidgetCursor && !this.resizeButtonMousedown) {
-      document.body.removeAttribute('id');
-    }
-  }
-
-
-
-
-  onResizeButtonMousedown() {
-    // Get the current column position and the number of columns in this row
-    let columnPos = this.columnElement.getBoundingClientRect().left;
-    let columnCount = this.row.columns.length;
-
-    // Get the width of the row
-    let rowWidth = this.row.rowElement.nativeElement.getBoundingClientRect().width;
-
-    // Get the max column span the columns get span accross
-    let maxColumnSpan = columnCount == 5 ? 10 : 12;
-
-    let index = this.row.columns.findIndex(x => x.component == this) + 1;
-    let nextColumn: ColumnComponent = this.row.columns[index].component;
-    let colspanOffset = maxColumnSpan - (this.columnSpan.value + nextColumn.columnSpan.value);
-
-    this.resizeButtonMousedown = true;
-    document.body.style.cursor = 'e-resize';
-
-
-    let onMousemove = (e: MouseEvent) => {
-      let mouseColumnOffset = e.clientX - columnPos;
-      let percent = mouseColumnOffset / (rowWidth / columnCount);
-      let columnSpan = Math.max(Math.ceil(percent * (maxColumnSpan / columnCount)), 1);
-      let nextElementSiblingColumnSpan = Math.max(maxColumnSpan - columnSpan - colspanOffset, 1);
-      let totalColumnSpan = nextElementSiblingColumnSpan + colspanOffset + columnSpan;
-
-      if (this.columnSpan.value != columnSpan && totalColumnSpan <= maxColumnSpan) {
-        // Update the column spans
-        this.columnSpan.value = columnSpan;
-        nextColumn.columnSpan.value = nextElementSiblingColumnSpan;
-      }
-    }
-
-    // Mouseup
-    let onMouseup = () => {
-      window.removeEventListener("mousemove", onMousemove);
-      window.removeEventListener("mouseup", onMouseup);
-      document.body.removeAttribute('style');
-      document.body.removeAttribute('id');
-      this.resizeButtonMousedown = false;
-    }
-
-    // Add the listeners
-    window.addEventListener("mousemove", onMousemove);
-    window.addEventListener("mouseup", onMouseup);
-  }
 
 
   load(columnData: ColumnData) {

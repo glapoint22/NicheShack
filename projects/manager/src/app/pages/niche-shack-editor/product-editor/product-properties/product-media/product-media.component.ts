@@ -11,7 +11,7 @@ import { ProductService } from 'projects/manager/src/app/services/product.servic
 export class ProductMediaComponent {
   @Input() media: Array<Media>;
   public mediaType = MediaType;
-  constructor(private popupService: PopupService, private productService: ProductService){}
+  constructor(private popupService: PopupService, public productService: ProductService){}
 
   // -----------------------------( ON PAGINATOR CLICK )------------------------------ \\
   onPaginatorClick(pageIndex: number) {

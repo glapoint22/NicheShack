@@ -4,6 +4,7 @@
 
 .column-indicator-container {
     & > .column-indicator {
+        top: 0;
         visibility: hidden;
         left: 0;
         width: 60px;
@@ -34,48 +35,6 @@
         &:hover {
             & .column-indicator {
                 visibility: visible;
-            }
-        }
-
-        &:not(:last-child) {
-           & > .column-divider {
-                outline: 1px dashed $selected-border-color;
-            }
-        }
-    }
-}
-
-
-
-
-body {
-    &:not(#widget-cursor) {
-        .canvas {
-            %column {
-                &:not(:last-child):hover {
-                    & > .column-divider {
-                         .resize-button {
-                             display: flex;
-                         }
-                     }
-                     
-                 }
-        
-        
-            }
-        }
-    }
-
-    &#column-resize {
-        .canvas {
-            & %column {
-                .resize-button {
-                    display: none !important;
-                }
-                
-                .resize-button:active, .resize-button:hover {
-                    display: flex !important;
-                }
             }
         }
     }

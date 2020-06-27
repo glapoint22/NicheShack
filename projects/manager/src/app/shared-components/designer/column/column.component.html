@@ -15,7 +15,8 @@ row.columns.length < 6}" [style.paddingTop]="padding.top.value" [style.paddingRi
 
 
     <!-- Column area (Used for mouse events for the column) -->
-    <div class="column-area" [style.height.px]="rowHeight" [style.top.px]="rowTop"></div>
+    <div class="column-area" [style.height.px]="rowHeight" [style.top.px]="rowTop">
+    </div>
 
 
     <ng-template #viewContainerRef>
@@ -24,25 +25,11 @@ row.columns.length < 6}" [style.paddingTop]="padding.top.value" [style.paddingRi
 
 
 
-    <!-- Column divider -->
-    <div class="column-divider" [style.height.px]="rowHeight" [style.top.px]="rowTop">
-
-        <!-- Resize column button -->
-        <div (mousedown)="onResizeButtonMousedown()" (mouseover)="onResizeButtonMouseover()"
-            (mouseleave)="onResizeButtonMouseleave()" class="resize-button">
-            <i class="fas fa-arrows-alt-h"></i>
-        </div>
-    </div>
-
-
-
     <!-- Column indicators -->
     <div #leftIndicator class="column-indicator" (mouseenter)="onDropIndicatorEnter()"
         (mouseleave)="onDropIndicatorLeave()"
-        (mouseup)="onDropIndicatorMouseup(leftIndicator.parentElement.parentElement.previousElementSibling)"
-        [style.height.px]="rowHeight" [style.top.px]="rowTop"></div>
+        (mouseup)="onDropIndicatorMouseup(leftIndicator.parentElement.parentElement.previousElementSibling)"></div>
     <div #rightIndicator class="column-indicator" (mouseenter)="onDropIndicatorEnter()"
         (mouseleave)="onDropIndicatorLeave()"
-        (mouseup)="onDropIndicatorMouseup(rightIndicator.parentElement.parentElement)" [style.height.px]="rowHeight"
-        [style.top.px]="rowTop"></div>
+        (mouseup)="onDropIndicatorMouseup(rightIndicator.parentElement.parentElement)"></div>
 </div>

@@ -1,33 +1,5 @@
-.resize-button {
-    display: none;
-    user-select: none;
-    width: 20px;
-    height: 20px;
-    background: #494949;
-    position: absolute;
-    right: -10px;
-    z-index: 10;
-    top: 50%;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    color: #dadada;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #b4b4b4;
-
-    &:hover {
-        cursor: e-resize;
-    }
-}
-
 .column-area {
     position: absolute;
     left:0;
-    right: 0;
-}
-
-
-.column-divider {
-    position: absolute;
     right: 0;
 }
