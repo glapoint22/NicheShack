@@ -161,7 +161,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
     this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.left);
 
     // HTML Content
-    if (this.htmlContent) textWidgetData.htmlContent = this.htmlContent;
+    if (this.textBox.content.innerHTML) textWidgetData.htmlContent = this.textBox.content.innerHTML;
 
 
     super.save(columnData);

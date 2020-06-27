@@ -5,18 +5,19 @@
     <div class="property-box-light-icon-bar">
 
         <!-- Paginator -->
-        <paginator [itemCount]="carouselWidget.banners.length" (onItemChange)="carouselWidget.currentBannerIndex = currentIndex = $event"></paginator>
+        <paginator #paginator [itemCount]="carouselWidget.banners.length"
+            (onItemChange)="carouselWidget.currentBannerIndex = $event"></paginator>
 
         <!-- Icons -->
         <div class="icons">
 
             <!-- Delete Banner Icon -->
-            <div class="icon-container" [ngClass]="{'icon-disabled':  carouselWidget.banners.length == 0}">
+            <div class="icon-container" (click)="onDeleteClick()" [ngClass]="{'icon-disabled':  carouselWidget.banners.length == 0}">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
             <!-- Add Banner Icon -->
-            <div class="icon-container">
+            <div class="icon-container" (click)="onAddBannerClick()">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>
@@ -32,7 +33,7 @@
 
 
         <!-- Banner Image -->
-        <image [image]="carouselWidget.banners[currentIndex].image" [mediaType]="mediaType.BannerImage"></image>
+        <image [image]="carouselWidget.banners[carouselWidget.currentBannerIndex].image" [mediaType]="mediaType.BannerImage"></image>
 
 
 
@@ -43,7 +44,7 @@
 
 
         <!-- Link -->
-        <link-property [link]="carouselWidget.banners[currentIndex].link"></link-property>
+        <link-property [link]="carouselWidget.banners[carouselWidget.currentBannerIndex].link"></link-property>
 
 
     </div>

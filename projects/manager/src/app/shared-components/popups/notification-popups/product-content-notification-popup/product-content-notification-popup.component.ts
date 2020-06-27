@@ -10,14 +10,12 @@ import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { CoverService } from 'projects/manager/src/app/services/cover.service';
 import { MenuService } from 'projects/manager/src/app/services/menu.service';
 import { NotificationService } from 'projects/manager/src/app/services/notification.service';
-import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
 import { PaginatorComponent } from '../../../paginator/paginator.component';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { Image } from 'projects/manager/src/app/classes/image';
 
 @Component({
   selector: 'product-content-notification-popup',
@@ -29,18 +27,9 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   public pricePointList: Array<Item>;
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, notificationService: NotificationService, private loadingService: LoadingService, private promptService: PromptService, private productService: ProductService) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService) }
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, notificationService: NotificationService, private promptService: PromptService, private productService: ProductService) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService) }
 
 
-  //                                                                 TEMP!!!!!!
-  // ******************************************************************************************************************************************
-  public addTemp(): Observable<string> {
-    return of('YGFDSFSDAFW').pipe(delay(1000));
-  }
-  // ******************************************************************************************************************************************
-
-
-  
   // --------------------------------( INITIALIZE POPUP )-------------------------------- \\
   initializePopup() {
     this.popupService.productContentNotificationPopup = this;
@@ -70,19 +59,15 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
 
   // -----------------------------( ADD CONTENT )------------------------------ \\
   addContent(paginator: PaginatorComponent) {
-    this.loadingService.loading = true;
-    this.addTemp().subscribe((id: string) => {
-      this.loadingService.loading = false;
-
-      this.productService.product.content.push({
-        id: id,
-        icon: null,
-        title: null,
-        priceIndices: []
-      });
-
-      paginator.currentIndex = this.contentIndex = this.productService.product.content.length - 1;
+    this.productService.product.content.push({
+      id: null,
+      icon: new Image(),
+      title: null,
+      priceIndices: []
     });
+
+    this.contentIndex = this.productService.product.content.length - 1;
+    paginator.setPage(this.productService.product.content.length);
   }
 
 
@@ -96,8 +81,9 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   deleteContent(paginator: PaginatorComponent) {
     this.productService.product.content.splice(this.contentIndex, 1);
 
-    // Set the index of the previous content
-    paginator.currentIndex = Math.max(0, this.contentIndex = Math.min(this.productService.product.content.length - 1, this.contentIndex));
+    // Set the page for the paginator
+    let index = Math.max(0, this.contentIndex = Math.min(this.productService.product.content.length - 1, this.contentIndex));
+    paginator.setPage(index + 1);
   }
 
 
@@ -112,39 +98,33 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
 
   // -----------------------------( ADD PRICE POINT )------------------------------ \\
   addPricePoint(sourceElement: HTMLElement) {
-    this.loadingService.loading = true;
+    // Create the new price point
+    let pricePoint: ProductPricePoint = {
+      id: null,
+      textBefore: '',
+      textAfter: '',
+      wholeNumber: 0,
+      decimal: 0
+    }
 
-    this.addTemp().subscribe((id: string) => {
-      // Create the new price point
-      let pricePoint: ProductPricePoint = {
-        id: id,
-        textBefore: '',
-        textAfter: '',
-        wholeNumber: 0,
-        decimal: 0
-      }
-
-      // Show the price point popup
-      this.popupService.sourceElement = sourceElement;
-      this.popupService.pricePointPopup.show = true;
+    // Show the price point popup
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.pricePointPopup.show = true;
 
 
-      // Push the new price point
-      this.pricePoints.push(pricePoint);
-      this.pricePointList.push({
-        id: pricePoint.id,
-        name: ''
-      });
-
-      // Set the reference to this new price point
-      this.popupService.pricePointPopup.pricePoint = pricePoint;
-      this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[this.pricePointList.length - 1];
-
-      // This will set the new price point in the product properties
-      this.popupService.pricePointPopup.setPricePointListItem();
-
-      this.loadingService.loading = false;
+    // Push the new price point
+    this.pricePoints.push(pricePoint);
+    this.pricePointList.push({
+      id: pricePoint.id,
+      name: ''
     });
+
+    // Set the reference to this new price point
+    this.popupService.pricePointPopup.pricePoint = pricePoint;
+    this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[this.pricePointList.length - 1];
+
+    // This will set the new price point in the product properties
+    this.popupService.pricePointPopup.setPricePointListItem();
   }
 
 

@@ -6,8 +6,10 @@ export class CarouselBanner {
     image: Image = new Image();
     link: Link = new Link();
 
-    constructor(carouselBannerData: CarouselBannerData) {
-        this.image.load(carouselBannerData.image);
-        this.link.load(carouselBannerData.link);
+    constructor(carouselBannerData?: CarouselBannerData) {
+        if (carouselBannerData) {
+            this.image.load(carouselBannerData.image);
+            this.link.load(carouselBannerData.link);
+        }
     }
 }

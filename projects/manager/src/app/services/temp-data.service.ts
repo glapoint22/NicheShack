@@ -139,16 +139,28 @@ export class TempDataService {
       case 'api/Categories':
         return of([
           {
-            id: 'fdsafdfds',
-            name: 'Health & Fitness'
+            name: 'Health & Fitness',
+            id: 'fdsfafsdfdsds',
+            icon: {
+              url: '44d71fbf43904ffdbdece40a45bdf9db.png',
+              name: 'Health & Fitness'
+            }
           },
           {
-            id: 'hgfdhfhhgf',
-            name: 'Self-Help'
+            name: 'Self-Help',
+            id: 'fsdfsdasd',
+            icon: {
+              url: '143968bba73642898bb4a6715a1efd3d.png',
+              name: 'self-help'
+            }
           },
           {
             id: 'rewqrewer',
-            name: 'E-business & E-marketing'
+            name: 'E-business & E-marketing',
+            icon: {
+              url: '9b00bc3910244ce798b8009227c65de7.png',
+              name: 'self-help'
+            }
           }
         ]).pipe(delay(1000));
 
@@ -318,6 +330,17 @@ export class TempDataService {
       // Lead Pages
       case 'api/Niches/LeadPageIds':
         return of(['FM1R8HAOEB', '5NOQOTV6KS', '026HJNAYPQ']).pipe(delay(1000));
+
+
+      case 'api/Niches/LeadPages/Create':
+        return of({
+          id: '4LSN6AR0F5',
+          name: 'New Lead Page',
+          width: 1600,
+          background: {
+            color: '#ffffff',
+          }
+        }).pipe(delay(1000));
 
 
       // Lead Pages
@@ -1036,7 +1059,7 @@ export class TempDataService {
           name: 'Booty Type Training',
           vendor:
           {
-            id: 'LWDT6IQHNX',
+            id: 'F5TD6KOQHB',
             name: 'Gumpy\'s',
           }
           ,
@@ -1337,10 +1360,200 @@ export class TempDataService {
 
 
 
-        // Category
+      // Category
       case 'api/Categories/Category':
-
         return of('44d71fbf43904ffdbdece40a45bdf9db.png').pipe(delay(1000));
+
+
+      case 'api/Pages/Create':
+        return of({
+          id: '4LSN6AR0F5',
+          name: 'New Page',
+          width: 1600,
+          background: {
+            color: '#ffffff',
+          }
+        }).pipe(delay(1000));
+
+
+
+      case 'api/Vendors':
+        return of({
+          id: 'F5TD6KOQHB',
+          name: 'Gumpy\'s',
+          webPage: 'http://www.gumpys.com',
+          address: {
+            street: '110 Feeder Dam Rd',
+            city: 'South Glens Falls',
+            zip: 12803,
+            poBox: 22,
+            state: 'NY',
+            country: 'USA'
+          },
+          primaryContact: {
+            firstName: 'Gabey',
+            lastName: 'Gump',
+            officePhone: '518-793-5555',
+            mobilePhone: '518-555-5555',
+            email: 'ggump@gmail.com'
+          },
+          secondaryContact: {
+            firstName: 'Brony',
+            lastName: 'Gump',
+            officePhone: '518-793-5555',
+            mobilePhone: '518-222-2222',
+            email: 'bgump@gmail.com'
+          },
+          notes: 'It\'s amazing that this dumb company has been around for 20 years. ' +
+            'You have to keep after Gabey Gump to do something simple. Don\'t bother emailing him because he won\'t reply. ' +
+            'He probably doesn\'t know how to check his email. I\'ve been told they are still using Windows 98 from an HP desktop with a 533 mhz processor.'
+        }).pipe(delay(1000));
+
+
+
+
+      case 'api/Vendors/Search':
+        return of([
+          {
+            id: 'HGSGDGFFAFSD',
+            name: 'Vendor1'
+          },
+          {
+            id: 'REEQWRRE',
+            name: 'Vendor2'
+          },
+          {
+            id: 'JHGFJGHJHJ',
+            name: 'Vendor3'
+          },
+          {
+            id: 'QEQWREWERR',
+            name: 'Vendor4'
+          },
+          {
+            id: 'LKJHJKLJLK',
+            name: 'Vendor5'
+          },
+          {
+            id: 'BVCXCVBBV',
+            name: 'Vendor6'
+          },
+          {
+            id: 'UYTRUUU',
+            name: 'Vendor7'
+          },
+          {
+            id: 'OIYIUOIUOO',
+            name: 'Vendor8'
+          },
+          {
+            id: 'VVVVVVVVVVFASDDD',
+            name: 'Vendor9'
+          },
+          {
+            id: 'JHGFHJJGHGHSDFADF',
+            name: 'Vendor10'
+          }
+        ]).pipe(delay(1000));
+
+
+
+
+
+
+      case 'api/Pages/Search':
+        return of([
+          {
+            id: 'HGSGDGFFAFSD',
+            name: 'Page1'
+          },
+          {
+            id: 'REEQWRRE',
+            name: 'Page2'
+          },
+          {
+            id: 'JHGFJGHJHJ',
+            name: 'Page3'
+          },
+          {
+            id: 'QEQWREWERR',
+            name: 'Page4'
+          },
+          {
+            id: 'LKJHJKLJLK',
+            name: 'Page5'
+          },
+          {
+            id: 'BVCXCVBBV',
+            name: 'Page6'
+          },
+          {
+            id: 'UYTRUUU',
+            name: 'Page7'
+          },
+          {
+            id: 'OIYIUOIUOO',
+            name: 'Page8'
+          },
+          {
+            id: 'VVVVVVVVVVFASDDD',
+            name: 'Page9'
+          },
+          {
+            id: 'JHGFHJJGHGHSDFADF',
+            name: 'Page10'
+          }
+        ]).pipe(delay(1000));
+
+
+
+      case 'api/Pages':
+        return of({
+          "background": {
+            "color": "#2564a8"
+          },
+          "rows": [
+            {
+              "columns": [
+                {
+                  "widgetData": {
+                    "background": {
+                      "color": "#ffffff00"
+                    },
+                    "htmlContent": "<div style=\"text-align: center;\"><span style=\"font-weight: 700;\"><span style=\"font-family: &quot;Comic Sans MS&quot;, cursive, sans-serif;\"><span style=\"font-size: 36px;\"><span style=\"color: rgb(222, 82, 180);\">Welcome To Gumpy's</span></span></span></span></div>",
+                    "widgetType": 1,
+                    "height": 64
+                  },
+                  "columnSpan": 12
+                }
+              ],
+              "top": 63.078125
+            },
+            {
+              "columns": [
+                {
+                  "widgetData": {
+                    "image": {
+                      "url": "ca7d0d7b27b8475fbb55a4bf63617f2f.jpg"
+                    },
+                    "link": {
+
+                    },
+                    "widgetType": 2,
+                    "width": 300,
+                    "height": 300,
+                    "horizontalAlignment": "0 auto"
+                  },
+                  "columnSpan": 12
+                }
+              ],
+              "top": 159.078125
+            }
+          ],
+          "id": "4LSN6AR0F5",
+          "name": "Gumpy's",
+          "width": 1600
+        }).pipe(delay(1000));
     }
 
   }

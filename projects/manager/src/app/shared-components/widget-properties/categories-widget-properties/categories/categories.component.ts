@@ -32,7 +32,6 @@ export class CategoriesComponent implements Searchable {
   // -----------------------------( SET SEARCH ITEM )------------------------------ \\
   setSearchItem(searchItem: any) {
     // Add the item to the list
-    // this.itemList.addListItem(searchItem);
     this.categoriesWidget.categories.push(searchItem)
   }
 

@@ -213,7 +213,6 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     // Set the events
     columnComponentRef.location.nativeElement.addEventListener('mouseover', columnComponentRef.instance.onMouseover.bind(columnComponentRef.instance));
     columnComponentRef.location.nativeElement.addEventListener('mouseup', () => { this.widgetService.currentWidgetCursor = null; });
-    columnComponentRef.location.nativeElement.addEventListener('mouseleave', columnComponentRef.instance.onMouseleave.bind(columnComponentRef.instance));
 
 
     // Set the column's row as this row

@@ -6,7 +6,7 @@
         <!-- Container for paginator & icons -->
         <div class="container">
 
-            <paginator [itemCount]="media ? media.length: 0" (onItemChange)="onPaginatorClick($event)"></paginator>
+            <paginator [itemCount]="media ? media.length: 0" [currentIndex]="productService.currentSelectedMediaIndex" (onItemChange)="onPaginatorClick($event)"></paginator>
 
             <!-- Icons -->
             <div class="icons">

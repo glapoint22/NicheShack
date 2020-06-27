@@ -171,22 +171,10 @@ export class LeadPageEditorComponent implements OnChanges {
     // Display the loading screen
     this.loadingService.loading = true;
 
-    let pageData = {
-      id: null,
-      name: 'New Lead Page',
-      width: 1600,
-      background: {
-        color: '#ffffff',
-        image: null,
-        enable: null
-      },
-      rows: []
-    }
 
+    this.dataService.get(this.leadPageUrl + '/Create')
+      .subscribe((pageData: PageData) => {
 
-    this.dataService.post(this.leadPageUrl, pageData)
-      .subscribe((leadPageId: string) => {
-        pageData.id = leadPageId;
 
         // Load the lead page
         this.loadPage('leadPage', pageData);
@@ -232,7 +220,7 @@ export class LeadPageEditorComponent implements OnChanges {
     this.leadPageIds.push(this.currentLeadPageId);
 
     // Set the paginator to show the new page number
-    paginator.currentIndex = this.leadPageIds.length - 1;
+    paginator.setPage(this.leadPageIds.length);
   }
 
 
@@ -265,31 +253,32 @@ export class LeadPageEditorComponent implements OnChanges {
     this.loadingService.loading = true;
 
     // Delete the page in the database
-    this.dataService.delete(this.leadPageUrl, this.currentLeadPageId).subscribe(() => {
-      // Remove this lead page id from the lead page ids array
-      let index = this.leadPageIds.findIndex(x => x == this.currentLeadPageId);
-      this.leadPageIds.splice(index, 1);
+    this.dataService.delete(this.leadPageUrl, this.currentLeadPageId)
+      .subscribe(() => {
+        // Remove this lead page id from the lead page ids array
+        let index = this.leadPageIds.findIndex(x => x == this.currentLeadPageId);
+        this.leadPageIds.splice(index, 1);
 
-      // If we have any lead pages
-      if (this.leadPageIds.length > 0) {
-        // Set the index of the previous page
-        index = Math.min(this.leadPageIds.length - 1, index);
+        // If we have any lead pages
+        if (this.leadPageIds.length > 0) {
+          // Set the index of the previous page
+          index = Math.min(this.leadPageIds.length - 1, index);
 
-        // Chage the page and reset the paginator
-        this.onPageChange(index);
-        paginator.currentIndex = index;
+          // Chage the page and reset the paginator
+          this.onPageChange(index);
+          paginator.setPage(index + 1);
 
-        // We have no pages left
-      } else {
-        // Reset the page to defaults
-        this.pageService.clearPage();
-        this.currentLeadPageId = null;
-        this.loadingService.loading = false;
-        this.view = 'page';
-        this.pageService.widgetCursors = [];
-        this.pageService.page.width = this.pageService.pageDefaultWidth;
-      }
-    });
+          // We have no pages left
+        } else {
+          // Reset the page to defaults
+          this.pageService.clearPage();
+          this.currentLeadPageId = null;
+          this.loadingService.loading = false;
+          this.view = 'page';
+          this.pageService.widgetCursors = [];
+          this.pageService.page.width = this.pageService.pageDefaultWidth;
+        }
+      });
   }
 
 

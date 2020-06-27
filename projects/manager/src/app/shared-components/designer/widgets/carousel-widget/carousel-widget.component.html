@@ -4,7 +4,7 @@
 
 
 
-    <ng-container *ngIf="banners.length > 0; else placeholder">
+    <ng-container *ngIf="banners.length > 0 && banners[currentBannerIndex].image && banners[currentBannerIndex].image.url; else placeholder">
         <img [src]="'images/' + banners[currentBannerIndex].image.url">
     </ng-container>
 

@@ -2,6 +2,11 @@
 
     <!-- Icons -->
     <div class="icons">
+        <!-- Delete icon -->
+        <div class="icon-container" [ngClass]="{'icon-disabled': !image || !image.url}" (click)="onDeleteImageClick()">
+            <i class="fas fa-trash-alt"></i>
+        </div>
+
         <!-- Media browser icon -->
         <div class="icon-container" (click)="onClick($event.target)">
             <i class="fas fa-image"></i>

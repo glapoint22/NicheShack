@@ -86,7 +86,7 @@ export class ProductEmailComponent implements OnInit {
 
           // Chage the page and reset the paginator
           this.onEmailChange(index);
-          paginator.currentIndex = index;
+          paginator.setPage(index + 1);
 
           // We have no pages left
         } else {
@@ -175,7 +175,7 @@ export class ProductEmailComponent implements OnInit {
     this.emailIds.push(this.currentEmailId);
 
     // Set the paginator to show the new page number
-    paginator.currentIndex = this.emailIds.length - 1;
+    paginator.setPage(this.emailIds.length);
   }
 
 
