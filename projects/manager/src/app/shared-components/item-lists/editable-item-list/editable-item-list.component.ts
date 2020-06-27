@@ -97,8 +97,12 @@ export class EditableItemListComponent extends ItemListComponent {
     // As long as we did NOT press the (Escape) key, update the name property
     if (!isEscape) {
       this.listItems[this.selectedListItemIndex].name = listItemTrimmed;
+
+      // If we're naming a new item
       if (this.newListItem) {
         this.postItem.emit(this.listItems[this.selectedListItemIndex]);
+
+        // If we're editing an existing item
       } else {
         this.updateItem.emit(this.listItems[this.selectedListItemIndex])
       }

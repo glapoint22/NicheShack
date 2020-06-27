@@ -5,7 +5,6 @@ import { Observable, of, fromEvent, Subscription } from 'rxjs';
 import { delay, debounceTime, switchMap, tap } from 'rxjs/operators';
 import { MediaType, Media } from '../../../classes/media';
 import { MediaItemListComponent } from '../../item-lists/media-item-list/media-item-list.component';
-import { Image } from '../../../classes/image';
 import { DropdownComponent } from '../../elements/dropdowns/dropdown/dropdown.component';
 import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
@@ -25,15 +24,17 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, private productService: ProductService, private formService: FormService) {
     super(popupService, cover, menuService, dropdownMenuService, dataService);
   }
-  public searchInput: HTMLInputElement;
   public media: Media;
   public noMedia: boolean;
   public mediaType = MediaType;
+  public updatingMediaIndex: number;
+  public searchInput: HTMLInputElement;
   public addingMediaInProgress: boolean;
   public movingMediaInProgress: boolean;
-  public autoSelectedMediaItemIndex: number;
   public loadingMediaInProgress: boolean;
   public indexOfCurrentMediaList: number;
+  public updatingMediaInProgress: boolean;
+  public autoSelectedMediaItemIndex: number;
   public dropdownOptions: Array<KeyValue<string, MediaType>>;
   public mediaLists: MediaItem[][] = [[], [], [], [], [], [], [], []];
   private dropdownList: Array<KeyValue<string, MediaType>> = [
@@ -45,13 +46,13 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     { key: 'Icons', value: MediaType.Icon },
     { key: 'Videos', value: MediaType.Video }];
   public menuOptions = [
-    { add: 'Add Image', edit: 'Edit Image', delete: 'Delete Image', deletes: 'Delete Images' },
-    { add: 'Add Background Image', edit: 'Edit Background Image', delete: 'Delete Background Image', deletes: 'Delete Background Images' },
-    { add: 'Add Banner Image', edit: 'Edit Banner Image', delete: 'Delete Banner Image', deletes: 'Delete Banner Images' },
-    { add: 'Add Category Image', edit: 'Edit Category Image', delete: 'Delete Category Image', deletes: 'Delete Category Images' },
-    { add: 'Add Product Image', edit: 'Edit Product Image', delete: 'Delete Product Image', deletes: 'Delete Product Images' },
-    { add: 'Add Icon', edit: 'Edit Icon', delete: 'Delete Icon', deletes: 'Delete Icons' },
-    { add: 'Add Video', edit: 'Edit Video', delete: 'Delete Video', deletes: 'Delete Videos' }, {}
+    { add: 'New Image', edit: 'Edit Image Name', update: 'Update Image', delete: 'Delete Image', deletes: 'Delete Images' },
+    { add: 'New Background Image', edit: 'Edit Background Image Name', update: 'Update Background Image', delete: 'Delete Background Image', deletes: 'Delete Background Images' },
+    { add: 'New Banner Image', edit: 'Edit Banner Image Name', update: 'Update Banner Image', delete: 'Delete Banner Image', deletes: 'Delete Banner Images' },
+    { add: 'New Category Image', edit: 'Edit Category Image Name', update: 'Update Category Image', delete: 'Delete Category Image', deletes: 'Delete Category Images' },
+    { add: 'New Product Image', edit: 'Edit Product Image Name', update: 'Update Product Image', delete: 'Delete Product Image', deletes: 'Delete Product Images' },
+    { add: 'New Icon', edit: 'Edit Icon Name', update: 'Update Icon', delete: 'Delete Icon', deletes: 'Delete Icons' },
+    { add: 'New Video', edit: 'Edit Video Name', update: 'Update Video', delete: 'Delete Video', deletes: 'Delete Videos' }, {}
   ];
   @ViewChild('dropdown', { static: false }) dropdown: DropdownComponent;
   @ViewChild('mediaItemList', { static: false }) mediaItemList: MediaItemListComponent;
@@ -85,7 +86,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
         return of();
       }
       this.loadingMediaInProgress = true;
-      return this.searchMedia();
+      return this.searchTempMedia();
     }));
     searchResults.subscribe((mediaItems: MediaItem[]) => {
       this.indexOfCurrentMediaList = MediaType.Search;
@@ -99,12 +100,12 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
   // -----------------------------( SET MEDIA SEARCH MENU OPTIONS )------------------------------ \\
   setMediaSearchMenuOptions() {
-    let searchType: Array<string> = [];
     this.menuOptions[7] = {
-      add: 'Add ' + searchType[this.indexOfCurrentMediaList],
-      edit: 'Edit ' + searchType[this.indexOfCurrentMediaList],
-      delete: 'Delete ' + searchType[this.indexOfCurrentMediaList],
-      deletes: 'Delete ' + searchType[this.indexOfCurrentMediaList] + 's'
+      add: this.menuOptions[this.popupService.mediaType].add,
+      edit: this.menuOptions[this.popupService.mediaType].edit,
+      update: this.menuOptions[this.popupService.mediaType].update,
+      delete: this.menuOptions[this.popupService.mediaType].delete,
+      deletes: this.menuOptions[this.popupService.mediaType].deletes
     };
   }
 
@@ -134,7 +135,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       this.loadingMediaInProgress = true;
 
       // Then fetch the data
-      this.loadMedia().subscribe((mediaItems: MediaItem[]) => {
+      this.loadTempMedia().subscribe((mediaItems: MediaItem[]) => {
         // After loading is complete, hide the spinner
         this.loadingMediaInProgress = false;
 
@@ -164,14 +165,15 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   // -----------------------------( AUTO SELECT MEDIA ITEM )------------------------------ \\
   autoSelectMediaItem() {
     this.autoSelectedMediaItemIndex = null;
-
     // If the current media list is videos
     if (this.indexOfCurrentMediaList == MediaType.Video) {
+
       // Find a match between the target media and a media item in the list using the thumbnail property
       this.autoSelectedMediaItemIndex = this.mediaLists[this.indexOfCurrentMediaList].findIndex(x => x.thumbnail == this.media.thumbnail);
 
       // When the current media list is everything other than videos
     } else {
+
       // Find a match between the target media and a media item in the list using the url property
       this.autoSelectedMediaItemIndex = this.mediaLists[this.indexOfCurrentMediaList].findIndex(x => x.url == this.media.url);
     }
@@ -192,7 +194,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     if (mediaItem == null) {
 
       // If the current media is video
-      if (mediaItem.type == MediaType.Video) {
+      if (this.popupService.mediaType == MediaType.Video) {
         // Set the thumbnail property of that media item to null
         this.media.thumbnail = null;
 
@@ -220,25 +222,92 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   }
 
 
-  // -----------------------------( ON ADD MEDIA )------------------------------ \\
-  onAddMedia(mediaSelectInput: HTMLElement) {
-    if (this.indexOfCurrentMediaList == MediaType.Video) {
-      this.formService.videoUrlForm.show = true;
-      let videoSubscription: Subscription
+  // -----------------------------( OPEN FORM )------------------------------ \\
+  openForm(mediaSelectInput: HTMLInputElement, selectedMediaIndex?: number) {
+    // If the selectedMediaIndex has a value, then we are updating. If not, we are adding
+    this.updatingMediaIndex = selectedMediaIndex;
 
+    // If the media we're adding is a video
+    if (this.indexOfCurrentMediaList == MediaType.Video) {
+      let videoSubscription: Subscription;
+
+      // Open the video url form
+      this.formService.videoUrlForm.show = true;
+      // When the submit button is clicked on the video url form
       videoSubscription = this.formService.onVideoUrlFormSubmit.subscribe((url: string) => {
-        this.alita(url);
+
+        // If the selectedMediaIndex does NOT have a value
+        if (this.updatingMediaIndex == null) {
+          // Then set the new video
+          this.setNewVideo(url);
+
+          // But if the selectedMediaIndex has a value
+        } else {
+          // Then set the updating of the video
+          this.setUpdateVideo(url);
+        }
+
         videoSubscription.unsubscribe();
       });
 
+      // If the media we're adding is an image
     } else {
+
+      // Clear the media select input (This is so the same filename can be entered again and again)
+      mediaSelectInput.value = "";
+      // Open the file explorer window
       mediaSelectInput.click()
     }
   }
 
 
+  // -----------------------------( SET NEW IMAGE )------------------------------ \\
+  setNewImage(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }) {
+    // As long as the file being passed in is NOT null
+    if (event.target.files[0] != null) {
+      // Let it be known that the adding of media is in progress
+      this.addingMediaInProgress = true;
+      // Create an empty item at the begining of the list where the new media will be placed
+      this.mediaLists[this.indexOfCurrentMediaList].unshift(new MediaItem(this.indexOfCurrentMediaList));
 
-  alita(url: string){
+
+      // Populate the database with the new media
+      this.getNewTempImage(event.target.files[0]).subscribe((media: any) => {
+        // Update the empty item with the new media data
+        this.mediaItemList.listItems[0].id = media.id;
+        this.mediaItemList.listItems[0].url = media.url;
+        this.mediaItemList.listItems[0].thumbnail = media.thumbnail;
+        this.onMediaSelect(this.mediaItemList.listItems[0]);
+
+        // Now set the new media to be editable so it can be named
+        this.preventNoShow = true;
+        this.addingMediaInProgress = false;
+        this.mediaItemList.selectedListItemIndex = 0;
+        this.mediaItemList.addEventListeners();
+        this.mediaItemList.setListItemEdit();
+      })
+    }
+  }
+
+
+  // -----------------------------( SET UPDATE IMAGE )------------------------------ \\
+  setUpdateImage(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }) {
+    // As long as the file being passed in is NOT null
+    if (event.target.files[0] != null) {
+      // Let it be known that the updating of media is in progress
+      this.updatingMediaInProgress = true;
+
+      this.getUpdateTempImage(event.target.files[0]).subscribe((media: any) => {
+        this.mediaItemList.listItems[this.updatingMediaIndex].url = media.url;
+        this.onMediaSelect(this.mediaItemList.listItems[this.updatingMediaIndex]);
+        this.updatingMediaInProgress = false;
+      })
+    }
+  }
+
+
+  // --------------------------------( SET NEW VIDEO )-------------------------------- \\
+  setNewVideo(url: string) {
     // Let it be known that the adding of media is in progress
     this.addingMediaInProgress = true;
     // Create an empty item at the begining of the list where the new media will be placed
@@ -246,11 +315,11 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
     // Populate the database with the new media
-    this.getNewVideo(url).subscribe((video: any) => {
+    this.getNewTempVideo(url).subscribe((media: any) => {
       // Update the empty item with the new media data
-      this.mediaItemList.listItems[0].id = video.id;
-      this.mediaItemList.listItems[0].url = video.url;
-      this.mediaItemList.listItems[0].thumbnail = video.thumbnail;
+      this.mediaItemList.listItems[0].id = media.id;
+      this.mediaItemList.listItems[0].url = media.url;
+      this.mediaItemList.listItems[0].thumbnail = media.thumbnail;
       this.onMediaSelect(this.mediaItemList.listItems[0])
 
       // Now set the new media to be editable so it can be named
@@ -263,27 +332,16 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   }
 
 
-  // -----------------------------( SET NEW MEDIA )------------------------------ \\
-  setNewMedia(event) {
-    // Let it be known that the adding of media is in progress
-    this.addingMediaInProgress = true;
-    // Create an empty item at the begining of the list where the new media will be placed
-    this.mediaLists[this.indexOfCurrentMediaList].unshift(new MediaItem(this.indexOfCurrentMediaList));
-    
+  // --------------------------------( SET UPDATE VIDEO )-------------------------------- \\
+  setUpdateVideo(url: string) {
+     // Let it be known that the updating of media is in progress
+    this.updatingMediaInProgress = true;
 
-    // Populate the database with the new media
-    this.getNewMedia(event.target.files[0]).subscribe((media: any) => {
-      // Update the empty item with the new media data
-      this.mediaItemList.listItems[0].id = media.id;
+    this.getUpdateTempVideo(url).subscribe((media: any) => {
       this.mediaItemList.listItems[0].url = media.url;
+      this.mediaItemList.listItems[0].thumbnail = media.thumbnail;
       this.onMediaSelect(this.mediaItemList.listItems[0])
-
-      // Now set the new media to be editable so it can be named
-      this.preventNoShow = true;
-      this.addingMediaInProgress = false;
-      this.mediaItemList.selectedListItemIndex = 0;
-      this.mediaItemList.addEventListeners();
-      this.mediaItemList.setListItemEdit();
+      this.updatingMediaInProgress = false;
     })
   }
 
@@ -294,7 +352,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     this.movingMediaInProgress = true;
 
     // Update the database to reflect the move
-    this.moveMedia().subscribe(() => {
+    this.moveTempMedia().subscribe(() => {
       this.movingMediaInProgress = false;
 
       // If the destination list has already been loaded
@@ -352,7 +410,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // If we're in search mode, then we can't use - indexOfCurrentMediaList
       this.indexOfCurrentMediaList == MediaType.Search ?
         // So we need to get the URL by using the popup service media type
-        this.getUrl(this.popupService.mediaType) : 
+        this.getUrl(this.popupService.mediaType) :
         // But if we're NOT in search mode, get the URL by using - indexOfCurrentMediaList
         this.getUrl(this.indexOfCurrentMediaList), mediaItem.name)
       .subscribe((id: string) => {
@@ -369,7 +427,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // If we're in search mode, then we can't use - indexOfCurrentMediaList
       this.indexOfCurrentMediaList == MediaType.Search ?
         // So we need to get the URL by using the popup service media type
-        this.getUrl(this.popupService.mediaType) : 
+        this.getUrl(this.popupService.mediaType) :
         // But if we're NOT in search mode, get the URL by using - indexOfCurrentMediaList
         this.getUrl(this.indexOfCurrentMediaList), mediaItem.name)
       .subscribe((id: string) => {
@@ -381,12 +439,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
   // --------------------------------( ON POPUP OUT )-------------------------------- \\
   onPopupOut() {
-
-    
-
-    
-
-    this.preventNoShow = (this.mediaItemList.indexOfEditedListItem != null || this.addingMediaInProgress || this.movingMediaInProgress || this.formService.videoUrlForm.show || (this.mediaItemList.selectedListItemIndex != null ? this.mediaItemList.listItems[this.mediaItemList.selectedListItemIndex].loading : null)) ? true : false;
+    this.preventNoShow = (this.mediaItemList.indexOfEditedListItem != null || this.addingMediaInProgress || this.updatingMediaInProgress || this.movingMediaInProgress || this.formService.videoUrlForm.show || (this.mediaItemList.selectedListItemIndex != null ? this.mediaItemList.listItems[this.mediaItemList.selectedListItemIndex].loading : null)) ? true : false;
     super.onPopupOut();
   }
 
@@ -398,7 +451,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
   // --------------------------------( LOAD MEDIA )-------------------------------- \\
-  loadMedia(): Observable<MediaItem[]> {
+  loadTempMedia(): Observable<MediaItem[]> {
     if (this.indexOfCurrentMediaList == MediaType.Image) {
       let image1: MediaItem = new MediaItem(MediaType.Image); image1.name = 'Image 1'; image1.id = 'oiweoiuwer'; image1.url = '2f119b657c194b32a88b0f0051d525be.png';
       let image2: MediaItem = new MediaItem(MediaType.Image); image2.name = 'Image 2'; image2.id = 'qweuywesdo'; image2.url = '6c048ea442b646b59970f907a4d3ce61.jpg';
@@ -465,7 +518,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
   // --------------------------------( SEARCH MEDIA )-------------------------------- \\
-  searchMedia(): Observable<MediaItem[]> {
+  searchTempMedia(): Observable<MediaItem[]> {
     let image1: MediaItem = new MediaItem(this.popupService.mediaType); image1.name = 'Gumpy Ice Cream secrets'; image1.id = 'oiweoiuwer'; image1.url = '1f3eccf21332491c949c7ac1648945ec.jpg';
     let image2: MediaItem = new MediaItem(this.popupService.mediaType); image2.name = 'A Gumpy a day keeps the doctor away'; image2.id = 'qweuywesdo'; image2.url = '2c35cff4d5d04327af35e26f9f7ebe79.png';
     let image3: MediaItem = new MediaItem(this.popupService.mediaType); image3.name = 'Gumpy Honey Ice Cream'; image3.id = 'potyuoptuw'; image3.url = '9da5043dd53a45efb472269b2d283dac.png';
@@ -473,8 +526,8 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   }
 
 
-  // --------------------------------( GET NEW MEDIA )-------------------------------- \\
-  getNewMedia(file): Observable<any> {
+  // --------------------------------( GET NEW TEMP IMAGE )-------------------------------- \\
+  getNewTempImage(file): Observable<any> {
     return of({
       id: 'isdfioewioweioweri',
       url: file.name
@@ -482,8 +535,16 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   }
 
 
+  // --------------------------------( GET UPDATE TEMP IMAGE )-------------------------------- \\
+  getUpdateTempImage(file): Observable<any> {
+    return of({
+      url: file.name
+    }).pipe(delay(3000));
+  }
 
-  getNewVideo(url: string): Observable<any> {
+
+  // --------------------------------( GET NEW TEMP VIDEO )-------------------------------- \\
+  getNewTempVideo(url: string): Observable<any> {
     return of({
       id: 'isdfioewioweioweri',
       url: url,
@@ -492,8 +553,17 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   }
 
 
+  // --------------------------------( GET UPDATE TEMP VIDEO )-------------------------------- \\
+  getUpdateTempVideo(url: string): Observable<any> {
+    return of({
+      url: url,
+      thumbnail: 'bc9ce0cc860e422aa7c9cafaaf61fc8a.png'
+    }).pipe(delay(3000));
+  }
+
+
   // --------------------------------( MOVE MEDIA )-------------------------------- \\
-  moveMedia(): Observable<any> {
+  moveTempMedia(): Observable<any> {
     return of({
 
     }).pipe(delay(3000));

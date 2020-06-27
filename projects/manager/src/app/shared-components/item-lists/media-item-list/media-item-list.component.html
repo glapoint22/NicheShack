@@ -1,7 +1,6 @@
 <div #overflowContainer class="overflow-container" (contextmenu)="$event.preventDefault()" 
 
 
-
 (mouseup)="setContextMenu($event)" >
         
 
@@ -12,6 +11,7 @@
                 (dblclick)="onListItemDoubleClick(listItemIndex)"
                 style="cursor: pointer;"
                 [ngClass]="{
+                            'hide-hover': mediaUpdateInitiated || mediaAddInitiated,
                             'edited-listItem': indexOfEditedListItem == listItemIndex,
                             'selected-listItem': selectedListItemIndex == listItemIndex,
                             'unselected-listItem': unselectedListItemIndex == listItemIndex,
@@ -27,17 +27,14 @@
             <td tabindex="-1"
                 (focus)="rowItem.focus()">
 
-                 <div *ngIf="listItemIndex != 0 || (listItemIndex == 0 && !addingMediaInProgress)" class="img"
+                 <div *ngIf="(listItemIndex != 0 || (listItemIndex == 0 && !addingMediaInProgress)) && (!listItem.selected || !updatingMediaInProgress)" class="img"
                       [ngStyle]="{ 'background-image': 'url(images/' + (listItem.type == mediaTypeEnum.Video ? listItem.thumbnail : listItem.url) + ')'}"
                       [ngClass]="{'highlight-image': selectedListItemIndex == listItemIndex,
                                   'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
                 </div> 
-                <div *ngIf="listItemIndex == 0 && addingMediaInProgress" style="width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;">
+                <div *ngIf="(listItemIndex == 0 && addingMediaInProgress) || (listItem.selected && updatingMediaInProgress)" style="width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;">
                     <i  class="fas fa-spinner fa-pulse font-size-3"></i>
                 </div>  
-                
-                
-
             </td>
 
             

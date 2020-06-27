@@ -33,13 +33,16 @@ table {
         outline: none;
         height: 42px;
 
-        &:hover:not(.no-hover):not(.selected-listItem):not(.transparent-listItem):not(.edited-listItem):not(.selected-listItem-top):not(.selected-listItem-middle):not(.selected-listItem-bottom):not(.selected-listItem-whole) {
+        &:hover:not(.hide-hover):not(.no-hover):not(.selected-listItem):not(.transparent-listItem):not(.edited-listItem):not(.selected-listItem-top):not(.selected-listItem-middle):not(.selected-listItem-bottom):not(.selected-listItem-whole) {
             background: $hover-fill-color;
             color: #dddddd;
 
 
         }
 
+        &.hide-hover {
+            background: transparent;
+        }
 
         &.selected-listItem:not(.transparent-listItem):not(.edited-listItem) {
             background: $selected-fill-color;
