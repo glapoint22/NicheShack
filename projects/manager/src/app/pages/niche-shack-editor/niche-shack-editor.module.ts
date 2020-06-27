@@ -15,7 +15,7 @@ import { ProductMediaComponent } from './product-editor/product-properties/produ
 import { ProductEmailComponent } from './product-editor/product-email/product-email.component';
 import { ColorIconComponent } from './product-editor/product-properties/product-description/color-icon/color-icon.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
-import { PropertiesEditorModule } from '../../properties-editor.module';
+import { PropertiesEditorModule } from '../../shared-components/properties-editor/properties-editor.module';
 import { PricePointPopupComponent } from './product-editor/product-properties/product-content/price-point-popup/price-point-popup.component';
 import { FormsModule } from '@angular/forms';
 import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';

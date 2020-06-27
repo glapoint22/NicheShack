@@ -129,4 +129,10 @@ export class PageEditorComponent implements Searchable {
         this.loadPage(pageData);
       });
   }
+
+
+  // --------------------------------------------------------------------- On Save Click --------------------------------------------------------
+  onSaveClick() {
+    this.pageService.savePage(this.apiUrl);
+  }
 }

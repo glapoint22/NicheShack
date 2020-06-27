@@ -12,24 +12,32 @@
 
 
 
-    <div style="flex-basis: 15%; max-width: 15%; background: #252525; overflow: auto;">
-
-        <ng-container
-            *ngIf="popupService.nicheShackHierarchyPopup.selectedItem && popupService.nicheShackHierarchyPopup.selectedItem.id">
-            <category-editor
-                *ngIf="popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Category"
-                [hierarchyItem]="popupService.nicheShackHierarchyPopup.selectedItem"></category-editor>
-            <niche-editor *ngIf="popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Niche"
-                [hierarchyItem]="popupService.nicheShackHierarchyPopup.selectedItem"></niche-editor>
-            <product-editor *ngIf="popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Product"
-                [hierarchyItem]="popupService.nicheShackHierarchyPopup.selectedItem"
-                (onModeChange)="productEditorMode = $event"></product-editor>
-        </ng-container>
 
 
-
-
+    <div class="properties-editor-container">
+        <properties-editor>
+            <ng-container
+                *ngIf="popupService.nicheShackHierarchyPopup.selectedItem && popupService.nicheShackHierarchyPopup.selectedItem.id">
+                <category-editor
+                    *ngIf="popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Category"
+                    [hierarchyItem]="popupService.nicheShackHierarchyPopup.selectedItem"></category-editor>
+                <niche-editor *ngIf="popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Niche"
+                    [hierarchyItem]="popupService.nicheShackHierarchyPopup.selectedItem"></niche-editor>
+                <product-editor
+                    *ngIf="popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Product"
+                    [hierarchyItem]="popupService.nicheShackHierarchyPopup.selectedItem"
+                    (onModeChange)="productEditorMode = $event"></product-editor>
+            </ng-container>
+        </properties-editor>
     </div>
+
+
+
+
+
+
+
+
 
 </div>
 
