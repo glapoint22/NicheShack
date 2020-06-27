@@ -6,6 +6,7 @@ import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
 import { Searchable } from '../../../classes/searchable';
 import { TempDataService } from '../../../services/temp-data.service';
+import { Item } from '../../../classes/item';
 
 @Component({
   selector: 'page-editor',
@@ -15,7 +16,8 @@ import { TempDataService } from '../../../services/temp-data.service';
 export class PageEditorComponent implements Searchable {
   public view: string = 'page';
   public currentPageId: string;
-  public searchUrl: string;
+  private apiUrl: string = 'api/Pages';
+  public searchUrl: string = this.apiUrl + '/Search';
 
   constructor(public pageService: PageService,
     private loadingService: LoadingService,
@@ -30,7 +32,7 @@ export class PageEditorComponent implements Searchable {
     this.loadingService.loading = true;
 
 
-    this.dataService.get('api/Pages/Create')
+    this.dataService.get(this.apiUrl + '/Create')
       .subscribe((pageData: PageData) => {
         this.loadPage(pageData);
       });
@@ -58,7 +60,7 @@ export class PageEditorComponent implements Searchable {
 
     let pageData = this.pageService.getPageData();
 
-    this.dataService.post('api/Pages', pageData)
+    this.dataService.post(this.apiUrl, pageData)
       .subscribe((pageId: string) => {
 
         pageData.id = pageId;
@@ -94,7 +96,7 @@ export class PageEditorComponent implements Searchable {
     this.loadingService.loading = true;
 
     // Delete the page in the database
-    this.dataService.delete('api/Pages', this.currentPageId)
+    this.dataService.delete(this.apiUrl, this.currentPageId)
       .subscribe(() => {
         this.pageService.clearPage();
         this.currentPageId = null;
@@ -117,7 +119,14 @@ export class PageEditorComponent implements Searchable {
 
 
   // ---------------------------------------------------------------- Set Search Item --------------------------------------------------------
-  setSearchItem(searchItem: any): void {
+  setSearchItem(searchItem: Item): void {
+    this.loadingService.loading = true;
 
+    this.dataService.get(this.apiUrl, [{ key: 'id', value: searchItem.id }])
+      .subscribe((pageData: PageData) => {
+
+        // Load the lead page
+        this.loadPage(pageData);
+      });
   }
 }

@@ -54,7 +54,6 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
   // -----------------------------( SET SEARCH ITEM )------------------------------ \\
   setSearchItem(searchItem: any) {
     // Add the item to the list
-    // this.itemList.addListItem(searchItem);
     this.productGroupWidget.featuredProducts.push(searchItem)
   }
 

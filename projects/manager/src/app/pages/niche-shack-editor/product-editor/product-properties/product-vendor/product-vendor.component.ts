@@ -15,7 +15,7 @@ import { TempDataService } from 'projects/manager/src/app/services/temp-data.ser
 })
 export class ProductVendorComponent implements Searchable {
   @Input() vendor: Item;
-  public searchUrl: string = 'api/Vendors';
+  public searchUrl: string = 'api/Vendors/Search';
   private subscription: Subscription;
 
   constructor(
@@ -36,7 +36,7 @@ export class ProductVendorComponent implements Searchable {
   // --------------------------------( ON VENDOR INFO CLICK )-------------------------------- \\
   onVendorInfoClick() {
     this.loadingService.loading = true;
-    this.dataService.get(this.searchUrl, [{ key: 'id', value: this.vendor.id }])
+    this.dataService.get('api/Vendors', [{ key: 'id', value: this.vendor.id }])
       .subscribe((vendor: Vendor) => {
         // Give the vendor info to the vendor form
         this.formService.vendorForm.vendor = vendor;

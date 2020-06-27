@@ -9,33 +9,37 @@
 
             <!-- Delete -->
             <div class="icon-container"
-                    [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Category (Delete)' : itemList.editIcon.isDisabled ? 'Delete Categories (Delete)' : 'Delete Category (Delete)'"
-                    [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
-                    (mouseover)="itemList.isOverIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="onRemoveCategoryClick()">
+                [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Category (Delete)' : itemList.editIcon.isDisabled ? 'Delete Categories (Delete)' : 'Delete Category (Delete)'"
+                [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                (click)="onRemoveCategoryClick()">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
 
             <!-- Add -->
-            <div class="icon-container"
-                    [attr.title]="'Add Category (Ctrl+Alt+A)'" 
-                    [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
-                    (mouseover)="itemList.isOverIconButton = true"
-                    (mouseout)="itemList.onIconButtonMouseOut()"
-                    (click)="!itemList.addIcon.isDisabled ? addCategory($event.target) : null">
+            <div class="icon-container" [attr.title]="'Add Category (Ctrl+Alt+A)'"
+                [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                (click)="!itemList.addIcon.isDisabled ? addCategory($event.target) : null">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>
 
-        <!-- Item LIst -->
-        <item-list 
-            #itemList 
-            [listItems]="categoriesWidget.categories"
-            (onAddItem)="addCategory()"
-            (onEditItem)="editCategory()"
-            [menuOptions]="['Add Category', 'Edit Category', 'Delete Category', 'Delete Categories']">
-        </item-list>
+        <div
+            [ngStyle]="{'padding.px' : categoriesWidget.categories && categoriesWidget.categories.length == 0 ? 0 : 6,
+                         'paddingTop.px' : categoriesWidget.categories && categoriesWidget.categories.length == 0 ? 0 : 7}">
+            <!-- Item LIst -->
+            <item-list #itemList [listItems]="categoriesWidget.categories" (onAddItem)="addCategory()"
+                (onEditItem)="editCategory()"
+                [menuOptions]="['Add Category', 'Edit Category', 'Delete Category', 'Delete Categories']">
+            </item-list>
+        </div>
+
+
+
+        <!-- Placeholder -->
+        <div *ngIf="categoriesWidget.categories && categoriesWidget.categories.length == 0" class="no-property">No
+            categories available</div>
     </div>
 </panel>
