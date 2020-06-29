@@ -28,7 +28,6 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   public noMedia: boolean;
   public mediaType = MediaType;
   public updatingMediaIndex: number;
-  public searchInput: HTMLInputElement;
   public addingMediaInProgress: boolean;
   public movingMediaInProgress: boolean;
   public loadingMediaInProgress: boolean;
@@ -86,7 +85,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
         return of();
       }
       this.loadingMediaInProgress = true;
-      return this.searchTempMedia();
+      return this.dataService.get(this.getUrl(this.popupService.mediaType) + '/Search', [{ key: 'search', value: searchInput.value }]);
     }));
     searchResults.subscribe((mediaItems: MediaItem[]) => {
       this.indexOfCurrentMediaList = MediaType.Search;
@@ -135,7 +134,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       this.loadingMediaInProgress = true;
 
       // Then fetch the data
-      this.loadTempMedia().subscribe((mediaItems: MediaItem[]) => {
+      this.dataService.get(this.getUrl(this.indexOfCurrentMediaList)).subscribe((mediaItems: MediaItem[]) => {
         // After loading is complete, hide the spinner
         this.loadingMediaInProgress = false;
 
@@ -272,11 +271,11 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
       // Populate the database with the new media
-      this.getNewTempImage(event.target.files[0]).subscribe((media: any) => {
+      this.dataService.post(this.getUrl(this.popupService.mediaType), event.target.files[0]).subscribe((media: any) => {
         // Update the empty item with the new media data
         this.mediaItemList.listItems[0].id = media.id;
         this.mediaItemList.listItems[0].url = media.url;
-        this.mediaItemList.listItems[0].thumbnail = media.thumbnail;
+        // this.mediaItemList.listItems[0].thumbnail = media.thumbnail;
         this.onMediaSelect(this.mediaItemList.listItems[0]);
 
         // Now set the new media to be editable so it can be named
@@ -297,8 +296,10 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // Let it be known that the updating of media is in progress
       this.updatingMediaInProgress = true;
 
-      this.getUpdateTempImage(event.target.files[0]).subscribe((media: any) => {
-        this.mediaItemList.listItems[this.updatingMediaIndex].url = media.url;
+      this.dataService.put(this.getUrl(this.popupService.mediaType), {
+        id: this.mediaItemList.listItems[this.updatingMediaIndex].id,
+        image: event.target.files[0]
+      }).subscribe(() => {
         this.onMediaSelect(this.mediaItemList.listItems[this.updatingMediaIndex]);
         this.updatingMediaInProgress = false;
       })
@@ -315,7 +316,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
     // Populate the database with the new media
-    this.getNewTempVideo(url).subscribe((media: any) => {
+    this.dataService.post(this.getUrl(this.popupService.mediaType), url).subscribe((media: any) => {
       // Update the empty item with the new media data
       this.mediaItemList.listItems[0].id = media.id;
       this.mediaItemList.listItems[0].url = media.url;
@@ -334,13 +335,16 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
   // --------------------------------( SET UPDATE VIDEO )-------------------------------- \\
   setUpdateVideo(url: string) {
-     // Let it be known that the updating of media is in progress
+    // Let it be known that the updating of media is in progress
     this.updatingMediaInProgress = true;
 
-    this.getUpdateTempVideo(url).subscribe((media: any) => {
-      this.mediaItemList.listItems[0].url = media.url;
-      this.mediaItemList.listItems[0].thumbnail = media.thumbnail;
-      this.onMediaSelect(this.mediaItemList.listItems[0])
+    this.dataService.put(this.getUrl(this.popupService.mediaType), {
+      id: this.mediaItemList.listItems[this.updatingMediaIndex].id,
+      url: url
+    }).subscribe((media: any) => {
+      this.mediaItemList.listItems[this.updatingMediaIndex].url = media.url;
+      this.mediaItemList.listItems[this.updatingMediaIndex].thumbnail = media.thumbnail;
+      this.onMediaSelect(this.mediaItemList.listItems[this.updatingMediaIndex])
       this.updatingMediaInProgress = false;
     })
   }
@@ -351,8 +355,20 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     // Let it be known that the moving of media is in progress
     this.movingMediaInProgress = true;
 
+    let moveMediaItems: Array<MediaItem> = [];
+
+
+    // Prepend the media item to its new list if it is selected
+    for (let i = 0; i < this.mediaItemList.listItems.length; i++) {
+      if (this.mediaItemList.listItems[i].selected) moveMediaItems.push(this.mediaItemList.listItems[i]);
+    }
+
+
     // Update the database to reflect the move
-    this.moveTempMedia().subscribe(() => {
+    this.dataService.put(this.getUrl(this.popupService.mediaType) + "/Move", {
+      ids: moveMediaItems.map(x => x.id),
+      destination: destinationMedia
+    }).subscribe(() => {
       this.movingMediaInProgress = false;
 
       // If the destination list has already been loaded
@@ -374,28 +390,32 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     let url: string;
 
     switch (mediaType) {
+      case MediaType.Image: {
+        url = 'api/Images';
+        break;
+      }
+      case MediaType.BackgroundImage: {
+        url = 'api/BackgroundImages';
+        break;
+      }
       case MediaType.BannerImage: {
-        url = 'api/Carousel';
+        url = 'api/Carousel/Images';
         break;
       }
       case MediaType.CategoryImage: {
-        url = 'api/Categories';
+        url = 'api/Categories/Images';
         break;
       }
       case MediaType.ProductImage: {
-        url = 'api/Products';
+        url = 'api/Products/Images';
         break;
       }
       case MediaType.Icon: {
-        url = 'api/ProductContent';
+        url = 'api/ProductContent/Images';
         break;
       }
       case MediaType.Video: {
         url = 'api/Videos';
-        break;
-      }
-      default: {
-        url = 'api/Images';
         break;
       }
     }
@@ -403,33 +423,18 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   }
 
 
-  // -----------------------------( POST )------------------------------ \\
-  post(mediaItem: MediaItem) {
-    mediaItem.loading = true;
-    this.dataService.post(
-      // If we're in search mode, then we can't use - indexOfCurrentMediaList
-      this.indexOfCurrentMediaList == MediaType.Search ?
-        // So we need to get the URL by using the popup service media type
-        this.getUrl(this.popupService.mediaType) :
-        // But if we're NOT in search mode, get the URL by using - indexOfCurrentMediaList
-        this.getUrl(this.indexOfCurrentMediaList), mediaItem.name)
-      .subscribe((id: string) => {
-        mediaItem.loading = false;
-        mediaItem.id = id;
-      });
-  }
 
 
-  // -----------------------------( UPDATE )------------------------------ \\
-  update(mediaItem: MediaItem) {
+
+
+
+
+  // -----------------------------( UPDATE MEDIA NAME )------------------------------ \\
+  updateMediaName(mediaItem: MediaItem) {
     mediaItem.loading = true;
     this.dataService.put(
-      // If we're in search mode, then we can't use - indexOfCurrentMediaList
-      this.indexOfCurrentMediaList == MediaType.Search ?
-        // So we need to get the URL by using the popup service media type
-        this.getUrl(this.popupService.mediaType) :
-        // But if we're NOT in search mode, get the URL by using - indexOfCurrentMediaList
-        this.getUrl(this.indexOfCurrentMediaList), mediaItem.name)
+
+      this.getUrl(this.popupService.mediaType), mediaItem)
       .subscribe((id: string) => {
         mediaItem.loading = false;
         mediaItem.id = id;
@@ -441,131 +446,5 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   onPopupOut() {
     this.preventNoShow = (this.mediaItemList.indexOfEditedListItem != null || this.addingMediaInProgress || this.updatingMediaInProgress || this.movingMediaInProgress || this.formService.videoUrlForm.show || (this.mediaItemList.selectedListItemIndex != null ? this.mediaItemList.listItems[this.mediaItemList.selectedListItemIndex].loading : null)) ? true : false;
     super.onPopupOut();
-  }
-
-
-
-
-  // ======================================================================= / TEMP \ ====================================================================================== \\
-  // ======================================================================= \ DATA / ====================================================================================== \\
-
-
-  // --------------------------------( LOAD MEDIA )-------------------------------- \\
-  loadTempMedia(): Observable<MediaItem[]> {
-    if (this.indexOfCurrentMediaList == MediaType.Image) {
-      let image1: MediaItem = new MediaItem(MediaType.Image); image1.name = 'Image 1'; image1.id = 'oiweoiuwer'; image1.url = '2f119b657c194b32a88b0f0051d525be.png';
-      let image2: MediaItem = new MediaItem(MediaType.Image); image2.name = 'Image 2'; image2.id = 'qweuywesdo'; image2.url = '6c048ea442b646b59970f907a4d3ce61.jpg';
-      let image3: MediaItem = new MediaItem(MediaType.Image); image3.name = 'Image 3'; image3.id = 'potyuoptuw'; image3.url = '0aada12f8b21471ea96aebe9a503977b.png';
-      let image4: MediaItem = new MediaItem(MediaType.Image); image4.name = 'Image 4'; image4.id = 'potyuoptuw'; image4.url = '6e1659b63e5643e0a9039064b4a52e12.png';
-      return of([image1, image2, image3, image4]).pipe(delay(1000));
-    }
-
-
-    if (this.indexOfCurrentMediaList == MediaType.BackgroundImage) {
-      let image1: MediaItem = new MediaItem(MediaType.BackgroundImage); image1.name = 'Campland'; image1.id = 'oiweoiuwer'; image1.url = 'campland-background.jpg';
-      let image2: MediaItem = new MediaItem(MediaType.BackgroundImage); image2.name = 'Background Image 2'; image2.id = 'qweuywesdo'; image2.url = 'a29f28773e154adaab48a6355f2f4e5d.png';
-      let image3: MediaItem = new MediaItem(MediaType.BackgroundImage); image3.name = 'Background Image 3'; image3.id = 'potyuoptuw'; image3.url = 'cfb7358d797d484eab24bd2a57d2b850.png';
-      return of([image1, image2, image3]).pipe(delay(1000));
-    }
-
-
-    if (this.indexOfCurrentMediaList == MediaType.BannerImage) {
-      let image1: MediaItem = new MediaItem(MediaType.BannerImage); image1.name = 'Frozen'; image1.id = 'oiweoiuwer'; image1.url = 'frozen.jpg';
-      let image2: MediaItem = new MediaItem(MediaType.BannerImage); image2.name = 'Banner Image 1'; image2.id = 'qweuywesdo'; image2.url = 'banner1.jpg';
-      let image3: MediaItem = new MediaItem(MediaType.BannerImage); image3.name = 'Banner Image 2'; image3.id = 'potyuoptuw'; image3.url = 'banner2.jpg';
-      let image4: MediaItem = new MediaItem(MediaType.BannerImage); image4.name = 'Banner Image 3'; image4.id = 'qweuywesdo'; image4.url = 'banner3.jpg';
-      let image5: MediaItem = new MediaItem(MediaType.BannerImage); image5.name = 'Banner Image 4'; image5.id = 'potyuoptuw'; image5.url = 'banner4.jpg';
-      let image6: MediaItem = new MediaItem(MediaType.BannerImage); image6.name = 'Banner Image 5'; image6.id = 'qweuywesdo'; image6.url = 'banner5.jpg';
-      return of([image1, image2, image3, image4, image5, image6]).pipe(delay(1000));
-    }
-
-
-    if (this.indexOfCurrentMediaList == MediaType.CategoryImage) {
-      let image1: MediaItem = new MediaItem(MediaType.CategoryImage); image1.name = 'Health & Fitness'; image1.id = 'oiweoiuwer'; image1.url = '44d71fbf43904ffdbdece40a45bdf9db.png';
-      let image2: MediaItem = new MediaItem(MediaType.CategoryImage); image2.name = 'Brain Power'; image2.id = 'qweuywesdo'; image2.url = 'abc61d06435c4a29833a089271fe128a.png';
-      let image3: MediaItem = new MediaItem(MediaType.CategoryImage); image3.name = 'Camping'; image3.id = 'potyuoptuw'; image3.url = 'ab0bda0d51a5408788359471b337662f.png';
-      return of([image1, image2, image3]).pipe(delay(1000));
-    }
-
-
-    if (this.indexOfCurrentMediaList == MediaType.ProductImage) {
-      let image1: MediaItem = new MediaItem(MediaType.ProductImage); image1.name = 'How to Seduce Out of Your League'; image1.id = 'oiweoiuwer'; image1.url = 'b4fa43f207d7420cbb2c72d0fe9c64ba.jpg';
-      let image2: MediaItem = new MediaItem(MediaType.ProductImage); image2.name = 'The 21 Day Flat Belly Fix System'; image2.id = 'qweuywesdo'; image2.url = '899c7b6deb544dd28a7ec3055c5196a1.jpg';
-      let image3: MediaItem = new MediaItem(MediaType.ProductImage); image3.name = 'Bigger Better Butt              '; image3.id = 'potyuoptuw'; image3.url = 'b212b69728ee4f3b9473831bb4f7ace9.png';
-      return of([image1, image2, image3]).pipe(delay(1000));
-    }
-
-
-    if (this.indexOfCurrentMediaList == MediaType.Icon) {
-      let image1: MediaItem = new MediaItem(MediaType.Icon); image1.name = 'PDF'; image1.id = 'oiweoiuwer'; image1.url = 'pdf.png';
-      let image2: MediaItem = new MediaItem(MediaType.Icon); image2.name = 'Audio'; image2.id = 'qweuywesdo'; image2.url = 'audio.png';
-      let image3: MediaItem = new MediaItem(MediaType.Icon); image3.name = 'Video'; image3.id = 'potyuoptuw'; image3.url = 'video.png';
-      let image4: MediaItem = new MediaItem(MediaType.Icon); image4.name = 'Software'; image4.id = 'potyuoptuw'; image4.url = 'software.png';
-      return of([image1, image2, image3, image4]).pipe(delay(1000));
-    }
-
-
-    if (this.indexOfCurrentMediaList == MediaType.Video) {
-      let image1: MediaItem = new MediaItem(MediaType.Video); image1.name = 'Video 1'; image1.id = 'oiweoiuwer'; image1.thumbnail = 'thumbnail1.png'; image1.url = '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff';
-      let image2: MediaItem = new MediaItem(MediaType.Video); image2.name = 'Video 2'; image2.id = 'qweuywesdo'; image2.thumbnail = 'thumbnail2.png'; image2.url = 'https://www.youtube.com/embed/1AI6RS1st2E';
-      let image3: MediaItem = new MediaItem(MediaType.Video); image3.name = 'Video 3'; image3.id = 'potyuoptuw'; image3.thumbnail = 'thumbnail3.png'; image3.url = '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff';
-      let image4: MediaItem = new MediaItem(MediaType.Video); image4.name = 'Video 4'; image4.id = 'oiweoiuwer'; image4.thumbnail = 'thumbnail4.png'; image4.url = 'https://www.youtube.com/embed/3ZEu6ZOMhlw';
-      let image5: MediaItem = new MediaItem(MediaType.Video); image5.name = 'Video 5'; image5.id = 'qweuywesdo'; image5.thumbnail = 'thumbnail5.png'; image5.url = 'https://player.vimeo.com/video/218732620';
-      let image6: MediaItem = new MediaItem(MediaType.Video); image6.name = 'Video 6'; image6.id = 'potyuoptuw'; image6.thumbnail = 'thumbnail6.png'; image6.url = 'https://player.vimeo.com/video/264188894';
-      return of([image1, image2, image3, image4, image5, image6]).pipe(delay(1000));
-    }
-  }
-
-
-  // --------------------------------( SEARCH MEDIA )-------------------------------- \\
-  searchTempMedia(): Observable<MediaItem[]> {
-    let image1: MediaItem = new MediaItem(this.popupService.mediaType); image1.name = 'Gumpy Ice Cream secrets'; image1.id = 'oiweoiuwer'; image1.url = '1f3eccf21332491c949c7ac1648945ec.jpg';
-    let image2: MediaItem = new MediaItem(this.popupService.mediaType); image2.name = 'A Gumpy a day keeps the doctor away'; image2.id = 'qweuywesdo'; image2.url = '2c35cff4d5d04327af35e26f9f7ebe79.png';
-    let image3: MediaItem = new MediaItem(this.popupService.mediaType); image3.name = 'Gumpy Honey Ice Cream'; image3.id = 'potyuoptuw'; image3.url = '9da5043dd53a45efb472269b2d283dac.png';
-    return of([image1, image2, image3]).pipe(delay(1000));
-  }
-
-
-  // --------------------------------( GET NEW TEMP IMAGE )-------------------------------- \\
-  getNewTempImage(file): Observable<any> {
-    return of({
-      id: 'isdfioewioweioweri',
-      url: file.name
-    }).pipe(delay(3000));
-  }
-
-
-  // --------------------------------( GET UPDATE TEMP IMAGE )-------------------------------- \\
-  getUpdateTempImage(file): Observable<any> {
-    return of({
-      url: file.name
-    }).pipe(delay(3000));
-  }
-
-
-  // --------------------------------( GET NEW TEMP VIDEO )-------------------------------- \\
-  getNewTempVideo(url: string): Observable<any> {
-    return of({
-      id: 'isdfioewioweioweri',
-      url: url,
-      thumbnail: '9da5043dd53a45efb472269b2d283dac.png'
-    }).pipe(delay(3000));
-  }
-
-
-  // --------------------------------( GET UPDATE TEMP VIDEO )-------------------------------- \\
-  getUpdateTempVideo(url: string): Observable<any> {
-    return of({
-      url: url,
-      thumbnail: 'bc9ce0cc860e422aa7c9cafaaf61fc8a.png'
-    }).pipe(delay(3000));
-  }
-
-
-  // --------------------------------( MOVE MEDIA )-------------------------------- \\
-  moveTempMedia(): Observable<any> {
-    return of({
-
-    }).pipe(delay(3000));
   }
 }
