@@ -42,8 +42,10 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   @Output() onMediaSelect: EventEmitter<MediaItem> = new EventEmitter();
 
 
-  @HostListener('mousemove')
-  onMousemove() {
+  // -----------------------------( ON WINDOW FOCUS )------------------------------ \\
+  @HostListener('window:focus')
+  onWindowFocus() {
+    // If we're updating media
     if (this.mediaUpdateInitiated) {
       this.mediaUpdateInitiated = false;
       // Put the focus back to the selected media item when updating is all done
@@ -51,7 +53,9 @@ export class MediaItemListComponent extends EditableItemListComponent implements
       // Then set the last focused list item as this selected list item
       this.lastFocusedListItem = document.activeElement;
     }
-    if(this.mediaAddInitiated) this.mediaAddInitiated = false;
+
+    // If we're adding media
+    if (this.mediaAddInitiated) this.mediaAddInitiated = false;
   }
 
 
@@ -121,7 +125,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
     if (this.selectedListItemIndex != null) {
       this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
         // Add
-        this.menuService.option(this.menuOptions[0], "Ctrl+Alt+N", this.addIcon.isDisabled, () => {this.mediaAddInitiated = true; this.onAddMedia.emit()}),
+        this.menuService.option(this.menuOptions[0], "Ctrl+Alt+N", this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() }),
         this.menuService.divider(),
         // Update
         this.menuService.option(this.menuOptions[2], "Ctrl+Alt+U", this.editIcon.isDisabled, () => { this.mediaUpdateInitiated = true; this.onUpdateMedia.emit(this.selectedListItemIndex) }),
@@ -139,7 +143,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
     } else {
       this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
         // Add
-        this.menuService.option(this.menuOptions[0], null, this.addIcon.isDisabled, () => {this.mediaAddInitiated = true; this.onAddMedia.emit()})
+        this.menuService.option(this.menuOptions[0], null, this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() })
       );
     }
   }
@@ -161,24 +165,17 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   }
 
 
+  // -----------------------------( SET LIST ITEM NAME )------------------------------ \\
+  setListItemName() {
+    // Update the item name
+    this.updateItemName.emit(this.listItems[this.selectedListItemIndex])
+  }
+
+
   // -----------------------------( REMOVE EVENT LISTENERS )------------------------------ \\
   removeEventListeners() {
-
-    if (this.mediaUpdateInitiated) {
-
-    } else {
+    if (!this.mediaUpdateInitiated) {
       super.removeEventListeners();
-    }
-
-    // console.log(this.listItems[this.selectedListItemIndex].selected)
-
-
-
-    // this.removeFocus();
-    // this.eventListenersAdded = false;
-    // window.removeEventListener('keyup', this.onKeyUp);
-    // window.removeEventListener('keydown', this.onKeyDown);
-    // window.removeEventListener('mousedown', this.onMouseDown);
-    // window.removeEventListener('blur', this.onInnerWindowBlur);
+    } 
   }
 }

@@ -11,8 +11,8 @@ import { ListItem } from '../../../classes/list-item';
 export class EditableItemListComponent extends ItemListComponent {
   public indexOfEditedListItem: number = null;
   public selectType = SelectType;
-  @Output() postItem: EventEmitter<ListItem> = new EventEmitter();
-  @Output() updateItem: EventEmitter<ListItem> = new EventEmitter();
+  @Output() postItemName: EventEmitter<ListItem> = new EventEmitter();
+  @Output() updateItemName: EventEmitter<ListItem> = new EventEmitter();
 
   // -----------------------------( SET SHORTCUT KEYS )------------------------------ \\
   setShortcutKeys(event: KeyboardEvent) {
@@ -98,17 +98,24 @@ export class EditableItemListComponent extends ItemListComponent {
     if (!isEscape) {
       this.listItems[this.selectedListItemIndex].name = listItemTrimmed;
 
-      // If we're naming a new item
-      if (this.newListItem) {
-        this.postItem.emit(this.listItems[this.selectedListItemIndex]);
-
-        // If we're editing an existing item
-      } else {
-        this.updateItem.emit(this.listItems[this.selectedListItemIndex])
-      }
+      // Set the list item name
+      this.setListItemName();
     }
     // Update the name in the list
     listItem.textContent = this.listItems[this.selectedListItemIndex].name;
+  }
+
+
+  // -----------------------------( SET LIST ITEM NAME )------------------------------ \\
+  setListItemName() {
+    // If we're naming a new item
+    if (this.newListItem) {
+      this.postItemName.emit(this.listItems[this.selectedListItemIndex]);
+
+      // If we're editing an existing item
+    } else {
+      this.updateItemName.emit(this.listItems[this.selectedListItemIndex])
+    }
   }
 
 
