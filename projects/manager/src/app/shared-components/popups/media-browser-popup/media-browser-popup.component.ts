@@ -235,16 +235,22 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // When the submit button is clicked on the video url form
       videoSubscription = this.formService.onVideoUrlFormSubmit.subscribe((url: string) => {
 
-        // If the selectedMediaIndex does NOT have a value
-        if (this.updatingMediaIndex == null) {
-          // Then set the new video
-          this.setNewVideo(url);
+        // If a url is defined, that means the submit button on the video url form was clicked. If the url is empty, that means cancel was clicked
+        if (url.length > 0) {
+          // If the selectedMediaIndex does NOT have a value
+          if (this.updatingMediaIndex == null) {
+            // Then set the new video
+            this.setNewVideo(url);
 
-          // But if the selectedMediaIndex has a value
-        } else {
-          // Then set the updating of the video
-          this.setUpdateVideo(url);
+            // But if the selectedMediaIndex has a value
+          } else {
+            // Then set the updating of the video
+            this.setUpdateVideo(url);
+          }
         }
+
+        // Set the focus back to the list
+        this.mediaItemList.setFocusToList();
 
         videoSubscription.unsubscribe();
       });
