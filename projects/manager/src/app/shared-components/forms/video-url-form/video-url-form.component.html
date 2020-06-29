@@ -3,7 +3,7 @@
         <!-- Bar -->
         <div class="form-bar">
             Video
-            <div class="form-x-button" (click)="show = false">X</div>
+            <div class="form-x-button" (click)="onCancelClick()">X</div>
         </div>
 
         <!-- Panel -->
@@ -16,7 +16,7 @@
             </fieldset>
 
             <div class="button-container">
-                <button (click)="show = false;">Close</button>
+                <button (click)="onCancelClick()">Close</button>
                 <button (click)="onSubmitClick(urlInput)" [disabled]="submitButtonDisabled">Submit</button>
             </div>
         </div>

@@ -11,15 +11,23 @@ export class VideoUrlFormComponent extends FormComponent implements OnInit {
   private urlInputValue: string;
 
 
+  // --------------------------------( NG ON INIT )-------------------------------- \\
+  ngOnInit() {
+    this.formService.videoUrlForm = this;
+  }
+
+
+  // --------------------------------( ON ESCAPE KEY DOWN )-------------------------------- \\
+  onEscapeKeydown() {
+    this.onCancelClick();
+  }
+
+
+  // --------------------------------( ON ENTER KEY DOWN )-------------------------------- \\
   @HostListener('document:keydown.enter')
   onEnterKeydown() {
     this.show = false;
     if(!this.submitButtonDisabled) this.formService.onVideoUrlFormSubmit.next(this.urlInputValue);
-  }
-
-  // --------------------------------( NG ON INIT )-------------------------------- \\
-  ngOnInit() {
-    this.formService.videoUrlForm = this;
   }
 
 
@@ -30,6 +38,13 @@ export class VideoUrlFormComponent extends FormComponent implements OnInit {
   }
 
 
+  // --------------------------------( ON CANCEL CLICK )-------------------------------- \\
+  onCancelClick() {
+    this.show = false;
+    this.formService.onVideoUrlFormSubmit.next('');
+  }
+
+
   // --------------------------------( ON SUBMIT CLICK )-------------------------------- \\
   onSubmitClick(urlInput: HTMLInputElement) {
     this.show = false;
@@ -37,6 +52,7 @@ export class VideoUrlFormComponent extends FormComponent implements OnInit {
   }
 
 
+  // --------------------------------( ON INPUT CHANGE )-------------------------------- \\
   onInputChange(urlInput: HTMLInputElement) {
     this.submitButtonDisabled = urlInput.value.length == 0 ? true : false;
     this.urlInputValue = urlInput.value;

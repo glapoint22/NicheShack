@@ -45,17 +45,11 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   // -----------------------------( ON WINDOW FOCUS )------------------------------ \\
   @HostListener('window:focus')
   onWindowFocus() {
-    // If we're updating media
-    if (this.mediaUpdateInitiated) {
-      this.mediaUpdateInitiated = false;
-      // Put the focus back to the selected media item when updating is all done
-      this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement.focus();
-      // Then set the last focused list item as this selected list item
-      this.lastFocusedListItem = document.activeElement;
+    // As long as we're NOT adding or updating a video
+    if (this.popupService.mediaType != MediaType.Video) {
+      // Set the focus back to the list
+      this.setFocusToList();
     }
-
-    // If we're adding media
-    if (this.mediaAddInitiated) this.mediaAddInitiated = false;
   }
 
 
@@ -149,6 +143,22 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   }
 
 
+  // -----------------------------( SET FOCUS TO LIST )------------------------------ \\
+  setFocusToList() {
+    // If we're adding an image
+    if (this.mediaAddInitiated) this.mediaAddInitiated = false;
+
+    // If we're updating an image
+    if (this.mediaUpdateInitiated) {
+      this.mediaUpdateInitiated = false;
+      // Put the focus back to the selected media item when updating is all done
+      this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement.focus();
+      // Then set the last focused list item as this selected list item
+      this.lastFocusedListItem = document.activeElement;
+    }
+  }
+
+
   // -----------------------------( ON LIST ITEM DOWN )------------------------------ \\
   onListItemDown(index: number) {
     super.onListItemDown(index);
@@ -176,6 +186,6 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   removeEventListeners() {
     if (!this.mediaUpdateInitiated) {
       super.removeEventListeners();
-    } 
+    }
   }
 }
