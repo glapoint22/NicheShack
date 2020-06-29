@@ -16,8 +16,9 @@ import { Item } from '../../../classes/item';
 export class PageEditorComponent implements Searchable {
   public view: string = 'page';
   public currentPageId: string;
-  private apiUrl: string = 'api/Pages';
-  public searchUrl: string = this.apiUrl + '/Search';
+  public apiUrl: string = 'api/Pages';
+  public searchResults: Array<Item>;
+  public items: Array<Item>;
 
   constructor(public pageService: PageService,
     private loadingService: LoadingService,

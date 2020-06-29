@@ -6,6 +6,7 @@ import { Searchable } from 'projects/manager/src/app/classes/searchable';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ItemListComponent } from '../../../item-lists/item-list/item-list.component';
+import { Item } from 'projects/manager/src/app/classes/item';
 
 @Component({
   selector: 'product-group-type',
@@ -17,7 +18,9 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
   @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
   public productGroupTypes: Array<KeyValue<string, string>>;
   public productGroupType = ProductGroupType;
-  public searchUrl: string = 'api/Products';
+  public apiUrl: string = 'api/Products';
+  public searchResults: Array<Item>;
+  public items: Array<Item>;
 
 
   constructor(private popupService: PopupService, private promptService: PromptService) { }

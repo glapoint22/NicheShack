@@ -1378,41 +1378,39 @@ export class TempDataService {
 
 
       case 'api/Vendors':
-        return of({
-          id: 'F5TD6KOQHB',
-          name: 'Gumpy\'s',
-          webPage: 'http://www.gumpys.com',
-          address: {
-            street: '110 Feeder Dam Rd',
-            city: 'South Glens Falls',
-            zip: 12803,
-            poBox: 22,
-            state: 'NY',
-            country: 'USA'
-          },
-          primaryContact: {
-            firstName: 'Gabey',
-            lastName: 'Gump',
-            officePhone: '518-793-5555',
-            mobilePhone: '518-555-5555',
-            email: 'ggump@gmail.com'
-          },
-          secondaryContact: {
-            firstName: 'Brony',
-            lastName: 'Gump',
-            officePhone: '518-793-5555',
-            mobilePhone: '518-222-2222',
-            email: 'bgump@gmail.com'
-          },
-          notes: 'It\'s amazing that this dumb company has been around for 20 years. ' +
-            'You have to keep after Gabey Gump to do something simple. Don\'t bother emailing him because he won\'t reply. ' +
-            'He probably doesn\'t know how to check his email. I\'ve been told they are still using Windows 98 from an HP desktop with a 533 mhz processor.'
-        }).pipe(delay(1000));
+        if (parameters) {
+          return of({
+            id: 'F5TD6KOQHB',
+            name: 'Gumpy\'s',
+            webPage: 'http://www.gumpys.com',
+            address: {
+              street: '110 Feeder Dam Rd',
+              city: 'South Glens Falls',
+              zip: 12803,
+              poBox: 22,
+              state: 'NY',
+              country: 'USA'
+            },
+            primaryContact: {
+              firstName: 'Gabey',
+              lastName: 'Gump',
+              officePhone: '518-793-5555',
+              mobilePhone: '518-555-5555',
+              email: 'ggump@gmail.com'
+            },
+            secondaryContact: {
+              firstName: 'Brony',
+              lastName: 'Gump',
+              officePhone: '518-793-5555',
+              mobilePhone: '518-222-2222',
+              email: 'bgump@gmail.com'
+            },
+            notes: 'It\'s amazing that this dumb company has been around for 20 years. ' +
+              'You have to keep after Gabey Gump to do something simple. Don\'t bother emailing him because he won\'t reply. ' +
+              'He probably doesn\'t know how to check his email. I\'ve been told they are still using Windows 98 from an HP desktop with a 533 mhz processor.'
+          }).pipe(delay(1000));
+        }
 
-
-
-
-      case 'api/Vendors/Search':
         return of([
           {
             id: 'HGSGDGFFAFSD',
@@ -1453,6 +1451,46 @@ export class TempDataService {
           {
             id: 'JHGFHJJGHGHSDFADF',
             name: 'Vendor10'
+          },
+          {
+            id: 'HGSGDGFFAFSD',
+            name: 'Vendor11'
+          },
+          {
+            id: 'REEQWRRE',
+            name: 'Vendor12'
+          },
+          {
+            id: 'JHGFJGHJHJ',
+            name: 'Vendor13'
+          },
+          {
+            id: 'QEQWREWERR',
+            name: 'Vendor14'
+          },
+          {
+            id: 'LKJHJKLJLK',
+            name: 'Vendor15'
+          },
+          {
+            id: 'BVCXCVBBV',
+            name: 'Vendor16'
+          },
+          {
+            id: 'UYTRUUU',
+            name: 'Vendor17'
+          },
+          {
+            id: 'OIYIUOIUOO',
+            name: 'Vendor18'
+          },
+          {
+            id: 'VVVVVVVVVVFASDDD',
+            name: 'Vendor19'
+          },
+          {
+            id: 'JHGFHJJGHGHSDFADF',
+            name: 'Vendor20'
           }
         ]).pipe(delay(1000));
 
@@ -1460,8 +1498,83 @@ export class TempDataService {
 
 
 
+      case 'api/Vendors/Search':
+        return of([
+          {
+            id: 'HGSGDGFFAFSD',
+            name: 'VendorSearch1'
+          },
+          {
+            id: 'REEQWRRE',
+            name: 'VendorSearch2'
+          },
+          {
+            id: 'JHGFJGHJHJ',
+            name: 'VendorSearch3'
+          },
+          {
+            id: 'QEQWREWERR',
+            name: 'VendorSearch4'
+          },
+          {
+            id: 'LKJHJKLJLK',
+            name: 'VendorSearch5'
+          }
+        ]).pipe(delay(1000));
 
-      case 'api/Pages/Search':
+
+
+      case 'api/Pages':
+        if (parameters) {
+          return of({
+            "background": {
+              "color": "#2564a8"
+            },
+            "rows": [
+              {
+                "columns": [
+                  {
+                    "widgetData": {
+                      "background": {
+                        "color": "#ffffff00"
+                      },
+                      "htmlContent": "<div style=\"text-align: center;\"><span style=\"font-weight: 700;\"><span style=\"font-family: &quot;Comic Sans MS&quot;, cursive, sans-serif;\"><span style=\"font-size: 36px;\"><span style=\"color: rgb(222, 82, 180);\">Welcome To Gumpy's</span></span></span></span></div>",
+                      "widgetType": 1,
+                      "height": 64
+                    },
+                    "columnSpan": 12
+                  }
+                ],
+                "top": 63.078125
+              },
+              {
+                "columns": [
+                  {
+                    "widgetData": {
+                      "image": {
+                        "url": "ca7d0d7b27b8475fbb55a4bf63617f2f.jpg"
+                      },
+                      "link": {
+
+                      },
+                      "widgetType": 2,
+                      "width": 300,
+                      "height": 300,
+                      "horizontalAlignment": "0 auto"
+                    },
+                    "columnSpan": 12
+                  }
+                ],
+                "top": 159.078125
+              }
+            ],
+            "id": "4LSN6AR0F5",
+            "name": "Gumpy's",
+            "width": 1600
+          }).pipe(delay(1000));
+        }
+
+
         return of([
           {
             id: 'HGSGDGFFAFSD',
@@ -1507,55 +1620,36 @@ export class TempDataService {
 
 
 
-      case 'api/Pages':
-        return of({
-          "background": {
-            "color": "#2564a8"
+
+
+
+
+
+
+      case 'api/Pages/Search':
+        return of([
+          {
+            id: 'HGSGDGFFAFSD',
+            name: 'PageSearch1'
           },
-          "rows": [
-            {
-              "columns": [
-                {
-                  "widgetData": {
-                    "background": {
-                      "color": "#ffffff00"
-                    },
-                    "htmlContent": "<div style=\"text-align: center;\"><span style=\"font-weight: 700;\"><span style=\"font-family: &quot;Comic Sans MS&quot;, cursive, sans-serif;\"><span style=\"font-size: 36px;\"><span style=\"color: rgb(222, 82, 180);\">Welcome To Gumpy's</span></span></span></span></div>",
-                    "widgetType": 1,
-                    "height": 64
-                  },
-                  "columnSpan": 12
-                }
-              ],
-              "top": 63.078125
-            },
-            {
-              "columns": [
-                {
-                  "widgetData": {
-                    "image": {
-                      "url": "ca7d0d7b27b8475fbb55a4bf63617f2f.jpg"
-                    },
-                    "link": {
-
-                    },
-                    "widgetType": 2,
-                    "width": 300,
-                    "height": 300,
-                    "horizontalAlignment": "0 auto"
-                  },
-                  "columnSpan": 12
-                }
-              ],
-              "top": 159.078125
-            }
-          ],
-          "id": "4LSN6AR0F5",
-          "name": "Gumpy's",
-          "width": 1600
-        }).pipe(delay(1000));
+          {
+            id: 'REEQWRRE',
+            name: 'PageSearch2'
+          },
+          {
+            id: 'JHGFJGHJHJ',
+            name: 'PageSearch3'
+          },
+          {
+            id: 'QEQWREWERR',
+            name: 'PageSearch4'
+          },
+          {
+            id: 'LKJHJKLJLK',
+            name: 'PageSearch5'
+          }
+        ]).pipe(delay(1000));
     }
-
   }
 
 

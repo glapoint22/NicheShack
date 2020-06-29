@@ -2,9 +2,11 @@
 
 .results-container {
     width: 100%;
+    max-width: 170px;
     height: 182px;
     border: 1px solid #373737;
     margin-top: 10px; font-size: 12px;
+    overflow: auto;
 }
 
 .search-item {
@@ -30,9 +32,9 @@ input {
 
 .fa-search {
     position: absolute;
-    font-size: 11px;
-    top: 5px;
-    left: 5px;
+    font-size: 10px;
+    top: 6px;
+    left: 6px;
     color: #aaaaaa;
 }
 
@@ -41,4 +43,26 @@ input {
     justify-content: center;
     align-items: center;
     color: #797979;
+}
+
+.fa-spinner {
+    font-size: 16px;
+}
+
+.clear-results {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #aaaaaa;
+    
+    &:hover {
+        color: white;
+    }
 }

@@ -4,6 +4,7 @@ import { Searchable } from 'projects/manager/src/app/classes/searchable';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ItemListComponent } from '../../../item-lists/item-list/item-list.component';
+import { Item } from 'projects/manager/src/app/classes/item';
 
 @Component({
   selector: 'categories',
@@ -13,8 +14,9 @@ import { ItemListComponent } from '../../../item-lists/item-list/item-list.compo
 export class CategoriesComponent implements Searchable {
   @Input() categoriesWidget: CategoriesWidgetComponent;
   @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
-
-  public searchUrl: string = 'api/Categories';
+  public apiUrl: string = 'api/Categories';
+  public searchResults: Array<Item>;
+  public items: Array<Item>;
 
   constructor(private popupService: PopupService, private promptService: PromptService) { }
 

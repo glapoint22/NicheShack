@@ -15,7 +15,9 @@ import { TempDataService } from 'projects/manager/src/app/services/temp-data.ser
 })
 export class ProductVendorComponent implements Searchable {
   @Input() vendor: Item;
-  public searchUrl: string = 'api/Vendors/Search';
+  public apiUrl: string = 'api/Vendors';
+  public searchResults: Array<Item>;
+  public items: Array<Item>;
   private subscription: Subscription;
 
   constructor(
