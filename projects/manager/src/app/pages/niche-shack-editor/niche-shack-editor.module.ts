@@ -16,16 +16,16 @@ import { ProductEmailComponent } from './product-editor/product-email/product-em
 import { ColorIconComponent } from './product-editor/product-properties/product-description/color-icon/color-icon.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { PropertiesEditorModule } from '../../shared-components/properties-editor/properties-editor.module';
-import { PricePointPopupComponent } from './product-editor/product-properties/product-content/price-point-popup/price-point-popup.component';
 import { FormsModule } from '@angular/forms';
-import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
-import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/dropdown-menu/dropdown-menu.module';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { PromptModule } from '../../shared-components/prompt/prompt.module';
 import { ProductVendorComponent } from './product-editor/product-properties/product-vendor/product-vendor.component';
 import { ProductInfoComponent } from './product-info/product-info.component';
 import { StarsModule } from 'shared-components/stars/stars.module';
+import { PaginatorModule } from '../../shared-components/paginator/paginator.module';
+import { CheckboxItemListModule } from '../../shared-components/item-lists/checkbox-item-list/checkbox-item-list.module';
+import { DropdownModule } from '../../shared-components/elements/dropdowns/dropdown/dropdown.module';
 
 
 @NgModule({
@@ -43,7 +43,6 @@ import { StarsModule } from 'shared-components/stars/stars.module';
     ProductMediaComponent,
     ProductEmailComponent,
     ColorIconComponent,
-    PricePointPopupComponent,
     ProductVendorComponent,
     ProductInfoComponent
   ],
@@ -53,12 +52,13 @@ import { StarsModule } from 'shared-components/stars/stars.module';
     ShowHideModule,
     PropertiesEditorModule,
     FormsModule,
-    ContextMenuModule,
-    DropdownMenuModule,
     CustomInputModule,
     DesignerModule,
     PromptModule,
-    StarsModule
+    StarsModule,
+    PaginatorModule,
+    CheckboxItemListModule,
+    DropdownModule
   ]
 })
 export class NicheShackEditorModule { }

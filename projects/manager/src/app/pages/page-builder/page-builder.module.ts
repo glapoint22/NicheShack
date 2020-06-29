@@ -5,8 +5,6 @@ import { PageBuilderComponent } from './page-builder.component';
 import { DesignerModule } from '../../shared-components/designer/designer.module';
 import { PageEditorComponent } from './page-editor/page-editor.component';
 import { PropertiesEditorModule } from '../../shared-components/properties-editor/properties-editor.module';
-import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
-import { DropdownMenuModule } from '../../shared-components/elements/dropdowns/dropdown-menu/dropdown-menu.module';
 import { PromptModule } from '../../shared-components/prompt/prompt.module';
 
 @NgModule({
@@ -19,8 +17,6 @@ import { PromptModule } from '../../shared-components/prompt/prompt.module';
     PageBuilderRoutingModule,
     DesignerModule,
     PropertiesEditorModule,
-    ContextMenuModule,
-    DropdownMenuModule,
     PromptModule
   ]
 })

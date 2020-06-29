@@ -6,7 +6,6 @@ import { ChangeEmailComponent } from './change-email.component';
 import { ValidationPageModule } from '../validation-page/validation-page.module';
 import { FormsModule } from '@angular/forms';
 import { MatchValueModule } from 'directives/match-value/match-value.module';
-import { ContextMenuModule } from '../../shared-components/context-menu/context-menu.module';
 
 
 @NgModule({
@@ -16,8 +15,7 @@ import { ContextMenuModule } from '../../shared-components/context-menu/context-
     ChangeEmailRoutingModule,
     ValidationPageModule,
     FormsModule,
-    MatchValueModule,
-    ContextMenuModule
+    MatchValueModule
   ]
 })
 export class ChangeEmailModule { }

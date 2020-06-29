@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { CoverService } from '../../services/cover.service';
 
 @Component({
   selector: 'properties-editor',
@@ -8,6 +9,11 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 export class PropertiesEditorComponent implements OnInit {
   @ViewChild('sizingBar', { static: false }) sizingBar: ElementRef;
   private propertiesEditorContainer: HTMLElement;
+
+
+  constructor(private coverService: CoverService) {
+
+  }
 
 
   // ------------------( NG ON INIT )------------------- \\
@@ -22,8 +28,8 @@ export class PropertiesEditorComponent implements OnInit {
     let offset = this.propertiesEditorContainer.getBoundingClientRect().left - event.clientX;
     let anchorPoint = this.propertiesEditorContainer.getBoundingClientRect().left + startWidth;
 
-    // Set the body to the resize cursor
-    document.body.style.cursor = 'e-resize';
+    // Show the cover
+    this.coverService.showResizeCover = true;
 
     // On Mousemove
     let onMousemove = (e: any) => {
@@ -40,7 +46,9 @@ export class PropertiesEditorComponent implements OnInit {
     let onMouseup = () => {
       window.removeEventListener("mousemove", onMousemove);
       window.removeEventListener("mouseup", onMouseup);
-      document.body.removeAttribute('style');
+      
+      // Hide the cover
+      this.coverService.showResizeCover = false;
     }
 
     window.addEventListener("mousemove", onMousemove);

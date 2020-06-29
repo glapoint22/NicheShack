@@ -34,6 +34,7 @@
                 [routerLink]="menuService.menus[menuIndex].options[optionIndex].path"
                 (mouseover)="menuService.onMenuOptionOver(menuIndex, optionIndex)"
                 [ngClass]="{'disabled-option': menuService.menus[menuIndex].options[optionIndex].isDisabled}"
+                (click)="menuService.onRouterOptionClick(menuIndex, optionIndex)"
                 (mousedown)="menuService.onMenuRouterOptionDown()">
                 <!-- Name -->
                 <div>

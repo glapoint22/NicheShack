@@ -468,6 +468,21 @@ export class MenuService {
   }
 
 
+  // -----------------------------( ON ROUTER OPTION CLICK )------------------------------ \\
+  onRouterOptionClick(menuIndex: number, optionIndex: number) {
+    // As long as this menu option is NOT disabled
+    if (!this.menus[menuIndex].options[optionIndex].isDisabled) {
+      
+      // Loop through all the menus
+      for (let i = 0; i < this.menus.length; i++) {
+        // And hide each one
+        this.showMenus[i] = false;
+      }
+      this.showMenu = false;
+    }
+  }
+
+
   // -----------------------------( ON MENU ROUTER OPTION DOWN )------------------------------ \\
   onMenuRouterOptionDown() {
     this.mainMenuHasFocus = false;

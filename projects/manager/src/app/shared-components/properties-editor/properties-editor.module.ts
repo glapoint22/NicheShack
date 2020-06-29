@@ -25,17 +25,11 @@ import { ImageComponent } from '../properties/image/image.component';
 import { VideoComponent } from '../widget-properties/video-widget-properties/video/video.component';
 import { CaptionComponent } from '../properties/caption/caption.component';
 import { NumberFieldComponent } from '../elements/number-fields/number-field/number-field.component';
-import { DropdownComponent } from '../elements/dropdowns/dropdown/dropdown.component';
 import { ColorSwatchComponent } from '../elements/color-swatch/color-swatch.component';
-import { ColorPickerPopupComponent } from '../popups/color-picker-popup/color-picker-popup.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
-import { LinkPopupComponent } from '../popups/link-popup/link-popup.component';
-import { MediaBrowserPopupComponent } from '../popups/media-browser-popup/media-browser-popup.component';
 import { EditableDropdownComponent } from '../elements/dropdowns/editable-dropdown/editable-dropdown.component';
-import { PaginatorComponent } from '../paginator/paginator.component';
 import { ItemListComponent } from '../item-lists/item-list/item-list.component';
 import { EditableItemListComponent } from '../item-lists/editable-item-list/editable-item-list.component';
-import { CheckboxItemListComponent } from '../item-lists/checkbox-item-list/checkbox-item-list.component';
 import { EditableNumberFieldComponent } from '../elements/number-fields/editable-number-field/editable-number-field.component';
 import { PagePropertiesComponent } from '../properties/page-properties/page-properties.component';
 import { RowPropertiesComponent } from '../row-properties/row-properties.component';
@@ -53,27 +47,15 @@ import { LineWidgetPropertiesComponent } from '../widget-properties/line-widget-
 import { CarouselWidgetPropertiesComponent } from '../widget-properties/carousel-widget-properties/carousel-widget-properties.component';
 import { CategoriesWidgetPropertiesComponent } from '../widget-properties/categories-widget-properties/categories-widget-properties.component';
 import { ProductGroupWidgetPropertiesComponent } from '../widget-properties/product-group-widget-properties/product-group-widget-properties.component';
-import { NormalizedNumberFieldComponent } from '../elements/number-fields/normalized-number-field/normalized-number-field.component';
-import { CoverComponent } from '../cover/cover.component';
 import { BackgroundComponent } from '../properties/background/background.component';
-import { ShowPopupDirective } from '../../directives/show-popup/show-popup.directive';
-import { MediaItemListComponent } from '../item-lists/media-item-list/media-item-list.component';
 import { LinkIconComponent } from '../link-icon/link-icon.component';
-import { HoplinkPopupComponent } from '../popups/hoplink-popup/hoplink-popup.component';
-import { SearchPopupComponent } from '../popups/search-popup/search-popup.component';
 import { ColorComponent } from '../properties/color/color.component';
-import { NotificationsItemListComponent } from '../item-lists/notifications-item-list/notifications-item-list.component';
-import { NotificationListPopupComponent } from '../popups/notification-popups/notification-list-popup/notification-list-popup.component';
-import { MessageNotificationPopupComponent } from '../popups/notification-popups/message-notification-popup/message-notification-popup.component';
 import { GeneralNotificationPopupComponent } from '../popups/notification-popups/general-notification-popup/general-notification-popup.component';
-import { ReviewComplaintNotificationPopupComponent } from '../popups/notification-popups/review-complaint-notification-popup/review-complaint-notification-popup.component';
-import { ProductDescriptionNotificationPopupComponent } from '../popups/notification-popups/product-description-notification-popup/product-description-notification-popup.component';
-import { ProductImageNotificationPopupComponent } from '../popups/notification-popups/product-image-notification-popup/product-image-notification-popup.component';
-import { ProductMediaNotificationPopupComponent } from '../popups/notification-popups/product-media-notification-popup/product-media-notification-popup.component';
-import { ProductContentNotificationPopupComponent } from '../popups/notification-popups/product-content-notification-popup/product-content-notification-popup.component';
 import { FiltersHierarchyComponent } from '../filters-hierarchy/filters-hierarchy.component';
 import { HierarchyModule } from '../hierarchy/hierarchy.module';
 import { PropertiesEditorComponent } from './properties-editor.component';
+import { PaginatorModule } from '../paginator/paginator.module';
+import { DropdownModule } from '../elements/dropdowns/dropdown/dropdown.module';
 
 
 @NgModule({
@@ -106,16 +88,10 @@ import { PropertiesEditorComponent } from './properties-editor.component';
     VideoComponent,
     CaptionComponent,
     NumberFieldComponent,
-    DropdownComponent,
     EditableDropdownComponent,
     ColorSwatchComponent,
-    ColorPickerPopupComponent,
-    LinkPopupComponent,
-    MediaBrowserPopupComponent,
-    PaginatorComponent,
     ItemListComponent,
     EditableItemListComponent,
-    CheckboxItemListComponent,
     EditableNumberFieldComponent,
     PagePropertiesComponent,
     ButtonWidgetPropertiesComponent,
@@ -129,24 +105,10 @@ import { PropertiesEditorComponent } from './properties-editor.component';
     LineWidgetPropertiesComponent,
     CarouselWidgetPropertiesComponent,
     CategoriesWidgetPropertiesComponent,
-    NormalizedNumberFieldComponent,
-    CoverComponent,
     BackgroundComponent,
     LinkIconComponent,
-    ShowPopupDirective,
-    MediaItemListComponent,
-    HoplinkPopupComponent,
-    SearchPopupComponent,
     ColorComponent,
-    NotificationsItemListComponent,
-    NotificationListPopupComponent,
-    MessageNotificationPopupComponent,
     GeneralNotificationPopupComponent,
-    ReviewComplaintNotificationPopupComponent,
-    ProductDescriptionNotificationPopupComponent,
-    ProductImageNotificationPopupComponent,
-    ProductMediaNotificationPopupComponent,
-    ProductContentNotificationPopupComponent,
     FiltersHierarchyComponent
   ],
   imports: [
@@ -154,7 +116,9 @@ import { PropertiesEditorComponent } from './properties-editor.component';
     CustomInputModule,
     ShowHideModule,
     FormsModule,
-    HierarchyModule
+    HierarchyModule,
+    PaginatorModule,
+    DropdownModule
   ],
   exports: [
     PropertiesEditorComponent,
@@ -185,16 +149,10 @@ import { PropertiesEditorComponent } from './properties-editor.component';
     VideoComponent,
     CaptionComponent,
     NumberFieldComponent,
-    DropdownComponent,
     EditableDropdownComponent,
     ColorSwatchComponent,
-    ColorPickerPopupComponent,
-    LinkPopupComponent,
-    MediaBrowserPopupComponent,
-    PaginatorComponent,
     ItemListComponent,
     EditableItemListComponent,
-    CheckboxItemListComponent,
     EditableNumberFieldComponent,
     PagePropertiesComponent,
     ButtonWidgetPropertiesComponent,
@@ -208,24 +166,10 @@ import { PropertiesEditorComponent } from './properties-editor.component';
     LineWidgetPropertiesComponent,
     CarouselWidgetPropertiesComponent,
     CategoriesWidgetPropertiesComponent,
-    NormalizedNumberFieldComponent,
-    CoverComponent,
     BackgroundComponent,
     LinkIconComponent,
-    ShowPopupDirective,
-    MediaItemListComponent,
-    HoplinkPopupComponent,
-    SearchPopupComponent,
     ColorComponent,
-    NotificationsItemListComponent,
-    NotificationListPopupComponent,
-    MessageNotificationPopupComponent,
     GeneralNotificationPopupComponent,
-    ReviewComplaintNotificationPopupComponent,
-    ProductDescriptionNotificationPopupComponent,
-    ProductImageNotificationPopupComponent,
-    ProductMediaNotificationPopupComponent,
-    ProductContentNotificationPopupComponent,
     FiltersHierarchyComponent
   ]
 })
