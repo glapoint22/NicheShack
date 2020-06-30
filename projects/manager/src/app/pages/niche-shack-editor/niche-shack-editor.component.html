@@ -1,26 +1,38 @@
-<div style="position: absolute; top: 33px; right: 0; bottom: 0; left: 0; display: flex; justify-content: flex-end;">
-    <div style="flex: 1; position: relative;"
-        *ngIf="popupService.nicheShackHierarchyPopup.selectedItem && popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Niche || (popupService.nicheShackHierarchyPopup.selectedItem && popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Product && productEditorMode == 'email')">
+<div class="container">
+    <!-- Designer -->
+    <div class="flex-container" *ngIf="popupService.nicheShackHierarchyPopup.selectedItem && 
+        popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Niche || 
+        (popupService.nicheShackHierarchyPopup.selectedItem && 
+        popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Product && 
+        productEditorMode == 'email')">
         <designer></designer>
     </div>
 
 
-    <div style="flex: 1; position: relative;"
-        *ngIf="popupService.nicheShackHierarchyPopup.selectedItem && popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Product && productEditorMode == 'properties'">
+    <!-- Product Info -->
+    <div class="flex-container" *ngIf="popupService.nicheShackHierarchyPopup.selectedItem && 
+        popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Product && 
+        productEditorMode == 'properties'">
         <product-info></product-info>
     </div>
 
 
-
+    <!-- Properties Editor -->
     <div class="properties-editor-container">
         <properties-editor>
             <ng-container
                 *ngIf="popupService.nicheShackHierarchyPopup.selectedItem && popupService.nicheShackHierarchyPopup.selectedItem.id">
+
+                <!-- Category Editor -->
                 <category-editor
                     *ngIf="popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Category"
                     [hierarchyItem]="popupService.nicheShackHierarchyPopup.selectedItem"></category-editor>
+
+                <!-- Niche Editor -->
                 <niche-editor *ngIf="popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Niche"
                     [hierarchyItem]="popupService.nicheShackHierarchyPopup.selectedItem"></niche-editor>
+
+                <!-- Product Editor -->
                 <product-editor
                     *ngIf="popupService.nicheShackHierarchyPopup.selectedItem.type == hierarchyItemType.Product"
                     [hierarchyItem]="popupService.nicheShackHierarchyPopup.selectedItem"

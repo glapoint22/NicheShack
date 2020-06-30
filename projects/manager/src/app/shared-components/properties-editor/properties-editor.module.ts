@@ -50,12 +50,12 @@ import { ProductGroupWidgetPropertiesComponent } from '../widget-properties/prod
 import { BackgroundComponent } from '../properties/background/background.component';
 import { LinkIconComponent } from '../link-icon/link-icon.component';
 import { ColorComponent } from '../properties/color/color.component';
-import { GeneralNotificationPopupComponent } from '../popups/notification-popups/general-notification-popup/general-notification-popup.component';
 import { FiltersHierarchyComponent } from '../filters-hierarchy/filters-hierarchy.component';
 import { HierarchyModule } from '../hierarchy/hierarchy.module';
 import { PropertiesEditorComponent } from './properties-editor.component';
 import { PaginatorModule } from '../paginator/paginator.module';
 import { DropdownModule } from '../elements/dropdowns/dropdown/dropdown.module';
+import { EmailPropertiesComponent } from '../../pages/email-builder/email-editor/email-properties/email-properties.component';
 
 
 @NgModule({
@@ -108,8 +108,8 @@ import { DropdownModule } from '../elements/dropdowns/dropdown/dropdown.module';
     BackgroundComponent,
     LinkIconComponent,
     ColorComponent,
-    GeneralNotificationPopupComponent,
-    FiltersHierarchyComponent
+    FiltersHierarchyComponent,
+    EmailPropertiesComponent
   ],
   imports: [
     CommonModule,
@@ -169,8 +169,8 @@ import { DropdownModule } from '../elements/dropdowns/dropdown/dropdown.module';
     BackgroundComponent,
     LinkIconComponent,
     ColorComponent,
-    GeneralNotificationPopupComponent,
-    FiltersHierarchyComponent
+    FiltersHierarchyComponent,
+    EmailPropertiesComponent
   ]
 })
 export class PropertiesEditorModule { }

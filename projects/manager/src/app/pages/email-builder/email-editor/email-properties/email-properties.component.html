@@ -1,0 +1,20 @@
+<div class="properties">
+    <!-- Email type -->
+    <div class="property">
+        <div class="label" style="margin-right: 15px;">Type:</div>
+        <div style="width: 100%;">
+            <dropdown [height]="22" [title]="''" [keyValue]="emailTypes" [selectedIndex]="page.type">
+            </dropdown>
+        </div>
+
+    </div>
+
+    <!-- Page Width -->
+    <div class="property">
+        <div class="label">Width:</div>
+        <div style="flex: 1;">
+            <editable-number-field [value]="page.width ? page.width : ''" (onValueChange)="page.width = $event">
+            </editable-number-field>
+        </div>
+    </div>
+</div>

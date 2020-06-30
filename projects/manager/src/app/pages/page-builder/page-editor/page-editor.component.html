@@ -40,7 +40,7 @@
 
         <!-- Page, Row, Column, and Widget buttons -->
         <div class="grooved-container-bottom">
-            <div class="button-left" [ngClass]="{'button-selected': view == 'page'}" (click)="view = 'page'">Page</div>
+            <div class="button-left" [ngClass]="{'button-selected': view == 'page' || view == 'email'}" (click)="setPageView()">Page</div>
             <div class="button-center" [ngClass]="{'button-selected': view == 'row'}" (click)="view = 'row'">Row</div>
             <div class="button-center" [ngClass]="{'button-selected': view == 'column'}" (click)="view = 'column'">
                 Column</div>
@@ -51,6 +51,8 @@
 
         <!-- Page Properties -->
         <page-properties *ngIf="view == 'page'" [page]="pageService.page"></page-properties>
+
+        <email-properties *ngIf="view == 'email'" [page]="pageService.page"></email-properties>
 
         <!-- Row Propterties -->
         <row-properties *ngIf="view == 'row'"></row-properties>

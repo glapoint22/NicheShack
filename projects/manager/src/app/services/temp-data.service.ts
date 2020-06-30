@@ -1378,6 +1378,19 @@ export class TempDataService {
 
 
 
+      case 'api/Emails/Create':
+        return of({
+          id: '4LSN6AR0F5',
+          name: 'New Page',
+          width: 600,
+          type: 0,
+          background: {
+            color: '#ffffff',
+          }
+        }).pipe(delay(1000));
+
+
+
       case 'api/Vendors':
         if (parameters) {
           return of({
@@ -1622,6 +1635,138 @@ export class TempDataService {
 
 
 
+
+
+
+
+
+
+
+      case 'api/Emails':
+        if (parameters) {
+          return of({
+            "background": {
+              "color": "#df136c"
+            },
+            "rows": [
+              {
+                "columns": [
+                  {
+                    "widgetData": {
+                      "background": {
+                        "color": "#ffffff00"
+                      },
+                      "htmlContent": "<div style=\"text-align: center;\"><span style=\"font-weight: 700;\"><span style=\"font-family: &quot;Comic Sans MS&quot;, cursive, sans-serif;\"><span style=\"font-size: 36px;\"><span style=\"color: rgb(6, 80, 216);\">Welcome To Gumpy's</span></span></span></span></div>",
+                      "widgetType": 1,
+                      "height": 64
+                    },
+                    "columnSpan": 12
+                  }
+                ],
+                "top": 63.078125
+              },
+              {
+                "columns": [
+                  {
+                    "widgetData": {
+                      "image": {
+                        "url": "ca7d0d7b27b8475fbb55a4bf63617f2f.jpg"
+                      },
+                      "link": {
+
+                      },
+                      "widgetType": 2,
+                      "width": 300,
+                      "height": 300,
+                      "horizontalAlignment": "0 auto"
+                    },
+                    "columnSpan": 12
+                  }
+                ],
+                "top": 159.078125
+              }
+            ],
+            "id": "4LSN6AR0F5",
+            "name": "Gumpy's",
+            "width": 600,
+            "type": 3
+          }).pipe(delay(1000));
+        }
+
+
+        return of([
+          {
+            id: 'HGSGDGFFAFSD',
+            name: 'Email1'
+          },
+          {
+            id: 'REEQWRRE',
+            name: 'Email2'
+          },
+          {
+            id: 'JHGFJGHJHJ',
+            name: 'Email3'
+          },
+          {
+            id: 'QEQWREWERR',
+            name: 'Email4'
+          },
+          {
+            id: 'LKJHJKLJLK',
+            name: 'Email5'
+          },
+          {
+            id: 'BVCXCVBBV',
+            name: 'Email6'
+          },
+          {
+            id: 'UYTRUUU',
+            name: 'Email7'
+          },
+          {
+            id: 'OIYIUOIUOO',
+            name: 'Email8'
+          },
+          {
+            id: 'VVVVVVVVVVFASDDD',
+            name: 'Email9'
+          },
+          {
+            id: 'JHGFHJJGHGHSDFADF',
+            name: 'Email10'
+          }
+        ]).pipe(delay(1000));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       case 'api/Pages/Search':
         return of([
           {
@@ -1643,6 +1788,35 @@ export class TempDataService {
           {
             id: 'LKJHJKLJLK',
             name: 'PageSearch5'
+          }
+        ]).pipe(delay(1000));
+
+
+
+
+
+
+      case 'api/Emails/Search':
+        return of([
+          {
+            id: 'HGSGDGFFAFSD',
+            name: 'EmailSearch1'
+          },
+          {
+            id: 'REEQWRRE',
+            name: 'EmailSearch2'
+          },
+          {
+            id: 'JHGFJGHJHJ',
+            name: 'EmailSearch3'
+          },
+          {
+            id: 'QEQWREWERR',
+            name: 'EmailSearch4'
+          },
+          {
+            id: 'LKJHJKLJLK',
+            name: 'EmailSearch5'
           }
         ]).pipe(delay(1000));
 
