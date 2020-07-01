@@ -61,11 +61,12 @@ export class PopupComponent {
 
   // --------------------------------( ON POPUP OUT )-------------------------------- \\
   onPopupOut() {
+    this.onPopupClose.emit();
+
     // As long as a menu is NOT open
     if (!this.menuService.showMenu && !this.preventNoShow) {
       // Close this popup
       this.show = false;
-      this.onPopupClose.emit();
       this.dropdownMenuService.showMenu = false;
       window.removeEventListener('mousemove', this.onMouseMove);
     }

@@ -21,10 +21,10 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
   public apiUrl: string = 'api/Products';
   public searchResults: Array<Item>;
   public items: Array<Item>;
-
-
   constructor(private popupService: PopupService, private promptService: PromptService) { }
 
+
+  // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     this.productGroupTypes = [
       { key: 'Featured Products', value: 'Featured Products' },
@@ -35,6 +35,16 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
       { key: 'Related Subscribed Products', value: 'Related Subscribed Products' },
       { key: 'Related Browsed Niche Products', value: 'Related Browsed Niche Products' }
     ]
+  }
+
+
+  // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
+  ngAfterViewInit() {
+    // Set delete prompt title and message
+    this.itemList.promptTitle = 'Delete Featured Product';
+    this.itemList.promptMultiTitle = 'Delete Featured Products';
+    this.itemList.propmtMessage = 'Are you sure you want to delete the selected Featured Product?';
+    this.itemList.propmtMultiMessage = 'Are you sure you want to delete all the selected Featured Products?';
   }
 
 
@@ -58,23 +68,5 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
   setSearchItem(searchItem: any) {
     // Add the item to the list
     this.productGroupWidget.featuredProducts.push(searchItem)
-  }
-
-
-
-
-  // -----------------------------( ON REMOVE PRODUCT CLICK )------------------------------ \\
-  onRemoveProductClick() {
-    if (!this.itemList.deleteIcon.isDisabled) {
-      this.promptService.showPrompt('Remove Product', 'Are you sure you want to remove this product?', this.removeProduct, this);
-    }
-
-  }
-
-
-
-  // -----------------------------( REMOVE PRODUCT )------------------------------ \\
-  removeProduct() {
-    this.itemList.deleteListItem();
   }
 }

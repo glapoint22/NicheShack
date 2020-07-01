@@ -13,7 +13,10 @@ export class PromptComponent {
 
   onKeydown(event: KeyboardEvent) {
     if (event.keyCode == 27) {
-      this.promptService.show = false;
+      window.setTimeout(()=>{
+        this.promptService.show = false;
+        this.promptService.onNoClick();
+      })
     }
   }
 }

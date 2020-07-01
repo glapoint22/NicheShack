@@ -77,22 +77,33 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     let searchInput = document.getElementById('search-input') as HTMLInputElement;
     let onInputChange = fromEvent(searchInput, 'input');
     let searchResults = onInputChange.pipe(debounceTime(250), switchMap(() => {
+
+      // If the search input text is empty
       if (searchInput.value == '') {
+        // Stop the spinner
         this.loadingMediaInProgress = false;
+        // Return to the media list we were on before the search
         this.indexOfCurrentMediaList = this.popupService.mediaType;
         // Select the appropriate media item in the list
         this.autoSelectMediaItem();
         return of();
       }
+
+      // But if the search input text is NOT empty, then turn on the spinner
       this.loadingMediaInProgress = true;
+      // Return the search results
       return this.dataService.get(this.getUrl(this.popupService.mediaType) + '/Search', [{ key: 'search', value: searchInput.value }]);
     }));
+
+    // If a match was found
     searchResults.subscribe((mediaItems: MediaItem[]) => {
+
       this.indexOfCurrentMediaList = MediaType.Search;
       this.loadingMediaInProgress = false;
       this.mediaLists[this.indexOfCurrentMediaList] = mediaItems;
       // Select the appropriate media item in the list
       this.autoSelectMediaItem();
+      this.setDeletePrompt();
     });
   }
 
@@ -149,6 +160,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
           this.mediaLists[this.indexOfCurrentMediaList] = mediaItems;
           // Select the appropriate media item in the list
           this.autoSelectMediaItem();
+          this.setDeletePrompt();
         }
       })
 
@@ -156,8 +168,68 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     } else {
       // Select the appropriate media item in the list
       this.autoSelectMediaItem();
+      this.setDeletePrompt();
     }
     this.setMediaSearchMenuOptions();
+  }
+
+
+  // -----------------------------( SET DELETE PROMPT )------------------------------ \\
+  setDeletePrompt() {
+    window.setTimeout(() => {
+      // Set delete prompt title and message
+      switch (this.popupService.mediaType) {
+        case MediaType.Image: {
+          this.mediaItemList.promptTitle = 'Delete Image';
+          this.mediaItemList.promptMultiTitle = 'Delete Images';
+          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected image?';
+          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected images?';
+          break;
+        }
+        case MediaType.BackgroundImage: {
+          this.mediaItemList.promptTitle = 'Delete Background Image';
+          this.mediaItemList.promptMultiTitle = 'Delete Background Images';
+          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected background image?';
+          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected background images?';
+          break;
+        }
+        case MediaType.BannerImage: {
+          this.mediaItemList.promptTitle = 'Delete Banner Image';
+          this.mediaItemList.promptMultiTitle = 'Delete Banner Images';
+          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected banner image?';
+          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected banner images?';
+          break;
+        }
+        case MediaType.CategoryImage: {
+          this.mediaItemList.promptTitle = 'Delete Category Image';
+          this.mediaItemList.promptMultiTitle = 'Delete Category Images';
+          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected category image?';
+          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected category images?';
+          break;
+        }
+        case MediaType.ProductImage: {
+          this.mediaItemList.promptTitle = 'Delete Product Image';
+          this.mediaItemList.promptMultiTitle = 'Delete Product Images';
+          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected product image?';
+          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected product images?';
+          break;
+        }
+        case MediaType.Icon: {
+          this.mediaItemList.promptTitle = 'Delete Icon';
+          this.mediaItemList.promptMultiTitle = 'Delete Icons';
+          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected icon?';
+          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected icons?';
+          break;
+        }
+        case MediaType.Video: {
+          this.mediaItemList.promptTitle = 'Delete Video';
+          this.mediaItemList.promptMultiTitle = 'Delete Videos';
+          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected video?';
+          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected videos?';
+          break;
+        }
+      }
+    });
   }
 
 
@@ -284,12 +356,12 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
         // this.mediaItemList.listItems[0].thumbnail = media.thumbnail;
         this.onMediaSelect(this.mediaItemList.listItems[0]);
 
-        // Now set the new media to be editable so it can be named
+        // Now set the new image to be editable so it can be named
         this.preventNoShow = true;
         this.addingMediaInProgress = false;
         this.mediaItemList.selectedListItemIndex = 0;
         this.mediaItemList.addEventListeners();
-        this.mediaItemList.setListItemEdit();
+        this.mediaItemList.editListItem();
       })
     }
   }
@@ -329,12 +401,12 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       this.mediaItemList.listItems[0].thumbnail = media.thumbnail;
       this.onMediaSelect(this.mediaItemList.listItems[0])
 
-      // Now set the new media to be editable so it can be named
+      // Now set the new video to be editable so it can be named
       this.preventNoShow = true;
       this.addingMediaInProgress = false;
       this.mediaItemList.selectedListItemIndex = 0;
       this.mediaItemList.addEventListeners();
-      this.mediaItemList.setListItemEdit();
+      this.mediaItemList.editListItem();
     })
   }
 
@@ -429,12 +501,6 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   }
 
 
-
-
-
-
-
-
   // -----------------------------( UPDATE MEDIA NAME )------------------------------ \\
   updateMediaName(mediaItem: MediaItem) {
     mediaItem.loading = true;
@@ -450,7 +516,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
   // --------------------------------( ON POPUP OUT )-------------------------------- \\
   onPopupOut() {
-    this.preventNoShow = (this.mediaItemList.indexOfEditedListItem != null || this.addingMediaInProgress || this.updatingMediaInProgress || this.movingMediaInProgress || this.formService.videoUrlForm.show || (this.mediaItemList.selectedListItemIndex != null ? this.mediaItemList.listItems[this.mediaItemList.selectedListItemIndex].loading : null)) ? true : false;
+    this.preventNoShow = (this.mediaItemList.promptService.show || this.mediaItemList.indexOfEditedListItem != null || this.addingMediaInProgress || this.updatingMediaInProgress || this.movingMediaInProgress || this.formService.videoUrlForm.show || (this.mediaItemList.selectedListItemIndex != null ? this.mediaItemList.listItems[this.mediaItemList.selectedListItemIndex].loading : null)) ? true : false;
     super.onPopupOut();
   }
 }

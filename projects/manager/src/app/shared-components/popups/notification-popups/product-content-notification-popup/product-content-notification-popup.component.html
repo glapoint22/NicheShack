@@ -155,7 +155,7 @@
                              [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
                              (mouseover)="itemList.isOverIconButton = true"
                              (mouseout)="itemList.onIconButtonMouseOut()"
-                             (click)="onDeletePricePoint(itemList)">
+                             (click)="itemList.onListItemDelete()">
                             <i class="fas fa-trash-alt"></i>
                         </div>
 
@@ -188,11 +188,11 @@
                         <!-- Checkbox Item LIst -->
                         <checkbox-item-list
                             #itemList 
+                            id="item-list"
                             [listItems]="pricePointList"
                             [checkList]="notificationService.productContentNotification.content[contentIndex].priceIndices"
                             (onAddItem)="addPricePoint(addIcon)"
                             (onEditItem)="editPricePoint(editIcon, itemList.selectedListItemIndex)"
-                            (onDeleteItem)="onDeletePricePoint(itemList)"
                             [menuOptions]="['Add Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">
                         </checkbox-item-list>
                     </div>

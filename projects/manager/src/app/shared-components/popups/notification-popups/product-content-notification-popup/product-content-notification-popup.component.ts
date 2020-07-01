@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
 import { Notification } from 'projects/manager/src/app/classes/notification';
 import { Item } from 'projects/manager/src/app/classes/item';
@@ -25,8 +25,10 @@ import { Image } from 'projects/manager/src/app/classes/image';
 export class ProductContentNotificationPopupComponent extends GeneralNotificationPopupComponent {
   public contentIndex: number = 0;
   public pricePointList: Array<Item>;
+  // public itemList;
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
+  @ViewChild('itemList', { static: false }) itemList: CheckboxItemListComponent;
   constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, notificationService: NotificationService, private promptService: PromptService, private productService: ProductService) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService) }
 
 
@@ -44,7 +46,6 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
     // Combine all the price point properties into one string
     if (this.notificationService.productContentNotification.pricePoints) {
       this.pricePointList = this.notificationService.productContentNotification.pricePoints.map(x => ({
-
         id: x.id,
         // Text Before
         name: ((x.textBefore.length == 0 ? "" : x.textBefore) + " " +
@@ -54,6 +55,14 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
           (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()
       }));
     }
+
+    // Set delete prompt title and message
+    window.setTimeout(() => {
+      this.itemList.promptTitle = 'Delete Price Point';
+      this.itemList.promptMultiTitle = 'Delete Price Points';
+      this.itemList.propmtMessage = 'Are you sure you want to delete the selected price point?';
+      this.itemList.propmtMultiMessage = 'Are you sure you want to delete all the selected price points?';
+    });
   }
 
 
@@ -134,20 +143,6 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
     this.popupService.pricePointPopup.show = true;
     this.popupService.pricePointPopup.pricePoint = this.pricePoints[index];
     this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[index];
-  }
-
-
-  // -----------------------------( ON DELETE PRICE POINT )------------------------------ \\
-  onDeletePricePoint(itemList: CheckboxItemListComponent) {
-    this.promptService.showPrompt('Delete Price Point', 'Are you sure you want to delete this price point?', this.deletePricePoint, this, [itemList]);
-  }
-
-
-  // -----------------------------( DELETE PRICE POINT )------------------------------ \\
-  deletePricePoint(itemList: CheckboxItemListComponent) {
-    this.pricePoints.splice(itemList.selectedListItemIndex, 1);
-    // itemList.removeListItem();????????????????????????????????????????????????????????????????????????????????????????
-    this.productService.setPrice();
   }
 
 

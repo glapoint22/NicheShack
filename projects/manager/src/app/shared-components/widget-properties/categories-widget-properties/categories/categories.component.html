@@ -12,7 +12,7 @@
                 [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Category (Delete)' : itemList.editIcon.isDisabled ? 'Delete Categories (Delete)' : 'Delete Category (Delete)'"
                 [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
                 (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                (click)="onRemoveCategoryClick()">
+                (click)="itemList.onListItemDelete()">
                 <i class="fas fa-trash-alt"></i>
             </div>
 

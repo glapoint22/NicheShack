@@ -17,9 +17,17 @@ export class CategoriesComponent implements Searchable {
   public apiUrl: string = 'api/Categories';
   public searchResults: Array<Item>;
   public items: Array<Item>;
-
   constructor(private popupService: PopupService, private promptService: PromptService) { }
 
+
+  // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
+  ngAfterViewInit() {
+    // Set delete prompt title and message
+    this.itemList.promptTitle = 'Delete Category';
+    this.itemList.promptMultiTitle = 'Delete Categories';
+    this.itemList.propmtMessage = 'Are you sure you want to delete the selected category?';
+    this.itemList.propmtMultiMessage = 'Are you sure you want to delete all the selected categories?';
+  }
 
 
   // -----------------------------( ADD CATEGORY )------------------------------ \\
@@ -35,20 +43,5 @@ export class CategoriesComponent implements Searchable {
   setSearchItem(searchItem: any) {
     // Add the item to the list
     this.categoriesWidget.categories.push(searchItem)
-  }
-
-
-  // -----------------------------( ON REMOVE CATEGORY CLICK )------------------------------ \\
-  onRemoveCategoryClick() {
-    if (!this.itemList.deleteIcon.isDisabled) {
-      this.promptService.showPrompt('Remove Category', 'Are you sure you want to remove this category?', this.removeCategory, this);
-    }
-
-  }
-
-
-  // -----------------------------( REMOVE CATEGORY )------------------------------ \\
-  removeCategory() {
-    this.itemList.deleteListItem();
   }
 }

@@ -14,9 +14,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
   public searchResults: Array<HierarchyItem>;
   public searchInput: HTMLInputElement;
   public filterType: number;
-
-
-  constructor(dataService: TempDataService, private promptService: PromptService) { super(dataService) }
+  constructor(dataService: TempDataService, public promptService: PromptService) { super(dataService) }
 
 
   // -----------------------------( INIT SEARCH )------------------------------ \\

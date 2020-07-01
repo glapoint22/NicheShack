@@ -5,6 +5,7 @@ import { MediaItem } from '../../../classes/media-item';
 import { MediaType } from '../../../classes/media';
 import { MenuService } from '../../../services/menu.service';
 import { PopupService } from '../../../services/popup.service';
+import { PromptService } from '../../../services/prompt.service';
 
 @Component({
   selector: 'media-item-list',
@@ -12,7 +13,7 @@ import { PopupService } from '../../../services/popup.service';
   styleUrls: ['./media-item-list.component.scss']
 })
 export class MediaItemListComponent extends EditableItemListComponent implements OnChanges {
-  constructor(menuService: MenuService, private popupService: PopupService) { super(menuService) }
+  constructor(menuService: MenuService, promptService: PromptService, private popupService: PopupService) { super(menuService, promptService) }
   // Public
   public selectType = SelectType;
   public mediaTypeEnum = MediaType;
@@ -62,9 +63,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
 
       window.setTimeout(() => {
         // Once the list item is selected, we then have to set focus to it
-        this.rowItem.find((item, index) => index == this.autoSelectedMediaItemIndex).nativeElement.focus();
-        // Then set the last focused list item as this selected list item
-        this.lastFocusedListItem = document.activeElement;
+        this.setListItemFocus(this.autoSelectedMediaItemIndex);
       }, 20)
     }
   }
@@ -124,7 +123,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
         // Update
         this.menuService.option(this.menuOptions[2], "Ctrl+Alt+U", this.editIcon.isDisabled, () => { this.mediaUpdateInitiated = true; this.onUpdateMedia.emit(this.selectedListItemIndex) }),
         // Edit
-        this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.editListItem),
+        this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.onListItemEdit),
 
         this.menuService.divider(),
 
@@ -132,7 +131,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
         moveTo,
 
         // Delete
-        this.menuService.option(this.deleteIcon.isDisabled ? this.menuOptions[3] : this.editIcon.isDisabled ? this.menuOptions[4] : this.menuOptions[3], "Delete", this.deleteIcon.isDisabled, this.deleteListItem)
+        this.menuService.option(this.deleteIcon.isDisabled ? this.menuOptions[3] : this.editIcon.isDisabled ? this.menuOptions[4] : this.menuOptions[3], "Delete", this.deleteIcon.isDisabled, this.onListItemDelete)
       );
     } else {
       this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
@@ -151,10 +150,9 @@ export class MediaItemListComponent extends EditableItemListComponent implements
     // If we're updating an image
     if (this.mediaUpdateInitiated) {
       this.mediaUpdateInitiated = false;
+
       // Put the focus back to the selected media item when updating is all done
-      this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement.focus();
-      // Then set the last focused list item as this selected list item
-      this.lastFocusedListItem = document.activeElement;
+      this.setListItemFocus(this.selectedListItemIndex);
     }
   }
 

@@ -16,7 +16,7 @@
             <div class="icon-container" [attr.title]="'Remove Featured Product'"
                 [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
                 (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                (click)="onRemoveProductClick()">
+                (click)="itemList.onListItemDelete()">
                 <i class="fas fa-trash-alt"></i>
             </div>
 

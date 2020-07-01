@@ -4,13 +4,14 @@ import { SelectType } from '../../../classes/list-item-select-type';
 import { MenuService } from '../../../services/menu.service';
 import { NotificationService } from '../../../services/notification.service';
 import { PopupService } from '../../../services/popup.service';
-import { NotificationType, NotificationTab, Notification } from '../../../classes/notification';
+import { NotificationType, Notification } from '../../../classes/notification';
 import { GeneralNotification } from '../../../classes/general-notification';
 import { ProductDescriptionNotification } from '../../../classes/product-description-notification';
 import { ProductImageNotification } from '../../../classes/product-image-notification';
 import { ProductMediaNotification } from '../../../classes/product-media-notification';
 import { ProductContentNotification } from '../../../classes/product-content-notification';
 import { ReviewComplaintNotification } from '../../../classes/review-complaint-notification';
+import { PromptService } from '../../../services/prompt.service';
 
 @Component({
   selector: 'notifications-item-list',
@@ -18,7 +19,7 @@ import { ReviewComplaintNotification } from '../../../classes/review-complaint-n
   styleUrls: ['./notifications-item-list.component.scss', '../media-item-list/media-item-list.component.scss']
 })
 export class NotificationsItemListComponent extends ItemListComponent {
-  constructor(menuService: MenuService, private notificationService: NotificationService, public popupService: PopupService) { super(menuService) }
+  constructor(menuService: MenuService, promptService: PromptService, private notificationService: NotificationService, public popupService: PopupService) { super(menuService, promptService) }
   public selectType = SelectType;
   public notificationImageList: Array<string>;
   @Input() listItems: Array<Notification>;

@@ -80,7 +80,7 @@
                         [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Price Point (Delete)' : itemList.editIcon.isDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
                         [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
                         (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                        (click)="onDeletePricePoint(itemList)">
+                        (click)="itemList.onListItemDelete()">
                         <i class="fas fa-trash-alt"></i>
                     </div>
 
@@ -105,7 +105,6 @@
                 <checkbox-item-list #itemList [listItems]="pricePointList"
                     [checkList]="content[contentIndex].priceIndices" (onAddItem)="addPricePoint(addIcon)"
                     (onEditItem)="editPricePoint(editIcon, itemList.selectedListItemIndex)"
-                    (onDeleteItem)="onDeletePricePoint(itemList)"
                     [menuOptions]="['Add Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">
                 </checkbox-item-list>
             </div>

@@ -13,25 +13,17 @@ export class ProductKeywordsComponent {
   @Input() product: Product;
   @ViewChild('itemList', { static: false }) itemList: EditableItemListComponent;
   public keywords: Array<string>;
-
   constructor(private dataService: TempDataService) { }
 
 
-  // -----------------------------( ON PANEL CLICK )------------------------------ \\
-  onPanelClick(expanded: boolean) {
-    if (expanded) {
-      if (!this.keywords) {
-        this.itemList.addIcon.isDisabled = true;
-        this.dataService.get('api/Products/Keywords', [{ key: 'productId', value: this.product.id }])
-          .subscribe((keywords: Array<string>) => {
-            this.keywords = keywords;
-            this.itemList.addIcon.isDisabled = false;
-          });
-      }
-    }
+  // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
+  ngAfterViewInit() {
+    // Set delete prompt title and message
+    this.itemList.promptTitle = 'Delete Keyword';
+    this.itemList.promptMultiTitle = 'Delete Keywords';
+    this.itemList.propmtMessage = 'Are you sure you want to delete the selected keyword?';
+    this.itemList.propmtMultiMessage = 'Are you sure you want to delete all the selected keywords?';
   }
-
-
 
 
   // -----------------------------( ON CHANGE )------------------------------ \\
@@ -61,6 +53,21 @@ export class ProductKeywordsComponent {
         id: item.id,
         name: item.name
       });
+    }
+  }
+
+
+  // -----------------------------( ON PANEL CLICK )------------------------------ \\
+  onPanelClick(expanded: boolean) {
+    if (expanded) {
+      if (!this.keywords) {
+        this.itemList.addIcon.isDisabled = true;
+        this.dataService.get('api/Products/Keywords', [{ key: 'productId', value: this.product.id }])
+          .subscribe((keywords: Array<string>) => {
+            this.keywords = keywords;
+            this.itemList.addIcon.isDisabled = false;
+          });
+      }
     }
   }
 }
