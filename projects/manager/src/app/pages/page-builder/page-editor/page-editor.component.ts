@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageService } from '../../../services/page.service';
 import { PageData } from '../../../classes/page-data';
 import { LoadingService } from '../../../services/loading.service';
@@ -13,20 +13,38 @@ import { Item } from '../../../classes/item';
   templateUrl: './page-editor.component.html',
   styleUrls: ['./page-editor.component.scss']
 })
-export class PageEditorComponent implements Searchable {
-  public view: string = 'page';
+export class PageEditorComponent implements OnInit, Searchable {
+  public view: string;
   public currentPageId: string;
-  public apiUrl: string = 'api/Pages';
+  public apiUrl: string;
   public searchResults: Array<Item>;
   public items: Array<Item>;
+  public pageType: string;
 
   constructor(public pageService: PageService,
     private loadingService: LoadingService,
-    private promptService: PromptService,
+    public promptService: PromptService,
     private popupService: PopupService,
     private dataService: TempDataService) { }
 
 
+  // ---------------------------------------------------------------------- Ng On Init --------------------------------------------------------
+  ngOnInit() {
+    this.apiUrl = 'api/Pages';
+    this.pageType = 'page';
+    this.setPageView();
+  }
+
+
+
+
+  // ---------------------------------------------------------------------- Set Page View --------------------------------------------------------
+  setPageView() {
+    this.view = this.pageType;
+  }
+
+
+  
   // ---------------------------------------------------------------------- Add Page --------------------------------------------------------
   addPage() {
     // Display the loading screen
@@ -43,9 +61,9 @@ export class PageEditorComponent implements Searchable {
 
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
   loadPage(pageData: PageData) {
-    this.pageService.setDesigner('page');
+    this.pageService.setDesigner(this.pageType);
     this.pageService.loadPage(pageData);
-    this.view = 'page';
+    this.setPageView();
     this.loadingService.loading = false;
     this.currentPageId = pageData.id;
   }
@@ -102,9 +120,8 @@ export class PageEditorComponent implements Searchable {
         this.pageService.clearPage();
         this.currentPageId = null;
         this.loadingService.loading = false;
-        this.view = 'page';
+        this.setPageView();
         this.pageService.widgetCursors = [];
-        this.pageService.page.width = 1600;
       });
   }
 

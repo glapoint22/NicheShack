@@ -7,4 +7,5 @@ export class PageData {
     public width: number;
     public background: BackgroundData = new BackgroundData();
     public rows: Array<RowData> = [];
+    public type?: number;
 }

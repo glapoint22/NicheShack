@@ -33,6 +33,9 @@ import { MediaBrowserPopupComponent } from './shared-components/popups/media-bro
 import { DropdownModule } from './shared-components/elements/dropdowns/dropdown/dropdown.module';
 import { MediaItemListComponent } from './shared-components/item-lists/media-item-list/media-item-list.component';
 import { PromptModule } from './shared-components/prompt/prompt.module';
+import { NicheShackHierarchyPopupComponent } from './shared-components/popups/niche-shack-hierarchy-popup/niche-shack-hierarchy-popup.component';
+import { HierarchyModule } from './shared-components/hierarchy/hierarchy.module';
+import { GeneralNotificationPopupComponent } from './shared-components/popups/notification-popups/general-notification-popup/general-notification-popup.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,9 @@ import { PromptModule } from './shared-components/prompt/prompt.module';
     ProductContentNotificationPopupComponent,
     PricePointPopupComponent,
     MediaBrowserPopupComponent,
-    MediaItemListComponent
+    MediaItemListComponent,
+    NicheShackHierarchyPopupComponent,
+    GeneralNotificationPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +76,8 @@ import { PromptModule } from './shared-components/prompt/prompt.module';
     PaginatorModule,
     CheckboxItemListModule,
     DropdownModule,
-    PromptModule
+    PromptModule,
+    HierarchyModule
   ],
   providers: [],
   bootstrap: [AppComponent]

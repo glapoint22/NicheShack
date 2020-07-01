@@ -119,6 +119,8 @@ export class PageService {
     this.page.name = pageData.name;
     this.page.width = pageData.width ? pageData.width : this.defaultWidth;
 
+    this.page.type = pageData.type;
+
     // Load the background
     this.page.background.load(pageData.background);
 
@@ -159,6 +161,8 @@ export class PageService {
     // Set the name and width of the page
     pageData.name = this.page.name;
     pageData.width = this.page.width;
+    
+    pageData.type = this.page.type;
 
     // Save the background
     this.page.background.save(pageData.background);

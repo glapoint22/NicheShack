@@ -22,6 +22,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/page-builder/page-builder.module').then(m => m.PageBuilderModule)
   },
   {
+    path: 'email-builder',
+    loadChildren: () => import('./pages/email-builder/email-builder.module').then(m => m.EmailBuilderModule)
+  },
+  {
     path: 'change-name',
     loadChildren: () => import('./pages/change-name/change-name.module').then(m => m.ChangeNameModule)
   },

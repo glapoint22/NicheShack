@@ -35,6 +35,7 @@ export class MenuBarComponent implements OnInit {
     this.menuService.buildMenu(this, this.navigationDropdown.nativeElement.getBoundingClientRect().right - 147, this.navigationDropdown.nativeElement.getBoundingClientRect().top + 28,
       this.menuService.routerOption("Niche Shack Editor", null, false, "/"),
       this.menuService.routerOption("Page Builder", null, false, "/page-builder"),
+      this.menuService.routerOption("Email Builder", null, false, "/email-builder"),
       this.menuService.divider(),
       this.menuService.routerOption("Change Name", null, false, "/change-name"),
       this.menuService.routerOption("Change Email", null, false, "/change-email"),
