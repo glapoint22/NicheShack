@@ -7,7 +7,7 @@ import { PopupComponent } from '../popup/popup.component';
 @Component({
   selector: 'color-picker-popup',
   templateUrl: './color-picker-popup.component.html',
-  styleUrls: ['./color-picker-popup.component.scss', '../popup/popup.component.scss'],
+  styleUrls: ['../popup/popup.component.scss', './color-picker-popup.component.scss'],
 })
 
 export class ColorPickerPopupComponent extends PopupComponent implements OnInit {
@@ -72,14 +72,14 @@ export class ColorPickerPopupComponent extends PopupComponent implements OnInit 
       this.setRGB();
     }
     setColor(e);
-    this.cover.showPointerCover = true;
+    this.cover.showPointerCover = this.preventNoShow = true;
     // Moving the ring
     let ringMove = (e: MouseEvent) => {
       setColor(e);
     }
     // Stop moving the ring
     let ringMoveEnd = () => {
-      this.cover.showPointerCover = false;
+      this.cover.showPointerCover = this.preventNoShow = false;
       window.removeEventListener("mousemove", ringMove);
       window.removeEventListener("mouseup", ringMoveEnd);
     }
@@ -99,14 +99,14 @@ export class ColorPickerPopupComponent extends PopupComponent implements OnInit 
       this.setRGB();
     }
     setHue(e)
-    this.cover.showPointerCover = true;
+    this.cover.showPointerCover = this.preventNoShow = true;
     // Moving the hue slider
     let hueSliderMove = (e: MouseEvent) => {
       setHue(e);
     }
     // Stop moving the hue slider
     let hueSliderMoveEnd = () => {
-      this.cover.showPointerCover = false;
+      this.cover.showPointerCover = this.preventNoShow = false;
       window.removeEventListener("mousemove", hueSliderMove);
       window.removeEventListener("mouseup", hueSliderMoveEnd);
     }

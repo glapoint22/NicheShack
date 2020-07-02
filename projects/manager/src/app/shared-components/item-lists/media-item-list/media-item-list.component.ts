@@ -6,6 +6,7 @@ import { MediaType } from '../../../classes/media';
 import { MenuService } from '../../../services/menu.service';
 import { PopupService } from '../../../services/popup.service';
 import { PromptService } from '../../../services/prompt.service';
+import { FormService } from '../../../services/form.service';
 
 @Component({
   selector: 'media-item-list',
@@ -13,7 +14,7 @@ import { PromptService } from '../../../services/prompt.service';
   styleUrls: ['./media-item-list.component.scss']
 })
 export class MediaItemListComponent extends EditableItemListComponent implements OnChanges {
-  constructor(menuService: MenuService, promptService: PromptService, private popupService: PopupService) { super(menuService, promptService) }
+  constructor(menuService: MenuService, promptService: PromptService, private popupService: PopupService, private formService: FormService) { super(menuService, promptService) }
   // Public
   public selectType = SelectType;
   public mediaTypeEnum = MediaType;
@@ -184,6 +185,15 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   removeEventListeners() {
     if (!this.mediaUpdateInitiated) {
       super.removeEventListeners();
+    }
+  }
+
+
+  // -----------------------------( ESCAPE )------------------------------ \\
+  escape() {
+    // As long as the video url form is NOT open
+    if (!this.formService.videoUrlForm.show) {
+      super.escape();
     }
   }
 }

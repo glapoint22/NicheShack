@@ -68,15 +68,15 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
 
   // -----------------------------( ADD CONTENT )------------------------------ \\
   addContent(paginator: PaginatorComponent) {
-    this.productService.product.content.push({
+    this.notificationService.productContentNotification.content.push({
       id: null,
       icon: new Image(),
       title: null,
       priceIndices: []
     });
 
-    this.contentIndex = this.productService.product.content.length - 1;
-    paginator.setPage(this.productService.product.content.length);
+    this.contentIndex = this.notificationService.productContentNotification.content.length - 1;
+    paginator.setPage(this.notificationService.productContentNotification.content.length);
   }
 
 
@@ -88,10 +88,10 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
 
   // -----------------------------( DELETE CONTENT )------------------------------ \\
   deleteContent(paginator: PaginatorComponent) {
-    this.productService.product.content.splice(this.contentIndex, 1);
+    this.notificationService.productContentNotification.content.splice(this.contentIndex, 1);
 
     // Set the page for the paginator
-    let index = Math.max(0, this.contentIndex = Math.min(this.productService.product.content.length - 1, this.contentIndex));
+    let index = Math.max(0, this.contentIndex = Math.min(this.notificationService.productContentNotification.content.length - 1, this.contentIndex));
     paginator.setPage(index + 1);
   }
 
@@ -122,7 +122,7 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
 
 
     // Push the new price point
-    this.pricePoints.push(pricePoint);
+    this.notificationService.productContentNotification.pricePoints.push(pricePoint);
     this.pricePointList.push({
       id: pricePoint.id,
       name: ''
@@ -141,7 +141,7 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   editPricePoint(sourceElement: HTMLElement, index: number) {
     this.popupService.sourceElement = sourceElement;
     this.popupService.pricePointPopup.show = true;
-    this.popupService.pricePointPopup.pricePoint = this.pricePoints[index];
+    this.popupService.pricePointPopup.pricePoint = this.notificationService.productContentNotification.pricePoints[index];
     this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[index];
   }
 

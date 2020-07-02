@@ -11,7 +11,7 @@ import { TempDataService } from 'projects/manager/src/app/services/temp-data.ser
 @Component({
   selector: 'notification-list-popup',
   templateUrl: './notification-list-popup.component.html',
-  styleUrls: ['./notification-list-popup.component.scss', '../../popup/popup.component.scss']
+  styleUrls: ['../../popup/popup.component.scss', './notification-list-popup.component.scss']
 })
 export class NotificationListPopupComponent extends PopupComponent implements OnInit {
   constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, public notificationService: NotificationService) { super(popupService, cover, menuService, dropdownMenuService, dataService) }

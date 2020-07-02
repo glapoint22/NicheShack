@@ -5,7 +5,7 @@ import { Link, LinkOption } from '../../../classes/link';
 @Component({
   selector: 'link-popup',
   templateUrl: './link-popup.component.html',
-  styleUrls: ['./link-popup.component.scss', '../popup/popup.component.scss']
+  styleUrls: ['../popup/popup.component.scss', './link-popup.component.scss',]
 })
 export class LinkPopupComponent extends PopupComponent implements OnInit {
   public link: Link;

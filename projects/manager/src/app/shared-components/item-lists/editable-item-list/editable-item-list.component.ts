@@ -252,7 +252,6 @@ export class EditableItemListComponent extends ItemListComponent {
 
       // If a list item is NOT being edited
     } else {
-
       super.escape();
     }
   }

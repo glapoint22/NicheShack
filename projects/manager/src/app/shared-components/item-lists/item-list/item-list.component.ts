@@ -540,7 +540,7 @@ export class ItemListComponent {
 
   // -----------------------------( ESCAPE )------------------------------ \\
   escape() {
-    // As long as the context menu is NOT open
+    // As long as the context menu and the prompt is NOT open
     if (!this.menuService.showMenu && !this.promptService.show) {
       // Then remove all listeners and selections
       this.removeEventListeners();

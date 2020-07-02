@@ -1,9 +1,6 @@
 <!-- Popup Base -->
-<div #popup transitionClass="fade-end"
-     class="popup-base fade-start"
-     (onShow)="onPopupShow(popup, arrow)"
-     *show="show">
-     
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)" *show="show">
+
     <!-- Arrow -->
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
 
@@ -13,8 +10,8 @@
         <div class="product-container">
 
             <!-- Product Thumbnail -->
-            <div class="thumbnail" 
-                 [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productContentNotification.productThumbnail + ')'}">
+            <div class="thumbnail"
+                [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productContentNotification.productThumbnail + ')'}">
             </div>
 
             <!-- Product Name -->
@@ -24,9 +21,8 @@
         </div>
 
         <!-- Ellipsis -->
-        <div #ellipsis 
-             class="icon-container"
-             (mousedown)="showContextMenu(notificationService.productContentNotification)">
+        <div #ellipsis class="icon-container"
+            (mousedown)="showContextMenu(notificationService.productContentNotification)">
             <i class="fas fa-ellipsis-v"></i>
         </div>
     </div>
@@ -39,14 +35,14 @@
     </div>
     <div class="header-line"></div>
 
-    
+
     <!-- Main Property Box -->
     <div class="main-property-box">
 
         <!-- Paginator -->
         <div class="paginator-bar">
             <paginator [itemCount]="notificationService.productContentNotification.customerText.length"
-                       (onItemChange)="paginatorIndex = $event">
+                (onItemChange)="paginatorIndex = $event">
             </paginator>
         </div>
 
@@ -83,11 +79,10 @@
             <div class="property-box-light-icon-bar">
 
                 <!-- Paginator -->
-                <paginator #paginator 
-                           [itemCount]="notificationService.productContentNotification.content.length"
-                           (onItemChange)="contentIndex = $event">
+                <paginator #paginator [itemCount]="notificationService.productContentNotification.content.length"
+                    (onItemChange)="contentIndex = $event">
                 </paginator>
-                
+
                 <!-- Icons -->
                 <div class="icons">
 
@@ -105,14 +100,16 @@
 
 
             <!-- Content -->
-            <div *ngIf="notificationService.productContentNotification.content.length > 0; else placeholder" class="content">
+            <div *ngIf="notificationService.productContentNotification.content.length > 0; else placeholder"
+                class="content">
 
 
                 <!-- Title -->
                 <div class="property">
                     <div class="label">Title:</div>
                 </div>
-                <input class="txt-20" [(ngModel)]="notificationService.productContentNotification.content[contentIndex].title">
+                <input class="txt-20"
+                    [(ngModel)]="notificationService.productContentNotification.content[contentIndex].title">
 
 
                 <!-- Icon -->
@@ -132,8 +129,10 @@
 
                     <!-- Image -->
                     <div class="img-container">
-                        <img *ngIf="notificationService.productContentNotification.content[contentIndex].icon.url" [src]="'images/' + notificationService.productContentNotification.content[contentIndex].icon.url">
-                        <div *ngIf="!notificationService.productContentNotification.content[contentIndex].icon.url" class="no-property">
+                        <img *ngIf="notificationService.productContentNotification.content[contentIndex].icon.url"
+                            [src]="'images/' + notificationService.productContentNotification.content[contentIndex].icon.url">
+                        <div *ngIf="!notificationService.productContentNotification.content[contentIndex].icon.url"
+                            class="no-property">
                             No icon available
                         </div>
                     </div>
@@ -151,33 +150,26 @@
 
                         <!-- Delete -->
                         <div class="icon-container"
-                             [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Price Point (Delete)' : itemList.editIcon.isDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
-                             [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
-                             (mouseover)="itemList.isOverIconButton = true"
-                             (mouseout)="itemList.onIconButtonMouseOut()"
-                             (click)="itemList.onListItemDelete()">
+                            [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Price Point (Delete)' : itemList.editIcon.isDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
+                            [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                            (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                            (click)="itemList.onListItemDelete()">
                             <i class="fas fa-trash-alt"></i>
                         </div>
 
                         <!-- Edit -->
-                        <div #editIcon
-                             class="icon-container"
-                             [attr.title]="'Edit Price Point (Ctrl+Alt+E)'" 
-                             [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
-                             (mouseover)="itemList.isOverIconButton = true"
-                             (mouseout)="itemList.onIconButtonMouseOut()"
-                             (click)="!itemList.editIcon.isDisabled ? editPricePoint($event.target, itemList.selectedListItemIndex) : null">
+                        <div #editIcon class="icon-container" [attr.title]="'Edit Price Point (Ctrl+Alt+E)'"
+                            [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
+                            (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                            (click)="!itemList.editIcon.isDisabled ? editPricePoint($event.target, itemList.selectedListItemIndex) : null">
                             <i class="fas fa-edit"></i>
                         </div>
 
                         <!-- Add -->
-                        <div #addIcon
-                             class="icon-container"
-                             [attr.title]="'Add Price Point (Ctrl+Alt+A)'" 
-                             [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
-                             (mouseover)="itemList.isOverIconButton = true"
-                             (mouseout)="itemList.onIconButtonMouseOut()"
-                             (click)="!itemList.addIcon.isDisabled ? addPricePoint($event.target) : null">
+                        <div #addIcon class="icon-container" [attr.title]="'Add Price Point (Ctrl+Alt+A)'"
+                            [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                            (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
+                            (click)="!itemList.addIcon.isDisabled ? addPricePoint($event.target) : null">
                             <i class="fas fa-plus-circle"></i>
                         </div>
                     </div>
@@ -186,10 +178,7 @@
 
                     <div class="list-container">
                         <!-- Checkbox Item LIst -->
-                        <checkbox-item-list
-                            #itemList 
-                            id="item-list"
-                            [listItems]="pricePointList"
+                        <checkbox-item-list #itemList id="item-list" [listItems]="pricePointList"
                             [checkList]="notificationService.productContentNotification.content[contentIndex].priceIndices"
                             (onAddItem)="addPricePoint(addIcon)"
                             (onEditItem)="editPricePoint(editIcon, itemList.selectedListItemIndex)"
@@ -203,8 +192,7 @@
                     <div class="no-property">No content available</div>
                 </ng-template>
             </div>
-        
-
+        </div>
 
 
         <!-- Employee Property Box -->
@@ -230,12 +218,11 @@
         </div>
     </div>
 
-
     <!-- Button Container -->
     <div *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
-         class="button-container">
+        class="button-container">
 
-         <!-- Buttons -->
+        <!-- Buttons -->
         <button (click)="onDismissButtonClick(notificationService.productContentNotification)">Dismiss</button>
         <button (click)="onRightButtonClick(notificationService.productContentNotification)">Publish</button>
     </div>

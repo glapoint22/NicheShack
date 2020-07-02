@@ -1,4 +1,4 @@
-<div *show="promptService.show" transitionClass="fade-end" class="modal-background fade-start" (keydown)="onKeydown($event)"
+<div *show="promptService.show" transitionClass="fade-end" class="modal-background fade-start" (keydown)="onKeydown($event)" style="z-index: 10;"
     tabindex="0">
     <div id="prompt">
         <dialog-box [dialogBoxName]="promptService.promptTitle" [isModal]="true" (onClose)="promptService.onNoClick(); promptService.show = false">
@@ -15,5 +15,4 @@
             </div>
         </dialog-box>
     </div>
-
 </div>

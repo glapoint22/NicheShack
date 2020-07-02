@@ -19,7 +19,9 @@ export class VideoUrlFormComponent extends FormComponent implements OnInit {
 
   // --------------------------------( ON ESCAPE KEY DOWN )-------------------------------- \\
   onEscapeKeydown() {
-    this.onCancelClick();
+    window.setTimeout(()=> {
+      this.onCancelClick();
+    })
   }
 
 
