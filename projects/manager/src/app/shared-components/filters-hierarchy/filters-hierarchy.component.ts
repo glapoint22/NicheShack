@@ -1,10 +1,10 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { HierarchyComponent } from '../hierarchy/hierarchy.component';
 import { HierarchyItem, FilterHierarchyItemType } from '../../classes/hierarchy-item';
-import { PanelComponent } from '../panels/panel/panel.component';
 import { HierarchyCheckboxItem } from '../../classes/hierarchy-checkbox-item';
 import { Product } from '../../classes/product';
 import { ProductFilter } from '../../classes/product-filter';
+import { PanelComponent } from '../panel/panel.component';
 
 @Component({
   selector: 'filters-hierarchy',

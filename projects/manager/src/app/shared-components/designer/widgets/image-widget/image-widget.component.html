@@ -15,7 +15,7 @@
 
     <!-- Image -->
     <ng-container *ngIf="image.url; else placeholder">
-        <img [src]="'images/' + image.url" (load)="onImageLoad($event)" [alt]="image.title" [title]="image.title"
+        <img [src]="'images/' + image.url" (load)="onImageLoad($event)" [alt]="image.name" [title]="image.name"
             [style.display]="imageLoaded ? 'inline' : 'none'">
     </ng-container>
 

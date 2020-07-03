@@ -10,16 +10,17 @@ export class NumberFieldComponent implements OnChanges {
   @Input() value: number;
   @Input() values: Array<number>;
   public currentIndex: number;
+  public inEditMode: boolean;
 
 
   ngOnChanges() {
     // Get the defualt index
     this.currentIndex = this.values.findIndex(x => x == this.value);
   }
-  
+
   onMousedown(mouseEvent: MouseEvent) {
     mouseEvent.preventDefault();
-    
+
   }
 
 
@@ -31,4 +32,6 @@ export class NumberFieldComponent implements OnChanges {
     this.value = this.values[this.currentIndex];
     this.onValueChange.emit(this.value);
   }
+
+  onInput(event) { }
 }

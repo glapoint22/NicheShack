@@ -8,7 +8,7 @@
             
         <tr *ngFor="let listItem of listItems; let listItemIndex = index"
                 (mousedown)="onListItemDown(listItemIndex)"
-                (dblclick)="onListItemDoubleClick(listItemIndex)"
+                (dblclick)="onListItemDoubleClick()"
                 style="cursor: pointer;"
                 [ngClass]="{
                             'hide-hover': mediaUpdateInitiated || mediaAddInitiated,

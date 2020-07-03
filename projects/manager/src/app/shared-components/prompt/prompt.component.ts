@@ -8,7 +8,7 @@ import { PromptService } from '../../services/prompt.service';
 })
 export class PromptComponent {
 
-  constructor(private promptService: PromptService) { }
+  constructor(public promptService: PromptService) { }
 
 
   onKeydown(event: KeyboardEvent) {

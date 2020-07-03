@@ -18,7 +18,7 @@ import { TempDataService } from '../../../services/temp-data.service';
 export class SearchPopupComponent extends PopupComponent implements OnInit {
   public searchable: Searchable;
   private searchInput: HTMLInputElement;
-  private searchValue: string;
+  public searchValue: string;
 
 
   constructor(

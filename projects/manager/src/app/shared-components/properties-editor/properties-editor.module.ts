@@ -10,8 +10,6 @@ import { StyleComponent } from '../widget-properties/line-widget-properties/styl
 import { BannersComponent } from '../widget-properties/carousel-widget-properties/banners/banners.component';
 import { ProductGroupTypeComponent } from '../widget-properties/product-group-widget-properties/product-group-type/product-group-type.component';
 import { CategoriesComponent } from '../widget-properties/categories-widget-properties/categories/categories.component';
-import { EnableablePanelComponent } from '../panels/enableable-panel/enableable-panel.component';
-import { PanelComponent } from '../panels/panel/panel.component';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 import { LinkComponent } from '../properties/link/link.component';
 import { BorderComponent } from '../properties/border/border.component';
@@ -56,6 +54,7 @@ import { PropertiesEditorComponent } from './properties-editor.component';
 import { PaginatorModule } from '../paginator/paginator.module';
 import { DropdownModule } from '../elements/dropdowns/dropdown/dropdown.module';
 import { EmailPropertiesComponent } from '../../pages/email-builder/email-editor/email-properties/email-properties.component';
+import { PanelComponent } from '../panel/panel.component';
 
 
 @NgModule({
@@ -74,7 +73,6 @@ import { EmailPropertiesComponent } from '../../pages/email-builder/email-editor
     ProductGroupWidgetPropertiesComponent,
     ProductGroupTypeComponent,
     CategoriesComponent,
-    EnableablePanelComponent,
     PanelComponent,
     LinkComponent,
     BorderComponent,
@@ -135,7 +133,6 @@ import { EmailPropertiesComponent } from '../../pages/email-builder/email-editor
     ProductGroupWidgetPropertiesComponent,
     ProductGroupTypeComponent,
     CategoriesComponent,
-    EnableablePanelComponent,
     PanelComponent,
     LinkComponent,
     BorderComponent,

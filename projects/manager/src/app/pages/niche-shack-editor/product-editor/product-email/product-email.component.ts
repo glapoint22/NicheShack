@@ -21,7 +21,7 @@ export class ProductEmailComponent implements OnInit {
 
   constructor(private promptService: PromptService,
     private loadingService: LoadingService,
-    private pageService: PageService,
+    public pageService: PageService,
     private dataService: TempDataService) { }
 
 

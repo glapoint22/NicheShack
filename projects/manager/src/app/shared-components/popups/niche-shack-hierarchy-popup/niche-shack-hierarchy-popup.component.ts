@@ -14,6 +14,7 @@ import { PromptService } from '../../../services/prompt.service';
 export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponent implements OnInit {
   @ViewChild('popup', { static: false }) popup: PopupComponent;
   public nicheShackHierarchyItemType = NicheShackHierarchyItemType;
+  public showMenu: boolean;
 
 
 

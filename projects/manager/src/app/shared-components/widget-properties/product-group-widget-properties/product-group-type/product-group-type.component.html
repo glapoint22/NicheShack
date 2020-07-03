@@ -22,7 +22,7 @@
 
 
             <!-- Add -->
-            <div class="icon-container" [attr.title]="'Add Featured Product (Ctrl+Alt+A)'"
+            <div #addIcon class="icon-container" [attr.title]="'Add Featured Product (Ctrl+Alt+A)'"
                 [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
                 (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
                 (click)="!itemList.addIcon.isDisabled ? addFeaturedProduct($event.target) : null">
@@ -35,8 +35,7 @@
             [ngStyle]="{'padding.px' : productGroupWidget.featuredProducts && productGroupWidget.featuredProducts.length == 0 ? 0 : 6,
                          'paddingTop.px' : productGroupWidget.featuredProducts && productGroupWidget.featuredProducts.length == 0 ? 0 : 7}">
             <!-- Item LIst -->
-            <item-list #itemList [listItems]="productGroupWidget.featuredProducts" (onAddItem)="addFeaturedProduct()"
-                (onEditItem)="editFeaturedProduct()"
+            <item-list #itemList [listItems]="productGroupWidget.featuredProducts" (onAddItem)="addFeaturedProduct(addIcon)"
                 [menuOptions]="['Add Featured Product', 'Edit Featured Product', 'Delete Featured Product', 'Delete Featured Products']">
             </item-list>
         </div>

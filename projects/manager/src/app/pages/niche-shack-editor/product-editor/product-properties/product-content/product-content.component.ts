@@ -26,11 +26,14 @@ export class ProductContentComponent implements OnChanges {
 
   // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
   ngAfterViewInit() {
-    // Set delete prompt title and message
-    this.itemList.promptTitle = 'Delete Price Point';
-    this.itemList.promptMultiTitle = 'Delete Price Points';
-    this.itemList.propmtMessage = 'Are you sure you want to delete the selected price point?';
-    this.itemList.propmtMultiMessage = 'Are you sure you want to delete all the selected price points?';
+    // As long as the list is there to access
+    if (this.itemList != null) {
+      // Set delete prompt title and message
+      this.itemList.promptTitle = 'Delete Price Point';
+      this.itemList.promptMultiTitle = 'Delete Price Points';
+      this.itemList.propmtMessage = 'Are you sure you want to delete the selected price point?';
+      this.itemList.propmtMultiMessage = 'Are you sure you want to delete all the selected price points?';
+    }
   }
 
 

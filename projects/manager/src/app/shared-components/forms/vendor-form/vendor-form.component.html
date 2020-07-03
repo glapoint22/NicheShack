@@ -196,7 +196,7 @@
 
 
             <!-- Notes -->
-            <fieldset [style.marginBottom]="newVendor ? initial : 0">
+            <fieldset [style.marginBottom]="newVendor ? 'initial' : 0">
                 <legend>Notes</legend>
                 <textarea [(ngModel)]="vendor.notes" [readonly]="!editMode"></textarea>
             </fieldset>

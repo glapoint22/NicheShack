@@ -4,11 +4,15 @@ import { HierarchyContentComponent } from './hierarchy-content/hierarchy-content
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { HierarchyCheckboxContentComponent } from './hierarchy-checkbox-content/hierarchy-checkbox-content.component';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
+import { HierarchyComponent } from './hierarchy.component';
+import { EditableHierarchyComponent } from './editable-hierarchy/editable-hierarchy.component';
 
 
 
 @NgModule({
   declarations: [
+    HierarchyComponent,
+    EditableHierarchyComponent,
     HierarchyContentComponent,
     HierarchyCheckboxContentComponent
   ],
@@ -18,6 +22,8 @@ import { CustomInputModule } from 'shared-components/custom-input/custom-input.m
     CustomInputModule
   ],
   exports: [
+    HierarchyComponent,
+    EditableHierarchyComponent,
     HierarchyContentComponent,
     HierarchyCheckboxContentComponent
   ]

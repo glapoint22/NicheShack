@@ -19,7 +19,7 @@ import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 })
 export class TextWidgetComponent extends FreeformWidgetComponent implements BreakpointsComponent, BreakpointsPaddingComponent {
   @ViewChild('iframe', { static: false }) iframe: ElementRef;
-  private textBox: TextBox;
+  public textBox: TextBox;
   private fixedHeight: number;
   private bottomHandleMove: boolean;
   public handleMove: boolean;

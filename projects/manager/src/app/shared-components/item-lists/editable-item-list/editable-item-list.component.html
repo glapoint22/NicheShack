@@ -6,7 +6,7 @@
                 (blur)="onListItemBlur()"
                 (mousedown)="onListItemDown(listItemIndex)"
                 [textContent]="listItem.name"
-                (dblclick)="onListItemDoubleClick(listItemIndex)"
+                (dblclick)="onListItemDoubleClick()"
                 [contentEditable]="indexOfEditedListItem == listItemIndex"
                 [ngClass]="{'edited-listItem': indexOfEditedListItem == listItemIndex,
                             'selected-listItem': selectedListItemIndex == listItemIndex,

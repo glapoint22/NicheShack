@@ -6,7 +6,9 @@ import { ValidationPageComponent } from '../validation-page/validation-page.comp
   styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent extends ValidationPageComponent implements OnInit {
-
+  public currentPassword: string;
+  public newPassword: string;
+  public reEnteredPassword: string;
 
   ngOnInit() {
   }

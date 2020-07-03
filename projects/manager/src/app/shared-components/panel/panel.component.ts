@@ -1,4 +1,5 @@
 import { Component, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Enableable } from '../../classes/enableable';
 
 @Component({
   selector: 'panel',
@@ -8,6 +9,7 @@ import { Component, Input, ViewChild, ElementRef, Output, EventEmitter } from '@
 export class PanelComponent {
   @Input() title: string;
   @Input() rounded: boolean;
+  @Input() enableableProperty: Enableable;
   @Output() onClick: EventEmitter<boolean> = new EventEmitter();
   @ViewChild('content', { static: false }) content: ElementRef;
   public expanded: boolean;

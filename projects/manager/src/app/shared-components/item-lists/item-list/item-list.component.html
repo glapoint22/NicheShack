@@ -6,15 +6,13 @@
                 (blur)="onListItemBlur()"
                 (mousedown)="onListItemDown(listItemIndex)"
                 [textContent]="listItem.name"
-                (dblclick)="onListItemDoubleClick(listItemIndex)"
-                [ngClass]="{'edited-listItem': indexOfEditedListItem == listItemIndex,
-                            'selected-listItem': selectedListItemIndex == listItemIndex,
+                (dblclick)="onListItemDoubleClick()"
+                [ngClass]="{'selected-listItem': selectedListItemIndex == listItemIndex,
                             'unselected-listItem': unselectedListItemIndex == listItemIndex,
                             'selected-listItem-top': listItem.selectType == selectType.Top,
                             'selected-listItem-whole': listItem.selectType == selectType.Whole,
                             'selected-listItem-middle': listItem.selectType == selectType.Middle,
-                            'selected-listItem-bottom': listItem.selectType == selectType.Bottom,
-                            'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
+                            'selected-listItem-bottom': listItem.selectType == selectType.Bottom}">
             </td>
         </tr>
     </table>

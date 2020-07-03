@@ -6,7 +6,8 @@ import { ValidationPageComponent } from '../validation-page/validation-page.comp
   styleUrls: ['./change-name.component.scss']
 })
 export class ChangeNameComponent extends ValidationPageComponent implements OnInit {
-
+  public _firstName: string;
+  public _lastName: string;
 
   ngOnInit() {
   }

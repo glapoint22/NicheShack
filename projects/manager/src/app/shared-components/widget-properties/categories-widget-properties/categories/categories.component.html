@@ -18,7 +18,7 @@
 
 
             <!-- Add -->
-            <div class="icon-container" [attr.title]="'Add Category (Ctrl+Alt+A)'"
+            <div #addIcon class="icon-container" [attr.title]="'Add Category (Ctrl+Alt+A)'"
                 [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
                 (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
                 (click)="!itemList.addIcon.isDisabled ? addCategory($event.target) : null">
@@ -30,8 +30,7 @@
             [ngStyle]="{'padding.px' : categoriesWidget.categories && categoriesWidget.categories.length == 0 ? 0 : 6,
                          'paddingTop.px' : categoriesWidget.categories && categoriesWidget.categories.length == 0 ? 0 : 7}">
             <!-- Item LIst -->
-            <item-list #itemList [listItems]="categoriesWidget.categories" (onAddItem)="addCategory()"
-                (onEditItem)="editCategory()"
+            <item-list #itemList [listItems]="categoriesWidget.categories" (onAddItem)="addCategory(addIcon)"
                 [menuOptions]="['Add Category', 'Edit Category', 'Delete Category', 'Delete Categories']">
             </item-list>
         </div>

@@ -7,7 +7,6 @@ import { NumberFieldComponent } from '../number-field/number-field.component';
   styleUrls: ['../number-field/number-field.component.scss', './editable-number-field.component.scss']
 })
 export class EditableNumberFieldComponent extends NumberFieldComponent {
-  public inEditMode: boolean;
   @Output() onSliderDown: EventEmitter<boolean> = new EventEmitter();
 
   ngOnChanges(){}

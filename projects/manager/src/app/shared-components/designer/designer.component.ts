@@ -22,7 +22,7 @@ export class DesignerComponent implements AfterViewInit {
   public widgetCursors: Array<WidgetCursor>;
 
 
-  constructor(private widgetService: WidgetService, public pageService: PageService, private breakpointService: BreakpointService) { }
+  constructor(public widgetService: WidgetService, public pageService: PageService, private breakpointService: BreakpointService) { }
 
   ngOnInit() {
     this.pageService.clearPage();
