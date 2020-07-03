@@ -13,7 +13,7 @@ import { TempDataService } from '../../../services/temp-data.service';
 @Component({
   selector: 'search-popup',
   templateUrl: './search-popup.component.html',
-  styleUrls: ['./search-popup.component.scss', '../popup/popup.component.scss']
+  styleUrls: ['../popup/popup.component.scss', './search-popup.component.scss']
 })
 export class SearchPopupComponent extends PopupComponent implements OnInit {
   public searchable: Searchable;

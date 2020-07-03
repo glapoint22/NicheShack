@@ -1,7 +1,7 @@
-<div *show="promptService.show" transitionClass="fade-end" class="modal-background fade-start" (keydown)="onKeydown($event)"
+<div *show="promptService.show" transitionClass="fade-end" class="modal-background fade-start" (keydown)="onKeydown($event)" style="z-index: 10;"
     tabindex="0">
     <div id="prompt">
-        <dialog-box [dialogBoxName]="promptService.promptTitle" [isModal]="true" (onClose)="promptService.show = false">
+        <dialog-box [dialogBoxName]="promptService.promptTitle" [isModal]="true" (onClose)="promptService.onNoClick(); promptService.show = false">
 
             <!-- Message -->
             <div class="message">
@@ -11,9 +11,8 @@
             <!-- Button Container -->
             <div class="form-button-container">
                 <button (click)="promptService.onYesClick(); promptService.show = false">Yes</button>
-                <button (click)="promptService.show = false">No</button>
+                <button (click)="promptService.onNoClick(); promptService.show = false">No</button>
             </div>
         </dialog-box>
     </div>
-
 </div>

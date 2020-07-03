@@ -36,7 +36,7 @@ export class PopupComponent {
 
   // --------------------------------( ON MOUSE MOVE )-------------------------------- \\
   onMouseMove = (e: MouseEvent) => {
-    if (!this.cover.showCover && this.popup.getBoundingClientRect().left != 0) {
+    if (this.popup.getBoundingClientRect().left != 0) {
       // If the mouse is to the left of the popup
       if (e.clientX < this.popup.getBoundingClientRect().left - 20 ||
         // Or the mouse is to the right of the popup
@@ -61,11 +61,13 @@ export class PopupComponent {
 
   // --------------------------------( ON POPUP OUT )-------------------------------- \\
   onPopupOut() {
+    // This is for the hierarchy popup
+    this.onPopupClose.emit();
+
     // As long as a menu is NOT open
     if (!this.menuService.showMenu && !this.preventNoShow) {
       // Close this popup
       this.show = false;
-      this.onPopupClose.emit();
       this.dropdownMenuService.showMenu = false;
       window.removeEventListener('mousemove', this.onMouseMove);
     }

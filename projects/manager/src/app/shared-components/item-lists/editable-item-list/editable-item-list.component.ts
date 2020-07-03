@@ -17,7 +17,7 @@ export class EditableItemListComponent extends ItemListComponent {
   // -----------------------------( SET SHORTCUT KEYS )------------------------------ \\
   setShortcutKeys(event: KeyboardEvent) {
     if (event.keyCode === 13) this.enter();
-    if (!this.editIcon.isDisabled && event.ctrlKey && event.altKey && event.keyCode === 69) this.editListItem()
+    if (!this.editIcon.isDisabled && event.ctrlKey && event.altKey && event.keyCode === 69) this.onListItemEdit()
     super.setShortcutKeys(event);
   }
 
@@ -184,8 +184,8 @@ export class EditableItemListComponent extends ItemListComponent {
   }
 
 
-  // -----------------------------( SET LIST ITEM ADD )------------------------------ \\
-  setListItemAdd() {
+  // -----------------------------( ADD LIST ITEM )------------------------------ \\
+  addListItem() {
     this.addEventListeners();
     this.newListItem = true;
     this.addIcon.isDisabled = true;
@@ -193,7 +193,7 @@ export class EditableItemListComponent extends ItemListComponent {
     this.deleteIcon.isDisabled = true;
     this.indexOfEditedListItem = 0;
     this.selectedListItemIndex = null;
-    this.listItems.unshift({ id: "", name: "", selected: false, selectType: null, loading: false });
+    this.listItems.unshift({ id: "", name: "", selected: false, selectType: null });
 
     for (let i = 0; i < this.listItems.length; i++) {
       this.listItems[i].selected = false;
@@ -201,13 +201,13 @@ export class EditableItemListComponent extends ItemListComponent {
     }
 
     window.setTimeout(() => {
-      this.rowItem.find((item, index) => index == this.indexOfEditedListItem).nativeElement.focus();
+      this.setListItemFocus(this.indexOfEditedListItem);
     });
   }
 
 
-  // -----------------------------( SET LIST ITEM EDIT )------------------------------ \\
-  setListItemEdit() {
+  // -----------------------------( EDIT LIST ITEM )------------------------------ \\
+  editListItem() {
     this.indexOfEditedListItem = this.selectedListItemIndex;
     this.addIcon.isDisabled = true;
     this.editIcon.isDisabled = true;
@@ -252,7 +252,6 @@ export class EditableItemListComponent extends ItemListComponent {
 
       // If a list item is NOT being edited
     } else {
-
       super.escape();
     }
   }

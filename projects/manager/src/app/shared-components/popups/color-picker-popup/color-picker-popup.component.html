@@ -51,7 +51,7 @@
             <div class="label">R</div>
             <normalized-number-field 
                 [value]="red"
-                (onSliderDown)="cover.showResizeCover = $event"
+                (onSliderDown)="cover.showResizeCover = preventNoShow = $event"
                 (onValueChange)="red = $event; updateRGB('red')">
             </normalized-number-field>
         </div>
@@ -61,7 +61,7 @@
             <div class="label">G</div>
             <normalized-number-field 
                 [value]="green"
-                (onSliderDown)="cover.showResizeCover = $event"
+                (onSliderDown)="cover.showResizeCover = preventNoShow = $event"
                 (onValueChange)="green = $event; updateRGB('green')">
             </normalized-number-field>
         </div>
@@ -71,7 +71,7 @@
             <div class="label">B</div>
             <normalized-number-field
                 [value]="blue"
-                (onSliderDown)="cover.showResizeCover = $event"
+                (onSliderDown)="cover.showResizeCover = preventNoShow = $event"
                 (onValueChange)="blue = $event; updateRGB('blue')">
             </normalized-number-field>
         </div>
@@ -81,7 +81,7 @@
             <div class="label">A</div>
             <normalized-number-field
                 [value]="alpha"
-                (onSliderDown)="cover.showResizeCover = $event"
+                (onSliderDown)="cover.showResizeCover = preventNoShow = $event"
                 (onValueChange)="alpha = $event; color.a = $event">
             </normalized-number-field>
         </div>

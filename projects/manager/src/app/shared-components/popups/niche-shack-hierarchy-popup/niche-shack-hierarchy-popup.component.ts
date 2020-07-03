@@ -14,7 +14,7 @@ import { PromptService } from '../../../services/prompt.service';
 export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponent implements OnInit {
   @ViewChild('popup', { static: false }) popup: PopupComponent;
   public nicheShackHierarchyItemType = NicheShackHierarchyItemType;
-  
+
 
 
   private _show: boolean;
@@ -50,10 +50,9 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
       this.filterType = NicheShackHierarchyItemType.Product;
     }
 
-    window.setTimeout(()=> {
+    window.setTimeout(() => {
       this.initSearch();
     });
-    
   }
 
 
@@ -320,6 +319,18 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
   onKeydown() {
     if (this.show) {
       super.onKeydown();
+    }
+  }
+
+  
+
+  // --------------------------------( ON POPUP OUT )-------------------------------- \\
+  onPopupOut() {
+    if(this.promptService.show) {
+      this.popup.preventNoShow = true;
+    }else {
+      this.show = false;
+      this.popup.preventNoShow = false;
     }
   }
 }

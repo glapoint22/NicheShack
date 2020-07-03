@@ -5,7 +5,7 @@ import { Product } from '../../../classes/product';
 @Component({
   selector: 'hoplink-popup',
   templateUrl: './hoplink-popup.component.html',
-  styleUrls: ['./hoplink-popup.component.scss', '../popup/popup.component.scss']
+  styleUrls: ['../popup/popup.component.scss', './hoplink-popup.component.scss']
 })
 export class HoplinkPopupComponent extends PopupComponent implements OnInit {
   public product: Product;

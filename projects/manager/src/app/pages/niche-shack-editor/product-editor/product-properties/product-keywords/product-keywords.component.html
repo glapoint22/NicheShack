@@ -12,7 +12,7 @@
                 [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Keyword (Delete)' : itemList.editIcon.isDisabled ? 'Delete Keywords (Delete)' : 'Delete Keyword (Delete)'"
                 [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
                 (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                (click)="itemList.deleteListItem()">
+                (click)="itemList.onListItemDelete()">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
@@ -20,7 +20,7 @@
             <div class="icon-container" [attr.title]="'Edit Keyword (Ctrl+Alt+E)'"
                 [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
                 (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                (click)="itemList.editListItem()">
+                (click)="itemList.onListItemEdit()">
                 <i class="fas fa-edit"></i>
             </div>
 
@@ -28,7 +28,7 @@
             <div class="icon-container" [attr.title]="'Add Keyword (Ctrl+Alt+A)'"
                 [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
                 (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                (click)="itemList.addListItem()">
+                (click)="itemList.onListItemAdd()">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>

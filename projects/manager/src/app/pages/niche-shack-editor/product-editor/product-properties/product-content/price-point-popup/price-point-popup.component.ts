@@ -12,7 +12,7 @@ import { TempDataService } from 'projects/manager/src/app/services/temp-data.ser
 @Component({
   selector: 'price-point-popup',
   templateUrl: './price-point-popup.component.html',
-  styleUrls: ['./price-point-popup.component.scss', '../../../../../../shared-components/popups/popup/popup.component.scss']
+  styleUrls: ['../../../../../../shared-components/popups/popup/popup.component.scss', './price-point-popup.component.scss']
 })
 export class PricePointPopupComponent extends PopupComponent implements OnInit {
   @ViewChildren('txtInput') txtInput: QueryList<ElementRef>;
@@ -20,7 +20,7 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
   public pricePointListItem: Item;
 
 
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, private productService: ProductService) {super(popupService, cover, menuService, dropdownMenuService, dataService)}
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, private productService: ProductService) { super(popupService, cover, menuService, dropdownMenuService, dataService) }
 
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
@@ -50,9 +50,9 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
   numbersOnly(index: number) {
     let txtInput = this.txtInput.toArray();
     !(/^[0-9]*$/i).test(txtInput[index].nativeElement.value) ? txtInput[index].nativeElement.value = txtInput[index].nativeElement.value.replace(/[^0-9]/ig, '') : null;
-    if (index == 1) this.pricePoint.wholeNumber = this.pricePoint.wholeNumber? parseInt(txtInput[index].nativeElement.value) : 0;
-    if (index == 2) this.pricePoint.decimal = this.pricePoint.decimal ? parseInt(txtInput[index].nativeElement.value): 0;
-    
+    if (index == 1) this.pricePoint.wholeNumber = this.pricePoint.wholeNumber ? parseInt(txtInput[index].nativeElement.value) : 0;
+    if (index == 2) this.pricePoint.decimal = this.pricePoint.decimal ? parseInt(txtInput[index].nativeElement.value) : 0;
+
     this.productService.setPrice();
   }
 

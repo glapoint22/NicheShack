@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { ProductPricePoint } from 'projects/manager/src/app/classes/product-price-point';
 import { ProductContent } from 'projects/manager/src/app/classes/product-content';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
@@ -20,8 +20,18 @@ export class ProductContentComponent implements OnChanges {
   public pricePointList: Array<Item>;
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
+  @ViewChild('itemList', { static: false }) itemList: CheckboxItemListComponent;
   constructor(public popupService: PopupService, private promptService: PromptService, private productService: ProductService) { }
 
+
+  // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
+  ngAfterViewInit() {
+    // Set delete prompt title and message
+    this.itemList.promptTitle = 'Delete Price Point';
+    this.itemList.promptMultiTitle = 'Delete Price Points';
+    this.itemList.propmtMessage = 'Are you sure you want to delete the selected price point?';
+    this.itemList.propmtMultiMessage = 'Are you sure you want to delete all the selected price points?';
+  }
 
 
   // -----------------------------( NG ON CHANGES )------------------------------ \\
@@ -127,20 +137,20 @@ export class ProductContentComponent implements OnChanges {
 
 
 
-  // -----------------------------( ON DELETE PRICE POINT )------------------------------ \\
-  onDeletePricePoint(itemList: CheckboxItemListComponent) {
-    this.promptService.showPrompt('Delete Price Point', 'Are you sure you want to delete this price point?', this.deletePricePoint, this, [itemList]);
-  }
+  // // -----------------------------( ON DELETE PRICE POINT )------------------------------ \\
+  // onDeletePricePoint(itemList: CheckboxItemListComponent) {
+  //   this.promptService.showPrompt('Delete Price Point', 'Are you sure you want to delete this price point?', this.deletePricePoint, this, [itemList]);
+  // }
 
 
 
 
 
 
-  // -----------------------------( DELETE PRICE POINT )------------------------------ \\
-  deletePricePoint(itemList: CheckboxItemListComponent) {
-    this.pricePoints.splice(itemList.selectedListItemIndex, 1);
-    // itemList.removeListItem();????????????????????????????????????????????????????????????????????????????????????????
-    this.productService.setPrice();
-  }
+  // // -----------------------------( DELETE PRICE POINT )------------------------------ \\
+  // deletePricePoint(itemList: CheckboxItemListComponent) {
+  //   this.pricePoints.splice(itemList.selectedListItemIndex, 1);
+  //   // itemList.removeListItem();????????????????????????????????????????????????????????????????????????????????????????
+  //   this.productService.setPrice();
+  // }
 }
