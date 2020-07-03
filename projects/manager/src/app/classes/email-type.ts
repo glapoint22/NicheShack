@@ -9,5 +9,6 @@ export enum EmailType {
     EmailChange = 'EmailChange',
     PasswordUpdated = 'Password Updated',
     NewSubscription = 'New Subscription',
-    RemoveSubscription = 'Remove Subscription'
+    RemoveSubscription = 'Remove Subscription',
+    OrderConfirmation = 'Order Confirmation'
 }
