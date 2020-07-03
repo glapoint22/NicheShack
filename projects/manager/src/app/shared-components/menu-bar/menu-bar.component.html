@@ -1,24 +1,31 @@
-<!-- Menu -->
+<!-- Menu Bar -->
 <div class="menu-bar">
 
-    <shack-icon></shack-icon>
+    <!-- Menus Container -->
+    <div class="menus-container">
 
-    <div style="display: flex;">
+        <!-- Shack Icon -->
+        <shack-icon></shack-icon>
 
-        <!-- Notifications Dropdown -->
-        <div class="icon-container position-relative" (click)="showNotificationsPopup(bell)">
-            <i #bell class="fas fa-bell font-size-4"></i>
-            <div *ngIf="notificationService.newNotifications.length + notificationService.pendingNotifications.length > 0"
-                class="notification-circle">
-                <div>{{notificationService.newNotifications.length + notificationService.pendingNotifications.length}}
-                </div>
-            </div>
+        <!-- Menu Bar Menus -->
+        <div #menu
+                class="menu-bar-menu"
+                *ngFor="let menuBarMenu of menuBarMenus"
+                [ngClass]="{'selected-menu': selectedMenuBarMenu == menuBarMenu}"
+                (mousedown)="selectedMenuBarMenu = menuBarMenu; menuBarMenu.showMenuFunction.apply(this, [menu])"
+                (mouseover)="selectedMenuBarMenu != null ? selectedMenuBarMenu = menuBarMenu : null; selectedMenuBarMenu != null ? menuBarMenu.showMenuFunction.apply(this, [menu]) : null">
+            {{menuBarMenu.name}}
         </div>
+    </div>
 
-
-        <!-- Navigation Dropdown -->
-        <div #navigationDropdown class="icon-container" (mousedown)="showNavigationMenu()">
-            <div class="arrow-down"></div>
+    <!-- Notifications -->
+    <div class="icon-container position-relative"
+            (click)="showNotificationsPopup(bell)">
+        <i #bell class="fas fa-bell font-size-4"></i>
+        <div *ngIf="notificationService.newNotifications.length + notificationService.pendingNotifications.length > 0"
+            class="notification-circle">
+            <div>{{notificationService.newNotifications.length + notificationService.pendingNotifications.length}}
+            </div>
         </div>
     </div>
 </div>

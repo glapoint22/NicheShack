@@ -1,8 +1,9 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { Notification } from '../../classes/notification';
 import { PopupService } from '../../services/popup.service';
 import { NotificationService } from '../../services/notification.service';
+import { menuBarMenu } from '../../classes/menu-bar-menu';
 
 @Component({
   selector: 'menu-bar',
@@ -10,14 +11,59 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./menu-bar.component.scss']
 })
 export class MenuBarComponent implements OnInit {
-  constructor(public menuService: MenuService, public popupService: PopupService, public notificationService: NotificationService) { }
-  @ViewChild('navigationDropdown', { static: false }) navigationDropdown: ElementRef;
+  constructor(public menuService: MenuService, public popupService: PopupService, public notificationService: NotificationService) {
+
+   }
+  public selectedMenuBarMenu: menuBarMenu;
+  public menuBarMenus: Array<menuBarMenu> = [{
+
+    name: 'File', showMenuFunction: (menu: HTMLElement) => {
+      this.menuService.buildMenu(this, menu.getBoundingClientRect().left, menu.getBoundingClientRect().top + menu.getBoundingClientRect().height,
+        this.menuService.routerOption("Niche Shack Editor", null, false, "/"),
+        this.menuService.routerOption("Page Builder", null, false, "/page-builder"),
+        this.menuService.routerOption("Email Builder", null, false, "/email-builder"),
+        this.menuService.divider(),
+        this.menuService.routerOption("Change Name", null, false, "/change-name"),
+        this.menuService.routerOption("Change Email", null, false, "/change-email"),
+        this.menuService.routerOption("Change Password", null, false, "/change-password"),
+        this.menuService.divider(),
+        this.menuService.option("Vendor Form", null, false, () => { }),
+        this.menuService.divider(),
+        this.menuService.option("Sign Out", null, false, () => { })
+      )
+    }
+  },
+  {
+    name: 'Edit', showMenuFunction: (menu: HTMLElement) => {
+      this.menuService.buildMenu(this, menu.getBoundingClientRect().left, menu.getBoundingClientRect().top + menu.getBoundingClientRect().height,
+        this.menuService.option("Undo", "Ctrl+Z", false, () => { }),
+        this.menuService.option("Redo", "Ctrl+Y", false, () => { }),
+        this.menuService.divider(),
+        this.menuService.option("Cut", "Ctrl+X", false, () => { }),
+        this.menuService.option("Copy", "Ctrl+C", false, () => { }),
+        this.menuService.option("Paste", "Ctrl+V", false, () => { }),
+      );
+    }
+  },
+  {
+    name: 'View', showMenuFunction: (menu: HTMLElement) => {
+      this.menuService.buildMenu(this, menu.getBoundingClientRect().left, menu.getBoundingClientRect().top + menu.getBoundingClientRect().height,
+        this.menuService.option("Full Screen", "F11", false, () => { })
+      );
+    }
+  }];
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     this.notificationService.getNotifications().subscribe((notification: Notification) => {
       this.notificationService.newNotifications.unshift(notification);
+    })
+
+    // When the dropdown menu closes
+    this.menuService.onMenuHide.subscribe(() => {
+      // Deselect the selected menu bar menu
+      this.selectedMenuBarMenu = null;
     })
   }
 
@@ -26,28 +72,5 @@ export class MenuBarComponent implements OnInit {
   showNotificationsPopup(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
     this.popupService.notificationListPopup.show = !this.popupService.notificationListPopup.show;
-  }
-
-
-  // -----------------------------( SHOW NAVIGATION MENU )------------------------------ \\
-  showNavigationMenu() {
-    // Build the menu
-    this.menuService.buildMenu(this, this.navigationDropdown.nativeElement.getBoundingClientRect().right - 147, this.navigationDropdown.nativeElement.getBoundingClientRect().top + 28,
-      this.menuService.routerOption("Niche Shack Editor", null, false, "/"),
-      this.menuService.routerOption("Page Builder", null, false, "/page-builder"),
-      this.menuService.routerOption("Email Builder", null, false, "/email-builder"),
-      this.menuService.divider(),
-      this.menuService.routerOption("Change Name", null, false, "/change-name"),
-      this.menuService.routerOption("Change Email", null, false, "/change-email"),
-      this.menuService.routerOption("Change Password", null, false, "/change-password"),
-      this.menuService.divider(),
-      this.menuService.option("Sign Out", null, false, this.signOut)
-    );
-  }
-
-
-  // -----------------------------( SIGN OUT )------------------------------ \\
-  signOut() {
-
   }
 }

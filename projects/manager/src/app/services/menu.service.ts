@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Menu } from '../classes/menu';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +25,30 @@ export class MenuService {
 
   // Public
   public menus: Menu[];
-  public showMenu: boolean;
+  // public showMenu: boolean;
   public showMenus: boolean[];
   public subMenuOptionHighlightOn: boolean[];
+  public onMenuHide = new Subject<void>();
+
+
+  private _showMenu: boolean;
+  public get showMenu(): boolean {
+    return this._showMenu;
+  }
+  public set showMenu(value: boolean) {
+    // Loop through all the menus
+    for (let i = 0; i < this.menus.length; i++) {
+      // And hide each one
+      this.showMenus[i] = false;
+    }
+    if (!value) this.onMenuHide.next();
+    this._showMenu = value;
+  }
+
+
+
+
+
 
 
 
@@ -191,7 +213,7 @@ export class MenuService {
 
     // When the main menu becomes visible
     if (menuIndex == 0) {
-      
+
       // Wait, so we can see if the main menu was launched from a mouse down or a mouse up
       window.setTimeout(() => {
 
@@ -218,11 +240,6 @@ export class MenuService {
 
             // Toggle the main menu off
             this.toggleMainMenuOn = false;
-            // Loop through all the menus
-            for (let i = 0; i < this.menus.length; i++) {
-              // And hide each one
-              this.showMenus[i] = false;
-            }
             this.showMenu = false;
           }
           // Record the left and top positon of the main menu
@@ -238,7 +255,7 @@ export class MenuService {
 
         // If the initial focus to the main menu has NOT been set yet
         if (!this.allowMenuHide) this.routerOptionDown = false;
-        
+
         // Mark that the initial focus to the main menu has been set
         this.allowMenuHide = true;
       }, 20)
@@ -415,12 +432,6 @@ export class MenuService {
 
             // Set the main menu toggle to off
             this.toggleMainMenuOn = false;
-            
-            // Loop through all the menus
-            for (let i = 0; i < this.menus.length; i++) {
-              // And hide each one
-              this.showMenus[i] = false;
-            }
             this.showMenu = false;
           }
         });
@@ -457,12 +468,6 @@ export class MenuService {
     if (!this.menus[menuIndex].options[optionIndex].isDisabled) {
       // Call the function that is associated with this menu option
       this.menus[menuIndex].options[optionIndex].menuOptionFunction.apply(this.currentObj, this.menus[menuIndex].options[optionIndex].functionParameters)
-
-      // Loop through all the menus
-      for (let i = 0; i < this.menus.length; i++) {
-        // And hide each one
-        this.showMenus[i] = false;
-      }
       this.showMenu = false;
     }
   }
@@ -472,12 +477,6 @@ export class MenuService {
   onRouterOptionClick(menuIndex: number, optionIndex: number) {
     // As long as this menu option is NOT disabled
     if (!this.menus[menuIndex].options[optionIndex].isDisabled) {
-      
-      // Loop through all the menus
-      for (let i = 0; i < this.menus.length; i++) {
-        // And hide each one
-        this.showMenus[i] = false;
-      }
       this.showMenu = false;
     }
   }
