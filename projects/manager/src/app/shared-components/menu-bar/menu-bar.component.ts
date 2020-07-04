@@ -4,6 +4,7 @@ import { Notification } from '../../classes/notification';
 import { PopupService } from '../../services/popup.service';
 import { NotificationService } from '../../services/notification.service';
 import { menuBarMenu } from '../../classes/menu-bar-menu';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'menu-bar',
@@ -11,9 +12,6 @@ import { menuBarMenu } from '../../classes/menu-bar-menu';
   styleUrls: ['./menu-bar.component.scss']
 })
 export class MenuBarComponent implements OnInit {
-  constructor(public menuService: MenuService, public popupService: PopupService, public notificationService: NotificationService) {
-
-   }
   public selectedMenuBarMenu: menuBarMenu;
   public menuBarMenus: Array<menuBarMenu> = [{
 
@@ -27,7 +25,8 @@ export class MenuBarComponent implements OnInit {
         this.menuService.routerOption("Change Email", null, false, "/change-email"),
         this.menuService.routerOption("Change Password", null, false, "/change-password"),
         this.menuService.divider(),
-        this.menuService.option("Vendor Form", null, false, () => { }),
+        this.menuService.option("Vendor Form", null, false, () => this.formService.vendorForm.show = true),
+        this.menuService.option("Filters Form", null, false, () => { }),
         this.menuService.divider(),
         this.menuService.option("Sign Out", null, false, () => { })
       )
@@ -52,6 +51,14 @@ export class MenuBarComponent implements OnInit {
       );
     }
   }];
+
+
+  constructor(
+    private menuService: MenuService,
+    private popupService: PopupService,
+    public notificationService: NotificationService,
+    private formService: FormService
+  ) { }
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\

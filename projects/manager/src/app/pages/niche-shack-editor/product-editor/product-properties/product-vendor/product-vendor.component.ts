@@ -36,23 +36,32 @@ export class ProductVendorComponent implements Searchable {
 
 
   // --------------------------------( ON VENDOR INFO CLICK )-------------------------------- \\
-  onVendorInfoClick() {
-    this.loadingService.loading = true;
-    this.dataService.get('api/Vendors', [{ key: 'id', value: this.vendor.id }])
-      .subscribe((vendor: Vendor) => {
-        // Give the vendor info to the vendor form
-        this.formService.vendorForm.vendor = vendor;
+  openVendorForm() {
+    // Subscribe to when a new vendor is submitted
+    if (this.subscription) this.subscription.unsubscribe();
+    this.subscription = this.formService.vendorForm.onSubmit.subscribe((vendor: Item) => {
+      this.setSearchItem(vendor);
+    });
 
-        // Hide the loading screen and show the vendor form
-        this.loadingService.loading = false;
-        this.formService.vendorForm.show = true;
 
-        // Subscribe to when a new vendor is submitted
-        if (this.subscription) this.subscription.unsubscribe();
-        this.subscription = this.formService.vendorForm.onSubmit.subscribe((vendor: Item) => {
-          this.setSearchItem(vendor);
+    if (this.vendor) {
+      this.loadingService.loading = true;
+      this.dataService.get('api/Vendors', [{ key: 'id', value: this.vendor.id }])
+        .subscribe((vendor: Vendor) => {
+          // Give the vendor info to the vendor form
+          this.formService.vendorForm.vendor = vendor;
+
+          // Hide the loading screen and show the vendor form
+          this.loadingService.loading = false;
+          this.formService.vendorForm.show = true;
+
+
         });
-      });
+    } else {
+      this.formService.vendorForm.editMode = true;
+      this.formService.vendorForm.show = true;
+    }
+
   }
 
 
