@@ -2,28 +2,28 @@
     max-width: 600px;
 }
 
-.ellipsis-container {
+.icons {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 5px;
 
-    .ellipsis {
-        width: 20px;
-        height: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
+    // .ellipsis {
+    //     width: 20px;
+    //     height: 20px;
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+    //     cursor: pointer;
 
 
-        &:hover {
-            color: #dbdbdb;
-        }
+    //     &:hover {
+    //         color: #dbdbdb;
+    //     }
     
-        .fa-ellipsis-v {
-            font-size: 13px;
-        }
-    }
+    //     .fa-ellipsis-v {
+    //         font-size: 13px;
+    //     }
+    // }
 }
 
 .contacts {
@@ -35,4 +35,17 @@
 .button-container {
     display: flex;
     justify-content: flex-end;
+}
+
+input, textarea{
+    &:disabled {
+        background: #252525;
+        border-color: #3e3e3e;
+    }
+}
+
+.property-row {
+    .label-disabled {
+        color: #525252;
+    }
 }
