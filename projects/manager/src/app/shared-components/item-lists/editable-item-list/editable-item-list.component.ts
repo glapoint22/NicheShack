@@ -34,75 +34,92 @@ export class EditableItemListComponent extends ItemListComponent {
 
 
   // -----------------------------( EVALUATE EDIT )------------------------------ \\
-  evaluateEdit(isEscape?: boolean) {
+  evaluateEdit(isEscape?: boolean, isBlur?: boolean) {
     let listItem = this.rowItem.find((item, index) => index == this.indexOfEditedListItem).nativeElement;
     let listItemTrimmed = listItem.textContent.trim();
+
+    // Set the focus to the list item just in case it lost it on a mouse down
+    listItem.focus();
 
     // If the list item is NOT empty
     if (listItemTrimmed.length > 0) {
 
-      // Set the focus to the list item just in case it lost it on a mouse down
-      this.setFocusToListItem(listItem);
+      // If we pressed the (Escape) key
+      if (isEscape) {
+
+        // If we were adding a new list item
+        if (this.newListItem) {
+          // Remove the new list item
+          this.listItems.splice(this.indexOfEditedListItem, 1);
+          this.indexOfEditedListItem = null;
+
+          // If we were NOT adding a new list item
+        } else {
+
+          // As long as the list item named is different from what it was before the edit
+          if (listItem.textContent != this.listItems[this.indexOfEditedListItem].name) {
+            // Reset the list item back to the way it was before the edit
+            listItem.textContent = this.listItems[this.indexOfEditedListItem].name;
+          }
+        }
+
+        // If we did NOT press the (Escape) key
+        // But the (Enter) key was pressed or the list item was (Blurred)
+      } else {
+
+        // As long as the list item named is different from what it was before the edit
+        if (listItem.textContent != this.listItems[this.indexOfEditedListItem].name) {
+          // Update the name property
+          this.listItems[this.indexOfEditedListItem].name = listItemTrimmed;
+          // Set the list item name
+          this.setListItemName();
+          // Update the name in the list
+          listItem.textContent = this.listItems[this.indexOfEditedListItem].name;
+        }
+      }
 
 
-      // Commit the edit
+      // Reset
       this.selectedListItemIndex = this.indexOfEditedListItem;
+      this.newListItem = false;
       this.addIcon.isDisabled = false;
       this.editIcon.isDisabled = false;
       this.deleteIcon.isDisabled = false;
       this.indexOfEditedListItem = null;
-      this.unselectedListItemIndex = null;
       this.pivotIndex = this.selectedListItemIndex;
       this.listItems[this.selectedListItemIndex].selected = true;
 
-      // Name the list item
-      this.nameListItem(listItem, listItemTrimmed, isEscape);
 
-      this.newListItem = false;
-
-      // If the list item is empty
+      // But if the list item is empty
     } else {
 
-      // If we were adding a list item
-      if (this.newListItem) {
-        // Remove that list item
+
+      // If we pressed the (Escape) key or the list item was (Blurred)
+      if (isEscape || isBlur) {
+
+        // If we were adding a new list item
+        if (this.newListItem) {
+          // Remove the new list item
+          this.listItems.splice(this.indexOfEditedListItem, 1);
+          this.indexOfEditedListItem = null;
+
+          // If we were NOT adding a new list item
+        } else {
+
+          // Reset the list item back to the way it was before the edit
+          listItem.textContent = this.listItems[this.indexOfEditedListItem].name;
+        }
+        // Reset
+        this.selectedListItemIndex = this.indexOfEditedListItem;
         this.newListItem = false;
-        this.unselectedListItemIndex = null;
-        this.listItems.splice(this.indexOfEditedListItem, 1);
-
-        // If we were NOT adding a list item
-      } else {
-
-        // Reset the list item back to the way it was before the edit
+        this.addIcon.isDisabled = false;
         this.editIcon.isDisabled = false;
         this.deleteIcon.isDisabled = false;
-        this.selectedListItemIndex = this.indexOfEditedListItem;
+        this.indexOfEditedListItem = null;
+        this.pivotIndex = this.selectedListItemIndex;
         this.listItems[this.selectedListItemIndex].selected = true;
-        listItem.textContent = this.listItems[this.indexOfEditedListItem].name;
       }
-      this.addIcon.isDisabled = false;
-      this.indexOfEditedListItem = null;
     }
-  }
-
-
-  // -----------------------------( SET FOCUS TO LIST ITEM )------------------------------ \\
-  setFocusToListItem(listItem) {
-    listItem.focus();
-  }
-
-
-  // -----------------------------( NAME LIST ITEM )------------------------------ \\
-  nameListItem(listItem, listItemTrimmed, isEscape?: boolean) {
-    // As long as we did NOT press the (Escape) key, update the name property
-    if (!isEscape) {
-      this.listItems[this.selectedListItemIndex].name = listItemTrimmed;
-
-      // Set the list item name
-      this.setListItemName();
-    }
-    // Update the name in the list
-    listItem.textContent = this.listItems[this.selectedListItemIndex].name;
   }
 
 
@@ -110,11 +127,11 @@ export class EditableItemListComponent extends ItemListComponent {
   setListItemName() {
     // If we're naming a new item
     if (this.newListItem) {
-      this.postItemName.emit(this.listItems[this.selectedListItemIndex]);
+      this.postItemName.emit(this.listItems[this.indexOfEditedListItem]);
 
       // If we're editing an existing item
     } else {
-      this.updateItemName.emit(this.listItems[this.selectedListItemIndex])
+      this.updateItemName.emit(this.listItems[this.indexOfEditedListItem])
     }
   }
 
@@ -141,8 +158,9 @@ export class EditableItemListComponent extends ItemListComponent {
   setListItemBlur() {
     // If a list item is being edited or added
     if (this.indexOfEditedListItem != null) {
+
       // Evaluate the state of the edit and then act accordingly
-      this.evaluateEdit();
+      this.evaluateEdit(null, true);
 
       // If a list item is NOT being edited
     } else {
