@@ -69,4 +69,12 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
       }
     }
   }
+
+
+
+  // -----------------------------( VIEW VENDOR INFO )------------------------------ \\
+  viewVendorInfo() {
+    super.viewVendorInfo(this.notificationService.productMediaNotification.vendorId);
+  }
+
 }

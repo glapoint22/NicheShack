@@ -11,11 +11,12 @@ import { CoverService } from 'projects/manager/src/app/services/cover.service';
 import { MenuService } from 'projects/manager/src/app/services/menu.service';
 import { NotificationService } from 'projects/manager/src/app/services/notification.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
-import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { PaginatorComponent } from '../../../paginator/paginator.component';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { Image } from 'projects/manager/src/app/classes/image';
+import { LoadingService } from 'projects/manager/src/app/services/loading.service';
+import { FormService } from 'projects/manager/src/app/services/form.service';
 
 @Component({
   selector: 'product-content-notification-popup',
@@ -29,7 +30,19 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
   @ViewChild('itemList', { static: false }) itemList: CheckboxItemListComponent;
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, notificationService: NotificationService, private promptService: PromptService, private productService: ProductService) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService) }
+
+
+  constructor(
+    popupService: PopupService,
+    cover: CoverService,
+    menuService: MenuService,
+    dropdownMenuService: DropdownMenuService,
+    dataService: TempDataService,
+    notificationService: NotificationService,
+    loadingService: LoadingService,
+    formService: FormService,
+    private promptService: PromptService,
+  ) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService, loadingService, formService) }
 
 
   // --------------------------------( INITIALIZE POPUP )-------------------------------- \\
@@ -146,6 +159,12 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
     this.popupService.pricePointPopup.show = true;
     this.popupService.pricePointPopup.pricePoint = this.notificationService.productContentNotification.pricePoints[index];
     this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[index];
+  }
+
+
+  // -----------------------------( VIEW VENDOR INFO )------------------------------ \\
+  viewVendorInfo() {
+    super.viewVendorInfo(this.notificationService.productContentNotification.vendorId);
   }
 
 

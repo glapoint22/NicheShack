@@ -75,6 +75,7 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: 'review-complaint.png',
+      productId: 'GSGDFFFASDS',
       productThumbnail: 'b212b69728ee4f3b9473831bb4f7ace9.png',
       productName: 'Bigger Better Butt',
       isChecked: [true, false, true],
@@ -127,8 +128,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: 'b4fa43f207d7420cbb2c72d0fe9c64ba.jpg',
+      productId: 'YTRYERTYW',
       productThumbnail: 'b4fa43f207d7420cbb2c72d0fe9c64ba.jpg',
       productName: 'How to seduce out of your league',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -182,8 +185,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: 'b212b69728ee4f3b9473831bb4f7ace9.png',
+      productId: 'RWERHFHFSDGSFDSF',
       productThumbnail: 'b212b69728ee4f3b9473831bb4f7ace9.png',
       productName: 'How to make ice cream like a Gumpy',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -228,7 +233,7 @@ export class NotificationService {
           text: 'Here are some notes that describe how I took action concerning product name does not match with the product image 3'
         }
       ]
-    } as ProductImageNotification).pipe(delay(0));
+    }).pipe(delay(0));
 
 
     // ================================= PRODUCT NAME (OTHER) ================================ \\
@@ -238,8 +243,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '6e1659b63e5643e0a9039064b4a52e12.png',
+      productId: 'UYTUWTRSFD',
       productThumbnail: '6e1659b63e5643e0a9039064b4a52e12.png',
       productName: '14 Day Perfect Body',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -289,8 +296,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '2f119b657c194b32a88b0f0051d525be.png',
+      productId: 'PASDGKIUYT',
       productThumbnail: '2f119b657c194b32a88b0f0051d525be.png',
       productName: 'Erase Your Stretch Mark',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -425,8 +434,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '0018ffd4eca34b6eb4fdc9bcdb0d329e.png',
+      productId: 'YGFDSGFHA',
       productThumbnail: '0018ffd4eca34b6eb4fdc9bcdb0d329e.png',
       productName: 'Attract Hotter Women',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -561,8 +572,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '9e4ffc59141f44349a0c9d60502e84d1.png',
+      productId: 'NHJJGHJGDDH',
       productThumbnail: '9e4ffc59141f44349a0c9d60502e84d1.png',
       productName: 'The Collection Of Confidence',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -697,8 +710,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '2a08e8f8bc7940b087f7e29d2e80a106.png',
+      productId: 'QEQWRHTHA',
       productThumbnail: '2a08e8f8bc7940b087f7e29d2e80a106.png',
       productName: 'The Lean Belly Secret',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -812,8 +827,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: 'bcddc0a43cdc41b0a0b86c6a2a56bacd.png',
+      productId: 'CDASCCSFSDF',
       productThumbnail: 'bcddc0a43cdc41b0a0b86c6a2a56bacd.png',
       productName: 'Acne No More',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -927,8 +944,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '42066b13a02c4a019c9a4b3fedd40b66.png',
+      productId: 'BSFFDFDBDDDSGDGD',
       productThumbnail: '42066b13a02c4a019c9a4b3fedd40b66.png',
       productName: 'My Bikini Belly',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1042,8 +1061,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '69b301fc34a1431e97851991a73a441c.png',
+      productId: 'VADASSDGTRHRTH',
       productThumbnail: '69b301fc34a1431e97851991a73a441c.png',
       productName: 'How To Date An Asian Women',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1156,9 +1177,11 @@ export class NotificationService {
       name: NotificationType.VideosAndImagesOther,
       selected: null,
       selectType: null,
+      productId: 'MEMGJUUYJG',
       listIcon: '724db7642d584175aa3630ab9a6cc5d9.jpg',
       productThumbnail: '724db7642d584175aa3630ab9a6cc5d9.jpg',
       productName: 'Sex Lust and Lies',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1272,8 +1295,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: 'd7f8ac43d31e49edaefb55eda385b468.png',
+      productId: 'ISJFJSDGRG',
       productThumbnail: 'd7f8ac43d31e49edaefb55eda385b468.png',
       productName: 'How To Grow Hair Long',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1325,8 +1350,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: 'ce662a813987430a9b2b0b17cb4bda72.png',
+      productId: 'ZASDHDFGHFS',
       productThumbnail: 'ce662a813987430a9b2b0b17cb4bda72.png',
       productName: 'Fat Shrinking Signal',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1378,8 +1405,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: 'c28764b0fd6f4cad80be85f047422fe1.png',
+      productId: 'JOJJJFRETG',
       productThumbnail: 'c28764b0fd6f4cad80be85f047422fe1.png',
       productName: 'Gluteus To The Maximus',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1431,8 +1460,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '6c048ea442b646b59970f907a4d3ce61.jpg',
+      productId: 'VKGUEDDEUYUYS',
       productThumbnail: '6c048ea442b646b59970f907a4d3ce61.jpg',
       productName: 'ABS',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1484,8 +1515,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '899c7b6deb544dd28a7ec3055c5196a1.jpg',
+      productId: 'BWWUYTRTUQF',
       productThumbnail: '899c7b6deb544dd28a7ec3055c5196a1.jpg',
       productName: 'The 21 Day Flat Belly Fix System',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1535,8 +1568,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '17a40d16e5d8454da45ed3d5683e0ab6.png',
+      productId: 'ESESEYGYUY',
       productThumbnail: '17a40d16e5d8454da45ed3d5683e0ab6.png',
       productName: '7 Day Super Slim',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1586,8 +1621,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: 'f5ca6bd2ac0549d3b7f0609c534eb182.png',
+      productId: 'NOSHJSGFREGE',
       productThumbnail: 'f5ca6bd2ac0549d3b7f0609c534eb182.png',
       productName: 'Yoga Burn Booty Challenge',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1637,8 +1674,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '429928f0e88045318dbae00b5a90df12.png',
+      productId: 'ZQYIUJYJSGFRSD',
       productThumbnail: '429928f0e88045318dbae00b5a90df12.png',
       productName: 'The 8 Week Booty',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1688,8 +1727,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '1d21c8846a464c989eb6914c224a3324.png',
+      productId: 'XKXKRFARSFF',
       productThumbnail: '1d21c8846a464c989eb6914c224a3324.png',
       productName: 'The Thyroid Factor',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
@@ -1739,8 +1780,10 @@ export class NotificationService {
       selected: null,
       selectType: null,
       listIcon: '1b4f02a0b8ad491e950a94eade1df05f.png',
+      productId: 'DEDHTHDTFHFH',
       productThumbnail: '1b4f02a0b8ad491e950a94eade1df05f.png',
       productName: 'What Husbands Can\'t Resist',
+      vendorId: 'F5TD6KOQHB',
       customerText: [
         {
           timeStamp: '11/24/2018  10:33 PM',
