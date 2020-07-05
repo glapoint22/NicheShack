@@ -1,0 +1,31 @@
+.form {
+    max-width: 350px;
+}
+
+.loading-container {
+    height: 100%;
+}
+
+.content {
+    height: 200px;
+    overflow: auto;
+    padding: 5px 2px;
+    background: #222222;
+    border-top: 1px solid #0c0c0c;
+    border-right: 1px solid #363636;
+    border-bottom: 1px solid #3d3d3d;
+    border-left: 1px solid #101010;
+}
+
+.search-bar {
+    div {
+        width: 94px;
+    }
+}
+
+.icon-bar {
+    border: none;
+    padding: 0;
+    margin-top: 13px;
+    margin-bottom: 4px;
+}

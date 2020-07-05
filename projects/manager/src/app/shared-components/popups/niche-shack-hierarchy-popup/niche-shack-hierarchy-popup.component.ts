@@ -265,51 +265,28 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
 
 
   // -----------------------------( CREATE ITEM )------------------------------ \\
-  createItem(): HierarchyItem {
-    let item: HierarchyItem;
+  createItem(): any {
+    let item: any;
 
+    // Category
     if (!this.selectedItem) {
       item = {
-        id: null,
-        name: '',
-        type: NicheShackHierarchyItemType.Category,
-        showChildren: false,
-        loading: false,
-        children: [],
-        parent: null,
-        childless: false,
-        url: this.getUrl(NicheShackHierarchyItemType.Category),
-        childrenUrl: this.getUrl(NicheShackHierarchyItemType.Niche),
-        childrenParameters: null
+        name: ''
       }
 
+      // Niche
     } else if (this.selectedItem.type == NicheShackHierarchyItemType.Category) {
       item = {
-        id: null,
         name: '',
-        type: NicheShackHierarchyItemType.Niche,
-        showChildren: false,
-        loading: false,
-        children: [],
         parent: this.selectedItem,
-        childless: false,
-        url: this.getUrl(NicheShackHierarchyItemType.Niche),
-        childrenUrl: this.getUrl(NicheShackHierarchyItemType.Product),
-        childrenParameters: null
       }
+
+      // Product
     } else {
       item = {
-        id: null,
         name: '',
-        type: NicheShackHierarchyItemType.Product,
-        showChildren: false,
-        loading: false,
-        children: [],
         parent: this.selectedItem,
         childless: true,
-        url: this.getUrl(NicheShackHierarchyItemType.Product),
-        childrenUrl: null,
-        childrenParameters: null
       }
     }
 
@@ -317,19 +294,22 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
   }
 
 
+
+
+  // --------------------------------( ON KEYDOWN )-------------------------------- \\
   onKeydown() {
     if (this.show) {
       super.onKeydown();
     }
   }
 
-  
+
 
   // --------------------------------( ON POPUP OUT )-------------------------------- \\
   onPopupOut() {
-    if(this.promptService.show) {
+    if (this.promptService.show) {
       this.popup.preventNoShow = true;
-    }else {
+    } else {
       this.show = false;
       this.popup.preventNoShow = false;
     }

@@ -1,7 +1,7 @@
 <ng-container *ngFor="let item of items">
 
     <div [ngClass]="{'child': item.parent, 'show-child': item.parent ? item.parent.showChildren: null}"
-        (transitionend)="transitionend($event)">
+        (transitionend)="transitionend($event)" style="position: relative">
         <div class="arrow-button-container" (transitionend)="$event.stopPropagation()">
 
             <!-- Arrow button -->

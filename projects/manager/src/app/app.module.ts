@@ -36,6 +36,7 @@ import { PromptModule } from './shared-components/prompt/prompt.module';
 import { NicheShackHierarchyPopupComponent } from './shared-components/popups/niche-shack-hierarchy-popup/niche-shack-hierarchy-popup.component';
 import { HierarchyModule } from './shared-components/hierarchy/hierarchy.module';
 import { GeneralNotificationPopupComponent } from './shared-components/popups/notification-popups/general-notification-popup/general-notification-popup.component';
+import { FiltersFormComponent } from './shared-components/forms/filters-form/filters-form.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { GeneralNotificationPopupComponent } from './shared-components/popups/no
     MediaBrowserPopupComponent,
     MediaItemListComponent,
     NicheShackHierarchyPopupComponent,
-    GeneralNotificationPopupComponent
+    GeneralNotificationPopupComponent,
+    FiltersFormComponent
   ],
   imports: [
     BrowserModule,

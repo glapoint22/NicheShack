@@ -1,0 +1,116 @@
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" (onShow)="onShow()"
+    style="z-index: 10;">
+
+
+    <div class="form">
+        <!-- Bar -->
+        <div class="form-bar">
+            Filters
+            <div class="form-x-button" (click)="show = false">X</div>
+        </div>
+
+        <!-- Panel -->
+        <div class="panel-light">
+
+
+            <!-- Search bar & filter menu -->
+            <div class="position-relative">
+                <!-- Search bar -->
+                <div class="search-bar">
+                    <input #searchInput id="search-input" class="border-oval-left" autocomplete="off">
+                    <div (mousedown)="showMenu = true">{{getItemName(filterType)}}</div>
+                </div>
+
+
+                <!-- Filter menu -->
+                <div *show="showMenu" class="fade-start filter-menu" transitionClass="fade-end" tabindex="0"
+                    (onHide)="showMenu = false" (blur)="showMenu = false">
+
+                    <div (mousedown)="$event.stopPropagation()">
+
+                        <!-- Filter -->
+                        <div style="margin-bottom: 10px">
+                            <radio-button [name]="'filter'" [label]="'Filter'"
+                                (change)="filterType = filterHierarchyItemType.Filter; showMenu = false; searchInput.value = ''"
+                                [checked]="filterType == filterHierarchyItemType.Filter"></radio-button>
+                        </div>
+
+
+                        <!-- Filter Option -->
+                        <div style="margin-bottom: 10px">
+                            <radio-button [name]="'filter'" [label]="'Filter Option'"
+                                (change)="filterType = filterHierarchyItemType.FilterOption; showMenu = false; searchInput.value = ''"
+                                [checked]="filterType == filterHierarchyItemType.FilterOption"></radio-button>
+                        </div>
+
+
+                        
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Icons -->
+            <div class="icon-bar">
+                <!-- Collapse -->
+                <div class="icon-container" title="Collapse" (click)="onCollapseButtonClick()"
+                    [ngClass]="{'icon-disabled': isCollapseButtonDisabled()}">
+
+                    <i class="fas fa-minus-square"></i>
+                </div>
+
+                <!-- Add -->
+                <div class="icon-container" (click)="onAddItemButtonClick()" [title]="getAddButtonTitle()"
+                    [ngClass]="{'icon-disabled': isAddItemDisabled()}">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+
+                <!-- Rename -->
+                <div class="icon-container" [ngClass]="{'icon-disabled': isEditItemDisabled()}"
+                    (click)="onEditItemClick()"
+                    [title]="selectedItem ? 'Rename ' + getItemName(selectedItem.type) : 'Rename'">
+
+                    <i class="fas fa-pencil-alt"></i>
+                </div>
+
+
+                <!-- Delete -->
+                <div class="icon-container" [ngClass]="{'icon-disabled': isDeleteItemDisabled()}"
+                    (click)="onDeleteClick()"
+                    [title]="selectedItem ? 'Delete ' + getItemName(selectedItem.type) : 'Delete'">
+
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+            </div>
+
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Search results close button -->
+                <div class="search-results" *ngIf="searchResults">
+                    <div class="results">{{searchResults.length}} results</div>
+                    <div class="close-button" title="Clear search results" (click)="clearSearchResults()">x</div>
+                </div>
+
+                <hierarchy-content *ngIf="items || searchResults; else loading"
+                    [items]="searchResults ? searchResults : items" [hierarchy]="this"></hierarchy-content>
+
+                <ng-template #loading>
+                    <div class="loading-container">
+                        <i class="fas fa-spinner fa-pulse font-size-3"></i>
+                    </div>
+                </ng-template>
+
+                <div *ngIf="items && items.length == 0" class="no-items">
+                    No filters available
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+</div>

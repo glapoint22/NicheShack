@@ -135,6 +135,67 @@ export class TempDataService {
 
 
 
+        // Filters
+      case 'api/Filters/Search':
+
+        return of([
+          {
+            id: 'yrttretwt',
+            name: 'Product Type Search'
+          },
+          {
+            id: 'jhgfsdgfa',
+            name: 'Billing Type Search'
+          },
+          {
+            id: 'qwerghghjkjg',
+            name: 'Promotional Search'
+          },
+          {
+            id: 'rtewghdgfadfdsfs',
+            name: 'Media Type Search'
+          },
+          {
+            id: 'oiuiiytreygsgdfg Search',
+            name: 'Gender'
+          }
+        ]).pipe(delay(1000));
+
+
+
+
+      // Filter options
+      case 'api/FilterOptions/Search':
+        
+          return of([
+            {
+              id: 'hgfdhfhgfh',
+              name: 'Physical Search',
+            },
+            {
+              id: 'kjhgkjkhk',
+              name: 'Digital Download Search',
+            },
+            {
+              id: 'qwfeerwer',
+              name: 'Email Search',
+            },
+            {
+              id: 'hgfdfgfghfhgf',
+              name: 'Online Membership Search',
+            }
+          ]).pipe(delay(1000));
+
+
+
+
+
+
+
+
+
+
+
 
       // Categories
       case 'api/Categories':
@@ -1429,32 +1490,6 @@ export class TempDataService {
           {
             id: 'F5TD6KOQHB',
             name: 'Gumpy\'s',
-            webPage: 'http://www.gumpys.com',
-            address: {
-              street: '110 Feeder Dam Rd',
-              city: 'South Glens Falls',
-              zip: 12803,
-              poBox: 22,
-              state: 'NY',
-              country: 'USA'
-            },
-            primaryContact: {
-              firstName: 'Gabey',
-              lastName: 'Gump',
-              officePhone: '518-793-5555',
-              mobilePhone: '518-555-5555',
-              email: 'ggump@gmail.com'
-            },
-            secondaryContact: {
-              firstName: 'Brony',
-              lastName: 'Gump',
-              officePhone: '518-793-5555',
-              mobilePhone: '518-222-2222',
-              email: 'bgump@gmail.com'
-            },
-            notes: 'It\'s amazing that this dumb company has been around for 20 years. ' +
-              'You have to keep after Gabey Gump to do something simple. Don\'t bother emailing him because he won\'t reply. ' +
-              'He probably doesn\'t know how to check his email. I\'ve been told they are still using Windows 98 from an HP desktop with a 533 mhz processor.'
           },
           {
             id: 'REEQWRRE',
