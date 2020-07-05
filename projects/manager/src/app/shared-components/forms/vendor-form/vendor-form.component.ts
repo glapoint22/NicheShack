@@ -197,7 +197,13 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
 
 
   // --------------------------------( SET SEARCH ITEM )-------------------------------- \\
-  setSearchItem(vendor: any) {
-    this.vendor = vendor;
+  setSearchItem(vendor: Item) {
+    this.loadingService.loading = true;
+
+    this.dataService.get(this.apiUrl, [{ key: 'id', value: vendor.id }])
+      .subscribe((vendor: Vendor) => {
+        this.vendor = vendor;
+        this.loadingService.loading = false;
+      });
   }
 }

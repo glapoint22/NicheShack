@@ -26,7 +26,7 @@ export class MenuBarComponent implements OnInit {
         this.menuService.routerOption("Change Password", null, false, "/change-password"),
         this.menuService.divider(),
         this.menuService.option("Vendor Form", null, false, () => this.formService.vendorForm.show = true),
-        this.menuService.option("Filters Form", null, false, () => { }),
+        this.menuService.option("Filters Form", null, false, () => this.formService.filtersForm.show = true),
         this.menuService.divider(),
         this.menuService.option("Sign Out", null, false, () => { })
       )

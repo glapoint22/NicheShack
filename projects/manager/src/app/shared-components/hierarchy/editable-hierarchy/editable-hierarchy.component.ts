@@ -126,8 +126,6 @@ export class EditableHierarchyComponent extends HierarchyComponent {
         // remove the listeners
         removeKeydownListener();
         removeBlurListener();
-
-        // this.editMode = false;
       }
     }
 
@@ -200,7 +198,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
     if (this.isDeleteItemDisabled()) return;
 
     let promptTitle = 'Delete';
-    let promptMessage = 'Are you sure you want to delete ' + this.selectedItem.name + '?';
+    let promptMessage = 'Are you sure you want to delete this ' + this.getItemName(this.selectedItem.type).toLowerCase() + '?';
 
     this.promptService.showPrompt(promptTitle, promptMessage, this.deleteItem, this);
   }
@@ -350,6 +348,8 @@ export class EditableHierarchyComponent extends HierarchyComponent {
 
           // Set the name of the item
           element.innerText = this.selectedItem.name = element.innerText;
+
+          this.mapItems([this.selectedItem], this.selectedItem.parent);
 
           // Flag that saving is complete
           this.selectedItem.loading = false;
