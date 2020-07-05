@@ -16,29 +16,29 @@ export class ItemListComponent implements OnInit {
   public promptTitle: string;
   public propmtMessage: string;
   public selectType = SelectType;
-  public preventDeselectionFromRightMouseDown: boolean;
   public promptMultiTitle: string;
   public pivotIndex: number = null;
   public ctrlDown: boolean = false;
   public propmtMultiMessage: string;
   public shiftDown: boolean = false;
   public newListItem: boolean = false;
-  public itemDeletionPending: boolean = false;
   public lastFocusedListItem: Element;
   public addIcon: icon = new icon(false);
   public editIcon: icon = new icon(true);
   public deleteIcon: icon = new icon(true);
   public isOverIconButton: boolean = false;
   public eventListenersAdded: boolean = false;
+  public itemDeletionPending: boolean = false;
   public selectedListItemIndex: number = null;
   public unselectedListItemIndex: number = null;
+  public preventDeselectionFromRightMouseDown: boolean;
   // Decorators
   @Input() listItems: Array<ListItem>;
   @Input() menuOptions: Array<string>;
   @Input() multiSelect: boolean = true;
   @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
-  @Output() onAddItem: EventEmitter<void> = new EventEmitter();
-  @Output() onEditItem: EventEmitter<void> = new EventEmitter();
+  @Output() onAddItem: EventEmitter<HTMLElement> = new EventEmitter();
+  @Output() onEditItem: EventEmitter<HTMLElement> = new EventEmitter();
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
@@ -414,7 +414,7 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( ADD LIST ITEM )------------------------------ \\
   addListItem() {
-    this.onAddItem.emit();
+    this.onAddItem.emit(this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement);
   }
 
 
@@ -428,7 +428,7 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( EDIT LIST ITEM )------------------------------ \\
   editListItem() {
-    this.onEditItem.emit();
+    this.onEditItem.emit(this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement);
   }
 
 

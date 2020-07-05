@@ -178,10 +178,12 @@
 
                     <div class="list-container">
                         <!-- Checkbox Item LIst -->
-                        <checkbox-item-list #itemList id="item-list" [listItems]="pricePointList"
+                        <checkbox-item-list 
+                            #itemList id="item-list"
+                            [listItems]="pricePointList"
                             [checkList]="notificationService.productContentNotification.content[contentIndex].priceIndices"
-                            (onAddItem)="addPricePoint(addIcon)"
-                            (onEditItem)="editPricePoint(editIcon, itemList.selectedListItemIndex)"
+                            (onAddItem)="addPricePoint($event)"
+                            (onEditItem)="editPricePoint($event, itemList.selectedListItemIndex)"
                             [menuOptions]="['Add Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">
                         </checkbox-item-list>
                     </div>

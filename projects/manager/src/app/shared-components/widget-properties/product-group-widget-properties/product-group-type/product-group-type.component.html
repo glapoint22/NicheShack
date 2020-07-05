@@ -35,8 +35,10 @@
             [ngStyle]="{'padding.px' : productGroupWidget.featuredProducts && productGroupWidget.featuredProducts.length == 0 ? 0 : 6,
                          'paddingTop.px' : productGroupWidget.featuredProducts && productGroupWidget.featuredProducts.length == 0 ? 0 : 7}">
             <!-- Item LIst -->
-            <item-list #itemList [listItems]="productGroupWidget.featuredProducts" (onAddItem)="addFeaturedProduct(addIcon)"
-                [menuOptions]="['Add Featured Product', 'Edit Featured Product', 'Delete Featured Product', 'Delete Featured Products']">
+            <item-list #itemList
+                       [listItems]="productGroupWidget.featuredProducts"
+                       (onAddItem)="addFeaturedProduct($event)"
+                       [menuOptions]="['Add Featured Product', 'Edit Featured Product', 'Delete Featured Product', 'Delete Featured Products']">
             </item-list>
         </div>
 

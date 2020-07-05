@@ -135,25 +135,4 @@ export class ProductContentComponent implements OnChanges {
     this.popupService.pricePointPopup.pricePoint = this.pricePoints[index];
     this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[index];
   }
-
-
-
-
-
-  // // -----------------------------( ON DELETE PRICE POINT )------------------------------ \\
-  // onDeletePricePoint(itemList: CheckboxItemListComponent) {
-  //   this.promptService.showPrompt('Delete Price Point', 'Are you sure you want to delete this price point?', this.deletePricePoint, this, [itemList]);
-  // }
-
-
-
-
-
-
-  // // -----------------------------( DELETE PRICE POINT )------------------------------ \\
-  // deletePricePoint(itemList: CheckboxItemListComponent) {
-  //   this.pricePoints.splice(itemList.selectedListItemIndex, 1);
-  //   // itemList.removeListItem();????????????????????????????????????????????????????????????????????????????????????????
-  //   this.productService.setPrice();
-  // }
 }
