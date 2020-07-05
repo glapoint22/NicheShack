@@ -25,4 +25,11 @@ export class ProductImageNotificationPopupComponent extends GeneralNotificationP
   onSubmit(notification: Notification) {
 
   }
+
+
+
+  // -----------------------------( VIEW VENDOR INFO )------------------------------ \\
+  viewVendorInfo() {
+    super.viewVendorInfo(this.notificationService.productImageNotification.vendorId);
+  }
 }

@@ -47,4 +47,11 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
       }
     }
   }
+
+
+  // -----------------------------( VIEW VENDOR INFO )------------------------------ \\
+  viewVendorInfo() {
+    super.viewVendorInfo(this.notificationService.productDescriptionNotification.vendorId);
+  }
+
 }
