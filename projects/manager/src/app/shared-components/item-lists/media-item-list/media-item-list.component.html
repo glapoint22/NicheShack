@@ -7,7 +7,7 @@
     <table >
             
         <tr *ngFor="let listItem of listItems; let listItemIndex = index"
-                (mousedown)="onListItemDown(listItemIndex)"
+                (mousedown)="onListItemDown(listItemIndex, $event)"
                 (dblclick)="onListItemDoubleClick()"
                 style="cursor: pointer;"
                 [ngClass]="{

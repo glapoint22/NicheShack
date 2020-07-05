@@ -5,8 +5,8 @@
     <table >
             
         <tr #rowItem *ngFor="let listItem of listItems; let listItemIndex = index"
-                (mousedown)="onListItemDown(listItemIndex)"
-                (click)="onListItemClick(listItem)"
+                (mousedown)="onListItemClick(listItem)"
+                
                 [ngClass]="{
                             'selected-listItem': selectedListItemIndex == listItemIndex,
                             'unselected-listItem': unselectedListItemIndex == listItemIndex,

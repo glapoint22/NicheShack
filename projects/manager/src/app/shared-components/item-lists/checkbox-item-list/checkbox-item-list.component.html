@@ -17,7 +17,7 @@
                 <td #rowItem
                     tabindex="-1"
                     (blur)="onListItemBlur()"
-                    (mousedown)="onListItemDown(listItemIndex)"
+                    (mousedown)="onListItemDown(listItemIndex, $event)"
                     [textContent]="listItem.name"
                     (dblclick)="onListItemDoubleClick()"
                     [ngClass]="{'selected-listItem': selectedListItemIndex == listItemIndex,

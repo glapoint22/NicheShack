@@ -159,8 +159,8 @@ export class MediaItemListComponent extends EditableItemListComponent implements
 
 
   // -----------------------------( ON LIST ITEM DOWN )------------------------------ \\
-  onListItemDown(index: number) {
-    super.onListItemDown(index);
+  onListItemDown(index: number, e?: MouseEvent) {
+    super.onListItemDown(index, e);
     this.onMediaSelect.emit(this.listItems[index]);
   }
 

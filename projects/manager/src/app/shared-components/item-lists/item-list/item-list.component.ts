@@ -1,4 +1,4 @@
-import { Component, ViewChildren, ElementRef, QueryList, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChildren, ElementRef, QueryList, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MenuService } from '../../../services/menu.service';
 import { ListItem } from '../../../classes/list-item';
 import { icon } from '../../../classes/icon';
@@ -10,19 +10,20 @@ import { PromptService } from '../../../services/prompt.service';
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.scss']
 })
-export class ItemListComponent {
+export class ItemListComponent implements OnInit {
   constructor(public menuService: MenuService, public promptService: PromptService) { }
   // Public
   public promptTitle: string;
   public propmtMessage: string;
   public selectType = SelectType;
+  public preventDeselectionFromRightMouseDown: boolean;
   public promptMultiTitle: string;
   public pivotIndex: number = null;
   public ctrlDown: boolean = false;
   public propmtMultiMessage: string;
   public shiftDown: boolean = false;
   public newListItem: boolean = false;
-  public itemDeleted: boolean = false;
+  public itemDeletionPending: boolean = false;
   public lastFocusedListItem: Element;
   public addIcon: icon = new icon(false);
   public editIcon: icon = new icon(true);
@@ -38,6 +39,19 @@ export class ItemListComponent {
   @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
   @Output() onAddItem: EventEmitter<void> = new EventEmitter();
   @Output() onEditItem: EventEmitter<void> = new EventEmitter();
+
+
+  // -----------------------------( NG ON INIT )------------------------------ \\
+  ngOnInit() {
+    // When a context menu gets hidden
+    this.menuService.onMenuHide.subscribe(() => {
+      // If a list item is selected
+      if (this.selectedListItemIndex != null) {
+        // Set the focus back to that list item
+        this.setListItemFocus(this.selectedListItemIndex)
+      }
+    });
+  }
 
 
   // -----------------------------( ADD EVENT LISTENERS )------------------------------ \\
@@ -72,10 +86,7 @@ export class ItemListComponent {
 
   // -----------------------------( SET SHORTCUT KEYS )------------------------------ \\
   setShortcutKeys(event: KeyboardEvent) {
-    if (event.keyCode === 46) {
-      this.onListItemDelete();
-      this.itemDeleted = true;
-    }
+    if (event.keyCode === 46) this.onListItemDelete();
     if (event.keyCode === 27) this.escape();
     if (event.keyCode === 38) this.arrowUp();
     if (event.keyCode === 40) this.arrowDown();
@@ -151,12 +162,19 @@ export class ItemListComponent {
 
   // -----------------------------( SET LIST ITEM BLUR )------------------------------ \\
   setListItemBlur() {
-    // When an item is deleted, it loses focus.
-    // This is to prevent the listeners from being removed when an item gets deleted
-    if (!this.itemDeleted) {
-      // Then remove all listeners and selections
+    // When a list item is deleted, it loses focus.
+    // This is to prevent the listeners from being removed when a list item gets deleted.
+    // Also, if a list item loses focus because of a right mouse down event, we don't want
+    // to clear the selections and remove the event listeners
+    if (!this.itemDeletionPending && !this.preventDeselectionFromRightMouseDown) {
+      // If a list item is NOT being deleted and there is no right mouse down event on a list item,
+      // then remove all listeners and selections
       this.removeEventListeners();
     }
+
+    // If a right mouse down event prevented the selections and listeners from being removed,
+    // then we can reset this back to false, because it alreday served its purpose
+    this.preventDeselectionFromRightMouseDown = false;
   }
 
 
@@ -178,13 +196,26 @@ export class ItemListComponent {
 
 
   // -----------------------------( ON LIST ITEM DOWN )------------------------------ \\
-  onListItemDown(index: number) {
+  onListItemDown(index: number, e?: MouseEvent) {
+    this.preventDeselectionFromRightMouseDown = false;
 
-    window.setTimeout(() => {
-      this.lastFocusedListItem = document.activeElement;
+    // If the list item is being selected from a right mouse down
+    if (e != null && e.which == 3) {
+      // Check to see if that list item is already selected
+      if (this.listItems[index].selected) {
+        // If it's already selected,
+        // then prevent it from being deselected
+        this.preventDeselectionFromRightMouseDown = true;
+      }
+    }
 
-      this.setListItemSelection(index);
-    })
+    // As long as we're not right clicking on a list item that's already selected
+    if (!this.preventDeselectionFromRightMouseDown) {
+      window.setTimeout(() => {
+        this.lastFocusedListItem = document.activeElement;
+        this.setListItemSelection(index);
+      });
+    }
   }
 
 
@@ -404,7 +435,7 @@ export class ItemListComponent {
   // -----------------------------( ON LIST ITEM DELETE )------------------------------ \\
   onListItemDelete() {
     if (!this.deleteIcon.isDisabled) {
-      this.itemDeleted = true;
+      this.itemDeletionPending = true;
       this.promptService.showPrompt(this.editIcon.isDisabled ? this.promptMultiTitle : this.promptTitle, this.editIcon.isDisabled ? this.propmtMultiMessage : this.propmtMessage, this.deleteListItem, this, null, this.onPromptCancel);
     }
   }
@@ -470,11 +501,6 @@ export class ItemListComponent {
           this.pivotIndex = this.selectedListItemIndex;
           // Allow the selected list item to be edited
           this.editIcon.isDisabled = false;
-
-
-          this.itemDeleted = false;
-
-
           // Set focus to that selected list item
           this.setListItemFocus(this.selectedListItemIndex);
         }, 20);
@@ -497,19 +523,19 @@ export class ItemListComponent {
         this.deleteIcon.isDisabled = true;
         // Re-establish the pivot index
         this.pivotIndex = this.unselectedListItemIndex;
-
-        this.itemDeleted = false;
-
         // Set focus to that unselected list item
         this.setListItemFocus(this.unselectedListItemIndex);
       }, 20);
     }
+    // Now that the list item(s) have been deleted,
+    // let it be known that item deletion is no longer pending
+    this.itemDeletionPending = false;
   }
 
 
   // -----------------------------( ON PROMPT CANCEL )------------------------------ \\
   onPromptCancel() {
-    this.itemDeleted = false;
+    this.itemDeletionPending = false;
     this.setListItemFocus(this.selectedListItemIndex);
   }
 
