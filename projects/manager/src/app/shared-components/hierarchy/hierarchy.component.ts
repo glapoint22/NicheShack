@@ -10,7 +10,17 @@ import { tap } from 'rxjs/operators';
 })
 export class HierarchyComponent {
   public items: Array<HierarchyItem>;
-  public selectedItem: HierarchyItem;
+
+
+  private _selectedItem: HierarchyItem;
+  public get selectedItem(): HierarchyItem {
+    return this._selectedItem;
+  }
+  public set selectedItem(item: HierarchyItem) {
+    this._selectedItem = item;
+    this.onItemSelect();
+  }
+
 
   constructor(public dataService: TempDataService) { }
 
@@ -96,4 +106,9 @@ export class HierarchyComponent {
 
   // -----------------------------( MAP ITEMS )------------------------------ \\
   mapItems(items: Array<HierarchyItem>, parent?: HierarchyItem, type?: number) { }
+
+
+
+  // -----------------------------( ON ITEM SELECT )------------------------------ \\
+  onItemSelect() { }
 }
