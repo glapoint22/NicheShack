@@ -9,6 +9,11 @@ import { BreakpointHorizontalAlignment, BreakpointVerticalAlignment } from 'proj
 export class ProportionalWidgetComponent extends WidgetComponent {
   public minWidth: number = 40;
 
+
+  ngAfterViewInit() {
+    this.height = this.widgetElement.nativeElement.getBoundingClientRect().height;
+  }
+
   onHandleMousedown(verticalHandle: string, horizontalHandle: string, event: MouseEvent) {
     let anchorWidth: number = this.widgetElement.nativeElement.clientWidth * (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? 0.5 : 1);
     let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().left +

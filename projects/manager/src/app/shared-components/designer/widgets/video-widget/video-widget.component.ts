@@ -41,6 +41,7 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
     // this.video.thumbnail = 'thumbnail1.png';
     // this.video.url = 'https://www.youtube.com/embed/1AI6RS1st2E';
     // this.video.url = '//player.vimeo.com/video/173192945?muted=false';
+    super.ngAfterViewInit();
     
   }
 

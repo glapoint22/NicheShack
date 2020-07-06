@@ -9,7 +9,7 @@
     </div>
 
     <!-- Height -->
-    <div class="property">
+    <div *ngIf="widget.height"  class="property">
         <div class="label">Height</div>
         <div style="flex: 1;">
             <editable-number-field #heightNumberField [value]="getHeight()"
