@@ -14,7 +14,12 @@ import { FormService } from '../../../services/form.service';
   styleUrls: ['./media-item-list.component.scss']
 })
 export class MediaItemListComponent extends EditableItemListComponent implements OnChanges {
-  constructor(menuService: MenuService, promptService: PromptService, private popupService: PopupService, private formService: FormService) { super(menuService, promptService) }
+  constructor(menuService: MenuService,
+              promptService: PromptService,
+              popupService: PopupService,
+              private formService: FormService) { 
+                super(menuService, promptService, popupService)
+              }
   // Public
   public selectType = SelectType;
   public mediaTypeEnum = MediaType;

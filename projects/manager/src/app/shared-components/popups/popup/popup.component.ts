@@ -4,6 +4,7 @@ import { CoverService } from '../../../services/cover.service';
 import { MenuService } from '../../../services/menu.service';
 import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 import { TempDataService } from '../../../services/temp-data.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'popup',
@@ -11,14 +12,26 @@ import { TempDataService } from '../../../services/temp-data.service';
   styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent {
-  public show: boolean;
   public preventNoShow: boolean = false;
   @Output() onPopupClose: EventEmitter<void> = new EventEmitter();
   private popup;
   private arrow;
   private popupTop: number;
   public arrowOnTop: boolean = false;
+  public onPopupHide = new Subject<void>();
   constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService, public dropdownMenuService: DropdownMenuService, public dataService: TempDataService) { }
+
+  // Show
+  private _show: boolean;
+  public get show(): boolean {
+    return this._show;
+  }
+  public set show(value: boolean) {
+    
+    if (!value) this.onPopupHide.next();
+    this._show = value;
+  }
+
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
