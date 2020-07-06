@@ -31,7 +31,7 @@
                          'paddingTop.px' : categoriesWidget.categories && categoriesWidget.categories.length == 0 ? 0 : 7}">
             <!-- Item LIst -->
             <item-list #itemList [listItems]="categoriesWidget.categories" (onAddItem)="addCategory($event)"
-                [menuOptions]="['Add Category', 'Edit Category', 'Delete Category', 'Delete Categories']">
+                [menuOptions]="['Add Category', null, 'Delete Category', 'Delete Categories']">
             </item-list>
         </div>
 

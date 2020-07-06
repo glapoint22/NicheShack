@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { SelectType } from '../../../classes/list-item-select-type';
 import { MenuService } from '../../../services/menu.service';
@@ -19,7 +19,12 @@ import { PromptService } from '../../../services/prompt.service';
   styleUrls: ['./notifications-item-list.component.scss', '../media-item-list/media-item-list.component.scss']
 })
 export class NotificationsItemListComponent extends ItemListComponent {
-  constructor(menuService: MenuService, promptService: PromptService, private notificationService: NotificationService, public popupService: PopupService) { super(menuService, promptService) }
+  constructor(menuService: MenuService,
+              promptService: PromptService,
+              popupService: PopupService,
+              private notificationService: NotificationService) { 
+                super(menuService, promptService, popupService) 
+              }
   public selectType = SelectType;
   public notificationImageList: Array<string>;
   @Input() listItems: Array<Notification>;

@@ -14,7 +14,12 @@ import { FormService } from '../../../services/form.service';
   styleUrls: ['./media-item-list.component.scss']
 })
 export class MediaItemListComponent extends EditableItemListComponent implements OnChanges {
-  constructor(menuService: MenuService, promptService: PromptService, private popupService: PopupService, private formService: FormService) { super(menuService, promptService) }
+  constructor(menuService: MenuService,
+    promptService: PromptService,
+    popupService: PopupService,
+    private formService: FormService) {
+    super(menuService, promptService, popupService)
+  }
   // Public
   public selectType = SelectType;
   public mediaTypeEnum = MediaType;
@@ -116,7 +121,19 @@ export class MediaItemListComponent extends EditableItemListComponent implements
       }
     }
 
-    if (this.selectedListItemIndex != null) {
+    // If a media item is NOT selected
+    if (this.selectedListItemIndex == null) {
+
+      // Just provide the 'Add' option in the context menu
+      this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
+        // Add
+        this.menuService.option(this.menuOptions[0], null, this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() })
+      );
+
+      // But if a media item is selected
+    } else {
+
+      // Provide all the following options
       this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
         // Add
         this.menuService.option(this.menuOptions[0], "Ctrl+Alt+N", this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() }),
@@ -125,19 +142,12 @@ export class MediaItemListComponent extends EditableItemListComponent implements
         this.menuService.option(this.menuOptions[2], "Ctrl+Alt+U", this.editIcon.isDisabled, () => { this.mediaUpdateInitiated = true; this.onUpdateMedia.emit(this.selectedListItemIndex) }),
         // Edit
         this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.onListItemEdit),
-
+        // Divider
         this.menuService.divider(),
-
         // Move To
         moveTo,
-
         // Delete
         this.menuService.option(this.deleteIcon.isDisabled ? this.menuOptions[3] : this.editIcon.isDisabled ? this.menuOptions[4] : this.menuOptions[3], "Delete", this.deleteIcon.isDisabled, this.onListItemDelete)
-      );
-    } else {
-      this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-        // Add
-        this.menuService.option(this.menuOptions[0], null, this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() })
       );
     }
   }

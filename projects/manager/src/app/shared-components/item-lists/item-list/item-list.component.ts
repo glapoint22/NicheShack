@@ -4,6 +4,7 @@ import { ListItem } from '../../../classes/list-item';
 import { icon } from '../../../classes/icon';
 import { SelectType } from '../../../classes/list-item-select-type';
 import { PromptService } from '../../../services/prompt.service';
+import { PopupService } from '../../../services/popup.service';
 
 @Component({
   selector: 'item-list',
@@ -11,7 +12,7 @@ import { PromptService } from '../../../services/prompt.service';
   styleUrls: ['./item-list.component.scss']
 })
 export class ItemListComponent implements OnInit {
-  constructor(public menuService: MenuService, public promptService: PromptService) { }
+  constructor(public menuService: MenuService, public promptService: PromptService, public popupService: PopupService) { }
   // Public
   public promptTitle: string;
   public propmtMessage: string;
@@ -43,8 +44,17 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
-    // When a context menu gets hidden
+    // When the context menu becomes hidden
     this.menuService.onMenuHide.subscribe(() => {
+      // If a list item is selected
+      if (this.selectedListItemIndex != null) {
+        // Set the focus back to that list item
+        this.setListItemFocus(this.selectedListItemIndex)
+      }
+    });
+
+    // When the search popup becomes hidden
+    this.popupService.searchPopup.onPopupHide.subscribe(() => {
       // If a list item is selected
       if (this.selectedListItemIndex != null) {
         // Set the focus back to that list item
@@ -151,6 +161,8 @@ export class ItemListComponent implements OnInit {
       if (document.activeElement != this.lastFocusedListItem
         // and the context menu is NOT open
         && !this.menuService.showMenu
+        // and the search popup is NOT open
+        && !this.popupService.searchPopup.show
         // and we're NOT clicking on an icon button
         && !this.isOverIconButton) {
         // Determine what happens when a list item loses focus 
@@ -164,9 +176,10 @@ export class ItemListComponent implements OnInit {
   setListItemBlur() {
     // When a list item is deleted, it loses focus.
     // This is to prevent the listeners from being removed when a list item gets deleted.
-    // Also, if a list item loses focus because of a right mouse down event, we don't want
-    // to clear the selections and remove the event listeners
-    if (!this.itemDeletionPending && !this.preventDeselectionFromRightMouseDown) {
+    if (!this.itemDeletionPending
+      // Also, if a list item loses focus because of a right mouse down event, we don't want
+      // to clear the selections and remove the event listeners
+      && !this.preventDeselectionFromRightMouseDown) {
       // If a list item is NOT being deleted and there is no right mouse down event on a list item,
       // then remove all listeners and selections
       this.removeEventListeners();
@@ -558,7 +571,7 @@ export class ItemListComponent implements OnInit {
       // Add
       this.menuService.option(this.menuOptions[0], "Ctrl+Alt+A", this.addIcon.isDisabled, this.onListItemAdd),
       // Edit
-      this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.onListItemEdit),
+      this.menuOptions[1] == null ? {} : this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.onListItemEdit),
       // Delete
       this.menuService.option(this.deleteIcon.isDisabled ? this.menuOptions[2] : this.editIcon.isDisabled ? this.menuOptions[3] : this.menuOptions[2], "Delete", this.deleteIcon.isDisabled, this.onListItemDelete));
   }
