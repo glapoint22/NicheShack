@@ -571,7 +571,7 @@ export class ItemListComponent implements OnInit {
       // Add
       this.menuService.option(this.menuOptions[0], "Ctrl+Alt+A", this.addIcon.isDisabled, this.onListItemAdd),
       // Edit
-      this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.onListItemEdit),
+      this.menuOptions[1] == null ? {} : this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.onListItemEdit),
       // Delete
       this.menuService.option(this.deleteIcon.isDisabled ? this.menuOptions[2] : this.editIcon.isDisabled ? this.menuOptions[3] : this.menuOptions[2], "Delete", this.deleteIcon.isDisabled, this.onListItemDelete));
   }
