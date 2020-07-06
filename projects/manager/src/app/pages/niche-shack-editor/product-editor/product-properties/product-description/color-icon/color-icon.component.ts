@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ColorSwatchComponent } from '../../../../../../shared-components/elements/color-swatch/color-swatch.component';
 import { Color } from '../../../../../../classes/color';
+import { Description } from 'projects/manager/src/app/classes/description';
 
 @Component({
   selector: 'color-icon',
@@ -11,34 +12,20 @@ export class ColorIconComponent extends ColorSwatchComponent {
   @Input() icon: string;
   @Input() title: string;
   @Input() removable: string;
-  @Output() onRemoveColor: EventEmitter<void> = new EventEmitter();
-  public showRemoveChange: boolean;
-
+  @Input() description: Description;
 
   // ---------------------------------------------------------------- On Click --------------------------------------------------------------
   onClick(sourceElement: HTMLElement) {
-    if (this.removable && !this.color.isEqual(Color.zero)) {
-      // Show the remove/change options
-      this.showRemoveChange = true;
+    if (this.removable && !this.color.isEqual(Color.zero) && !this.popupService.colorPickerPopup.show) {
+      // This will open the highlight popup
+      this.popupService.sourceElement = sourceElement;
+      this.popupService.highlightPopup.color = this.color;
+      this.popupService.highlightPopup.description = this.description;
+      this.popupService.highlightPopup.show = !this.popupService.highlightPopup.show;
+
     } else {
       // This will open up the color picker
       super.onClick(sourceElement);
     }
-  }
-
-  
-
-
-
-  // -------------------------------------------------------------- On Option Click -----------------------------------------------------------
-  onOptionClick(changeColor: boolean, sourceElement: HTMLElement) {
-    // Click of one of the options (remove color / change color)
-    if (changeColor) {
-      super.onClick(sourceElement);
-    } else {
-      this.onRemoveColor.emit();
-    }
-
-    this.showRemoveChange = false;
   }
 }

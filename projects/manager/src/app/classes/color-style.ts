@@ -59,6 +59,7 @@ export class ColorStyle extends PersistentStyle {
         // If the color value is zero, assign the default color
         if (this.value.isEqual(Color.zero)) {
             this.value.copy(this.defaultColor);
+            this.styleValue = Color.zero.toRGBString();
         }
 
         // Clear the selection from the text

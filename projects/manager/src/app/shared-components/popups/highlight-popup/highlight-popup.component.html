@@ -1,0 +1,17 @@
+<!-- Popup Base -->
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)" *show="show">
+
+    <!-- Arrow -->
+    <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
+
+
+    <div>
+        <div class="option" (click)="onOptionClick(false)" title="Remove Color">
+            <i class="fas fa-ban"></i>
+        </div>
+        <div class="option" (click)="onOptionClick(true)" title="Change Color">
+            <i class="fas fa-tint"
+                [style.color]="'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', ' + color.a + ')'"></i>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+.option {
+    background: #272727;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-color: #595959;
+    font-size: 16px;
+    cursor: pointer;
+    
+
+    &:first-child {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        color: red;
+    }
+
+    &:last-child {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom: 1px solid #595959;
+    }
+
+    &:hover {
+        background: #313131;
+    }
+}

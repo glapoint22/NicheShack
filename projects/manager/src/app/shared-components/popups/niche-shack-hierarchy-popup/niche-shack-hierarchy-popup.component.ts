@@ -305,13 +305,20 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
 
 
 
-  // --------------------------------( ON POPUP OUT )-------------------------------- \\
-  onPopupOut() {
-    if (this.promptService.show) {
-      this.popup.preventNoShow = true;
-    } else {
-      this.show = false;
-      this.popup.preventNoShow = false;
-    }
+
+
+
+  // -----------------------------( ON DELETE CLICK )------------------------------ \\
+  onDeleteClick() {
+    if (this.isDeleteItemDisabled()) return;
+
+    this.popup.preventNoShow = true;
+
+    super.onDeleteClick();
+
+    this.promptService.onPromptClose
+      .subscribe(() => {
+        this.popup.preventNoShow = false;
+      });
   }
 }

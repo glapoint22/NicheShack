@@ -92,7 +92,7 @@
                 <!-- Highlight color -->
                 <color-icon [color]="description.highlightColor.value" [icon]="'fa-highlighter'"
                     [title]="'Highlight color'" [removable]="true"
-                    (onRemoveColor)="description.highlightColor.removeColor()"
+                    [description]="description"
                     (onInit)="description.highlightColor.colorPicker = $event"
                     (onColorPickerOpen)="description.highlightColor.onColorPickerOpen()">
                 </color-icon>
