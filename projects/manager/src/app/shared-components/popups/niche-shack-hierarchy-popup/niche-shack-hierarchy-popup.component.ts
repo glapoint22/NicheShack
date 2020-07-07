@@ -5,6 +5,7 @@ import { TempDataService } from '../../../services/temp-data.service';
 import { PopupService } from '../../../services/popup.service';
 import { EditableHierarchyComponent } from '../../hierarchy/editable-hierarchy/editable-hierarchy.component';
 import { PromptService } from '../../../services/prompt.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'niche-shack-hierarchy-popup',
@@ -31,7 +32,12 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
   }
 
 
-  constructor(dataService: TempDataService, promptService: PromptService, private popupService: PopupService) { super(dataService, promptService) }
+  constructor(
+    dataService: TempDataService,
+    promptService: PromptService,
+    private popupService: PopupService,
+    private router: Router
+  ) { super(dataService, promptService) }
 
 
 
@@ -305,13 +311,27 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
 
 
 
-  // --------------------------------( ON POPUP OUT )-------------------------------- \\
-  onPopupOut() {
-    if (this.promptService.show) {
-      this.popup.preventNoShow = true;
-    } else {
-      this.show = false;
-      this.popup.preventNoShow = false;
-    }
+
+
+
+  // -----------------------------( ON DELETE CLICK )------------------------------ \\
+  onDeleteClick() {
+    if (this.isDeleteItemDisabled()) return;
+
+    this.popup.preventNoShow = true;
+
+    super.onDeleteClick();
+
+    this.promptService.onPromptClose
+      .subscribe(() => {
+        this.popup.preventNoShow = false;
+      });
+  }
+
+
+
+  // -----------------------------( ON ITEM SELECT )------------------------------ \\
+  onItemSelect() {
+    this.router.navigate(['']);
   }
 }

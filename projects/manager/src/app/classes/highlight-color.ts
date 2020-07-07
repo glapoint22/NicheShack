@@ -43,5 +43,6 @@ export class HighlightColor extends ColorStyle {
         this.isRemoveColor = true;
         this.applyStyle();
         this.isRemoveColor = false;
+        this.value.copy(Color.zero);
     }
 }

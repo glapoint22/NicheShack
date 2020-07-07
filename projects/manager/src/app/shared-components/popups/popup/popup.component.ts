@@ -74,11 +74,11 @@ export class PopupComponent {
 
   // --------------------------------( ON POPUP OUT )-------------------------------- \\
   onPopupOut() {
-    // This is for the hierarchy popup
-    this.onPopupClose.emit();
-
     // As long as a menu is NOT open
     if (!this.menuService.showMenu && !this.preventNoShow) {
+      // Emit that this popup is closed
+      this.onPopupClose.emit();
+
       // Close this popup
       this.show = false;
       this.dropdownMenuService.showMenu = false;
