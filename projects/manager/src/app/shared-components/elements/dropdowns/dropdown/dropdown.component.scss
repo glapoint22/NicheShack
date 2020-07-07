@@ -1,46 +1,51 @@
 .base {
-    position: relative;
     display: flex;
     background: #414141;
     border: 1px solid #505050;
-    border-radius: 3px;
-    width: 100%;
-    color: #c0c0c0;
+    border-radius:3px; 
+
     &:hover:not(.hightlight-base) {
         color: #dddddd;
     }
     &.hightlight-base {
         color: white;
     }
-    padding-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-}
+    
+    .label-container {
+        width: 100%;
+        height: 100%;
+        padding-left: 2px;
+        padding-top: 3px;
+        padding-bottom: 3px;
 
-.label {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    padding-left: 4px;
-    user-select: none;
-    white-space: nowrap;
-    overflow: hidden;
-    background: #4d4d4d;
-}
+        .label {
+            display: flex;
+            background: #4d4d4d;
+            width: 100%;
+            height: 100%;
+            font-size: 11px;
+            align-items: center;
+            padding-left: 3px;
+            user-select: none;
 
-.button {
-    min-width: 16px;
-}
+            &:hover:not(.hightlight-label) {
+                color: #dddddd;
+            }
+            &.hightlight-label {
+                color: white;
+            }
+        }
+    }
 
-.arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    font-family:cursive;
-    transform: rotate(90deg);
-    user-select: none;
+    .button {
+        display: flex;
+        min-width: 16px; 
+        height: 100%; 
+        align-items: center;
+        justify-content: center;
+
+        .fa-chevron-down {
+            font-size: 8px;
+        }
+    }
 }

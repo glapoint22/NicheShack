@@ -1,20 +1,24 @@
 <!-- Base -->
 <div #base
      class="base"
-     [title]="title"
+     [title]="title == null ? '' : title"
      [style.height.px]="height"
      (mousedown)="onDropdownSelect()"
      [ngClass]="{'hightlight-base': dropdownMenuService.showMenu && dropdownMenuService.currentObj == this}">
 
-    <!-- Label -->
-    <div class="label">
-        {{selectedIndex == -1 ? "" : keyValue[selectedIndex].key}}
+
+    <!-- Label Container -->
+    <div class="label-container">
+
+        <!-- Label -->
+        <div class="label" 
+             [ngClass]="{'hightlight-label': dropdownMenuService.showMenu && dropdownMenuService.currentObj == this}">
+            {{selectedIndex == -1 ? "" : keyValue[selectedIndex].key}}
+        </div>
     </div>
 
     <!-- Button -->
     <div class="button">
-        <div class="arrow">
-            >
-        </div>
+        <i class="fas fa-chevron-down"></i>
     </div>
 </div>

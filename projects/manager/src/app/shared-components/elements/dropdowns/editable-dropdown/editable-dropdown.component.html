@@ -1,23 +1,26 @@
 <!-- Base -->
-<div #base 
+<div #base
      class="base"
-     [title]="title"
+     [title]="title == null ? '' : title"
      [style.height.px]="height"
-     [ngClass]="{'hightlight-base': (dropdownMenuService.showMenu && dropdownMenuService.currentObj == this) || textInputHasFocus}">
+     [ngClass]="{'hightlight-base': dropdownMenuService.showMenu && dropdownMenuService.currentObj == this}">
 
-    <!-- Text Input -->
-    <input #textInput
-         (blur)="onTextInputBlur()"
-         (focus)="onTextInputFocus()"
-         (input)="onTextInputChange()"
-         [value]="selectedIndex == -1 ? '' : keyValue[selectedIndex].key"
-         [ngClass]="{'hightlight-text': (dropdownMenuService.showMenu && dropdownMenuService.currentObj == this)}">
-            
+
+    <!-- Label Container -->
+    <div class="label-container">
+
+        <!-- Text Input -->
+        <input #textInput
+            (blur)="onTextInputBlur()"
+            (focus)="onTextInputFocus()"
+            (input)="onTextInputChange()"
+            [value]="selectedIndex == -1 ? '' : keyValue[selectedIndex].key"
+            [ngClass]="{'hightlight-text': (dropdownMenuService.showMenu && dropdownMenuService.currentObj == this)}">
+        </div>
+
     <!-- Button -->
     <div class="button"
          (mousedown)="onDropdownSelect()">
-        <div class="arrow">
-            >
-        </div>
+        <i class="fas fa-chevron-down"></i>
     </div>
 </div>

@@ -4,7 +4,7 @@ import { DropdownComponent } from '../dropdown/dropdown.component';
 @Component({
   selector: 'editable-dropdown',
   templateUrl: './editable-dropdown.component.html',
-  styleUrls: ['./editable-dropdown.component.scss', '../dropdown/dropdown.component.scss']
+  styleUrls: ['../dropdown/dropdown.component.scss', './editable-dropdown.component.scss']
 })
 export class EditableDropdownComponent extends DropdownComponent {
   public textInputHasFocus: boolean = false;
