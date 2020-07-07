@@ -26,7 +26,6 @@ import { NumberFieldComponent } from '../elements/number-fields/number-field/num
 import { ColorSwatchComponent } from '../elements/color-swatch/color-swatch.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { EditableDropdownComponent } from '../elements/dropdowns/editable-dropdown/editable-dropdown.component';
-import { ItemListComponent } from '../item-lists/item-list/item-list.component';
 import { EditableItemListComponent } from '../item-lists/editable-item-list/editable-item-list.component';
 import { EditableNumberFieldComponent } from '../elements/number-fields/editable-number-field/editable-number-field.component';
 import { PagePropertiesComponent } from '../properties/page-properties/page-properties.component';
@@ -55,6 +54,7 @@ import { PaginatorModule } from '../paginator/paginator.module';
 import { DropdownModule } from '../elements/dropdowns/dropdown/dropdown.module';
 import { EmailPropertiesComponent } from '../../pages/email-builder/email-editor/email-properties/email-properties.component';
 import { PanelComponent } from '../panel/panel.component';
+import { ItemListModule } from '../item-lists/item-list/item-list.module';
 
 
 @NgModule({
@@ -88,7 +88,6 @@ import { PanelComponent } from '../panel/panel.component';
     NumberFieldComponent,
     EditableDropdownComponent,
     ColorSwatchComponent,
-    ItemListComponent,
     EditableItemListComponent,
     EditableNumberFieldComponent,
     PagePropertiesComponent,
@@ -116,7 +115,8 @@ import { PanelComponent } from '../panel/panel.component';
     FormsModule,
     HierarchyModule,
     PaginatorModule,
-    DropdownModule
+    DropdownModule,
+    ItemListModule
   ],
   exports: [
     PropertiesEditorComponent,
@@ -148,7 +148,6 @@ import { PanelComponent } from '../panel/panel.component';
     NumberFieldComponent,
     EditableDropdownComponent,
     ColorSwatchComponent,
-    ItemListComponent,
     EditableItemListComponent,
     EditableNumberFieldComponent,
     PagePropertiesComponent,

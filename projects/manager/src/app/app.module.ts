@@ -38,6 +38,8 @@ import { HierarchyModule } from './shared-components/hierarchy/hierarchy.module'
 import { GeneralNotificationPopupComponent } from './shared-components/popups/notification-popups/general-notification-popup/general-notification-popup.component';
 import { FiltersFormComponent } from './shared-components/forms/filters-form/filters-form.component';
 import { HighlightPopupComponent } from './shared-components/popups/highlight-popup/highlight-popup.component';
+import { ProductsFormComponent } from './shared-components/forms/products-form/products-form.component';
+import { ItemListModule } from './shared-components/item-lists/item-list/item-list.module';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,8 @@ import { HighlightPopupComponent } from './shared-components/popups/highlight-po
     NicheShackHierarchyPopupComponent,
     GeneralNotificationPopupComponent,
     FiltersFormComponent,
-    HighlightPopupComponent
+    HighlightPopupComponent,
+    ProductsFormComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,8 @@ import { HighlightPopupComponent } from './shared-components/popups/highlight-po
     CheckboxItemListModule,
     DropdownModule,
     PromptModule,
-    HierarchyModule
+    HierarchyModule,
+    ItemListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

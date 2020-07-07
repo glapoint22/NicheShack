@@ -11,6 +11,10 @@ export class FormComponent {
 
   @HostListener('document:keydown.escape')
   onEscapeKeydown() {
+    this.close();
+  }
+
+  close() {
     this.show = false;
   }
 }

@@ -42,9 +42,6 @@
                                 (change)="filterType = filterHierarchyItemType.FilterOption; showMenu = false; searchInput.value = ''"
                                 [checked]="filterType == filterHierarchyItemType.FilterOption"></radio-button>
                         </div>
-
-
-                        
                     </div>
                 </div>
             </div>
@@ -85,7 +82,7 @@
 
 
             <!-- Content -->
-            <div class="content">
+            <div class="panel-dark">
                 <!-- Search results close button -->
                 <div class="search-results" *ngIf="searchResults">
                     <div class="results">{{searchResults.length}} results</div>
@@ -105,12 +102,6 @@
                     No filters available
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
-
-
 </div>
