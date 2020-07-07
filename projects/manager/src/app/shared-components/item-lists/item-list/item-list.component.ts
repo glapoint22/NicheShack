@@ -569,7 +569,7 @@ export class ItemListComponent implements OnInit {
     // Build the context menu
     this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
       // Add
-      this.menuService.option(this.menuOptions[0], "Ctrl+Alt+A", this.addIcon.isDisabled, this.onListItemAdd),
+      this.menuService.option(this.menuOptions[0], "Ctrl+Alt+N", this.addIcon.isDisabled, this.onListItemAdd),
       // Edit
       this.menuOptions[1] == null ? {} : this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.onListItemEdit),
       // Delete
