@@ -19,7 +19,7 @@
                       [height]="20"
                       [keyValue]="dropdownOptions"
                       (onChange)="onDropdownChange($event, searchInput)"
-                      [selectedIndex]="popupService.mediaType == mediaType.Video ? 0 : popupService.mediaType">
+                      [selectedIndex]="popupService.mediaType == mediaType.Video ? 0 : dropdownOptions.length == 1 ? 0 : popupService.mediaType">
             </dropdown>
 
             <!-- Dropdown Cover -->
