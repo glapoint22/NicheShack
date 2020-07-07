@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { EditableHierarchyComponent } from '../../hierarchy/editable-hierarchy/editable-hierarchy.component';
 import { TempDataService } from '../../../services/temp-data.service';
 import { PromptService } from '../../../services/prompt.service';
@@ -238,5 +238,13 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
     if (this.show) {
       super.onKeydown();
     }
+  }
+
+
+
+  // --------------------------------( ON ESCAPE KEYDOWN )-------------------------------- \\
+  @HostListener('document:keydown.escape')
+  onEscapeKeydown() {
+    this.show = false;
   }
 }

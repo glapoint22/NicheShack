@@ -2008,7 +2008,35 @@ export class TempDataService {
         let searchVideo5: MediaItem = new MediaItem(MediaType.Video); searchVideo5.name = 'Search Video 5'; searchVideo5.id = 'qweuywesdo'; searchVideo5.thumbnail = '1e83e80b1dbb4443a3b2c85023104caf.png'; searchVideo5.url = 'https://player.vimeo.com/video/218732620';
         let searchVideo6: MediaItem = new MediaItem(MediaType.Video); searchVideo6.name = 'Search Video 6'; searchVideo6.id = 'potyuoptuw'; searchVideo6.thumbnail = '1f0236db351b4535bec6a2701db9a8ea.png'; searchVideo6.url = 'https://player.vimeo.com/video/264188894';
         return of([searchVideo1, searchVideo2, searchVideo3, searchVideo4, searchVideo5, searchVideo6]).pipe(delay(1000));
-    }
+    
+        
+
+        case 'api/Products/Vendor':
+        return of([
+          {
+            id: 'HGSGDGFFAFSD',
+            name: 'Flavor of the week: The Gumpy Way'
+          },
+          {
+            id: 'REEQWRRE',
+            name: 'The Autobiography of Gabey Gump'
+          },
+          {
+            id: 'JHGFJGHJHJ',
+            name: 'How To Be Successful Like the Gumpy\'s'
+          },
+          {
+            id: 'QEQWREWERR',
+            name: 'The Gumpy\'s'
+          },
+          {
+            id: 'LKJHJKLJLK',
+            name: 'Once a Gumpy, Always a Gumpy'
+          }
+        ]).pipe(delay(1000));
+    
+    
+      }
   }
 
 

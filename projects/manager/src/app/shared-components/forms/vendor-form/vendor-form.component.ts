@@ -67,7 +67,7 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
         this.menuService.divider(),
         this.menuService.option("Go To Web Page", null, this.vendor.webPage == null, () => window.open(this.vendor.webPage)),
         this.menuService.divider(),
-        this.menuService.option("View Product List", null, !this.vendor.id, () => { }),
+        this.menuService.option("View Product List", null, !this.vendor.id, () => this.getProducts()),
         this.menuService.divider(),
         this.menuService.option("Close", null, false, () => this.close())
       );
@@ -77,7 +77,7 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
 
   // --------------------------------( ON ESCAPE KEY DOWN )-------------------------------- \\
   onEscapeKeydown() {
-    if (!this.menuService.showMenu) super.onEscapeKeydown();
+    if (!this.menuService.showMenu && !this.formService.productsForm.show) super.onEscapeKeydown();
   }
 
 
@@ -139,7 +139,8 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
         }, this);
     } else {
       this.vendor = new Vendor();
-      this.show = false;
+      this.formService.productsForm.products = null;
+      super.close();
     }
   }
 
@@ -205,5 +206,27 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
         this.vendor = vendor;
         this.loadingService.loading = false;
       });
+  }
+
+
+
+  getProducts() {
+    if (!this.formService.productsForm.products) {
+      this.loadingService.loading = true;
+
+
+      this.dataService.get('api/Products/Vendor', [{ key: 'vendorId', value: this.vendor.id }])
+        .subscribe((products: Array<Item>) => {
+          this.formService.productsForm.products = products;
+          this.loadingService.loading = false;
+          this.formService.productsForm.show = true;
+        });
+    } else {
+      this.formService.productsForm.show = true;
+    }
+
+
+
+
   }
 }
