@@ -162,6 +162,30 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   }
 
 
+  // -----------------------------( MOVE ARRAY ELEMENT )------------------------------ \\
+  moveArrayElement(arr, move) {
+    let element = arr[move.fromIndex];
+
+    arr.splice(move.fromIndex, 1);
+    arr.splice(move.toIndex, 0, element);
+  }
+
+
+  // -----------------------------( MOVE PRICE POINT )------------------------------ \\
+  movePricePoint(move) {
+    // Update the price points
+    this.moveArrayElement(this.notificationService.productContentNotification.pricePoints, move);
+
+    // Update the check list
+    for(let i = 0; i < this.notificationService.productContentNotification.content.length; i++) {
+      this.moveArrayElement(this.notificationService.productContentNotification.content[i].priceIndices, move)
+    }
+
+    // Then update the price point list
+    this.moveArrayElement(this.pricePointList, move);
+  }
+
+
   // -----------------------------( VIEW VENDOR INFO )------------------------------ \\
   viewVendorInfo() {
     super.viewVendorInfo(this.notificationService.productContentNotification.vendorId);

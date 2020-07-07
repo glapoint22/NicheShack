@@ -108,7 +108,8 @@
                     [checkList]="content[contentIndex].priceIndices"
                     (onAddItem)="addPricePoint($event)"
                     (onEditItem)="editPricePoint($event, itemList.selectedListItemIndex)"
-                    [menuOptions]="['Add Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">
+                    (onPricePointMove)="movePricePoint($event)"
+                    [menuOptions]="['New Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">
                 </checkbox-item-list>
             </div>
         </div>

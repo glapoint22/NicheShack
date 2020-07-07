@@ -135,4 +135,28 @@ export class ProductContentComponent implements OnChanges {
     this.popupService.pricePointPopup.pricePoint = this.pricePoints[index];
     this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[index];
   }
+
+
+  // -----------------------------( MOVE ARRAY ELEMENT )------------------------------ \\
+  moveArrayElement(arr, move) {
+    let element = arr[move.fromIndex];
+
+    arr.splice(move.fromIndex, 1);
+    arr.splice(move.toIndex, 0, element);
+  }
+
+
+  // -----------------------------( MOVE PRICE POINT )------------------------------ \\
+  movePricePoint(move) {
+    // Update the price points
+    this.moveArrayElement(this.pricePoints, move);
+
+    // Update the check list
+    for(let i = 0; i < this.content.length; i++) {
+      this.moveArrayElement(this.content[i].priceIndices, move)
+    }
+
+    // Then update the price point list
+    this.moveArrayElement(this.pricePointList, move);
+  }
 }
