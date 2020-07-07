@@ -122,9 +122,11 @@ export class ColorPickerPopupComponent extends PopupComponent implements OnInit 
     let hsb: HSB = new HSB(this.hue, this.ringX, 100 - this.ringY);
     let hsl: HSL = hsb.toHSL();
     let rgbColor: Color = Color.HSLToRGB(hsl.h / 360, hsl.s / 100, hsl.l / 100);
+    rgbColor.a = this.color.a;
 
     //Update the input fields
-    if (activeElement != "hex") this.hex = rgbColor.toHex();
+    if (activeElement != "hex") this.hex = rgbColor.toHex().substring(1);
+    if (activeElement != 'alpha') this.alpha = this.color.a = Color.hexToRGB('#' + this.hex).a;
     this.color.r = rgbColor.r;
     if (activeElement != "red") this.red = Math.round(((rgbColor.r / 2.55) / 100) * 100) / 100;
     this.color.g = rgbColor.g;

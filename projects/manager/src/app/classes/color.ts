@@ -94,6 +94,13 @@ export class Color {
             g = "0x" + hex[3] + hex[4];
             b = "0x" + hex[5] + hex[6];
 
+            // 7 digits
+        } else if (hex.length == 8) {
+            r = "0x" + hex[1] + hex[2];
+            g = "0x" + hex[3] + hex[4];
+            b = "0x" + hex[5] + hex[6];
+            a = "0x" + hex[7] + 0;
+
             // 8 digits
         } else if (hex.length == 9) {
             r = "0x" + hex[1] + hex[2];

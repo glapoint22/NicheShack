@@ -82,7 +82,7 @@
             <normalized-number-field
                 [value]="alpha"
                 (onSliderDown)="cover.showResizeCover = preventNoShow = $event"
-                (onValueChange)="alpha = $event; color.a = $event">
+                (onValueChange)="alpha = $event; color.a = $event; updateRGB('alpha')">
             </normalized-number-field>
         </div>
 
@@ -90,7 +90,7 @@
         <div class="property">
             <div class="label">Hex</div>
             <input class="txt-20"
-                   maxlength="6"
+                   maxlength="8"
                    spellcheck="false"
                    (select)="editMode = true"
                    (focus)="hexFocus = true;"
