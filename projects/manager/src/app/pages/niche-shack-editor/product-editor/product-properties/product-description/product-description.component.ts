@@ -3,6 +3,7 @@ import { Description } from 'projects/manager/src/app/classes/description';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { PanelComponent } from 'projects/manager/src/app/shared-components/panel/panel.component';
 
 @Component({
   selector: 'product-description',
@@ -11,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class ProductDescriptionComponent implements AfterViewInit {
   @ViewChild('iframe', { static: false }) iframe: ElementRef;
+  @ViewChild('panel', { static: false }) panel: PanelComponent;
   public description: Description;
 
 
@@ -42,28 +44,31 @@ export class ProductDescriptionComponent implements AfterViewInit {
       }
 
 
-      // Set the height of the iframe
-      this.setIframeHeight();
-
       window.setTimeout(() => {
         window.focus();
       });
 
 
-      // Update the description in the product info window and update the height of the iframe and panel
+      // Update the description in the product info window
       this.description.onChange.subscribe(() => {
         this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
-
-        this.setIframeHeight();
       });
     }
   }
 
 
 
+  ngDoCheck() {
+    if (this.description && this.iframe) this.setHeight();
+  }
+
+
+
 
   // -----------------------------( SET IFRAME HEIGHT )------------------------------ \\
-  setIframeHeight() {
+  setHeight() {
     this.iframe.nativeElement.style.height = Math.max(64, this.description.getContentHeight()) + 'px';
+    if (!this.panel.expanded) this.panel.onContentLoad();
+
   }
 }
