@@ -376,8 +376,10 @@ export class EditableHierarchyComponent extends HierarchyComponent {
         el.contentEditable = 'false';
         this.editMode = false;
       } else {
-        // Deselect the selected item
-        this.selectedItem = null;
+        // If prompt is not up, deselect the selected item
+        if (!this.promptService.show) {
+          this.selectedItem = null;
+        }
       }
     }
   }
