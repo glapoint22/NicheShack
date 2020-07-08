@@ -26,7 +26,6 @@ import { NumberFieldComponent } from '../elements/number-fields/number-field/num
 import { ColorSwatchComponent } from '../elements/color-swatch/color-swatch.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { EditableDropdownComponent } from '../elements/dropdowns/editable-dropdown/editable-dropdown.component';
-import { EditableItemListComponent } from '../item-lists/editable-item-list/editable-item-list.component';
 import { EditableNumberFieldComponent } from '../elements/number-fields/editable-number-field/editable-number-field.component';
 import { PagePropertiesComponent } from '../properties/page-properties/page-properties.component';
 import { RowPropertiesComponent } from '../row-properties/row-properties.component';
@@ -48,13 +47,11 @@ import { BackgroundComponent } from '../properties/background/background.compone
 import { LinkIconComponent } from '../link-icon/link-icon.component';
 import { ColorComponent } from '../properties/color/color.component';
 import { FiltersHierarchyComponent } from '../filters-hierarchy/filters-hierarchy.component';
-import { HierarchyModule } from '../hierarchy/hierarchy.module';
 import { PropertiesEditorComponent } from './properties-editor.component';
-import { PaginatorModule } from '../paginator/paginator.module';
-import { DropdownModule } from '../elements/dropdowns/dropdown/dropdown.module';
 import { EmailPropertiesComponent } from '../../pages/email-builder/email-editor/email-properties/email-properties.component';
 import { PanelComponent } from '../panel/panel.component';
-import { ItemListModule } from '../item-lists/item-list/item-list.module';
+import { HierarchyCheckboxContentComponent } from '../hierarchy/hierarchy-checkbox-content/hierarchy-checkbox-content.component';
+import { SharedModule } from '../shared.module';
 
 
 @NgModule({
@@ -88,7 +85,6 @@ import { ItemListModule } from '../item-lists/item-list/item-list.module';
     NumberFieldComponent,
     EditableDropdownComponent,
     ColorSwatchComponent,
-    EditableItemListComponent,
     EditableNumberFieldComponent,
     PagePropertiesComponent,
     ButtonWidgetPropertiesComponent,
@@ -106,17 +102,15 @@ import { ItemListModule } from '../item-lists/item-list/item-list.module';
     LinkIconComponent,
     ColorComponent,
     FiltersHierarchyComponent,
-    EmailPropertiesComponent
+    EmailPropertiesComponent,
+    HierarchyCheckboxContentComponent
   ],
   imports: [
     CommonModule,
     CustomInputModule,
     ShowHideModule,
     FormsModule,
-    HierarchyModule,
-    PaginatorModule,
-    DropdownModule,
-    ItemListModule
+    SharedModule
   ],
   exports: [
     PropertiesEditorComponent,
@@ -148,7 +142,6 @@ import { ItemListModule } from '../item-lists/item-list/item-list.module';
     NumberFieldComponent,
     EditableDropdownComponent,
     ColorSwatchComponent,
-    EditableItemListComponent,
     EditableNumberFieldComponent,
     PagePropertiesComponent,
     ButtonWidgetPropertiesComponent,
@@ -166,7 +159,8 @@ import { ItemListModule } from '../item-lists/item-list/item-list.module';
     LinkIconComponent,
     ColorComponent,
     FiltersHierarchyComponent,
-    EmailPropertiesComponent
+    EmailPropertiesComponent,
+    HierarchyCheckboxContentComponent
   ]
 })
 export class PropertiesEditorModule { }

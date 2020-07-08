@@ -23,9 +23,7 @@ import { PromptModule } from '../../shared-components/prompt/prompt.module';
 import { ProductVendorComponent } from './product-editor/product-properties/product-vendor/product-vendor.component';
 import { ProductInfoComponent } from './product-info/product-info.component';
 import { StarsModule } from 'shared-components/stars/stars.module';
-import { PaginatorModule } from '../../shared-components/paginator/paginator.module';
-import { CheckboxItemListModule } from '../../shared-components/item-lists/checkbox-item-list/checkbox-item-list.module';
-import { DropdownModule } from '../../shared-components/elements/dropdowns/dropdown/dropdown.module';
+import { SharedModule } from '../../shared-components/shared.module';
 
 
 @NgModule({
@@ -56,9 +54,7 @@ import { DropdownModule } from '../../shared-components/elements/dropdowns/dropd
     DesignerModule,
     PromptModule,
     StarsModule,
-    PaginatorModule,
-    CheckboxItemListModule,
-    DropdownModule
+    SharedModule
   ]
 })
 export class NicheShackEditorModule { }
