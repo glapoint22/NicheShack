@@ -13,7 +13,6 @@ import { ProductHoplinkComponent } from './product-editor/product-properties/pro
 import { ProductKeywordsComponent } from './product-editor/product-properties/product-keywords/product-keywords.component';
 import { ProductMediaComponent } from './product-editor/product-properties/product-media/product-media.component';
 import { ProductEmailComponent } from './product-editor/product-email/product-email.component';
-import { ColorIconComponent } from './product-editor/product-properties/product-description/color-icon/color-icon.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { PropertiesEditorModule } from '../../shared-components/properties-editor/properties-editor.module';
 import { FormsModule } from '@angular/forms';
@@ -40,7 +39,6 @@ import { SharedModule } from '../../shared-components/shared.module';
     ProductKeywordsComponent,
     ProductMediaComponent,
     ProductEmailComponent,
-    ColorIconComponent,
     ProductVendorComponent,
     ProductInfoComponent
   ],

@@ -70,6 +70,21 @@ export class TextBox {
                 color: ` + defaultFontColor.toRGBString() + `;
                 line-height: normal;
             }
+            ::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+                border-radius: 10px;
+                background-color: #131212;
+            }
+            ::-webkit-scrollbar {
+                width: 12px;
+                height: 12px;
+                background-color: #131212;
+            }
+            ::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+                background-color: #444;
+            }
             ul, ol {
                 margin-top: 0;
                 margin-bottom: 0;

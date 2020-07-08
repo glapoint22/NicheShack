@@ -1,0 +1,40 @@
+@import '../../../../../../scss/variables';
+
+.icon-bar {
+    background: #292929;
+    margin: 2px;
+    padding-right: 2px;
+    height: 40px;
+    align-items: center;
+    flex-direction: row;
+    overflow: auto;
+    
+    & > div {
+        margin: 0 5px;
+        flex-shrink: 0;
+    }
+}
+
+
+iframe {
+    width: 100%;
+    border: none;
+    user-select: none;
+    background: #1b1b1b;
+    margin-bottom: 0;
+    display: block;
+    overflow: hidden;
+}
+
+.selected {
+    background: $selected-fill-color;
+    border: 1px solid $selected-border-color;
+    color: #d2e5ff;
+}
+
+select {
+    max-width: 100px;
+    &:first-child {
+        margin-right: 5px;
+    }
+}
