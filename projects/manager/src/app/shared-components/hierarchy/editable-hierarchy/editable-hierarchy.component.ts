@@ -29,7 +29,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
             this.clearSearchResults();
             return of();
           }
-          return this.load(this.getUrl(this.filterType) + '/Search', [{ key: 'search', value: this.searchInput.value }]);
+          return this.load(this.getUrl(this.filterType) + '/Search', [{ key: 'searchWords', value: this.searchInput.value }]);
         }))
       .pipe(tap((items: Array<HierarchyItem>) => {
         this.mapItems(items, null, this.filterType);

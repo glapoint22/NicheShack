@@ -11,8 +11,8 @@ export class Description extends TextBox {
     constructor(contentDocument: HTMLDocument, applicationRef: ApplicationRef, defaultFontColor: Color) {
         super(contentDocument, applicationRef, defaultFontColor);
 
-        this.lowercaseStyle = new LowercaseStyle(contentDocument);
-        this.uppercaseStyle = new UppercaseStyle(contentDocument);
+        this.lowercaseStyle = new LowercaseStyle(contentDocument, this.onChange);
+        this.uppercaseStyle = new UppercaseStyle(contentDocument, this.onChange);
     }
 }
 

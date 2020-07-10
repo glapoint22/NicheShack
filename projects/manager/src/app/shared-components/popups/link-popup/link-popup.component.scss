@@ -1,3 +1,5 @@
+@import '../../../../scss/variables';
+
 .radio-button-option {
     margin-bottom: 10px;
 }
@@ -9,4 +11,58 @@
     bottom: 0;
     left: 0;
     background: rgba(27, 27, 27, 0.5);
+}
+
+.txt-20 {
+    &:disabled {
+        background: #1d1d1d;
+        border-color: #272727;
+    }
+}
+
+.search-container {
+    position: absolute;
+    width: 100%;
+    height: 222px;
+    background: #222222;
+    border: 1px solid #373737;
+
+    .search-item {
+        width: 100%;
+        height: 22px;
+        line-height: 22px;
+        padding: 0 5px;
+        overflow: hidden;
+        cursor: pointer;
+        font-size: 12px;
+
+        &:hover {
+            background: $hover-fill-color;
+        }
+    }
+}
+
+
+.clear-results {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #aaaaaa;
+    
+    &:hover:not(.disabled-clear-results) {
+        color: white;
+    }
+}
+
+
+.disabled-clear-results {
+    color: #535353;
+    cursor: default;
 }

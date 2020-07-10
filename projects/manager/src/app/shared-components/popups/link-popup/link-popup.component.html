@@ -9,33 +9,37 @@
     <!-- None -->
     <div class="radio-button-option">
         <radio-button [name]="'link-option'" [label]="'None'"
-            (change)="link.selectedOption = linkOption.None; link.url = ''"
+            (change)="link.selectedOption = linkOption.None; link.url = ''; onOptionChange()"
             [checked]="link.selectedOption == linkOption.None"></radio-button>
     </div>
 
     <!-- Page -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Page'" (change)="link.selectedOption = linkOption.Page"
+        <radio-button [name]="'link-option'" [label]="'Page'"
+            (change)="link.selectedOption = linkOption.Page; apiUrl = 'api/Pages/Links'; onOptionChange()"
             [checked]="link.selectedOption == linkOption.Page"></radio-button>
     </div>
 
     <!-- Category -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Category'" (change)="link.selectedOption = linkOption.Category"
+        <radio-button [name]="'link-option'" [label]="'Category'"
+            (change)="link.selectedOption = linkOption.Category; apiUrl = 'api/Categories/Links'; onOptionChange()"
             [checked]="link.selectedOption == linkOption.Category">
         </radio-button>
     </div>
 
     <!-- Niche -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Niche'" (change)="link.selectedOption = linkOption.Niche"
+        <radio-button [name]="'link-option'" [label]="'Niche'"
+            (change)="link.selectedOption = linkOption.Niche; apiUrl = 'api/Niches/Links'; onOptionChange()"
             [checked]="link.selectedOption == linkOption.Niche">
         </radio-button>
     </div>
 
     <!-- Product -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Product'" (change)="link.selectedOption = linkOption.Product"
+        <radio-button [name]="'link-option'" [label]="'Product'"
+            (change)="link.selectedOption = linkOption.Product; apiUrl = 'api/Products/Links'; onOptionChange()"
             [checked]="link.selectedOption == linkOption.Product">
         </radio-button>
     </div>
@@ -43,20 +47,34 @@
     <!-- Web Address -->
     <div class="radio-button-option">
         <radio-button [name]="'link-option'" [label]="'Web Address'"
-            (change)="link.selectedOption = linkOption.WebAddress"
+            (change)="link.selectedOption = linkOption.WebAddress; searchResults = null; onOptionChange()"
             [checked]="link.selectedOption == linkOption.WebAddress"></radio-button>
     </div>
 
     <!-- On Click() -->
     <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'On Click()'" (change)="link.selectedOption = linkOption.OnClick"
-            [checked]="link.selectedOption == linkOption.OnClick">
+        <radio-button [name]="'link-option'" [label]="'On Click()'" (change)="link.selectedOption = linkOption.OnClick; link.url = 'onClick()'; link.optionValue = 'onClick()'; 
+            searchResults = null; preventNoShow = false" [checked]="link.selectedOption == linkOption.OnClick">
         </radio-button>
     </div>
 
+    <div style="position: relative;">
+        <!-- Input -->
+        <input id="search-input" class="txt-20" [(ngModel)]="link.optionValue" (click)="$event.target.select()"
+            [disabled]="link.selectedOption == linkOption.None || link.selectedOption == linkOption.OnClick"
+            autocomplete="off" (input)="OnInput()">
 
-    <!-- Link -->
-    <input class="txt-20" [(ngModel)]="link.url" (click)="$event.target.select()">
+            <div class="clear-results" (click)="clearSearchResults()" [ngClass]="{'disabled-clear-results': !searchResults}">
+                <i class="fas fa-times"></i>
+            </div>
+
+        <!-- Search -->
+        <div class="search-container" *ngIf="searchResults">
+            <div class="search-item" *ngFor="let result of searchResults" (click)="onResultClick(result)">
+                {{result.name}}</div>
+        </div>
+    </div>
+
 
 
     <!-- Disabled cover -->

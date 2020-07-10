@@ -1,6 +1,14 @@
 import { Style } from './style';
+import { Subject } from 'rxjs';
 
 export abstract class CaseStyle extends Style {
+
+    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+        super(contentDocument, onChange);
+    }
+
+
+
     setStyle(range: Range) {
         let startOffset: number = range.startOffset;
         let endOffset: number = range.endOffset;
@@ -17,6 +25,8 @@ export abstract class CaseStyle extends Style {
         if (range.endContainer == this.selectedRange.endContainer) {
             this.selectedRange.setEnd(range.endContainer, endOffset);
         }
+
+        this.onChange.next();
     }
 
     parseContents(node: Node, range: Range) {

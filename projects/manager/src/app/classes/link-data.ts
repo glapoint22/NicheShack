@@ -1,4 +1,5 @@
 export class LinkData {
-    selectedOption: string;
-    url: string;
+    public selectedOption: string;
+    public url: string;
+    public optionValue: string;
 }

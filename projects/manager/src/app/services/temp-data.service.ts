@@ -135,7 +135,7 @@ export class TempDataService {
 
 
 
-        // Filters
+      // Filters
       case 'api/Filters/Search':
 
         return of([
@@ -166,25 +166,25 @@ export class TempDataService {
 
       // Filter options
       case 'api/FilterOptions/Search':
-        
-          return of([
-            {
-              id: 'hgfdhfhgfh',
-              name: 'Physical Search',
-            },
-            {
-              id: 'kjhgkjkhk',
-              name: 'Digital Download Search',
-            },
-            {
-              id: 'qwfeerwer',
-              name: 'Email Search',
-            },
-            {
-              id: 'hgfdfgfghfhgf',
-              name: 'Online Membership Search',
-            }
-          ]).pipe(delay(1000));
+
+        return of([
+          {
+            id: 'hgfdhfhgfh',
+            name: 'Physical Search',
+          },
+          {
+            id: 'kjhgkjkhk',
+            name: 'Digital Download Search',
+          },
+          {
+            id: 'qwfeerwer',
+            name: 'Email Search',
+          },
+          {
+            id: 'hgfdfgfghfhgf',
+            name: 'Online Membership Search',
+          }
+        ]).pipe(delay(1000));
 
 
 
@@ -499,8 +499,9 @@ export class TempDataService {
                         left: '24px'
                       },
                       link: {
-                        selectedOption: 'webAddress',
-                        url: 'http://www.alitamovie.com'
+                        selectedOption: 'category',
+                        url: 'http://www.alitamovie.com',
+                        optionValue: 'Alita Category'
                       },
                       backgroundHoverColor: '#6b2456',
                       backgroundActiveColor: '#446e05',
@@ -2008,10 +2009,10 @@ export class TempDataService {
         let searchVideo5: MediaItem = new MediaItem(MediaType.Video); searchVideo5.name = 'Search Video 5'; searchVideo5.id = 'qweuywesdo'; searchVideo5.thumbnail = '1e83e80b1dbb4443a3b2c85023104caf.png'; searchVideo5.url = 'https://player.vimeo.com/video/218732620';
         let searchVideo6: MediaItem = new MediaItem(MediaType.Video); searchVideo6.name = 'Search Video 6'; searchVideo6.id = 'potyuoptuw'; searchVideo6.thumbnail = '1f0236db351b4535bec6a2701db9a8ea.png'; searchVideo6.url = 'https://player.vimeo.com/video/264188894';
         return of([searchVideo1, searchVideo2, searchVideo3, searchVideo4, searchVideo5, searchVideo6]).pipe(delay(1000));
-    
-        
 
-        case 'api/Products/Vendor':
+
+
+      case 'api/Products/Vendor':
         return of([
           {
             id: 'HGSGDGFFAFSD',
@@ -2034,9 +2035,208 @@ export class TempDataService {
             name: 'Once a Gumpy, Always a Gumpy'
           }
         ]).pipe(delay(1000));
-    
-    
-      }
+
+
+
+        case 'api/Pages/Links':
+        return of([
+          {
+            name: 'Alita Page',
+            link: 'http://www.alitamovie.com'
+          },
+          {
+            name: 'Gumpy\'s Page',
+            link: 'http://www.gumpys.com'
+          },
+          {
+            name: 'Ice Cream Page',
+            link: 'http://www.icecream.com'
+          },
+          {
+            name: 'Chocolate Page',
+            link: 'http://www.chocolate.com'
+          },
+          {
+            name: 'Vanilla Page',
+            link: 'http://www.vanilla.com'
+          },
+          {
+            name: 'Strawberry Page',
+            link: 'http://www.strawberry.com'
+          },
+          {
+            name: 'Avatar Page',
+            link: 'http://www.avatar.com'
+          },
+          {
+            name: 'Star Wars Page',
+            link: 'http://www.starwars.com'
+          },
+          {
+            name: 'Titanic Page',
+            link: 'http://www.titanic.com'
+          },
+          {
+            name: 'Spellbind Page',
+            link: 'http://www.spellbind.com'
+          }
+        ]).pipe(delay(1000));
+
+
+
+
+
+
+
+
+        case 'api/Categories/Links':
+        return of([
+          {
+            name: 'Alita Category',
+            link: 'http://www.alitamovie.com'
+          },
+          {
+            name: 'Gumpy\'s Category',
+            link: 'http://www.gumpys.com'
+          },
+          {
+            name: 'Ice Cream Category',
+            link: 'http://www.icecream.com'
+          },
+          {
+            name: 'Chocolate Category',
+            link: 'http://www.chocolate.com'
+          },
+          {
+            name: 'Vanilla Category',
+            link: 'http://www.vanilla.com'
+          },
+          {
+            name: 'Strawberry Category',
+            link: 'http://www.strawberry.com'
+          },
+          {
+            name: 'Avatar Category',
+            link: 'http://www.avatar.com'
+          },
+          {
+            name: 'Star Wars Category',
+            link: 'http://www.starwars.com'
+          },
+          {
+            name: 'Titanic Category',
+            link: 'http://www.titanic.com'
+          },
+          {
+            name: 'Spellbind Category',
+            link: 'http://www.spellbind.com'
+          }
+        ]).pipe(delay(1000));
+
+
+
+
+
+
+
+        case 'api/Niches/Links':
+        return of([
+          {
+            name: 'Alita Niche',
+            link: 'http://www.alitamovie.com'
+          },
+          {
+            name: 'Gumpy\'s Niche',
+            link: 'http://www.gumpys.com'
+          },
+          {
+            name: 'Ice Cream Niche',
+            link: 'http://www.icecream.com'
+          },
+          {
+            name: 'Chocolate Niche',
+            link: 'http://www.chocolate.com'
+          },
+          {
+            name: 'Vanilla Niche',
+            link: 'http://www.vanilla.com'
+          },
+          {
+            name: 'Strawberry Niche',
+            link: 'http://www.strawberry.com'
+          },
+          {
+            name: 'Avatar Niche',
+            link: 'http://www.avatar.com'
+          },
+          {
+            name: 'Star Wars Niche',
+            link: 'http://www.starwars.com'
+          },
+          {
+            name: 'Titanic Niche',
+            link: 'http://www.titanic.com'
+          },
+          {
+            name: 'Spellbind Niche',
+            link: 'http://www.spellbind.com'
+          }
+        ]).pipe(delay(1000));
+
+
+
+
+
+
+
+
+
+        case 'api/Products/Links':
+        return of([
+          {
+            name: 'Alita Product',
+            link: 'http://www.alitamovie.com'
+          },
+          {
+            name: 'Gumpy\'s Product',
+            link: 'http://www.gumpys.com'
+          },
+          {
+            name: 'Ice Cream Product',
+            link: 'http://www.icecream.com'
+          },
+          {
+            name: 'Chocolate Product',
+            link: 'http://www.chocolate.com'
+          },
+          {
+            name: 'Vanilla Product',
+            link: 'http://www.vanilla.com'
+          },
+          {
+            name: 'Strawberry Product',
+            link: 'http://www.strawberry.com'
+          },
+          {
+            name: 'Avatar Product',
+            link: 'http://www.avatar.com'
+          },
+          {
+            name: 'Star Wars Product',
+            link: 'http://www.starwars.com'
+          },
+          {
+            name: 'Titanic Product',
+            link: 'http://www.titanic.com'
+          },
+          {
+            name: 'Spellbind Product',
+            link: 'http://www.spellbind.com'
+          }
+        ]).pipe(delay(1000));
+
+
+    }
   }
 
 
