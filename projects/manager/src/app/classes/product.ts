@@ -3,7 +3,8 @@ import { ProductPricePoint } from './product-price-point';
 import { Media } from './media';
 import { SafeHtml } from '@angular/platform-browser';
 import { Item } from './item';
-import { ProductFilter } from './product-filter';
+import { Image } from './image';
+import { HierarchyCheckboxItem } from './hierarchy-checkbox-item';
 
 export interface Product {
     id: string;
@@ -15,9 +16,10 @@ export interface Product {
     description: string;
     content: Array<ProductContent>;
     pricePoints: Array<ProductPricePoint>;
+    image: Image;
     media: Array<Media>;
     price: string;
-    productFilters: Array<ProductFilter>;
+    filterOptionChanges: Array<HierarchyCheckboxItem>;
     keywords: Array<Item>;
     safeDescription?: SafeHtml;
 }

@@ -4,6 +4,7 @@ import { ProductService } from 'projects/manager/src/app/services/product.servic
 import { ProductDescriptionComponent } from './product-description/product-description.component';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { MediaType } from 'projects/manager/src/app/classes/media';
 
 @Component({
   selector: 'product-properties',
@@ -14,6 +15,7 @@ export class ProductPropertiesComponent implements OnChanges {
   @Input() productId: string;
   @ViewChild('description', { static: false }) productDescription: ProductDescriptionComponent;
   public product: Product;
+  public mediaType = MediaType;
 
   constructor(public loadingService: LoadingService, public productService: ProductService, private dataService: TempDataService) { }
 

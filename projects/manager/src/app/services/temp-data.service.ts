@@ -347,43 +347,7 @@ export class TempDataService {
 
 
 
-      // Keywords
-      case 'api/Products/Keywords':
 
-        return of([
-          {
-            id: 'AFSDFFDSFS',
-            name: 'Gumpy'
-          },
-          {
-            id: 'GGFSDFGFSDAF',
-            name: 'Ice Cream'
-          },
-          {
-            id: 'WFWFASF',
-            name: 'Chocolate'
-          },
-          {
-            id: 'HYTREYREY',
-            name: 'Vanilla'
-          },
-          {
-            id: 'UYTUYRUY',
-            name: 'Strawberry'
-          },
-          {
-            id: 'YTRYRE',
-            name: 'Sundae'
-          },
-          {
-            id: 'AFSDFFDSFS',
-            name: 'Ice Cream Cone'
-          },
-          {
-            id: 'AFSDFFDSFS',
-            name: 'Mint Chocolate Chip'
-          }
-        ]).pipe(delay(1000));
 
 
 
@@ -1124,8 +1088,41 @@ export class TempDataService {
           {
             id: 'F5TD6KOQHB',
             name: 'Gumpy\'s',
-          }
-          ,
+          },
+          keywords: [
+            {
+              id: 'AFSDFFDSFS',
+              name: 'Gumpy'
+            },
+            {
+              id: 'GGFSDFGFSDAF',
+              name: 'Ice Cream'
+            },
+            {
+              id: 'WFWFASF',
+              name: 'Chocolate'
+            },
+            {
+              id: 'HYTREYREY',
+              name: 'Vanilla'
+            },
+            {
+              id: 'UYTUYRUY',
+              name: 'Strawberry'
+            },
+            {
+              id: 'YTRYRE',
+              name: 'Sundae'
+            },
+            {
+              id: 'AFSDFFDSFS',
+              name: 'Ice Cream Cone'
+            },
+            {
+              id: 'AFSDFFDSFS',
+              name: 'Mint Chocolate Chip'
+            }
+          ],
           rating: 0,
           totalReviews: 0,
           hoplink: 'https://d7c4efozzevfuniljjxksc8r3g.hop.clickbank.net/',
@@ -1224,6 +1221,11 @@ export class TempDataService {
               textAfter: "a Year"
             }
           ],
+          image: {
+            id: 'UTWERTFASD',
+            name: 'Booty Type Training',
+            url: 'bootytypetraining.jpg'
+          },
           media: [
             {
               id: 'UTWERTFASD',
@@ -2038,7 +2040,7 @@ export class TempDataService {
 
 
 
-        case 'api/Pages/Links':
+      case 'api/Pages/Links':
         return of([
           {
             name: 'Alita Page',
@@ -2089,7 +2091,7 @@ export class TempDataService {
 
 
 
-        case 'api/Categories/Links':
+      case 'api/Categories/Links':
         return of([
           {
             name: 'Alita Category',
@@ -2139,7 +2141,7 @@ export class TempDataService {
 
 
 
-        case 'api/Niches/Links':
+      case 'api/Niches/Links':
         return of([
           {
             name: 'Alita Niche',
@@ -2191,7 +2193,7 @@ export class TempDataService {
 
 
 
-        case 'api/Products/Links':
+      case 'api/Products/Links':
         return of([
           {
             name: 'Alita Product',

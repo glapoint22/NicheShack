@@ -15,6 +15,11 @@
     <!-- Filters -->
     <filters-hierarchy [product]="product"></filters-hierarchy>
 
+    <!-- Image -->
+    <panel [title]="'Image'">
+        <image [image]="product.image" [mediaType]="mediaType.ProductImage"></image>
+    </panel>
+
 
     <!-- Content -->
     <product-content [content]="product.content" [pricePoints]="product.pricePoints">
@@ -26,7 +31,7 @@
 
 
     <!-- Keywords -->
-    <product-keywords [product]="product"></product-keywords>
+    <product-keywords [keywords]="product.keywords"></product-keywords>
 
 
     <!-- Description -->

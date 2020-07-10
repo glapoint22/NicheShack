@@ -16,7 +16,7 @@
 
     <!-- Image -->
     <div class="img-container">
-        <div *ngIf="image && image.url" [ngStyle]="{ 'background-image': 'url(images/' + image.url + ')'}" class="img">
+        <div *ngIf="image && image.url" [ngStyle]="{ 'background-image': 'url(images/' + image.url + ')'}" class="img" [title]="image.name">
         </div>
         <div *ngIf="!image || !image.url" class="no-property">No image available</div>
     </div>
