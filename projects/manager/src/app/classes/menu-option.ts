@@ -1,11 +1,28 @@
-export class MenuOption {
-    type: string;
-    name?: string;
-    subMenuIndex?: number;
-    subMenuTop?: number;
-    shortcutKeys?: string;
-    isDisabled?: boolean;
-    menuOptionFunction?: Function;
-    functionParameters?: any;
-    path?: string;
+import { Option } from './option';
+import { MenuOptions } from './menu-options';
+import { MenuOptionType } from './menu-option-type';
+import { Menu } from './menu';
+
+export class MenuOption extends Option implements MenuOptions {
+    public type: MenuOptionType = MenuOptionType.MenuOption;
+
+    constructor(name: string, isDisabled: boolean, public menuOptionFunction: Function, public functionParameters?: any, shortcutKeys?: string) {
+        super(name, isDisabled, shortcutKeys)
+    }
+
+
+    // -----------------------------( CREATE OPTION )------------------------------ \\
+    createOption(options: Array<MenuOptions>) {
+        options.push(new MenuOption(this.name, this.isDisabled, this.menuOptionFunction, this.functionParameters, this.shortcutKeys));
+    }
+
+
+    // -----------------------------( CLICK )------------------------------ \\
+    click(currentObj: Object) {
+        // As long as this menu option is NOT disabled
+        if (!this.isDisabled) {
+            // Call the function that is associated with this menu option
+            this.menuOptionFunction.apply(currentObj, this.functionParameters)
+        }
+    }
 }
