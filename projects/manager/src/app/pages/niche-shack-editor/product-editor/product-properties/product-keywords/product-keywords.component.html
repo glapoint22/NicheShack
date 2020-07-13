@@ -1,5 +1,5 @@
 <!-- Panel -->
-<panel [title]="'Keywords'" (onClick)="onPanelClick($event)">
+<panel [title]="'Keywords'">
 
     <!-- Property Box -->
     <div class="property-box-dark" style="position: relative;">
@@ -37,16 +37,8 @@
 
         <!-- Editable Item LIst -->
         <editable-item-list #itemList [listItems]="keywords"
-            (postItemName)="onChange($event)"
-            (updateItemName)="onChange($event)"
             [menuOptions]="['New Keyword', 'Edit Keyword', 'Delete Keyword', 'Delete Keywords']">
         </editable-item-list>
-
-
-
-        <div class="loading" *ngIf="!keywords">
-            <i class="fas fa-spinner fa-pulse font-size-3"></i>
-        </div>
 
 
 

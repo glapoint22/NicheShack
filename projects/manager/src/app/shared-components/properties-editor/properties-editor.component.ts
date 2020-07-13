@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CoverService } from '../../services/cover.service';
 
 @Component({
@@ -7,13 +7,10 @@ import { CoverService } from '../../services/cover.service';
   styleUrls: ['./properties-editor.component.scss']
 })
 export class PropertiesEditorComponent implements OnInit {
-  @ViewChild('sizingBar', { static: false }) sizingBar: ElementRef;
   private propertiesEditorContainer: HTMLElement;
 
 
-  constructor(private coverService: CoverService) {
-
-  }
+  constructor(private coverService: CoverService) { }
 
 
   // ------------------( NG ON INIT )------------------- \\
@@ -46,7 +43,7 @@ export class PropertiesEditorComponent implements OnInit {
     let onMouseup = () => {
       window.removeEventListener("mousemove", onMousemove);
       window.removeEventListener("mouseup", onMouseup);
-      
+
       // Hide the cover
       this.coverService.showResizeCover = false;
     }

@@ -1,7 +1,7 @@
 import { Image } from './image';
+import { Item } from './item';
+import { ImageData } from './image-data';
 
-export class Category {
-    id: string;
-    name: string;
-    icon: Image = new Image();
+export interface Category extends Item {
+    icon: ImageData;
 }

@@ -39,6 +39,7 @@ import { PopupComponent } from './shared-components/popups/popup/popup.component
 import { ShackIconComponent } from './shared-components/shack-icon/shack-icon.component';
 import { MenuBarComponent } from './shared-components/menu-bar/menu-bar.component';
 import { SharedModule } from './shared-components/shared.module';
+import { NotificationProductDescriptionComponent } from './shared-components/popups/notification-popups/product-description-notification-popup/notification-product-description/notification-product-description.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { SharedModule } from './shared-components/shared.module';
     HierarchyContentComponent,
     PopupComponent,
     ShackIconComponent,
-    MenuBarComponent
+    MenuBarComponent,
+    NotificationProductDescriptionComponent
   ],
   imports: [
     BrowserModule,

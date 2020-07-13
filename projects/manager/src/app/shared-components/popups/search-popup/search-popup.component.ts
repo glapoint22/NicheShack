@@ -54,7 +54,7 @@ export class SearchPopupComponent extends PopupComponent implements OnInit {
             return of();
           }
 
-          return this.dataService.get(this.searchable.apiUrl + '/Search', [{ key: 'search', value: event.target.value }]);
+          return this.dataService.get(this.searchable.apiUrl + '/Search', [{ key: 'searchWords', value: event.target.value }]);
         }))
       .subscribe((results: Array<Item>) => {
         this.searchable.searchResults = results;

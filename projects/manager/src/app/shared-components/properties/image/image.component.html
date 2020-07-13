@@ -3,12 +3,13 @@
     <!-- Icons -->
     <div class="icons">
         <!-- Delete icon -->
-        <div class="icon-container" [ngClass]="{'icon-disabled': !image || !image.url}" (click)="onDeleteImageClick()">
+        <div *ngIf="!noDelete" class="icon-container" [ngClass]="{'icon-disabled': !image || !image.url}"
+            (click)="onDeleteImageClick()" title="Delete Image">
             <i class="fas fa-trash-alt"></i>
         </div>
 
         <!-- Media browser icon -->
-        <div class="icon-container" (click)="onClick($event.target)">
+        <div class="icon-container" (click)="onClick($event.target)" title="Open Media Browser">
             <i class="fas fa-image"></i>
         </div>
     </div>
@@ -16,7 +17,8 @@
 
     <!-- Image -->
     <div class="img-container">
-        <div *ngIf="image && image.url" [ngStyle]="{ 'background-image': 'url(images/' + image.url + ')'}" class="img">
+        <div *ngIf="image && image.url" [ngStyle]="{ 'background-image': 'url(images/' + image.url + ')'}" class="img"
+            [title]="image.name">
         </div>
         <div *ngIf="!image || !image.url" class="no-property">No image available</div>
     </div>

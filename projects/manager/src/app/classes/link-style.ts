@@ -15,26 +15,35 @@ export class LinkStyle extends NodeStyle {
         // Subscribe when the popup closes
         this.linkPopupSubscription = linkPopup.onPopupClose.subscribe(() => {
             let linkData: Link = new Link();
+            let anchor: HTMLElement;
 
             // Get the link data
             if (this.isSelected) {
-                linkData = this.getLinkData(this.getAnchorNode(this.selectedRange));
+                anchor = this.getAnchorNode(this.selectedRange);
+                if (anchor) linkData = this.getLinkData(anchor);
             }
 
 
             // Decide if we apply the link data or remove the link data
             if (this.link.url && this.link.selectedOption != LinkOption.None && (this.link.selectedOption != linkData.selectedOption || this.link.url != linkData.url)) {
                 this.applyStyle();
-            } else if (this.link.selectedOption == LinkOption.None && this.isSelected) {
+            } else if (this.link.selectedOption == LinkOption.None && anchor) {
                 this.removeLink();
+            } else {
+                if (linkData.url) {
+                    this.link = linkData;
+                } else {
+                    this.link.selectedOption = LinkOption.None;
+                }
             }
+
 
             // Set the focus back to the text
             this.setFocus();
         });
     }
 
-    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+    constructor(contentDocument: HTMLDocument, onChange: Subject<string>) {
         super(contentDocument, onChange);
 
         this.style = 'A';
@@ -52,15 +61,13 @@ export class LinkStyle extends NodeStyle {
             let anchor = this.getAnchorNode(this.selectedRange);
 
             // Update the selection to select all of the link text if it isn't already
-            this.updateSelection(anchor);
-
+            if (anchor) this.updateSelection(anchor);
         } else {
             // If the selection is collapsed, flag to disable the link popup
             if (this.selectedRange.collapsed || !this.isSingleLineSelection) {
                 this.link.disabled = true;
             }
         }
-
     }
 
 
@@ -95,11 +102,16 @@ export class LinkStyle extends NodeStyle {
 
         if (this.isSelected) {
             // Get the link data
-            let link: Link = this.getLinkData(this.getAnchorNode(range));
+            let anchor = this.getAnchorNode(range);
 
-            // Assign the link data
-            this.link.selectedOption = link.selectedOption;
-            this.link.url = link.url;
+            if (anchor) {
+                let link: Link = this.getLinkData(anchor);
+
+                // Assign the link data
+                this.link.selectedOption = link.selectedOption;
+                this.link.url = link.url;
+                this.link.optionValue = link.optionValue;
+            }
         }
     }
 
@@ -114,9 +126,9 @@ export class LinkStyle extends NodeStyle {
 
     // -------------------------------------------------------------------------- Set Style -----------------------------------------------------------------
     setStyle(range: Range) {
-        let anchor: HTMLElement;
+        let anchor: HTMLElement = this.getAnchorNode(range);;
 
-        if (!this.isSelected) {
+        if (!anchor) {
             // Create the anchor node and append the contents
             anchor = document.createElement('A');
             anchor.appendChild(range.extractContents());
@@ -128,14 +140,9 @@ export class LinkStyle extends NodeStyle {
             this.isSelected = true;
 
         }
-        else {
-            // Get the anchor from the selection
-            anchor = this.getAnchorNode(range);
-        }
 
-        // Assign the link data to the anchor
+
         this.setLinkData(anchor);
-
         this.updateSelection(anchor);
     }
 
@@ -149,11 +156,12 @@ export class LinkStyle extends NodeStyle {
     // --------------------------------------------------------------------------- Get Link Data -------------------------------------------------------------
     getLinkData(node: HTMLElement): Link {
         let link = new Link();
-        let data = JSON.parse(node.getAttribute('href'));
+        // let data = JSON.parse(node.getAttribute('href'));
 
         // Assign the data and return the link object
-        link.selectedOption = data.selectedOption;
-        link.url = data.url;
+        link.selectedOption = node.getAttribute('option') as LinkOption;
+        link.url = node.getAttribute('href');
+        link.optionValue = node.getAttribute('optionvalue');
         return link;
     }
 
@@ -169,9 +177,12 @@ export class LinkStyle extends NodeStyle {
 
     // --------------------------------------------------------------------------- Set Link Data -------------------------------------------------------------
     setLinkData(anchor: HTMLElement) {
+        // JSON.stringify({ selectedOption: this.link.selectedOption, url: this.link.url })
         // Assign the data to the anchor node
-        anchor.setAttribute('href', JSON.stringify({ selectedOption: this.link.selectedOption, url: this.link.url }));
+        anchor.setAttribute('href', this.link.url);
         anchor.setAttribute('target', '_blank');
+        anchor.setAttribute('option', this.link.selectedOption);
+        anchor.setAttribute('optionValue', this.link.optionValue);
     }
 
 
@@ -191,7 +202,7 @@ export class LinkStyle extends NodeStyle {
         let node: HTMLElement = range.startContainer as HTMLElement;
 
         // Loop through each node until we find the anchor node
-        while (node.tagName != 'A') {
+        while (node && node.tagName != 'A') {
             node = node.parentElement;
         }
 
@@ -219,7 +230,9 @@ export class LinkStyle extends NodeStyle {
         this.selectedRange.setEnd(lastTextChild, lastTextChild.length);
 
         // Flag that this style is not selected
-        this.isSelected = false;
+        // this.isSelected = false;
+
+        this.onChange.next(this.contentDocument.body.firstElementChild.innerHTML);
     }
 
 
@@ -237,19 +250,21 @@ export class LinkStyle extends NodeStyle {
     removeStyle(range) {
         let anchor = this.getAnchorNode(range);
 
-        // Set the range to include all the contents within the anchor node
-        range.setStartBefore(anchor.firstChild);
-        let lastTextChild = this.getLastTextChild(anchor);
-        range.setEnd(lastTextChild, lastTextChild.length);
+        if (anchor) {
+            // Set the range to include all the contents within the anchor node
+            range.setStartBefore(anchor.firstChild);
+            let lastTextChild = this.getLastTextChild(anchor);
+            range.setEnd(lastTextChild, lastTextChild.length);
 
-        // Extract the contents
-        let contents = range.extractContents();
+            // Extract the contents
+            let contents = range.extractContents();
 
-        // Remove the anchor node
-        anchor.remove();
+            // Remove the anchor node
+            anchor.remove();
 
-        // Put the contents back
-        range.insertNode(contents);
+            // Put the contents back
+            range.insertNode(contents);
+        }
     }
 
 
@@ -263,6 +278,7 @@ export class LinkStyle extends NodeStyle {
     resetLinkData() {
         this.link.url = '';
         this.link.selectedOption = LinkOption.None;
+        this.link.optionValue = '';
     }
 
 

@@ -1484,7 +1484,15 @@ export class NotificationService {
         }
       ],
 
-      productDescription: 'This is a description that is other, so here you have to redo the description so that it is no longer other.',
+      productDescription: '<div>"The Skinny Asian Diet" Program gives you all of the incredible strategies and secret methods Asian women ' +
+      'are using to get super-lean, super-healthy, and super-happy without expensive fitness gear and without going hungry. And it ' +
+      'works even if your schedule is too busy for a single spare minute! Whether you\'re a career-oriented gal logging 60 hours a week ' +
+      'at the office or a stay-at-home mom who would like to finally drop that annoying post-baby fat you\'ve been carrying, the program ' +
+      'will get you where you want to be fast. The beauty of the program is that it works for every weight loss scenario. It doesn\'t matter ' +
+      'if you\'re 10 pounds overweight or 100 pounds overweight, you will achieve your goal number quickly! "The Skinny Asian Diet" works for ' +
+      'men too, so feel free to share the system with your husband or boyfriend if he has his own spare-tire you\'d like to see disappear. The ' +
+      'best part of all is that it won\'t feel like you\'re on a diet at all. It will feel like you\'re living life to the fullest, eating large ' +
+      'meals filled with great food that is simple to prepare, with no midnight cravings for sweets or other guilty pleasures!</div>',
 
       notesText: [
         {

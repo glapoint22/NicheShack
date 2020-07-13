@@ -3,7 +3,7 @@ import { ProductPricePoint } from './product-price-point';
 import { Media } from './media';
 import { SafeHtml } from '@angular/platform-browser';
 import { Item } from './item';
-import { ProductFilter } from './product-filter';
+import { ImageData } from './image-data';
 
 export interface Product {
     id: string;
@@ -15,9 +15,9 @@ export interface Product {
     description: string;
     content: Array<ProductContent>;
     pricePoints: Array<ProductPricePoint>;
+    image: ImageData;
     media: Array<Media>;
     price: string;
-    productFilters: Array<ProductFilter>;
     keywords: Array<Item>;
     safeDescription?: SafeHtml;
 }

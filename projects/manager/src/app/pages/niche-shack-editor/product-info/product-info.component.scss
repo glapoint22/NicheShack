@@ -43,6 +43,13 @@
                 }
             }
 
+            .no-thumbnail {
+                font-size: 11px;
+                border: 1px solid #6b6b6b;
+                color: #b9b9b9;
+                text-align: center;
+            }
+
             .selected-thumbnail {
                 outline: 5px solid $selected-border-color;
                 outline-offset: -5px;

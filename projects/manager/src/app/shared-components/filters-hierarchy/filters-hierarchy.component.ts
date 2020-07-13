@@ -3,7 +3,6 @@ import { HierarchyComponent } from '../hierarchy/hierarchy.component';
 import { HierarchyItem, FilterHierarchyItemType } from '../../classes/hierarchy-item';
 import { HierarchyCheckboxItem } from '../../classes/hierarchy-checkbox-item';
 import { Product } from '../../classes/product';
-import { ProductFilter } from '../../classes/product-filter';
 import { PanelComponent } from '../panel/panel.component';
 
 @Component({
@@ -14,6 +13,17 @@ import { PanelComponent } from '../panel/panel.component';
 export class FiltersHierarchyComponent extends HierarchyComponent {
   @Input() product: Product;
   @ViewChild('panel', { static: false }) panel: PanelComponent;
+
+
+  ngOnChanges() {
+    // Load the filters
+    this.load('api/Filters').subscribe((items: Array<HierarchyCheckboxItem>) => {
+      this.items = items;
+      window.setTimeout(() => {
+        this.panel.onContentLoad();
+      });
+    });
+  }
 
   // -----------------------------( MAP ITEMS )------------------------------ \\
   mapItems(items: Array<HierarchyItem>, parent?: HierarchyItem) {
@@ -44,44 +54,12 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
 
 
 
-  // -----------------------------( ON PANEL CLICK )------------------------------ \\
-  onPanelClick(expanded: boolean) {
-    if (expanded) {
-      if (!this.items) {
-        this.load('api/Filters')
-          .subscribe((items: Array<HierarchyItem>) => {
-            this.items = items;
-          });
-      }
-    }
-  }
-
-
-
   // -----------------------------( ON CHANGE )------------------------------ \\
-  onChange(item: HierarchyCheckboxItem) {
-    let productFilter: ProductFilter;
-
-    // If we have any product filters
-    if (this.product.productFilters) {
-      // Find the product filter in the array
-      productFilter = this.product.productFilters.find(x => x.id == item.id);
-
-      // We have no prodcut filters so initialize new product filters with a length of zero
-    } else {
-      this.product.productFilters = [];
-    }
-
-    // If we have a product filter, update it
-    if (productFilter) {
-      productFilter.checked = item.checked;
-
-      // This product filter does not exist in the array, add it
-    } else {
-      this.product.productFilters.push({
-        id: item.id,
-        checked: item.checked
-      });
-    }
+  onChange(filterOption: HierarchyCheckboxItem) {
+    this.dataService.put('api/Products/Filters', {
+      productId: this.product.id,
+      filterOptionId: filterOption.id,
+      checked: filterOption.checked
+    }).subscribe();
   }
 }

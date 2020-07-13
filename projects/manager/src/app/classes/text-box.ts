@@ -36,7 +36,7 @@ export class TextBox {
     public orderedList: OrderedList;
     public unorderedList: UnorderedList;
     public linkStyle: LinkStyle;
-    public onChange = new Subject<void>();
+    public onChange = new Subject<string>();
     public content: HTMLElement;
 
 
@@ -69,6 +69,21 @@ export class TextBox {
                 text-align: left;
                 color: ` + defaultFontColor.toRGBString() + `;
                 line-height: normal;
+            }
+            ::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+                border-radius: 10px;
+                background-color: #131212;
+            }
+            ::-webkit-scrollbar {
+                width: 12px;
+                height: 12px;
+                background-color: #131212;
+            }
+            ::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+                background-color: #444;
             }
             ul, ol {
                 margin-top: 0;
@@ -201,7 +216,7 @@ export class TextBox {
         });
 
         contentDocument.oninput = () => {
-            this.onChange.next();
+            this.onChange.next(this.content.innerHTML);
             applicationRef.tick();
         }
 
@@ -289,7 +304,7 @@ export class TextBox {
                                 event.preventDefault();
                             }
 
-                            this.onChange.next();
+                            this.onChange.next(this.content.innerHTML);
                         }
                     }
 

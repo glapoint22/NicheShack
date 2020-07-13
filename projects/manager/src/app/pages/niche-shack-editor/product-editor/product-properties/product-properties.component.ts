@@ -1,7 +1,6 @@
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
-import { ProductDescriptionComponent } from './product-description/product-description.component';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 
@@ -12,7 +11,6 @@ import { TempDataService } from 'projects/manager/src/app/services/temp-data.ser
 })
 export class ProductPropertiesComponent implements OnChanges {
   @Input() productId: string;
-  @ViewChild('description', { static: false }) productDescription: ProductDescriptionComponent;
   public product: Product;
 
   constructor(public loadingService: LoadingService, public productService: ProductService, private dataService: TempDataService) { }
@@ -32,24 +30,7 @@ export class ProductPropertiesComponent implements OnChanges {
           // Assign the product
           this.productService.product = this.product = product;
           this.loadingService.loading = false;
-
-          // Set the product description
-          if (this.productDescription && this.productDescription.description) {
-            this.productDescription.description.content.innerHTML = product.description;
-            this.productDescription.description.onChange.next();
-          }
         });
     }
-  }
-
-
-
-  onSaveClick() {
-    this.loadingService.loading = true;
-
-    this.dataService.put('api/Products/Product', this.product)
-      .subscribe(() => {
-        this.loadingService.loading = false;
-      });
   }
 }

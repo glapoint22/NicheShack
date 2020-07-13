@@ -25,7 +25,6 @@ import { CaptionComponent } from '../properties/caption/caption.component';
 import { NumberFieldComponent } from '../elements/number-fields/number-field/number-field.component';
 import { ColorSwatchComponent } from '../elements/color-swatch/color-swatch.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
-import { EditableDropdownComponent } from '../elements/dropdowns/editable-dropdown/editable-dropdown.component';
 import { EditableNumberFieldComponent } from '../elements/number-fields/editable-number-field/editable-number-field.component';
 import { PagePropertiesComponent } from '../properties/page-properties/page-properties.component';
 import { RowPropertiesComponent } from '../row-properties/row-properties.component';
@@ -44,7 +43,6 @@ import { CarouselWidgetPropertiesComponent } from '../widget-properties/carousel
 import { CategoriesWidgetPropertiesComponent } from '../widget-properties/categories-widget-properties/categories-widget-properties.component';
 import { ProductGroupWidgetPropertiesComponent } from '../widget-properties/product-group-widget-properties/product-group-widget-properties.component';
 import { BackgroundComponent } from '../properties/background/background.component';
-import { LinkIconComponent } from '../link-icon/link-icon.component';
 import { ColorComponent } from '../properties/color/color.component';
 import { FiltersHierarchyComponent } from '../filters-hierarchy/filters-hierarchy.component';
 import { PropertiesEditorComponent } from './properties-editor.component';
@@ -83,7 +81,6 @@ import { SharedModule } from '../shared.module';
     VideoComponent,
     CaptionComponent,
     NumberFieldComponent,
-    EditableDropdownComponent,
     ColorSwatchComponent,
     EditableNumberFieldComponent,
     PagePropertiesComponent,
@@ -99,7 +96,6 @@ import { SharedModule } from '../shared.module';
     CarouselWidgetPropertiesComponent,
     CategoriesWidgetPropertiesComponent,
     BackgroundComponent,
-    LinkIconComponent,
     ColorComponent,
     FiltersHierarchyComponent,
     EmailPropertiesComponent,
@@ -140,7 +136,6 @@ import { SharedModule } from '../shared.module';
     VideoComponent,
     CaptionComponent,
     NumberFieldComponent,
-    EditableDropdownComponent,
     ColorSwatchComponent,
     EditableNumberFieldComponent,
     PagePropertiesComponent,
@@ -156,7 +151,6 @@ import { SharedModule } from '../shared.module';
     CarouselWidgetPropertiesComponent,
     CategoriesWidgetPropertiesComponent,
     BackgroundComponent,
-    LinkIconComponent,
     ColorComponent,
     FiltersHierarchyComponent,
     EmailPropertiesComponent,

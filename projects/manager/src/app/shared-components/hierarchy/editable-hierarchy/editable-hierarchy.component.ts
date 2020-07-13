@@ -29,7 +29,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
             this.clearSearchResults();
             return of();
           }
-          return this.load(this.getUrl(this.filterType) + '/Search', [{ key: 'search', value: this.searchInput.value }]);
+          return this.load(this.getUrl(this.filterType) + '/Search', [{ key: 'searchWords', value: this.searchInput.value }]);
         }))
       .pipe(tap((items: Array<HierarchyItem>) => {
         this.mapItems(items, null, this.filterType);
@@ -376,8 +376,10 @@ export class EditableHierarchyComponent extends HierarchyComponent {
         el.contentEditable = 'false';
         this.editMode = false;
       } else {
-        // Deselect the selected item
-        this.selectedItem = null;
+        // If prompt is not up, deselect the selected item
+        if (!this.promptService.show) {
+          this.selectedItem = null;
+        }
       }
     }
   }

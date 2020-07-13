@@ -92,7 +92,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // But if the search input text is NOT empty, then turn on the spinner
       this.loadingMediaInProgress = true;
       // Return the search results
-      return this.dataService.get(this.getUrl(this.popupService.mediaType) + '/Search', [{ key: 'search', value: searchInput.value }]);
+      return this.dataService.get(this.getUrl(this.popupService.mediaType) + '/Search', [{ key: 'searchWords', value: searchInput.value }]);
     }));
 
     // If a match was found

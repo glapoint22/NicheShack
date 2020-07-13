@@ -16,7 +16,7 @@ export class CheckboxItemListComponent extends ItemListComponent implements OnIn
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     // When the price point popup becomes hidden
-    this.popupService.pricePointPopup.onPopupHide.subscribe(() => {
+    this.popupService.pricePointPopup.onPopupClose.subscribe(() => {
       // If a list item is selected
       if (this.selectedListItemIndex != null) {
         // Set the focus back to that list item

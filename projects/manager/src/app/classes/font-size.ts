@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 
 export class FontSize extends DropdownStyle {
 
-    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+    constructor(contentDocument: HTMLDocument, onChange: Subject<string>) {
         contentDocument = contentDocument != null ? contentDocument : document.implementation.createHTMLDocument();
 
         super(contentDocument, onChange);

@@ -1,17 +1,62 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { Media, MediaType } from 'projects/manager/src/app/classes/media';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
+import { Subscription } from 'rxjs';
+import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { PromptService } from 'projects/manager/src/app/services/prompt.service';
+import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 
 @Component({
   selector: 'product-media',
   templateUrl: './product-media.component.html',
   styleUrls: ['./product-media.component.scss']
 })
-export class ProductMediaComponent {
+export class ProductMediaComponent implements OnInit, OnChanges, OnDestroy {
   @Input() media: Array<Media>;
+  @ViewChild('paginator', { static: false }) paginator: PaginatorComponent;
   public mediaType = MediaType;
-  constructor(private popupService: PopupService, public productService: ProductService){}
+  private subscription: Subscription;
+  private currentMediaId: string;
+
+
+  constructor(
+    private popupService: PopupService,
+    public productService: ProductService,
+    private dataService: TempDataService,
+    private promptService: PromptService
+  ) { }
+
+
+  // -----------------------------( NG ON INIT )------------------------------ \\
+  ngOnInit() {
+    this.subscription = this.popupService.mediaBrowserPopup.onPopupClose
+      .subscribe(() => {
+        // Test to see if the media changed
+        if (this.currentMediaId != this.productService.currentSelectedMedia.id) {
+
+          // Update the media
+          this.dataService.put('api/Products/Media', {
+            productId: this.productService.product.id,
+            oldMediaId: this.currentMediaId,
+            newMediaId: this.productService.currentSelectedMedia.id
+          })
+            .subscribe(() => {
+              // Set the current media id as the new media id
+              this.currentMediaId = this.productService.currentSelectedMedia.id;
+            });
+        }
+      });
+  }
+
+
+
+  // -----------------------------( NG ON CHANGES )------------------------------ \\
+  ngOnChanges() {
+    if (this.media.length > 0) this.currentMediaId = this.media[0].id;
+  }
+
+
 
   // -----------------------------( ON PAGINATOR CLICK )------------------------------ \\
   onPaginatorClick(pageIndex: number) {
@@ -37,5 +82,64 @@ export class ProductMediaComponent {
     this.popupService.sourceElement = sourceElement;
     this.popupService.mediaBrowserPopup.media = this.media[this.productService.currentSelectedMediaIndex];
     this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
+  }
+
+
+
+  // -----------------------------( ADD MEDIA ITEM )------------------------------ \\
+  addMediaItem() {
+    this.dataService.post('api/Products/Media', this.productService.product.id)
+      .subscribe((id: string) => {
+        this.media[this.productService.currentSelectedMediaIndex].id = id;
+      });
+
+    this.productService.product.media.push({
+      id: null,
+      name: null,
+      url: null
+    });
+    this.paginator.setPage(this.productService.product.media.length);
+    this.productService.currentSelectedMediaIndex = this.productService.product.media.length - 1;
+    this.productService.currentSelectedMedia = this.media[this.productService.currentSelectedMediaIndex];
+    this.productService.scrollTop = this.productService.currentSelectedMediaIndex * 64;
+  }
+
+
+
+
+  // -----------------------------( ON DELETE CLICK )------------------------------ \\
+  onDeleteClick() {
+    if (this.media.length == 0) return;
+
+    let promptTitle = 'Delete';
+    let promptMessage = 'Are you sure you want to delete this media item?';
+
+    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteMediaItem, this);
+  }
+
+
+  // -----------------------------( DELETE ITEM )------------------------------ \\
+  deleteMediaItem() {
+    this.dataService.delete('api/Products/Media', this.media[this.productService.currentSelectedMediaIndex].id)
+      .subscribe();
+
+    this.media.splice(this.productService.currentSelectedMediaIndex, 1);
+    this.productService.currentSelectedMediaIndex = Math.min(this.media.length - 1, this.productService.currentSelectedMediaIndex);
+
+    if (this.productService.currentSelectedMediaIndex >= 0) {
+      this.productService.currentSelectedMedia = this.media[this.productService.currentSelectedMediaIndex];
+      this.productService.setCurrentSelectedMedia(this.media[this.productService.currentSelectedMediaIndex]);
+      this.productService.scrollTop = this.productService.currentSelectedMediaIndex * 64;
+    } else {
+      this.productService.currentSelectedMediaIndex = 0;
+    }
+
+  }
+
+
+
+  // -----------------------------( NG ON DESTROY )------------------------------ \\
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

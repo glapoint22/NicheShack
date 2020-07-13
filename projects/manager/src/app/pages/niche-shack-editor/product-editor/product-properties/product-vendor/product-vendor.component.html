@@ -18,9 +18,9 @@
         </div>
 
         <!-- Link -->
-        <ng-container *ngIf="vendor; else placeholder">
+        <ng-container *ngIf="product.vendor; else placeholder">
             <div class="vendor">
-                {{vendor.name}}
+                {{product.vendor.name}}
             </div>
         </ng-container>
 

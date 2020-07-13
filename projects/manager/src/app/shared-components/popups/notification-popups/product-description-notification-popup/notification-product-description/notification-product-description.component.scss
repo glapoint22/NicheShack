@@ -1,12 +1,10 @@
 @import '../../../../../../scss/variables';
 
 .icon-bar {
-    border: 1px solid #4f4f4f;
-    border-bottom: 0;
-    padding: 5px;
+    background: #292929;
     margin: 2px;
-    background-color: #3b3b3b;
-    justify-content: space-between;
+    padding-right: 2px;
+    height: 40px;
     align-items: center;
     flex-direction: row;
     overflow: auto;
@@ -17,14 +15,6 @@
     }
 }
 
-.icon-container {
-    margin: 4px;
-    border-radius: 2px;
-
-    &:hover:not(.selected) {
-        background-color: $hover-fill-color;
-    }
-}
 
 iframe {
     width: 100%;
@@ -35,7 +25,6 @@ iframe {
     display: block;
     overflow: hidden;
 }
-
 
 .selected {
     background: $selected-fill-color;

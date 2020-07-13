@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ColorSwatchComponent } from '../../../../../../shared-components/elements/color-swatch/color-swatch.component';
 import { Color } from '../../../../../../classes/color';
 import { Description } from 'projects/manager/src/app/classes/description';

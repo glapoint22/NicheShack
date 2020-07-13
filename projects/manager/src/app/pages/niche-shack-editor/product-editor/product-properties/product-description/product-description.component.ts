@@ -3,6 +3,10 @@ import { Description } from 'projects/manager/src/app/classes/description';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { PanelComponent } from 'projects/manager/src/app/shared-components/panel/panel.component';
+import { of } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 
 @Component({
   selector: 'product-description',
@@ -11,10 +15,16 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class ProductDescriptionComponent implements AfterViewInit {
   @ViewChild('iframe', { static: false }) iframe: ElementRef;
+  @ViewChild('panel', { static: false }) panel: PanelComponent;
   public description: Description;
 
 
-  constructor(private applicationRef: ApplicationRef, private productService: ProductService, private sanitizer: DomSanitizer) { }
+  constructor(
+    private applicationRef: ApplicationRef,
+    private productService: ProductService,
+    private sanitizer: DomSanitizer,
+    private dataService: TempDataService
+  ) { }
 
 
   // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
@@ -42,28 +52,42 @@ export class ProductDescriptionComponent implements AfterViewInit {
       }
 
 
-      // Set the height of the iframe
-      this.setIframeHeight();
-
       window.setTimeout(() => {
         window.focus();
       });
 
 
-      // Update the description in the product info window and update the height of the iframe and panel
-      this.description.onChange.subscribe(() => {
-        this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
-
-        this.setIframeHeight();
+      // Update the description in the product info window
+      this.description.onChange.subscribe((description: string) => {
+        this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(description);
       });
+
+
+      // Save the description to the database
+      this.description.onChange.pipe(
+        debounceTime(1000),
+        switchMap((description: string) => {
+          return this.dataService.put('api/Products/Description', {
+            productId: this.productService.product.id,
+            description: description
+          });
+        })).subscribe();
     }
+  }
+
+
+
+  ngDoCheck() {
+    if (this.description && this.iframe) this.setHeight();
   }
 
 
 
 
   // -----------------------------( SET IFRAME HEIGHT )------------------------------ \\
-  setIframeHeight() {
+  setHeight() {
     this.iframe.nativeElement.style.height = Math.max(64, this.description.getContentHeight()) + 'px';
+    if (!this.panel.expanded) this.panel.onContentLoad();
+
   }
 }

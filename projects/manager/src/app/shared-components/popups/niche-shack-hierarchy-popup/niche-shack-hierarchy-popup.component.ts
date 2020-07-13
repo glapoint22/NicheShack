@@ -24,8 +24,8 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
     return this._show;
   }
   public set show(v: boolean) {
-    this.popup.show = v;
     if (v) {
+      this.popup.show = v;
       this.onPopupShow();
     }
     this._show = v;

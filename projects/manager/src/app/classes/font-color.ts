@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 
 export class FontColor extends ColorStyle {
 
-    constructor(contentDocument: HTMLDocument, defaultColor: Color, onChange: Subject<void>) {
+    constructor(contentDocument: HTMLDocument, defaultColor: Color, onChange: Subject<string>) {
         super(contentDocument, onChange);
 
         this.style = 'color';

@@ -8,6 +8,9 @@ import { EditableItemListComponent } from './item-lists/editable-item-list/edita
 import { MediaItemListComponent } from './item-lists/media-item-list/media-item-list.component';
 import { NotificationsItemListComponent } from './item-lists/notifications-item-list/notifications-item-list.component';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
+import { EditableDropdownComponent } from './elements/dropdowns/editable-dropdown/editable-dropdown.component';
+import { ColorIconComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-description/color-icon/color-icon.component';
+import { LinkIconComponent } from './link-icon/link-icon.component';
 
 
 
@@ -15,11 +18,14 @@ import { CustomInputModule } from 'shared-components/custom-input/custom-input.m
   declarations: [
     PaginatorComponent,
     DropdownComponent,
+    EditableDropdownComponent,
     ItemListComponent,
     CheckboxItemListComponent,
     EditableItemListComponent,
     MediaItemListComponent,
-    NotificationsItemListComponent
+    NotificationsItemListComponent,
+    ColorIconComponent,
+    LinkIconComponent
   ],
   imports: [
     CommonModule,
@@ -28,11 +34,14 @@ import { CustomInputModule } from 'shared-components/custom-input/custom-input.m
   exports: [
     PaginatorComponent,
     DropdownComponent,
+    EditableDropdownComponent,
     ItemListComponent,
     CheckboxItemListComponent,
     EditableItemListComponent,
     MediaItemListComponent,
-    NotificationsItemListComponent
+    NotificationsItemListComponent,
+    ColorIconComponent,
+    LinkIconComponent
   ]
 })
 export class SharedModule { }

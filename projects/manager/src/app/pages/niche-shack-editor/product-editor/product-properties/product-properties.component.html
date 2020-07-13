@@ -1,12 +1,11 @@
 <div class="container" *ngIf="product">
     <!-- Save & Publish buttons -->
     <div class="grooved-container">
-        <div class="button-left" (click)="onSaveClick()">Save</div>
-        <div class="button-right">Publish</div>
+        <div class="button-center">Publish</div>
     </div>
 
     <!-- Vendor -->
-    <product-vendor id="first-property" [vendor]="product.vendor"></product-vendor>
+    <product-vendor id="first-property" [product]="product"></product-vendor>
 
     <!-- Hoplink -->
     <product-hoplink [product]="product"></product-hoplink>
@@ -21,14 +20,18 @@
     </product-content>
 
 
+    <!-- Image -->
+    <product-image [product]="product"></product-image>
+
+
     <!-- Media -->
     <product-media [media]="product.media"></product-media>
 
 
     <!-- Keywords -->
-    <product-keywords [product]="product"></product-keywords>
+    <product-keywords [keywords]="product.keywords"></product-keywords>
 
 
     <!-- Description -->
-    <product-description #description></product-description>
+    <product-description></product-description>
 </div>

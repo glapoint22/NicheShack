@@ -54,7 +54,7 @@ export class ItemListComponent implements OnInit {
     });
 
     // When the search popup becomes hidden
-    this.popupService.searchPopup.onPopupHide.subscribe(() => {
+    this.popupService.searchPopup.onPopupClose.subscribe(() => {
       // If a list item is selected
       if (this.selectedListItemIndex != null) {
         // Set the focus back to that list item
