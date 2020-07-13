@@ -13,7 +13,7 @@ export class Style {
     public contentParentNode: HTMLElement;
 
 
-    constructor(public contentDocument: HTMLDocument, public onChange: Subject<void> = new Subject<void>()) {
+    constructor(public contentDocument: HTMLDocument, public onChange: Subject<string> = new Subject<string>()) {
         this.contentParentNode = contentDocument.body.firstElementChild as HTMLElement;
     }
 
@@ -176,7 +176,7 @@ export class Style {
         }
 
         this.finalizeStyle();
-        this.onChange.next();
+        this.onChange.next(this.contentDocument.body.firstElementChild.innerHTML);
     }
 
 

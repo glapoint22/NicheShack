@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { Vendor } from 'projects/manager/src/app/classes/vendor';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { Product } from 'projects/manager/src/app/classes/product';
 
 @Component({
   selector: 'product-vendor',
@@ -14,7 +15,7 @@ import { TempDataService } from 'projects/manager/src/app/services/temp-data.ser
   styleUrls: ['./product-vendor.component.scss']
 })
 export class ProductVendorComponent implements Searchable {
-  @Input() vendor: Item;
+  @Input() product: Product;
   public apiUrl: string = 'api/Vendors';
   public searchResults: Array<Item>;
   public items: Array<Item>;
@@ -44,9 +45,9 @@ export class ProductVendorComponent implements Searchable {
     });
 
 
-    if (this.vendor) {
+    if (this.product.vendor) {
       this.loadingService.loading = true;
-      this.dataService.get('api/Vendors', [{ key: 'id', value: this.vendor.id }])
+      this.dataService.get(this.apiUrl, [{ key: 'id', value: this.product.vendor.id }])
         .subscribe((vendor: Vendor) => {
           // Give the vendor info to the vendor form
           this.formService.vendorForm.vendor = vendor;
@@ -66,7 +67,11 @@ export class ProductVendorComponent implements Searchable {
 
 
   // --------------------------------( SET SEARCH ITEM )-------------------------------- \\
-  setSearchItem(vendor: any) {
-    this.vendor = vendor;
+  setSearchItem(vendor: Item) {
+    if (!this.product.vendor || this.product.vendor.id != vendor.id) {
+      this.product.vendor = vendor;
+      this.dataService.put('api/Products/Vendor', this.product)
+        .subscribe();
+    }
   }
 }

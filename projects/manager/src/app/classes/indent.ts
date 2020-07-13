@@ -6,7 +6,7 @@ export class Indent extends LineStyle {
     public indentDirection: number;
     private selection: Selection;
 
-    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+    constructor(contentDocument: HTMLDocument, onChange: Subject<string>) {
         super(contentDocument, onChange);
 
         this.style = 'marginLeft';

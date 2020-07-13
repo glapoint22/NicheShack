@@ -36,7 +36,7 @@ export class TextBox {
     public orderedList: OrderedList;
     public unorderedList: UnorderedList;
     public linkStyle: LinkStyle;
-    public onChange = new Subject<void>();
+    public onChange = new Subject<string>();
     public content: HTMLElement;
 
 
@@ -216,7 +216,7 @@ export class TextBox {
         });
 
         contentDocument.oninput = () => {
-            this.onChange.next();
+            this.onChange.next(this.content.innerHTML);
             applicationRef.tick();
         }
 
@@ -304,7 +304,7 @@ export class TextBox {
                                 event.preventDefault();
                             }
 
-                            this.onChange.next();
+                            this.onChange.next(this.content.innerHTML);
                         }
                     }
 

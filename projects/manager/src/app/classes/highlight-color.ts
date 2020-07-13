@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 export class HighlightColor extends ColorStyle {
     private isRemoveColor: boolean;
 
-    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+    constructor(contentDocument: HTMLDocument, onChange: Subject<string>) {
         super(contentDocument, onChange);
 
         this.style = 'backgroundColor';

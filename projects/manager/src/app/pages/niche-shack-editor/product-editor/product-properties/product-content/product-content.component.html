@@ -8,19 +8,19 @@
         <div class="property-box-light-icon-bar">
 
             <!-- Paginator -->
-            <paginator #paginator [itemCount]="content.length" (onItemChange)="contentIndex = $event">
+            <paginator #paginator [itemCount]="content.length" (onItemChange)="onItemChange($event)">
             </paginator>
 
             <!-- Icons -->
             <div class="icons">
 
                 <!-- Delete Content Icon -->
-                <div class="icon-container" (click)="onDeleteContent(paginator)">
+                <div class="icon-container" (click)="onDeleteContent(paginator)" title="Delete Content">
                     <i class="fas fa-trash-alt"></i>
                 </div>
 
                 <!-- Add Content Icon -->
-                <div class="icon-container" (click)="addContent(paginator)">
+                <div class="icon-container" (click)="addContent(paginator)" title="Add Content">
                     <i class="fas fa-plus-circle"></i>
                 </div>
             </div>
@@ -35,7 +35,7 @@
             <div class="property">
                 <div class="label">Title:</div>
             </div>
-            <input class="txt-20" [(ngModel)]="content[contentIndex].title">
+            <input #titleInput class="txt-20" [(ngModel)]="content[contentIndex].title">
 
 
 
@@ -48,7 +48,7 @@
 
                 <!-- Image Icon -->
                 <div class="icons">
-                    <div class="icon-container" (click)="onImageIconClick($event.target)">
+                    <div class="icon-container" (click)="onImageIconClick($event.target)" title="Open Media Browser">
                         <i class="fas fa-image"></i>
                     </div>
                 </div>

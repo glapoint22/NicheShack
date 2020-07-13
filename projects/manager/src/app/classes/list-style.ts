@@ -31,7 +31,7 @@ export class ListStyle extends NodeStyle {
 
         this.setFocus();
 
-        this.onChange.next();
+        this.onChange.next(this.contentDocument.body.firstElementChild.innerHTML);
     }
 
 

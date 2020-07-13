@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 
 export class LowercaseStyle extends CaseStyle {
 
-    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+    constructor(contentDocument: HTMLDocument, onChange: Subject<string>) {
         super(contentDocument, onChange);
     }
 

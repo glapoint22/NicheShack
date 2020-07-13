@@ -23,6 +23,7 @@ import { ProductVendorComponent } from './product-editor/product-properties/prod
 import { ProductInfoComponent } from './product-info/product-info.component';
 import { StarsModule } from 'shared-components/stars/stars.module';
 import { SharedModule } from '../../shared-components/shared.module';
+import { ProductImageComponent } from './product-editor/product-properties/product-image/product-image.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { SharedModule } from '../../shared-components/shared.module';
     ProductMediaComponent,
     ProductEmailComponent,
     ProductVendorComponent,
-    ProductInfoComponent
+    ProductInfoComponent,
+    ProductImageComponent
   ],
   imports: [
     CommonModule,

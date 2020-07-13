@@ -56,21 +56,10 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
 
   // -----------------------------( ON CHANGE )------------------------------ \\
   onChange(filterOption: HierarchyCheckboxItem) {
-    // If there are no filter option changes
-    if (!this.product.filterOptionChanges) {
-      this.product.filterOptionChanges = [];
-    }
-
-    // Get the index of the current filter option
-    let index: number = this.product.filterOptionChanges.findIndex(x => x.id == filterOption.id);
-
-
-    if (index > -1) {
-      // Remove this option as it was set back to its original value
-      this.product.filterOptionChanges.splice(index, 1);
-    } else {
-      // If the filter option is not found, add it to the filter changes array
-      this.product.filterOptionChanges.push(filterOption);
-    }
+    this.dataService.put('api/Products/Filters', {
+      productId: this.product.id,
+      filterOptionId: filterOption.id,
+      checked: filterOption.checked
+    }).subscribe();
   }
 }

@@ -12,14 +12,11 @@
     <ng-container *ngIf="category">
         <!-- Save & Publish buttons -->
         <div class="grooved-container">
-            <div class="button-left" (click)="onSaveClick()">Save</div>
-            <div class="button-right">Publish</div>
+            <div class="button-center">Publish</div>
         </div>
 
 
         <!-- Category Icon -->
-        <image [image]="category.icon" [mediaType]="mediaType.CategoryImage"></image>
+        <image [image]="category.icon" [mediaType]="mediaType.CategoryImage" [noDelete]="true"></image>
     </ng-container>
-
-
 </div>

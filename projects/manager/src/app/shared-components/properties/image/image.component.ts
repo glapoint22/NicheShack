@@ -12,6 +12,7 @@ import { MediaType } from '../../../classes/media';
 export class ImageComponent {
   @Input() image: Image;
   @Input() mediaType: MediaType;
+  @Input() noDelete: boolean;
   constructor(private promptService: PromptService, private popupService: PopupService) { }
 
   onDeleteImageClick() {

@@ -4,6 +4,9 @@ import { Color } from 'projects/manager/src/app/classes/color';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PanelComponent } from 'projects/manager/src/app/shared-components/panel/panel.component';
+import { of } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 
 @Component({
   selector: 'product-description',
@@ -16,7 +19,12 @@ export class ProductDescriptionComponent implements AfterViewInit {
   public description: Description;
 
 
-  constructor(private applicationRef: ApplicationRef, private productService: ProductService, private sanitizer: DomSanitizer) { }
+  constructor(
+    private applicationRef: ApplicationRef,
+    private productService: ProductService,
+    private sanitizer: DomSanitizer,
+    private dataService: TempDataService
+  ) { }
 
 
   // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
@@ -50,9 +58,20 @@ export class ProductDescriptionComponent implements AfterViewInit {
 
 
       // Update the description in the product info window
-      this.description.onChange.subscribe(() => {
-        this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
+      this.description.onChange.subscribe((description: string) => {
+        this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(description);
       });
+
+
+      // Save the description to the database
+      this.description.onChange.pipe(
+        debounceTime(1000),
+        switchMap((description: string) => {
+          return this.dataService.put('api/Products/Description', {
+            productId: this.productService.product.id,
+            description: description
+          });
+        })).subscribe();
     }
   }
 

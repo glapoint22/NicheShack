@@ -199,32 +199,31 @@ export class TempDataService {
 
       // Categories
       case 'api/Categories':
-        return of([
-          {
+        if(!parameters) {
+          return of([
+            {
+              name: 'Health & Fitness',
+              id: 'fdsfafsdfdsds',
+            },
+            {
+              name: 'Self-Help',
+              id: 'fsdfsdasd',
+            },
+            {
+              id: 'rewqrewer',
+              name: 'E-business & E-marketing',
+            }
+          ]).pipe(delay(1000));
+
+          
+        } else {
+          return of({
+            id: 'GFDGSDFSDAFD',
             name: 'Health & Fitness',
-            id: 'fdsfafsdfdsds',
-            icon: {
-              url: '44d71fbf43904ffdbdece40a45bdf9db.png',
-              name: 'Health & Fitness'
-            }
-          },
-          {
-            name: 'Self-Help',
-            id: 'fsdfsdasd',
-            icon: {
-              url: '143968bba73642898bb4a6715a1efd3d.png',
-              name: 'self-help'
-            }
-          },
-          {
-            id: 'rewqrewer',
-            name: 'E-business & E-marketing',
-            icon: {
-              url: '9b00bc3910244ce798b8009227c65de7.png',
-              name: 'self-help'
-            }
-          }
-        ]).pipe(delay(1000));
+            url: '44d71fbf43904ffdbdece40a45bdf9db.png'
+          }).pipe(delay(1000));
+        }
+        
 
 
 
@@ -1146,8 +1145,6 @@ export class TempDataService {
                 id: 'FSDFASFFSDFA',
                 name: 'Video',
                 url: 'video.png',
-                load: null,
-                save: null
               },
               priceIndices: [
                 true,
@@ -1163,8 +1160,6 @@ export class TempDataService {
                 id: 'JHFJSDRFGFFD',
                 name: 'Audio',
                 url: 'audio.png',
-                load: null,
-                save: null
               },
               priceIndices: [
                 false,
@@ -1180,8 +1175,6 @@ export class TempDataService {
                 id: 'QRDFDDASFASDF',
                 name: 'PDF',
                 url: 'pdf.png',
-                load: null,
-                save: null
               },
               priceIndices: [
                 true,
@@ -1425,9 +1418,7 @@ export class TempDataService {
 
 
 
-      // Category
-      case 'api/Categories/Category':
-        return of('44d71fbf43904ffdbdece40a45bdf9db.png').pipe(delay(1000));
+      
 
 
       case 'api/Pages/Create':

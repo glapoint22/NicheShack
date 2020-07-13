@@ -43,7 +43,7 @@ export class LinkStyle extends NodeStyle {
         });
     }
 
-    constructor(contentDocument: HTMLDocument, onChange: Subject<void>) {
+    constructor(contentDocument: HTMLDocument, onChange: Subject<string>) {
         super(contentDocument, onChange);
 
         this.style = 'A';
@@ -232,7 +232,7 @@ export class LinkStyle extends NodeStyle {
         // Flag that this style is not selected
         // this.isSelected = false;
 
-        this.onChange.next();
+        this.onChange.next(this.contentDocument.body.firstElementChild.innerHTML);
     }
 
 
