@@ -5,15 +5,7 @@
     <table >
             
         <tr #rowItem *ngFor="let listItem of listItems; let listItemIndex = index"
-                (mousedown)="onListItemClick(listItem)"
-                
-                [ngClass]="{
-                            'selected-listItem': selectedListItemIndex == listItemIndex,
-                            'unselected-listItem': unselectedListItemIndex == listItemIndex,
-                            'selected-listItem-top': listItem.selectType == selectType.Top,
-                            'selected-listItem-whole': listItem.selectType == selectType.Whole,
-                            'selected-listItem-middle': listItem.selectType == selectType.Middle,
-                            'selected-listItem-bottom': listItem.selectType == selectType.Bottom}">
+                (mousedown)="onListItemClick(listItem)">
                             
             <td>
                  <div class="img"

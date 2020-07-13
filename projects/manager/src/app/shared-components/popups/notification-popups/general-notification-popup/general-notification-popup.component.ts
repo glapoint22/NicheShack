@@ -10,6 +10,8 @@ import { NotificationService } from 'projects/manager/src/app/services/notificat
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { Vendor } from 'projects/manager/src/app/classes/vendor';
 import { FormService } from 'projects/manager/src/app/services/form.service';
+import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
+import { MenuDivider } from 'projects/manager/src/app/classes/menu-divider';
 
 @Component({
   selector: 'general-notification-popup',
@@ -51,27 +53,31 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
 
       // Build the menu
       this.menuService.buildMenu(this, this.ellipsis.nativeElement.getBoundingClientRect().right - 20, this.ellipsis.nativeElement.getBoundingClientRect().top + 22,
-        this.menuService.option("Go To Product Page", null, false, this.goToProductPage),
-        this.menuService.divider(),
-        this.menuService.option("Go To Vendor Product Page", null, false, this.goToVendorProductPage),
-        this.menuService.option("View Vendor Info", null, false, this.viewVendorInfo),
-        this.menuService.option("Contact Vendor", null, true, this.contactVendor),
-        this.menuService.divider(),
-        this.menuService.option("Close", null, false, this.onClose, notification),
-        this.menuService.divider(),
-        this.menuService.option("Restore", null, false, this.sendNotificationToPending, notification)
+        [
+          new MenuOption("Go To Product Page", false, this.goToProductPage),
+          new MenuDivider(),
+          new MenuOption("Go To Vendor Product Page", false, this.goToVendorProductPage),
+          new MenuOption("View Vendor Info", false, this.viewVendorInfo),
+          new MenuOption("Contact Vendor", true, this.contactVendor),
+          new MenuDivider(),
+          new MenuOption("Close", false, this.onClose, [notification]),
+          new MenuDivider(),
+          new MenuOption("Restore", false, this.sendNotificationToPending, [notification])
+        ]
       );
 
     } else {
       // Build the menu
       this.menuService.buildMenu(this, this.ellipsis.nativeElement.getBoundingClientRect().right - 20, this.ellipsis.nativeElement.getBoundingClientRect().top + 22,
-        this.menuService.option("Go To Product Page", null, false, this.goToProductPage),
-        this.menuService.divider(),
-        this.menuService.option("Go To Vendor Product Page", null, false, this.goToVendorProductPage),
-        this.menuService.option("View Vendor Info", null, false, this.viewVendorInfo),
-        this.menuService.option("Contact Vendor", null, true, this.contactVendor),
-        this.menuService.divider(),
-        this.menuService.option("Close", null, false, this.onClose, notification)
+        [
+          new MenuOption("Go To Product Page", false, this.goToProductPage),
+          new MenuDivider(),
+          new MenuOption("Go To Vendor Product Page", false, this.goToVendorProductPage),
+          new MenuOption("View Vendor Info", false, this.viewVendorInfo),
+          new MenuOption("Contact Vendor", true, this.contactVendor),
+          new MenuDivider(),
+          new MenuOption("Close", false, this.onClose, [notification])
+        ]
       );
     }
   }

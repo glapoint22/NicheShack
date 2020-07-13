@@ -2,6 +2,7 @@ import { Option } from './option';
 import { MenuOptions } from './menu-options';
 import { MenuOptionType } from './menu-option-type';
 import { Menu } from './menu';
+import { MainMenu } from './main-menu';
 
 export class MenuOption extends Option implements MenuOptions {
     public type: MenuOptionType = MenuOptionType.MenuOption;
@@ -17,12 +18,14 @@ export class MenuOption extends Option implements MenuOptions {
     }
 
 
-    // -----------------------------( CLICK )------------------------------ \\
-    click(currentObj: Object) {
+    // -----------------------------( ON CLICK )------------------------------ \\
+    onClick(mainMenu: MainMenu) {
         // As long as this menu option is NOT disabled
         if (!this.isDisabled) {
             // Call the function that is associated with this menu option
-            this.menuOptionFunction.apply(currentObj, this.functionParameters)
+            this.menuOptionFunction.apply(mainMenu.currentObj, this.functionParameters)
+            // Close the main menu
+            mainMenu.isVisible = false;
         }
     }
 }

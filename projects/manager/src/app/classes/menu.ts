@@ -10,6 +10,8 @@ export class Menu {
     public subMenuOptionOutTimeout?: number;
     public hasFocus: boolean;
 
+
+    // -----------------------------( CONSTRUCTOR )------------------------------ \\
     constructor(public index: number, public type: MenuType, left?: number, top?: number, isVisible?: boolean) {
         this.left = left;
         this.top = top;
@@ -17,8 +19,8 @@ export class Menu {
     }
 
 
-    // -----------------------------( ON MENU SHOW )------------------------------ \\
-    onMenuShow(htmlMenu: HTMLElement, mainMenu: MainMenu) {
+    // -----------------------------( ON SHOW )------------------------------ \\
+    onShow(htmlMenu: HTMLElement, mainMenu: MainMenu) {
         // Set the focus to any menu that becomes visible
         htmlMenu.focus();
 
@@ -47,7 +49,7 @@ export class Menu {
                         // But if the main menu is currently toggled on
                     } else {
 
-                        // Toggle the main menu off
+                        // Close the main menu
                         mainMenu.toggleOn = false;
                         mainMenu.isVisible = false;
                     }
@@ -68,26 +70,8 @@ export class Menu {
     }
 
 
-    // -----------------------------( IS VISIBLE )------------------------------ \\
-    private _isVisible: boolean;
-    public get isVisible(): boolean {
-        return this._isVisible;
-    }
-    public set isVisible(value: boolean) {
-        if (!value) {
-            this.options.forEach(option => {
-
-                if (option.type == MenuOptionType.SubMenuOption) {
-                    option.showHighlight = false;
-                }
-            })
-        }
-        this._isVisible = value;
-    }
-
-
-    // -----------------------------( SET MENU WIDTH )------------------------------ \\
-    setMenuWidth(htmlMenu: HTMLElement) {
+    // -----------------------------( SET WIDTH )------------------------------ \\
+    setWidth(htmlMenu: HTMLElement) {
         let extendedWidth = 0;
 
         // If the initial width of the menu has NOT been recorded yet
@@ -120,7 +104,6 @@ export class Menu {
 
     // -----------------------------( SET MENU LEFT )------------------------------ \\
     setMenuLeft(htmlMenu: HTMLElement) {
-
         // If it's the main menu
         if (this.type == MenuType.MainMenu) {
             let menuLeft = this.left;
@@ -226,8 +209,8 @@ export class Menu {
     }
 
 
-    // -----------------------------( ON MENU FOCUS )------------------------------ \\
-    onMenuFocus(menus: Array<Menu>) {
+    // -----------------------------( ON FOCUS )------------------------------ \\
+    onFocus(menus: Array<Menu>) {
 
         // If the focus is NOT on the main menu
         if (this.type != MenuType.MainMenu) {
@@ -244,8 +227,8 @@ export class Menu {
     }
 
 
-    // -----------------------------( ON MENU BLUR )------------------------------ \\
-    onMenuBlur(htmlMenu: HTMLElement, mainMenu: MainMenu) {
+    // -----------------------------( ON BLUR )------------------------------ \\
+    onBlur(htmlMenu: HTMLElement, mainMenu: MainMenu) {
         // As long as the initial focus to the main menu has been set
         if (mainMenu.allowHide) {
 
@@ -273,16 +256,29 @@ export class Menu {
     }
 
 
-    // -----------------------------( ON MENU OVER )------------------------------ \\
-    onMenuOver() {
+    // -----------------------------( ON OVER )------------------------------ \\
+    onOver() {
         // Now that we have moused over a menu, remove the timer that was waiting to hide the sub menus from a sub menu option out
         clearTimeout(this.subMenuOptionOutTimeout);
     }
 
 
+    // -----------------------------( IS VISIBLE )------------------------------ \\
+    private _isVisible: boolean;
+    public get isVisible(): boolean {
+        return this._isVisible;
+    }
+    public set isVisible(value: boolean) {
+        if (!value) {
+            this.options.forEach(option => {
 
-
-
+                if (option.type == MenuOptionType.SubMenuOption) {
+                    option.showHighlight = false;
+                }
+            })
+        }
+        this._isVisible = value;
+    }
 }
 
 export enum MenuType {

@@ -5,41 +5,18 @@
     <div #htmlMenu
          tabindex="-1"
          class="menu-base"
-         (mousedown)="$event.stopPropagation()"
-         (contextmenu)="$event.preventDefault()"
          *ngIf="menu.isVisible"
-         (focus)="menu.onMenuFocus(menuService.menu.menus)"
-         (mouseover)="menu.onMenuOver()"
-         (blur)="menu.onMenuBlur(htmlMenu, menuService.menu)"
-         (onShow)="menu.onMenuShow(htmlMenu, menuService.menu)"
-         [style.width]="menu.setMenuWidth(htmlMenu)">
+         (mouseover)="menu.onOver()"
+         (mousedown)="$event.stopPropagation()"
+         [style.width]="menu.setWidth(htmlMenu)"
+         (contextmenu)="$event.preventDefault()"
+         (focus)="menu.onFocus(menuService.menu.menus)"
+         (blur)="menu.onBlur(htmlMenu, menuService.menu)"
+         (onShow)="menu.onShow(htmlMenu, menuService.menu)">
 
 
-        <!-- Loop through the contents of the current menu -->
+        <!-- Loop through all the options of the current menu -->
         <ng-container *ngFor="let menuOption of menuService.menu.menus[menuIndex].options; let optionIndex = index">
-
-            <!-- Option -->
-            <div class="menu-option"
-                 (click)="menuOption.click(menuService.menu.currentObj); !menuOption.isDisabled ? menuService.menu.isVisible = false : true"
-                 (mouseover)="menuOption.onMenuOptionOver(menu, menuService.menu.menus)"
-                 *ngIf="menuOption.type == menuOptionType.MenuOption" 
-                 [ngClass]="{'disabled-option': menuOption.isDisabled}">
-                <div>{{menuOption.name}}</div>
-                <div *ngIf="menuOption.shortcutKeys != null">{{menuOption.shortcutKeys}}</div>
-            </div>
-
-
-            <!-- Router Option -->
-            <div class="menu-option"
-                 (mousedown)="menuService.menu.menus[0].hasFocus = false; menuService.menu.previousLeft = null; menuService.menu.previousTop = null;"
-                 (click)="!menuOption.isDisabled ? menuService.menu.isVisible = false : true"
-                 (mouseover)="menuOption.onMenuOptionOver(menu, menuService.menu.menus)"
-                 [routerLink]="menuOption.path"
-                 *ngIf="menuOption.type == menuOptionType.RouterOption" 
-                 [ngClass]="{'disabled-option': menuOption.isDisabled}">
-                <div>{{menuOption.name}}</div>
-                <div *ngIf="menuOption.shortcutKeys != null">{{menuOption.shortcutKeys}}</div>
-            </div>
 
 
             <!-- Divider -->
@@ -48,14 +25,35 @@
             </div>
 
 
+            <!-- Option -->
+            <div class="menu-option"
+                 (click)="menuOption.onClick(menuService.menu)"
+                 *ngIf="menuOption.type == menuOptionType.MenuOption"
+                 [ngClass]="{'disabled-option': menuOption.isDisabled}"
+                 (mouseover)="menuOption.onOver(menu, menuService.menu.menus)">
+                <div>{{menuOption.name}}</div><div *ngIf="menuOption.shortcutKeys != null">{{menuOption.shortcutKeys}}</div>
+            </div>
+
+
+            <!-- Router Option -->
+            <div class="menu-option"
+                 [routerLink]="menuOption.path"
+                 (click)="menuOption.onClick(menuService.menu)"
+                 (mousedown)="menuOption.onDown(menuService.menu)"
+                 *ngIf="menuOption.type == menuOptionType.RouterOption"
+                 [ngClass]="{'disabled-option': menuOption.isDisabled}"
+                 (mouseover)="menuOption.onOver(menu, menuService.menu.menus)">
+                <div>{{menuOption.name}}</div><div *ngIf="menuOption.shortcutKeys != null">{{menuOption.shortcutKeys}}</div>
+            </div>
+
+
             <!-- Sub Menu -->
             <div class="sub-menu-option"
-                 (mouseout)="menuOption.onSubMenuOptionOut(menuService.menu.menus)"
+                 (mouseout)="menuOption.onOut(menuService.menu.menus)"
                  *ngIf="menuOption.type == menuOptionType.SubMenuOption"
-                 (mouseover)="menuOption.onSubMenuOptionOver($event.target, menu, menuService.menu.menus)"
+                 (mouseover)="menuOption.over($event.target, menu, menuService.menu.menus)"
                  [ngClass]="{'sub-menu-option-highlight': menuOption.showHighlight, 'disabled-option': menuOption.isDisabled }">
-                <div style="pointer-events: none;">{{menuOption.name}}</div>
-                <div class="arrow-right" style="pointer-events: none;"></div>
+                <div style="pointer-events: none;">{{menuOption.name}}</div><div class="arrow-right" style="pointer-events: none;"></div>
             </div>
         </ng-container>
     </div>
