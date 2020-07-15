@@ -73,7 +73,7 @@ export class PopupComponent {
   // --------------------------------( ON POPUP OUT )-------------------------------- \\
   onPopupOut() {
     // As long as a menu is NOT open
-    if (!this.menuService.showMenu && !this.preventNoShow) {
+    if (!this.menuService.menu.isVisible && !this.preventNoShow) {
 
       // Close this popup
       this.show = false;

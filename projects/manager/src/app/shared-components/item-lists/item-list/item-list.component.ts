@@ -5,6 +5,7 @@ import { icon } from '../../../classes/icon';
 import { SelectType } from '../../../classes/list-item-select-type';
 import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
+import { MenuOption } from '../../../classes/menu-option';
 
 @Component({
   selector: 'item-list',
@@ -45,7 +46,7 @@ export class ItemListComponent implements OnInit {
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     // When the context menu becomes hidden
-    this.menuService.onMenuHide.subscribe(() => {
+    this.menuService.menu.onHide.subscribe(() => {
       // If a list item is selected
       if (this.selectedListItemIndex != null) {
         // Set the focus back to that list item
@@ -127,13 +128,13 @@ export class ItemListComponent implements OnInit {
   // -----------------------------( ON MOUSE DOWN )------------------------------ \\
   onMouseDown = () => {
     // As long as the context menu IS open
-    if (this.menuService.showMenu
+    if (this.menuService.menu.isVisible
       // and we're NOT clicking on an icon button
       && !this.isOverIconButton) {
 
       window.setTimeout(() => {
         // check to see if the context menu is now closed, if it is
-        if (!this.menuService.showMenu
+        if (!this.menuService.menu.isVisible
           // and we're not selecting a list item
           && document.activeElement != this.lastFocusedListItem) {
 
@@ -160,7 +161,7 @@ export class ItemListComponent implements OnInit {
       // As long as a list item isn't losing focus becaus another list item is receiving focus
       if (document.activeElement != this.lastFocusedListItem
         // and the context menu is NOT open
-        && !this.menuService.showMenu
+        && !this.menuService.menu.isVisible
         // and the search popup is NOT open
         && !this.popupService.searchPopup.show
         // and we're NOT clicking on an icon button
@@ -198,7 +199,7 @@ export class ItemListComponent implements OnInit {
     // * A fail safe that puts the focus back to the selected list item if a mouseup occurs outside the click bounds of an icon button * \\ 
 
     // As long as the context menu is NOT open
-    if (!this.menuService.showMenu) {
+    if (!this.menuService.menu.isVisible) {
       // If a list item is selected
       if (this.selectedListItemIndex != null) {
         // Set focus to that list item
@@ -568,19 +569,22 @@ export class ItemListComponent implements OnInit {
   buildContextMenu(e: MouseEvent) {
     // Build the context menu
     this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-      // Add
-      this.menuService.option(this.menuOptions[0], "Ctrl+Alt+N", this.addIcon.isDisabled, this.onListItemAdd),
-      // Edit
-      this.menuOptions[1] == null ? {} : this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.onListItemEdit),
-      // Delete
-      this.menuService.option(this.deleteIcon.isDisabled ? this.menuOptions[2] : this.editIcon.isDisabled ? this.menuOptions[3] : this.menuOptions[2], "Delete", this.deleteIcon.isDisabled, this.onListItemDelete));
+      [
+        // Add
+        new MenuOption(this.menuOptions[0],  this.addIcon.isDisabled, this.onListItemAdd, null, "Ctrl+Alt+N"),
+        // Edit
+        new MenuOption(this.menuOptions[1],  this.editIcon.isDisabled, this.onListItemEdit, null, "Ctrl+Alt+E"),
+        // Delete
+        new MenuOption(this.deleteIcon.isDisabled ? this.menuOptions[2] : this.editIcon.isDisabled ? this.menuOptions[3] : this.menuOptions[2],  this.deleteIcon.isDisabled, this.onListItemDelete, null, "Delete")
+      ]
+    );
   }
 
 
   // -----------------------------( ESCAPE )------------------------------ \\
   escape() {
     // As long as the context menu and the prompt is NOT open
-    if (!this.menuService.showMenu && !this.promptService.show) {
+    if (!this.menuService.menu.isVisible && !this.promptService.show) {
       // Then remove all listeners and selections
       this.removeEventListeners();
     }

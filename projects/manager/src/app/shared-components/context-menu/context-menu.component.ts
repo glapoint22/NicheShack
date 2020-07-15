@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
+import { MenuOptionType } from '../../classes/menu-option-type';
 
 @Component({
   selector: 'context-menu',
@@ -8,17 +9,17 @@ import { MenuService } from '../../services/menu.service';
 })
 export class ContextMenuComponent {
   constructor(public menuService: MenuService) { }
-
+  public menuOptionType = MenuOptionType;
 
   // -----------------------------( HOST LISTENER )------------------------------ \\
   @HostListener('keydown', ['$event'])
   onKeydown(event: KeyboardEvent) {
     if (event.code === 'Escape' || event.keyCode === 27) {
       // Loop through all the menus
-      for(let i = 0; i < this.menuService.menus.length; i++) {
-        // And hide each one
-        this.menuService.showMenus[i] = false;
-      }
+      this.menuService.menu.menus.forEach(menu => {
+        // And hide each menu
+        menu.isVisible = false;
+      })
     }
   }
 }

@@ -7,6 +7,8 @@ import { MenuService } from '../../../services/menu.service';
 import { PopupService } from '../../../services/popup.service';
 import { PromptService } from '../../../services/prompt.service';
 import { FormService } from '../../../services/form.service';
+import { MenuOption } from '../../../classes/menu-option';
+import { MenuDivider } from '../../../classes/menu-divider';
 
 @Component({
   selector: 'media-item-list',
@@ -28,12 +30,12 @@ export class MediaItemListComponent extends EditableItemListComponent implements
 
   // Private
   private moveTo = [];
-  private mediaTypes = [this.menuService.option("Images", null, false, () => { this.onMoveMedia.emit(MediaType.Image) }),
-  this.menuService.option("Background Images", null, false, () => { this.onMoveMedia.emit(MediaType.BackgroundImage) }),
-  this.menuService.option("Banner Images", null, false, () => { this.onMoveMedia.emit(MediaType.BannerImage) }),
-  this.menuService.option("Category Images", null, false, () => { this.onMoveMedia.emit(MediaType.CategoryImage) }),
-  this.menuService.option("Product Images", null, false, () => { this.onMoveMedia.emit(MediaType.ProductImage) }),
-  this.menuService.option("Icons", null, false, () => { this.onMoveMedia.emit(MediaType.Icon) })];
+  // private mediaTypes = [this.menuService.option("Images", null, false, () => { this.onMoveMedia.emit(MediaType.Image) }),
+  // this.menuService.option("Background Images", null, false, () => { this.onMoveMedia.emit(MediaType.BackgroundImage) }),
+  // this.menuService.option("Banner Images", null, false, () => { this.onMoveMedia.emit(MediaType.BannerImage) }),
+  // this.menuService.option("Category Images", null, false, () => { this.onMoveMedia.emit(MediaType.CategoryImage) }),
+  // this.menuService.option("Product Images", null, false, () => { this.onMoveMedia.emit(MediaType.ProductImage) }),
+  // this.menuService.option("Icons", null, false, () => { this.onMoveMedia.emit(MediaType.Icon) })];
 
   // Decorators
   @Input() mediaType: MediaType;
@@ -78,13 +80,13 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   // -----------------------------( BUILD CONTEXT MENU )------------------------------ \\
   buildContextMenu(e: MouseEvent) {
     let moveTo = {};
-    this.moveTo[MediaType.Image] = this.menuService.subMenu("Move Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
-    this.moveTo[MediaType.BackgroundImage] = this.menuService.subMenu("Move Background Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
-    this.moveTo[MediaType.BannerImage] = this.menuService.subMenu("Move Banner Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
-    this.moveTo[MediaType.CategoryImage] = this.menuService.subMenu("Move Category Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
-    this.moveTo[MediaType.ProductImage] = this.menuService.subMenu("Move Product Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.Icon]);
-    this.moveTo[MediaType.Icon] = this.menuService.subMenu("Move Icon" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage]);
-    this.moveTo[MediaType.Video] = {};
+    // this.moveTo[MediaType.Image] = this.menuService.subMenu("Move Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
+    // this.moveTo[MediaType.BackgroundImage] = this.menuService.subMenu("Move Background Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
+    // this.moveTo[MediaType.BannerImage] = this.menuService.subMenu("Move Banner Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
+    // this.moveTo[MediaType.CategoryImage] = this.menuService.subMenu("Move Category Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
+    // this.moveTo[MediaType.ProductImage] = this.menuService.subMenu("Move Product Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.Icon]);
+    // this.moveTo[MediaType.Icon] = this.menuService.subMenu("Move Icon" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage]);
+    // this.moveTo[MediaType.Video] = {};
 
     switch (this.mediaType) {
       case MediaType.Image: {
@@ -126,8 +128,10 @@ export class MediaItemListComponent extends EditableItemListComponent implements
 
       // Just provide the 'Add' option in the context menu
       this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-        // Add
-        this.menuService.option(this.menuOptions[0], null, this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() })
+        [
+          // Add
+          new MenuOption(this.menuOptions[0], this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() })
+        ]
       );
 
       // But if a media item is selected
@@ -135,19 +139,21 @@ export class MediaItemListComponent extends EditableItemListComponent implements
 
       // Provide all the following options
       this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-        // Add
-        this.menuService.option(this.menuOptions[0], "Ctrl+Alt+N", this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() }),
-        this.menuService.divider(),
-        // Update
-        this.menuService.option(this.menuOptions[2], "Ctrl+Alt+U", this.editIcon.isDisabled, () => { this.mediaUpdateInitiated = true; this.onUpdateMedia.emit(this.selectedListItemIndex) }),
-        // Edit
-        this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.onListItemEdit),
-        // Divider
-        this.menuService.divider(),
-        // Move To
-        moveTo,
-        // Delete
-        this.menuService.option(this.deleteIcon.isDisabled ? this.menuOptions[3] : this.editIcon.isDisabled ? this.menuOptions[4] : this.menuOptions[3], "Delete", this.deleteIcon.isDisabled, this.onListItemDelete)
+        [
+          // Add
+          new MenuOption(this.menuOptions[0], this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() }, null, "Ctrl+Alt+N"),
+          new MenuDivider(),
+          // Update
+          new MenuOption(this.menuOptions[2], this.editIcon.isDisabled, () => { this.mediaUpdateInitiated = true; this.onUpdateMedia.emit(this.selectedListItemIndex) }, null, "Ctrl+Alt+U"),
+          // Edit
+          new MenuOption(this.menuOptions[1], this.editIcon.isDisabled, this.onListItemEdit, null, "Ctrl+Alt+E"),
+          // Divider
+          new MenuDivider(),
+          // Move To
+          // moveTo,
+          // Delete
+          new MenuOption(this.deleteIcon.isDisabled ? this.menuOptions[3] : this.editIcon.isDisabled ? this.menuOptions[4] : this.menuOptions[3],  this.deleteIcon.isDisabled, this.onListItemDelete, null, "Delete")
+        ]
       );
     }
   }

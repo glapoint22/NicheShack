@@ -5,6 +5,9 @@ import { PopupService } from '../../services/popup.service';
 import { NotificationService } from '../../services/notification.service';
 import { menuBarMenu } from '../../classes/menu-bar-menu';
 import { FormService } from '../../services/form.service';
+import { RouterOption } from '../../classes/router-option';
+import { MenuDivider } from '../../classes/menu-divider';
+import { MenuOption } from '../../classes/menu-option';
 
 @Component({
   selector: 'menu-bar',
@@ -17,37 +20,43 @@ export class MenuBarComponent implements OnInit {
 
     name: 'File', showMenuFunction: (menu: HTMLElement) => {
       this.menuService.buildMenu(this, menu.getBoundingClientRect().left, menu.getBoundingClientRect().top + menu.getBoundingClientRect().height,
-        this.menuService.routerOption("Niche Shack Editor", null, false, "/"),
-        this.menuService.routerOption("Page Builder", null, false, "/page-builder"),
-        this.menuService.routerOption("Email Builder", null, false, "/email-builder"),
-        this.menuService.divider(),
-        this.menuService.routerOption("Change Name", null, false, "/change-name"),
-        this.menuService.routerOption("Change Email", null, false, "/change-email"),
-        this.menuService.routerOption("Change Password", null, false, "/change-password"),
-        this.menuService.divider(),
-        this.menuService.option("Vendor Form", null, false, () => this.formService.vendorForm.show = true),
-        this.menuService.option("Filters Form", null, false, () => this.formService.filtersForm.show = true),
-        this.menuService.divider(),
-        this.menuService.option("Sign Out", null, false, () => { })
-      )
+        [
+          new RouterOption("Niche Shack Editor", false, "/"),
+          new RouterOption("Page Builder", false, "/page-builder"),
+          new RouterOption("Email Builder", false, "/email-builder"),
+          new MenuDivider(),
+          new RouterOption("Change Name", false, "/change-name"),
+          new RouterOption("Change Email", false, "/change-email"),
+          new RouterOption("Change Password", false, "/change-password"),
+          new MenuDivider(),
+          new MenuOption("Vendor Form", false, () => this.formService.vendorForm.show = true),
+          new MenuOption("Filters Form", false, () => this.formService.filtersForm.show = true),
+          new MenuDivider(),
+          new MenuOption("Sign Out", false, () => { })
+        ]
+      );
     }
   },
   {
     name: 'Edit', showMenuFunction: (menu: HTMLElement) => {
       this.menuService.buildMenu(this, menu.getBoundingClientRect().left, menu.getBoundingClientRect().top + menu.getBoundingClientRect().height,
-        this.menuService.option("Undo", "Ctrl+Z", false, () => { }),
-        this.menuService.option("Redo", "Ctrl+Y", false, () => { }),
-        this.menuService.divider(),
-        this.menuService.option("Cut", "Ctrl+X", false, () => { }),
-        this.menuService.option("Copy", "Ctrl+C", false, () => { }),
-        this.menuService.option("Paste", "Ctrl+V", false, () => { }),
+        [
+          new MenuOption("Undo", false, () => { }, null, "Ctrl+Z"),
+          new MenuOption("Redo", false, () => { }, null, "Ctrl+Y"),
+          new MenuDivider(),
+          new MenuOption("Cut", false, () => { }, null, "Ctrl+X"),
+          new MenuOption("Copy", false, () => { }, null, "Ctrl+C"),
+          new MenuOption("Paste", false, () => { }, null, "Ctrl+V")
+        ]
       );
     }
   },
   {
     name: 'View', showMenuFunction: (menu: HTMLElement) => {
       this.menuService.buildMenu(this, menu.getBoundingClientRect().left, menu.getBoundingClientRect().top + menu.getBoundingClientRect().height,
-        this.menuService.option("Full Screen", "F11", false, () => { })
+        [
+          new MenuOption("Full Screen", false, () => { }, null, "F11")
+        ]
       );
     }
   }];
@@ -68,7 +77,7 @@ export class MenuBarComponent implements OnInit {
     })
 
     // When the dropdown menu closes
-    this.menuService.onMenuHide.subscribe(() => {
+    this.menuService.menu.onHide.subscribe(() => {
       // Deselect the selected menu bar menu
       this.selectedMenuBarMenu = null;
     })

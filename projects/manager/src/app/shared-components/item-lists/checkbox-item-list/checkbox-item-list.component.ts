@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { SelectType } from '../../../classes/list-item-select-type';
+import { MenuOption } from '../../../classes/menu-option';
+import { MenuDivider } from '../../../classes/menu-divider';
 
 @Component({
   selector: 'checkbox-item-list',
@@ -9,7 +11,7 @@ import { SelectType } from '../../../classes/list-item-select-type';
 })
 export class CheckboxItemListComponent extends ItemListComponent implements OnInit {
   @Input() checkList: Array<boolean>;
-  @Output() onPricePointMove: EventEmitter<{fromIndex: number, toIndex: number}> = new EventEmitter();
+  @Output() onPricePointMove: EventEmitter<{ fromIndex: number, toIndex: number }> = new EventEmitter();
   public selectType = SelectType;
 
 
@@ -39,19 +41,20 @@ export class CheckboxItemListComponent extends ItemListComponent implements OnIn
   buildContextMenu(e: MouseEvent) {
     // Build the context menu
     this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-
-      this.menuService.option("Move Up", null, this.selectedListItemIndex == 0 || this.editIcon.isDisabled ? true : false, this.movePricePoint, this.selectedListItemIndex, this.selectedListItemIndex - 1),
-
-      this.menuService.option("Move Down", null, this.selectedListItemIndex == this.listItems.length - 1 || this.editIcon.isDisabled ? true : false, this.movePricePoint, this.selectedListItemIndex, this.selectedListItemIndex + 1),
-
-      // Divider
-      this.menuService.divider(),
-      // Add
-      this.menuService.option(this.menuOptions[0], "Ctrl+Alt+N", this.addIcon.isDisabled, this.onListItemAdd),
-      // Edit
-      this.menuOptions[1] == null ? {} : this.menuService.option(this.menuOptions[1], "Ctrl+Alt+E", this.editIcon.isDisabled, this.onListItemEdit),
-      // Delete
-      this.menuService.option(this.deleteIcon.isDisabled ? this.menuOptions[2] : this.editIcon.isDisabled ? this.menuOptions[3] : this.menuOptions[2], "Delete", this.deleteIcon.isDisabled, this.onListItemDelete),
+      [
+        // Move Up
+        new MenuOption("Move Up", this.selectedListItemIndex == 0 || this.editIcon.isDisabled ? true : false, this.movePricePoint, [this.selectedListItemIndex, this.selectedListItemIndex - 1]),
+        // Move Down
+        new MenuOption("Move Down", this.selectedListItemIndex == this.listItems.length - 1 || this.editIcon.isDisabled ? true : false, this.movePricePoint, [this.selectedListItemIndex, this.selectedListItemIndex + 1]),
+        // Divider
+        new MenuDivider(),
+        // Add
+        new MenuOption(this.menuOptions[0], this.addIcon.isDisabled, this.onListItemAdd, null, "Ctrl+Alt+N"),
+        // Edit
+        new MenuOption(this.menuOptions[1], this.editIcon.isDisabled, this.onListItemEdit, null, "Ctrl+Alt+E"),
+        // Delete
+        new MenuOption(this.deleteIcon.isDisabled ? this.menuOptions[2] : this.editIcon.isDisabled ? this.menuOptions[3] : this.menuOptions[2], this.deleteIcon.isDisabled, this.onListItemDelete, null, "Delete"),
+      ]
     );
   }
 
@@ -59,13 +62,13 @@ export class CheckboxItemListComponent extends ItemListComponent implements OnIn
   // -----------------------------( MOVE PRICE POINT )------------------------------ \\
   movePricePoint(fromIndex: number, toIndex: number) {
     // Output the move values
-    this.onPricePointMove.emit({fromIndex, toIndex});
+    this.onPricePointMove.emit({ fromIndex, toIndex });
 
     // Select the moved price point
     this.onListItemDown(toIndex)
 
     // Set focus to the moved price point
-    window.setTimeout(()=> {
+    window.setTimeout(() => {
       this.setListItemFocus(this.selectedListItemIndex);
     })
   }
