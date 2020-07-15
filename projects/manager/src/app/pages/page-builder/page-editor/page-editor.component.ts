@@ -61,7 +61,7 @@ export class PageEditorComponent implements OnInit, Searchable {
 
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
   loadPage(pageData: PageData) {
-    this.pageService.setDesigner(this.pageType);
+    this.pageService.page.setWidgets(this.pageType);
     this.pageService.loadPage(pageData);
     this.setPageView();
     this.loadingService.loading = false;
@@ -77,7 +77,7 @@ export class PageEditorComponent implements OnInit, Searchable {
 
     this.loadingService.loading = true;
 
-    let pageData = this.pageService.getPageData();
+    let pageData = this.pageService.page.getData();
 
     this.dataService.post(this.apiUrl, pageData)
       .subscribe((pageId: string) => {
@@ -121,7 +121,7 @@ export class PageEditorComponent implements OnInit, Searchable {
         this.currentPageId = null;
         this.loadingService.loading = false;
         this.setPageView();
-        this.pageService.widgetCursors = [];
+        this.pageService.page.widgetCursors = [];
       });
   }
 
@@ -146,11 +146,5 @@ export class PageEditorComponent implements OnInit, Searchable {
         // Load the lead page
         this.loadPage(pageData);
       });
-  }
-
-
-  // --------------------------------------------------------------------- On Save Click --------------------------------------------------------
-  onSaveClick() {
-    this.pageService.savePage(this.apiUrl);
   }
 }

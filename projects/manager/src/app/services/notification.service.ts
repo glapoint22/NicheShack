@@ -328,8 +328,6 @@ export class NotificationService {
             id: 'FSDFASFFSDFA',
             name: 'Video',
             url: 'video.png',
-            load: null,
-            save: null
           },
           priceIndices: [
             true,
@@ -345,8 +343,6 @@ export class NotificationService {
             id: 'JHFJSDRFGFFD',
             name: 'Audio',
             url: 'audio.png',
-            load: null,
-            save: null
           },
           priceIndices: [
             false,
@@ -362,8 +358,6 @@ export class NotificationService {
             id: 'QRDFDDASFASDF',
             name: 'PDF',
             url: 'pdf.png',
-            load: null,
-            save: null
           },
           priceIndices: [
             true,
@@ -466,8 +460,6 @@ export class NotificationService {
             id: 'FSDFASFFSDFA',
             name: 'Video',
             url: 'video.png',
-            load: null,
-            save: null
           },
           priceIndices: [
             true,
@@ -483,8 +475,6 @@ export class NotificationService {
             id: 'JHFJSDRFGFFD',
             name: 'Audio',
             url: 'audio.png',
-            load: null,
-            save: null
           },
           priceIndices: [
             false,
@@ -500,8 +490,6 @@ export class NotificationService {
             id: 'QRDFDDASFASDF',
             name: 'PDF',
             url: 'pdf.png',
-            load: null,
-            save: null
           },
           priceIndices: [
             true,
@@ -604,8 +592,6 @@ export class NotificationService {
             id: 'FSDFASFFSDFA',
             name: 'Video',
             url: 'video.png',
-            load: null,
-            save: null
           },
           priceIndices: [
             true,
@@ -621,8 +607,6 @@ export class NotificationService {
             id: 'JHFJSDRFGFFD',
             name: 'Audio',
             url: 'audio.png',
-            load: null,
-            save: null
           },
           priceIndices: [
             false,
@@ -638,8 +622,6 @@ export class NotificationService {
             id: 'QRDFDDASFASDF',
             name: 'PDF',
             url: 'pdf.png',
-            load: null,
-            save: null
           },
           priceIndices: [
             true,

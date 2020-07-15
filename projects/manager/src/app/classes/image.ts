@@ -6,14 +6,14 @@ export class Image implements Media {
     public name: string;
     public url: string;
 
-    load(imageData: ImageData) {
+    setData(imageData: ImageData) {
         if (imageData) {
             this.url = imageData.url;
             this.name = imageData.name;
         }
     }
 
-    save(imageData: ImageData) {
+    getData(imageData: ImageData) {
         if (this.url) imageData.url = this.url;
         if (this.name) imageData.name = this.name;
     }

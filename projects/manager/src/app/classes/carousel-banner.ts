@@ -8,8 +8,8 @@ export class CarouselBanner {
 
     constructor(carouselBannerData?: CarouselBannerData) {
         if (carouselBannerData) {
-            this.image.load(carouselBannerData.image);
-            this.link.load(carouselBannerData.link);
+            this.image.setData(carouselBannerData.image);
+            this.link.setData(carouselBannerData.link);
         }
     }
 }

@@ -70,39 +70,39 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
   }
 
 
-  load(widgetData: ContainerWidgetData) {
-    this.background.load(widgetData.background);
-    this.border.load(widgetData.border);
-    this.corners.load(widgetData.corners);
-    this.shadow.load(widgetData.shadow);
-    this.padding.load(widgetData.padding);
+  setData(widgetData: ContainerWidgetData) {
+    this.background.setData(widgetData.background);
+    this.border.setData(widgetData.border);
+    this.corners.setData(widgetData.corners);
+    this.shadow.setData(widgetData.shadow);
+    this.padding.setData(widgetData.padding);
 
-    super.load(widgetData);
+    super.setData(widgetData);
   }
 
 
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     let containerWidgetData = columnData.widgetData = new ContainerWidgetData();
 
     // Name
     if (this.name != 'Container') containerWidgetData.name = this.name;
 
     // Background
-    this.background.save(containerWidgetData.background);
+    this.background.getData(containerWidgetData.background);
 
     // Border
-    this.border.save(containerWidgetData.border);
+    this.border.getData(containerWidgetData.border);
 
     // Corners
-    this.corners.save(containerWidgetData.corners);
+    this.corners.getData(containerWidgetData.corners);
 
     // Shadow
-    this.shadow.save(containerWidgetData.shadow);
+    this.shadow.getData(containerWidgetData.shadow);
 
     // Padding
-    this.padding.save(containerWidgetData.padding, this.breakpoints);
+    this.padding.getData(containerWidgetData.padding, this.breakpoints);
     this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.top);
     this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.right);
     this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.bottom);
@@ -110,10 +110,10 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
 
     
 
-    super.save(columnData);
+    super.getData(columnData);
 
 
-    this.container.save(containerWidgetData.rows);
+    this.container.getData(containerWidgetData.rows);
   }
 
 

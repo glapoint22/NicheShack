@@ -82,16 +82,16 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
 
   buildHTML(parent: HTMLElement) { }
 
-  load(widgetData: WidgetData) {
+  setData(widgetData: WidgetData) {
     if (widgetData.name) this.name = widgetData.name;
     if (widgetData.width) this.width = widgetData.width;
     if (widgetData.height) this.height = widgetData.height;
-    this.horizontalAlignment.load(widgetData.horizontalAlignment);
+    this.horizontalAlignment.setData(widgetData.horizontalAlignment);
     this.breakpointService.loadBreakpoints(widgetData.breakpoints, this);
   }
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     // Type
     columnData.widgetData.widgetType = this.type;
 
@@ -103,7 +103,7 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
 
     // Horizontal Alignment
     if (!this.breakpoints.some(x => x.breakpointObject == this.horizontalAlignment)) {
-      this.horizontalAlignment.save(columnData.widgetData);
+      this.horizontalAlignment.getData(columnData.widgetData);
     } else {
       this.breakpointService.saveBreakpoints(this.breakpoints, columnData.widgetData.breakpoints, this.horizontalAlignment);
     }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { WidgetService } from '../../services/widget.service';
+import { PageService } from '../../services/page.service';
 
 @Component({
   selector: 'column-properties',
@@ -8,6 +9,9 @@ import { WidgetService } from '../../services/widget.service';
 })
 export class ColumnPropertiesComponent {
 
-  constructor(public widgetService: WidgetService) { }
+  constructor(
+    public widgetService: WidgetService,
+    public pageService: PageService,
+  ) { }
 
 }

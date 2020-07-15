@@ -375,6 +375,7 @@ export class TempDataService {
             id: 'FM1R8HAOEB',
             name: 'Campland',
             width: 1600,
+            type: 0,
             background: {
               enable: false,
               color: '#ffffff',
@@ -1881,61 +1882,61 @@ export class TempDataService {
 
       // Images
       case 'api/Images':
-        let image1: MediaItem = new MediaItem(MediaType.Image); image1.name = 'Image 1'; image1.id = 'oiweoiuwer'; image1.url = '2f119b657c194b32a88b0f0051d525be.png';
-        let image2: MediaItem = new MediaItem(MediaType.Image); image2.name = 'Image 2'; image2.id = 'qweuywesdo'; image2.url = '6c048ea442b646b59970f907a4d3ce61.jpg';
-        let image3: MediaItem = new MediaItem(MediaType.Image); image3.name = 'Image 3'; image3.id = 'potyuoptuw'; image3.url = '0aada12f8b21471ea96aebe9a503977b.png';
-        let image4: MediaItem = new MediaItem(MediaType.Image); image4.name = 'Image 4'; image4.id = 'potyuoptuw'; image4.url = '6e1659b63e5643e0a9039064b4a52e12.png';
+        let image1: MediaItem = new MediaItem(MediaType.Image); image1.name = 'Image 1'; image1.id = 'gdfassd'; image1.url = '2f119b657c194b32a88b0f0051d525be.png';
+        let image2: MediaItem = new MediaItem(MediaType.Image); image2.name = 'Image 2'; image2.id = 'hdfghfgh'; image2.url = '6c048ea442b646b59970f907a4d3ce61.jpg';
+        let image3: MediaItem = new MediaItem(MediaType.Image); image3.name = 'Image 3'; image3.id = 'qwrwerr'; image3.url = '0aada12f8b21471ea96aebe9a503977b.png';
+        let image4: MediaItem = new MediaItem(MediaType.Image); image4.name = 'Image 4'; image4.id = 'kjghjkhjkhjk'; image4.url = '6e1659b63e5643e0a9039064b4a52e12.png';
         return of([image1, image2, image3, image4]).pipe(delay(1000));
 
 
       // Background Images
       case 'api/BackgroundImages':
-        let backgroundImage1: MediaItem = new MediaItem(MediaType.BackgroundImage); backgroundImage1.name = 'Campland'; backgroundImage1.id = 'oiweoiuwer'; backgroundImage1.url = 'campland-background.jpg';
-        let backgroundImage2: MediaItem = new MediaItem(MediaType.BackgroundImage); backgroundImage2.name = 'Background Image 2'; backgroundImage2.id = 'qweuywesdo'; backgroundImage2.url = 'a29f28773e154adaab48a6355f2f4e5d.png';
-        let backgroundImage3: MediaItem = new MediaItem(MediaType.BackgroundImage); backgroundImage3.name = 'Background Image 3'; backgroundImage3.id = 'potyuoptuw'; backgroundImage3.url = 'cfb7358d797d484eab24bd2a57d2b850.png';
+        let backgroundImage1: MediaItem = new MediaItem(MediaType.BackgroundImage); backgroundImage1.name = 'Campland'; backgroundImage1.id = 'nbvncbvnn'; backgroundImage1.url = 'campland-background.jpg';
+        let backgroundImage2: MediaItem = new MediaItem(MediaType.BackgroundImage); backgroundImage2.name = 'Background Image 2'; backgroundImage2.id = 'qrwerrbvcbxcvb'; backgroundImage2.url = 'a29f28773e154adaab48a6355f2f4e5d.png';
+        let backgroundImage3: MediaItem = new MediaItem(MediaType.BackgroundImage); backgroundImage3.name = 'Background Image 3'; backgroundImage3.id = 'nbvcnvnvxx'; backgroundImage3.url = 'cfb7358d797d484eab24bd2a57d2b850.png';
         return of([backgroundImage1, backgroundImage2, backgroundImage3]).pipe(delay(1000));
 
       // Banner Images
       case 'api/Carousel/Images':
-        let bannerImage1: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage1.name = 'Frozen'; bannerImage1.id = 'oiweoiuwer'; bannerImage1.url = 'frozen.jpg';
-        let bannerImage2: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage2.name = 'Banner Image 1'; bannerImage2.id = 'qweuywesdo'; bannerImage2.url = 'banner1.jpg';
-        let bannerImage3: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage3.name = 'Banner Image 2'; bannerImage3.id = 'potyuoptuw'; bannerImage3.url = 'banner2.jpg';
-        let bannerImage4: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage4.name = 'Banner Image 3'; bannerImage4.id = 'qweuywesdo'; bannerImage4.url = 'banner3.jpg';
-        let bannerImage5: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage5.name = 'Banner Image 4'; bannerImage5.id = 'potyuoptuw'; bannerImage5.url = 'banner4.jpg';
-        let bannerImage6: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage6.name = 'Banner Image 5'; bannerImage6.id = 'qweuywesdo'; bannerImage6.url = 'banner5.jpg';
+        let bannerImage1: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage1.name = 'Frozen'; bannerImage1.id = 'rqewrrwerew'; bannerImage1.url = 'frozen.jpg';
+        let bannerImage2: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage2.name = 'Banner Image 1'; bannerImage2.id = 'jjfghjghjghj'; bannerImage2.url = 'banner1.jpg';
+        let bannerImage3: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage3.name = 'Banner Image 2'; bannerImage3.id = 'uurutyuyrturtyutu'; bannerImage3.url = 'banner2.jpg';
+        let bannerImage4: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage4.name = 'Banner Image 3'; bannerImage4.id = '4325rtwerweqwer'; bannerImage4.url = 'banner3.jpg';
+        let bannerImage5: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage5.name = 'Banner Image 4'; bannerImage5.id = '98765fhtdfhdfdfg'; bannerImage5.url = 'banner4.jpg';
+        let bannerImage6: MediaItem = new MediaItem(MediaType.BannerImage); bannerImage6.name = 'Banner Image 5'; bannerImage6.id = 'bssddfgbsdsdfb'; bannerImage6.url = 'banner5.jpg';
         return of([bannerImage1, bannerImage2, bannerImage3, bannerImage4, bannerImage5, bannerImage6]).pipe(delay(1000));
 
 
       // Category Images
       case 'api/Categories/Images':
-        let categoryImage1: MediaItem = new MediaItem(MediaType.CategoryImage); categoryImage1.name = 'Health & Fitness'; categoryImage1.id = 'oiweoiuwer'; categoryImage1.url = '44d71fbf43904ffdbdece40a45bdf9db.png';
-        let categoryImage2: MediaItem = new MediaItem(MediaType.CategoryImage); categoryImage2.name = 'Brain Power'; categoryImage2.id = 'qweuywesdo'; categoryImage2.url = 'abc61d06435c4a29833a089271fe128a.png';
-        let categoryImage3: MediaItem = new MediaItem(MediaType.CategoryImage); categoryImage3.name = 'Camping'; categoryImage3.id = 'potyuoptuw'; categoryImage3.url = 'ab0bda0d51a5408788359471b337662f.png';
+        let categoryImage1: MediaItem = new MediaItem(MediaType.CategoryImage); categoryImage1.name = 'Health & Fitness'; categoryImage1.id = '4132gfddfsgdfga'; categoryImage1.url = '44d71fbf43904ffdbdece40a45bdf9db.png';
+        let categoryImage2: MediaItem = new MediaItem(MediaType.CategoryImage); categoryImage2.name = 'Brain Power'; categoryImage2.id = 'bgfdbbfsdafsdf'; categoryImage2.url = 'abc61d06435c4a29833a089271fe128a.png';
+        let categoryImage3: MediaItem = new MediaItem(MediaType.CategoryImage); categoryImage3.name = 'Camping'; categoryImage3.id = '65436sgdgfgvdfsfv'; categoryImage3.url = 'ab0bda0d51a5408788359471b337662f.png';
         return of([categoryImage1, categoryImage2, categoryImage3]).pipe(delay(1000));
 
       // Product Images
       case 'api/Products/Images':
-        let productImage1: MediaItem = new MediaItem(MediaType.ProductImage); productImage1.name = 'How to Seduce Out of Your League'; productImage1.id = 'oiweoiuwer'; productImage1.url = 'b4fa43f207d7420cbb2c72d0fe9c64ba.jpg';
-        let productImage2: MediaItem = new MediaItem(MediaType.ProductImage); productImage2.name = 'The 21 Day Flat Belly Fix System'; productImage2.id = 'qweuywesdo'; productImage2.url = '899c7b6deb544dd28a7ec3055c5196a1.jpg';
-        let productImage3: MediaItem = new MediaItem(MediaType.ProductImage); productImage3.name = 'Bigger Better Butt'; productImage3.id = 'potyuoptuw'; productImage3.url = 'b212b69728ee4f3b9473831bb4f7ace9.png';
+        let productImage1: MediaItem = new MediaItem(MediaType.ProductImage); productImage1.name = 'How to Seduce Out of Your League'; productImage1.id = 'bbbdsafsdfsdffqwre'; productImage1.url = 'b4fa43f207d7420cbb2c72d0fe9c64ba.jpg';
+        let productImage2: MediaItem = new MediaItem(MediaType.ProductImage); productImage2.name = 'The 21 Day Flat Belly Fix System'; productImage2.id = 'pouipipipsgdfg'; productImage2.url = '899c7b6deb544dd28a7ec3055c5196a1.jpg';
+        let productImage3: MediaItem = new MediaItem(MediaType.ProductImage); productImage3.name = 'Bigger Better Butt'; productImage3.id = '6543gsdgdfdfgsavvv'; productImage3.url = 'b212b69728ee4f3b9473831bb4f7ace9.png';
         return of([productImage1, productImage2, productImage3]).pipe(delay(1000));
 
       // Icons
       case 'api/ProductContent/Images':
-        let icon1: MediaItem = new MediaItem(MediaType.Icon); icon1.name = 'PDF'; icon1.id = 'oiweoiuwer'; icon1.url = 'pdf.png';
-        let icon2: MediaItem = new MediaItem(MediaType.Icon); icon2.name = 'Audio'; icon2.id = 'qweuywesdo'; icon2.url = 'audio.png';
-        let icon3: MediaItem = new MediaItem(MediaType.Icon); icon3.name = 'Video'; icon3.id = 'potyuoptuw'; icon3.url = 'video.png';
-        let icon4: MediaItem = new MediaItem(MediaType.Icon); icon4.name = 'Software'; icon4.id = 'potyuoptuw'; icon4.url = 'software.png';
+        let icon1: MediaItem = new MediaItem(MediaType.Icon); icon1.name = 'PDF'; icon1.id = '124332ghfdfhhgfhfghgfhfnnnn'; icon1.url = 'pdf.png';
+        let icon2: MediaItem = new MediaItem(MediaType.Icon); icon2.name = 'Audio'; icon2.id = 'bxcvbvcbcbcvbaaa1111'; icon2.url = 'audio.png';
+        let icon3: MediaItem = new MediaItem(MediaType.Icon); icon3.name = 'Video'; icon3.id = 'mmdddfrrssss11'; icon3.url = 'video.png';
+        let icon4: MediaItem = new MediaItem(MediaType.Icon); icon4.name = 'Software'; icon4.id = 'bbfsdafsdfiutyiiyuiuy4354545435aa'; icon4.url = 'software.png';
         return of([icon1, icon2, icon3, icon4]).pipe(delay(1000));
 
       // Videos
       case 'api/Videos':
-        let video1: MediaItem = new MediaItem(MediaType.Video); video1.name = 'Video 1'; video1.id = 'oiweoiuwer'; video1.thumbnail = 'thumbnail1.png'; video1.url = '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff';
-        let video2: MediaItem = new MediaItem(MediaType.Video); video2.name = 'Video 2'; video2.id = 'qweuywesdo'; video2.thumbnail = 'thumbnail2.png'; video2.url = 'https://www.youtube.com/embed/1AI6RS1st2E';
-        let video3: MediaItem = new MediaItem(MediaType.Video); video3.name = 'Video 3'; video3.id = 'potyuoptuw'; video3.thumbnail = 'thumbnail3.png'; video3.url = '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff';
-        let video4: MediaItem = new MediaItem(MediaType.Video); video4.name = 'Video 4'; video4.id = 'oiweoiuwer'; video4.thumbnail = 'thumbnail4.png'; video4.url = 'https://www.youtube.com/embed/3ZEu6ZOMhlw';
-        let video5: MediaItem = new MediaItem(MediaType.Video); video5.name = 'Video 5'; video5.id = 'qweuywesdo'; video5.thumbnail = 'thumbnail5.png'; video5.url = 'https://player.vimeo.com/video/218732620';
-        let video6: MediaItem = new MediaItem(MediaType.Video); video6.name = 'Video 6'; video6.id = 'potyuoptuw'; video6.thumbnail = 'thumbnail6.png'; video6.url = 'https://player.vimeo.com/video/264188894';
+        let video1: MediaItem = new MediaItem(MediaType.Video); video1.name = 'Video 1'; video1.id = 'bbbbaaaarwqwerwr65434ggd'; video1.thumbnail = 'thumbnail1.png'; video1.url = '//player.vimeo.com/video/173192945?title=0&byline=0&portrait=0&color=ffffff';
+        let video2: MediaItem = new MediaItem(MediaType.Video); video2.name = 'Video 2'; video2.id = 'bbdsfsafsdfiiiiii11afsdfacc'; video2.thumbnail = 'thumbnail2.png'; video2.url = 'https://www.youtube.com/embed/1AI6RS1st2E';
+        let video3: MediaItem = new MediaItem(MediaType.Video); video3.name = 'Video 3'; video3.id = '2432ffasdhghdgdfnnnzzzffa'; video3.thumbnail = 'thumbnail3.png'; video3.url = '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff';
+        let video4: MediaItem = new MediaItem(MediaType.Video); video4.name = 'Video 4'; video4.id = 'jgfsdgf343asfrfaaaa'; video4.thumbnail = 'thumbnail4.png'; video4.url = 'https://www.youtube.com/embed/3ZEu6ZOMhlw';
+        let video5: MediaItem = new MediaItem(MediaType.Video); video5.name = 'Video 5'; video5.id = 'bbbafasdff4553iuityyouus'; video5.thumbnail = 'thumbnail5.png'; video5.url = 'https://player.vimeo.com/video/218732620';
+        let video6: MediaItem = new MediaItem(MediaType.Video); video6.name = 'Video 6'; video6.id = 'caaa22234jfjhgasafsdfadgfs'; video6.thumbnail = 'thumbnail6.png'; video6.url = 'https://player.vimeo.com/video/264188894';
         return of([video1, video2, video3, video4, video5, video6]).pipe(delay(1000));
 
 
@@ -1946,61 +1947,61 @@ export class TempDataService {
 
       // Images
       case 'api/Images/Search':
-        let searchImage1: MediaItem = new MediaItem(MediaType.Image); searchImage1.name = 'Search Image 1'; searchImage1.id = 'oiweoiuwer'; searchImage1.url = '00cfd1973191425080201d9fcff5c305.png';
-        let searchImage2: MediaItem = new MediaItem(MediaType.Image); searchImage2.name = 'Search Image 2'; searchImage2.id = 'qweuywesdo'; searchImage2.url = '00da7531db2f4b6dbd10c10a93278946.png';
-        let searchImage3: MediaItem = new MediaItem(MediaType.Image); searchImage3.name = 'Search Image 3'; searchImage3.id = 'potyuoptuw'; searchImage3.url = '0a2b8633118d4719bddfe468521d8a39.png';
-        let searchImage4: MediaItem = new MediaItem(MediaType.Image); searchImage4.name = 'Search Image 4'; searchImage4.id = 'potyuoptuw'; searchImage4.url = '0a89b15aee2945d3b3bf71a241e3bcaf.png';
+        let searchImage1: MediaItem = new MediaItem(MediaType.Image); searchImage1.name = 'Search Image 1'; searchImage1.id = 'afsdfsdafdasfvzxvxcvxcvxffff11000'; searchImage1.url = '00cfd1973191425080201d9fcff5c305.png';
+        let searchImage2: MediaItem = new MediaItem(MediaType.Image); searchImage2.name = 'Search Image 2'; searchImage2.id = 'bbbaaaayyoooooiuyrweraccaa223'; searchImage2.url = '00da7531db2f4b6dbd10c10a93278946.png';
+        let searchImage3: MediaItem = new MediaItem(MediaType.Image); searchImage3.name = 'Search Image 3'; searchImage3.id = 'zzzzzbbbbbbdddaa'; searchImage3.url = '0a2b8633118d4719bddfe468521d8a39.png';
+        let searchImage4: MediaItem = new MediaItem(MediaType.Image); searchImage4.name = 'Search Image 4'; searchImage4.id = 'bvcxzv2rwerqeeaddsf'; searchImage4.url = '0a89b15aee2945d3b3bf71a241e3bcaf.png';
         return of([searchImage1, searchImage2, searchImage3, searchImage4]).pipe(delay(1000));
 
 
       // Background Images
       case 'api/BackgroundImages/Search':
-        let searchBackgroundImage1: MediaItem = new MediaItem(MediaType.BackgroundImage); searchBackgroundImage1.name = 'Search Background Image 1'; searchBackgroundImage1.id = 'oiweoiuwer'; searchBackgroundImage1.url = '0b935a68e3684bf1a9ec01beab0deea8.png';
-        let searchBackgroundImage2: MediaItem = new MediaItem(MediaType.BackgroundImage); searchBackgroundImage2.name = 'Search Background Image 2'; searchBackgroundImage2.id = 'qweuywesdo'; searchBackgroundImage2.url = '0bbe439f6e9f4514b0154bc4a3c0ef37.png';
-        let searchBackgroundImage3: MediaItem = new MediaItem(MediaType.BackgroundImage); searchBackgroundImage3.name = 'Search Background Image 3'; searchBackgroundImage3.id = 'potyuoptuw'; searchBackgroundImage3.url = '0bdb6669488944b9b8dd04d26d61bd09.png';
+        let searchBackgroundImage1: MediaItem = new MediaItem(MediaType.BackgroundImage); searchBackgroundImage1.name = 'Search Background Image 1'; searchBackgroundImage1.id = 'rttttyttyteryrss'; searchBackgroundImage1.url = '0b935a68e3684bf1a9ec01beab0deea8.png';
+        let searchBackgroundImage2: MediaItem = new MediaItem(MediaType.BackgroundImage); searchBackgroundImage2.name = 'Search Background Image 2'; searchBackgroundImage2.id = 'nnafffyy4334azzal'; searchBackgroundImage2.url = '0bbe439f6e9f4514b0154bc4a3c0ef37.png';
+        let searchBackgroundImage3: MediaItem = new MediaItem(MediaType.BackgroundImage); searchBackgroundImage3.name = 'Search Background Image 3'; searchBackgroundImage3.id = 'ywwrtretadddccss884'; searchBackgroundImage3.url = '0bdb6669488944b9b8dd04d26d61bd09.png';
         return of([searchBackgroundImage1, searchBackgroundImage2, searchBackgroundImage3]).pipe(delay(1000));
 
       // Banner Images
       case 'api/Carousel/Images/Search':
-        let searchBannerImage1: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage1.name = 'Search Banner Image 1'; searchBannerImage1.id = 'oiweoiuwer'; searchBannerImage1.url = '0d9d6132467540bc99cb58a45976e40a.png';
-        let searchBannerImage2: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage2.name = 'Search Banner Image 2'; searchBannerImage2.id = 'qweuywesdo'; searchBannerImage2.url = '0e5bb073af354e01a03ec6d5254efb8d.png';
-        let searchBannerImage3: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage3.name = 'Search Banner Image 3'; searchBannerImage3.id = 'potyuoptuw'; searchBannerImage3.url = '0e535fb35dc54e519c1c56e2bf2ccd29.png';
-        let searchBannerImage4: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage4.name = 'Search Banner Image 4'; searchBannerImage4.id = 'qweuywesdo'; searchBannerImage4.url = '0f807d78672141d083919b1505537391.jpg';
-        let searchBannerImage5: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage5.name = 'Search Banner Image 5'; searchBannerImage5.id = 'potyuoptuw'; searchBannerImage5.url = '01b9dbfac8184f769fcc27038b2330ae.png';
-        let searchBannerImage6: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage6.name = 'Search Banner Image 6'; searchBannerImage6.id = 'qweuywesdo'; searchBannerImage6.url = '01d878d82ad6400e98a58d09212ef0cc.jpg';
+        let searchBannerImage1: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage1.name = 'Search Banner Image 1'; searchBannerImage1.id = '234324gfdgdgdsmmmmxxx'; searchBannerImage1.url = '0d9d6132467540bc99cb58a45976e40a.png';
+        let searchBannerImage2: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage2.name = 'Search Banner Image 2'; searchBannerImage2.id = '2fdsfdsfavvvuuuiuyiwddxx'; searchBannerImage2.url = '0e5bb073af354e01a03ec6d5254efb8d.png';
+        let searchBannerImage3: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage3.name = 'Search Banner Image 3'; searchBannerImage3.id = 'xxxxzzzhhfdsfdsfad7774356fafasazff'; searchBannerImage3.url = '0e535fb35dc54e519c1c56e2bf2ccd29.png';
+        let searchBannerImage4: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage4.name = 'Search Banner Image 4'; searchBannerImage4.id = '22332jjgjhhgjgjvccasaskjhgerew'; searchBannerImage4.url = '0f807d78672141d083919b1505537391.jpg';
+        let searchBannerImage5: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage5.name = 'Search Banner Image 5'; searchBannerImage5.id = '08767eddsgfdsgdcdafds'; searchBannerImage5.url = '01b9dbfac8184f769fcc27038b2330ae.png';
+        let searchBannerImage6: MediaItem = new MediaItem(MediaType.BannerImage); searchBannerImage6.name = 'Search Banner Image 6'; searchBannerImage6.id = '2rfdasdffcasdgferrssxxafaazzz'; searchBannerImage6.url = '01d878d82ad6400e98a58d09212ef0cc.jpg';
         return of([searchBannerImage1, searchBannerImage2, searchBannerImage3, searchBannerImage4, searchBannerImage5, searchBannerImage6]).pipe(delay(1000));
 
 
       // Category Images
       case 'api/Categories/Images/Search':
-        let searchCategoryImage1: MediaItem = new MediaItem(MediaType.CategoryImage); searchCategoryImage1.name = 'Search Category Image 1'; searchCategoryImage1.id = 'oiweoiuwer'; searchCategoryImage1.url = '01f0631f756349399dead6763a99e432.png';
-        let searchCategoryImage2: MediaItem = new MediaItem(MediaType.CategoryImage); searchCategoryImage2.name = 'Search Category Image 2'; searchCategoryImage2.id = 'qweuywesdo'; searchCategoryImage2.url = '1a5c40cd25c54650ac4ca95faa3e1e35.png';
-        let searchCategoryImage3: MediaItem = new MediaItem(MediaType.CategoryImage); searchCategoryImage3.name = 'Search Category Image 3'; searchCategoryImage3.id = 'potyuoptuw'; searchCategoryImage3.url = '1a56b295fdde4d11999116001431976f.png';
+        let searchCategoryImage1: MediaItem = new MediaItem(MediaType.CategoryImage); searchCategoryImage1.name = 'Search Category Image 1'; searchCategoryImage1.id = '2dfdfasdfcccutewsdfghjmmmczxsa'; searchCategoryImage1.url = '01f0631f756349399dead6763a99e432.png';
+        let searchCategoryImage2: MediaItem = new MediaItem(MediaType.CategoryImage); searchCategoryImage2.name = 'Search Category Image 2'; searchCategoryImage2.id = '5gffds22339876gfdgsdczxxxxzz'; searchCategoryImage2.url = '1a5c40cd25c54650ac4ca95faa3e1e35.png';
+        let searchCategoryImage3: MediaItem = new MediaItem(MediaType.CategoryImage); searchCategoryImage3.name = 'Search Category Image 3'; searchCategoryImage3.id = 'bggsfggfgdafdsfazzzzffee22mnb6gzxtu'; searchCategoryImage3.url = '1a56b295fdde4d11999116001431976f.png';
         return of([searchCategoryImage1, searchCategoryImage2, searchCategoryImage3]).pipe(delay(1000));
 
       // Product Images
       case 'api/Products/Images/Search':
-        let searchProductImage1: MediaItem = new MediaItem(MediaType.ProductImage); searchProductImage1.name = 'Search Product Image 1'; searchProductImage1.id = 'oiweoiuwer'; searchProductImage1.url = '1a3567d86c7748a2985777e06817f989.jpg';
-        let searchProductImage2: MediaItem = new MediaItem(MediaType.ProductImage); searchProductImage2.name = 'Search Product Image 2'; searchProductImage2.id = 'qweuywesdo'; searchProductImage2.url = '1a4209cfdcb74a5c93547b6b66db9edc.png';
-        let searchProductImage3: MediaItem = new MediaItem(MediaType.ProductImage); searchProductImage3.name = 'Search Product Image 3'; searchProductImage3.id = 'potyuoptuw'; searchProductImage3.url = '1b47c07f752648fda4109aa62357cd47.png';
+        let searchProductImage1: MediaItem = new MediaItem(MediaType.ProductImage); searchProductImage1.name = 'Search Product Image 1'; searchProductImage1.id = 'ccsfjhjfg21afffsssskklpuycsz'; searchProductImage1.url = '1a3567d86c7748a2985777e06817f989.jpg';
+        let searchProductImage2: MediaItem = new MediaItem(MediaType.ProductImage); searchProductImage2.name = 'Search Product Image 2'; searchProductImage2.id = 'csfyyteeeadfbnccxzzzz75'; searchProductImage2.url = '1a4209cfdcb74a5c93547b6b66db9edc.png';
+        let searchProductImage3: MediaItem = new MediaItem(MediaType.ProductImage); searchProductImage3.name = 'Search Product Image 3'; searchProductImage3.id = 'kkgfsd2edasdkrrreecccdasfdchhre'; searchProductImage3.url = '1b47c07f752648fda4109aa62357cd47.png';
         return of([searchProductImage1, searchProductImage2, searchProductImage3]).pipe(delay(1000));
 
       // Icons
       case 'api/ProductContent/Images/Search':
-        let searchIcon1: MediaItem = new MediaItem(MediaType.Icon); searchIcon1.name = 'Search Icon 1'; searchIcon1.id = 'oiweoiuwer'; searchIcon1.url = '1b3965404449489bbd02f47621550a66.png';
-        let searchIcon2: MediaItem = new MediaItem(MediaType.Icon); searchIcon2.name = 'Search Icon 2'; searchIcon2.id = 'qweuywesdo'; searchIcon2.url = '1bb85272877b4b35a30ebec6a930b33b.png';
-        let searchIcon3: MediaItem = new MediaItem(MediaType.Icon); searchIcon3.name = 'Search Icon 3'; searchIcon3.id = 'potyuoptuw'; searchIcon3.url = '1bd9299bc05545c1b24da0d8c6569bf2.png';
-        let searchIcon4: MediaItem = new MediaItem(MediaType.Icon); searchIcon4.name = 'Search Icon 4'; searchIcon4.id = 'potyuoptuw'; searchIcon4.url = '1d50e7660516440d8673cbcdf486cbd0.png';
+        let searchIcon1: MediaItem = new MediaItem(MediaType.Icon); searchIcon1.name = 'Search Icon 1'; searchIcon1.id = '3dfsvvggfgjhfghjafssxoiuycsa'; searchIcon1.url = '1b3965404449489bbd02f47621550a66.png';
+        let searchIcon2: MediaItem = new MediaItem(MediaType.Icon); searchIcon2.name = 'Search Icon 2'; searchIcon2.id = 'lkjhbgf55zaaaalhggfdvaw'; searchIcon2.url = '1bb85272877b4b35a30ebec6a930b33b.png';
+        let searchIcon3: MediaItem = new MediaItem(MediaType.Icon); searchIcon3.name = 'Search Icon 3'; searchIcon3.id = 'eiihjdhdheuiyrtytyt'; searchIcon3.url = '1bd9299bc05545c1b24da0d8c6569bf2.png';
+        let searchIcon4: MediaItem = new MediaItem(MediaType.Icon); searchIcon4.name = 'Search Icon 4'; searchIcon4.id = '4h4hueueusgsgdfgg8qtqfgsg'; searchIcon4.url = '1d50e7660516440d8673cbcdf486cbd0.png';
         return of([searchIcon1, searchIcon2, searchIcon3, searchIcon4]).pipe(delay(1000));
 
       // Videos
       case 'api/Videos/Search':
-        let searchVideo1: MediaItem = new MediaItem(MediaType.Video); searchVideo1.name = 'Search Video 1'; searchVideo1.id = 'oiweoiuwer'; searchVideo1.thumbnail = '1d83a09d3ff948b5b56c665d820c8e0e.png'; searchVideo1.url = 'https://www.youtube.com/embed/x-3O1Six0lM';
-        let searchVideo2: MediaItem = new MediaItem(MediaType.Video); searchVideo2.name = 'Search Video 2'; searchVideo2.id = 'qweuywesdo'; searchVideo2.thumbnail = '1e7f8a81d0754b94aa37b6270c3880d7.png'; searchVideo2.url = 'https://www.youtube.com/embed/1AI6RS1st2E';
-        let searchVideo3: MediaItem = new MediaItem(MediaType.Video); searchVideo3.name = 'Search Video 3'; searchVideo3.id = 'potyuoptuw'; searchVideo3.thumbnail = '1e8eaac85778452ea8ea12851e6ec00c.png'; searchVideo3.url = '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff';
-        let searchVideo4: MediaItem = new MediaItem(MediaType.Video); searchVideo4.name = 'Search Video 4'; searchVideo4.id = 'oiweoiuwer'; searchVideo4.thumbnail = '1e25aa3d5dcf4cb4a9d15d3cf2a1078b.png'; searchVideo4.url = 'https://www.youtube.com/embed/3ZEu6ZOMhlw';
-        let searchVideo5: MediaItem = new MediaItem(MediaType.Video); searchVideo5.name = 'Search Video 5'; searchVideo5.id = 'qweuywesdo'; searchVideo5.thumbnail = '1e83e80b1dbb4443a3b2c85023104caf.png'; searchVideo5.url = 'https://player.vimeo.com/video/218732620';
-        let searchVideo6: MediaItem = new MediaItem(MediaType.Video); searchVideo6.name = 'Search Video 6'; searchVideo6.id = 'potyuoptuw'; searchVideo6.thumbnail = '1f0236db351b4535bec6a2701db9a8ea.png'; searchVideo6.url = 'https://player.vimeo.com/video/264188894';
+        let searchVideo1: MediaItem = new MediaItem(MediaType.Video); searchVideo1.name = 'Search Video 1'; searchVideo1.id = 'nsgiiazhhj4y3ter'; searchVideo1.thumbnail = '1d83a09d3ff948b5b56c665d820c8e0e.png'; searchVideo1.url = 'https://www.youtube.com/embed/x-3O1Six0lM';
+        let searchVideo2: MediaItem = new MediaItem(MediaType.Video); searchVideo2.name = 'Search Video 2'; searchVideo2.id = 'b543rgresg4frhssd'; searchVideo2.thumbnail = '1e7f8a81d0754b94aa37b6270c3880d7.png'; searchVideo2.url = 'https://www.youtube.com/embed/1AI6RS1st2E';
+        let searchVideo3: MediaItem = new MediaItem(MediaType.Video); searchVideo3.name = 'Search Video 3'; searchVideo3.id = 'nha33afsadfdsaxxzzzyyyre2246'; searchVideo3.thumbnail = '1e8eaac85778452ea8ea12851e6ec00c.png'; searchVideo3.url = '//player.vimeo.com/video/179479722?title=0&byline=0&portrait=0&color=ffffff';
+        let searchVideo4: MediaItem = new MediaItem(MediaType.Video); searchVideo4.name = 'Search Video 4'; searchVideo4.id = 'mrtrtewrdsaf21wfsadfccszuw'; searchVideo4.thumbnail = '1e25aa3d5dcf4cb4a9d15d3cf2a1078b.png'; searchVideo4.url = 'https://www.youtube.com/embed/3ZEu6ZOMhlw';
+        let searchVideo5: MediaItem = new MediaItem(MediaType.Video); searchVideo5.name = 'Search Video 5'; searchVideo5.id = '95hvvsfgdgfgtretcssdfakg'; searchVideo5.thumbnail = '1e83e80b1dbb4443a3b2c85023104caf.png'; searchVideo5.url = 'https://player.vimeo.com/video/218732620';
+        let searchVideo6: MediaItem = new MediaItem(MediaType.Video); searchVideo6.name = 'Search Video 6'; searchVideo6.id = 'dwwtdfeyyhdfdryh'; searchVideo6.thumbnail = '1f0236db351b4535bec6a2701db9a8ea.png'; searchVideo6.url = 'https://player.vimeo.com/video/264188894';
         return of([searchVideo1, searchVideo2, searchVideo3, searchVideo4, searchVideo5, searchVideo6]).pipe(delay(1000));
 
 

@@ -2,28 +2,30 @@
     <!-- Column ID -->
     <div class="grooved-container">
         <div class="label">Name:</div>
-        <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.column.name">
+        <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.column.name" (input)="pageService.save.next()">
     </div>
 
     <!-- background -->
     <div id="first-property">
-        <panel [title]="'Background'" [enableableProperty]="widgetService.selectedWidget.column.background">
-            <background [background]="widgetService.selectedWidget.column.background"></background>
+        <panel [title]="'Background'" [enableableProperty]="widgetService.selectedWidget.column.background"
+            (onEnableOptionClick)="pageService.save.next()">
+            <background [background]="widgetService.selectedWidget.column.background"
+                (onChange)="pageService.save.next()"></background>
         </panel>
     </div>
 
     <!-- Border -->
-    <border [border]="widgetService.selectedWidget.column.border"></border>
+    <border [border]="widgetService.selectedWidget.column.border" (onChange)="pageService.save.next()"></border>
 
     <!-- Corners -->
-    <corners [corners]="widgetService.selectedWidget.column.corners"></corners>
+    <corners [corners]="widgetService.selectedWidget.column.corners" (onChange)="pageService.save.next()"></corners>
 
     <!-- Shadow -->
-    <shadow [shadow]="widgetService.selectedWidget.column.shadow"></shadow>
+    <shadow [shadow]="widgetService.selectedWidget.column.shadow" (onChange)="pageService.save.next()"></shadow>
 
     <!-- Padding -->
-    <padding [paddingComponent]="widgetService.selectedWidget.column"></padding>
+    <padding [paddingComponent]="widgetService.selectedWidget.column" (onChange)="pageService.save.next()"></padding>
 
     <!-- Horizontal Alignment -->
-    <horizontal-alignment [widget]="widgetService.selectedWidget"></horizontal-alignment>
+    <horizontal-alignment [widget]="widgetService.selectedWidget" (onChange)="pageService.save.next()"></horizontal-alignment>
 </ng-container>

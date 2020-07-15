@@ -46,35 +46,35 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
   }
 
 
-  load(widgetData: VideoWidgetData) {
-    this.border.load(widgetData.border);
-    this.corners.load(widgetData.corners);
-    this.shadow.load(widgetData.shadow);
-    this.video.load(widgetData.video);
-    super.load(widgetData);
+  setData(widgetData: VideoWidgetData) {
+    this.border.setData(widgetData.border);
+    this.corners.setData(widgetData.corners);
+    this.shadow.setData(widgetData.shadow);
+    this.video.setData(widgetData.video);
+    super.setData(widgetData);
   }
 
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     let videoWidgetData = columnData.widgetData = new VideoWidgetData();
 
     // Name
     if (this.name != 'Video') videoWidgetData.name = this.name;
     
     // Border
-    this.border.save(videoWidgetData.border);
+    this.border.getData(videoWidgetData.border);
 
     // Corners
-    this.corners.save(videoWidgetData.corners);
+    this.corners.getData(videoWidgetData.corners);
 
     // Shadow
-    this.shadow.save(videoWidgetData.shadow);
+    this.shadow.getData(videoWidgetData.shadow);
 
     // Video
-    this.video.save(videoWidgetData.video);
+    this.video.getData(videoWidgetData.video);
 
-    super.save(columnData);
+    super.getData(columnData);
   }
 
 

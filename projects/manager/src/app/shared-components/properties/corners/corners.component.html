@@ -1,7 +1,7 @@
 <panel [title]="'Corners'">
     <!-- Constrain -->
     <checkbox style="color: white;" [label]="'Constrain'" [checked]="corners.constrain"
-        (change)="corners.constrain = !corners.constrain">
+        (change)="corners.constrain = !corners.constrain; onChange.emit()">
     </checkbox>
 
     <!-- Top Left -->

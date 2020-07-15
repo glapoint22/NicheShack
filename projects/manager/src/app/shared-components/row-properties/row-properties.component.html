@@ -2,31 +2,34 @@
     <!-- Row ID -->
     <div class="grooved-container">
         <div class="label">Name:</div>
-        <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.column.row.name">
+        <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.column.row.name"
+            (input)="pageService.save.next()">
     </div>
 
     <!-- background -->
     <div id="first-property">
-        <panel [title]="'Background'" [enableableProperty]="widgetService.selectedWidget.column.row.background">
-            <background [background]="widgetService.selectedWidget.column.row.background"></background>
+        <panel [title]="'Background'" [enableableProperty]="widgetService.selectedWidget.column.row.background"
+            (onEnableOptionClick)="pageService.save.next()">
+            <background [background]="widgetService.selectedWidget.column.row.background"
+                (onChange)="pageService.save.next()"></background>
         </panel>
     </div>
 
     <!-- Border -->
-    <border [border]="widgetService.selectedWidget.column.row.border"></border>
+    <border [border]="widgetService.selectedWidget.column.row.border" (onChange)="pageService.save.next()"></border>
 
     <!-- Corners -->
-    <corners [corners]="widgetService.selectedWidget.column.row.corners"></corners>
+    <corners [corners]="widgetService.selectedWidget.column.row.corners" (onChange)="pageService.save.next()"></corners>
 
     <!-- Shadow -->
-    <shadow [shadow]="widgetService.selectedWidget.column.row.shadow"></shadow>
+    <shadow [shadow]="widgetService.selectedWidget.column.row.shadow" (onChange)="pageService.save.next()"></shadow>
 
     <!-- Position -->
     <position [row]="widgetService.selectedWidget.column.row"></position>
 
     <!-- Padding -->
-    <padding [paddingComponent]="widgetService.selectedWidget.column.row"></padding>
+    <padding [paddingComponent]="widgetService.selectedWidget.column.row" (onChange)="pageService.save.next()"></padding>
 
     <!-- Vertical Alignment -->
-    <vertical-alignment [row]="widgetService.selectedWidget.column.row"></vertical-alignment>
+    <vertical-alignment [row]="widgetService.selectedWidget.column.row" (onChange)="pageService.save.next()"></vertical-alignment>
 </ng-container>

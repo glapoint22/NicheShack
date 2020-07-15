@@ -167,36 +167,36 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
 
 
 
-  load(columnData: ColumnData) {
+  setData(columnData: ColumnData) {
     this.name = columnData.name;
-    this.background.load(columnData.background);
-    this.border.load(columnData.border);
-    this.corners.load(columnData.corners);
-    this.shadow.load(columnData.shadow);
-    this.padding.load(columnData.padding);
+    this.background.setData(columnData.background);
+    this.border.setData(columnData.border);
+    this.corners.setData(columnData.corners);
+    this.shadow.setData(columnData.shadow);
+    this.padding.setData(columnData.padding);
     this.breakpointService.loadBreakpoints(columnData.breakpoints, this);
     this.columnSpan.value = columnData.columnSpan;
   }
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     // Name
     if (this.name != 'Column') columnData.name = this.name;
 
     // Background
-    this.background.save(columnData.background);
+    this.background.getData(columnData.background);
 
     // Border
-    this.border.save(columnData.border);
+    this.border.getData(columnData.border);
 
     // Corners
-    this.corners.save(columnData.corners);
+    this.corners.getData(columnData.corners);
 
     // Shadow
-    this.shadow.save(columnData.shadow);
+    this.shadow.getData(columnData.shadow);
 
     // Padding
-    this.padding.save(columnData.padding, this.breakpoints);
+    this.padding.getData(columnData.padding, this.breakpoints);
     this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.top);
     this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.right);
     this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.bottom);
@@ -210,7 +210,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
     this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.visibility);
 
     // Save the widget data
-    this.widget.save(columnData);
+    this.widget.getData(columnData);
   }
 
 

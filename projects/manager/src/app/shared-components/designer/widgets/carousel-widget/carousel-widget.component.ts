@@ -34,15 +34,15 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
   
 
 
-  load(widgetData: CarouselWidgetData) {
+  setData(widgetData: CarouselWidgetData) {
     widgetData.banners.forEach((banner: CarouselBannerData) => {
       this.banners.push(new CarouselBanner(banner));
     });
-    super.load(widgetData);
+    super.setData(widgetData);
   }
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     let carouselWidgetData = columnData.widgetData = new CarouselWidgetData();
 
     // Name
@@ -51,7 +51,7 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
     // Categories
     if (this.banners.length > 0) carouselWidgetData.banners = this.banners;
 
-    super.save(columnData);
+    super.getData(columnData);
   }
 
 

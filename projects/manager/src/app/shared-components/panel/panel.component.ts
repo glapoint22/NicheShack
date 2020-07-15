@@ -10,7 +10,7 @@ export class PanelComponent {
   @Input() title: string;
   @Input() rounded: boolean;
   @Input() enableableProperty: Enableable;
-  @Output() onClick: EventEmitter<boolean> = new EventEmitter();
+  @Output() onEnableOptionClick: EventEmitter<void> = new EventEmitter();
   @ViewChild('content', { static: false }) content: ElementRef;
   public expanded: boolean;
   public contentMaxHeight: number;
@@ -25,8 +25,6 @@ export class PanelComponent {
   }
 
   click(input: HTMLInputElement) {
-    this.onClick.emit(!input.checked);
-    
     if (input.checked) {
       this.onContentLoad();
 

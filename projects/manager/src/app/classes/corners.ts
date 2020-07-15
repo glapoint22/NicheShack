@@ -47,7 +47,7 @@ export class Corners {
         return style;
     }
 
-    load(cornersData: CornersData) {
+    setData(cornersData: CornersData) {
         if (cornersData) {
             this.constrain = cornersData.constrain;
             if (cornersData.topLeft) this.topLeft = cornersData.topLeft;
@@ -58,7 +58,7 @@ export class Corners {
     }
 
 
-    save(cornersData: CornersData) {
+    getData(cornersData: CornersData) {
         if (this.topLeft > 0 || this.topRight > 0 || this.bottomRight > 0 || this.bottomLeft > 0) {
             if (this.constrain) cornersData.constrain = this.constrain;
             if (this.topLeft > 0) cornersData.topLeft = this.topLeft;

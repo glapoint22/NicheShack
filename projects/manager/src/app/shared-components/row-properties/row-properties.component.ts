@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { WidgetService } from '../../services/widget.service';
+import { PageService } from '../../services/page.service';
 
 @Component({
   selector: 'row-properties',
@@ -8,5 +9,8 @@ import { WidgetService } from '../../services/widget.service';
 })
 export class RowPropertiesComponent {
 
-  constructor(public widgetService: WidgetService) { }
+  constructor(
+    public widgetService: WidgetService,
+    public pageService: PageService,
+  ) { }
 }

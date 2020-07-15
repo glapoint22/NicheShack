@@ -35,6 +35,8 @@ export class LeadPageEditorComponent implements OnChanges {
     // Display the loading screen
     this.loadingService.loading = true;
 
+    this.pageService.apiUrl = this.leadPageUrl;
+
     // Get the lead page ids for this niche
     this.dataService.get('api/Niches/LeadPageIds', [{ key: 'nicheId', value: this.nicheId }])
       .subscribe((leadPageIds: Array<string>) => {
@@ -124,7 +126,7 @@ export class LeadPageEditorComponent implements OnChanges {
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
   loadPage(pageType: string, pageData: PageData) {
     this.selectedTab = pageType;
-    this.pageService.setDesigner(pageType);
+    this.pageService.page.setWidgets(pageType);
     this.pageService.loadPage(pageData);
     this.view = 'page';
     this.loadingService.loading = false;
@@ -139,6 +141,8 @@ export class LeadPageEditorComponent implements OnChanges {
   // ---------------------------------------------------------------- On Lead Page Tab Click ----------------------------------------------------
   onLeadPageTabClick() {
     if (this.selectedTab == 'email') {
+      this.pageService.apiUrl = this.leadPageUrl;
+
       // Load the current lead page
       this.loadLeadPage(this.currentLeadPageId);
 
@@ -155,6 +159,8 @@ export class LeadPageEditorComponent implements OnChanges {
   // ------------------------------------------------------------------- On Email Tab Click ------------------------------------------------------
   onEmailTabClick() {
     if (this.selectedTab == 'leadPage') {
+      this.pageService.apiUrl = this.emailUrl;
+
       // Load the current lead page's email
       this.loadEmail(this.currentLeadPageId);
     }
@@ -195,7 +201,7 @@ export class LeadPageEditorComponent implements OnChanges {
     if (!this.currentLeadPageId) return;
 
     this.loadingService.loading = true;
-    let pageData = this.pageService.getPageData();
+    let pageData = this.pageService.page.getData();
 
     this.dataService.post(this.leadPageUrl, pageData)
       .subscribe((leadPageId: string) => {
@@ -275,17 +281,9 @@ export class LeadPageEditorComponent implements OnChanges {
           this.currentLeadPageId = null;
           this.loadingService.loading = false;
           this.view = 'page';
-          this.pageService.widgetCursors = [];
-          this.pageService.page.width = this.pageService.pageDefaultWidth;
+          this.pageService.page.widgetCursors = [];
+          this.pageService.page.width = this.pageService.page.defaultWidth;
         }
       });
-  }
-
-
-
-
-  // --------------------------------------------------------------------- On Save Click --------------------------------------------------------
-  onSaveClick() {
-    this.pageService.savePage(this.selectedTab == 'leadPage' ? this.leadPageUrl : this.emailUrl);
   }
 }

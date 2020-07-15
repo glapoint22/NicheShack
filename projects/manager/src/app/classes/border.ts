@@ -23,7 +23,7 @@ export class Border implements Enableable {
     }
 
 
-    load(borderData: BorderData) {
+    setData(borderData: BorderData) {
         if (borderData) {
             this.enable = borderData.enable;
             if (borderData.width) this.width = borderData.width;
@@ -32,7 +32,7 @@ export class Border implements Enableable {
         }
     }
 
-    save(borderData: BorderData) {
+    getData(borderData: BorderData) {
         if (this.enable) {
             borderData.enable = this.enable;
             if (this.width > 1) borderData.width = this.width;

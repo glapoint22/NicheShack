@@ -20,7 +20,7 @@ export class Padding {
         paddingComponent['paddingLeft'] = this.left;
     }
 
-    load(paddingData: PaddingData) {
+    setData(paddingData: PaddingData) {
         if (paddingData) {
             this.constrain = paddingData.constrain;
             if (paddingData.top) this.top.value = paddingData.top;
@@ -31,37 +31,31 @@ export class Padding {
     }
 
 
-    save(paddingData: PaddingData, breakpoints: Array<Breakpoint>) {
-        if (this.top.value != BreakpointSpacing._0px ||
-            this.right.value != BreakpointSpacing._0px ||
-            this.bottom.value != BreakpointSpacing._0px ||
-            this.left.value != BreakpointSpacing._0px) {
+    getData(paddingData: PaddingData, breakpoints: Array<Breakpoint>) {
+        if (this.constrain) paddingData.constrain = this.constrain;
 
-            if (this.constrain) paddingData.constrain = this.constrain;
-
-            // Top
-            if (this.top.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.top)) {
-                paddingData.top = this.top.value;
-            }
+        // Top
+        if (this.top.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.top)) {
+            paddingData.top = this.top.value;
+        }
 
 
-            // Right
-            if (this.right.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.right)) {
-                paddingData.right = this.right.value;
-            }
+        // Right
+        if (this.right.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.right)) {
+            paddingData.right = this.right.value;
+        }
 
 
 
-            // Bottom
-            if (this.bottom.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.bottom)) {
-                paddingData.bottom = this.bottom.value;
-            }
+        // Bottom
+        if (this.bottom.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.bottom)) {
+            paddingData.bottom = this.bottom.value;
+        }
 
 
-            // Left
-            if (this.left.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.left)) {
-                paddingData.left = this.left.value;
-            }
+        // Left
+        if (this.left.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.left)) {
+            paddingData.left = this.left.value;
         }
     }
 }

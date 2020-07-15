@@ -16,6 +16,7 @@ import { WidgetComponent } from '../widgets/widget/widget.component';
 import { RowData } from '../../../classes/row-data';
 import { Background } from '../../../classes/background';
 import { ColumnData } from '../../../classes/column-data';
+import { PageService } from '../../../services/page.service';
 
 @Component({
   selector: 'row',
@@ -46,9 +47,12 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
   public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();
   public name: string = 'Row';
 
-  constructor(private resolver: ComponentFactoryResolver,
+  constructor(
+    private resolver: ComponentFactoryResolver,
     public widgetService: WidgetService,
-    private breakpointService: BreakpointService) { }
+    private breakpointService: BreakpointService,
+    private pageService: PageService
+  ) { }
 
 
   ngOnInit() {
@@ -135,6 +139,9 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     if (allRowsAtZero) {
       delta += -value;
     }
+
+    // Save the page
+    this.pageService.save.next();
 
     return delta;
   }
@@ -258,19 +265,19 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
 
 
-  load(rowData: RowData) {
+  setData(rowData: RowData) {
     this.name = rowData.name;
-    this.background.load(rowData.background);
-    this.border.load(rowData.border);
-    this.corners.load(rowData.corners);
-    this.shadow.load(rowData.shadow);
-    this.padding.load(rowData.padding);
-    this.verticalAlignment.load(rowData.verticalAlignment);
+    this.background.setData(rowData.background);
+    this.border.setData(rowData.border);
+    this.corners.setData(rowData.corners);
+    this.shadow.setData(rowData.shadow);
+    this.padding.setData(rowData.padding);
+    this.verticalAlignment.setData(rowData.verticalAlignment);
     this.breakpointService.loadBreakpoints(rowData.breakpoints, this);
   }
 
 
-  save(rowData: RowData) {
+  getData(rowData: RowData) {
     // Name
     if (this.name != 'Row') rowData.name = this.name;
 
@@ -278,19 +285,19 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     rowData.top = this.getPosition();
 
     // Background
-    this.background.save(rowData.background);
+    this.background.getData(rowData.background);
 
     // Border
-    this.border.save(rowData.border);
+    this.border.getData(rowData.border);
 
     // Corners
-    this.corners.save(rowData.corners);
+    this.corners.getData(rowData.corners);
 
     // Shadow
-    this.shadow.save(rowData.shadow);
+    this.shadow.getData(rowData.shadow);
 
     // Padding
-    this.padding.save(rowData.padding, this.breakpoints);
+    this.padding.getData(rowData.padding, this.breakpoints);
     this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.top);
     this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.right);
     this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.bottom);
@@ -298,7 +305,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
     // Vertical Alignment
     if (!this.breakpoints.some(x => x.breakpointObject == this.verticalAlignment)) {
-      this.verticalAlignment.save(rowData);
+      this.verticalAlignment.getData(rowData);
     } else {
       this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.verticalAlignment);
     }
@@ -307,7 +314,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     this.columns.forEach((column: Column) => {
       rowData.columns.push(new ColumnData());
       let columnData = rowData.columns[rowData.columns.length - 1];
-      column.component.save(columnData);
+      column.component.getData(columnData);
     });
   }
 

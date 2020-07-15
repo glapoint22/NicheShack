@@ -5,9 +5,9 @@
     <div class="arrow"></div>
 
     <!-- Checkbox -->
-    <div *ngIf="enableableProperty" (mousedown)="$event.stopPropagation()">
+    <div *ngIf="enableableProperty" (click)="$event.stopPropagation()">
         <checkbox [checked]="enableableProperty.enable"
-            (change)="enableableProperty.enable = !enableableProperty.enable"></checkbox>
+            (change)="enableableProperty.enable = !enableableProperty.enable; onEnableOptionClick.emit()"></checkbox>
     </div>
 
     <!-- Title -->
@@ -21,5 +21,5 @@
     <ng-content></ng-content>
 
     <!-- Disabled cover -->
-    <div *ngIf="enableableProperty && !enableableProperty.enable" class="disable-cover"></div>
+    <div *ngIf="enableableProperty && !enableableProperty.enable" class="property-cover"></div>
 </div>

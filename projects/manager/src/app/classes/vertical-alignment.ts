@@ -25,14 +25,14 @@ export class VerticalAlignment extends Alignment implements BreakpointObject {
         }
     }
 
-    load(value: string) {
+    setData(value: string) {
         if (value) {
             this.value = value as BreakpointVerticalAlignment;
         }
     }
 
 
-    save(rowData: RowData) {
+    getData(rowData: RowData) {
         if (this.value != this.defaultValue) rowData.verticalAlignment = this.value;
     }
 }

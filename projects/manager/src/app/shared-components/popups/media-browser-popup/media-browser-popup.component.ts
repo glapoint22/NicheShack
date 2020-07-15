@@ -286,7 +286,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       this.media.name = mediaItem.name;
 
       // If the media item that is selected is either a video or a product image
-      if (mediaItem.type == MediaType.Video || mediaItem.type == MediaType.ProductImage) {
+      if (mediaItem.type == MediaType.Video || mediaItem.type == MediaType.ProductMediaImage) {
         this.productService.setCurrentSelectedMedia(this.media);
       }
     }
@@ -464,7 +464,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
   // -----------------------------( GET URL )------------------------------ \\
-  getUrl(mediaType: MediaType): string {
+   getUrl(mediaType: MediaType): string {
     let url: string;
 
     switch (mediaType) {

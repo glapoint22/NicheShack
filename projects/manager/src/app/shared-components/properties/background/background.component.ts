@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Background } from '../../../classes/background';
 import { KeyValue } from '@angular/common';
 import { MediaType } from '../../../classes/media';
@@ -10,6 +10,7 @@ import { MediaType } from '../../../classes/media';
 })
 export class BackgroundComponent implements OnChanges {
   @Input() background: Background;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
   public repeatOptions: Array<KeyValue<string, string>>;
   public positionOptions: Array<KeyValue<string, string>>;
   public attachmentOptions: Array<KeyValue<string, string>>;
@@ -18,8 +19,9 @@ export class BackgroundComponent implements OnChanges {
   public selectedAttachmentIndex: number;
   public mediaType = MediaType;
 
+
   ngOnChanges() {
-    if(!this.background.image) return;
+    if (!this.background.image) return;
 
     // Position options
     this.positionOptions = [

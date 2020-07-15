@@ -26,12 +26,12 @@ export class DesignerComponent implements AfterViewInit {
 
   ngOnInit() {
     this.pageService.clearPage();
-    this.pageService.widgetCursors = []
+    this.pageService.page.widgetCursors = []
   }
 
 
   ngAfterViewInit() {
-    this.pageService.rootContainer = this.rootContainer;
+    this.pageService.page.rootContainer = this.rootContainer;
   }
 
 

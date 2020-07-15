@@ -27,26 +27,26 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
     super.ngOnInit();
   }
 
-  load(widgetData: LineWidgetData) {
-    this.border.load(widgetData.border);
-    this.shadow.load(widgetData.shadow);
-    super.load(widgetData);
+  setData(widgetData: LineWidgetData) {
+    this.border.setData(widgetData.border);
+    this.shadow.setData(widgetData.shadow);
+    super.setData(widgetData);
   }
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     let lineWidgetData = columnData.widgetData = new LineWidgetData();
 
     // Name
     if (this.name != 'Line') lineWidgetData.name = this.name;
     
     // Border
-    this.border.save(lineWidgetData.border);
+    this.border.getData(lineWidgetData.border);
 
     // Shadow
-    this.shadow.save(lineWidgetData.shadow);
+    this.shadow.getData(lineWidgetData.shadow);
 
-    super.save(columnData);
+    super.getData(columnData);
   }
 
 

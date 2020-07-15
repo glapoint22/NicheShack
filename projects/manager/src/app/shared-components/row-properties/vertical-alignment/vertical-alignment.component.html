@@ -26,7 +26,7 @@
         </div>
 
         <!-- Breakpoint checkbox -->
-        <checkbox (change)="breakpointService.toggleBreakpoint(row.breakpoints, row.verticalAlignment)"
+        <checkbox (change)="breakpointService.toggleBreakpoint(row.breakpoints, row.verticalAlignment); onChange.emit()"
             [checked]="row.verticalAlignment.breakpointSet"
             [disabled]="breakpointService.currentBreakpointScreenSize == '0'"></checkbox>
     </div>

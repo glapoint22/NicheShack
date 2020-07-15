@@ -6,23 +6,23 @@ export class BackgroundImage extends Image {
     public repeat: string;
     public attachment: string;
 
-    load(backgroundImageData: BackgroundImageData) {
+    setData(backgroundImageData: BackgroundImageData) {
         if (backgroundImageData) {
             this.position = backgroundImageData.position;
             this.repeat = backgroundImageData.repeat;
             this.attachment = backgroundImageData.attachment;
 
-            super.load(backgroundImageData);
+            super.setData(backgroundImageData);
         }
     }
 
 
 
-    save(backgroundImageData: BackgroundImageData) {
+    getData(backgroundImageData: BackgroundImageData) {
         if (this.position) backgroundImageData.position = this.position;
         if (this.repeat) backgroundImageData.repeat = this.repeat;
         if (this.attachment) backgroundImageData.attachment = this.attachment;
 
-        super.save(backgroundImageData)
+        super.getData(backgroundImageData)
     }
 }

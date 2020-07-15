@@ -7,7 +7,7 @@ export class BorderColor {
         return '\n\tborder-color: ' + this.value.toRGBString() + ';';
     }
 
-    load(color: string) {
+    setData(color: string) {
         if (color) this.value = Color.hexToRGB(color);
     }
 }
