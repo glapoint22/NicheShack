@@ -14,6 +14,7 @@ import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 import { KeyValue } from '@angular/common';
 import { TempDataService } from '../../../services/temp-data.service';
 import { FormService } from '../../../services/form.service';
+import { DropdownOption } from '../../../classes/dropdown-option';
 
 @Component({
   selector: 'media-browser-popup',
@@ -34,16 +35,21 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   public indexOfCurrentMediaList: number;
   public updatingMediaInProgress: boolean;
   public autoSelectedMediaItemIndex: number;
-  public dropdownOptions: Array<KeyValue<string, MediaType>>;
+  public dropdownOptions: Array<KeyValue<any, MediaType>>;
   public mediaLists: MediaItem[][] = [[], [], [], [], [], [], [], []];
-  private dropdownList: Array<KeyValue<string, MediaType>> = [
-    { key: 'Images', value: MediaType.Image },
-    { key: 'Background Images', value: MediaType.BackgroundImage },
-    { key: 'Banner Images', value: MediaType.BannerImage },
-    { key: 'Category Images', value: MediaType.CategoryImage },
-    { key: 'Product Images', value: MediaType.ProductImage },
-    { key: 'Icons', value: MediaType.Icon },
-    { key: 'Videos', value: MediaType.Video }];
+  private dropdownList: Array<KeyValue<any, MediaType>> =
+    [
+      { key: 'Images', value: MediaType.Image },
+      { key: 'Background Images', value: MediaType.BackgroundImage },
+      { key: 'Banner Images', value: MediaType.BannerImage },
+      { key: 'Category Images', value: MediaType.CategoryImage },
+      { key: 'Product Images', value: MediaType.ProductImage },
+      { key: 'Icons', value: MediaType.Icon },
+      { key: 'Videos', value: MediaType.Video }
+    ];
+
+
+
   public menuOptions = [
     { add: 'New Image', edit: 'Edit Image Name', update: 'Update Image', delete: 'Delete Image', deletes: 'Delete Images' },
     { add: 'New Background Image', edit: 'Edit Background Image Name', update: 'Update Background Image', delete: 'Delete Background Image', deletes: 'Delete Background Images' },
@@ -240,13 +246,21 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     if (this.indexOfCurrentMediaList == MediaType.Video) {
 
       // Find a match between the target media and a media item in the list using the thumbnail property
-      this.autoSelectedMediaItemIndex = this.mediaLists[this.indexOfCurrentMediaList].findIndex(x => x.thumbnail == this.media.thumbnail);
+      this.autoSelectedMediaItemIndex = this.mediaLists[this.indexOfCurrentMediaList].findIndex(x => {
+        // As long as the media property is assigned, 
+        // if the media property is NOT assigned, it means the target media was never loaded
+        if (this.media != null) x.thumbnail == this.media.thumbnail
+      });
 
       // When the current media list is everything other than videos
     } else {
 
       // Find a match between the target media and a media item in the list using the url property
-      this.autoSelectedMediaItemIndex = this.mediaLists[this.indexOfCurrentMediaList].findIndex(x => x.url == this.media.url);
+      this.autoSelectedMediaItemIndex = this.mediaLists[this.indexOfCurrentMediaList].findIndex(x => {
+        // As long as the media property is assigned, 
+        // if the media property is NOT assigned, it means the target media was never loaded
+        if (this.media != null) x.url == this.media.url
+      });
     }
   }
 

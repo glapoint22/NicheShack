@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DropdownMenuService } from '../../../../services/dropdown-menu.service';
 import { KeyValue } from '@angular/common';
 
@@ -12,35 +12,33 @@ export class DropdownComponent {
   @Input() title: string;
   @Input() height: number;
   @Input() selectedIndex: number;
-  @Input() keyValue: KeyValue<string, string>[];
-  @ViewChild('base', { static: false }) base: ElementRef;
+  @Input() dropdownList: Array<KeyValue<any, any>>;
   @Output() onChange: EventEmitter<string> = new EventEmitter();
   
   // Public
   public initialSelectedIndex: number;
 
-
   // -----------------------------( ON DROPDOWN SELECT )------------------------------ \\
-  onDropdownSelect() {
+  onDropdownSelect(dropdown: HTMLElement) {
     // Build the menu
-    this.buildMenu();
+    this.buildMenu(dropdown);
     // Record the index of the menu option that is selected for future reference
     this.initialSelectedIndex = this.selectedIndex;
     // Select the menu option in this list that matches the index of the selected index
-    this.dropdownMenuService.selectedIndex = this.selectedIndex;
+    this.dropdownMenuService.dropdownMenu.selectedIndex = this.selectedIndex;
   }
 
 
   // -----------------------------( BUILD MENU )------------------------------ \\
-  buildMenu(){
-    this.dropdownMenuService.buildMenu(this, this.base.nativeElement, false, this.keyValue, this.onMenuOptionSelect, this.onArrowKeyDown, this.restoreSelectedIndexValue);
+  buildMenu(dropdown: HTMLElement){
+    this.dropdownMenuService.buildMenu(this, dropdown, false, this.dropdownList, this.onMenuOptionSelect, this.onArrowKeyDown, this.restoreSelectedIndexValue);
   }
 
 
   // -----------------------------( ON MENU OPTION SELECT )------------------------------ \\
   onMenuOptionSelect() {
-    this.onChange.emit(this.keyValue[this.dropdownMenuService.selectedIndex].value);
-    this.selectedIndex = this.dropdownMenuService.selectedIndex;
+    this.onChange.emit(this.dropdownMenuService.dropdownMenu.selectedOption.option.value);
+    this.selectedIndex = this.dropdownMenuService.dropdownMenu.selectedIndex;
     // Record the index of the menu option that is selected for future reference
     this.initialSelectedIndex = this.selectedIndex;
   }
@@ -48,7 +46,7 @@ export class DropdownComponent {
 
   // -----------------------------( ON ARROW KEY DOWN )------------------------------ \\
   onArrowKeyDown() {
-    this.selectedIndex = this.dropdownMenuService.selectedIndex;
+    this.selectedIndex = this.dropdownMenuService.dropdownMenu.selectedIndex;
   }
 
 

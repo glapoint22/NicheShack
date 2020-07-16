@@ -77,7 +77,7 @@ export class PopupComponent {
 
       // Close this popup
       this.show = false;
-      this.dropdownMenuService.showMenu = false;
+      this.dropdownMenuService.dropdownMenu.isVisible = false;
       window.removeEventListener('mousemove', this.onMouseMove);
     }
   }

@@ -193,7 +193,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   // -----------------------------( SET LIST ITEM NAME )------------------------------ \\
   setListItemName() {
     // Update the item name
-    this.updateItemName.emit(this.listItems[this.selectedListItemIndex])
+    this.updateItemName.emit(this.listItems[this.indexOfEditedListItem]);
   }
 
 

@@ -17,7 +17,7 @@
         <div class="dropdown">
             <dropdown [title]="''"
                       [height]="20"
-                      [keyValue]="dropdownOptions"
+                      [dropdownList]="dropdownOptions"
                       (onChange)="onDropdownChange($event, searchInput)"
                       [selectedIndex]="popupService.mediaType == mediaType.Video ? 0 : dropdownOptions.length == 1 ? 0 : popupService.mediaType">
             </dropdown>

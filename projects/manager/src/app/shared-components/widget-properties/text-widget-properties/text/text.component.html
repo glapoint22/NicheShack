@@ -4,7 +4,7 @@
     <div class="property">
         <div class="label">Font</div>
         <div style="flex: 1;">
-            <dropdown [height]="20" [keyValue]="textWidget.textBox.font.options"
+            <dropdown [height]="20" [dropdownList]="textWidget.textBox.font.options"
                 [selectedIndex]="textWidget.textBox.font.selectedIndex"
                 (onChange)="textWidget.textBox.font.setStyleValue($event)">
             </dropdown>
@@ -15,7 +15,7 @@
     <div class="property">
         <div class="label">Font Size</div>
         <div style="flex: 1;">
-            <editable-dropdown [height]="20" [keyValue]="textWidget.textBox.fontSize.options"
+            <editable-dropdown [height]="20" [dropdownList]="textWidget.textBox.fontSize.options"
                 [selectedIndex]="textWidget.textBox.fontSize.selectedIndex"
                 (onChange)="textWidget.textBox.fontSize.setStyleValue($event)">
             </editable-dropdown>

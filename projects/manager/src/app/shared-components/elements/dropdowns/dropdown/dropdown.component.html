@@ -1,19 +1,16 @@
 <!-- Base -->
-<div #base
+<div #dropdown
      class="base"
-     [title]="title == null ? '' : title"
      [style.height.px]="height"
-     (mousedown)="onDropdownSelect()"
-     [ngClass]="{'hightlight-base': dropdownMenuService.showMenu && dropdownMenuService.currentObj == this}">
+     (mousedown)="onDropdownSelect(dropdown)"
+     [title]="title == null ? '' : title"
+     [ngClass]="{'hightlight-base': dropdownMenuService.dropdownMenu.isVisible && dropdownMenuService.dropdownMenu.currentObj == this}">
 
-
-    <!-- Label Container -->
+    <!-- Label -->
     <div class="label-container">
-
-        <!-- Label -->
         <div class="label" 
-             [ngClass]="{'hightlight-label': dropdownMenuService.showMenu && dropdownMenuService.currentObj == this}">
-            {{selectedIndex == -1 ? "" : keyValue[selectedIndex].key}}
+             [ngClass]="{'hightlight-label': dropdownMenuService.dropdownMenu.isVisible && dropdownMenuService.dropdownMenu.currentObj == this}">
+            {{selectedIndex == -1 ? "" : dropdownList[selectedIndex].key}}
         </div>
     </div>
 

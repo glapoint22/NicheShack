@@ -15,7 +15,7 @@
 
     <!-- Font -->
     <div style="margin: 0 10px; width: 140px;">
-        <dropdown [height]="24" [title]="'Font'" [keyValue]="description.font.options"
+        <dropdown [height]="24" [title]="'Font'" [dropdownList]="description.font.options"
             [selectedIndex]="description.font.selectedIndex" (onChange)="description.font.setStyleValue($event)">
         </dropdown>
     </div>
@@ -23,7 +23,7 @@
 
     <!-- Font size -->
     <div style="margin: 0; width: 45px;">
-        <editable-dropdown [height]="24" [title]="'Font Size'" [keyValue]="description.fontSize.options"
+        <editable-dropdown [height]="24" [title]="'Font Size'" [dropdownList]="description.fontSize.options"
             [selectedIndex]="description.fontSize.selectedIndex"
             (onChange)="description.fontSize.setStyleValue($event)">
         </editable-dropdown>

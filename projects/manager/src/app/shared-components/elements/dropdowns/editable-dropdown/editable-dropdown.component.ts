@@ -12,8 +12,8 @@ export class EditableDropdownComponent extends DropdownComponent {
 
 
   // ----------------------------------------------------( BUILD MENU )------------------------------------------- \\
-  buildMenu() {
-    this.dropdownMenuService.buildMenu(this, this.base.nativeElement, true, this.keyValue, this.onMenuOptionSelect, this.onArrowKeyDown, this.restoreSelectedIndexValue);
+  buildMenu(dropdown: HTMLElement) {
+    this.dropdownMenuService.buildMenu(this, dropdown, true, this.dropdownList, this.onMenuOptionSelect, this.onArrowKeyDown, this.restoreSelectedIndexValue);
   }
 
 
@@ -33,7 +33,7 @@ export class EditableDropdownComponent extends DropdownComponent {
       // Wait to see if the text input gets populated
       window.setTimeout(() => {
         // If the text input does NOT get populated, update the text input with the last menu option that was selected
-        this.textInput.nativeElement.value = this.keyValue[this.selectedIndex].key
+        this.textInput.nativeElement.value = this.dropdownList[this.selectedIndex].key
       }, 200)
     }
     // Remove the listener for the keydown
@@ -54,22 +54,22 @@ export class EditableDropdownComponent extends DropdownComponent {
       // As long as the text input is NOT empty
       if (this.textInput.nativeElement.value.length != 0) {
         let textInputValue = this.textInput.nativeElement.value;
-        let indexOfMenuOption = this.keyValue.map(e => e.key).indexOf(textInputValue);
+        let indexOfMenuOption = this.dropdownList.map(e => e.key).indexOf(textInputValue);
 
         // If the value that is being displayed in the text input is not within the list of options in the dropdown menu
         if (indexOfMenuOption == -1) {
           // Update the 'Other' option using the value that's in the text input
-          this.keyValue[0].key = textInputValue;
-          this.keyValue[0].value = textInputValue + "px";
+          this.dropdownList[0].key = textInputValue;
+          this.dropdownList[0].value = textInputValue + "px";
           // Emit the value
           this.selectedIndex = 0;
-          this.onChange.emit(this.keyValue[0].value);
+          this.onChange.emit(this.dropdownList[0].value);
           
           // If the value that is being displayed in the text input is within the list of options in the dropdown menu 
         } else {
           // Emit the value
           this.selectedIndex = indexOfMenuOption;
-          this.onChange.emit(this.keyValue[indexOfMenuOption].value);
+          this.onChange.emit(this.dropdownList[indexOfMenuOption].value);
         }
         // Remove the listener
         window.removeEventListener('keydown', this.onKeyDown);
@@ -83,7 +83,7 @@ export class EditableDropdownComponent extends DropdownComponent {
       // If the text input is empty
       if (this.textInput.nativeElement.value.length == 0) {
         // Update the text input with the last menu option that was selected
-        this.textInput.nativeElement.value = this.keyValue[this.selectedIndex].key
+        this.textInput.nativeElement.value = this.dropdownList[this.selectedIndex].key
       }
       // Remove the listener
       window.removeEventListener('keydown', this.onKeyDown);

@@ -1,29 +1,29 @@
 <!-- Menu Base -->
-<div #menu *ngIf="dropdownMenuService.showMenu"
+<div #htmlMenu 
      tabindex="-1"
      class="menu-base"
      (mousedown)="$event.stopPropagation()"
      (contextmenu)="$event.preventDefault()"
-     (blur)="dropdownMenuService.onMenuBlur()"
-     (onShow)="dropdownMenuService.onMenuShow(menu)"
-     [style.minWidth.px]="dropdownMenuService.menuWidth"
-     [style.left]="dropdownMenuService.setMenuPosition(menu)"
-     [style.height.px]="((dropdownMenuService.menuOptions.length * 22) + (dropdownMenuService.isEditable ? 5 : 0)) + 2">
+     *ngIf="dropdownMenuService.dropdownMenu.isVisible"
+     (blur)="dropdownMenuService.dropdownMenu.onMenuBlur()"
+     (onShow)="dropdownMenuService.dropdownMenu.onShow(htmlMenu)"
+     [style.minWidth.px]="dropdownMenuService.dropdownMenu.width"
+     [style.left]="dropdownMenuService.dropdownMenu.setMenuPosition(htmlMenu)"
+     [style.height.px]="((dropdownMenuService.dropdownMenu.list.length * 22) + (dropdownMenuService.dropdownMenu.isEditable ? 5 : 0)) + 2">
 
-     <!-- Menu Option -->
-     <ng-container *ngFor="let i of dropdownMenuService.menuOptions; let optionIndex = index">
-          <div 
-               class="menu-option"
-               (click)="dropdownMenuService.onMenuOptionSelect(optionIndex)" 
-               [ngClass]="{'selected-option': dropdownMenuService.selectedIndex == optionIndex}">
-               {{dropdownMenuService.menuOptions[optionIndex].key}}
+     <!-- Loop through all the dropdown options -->
+     <ng-container *ngFor="let dropdownOption of dropdownMenuService.dropdownMenu.list">
+
+          <!-- Dropdown Option -->
+          <div class="dropdown-option"
+               (click)="dropdownOption.onClick(dropdownMenuService.dropdownMenu, dropdownOption)" 
+               [ngClass]="{'selected-option': dropdownMenuService.dropdownMenu.selectedOption == dropdownOption}">
+               {{dropdownOption.option.key}}
           </div>
 
-          <div *ngIf="optionIndex == 0 && dropdownMenuService.isEditable" style="width: 100%; height: 1px; background: #383838; margin-top: 2px; margin-bottom: 2px;"></div>
-          
+          <!-- Editable Other Line -->
+          <div class="editable-other-line"
+               *ngIf="dropdownMenuService.dropdownMenu.isEditable && dropdownOption.getIndex(dropdownMenuService.dropdownMenu, dropdownOption) == 0">
+          </div>
      </ng-container>
 </div>
-
-
-
-    

@@ -1,9 +1,9 @@
 <!-- Base -->
-<div #base
+<div #dropdown
      class="base"
-     [title]="title == null ? '' : title"
      [style.height.px]="height"
-     [ngClass]="{'hightlight-base': dropdownMenuService.showMenu && dropdownMenuService.currentObj == this}">
+     [title]="title == null ? '' : title"
+     [ngClass]="{'hightlight-base': dropdownMenuService.dropdownMenu.isVisible && dropdownMenuService.dropdownMenu.currentObj == this}">
 
 
     <!-- Label Container -->
@@ -14,13 +14,13 @@
             (blur)="onTextInputBlur()"
             (focus)="onTextInputFocus()"
             (input)="onTextInputChange()"
-            [value]="selectedIndex == -1 ? '' : keyValue[selectedIndex].key"
-            [ngClass]="{'hightlight-text': (dropdownMenuService.showMenu && dropdownMenuService.currentObj == this)}">
+            [value]="selectedIndex == -1 ? '' : dropdownList[selectedIndex].key"
+            [ngClass]="{'hightlight-text': (dropdownMenuService.dropdownMenu.isVisible && dropdownMenuService.dropdownMenu.currentObj == this)}">
         </div>
 
     <!-- Button -->
     <div class="button"
-         (mousedown)="onDropdownSelect()">
+         (mousedown)="onDropdownSelect(dropdown)">
         <i class="fas fa-chevron-down"></i>
     </div>
 </div>
