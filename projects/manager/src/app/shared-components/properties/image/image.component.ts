@@ -14,6 +14,7 @@ export class ImageComponent implements OnChanges, DoCheck {
   @Input() mediaType: MediaType;
   @Input() noDelete: boolean;
   @Output() onChange: EventEmitter<void> = new EventEmitter();
+  @Output() onLoad: EventEmitter<void> = new EventEmitter();
   private currentImage: string;
 
   constructor(private promptService: PromptService, private popupService: PopupService) { }

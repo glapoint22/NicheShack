@@ -1,5 +1,6 @@
 <!-- Image -->
-<panel [title]="'Image'">
-    <image [image]="product.image" [mediaType]="mediaType.ProductImage" [noDelete]="true" (onChange)="onChange()">
+<panel #panel [title]="'Image'">
+    <image [image]="product.image" [mediaType]="mediaType.ProductImage" [noDelete]="true" (onChange)="onChange()"
+        (onLoad)="panel.onContentLoad()">
     </image>
 </panel>
