@@ -1,7 +1,7 @@
 <!-- Panel -->
 <panel [title]="'Product Group Type'">
 
-    <dropdown [height]="22" [title]="''" [keyValue]="productGroupTypes"
+    <dropdown [height]="22" [title]="''" [dropdownList]="productGroupTypes"
         [selectedIndex]="productGroupWidget.productGroupType" (onChange)="onDropdownOptionSelect($event); onChange.emit()">
     </dropdown>
 
