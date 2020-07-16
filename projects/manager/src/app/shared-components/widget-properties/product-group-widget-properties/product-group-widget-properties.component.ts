@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ProductGroupWidgetComponent } from '../../designer/widgets/product-group-widget/product-group-widget.component';
+import { PageService } from '../../../services/page.service';
 
 @Component({
   selector: 'product-group-widget-properties',
@@ -8,4 +9,6 @@ import { ProductGroupWidgetComponent } from '../../designer/widgets/product-grou
 })
 export class ProductGroupWidgetPropertiesComponent {
   @Input() productGroupWidget: ProductGroupWidgetComponent;
+
+  constructor(public pageService: PageService) { }
 }

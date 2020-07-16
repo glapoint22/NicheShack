@@ -380,6 +380,7 @@ export class TempDataService {
               enable: false,
               color: '#ffffff',
               image: {
+                id: 'GDGFAFSDAFQWRREW',
                 name: 'Campland',
                 url: 'campland-background.jpg',
                 position: 'center center',

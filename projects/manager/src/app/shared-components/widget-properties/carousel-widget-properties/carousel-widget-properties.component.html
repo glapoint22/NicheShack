@@ -12,7 +12,8 @@
         <div class="icons">
 
             <!-- Delete Banner Icon -->
-            <div class="icon-container" (click)="onDeleteClick()" [ngClass]="{'icon-disabled':  carouselWidget.banners.length == 0}">
+            <div class="icon-container" (click)="onDeleteClick()"
+                [ngClass]="{'icon-disabled':  carouselWidget.banners.length == 0}">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
@@ -33,7 +34,8 @@
 
 
         <!-- Banner Image -->
-        <image [image]="carouselWidget.banners[carouselWidget.currentBannerIndex].image" [mediaType]="mediaType.BannerImage"></image>
+        <image [image]="carouselWidget.banners[carouselWidget.currentBannerIndex].image"
+            [mediaType]="mediaType.BannerImage" [noDelete]="true" (onChange)="pageService.save()"></image>
 
 
 
@@ -44,7 +46,8 @@
 
 
         <!-- Link -->
-        <link-property [link]="carouselWidget.banners[carouselWidget.currentBannerIndex].link"></link-property>
+        <link-property [link]="carouselWidget.banners[carouselWidget.currentBannerIndex].link"
+            (onChange)="pageService.save()"></link-property>
 
 
     </div>

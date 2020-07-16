@@ -2,7 +2,7 @@
     <div class="property">
         <div class="label">Color</div>
         <div style="flex: 1;">
-            <color-swatch [color]="color"></color-swatch>
+            <color-swatch [color]="color" (onChange)="onChange.emit()"></color-swatch>
         </div>
     </div>
 </panel>

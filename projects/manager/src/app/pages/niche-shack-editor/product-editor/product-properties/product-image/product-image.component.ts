@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { MediaType } from 'projects/manager/src/app/classes/media';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { SaveService } from 'projects/manager/src/app/services/save.service';
 
 @Component({
   selector: 'product-image',
@@ -12,10 +12,12 @@ export class ProductImageComponent {
   @Input() product: Product;
   public mediaType = MediaType;
 
-  constructor(private dataService: TempDataService) { }
+  constructor(private saveService: SaveService) { }
 
   onChange() {
-    this.dataService.put('api/Products/Image', this.product)
-      .subscribe();
+      this.saveService.save({
+        url: 'api/Products/Image',
+        data: this.product
+      });
   }
 }

@@ -325,7 +325,9 @@ export class FreeformWidgetComponent extends WidgetComponent {
       }
 
 
-
+      if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
+        this.column.row.container.save();
+      }
 
 
 
@@ -404,6 +406,10 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
     this.width = Math.max(startWidth * percent, 10);
     if (this.width >= columnWidth) this.width = null;
+
+    if (document.body.style.cursor == 'w-resize' || document.body.style.cursor == 'e-resize') {
+      this.column.row.container.save();
+    }
   }
 
   getMinHeight(): number {

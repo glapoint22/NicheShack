@@ -5,6 +5,7 @@ import { LoadingService } from '../../../services/loading.service';
 import { MediaType } from '../../../classes/media';
 import { TempDataService } from '../../../services/temp-data.service';
 import { ImageData } from '../../../classes/image-data';
+import { SaveService } from '../../../services/save.service';
 
 @Component({
   selector: 'category-editor',
@@ -18,14 +19,18 @@ export class CategoryEditorComponent implements OnChanges {
 
   constructor(
     public loadingService: LoadingService,
-    private dataService: TempDataService
+    private dataService: TempDataService,
+    private saveService: SaveService
   ) { }
 
 
 
   onChange() {
     // Update the icon
-    this.dataService.put('api/Categories/Icon', this.category).subscribe();
+    this.saveService.save({
+      url: 'api/Categories/Icon',
+      data: this.category
+    });
   }
 
 

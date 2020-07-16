@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { Subscription } from 'rxjs';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { SaveService } from 'projects/manager/src/app/services/save.service';
 
 @Component({
   selector: 'product-hoplink',
@@ -14,7 +14,7 @@ export class ProductHoplinkComponent implements OnInit, OnChanges, OnDestroy {
   private subscription: Subscription;
   private currentHoplink: string;
 
-  constructor(private popupService: PopupService, private dataService: TempDataService) { }
+  constructor(private popupService: PopupService, private saveService: SaveService) { }
 
 
   ngOnInit() {
@@ -24,11 +24,12 @@ export class ProductHoplinkComponent implements OnInit, OnChanges, OnDestroy {
         if (this.currentHoplink != this.product.hoplink) {
 
           // Update the hoplink
-          this.dataService.put('api/Products/Hoplink', this.product)
-            .subscribe(() => {
-              // Set the current hoplink as the new hoplink
-              this.currentHoplink = this.product.hoplink;
-            });
+          this.saveService.save({
+            url: 'api/Products/Hoplink',
+            data: this.product
+          });
+
+          this.currentHoplink = this.product.hoplink;
         }
       });
   }

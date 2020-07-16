@@ -141,7 +141,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     }
 
     // Save the page
-    this.pageService.save.next();
+    this.container.save();
 
     return delta;
   }
@@ -205,6 +205,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
     // Add or update each column with the correct column span based on the number of columns in this row
     this.setColumnSpans();
+    this.container.save();
   }
 
 
@@ -244,6 +245,8 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     } else {
       this.container.deleteRow(this);
     }
+
+    this.container.save();
   }
 
 

@@ -14,21 +14,21 @@ export class ImageComponent implements OnChanges, DoCheck {
   @Input() mediaType: MediaType;
   @Input() noDelete: boolean;
   @Output() onChange: EventEmitter<void> = new EventEmitter();
-  private currentImageId: string;
+  private currentImage: string;
 
   constructor(private promptService: PromptService, private popupService: PopupService) { }
 
 
   ngDoCheck() {
-    if (this.image && this.currentImageId != this.image.id) {
-      this.currentImageId = this.image.id;
+    if (this.image && this.currentImage != this.image.url) {
+      this.currentImage = this.image.url;
       this.onChange.emit();
     }
   }
 
 
   ngOnChanges() {
-    if (this.image) this.currentImageId = this.image.id;
+    if (this.image) this.currentImage = this.image.url;
   }
 
   onDeleteImageClick() {
@@ -42,7 +42,7 @@ export class ImageComponent implements OnChanges, DoCheck {
 
   deleteImage() {
     this.image.url = null;
-    this.currentImageId = null;
+    this.currentImage = null;
     this.onChange.emit();
   }
 

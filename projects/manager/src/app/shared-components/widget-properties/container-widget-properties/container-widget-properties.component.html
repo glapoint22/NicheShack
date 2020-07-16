@@ -1,27 +1,28 @@
 <!-- background -->
 <div id="first-property">
-    <panel [title]="'Background'" [enableableProperty]="containerWidget.background">
-        <background [background]="containerWidget.background"></background>
+    <panel [title]="'Background'" [enableableProperty]="containerWidget.background"
+        (onEnableOptionClick)="pageService.save()">
+        <background [background]="containerWidget.background" (onChange)="pageService.save()"></background>
     </panel>
 </div>
 
 <!-- Border -->
-<border [border]="containerWidget.border"></border>
+<border [border]="containerWidget.border" (onChange)="pageService.save()"></border>
 
 <!-- Corners -->
-<corners [corners]="containerWidget.corners"></corners>
+<corners [corners]="containerWidget.corners" (onChange)="pageService.save()"></corners>
 
 <!-- Shadow -->
-<shadow [shadow]="containerWidget.shadow"></shadow>
+<shadow [shadow]="containerWidget.shadow" (onChange)="pageService.save()"></shadow>
 
 <!-- Dimensions -->
-<dimensions [widget]="containerWidget"></dimensions>
+<dimensions [widget]="containerWidget" (onChange)="pageService.save()"></dimensions>
 
 <!-- Columns -->
-<columns [column]="containerWidget.column"></columns>
+<columns [column]="containerWidget.column" (onChange)="pageService.save()"></columns>
 
 <!-- Padding -->
-<padding [paddingComponent]="containerWidget"></padding>
+<padding [paddingComponent]="containerWidget" (onChange)="pageService.save()"></padding>
 
 <!-- Visibility -->
-<visibility [column]="containerWidget.column"></visibility>
+<visibility [column]="containerWidget.column" (onChange)="pageService.save()"></visibility>

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ContainerWidgetComponent } from '../../designer/widgets/container-widget/container-widget.component';
+import { PageService } from '../../../services/page.service';
 
 @Component({
   selector: 'container-widget-properties',
@@ -8,4 +9,6 @@ import { ContainerWidgetComponent } from '../../designer/widgets/container-widge
 })
 export class ContainerWidgetPropertiesComponent {
   @Input() containerWidget: ContainerWidgetComponent;
+
+  constructor(public pageService: PageService) { }
 }

@@ -4,6 +4,7 @@ import { MediaType } from '../../../classes/media';
 import { CarouselBanner } from '../../../classes/carousel-banner';
 import { PaginatorComponent } from '../../paginator/paginator.component';
 import { PromptService } from '../../../services/prompt.service';
+import { PageService } from '../../../services/page.service';
 
 @Component({
   selector: 'carousel-widget-properties',
@@ -16,7 +17,7 @@ export class CarouselWidgetPropertiesComponent {
   public mediaType = MediaType;
 
 
-  constructor(private promptService: PromptService) { }
+  constructor(private promptService: PromptService, public pageService: PageService) { }
 
 
   // --------------------------------------------------------------------- On Add Banner --------------------------------------------------------
@@ -24,6 +25,7 @@ export class CarouselWidgetPropertiesComponent {
     this.carouselWidget.banners.push(new CarouselBanner());
     this.paginator.setPage(this.carouselWidget.banners.length);
     this.carouselWidget.currentBannerIndex = this.carouselWidget.banners.length - 1;
+    this.pageService.save();
   }
 
 
@@ -48,5 +50,7 @@ export class CarouselWidgetPropertiesComponent {
       this.carouselWidget.currentBannerIndex = Math.min(this.carouselWidget.banners.length - 1, this.carouselWidget.currentBannerIndex);
       this.paginator.setPage(this.carouselWidget.currentBannerIndex + 1);
     }
+
+    this.pageService.save();
   }
 }

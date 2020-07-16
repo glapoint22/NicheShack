@@ -157,13 +157,14 @@ export class ProportionalWidgetComponent extends WidgetComponent {
     if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
       this.column.row.positionNextRow(-deltaHeight);
 
+      this.column.row.container.save();
 
-      // Align Center or Align Bottom
+      // Align Middle or Align Bottom
     } else if ((this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
       this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom) && this.width) {
 
 
-      // Align center
+      // Align Middle
       if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
         this.column.row.positionNextRow(-deltaHeight * 0.5);
       }

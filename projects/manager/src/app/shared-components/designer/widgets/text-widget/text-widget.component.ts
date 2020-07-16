@@ -70,6 +70,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
         this.height = Math.max(contentHeight, this.fixedHeight);
 
         this.column.row.positionNextRow(this.height - previousHeight);
+        this.column.row.container.save();
       });
     }
   }

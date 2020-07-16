@@ -3,9 +3,7 @@ import { Page } from '../classes/page';
 import { WidgetService } from './widget.service';
 import { PageData } from '../classes/page-data';
 import { BreakpointService } from './breakpoint.service';
-import { TempDataService } from './temp-data.service';
-import { Subject } from 'rxjs';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { SaveService } from './save.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +11,22 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 export class PageService {
   public page: Page = new Page();
   public apiUrl: string;
-  public save = new Subject<void>();
 
   constructor(
     private widgetService: WidgetService,
     private breakpointService: BreakpointService,
-    private dataService: TempDataService
-  ) {
-    this.save.pipe(
-      debounceTime(1000),
-      switchMap(() => {
-        return this.dataService.put(this.apiUrl, this.stringifyPage(this.page.getData()));
-      })).subscribe();
+    private saveService: SaveService
+  ) { }
+
+
+  save() {
+    this.saveService.save({
+      url: this.apiUrl,
+      data: this.stringifyPage(this.page.getData())
+    });
   }
+
+
 
   // -----------------------------( PREVIEW )------------------------------ \\
   preview() {

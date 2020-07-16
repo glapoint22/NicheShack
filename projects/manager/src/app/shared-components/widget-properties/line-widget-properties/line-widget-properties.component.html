@@ -1,14 +1,14 @@
 <!-- Style -->
-<style-property id="first-property" [border]="lineWidget.border"></style-property>
+<style-property id="first-property" [border]="lineWidget.border" (onChange)="pageService.save()"></style-property>
 
 <!-- Shadow -->
-<shadow [shadow]="lineWidget.shadow"></shadow>
+<shadow [shadow]="lineWidget.shadow" (onChange)="pageService.save()"></shadow>
 
 <!-- Dimensions -->
-<dimensions [widget]="lineWidget"></dimensions>
+<dimensions [widget]="lineWidget" (onChange)="pageService.save()"></dimensions>
 
 <!-- Columns -->
-<columns [column]="lineWidget.column"></columns>
+<columns [column]="lineWidget.column" (onChange)="pageService.save()"></columns>
 
 <!-- Visibility -->
-<visibility [column]="lineWidget.column"></visibility>
+<visibility [column]="lineWidget.column" (onChange)="pageService.save()"></visibility>

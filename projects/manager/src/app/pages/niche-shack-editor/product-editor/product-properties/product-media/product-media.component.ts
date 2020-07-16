@@ -5,6 +5,7 @@ import { ProductService } from 'projects/manager/src/app/services/product.servic
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
+import { SaveService } from 'projects/manager/src/app/services/save.service';
 
 @Component({
   selector: 'product-media',
@@ -22,7 +23,8 @@ export class ProductMediaComponent implements OnChanges, DoCheck {
     private popupService: PopupService,
     public productService: ProductService,
     private dataService: TempDataService,
-    private promptService: PromptService
+    private promptService: PromptService,
+    private saveService: SaveService
   ) { }
 
 
@@ -42,11 +44,14 @@ export class ProductMediaComponent implements OnChanges, DoCheck {
       this.currentMediaId = this.productService.currentSelectedMedia.id;
 
       // Update the media
-      this.dataService.put('api/Products/Media', {
-        productId: this.productService.product.id,
-        oldMediaId: this.currentMediaId,
-        newMediaId: this.productService.currentSelectedMedia.id
-      }).subscribe();
+      this.saveService.save({
+        url: 'api/Products/Media',
+        data: {
+          productId: this.productService.product.id,
+          oldMediaId: this.currentMediaId,
+          newMediaId: this.productService.currentSelectedMedia.id
+        }
+      });
     }
   }
 

@@ -4,6 +4,7 @@ import { WidgetService } from '../../../services/widget.service';
 import { Row } from '../../../classes/row';
 import { WidgetComponent } from '../widgets/widget/widget.component';
 import { RowData } from '../../../classes/row-data';
+import { PageService } from '../../../services/page.service';
 
 @Component({
   selector: 'container',
@@ -31,7 +32,11 @@ export class ContainerComponent {
 
 
 
-  constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }
+  constructor(
+    private resolver: ComponentFactoryResolver,
+    public widgetService: WidgetService,
+    private pageService: PageService
+  ) { }
 
 
 
@@ -171,5 +176,10 @@ export class ContainerComponent {
         row.component.getData(rowData);
       });
     }
+  }
+
+  save() {
+    // Save the page
+    this.pageService.save();
   }
 }

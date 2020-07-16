@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Border } from 'projects/manager/src/app/classes/border';
 
 @Component({
@@ -8,4 +8,5 @@ import { Border } from 'projects/manager/src/app/classes/border';
 })
 export class StyleComponent {
   @Input() border: Border;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
 }

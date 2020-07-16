@@ -10,8 +10,8 @@ import { PaginatorComponent } from 'projects/manager/src/app/shared-components/p
 import { MediaType } from 'projects/manager/src/app/classes/media';
 import { Image } from 'projects/manager/src/app/classes/image';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
-import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { SaveService } from 'projects/manager/src/app/services/save.service';
 
 @Component({
   selector: 'product-content',
@@ -22,51 +22,45 @@ export class ProductContentComponent implements OnInit, OnChanges, AfterViewInit
   @Input() content: Array<ProductContent>;
   @Input() pricePoints: Array<ProductPricePoint>;
   @ViewChild('itemList', { static: false }) itemList: CheckboxItemListComponent;
-  @ViewChild('titleInput', { static: false }) titleInput: ElementRef;
   public contentIndex: number = 0;
   public pricePointList: Array<Item>;
-  private mediaBrowserPopupSubscription: Subscription;
+  public mediaType = MediaType;
   private pricePointPopupSubscription: Subscription;
-  private currentIcon: string;
 
 
   constructor(
     public popupService: PopupService,
     private promptService: PromptService,
     private productService: ProductService,
-    private dataService: TempDataService
+    private dataService: TempDataService,
+    private saveService: SaveService
   ) { }
 
 
 
 
   ngOnInit() {
-    this.mediaBrowserPopupSubscription = this.popupService.mediaBrowserPopup.onPopupClose
-      .subscribe(() => {
-        // Test to see if the icon changed
-        if (this.currentIcon != this.content[this.contentIndex].icon.id) {
-
-          // Update the icon
-          this.dataService.put('api/Content/Icon', {
-            productId: this.productService.product.id,
-            contentId: this.content[this.contentIndex].id,
-            iconId: this.content[this.contentIndex].icon.id
-          })
-            .subscribe(() => {
-              // Set the current icon as the new icon
-              this.currentIcon = this.content[this.contentIndex].icon.id;
-            });
-        }
-      });
-
-
-
-
     // Update the price point
     this.pricePointPopupSubscription = this.popupService.pricePointPopup.onPopupClose
       .subscribe(() => {
-        this.dataService.put('api/Products/PricePoints', this.popupService.pricePointPopup.pricePoint).subscribe();
+        this.saveService.save({
+          url: 'api/Products/PricePoints',
+          data: this.popupService.pricePointPopup.pricePoint
+        });
       });
+  }
+
+
+
+  onIconChange() {
+    this.saveService.save({
+      url: 'api/Content/Icon',
+      data: {
+        productId: this.productService.product.id,
+        contentId: this.content[this.contentIndex].id,
+        iconId: this.content[this.contentIndex].icon.id
+      }
+    });
   }
 
 
@@ -82,19 +76,9 @@ export class ProductContentComponent implements OnInit, OnChanges, AfterViewInit
       this.itemList.propmtMessage = 'Are you sure you want to delete the selected price point?';
       this.itemList.propmtMultiMessage = 'Are you sure you want to delete all the selected price points?';
     }
-
-    // This will update the content title
-    fromEvent(this.titleInput.nativeElement, 'input')
-      .pipe(
-        debounceTime(250),
-        switchMap(() => {
-          return this.dataService.put('api/Content/Title', {
-            productId: this.productService.product.id,
-            contentId: this.content[this.contentIndex].id,
-            title: this.titleInput.nativeElement.value
-          })
-        })).subscribe();
   }
+
+
 
 
   // -----------------------------( NG ON CHANGES )------------------------------ \\
@@ -114,9 +98,25 @@ export class ProductContentComponent implements OnInit, OnChanges, AfterViewInit
           (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()
       }));
     }
-
-    this.currentIcon = this.content[this.contentIndex].icon.id;
   }
+
+
+
+
+  // -----------------------------( ON TITLE CHANGE )------------------------------ \\
+  onTitleChange(value: string) {
+    this.saveService.save({
+      url: 'api/Content/Title',
+      data: {
+        productId: this.productService.product.id,
+        contentId: this.content[this.contentIndex].id,
+        title: value
+      }
+    });
+  }
+
+
+
 
 
   // -----------------------------( ADD CONTENT )------------------------------ \\
@@ -135,7 +135,6 @@ export class ProductContentComponent implements OnInit, OnChanges, AfterViewInit
 
 
     this.productService.product.content.push(content);
-    this.currentIcon = null;
 
     this.contentIndex = this.productService.product.content.length - 1;
     paginator.setPage(this.productService.product.content.length);
@@ -233,11 +232,14 @@ export class ProductContentComponent implements OnInit, OnChanges, AfterViewInit
   // -----------------------------( MOVE PRICE POINT )------------------------------ \\
   movePricePoint(move) {
     // Save the new order to the database
-    this.dataService.put('api/Products/PricePoints/Move', {
-      productId: this.productService.product.id,
-      pricePointId: this.pricePoints[move.fromIndex].id,
-      order: move.toIndex
-    }).subscribe();
+    this.saveService.save({
+      url: 'api/Products/PricePoints/Move',
+      data: {
+        productId: this.productService.product.id,
+        pricePointId: this.pricePoints[move.fromIndex].id,
+        order: move.toIndex
+      }
+    });
 
     // Update the price points
     this.moveArrayElement(this.pricePoints, move);
@@ -257,7 +259,6 @@ export class ProductContentComponent implements OnInit, OnChanges, AfterViewInit
 
   onItemChange(index: number) {
     this.contentIndex = index;
-    this.currentIcon = this.content[this.contentIndex].icon.id;
   }
 
 
@@ -265,7 +266,7 @@ export class ProductContentComponent implements OnInit, OnChanges, AfterViewInit
 
 
   ngOnDestroy() {
-    this.mediaBrowserPopupSubscription.unsubscribe();
+    // this.mediaBrowserPopupSubscription.unsubscribe();
     this.pricePointPopupSubscription.unsubscribe();
   }
 }

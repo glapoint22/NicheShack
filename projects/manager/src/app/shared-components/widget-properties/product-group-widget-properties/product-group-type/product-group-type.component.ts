@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { ProductGroupType } from 'projects/manager/src/app/classes/product-group-type';
 import { KeyValue } from '@angular/common';
 import { ProductGroupWidgetComponent } from '../../../designer/widgets/product-group-widget/product-group-widget.component';
@@ -15,12 +15,15 @@ import { Item } from 'projects/manager/src/app/classes/item';
 })
 export class ProductGroupTypeComponent implements OnInit, Searchable {
   @Input() productGroupWidget: ProductGroupWidgetComponent;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
   @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
   public productGroupTypes: Array<KeyValue<string, string>>;
   public productGroupType = ProductGroupType;
   public apiUrl: string = 'api/Products';
   public searchResults: Array<Item>;
   public items: Array<Item>;
+
+
   constructor(private popupService: PopupService, private promptService: PromptService) { }
 
 
@@ -67,6 +70,8 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
   // -----------------------------( SET SEARCH ITEM )------------------------------ \\
   setSearchItem(searchItem: any) {
     // Add the item to the list
-    this.productGroupWidget.featuredProducts.push(searchItem)
+    this.productGroupWidget.featuredProducts.push(searchItem);
+
+    this.onChange.emit();
   }
 }

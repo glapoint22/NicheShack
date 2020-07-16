@@ -4,9 +4,7 @@ import { Color } from 'projects/manager/src/app/classes/color';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PanelComponent } from 'projects/manager/src/app/shared-components/panel/panel.component';
-import { of } from 'rxjs';
-import { debounceTime, switchMap } from 'rxjs/operators';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { SaveService } from 'projects/manager/src/app/services/save.service';
 
 @Component({
   selector: 'product-description',
@@ -23,7 +21,7 @@ export class ProductDescriptionComponent implements AfterViewInit {
     private applicationRef: ApplicationRef,
     private productService: ProductService,
     private sanitizer: DomSanitizer,
-    private dataService: TempDataService
+    private saveService: SaveService
   ) { }
 
 
@@ -64,14 +62,16 @@ export class ProductDescriptionComponent implements AfterViewInit {
 
 
       // Save the description to the database
-      this.description.onChange.pipe(
-        debounceTime(1000),
-        switchMap((description: string) => {
-          return this.dataService.put('api/Products/Description', {
-            productId: this.productService.product.id,
-            description: description
+      this.description.onChange
+        .subscribe((description: string) => {
+          this.saveService.save({
+            url: 'api/Products/Description',
+            data: {
+              productId: this.productService.product.id,
+              description: description
+            }
           });
-        })).subscribe();
+        });
     }
   }
 

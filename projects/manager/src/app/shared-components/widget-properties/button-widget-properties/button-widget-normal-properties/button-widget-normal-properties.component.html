@@ -1,37 +1,36 @@
 <!-- background -->
 <div id="first-property">
     <panel [title]="'Background'">
-        <background [background]="buttonWidget.background"></background>
+        <background [background]="buttonWidget.background" (onChange)="pageService.save()"></background>
     </panel>
 </div>
 
 
 <!-- Caption -->
-<caption-property [caption]="buttonWidget.caption"></caption-property>
+<caption-property [caption]="buttonWidget.caption" (onChange)="pageService.save()"></caption-property>
 
 <!-- Border -->
-<border [border]="buttonWidget.border"></border>
+<border [border]="buttonWidget.border" (onChange)="pageService.save()"></border>
 
 <!-- Corners -->
-<corners [corners]="buttonWidget.corners"></corners>
+<corners [corners]="buttonWidget.corners" (onChange)="pageService.save()"></corners>
 
 <!-- Shadow -->
-<shadow [shadow]="buttonWidget.shadow"></shadow>
+<shadow [shadow]="buttonWidget.shadow" (onChange)="pageService.save()"></shadow>
 
 <!-- Padding -->
-<padding [paddingComponent]="buttonWidget"></padding>
+<padding [paddingComponent]="buttonWidget" (onChange)="pageService.save()"></padding>
 
 <!-- Link -->
 <panel [title]="'Link'">
-    <link-property [link]="buttonWidget.link"></link-property>
+    <link-property [link]="buttonWidget.link" (onChange)="pageService.save()"></link-property>
 </panel>
 
-
 <!-- Dimensions -->
-<dimensions [widget]="buttonWidget"></dimensions>
+<dimensions [widget]="buttonWidget" (onChange)="pageService.save()"></dimensions>
 
 <!-- Columns -->
-<columns [column]="buttonWidget.column"></columns>
+<columns [column]="buttonWidget.column" (onChange)="pageService.save()"></columns>
 
 <!-- Visibility -->
-<visibility [column]="buttonWidget.column"></visibility>
+<visibility [column]="buttonWidget.column" (onChange)="pageService.save()"></visibility>
