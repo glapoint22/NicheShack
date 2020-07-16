@@ -2,7 +2,7 @@
     <!-- Widget ID -->
     <div class="grooved-container">
         <div class="label">Name:</div>
-        <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.name">
+        <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.name" (input)="pageService.save()">
     </div>
 
     <!-- Button -->

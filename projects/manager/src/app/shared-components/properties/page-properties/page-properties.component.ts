@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Page } from '../../../classes/page';
+import { PageService } from '../../../services/page.service';
 
 @Component({
   selector: 'page-properties',
@@ -8,4 +9,6 @@ import { Page } from '../../../classes/page';
 })
 export class PagePropertiesComponent {
   @Input() page: Page = new Page();
+
+  constructor(public pageService: PageService) { }
 }

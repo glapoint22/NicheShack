@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Color } from '../../../classes/color';
 
 @Component({
@@ -9,4 +9,5 @@ import { Color } from '../../../classes/color';
 export class ColorComponent {
   @Input() color: Color;
   @Input() caption: string;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
 }

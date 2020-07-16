@@ -25,13 +25,13 @@ export class HorizontalAlignment extends Alignment implements BreakpointObject {
         }
     }
 
-    load(value: string) {
+    setData(value: string) {
         if (value) {
             this.value = value as BreakpointHorizontalAlignment;
         }
     }
 
-    save(widgetData: WidgetData) {
+    getData(widgetData: WidgetData) {
         if (this.value != this.defaultValue) widgetData.horizontalAlignment = this.value;
     }
 }

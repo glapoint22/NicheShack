@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { BreakpointSpacing } from '../../../classes/breakpoint';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-padding-component';
@@ -10,6 +10,7 @@ import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-paddin
 })
 export class PaddingComponent {
   @Input() paddingComponent: BreakpointsPaddingComponent;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
   public paddingValues: Array<string>;
 
 
@@ -40,6 +41,8 @@ export class PaddingComponent {
     } else {
       this.setValue(position, value);
     }
+
+    this.onChange.emit();
   }
 
 
@@ -82,6 +85,8 @@ export class PaddingComponent {
     } else {
       this.toggleBreakpoint(position);
     }
+
+    this.onChange.emit();
   }
 
 

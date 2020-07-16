@@ -47,40 +47,40 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
     this.imageLoaded = true;
   }
 
-  load(widgetData: ImageWidgetData) {
-    this.border.load(widgetData.border);
-    this.corners.load(widgetData.corners);
-    this.shadow.load(widgetData.shadow);
-    this.link.load(widgetData.link);
-    this.image.load(widgetData.image);
-    super.load(widgetData);
+  setData(widgetData: ImageWidgetData) {
+    this.border.setData(widgetData.border);
+    this.corners.setData(widgetData.corners);
+    this.shadow.setData(widgetData.shadow);
+    this.link.setData(widgetData.link);
+    this.image.setData(widgetData.image);
+    super.setData(widgetData);
   }
 
 
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     let imageWidgetData = columnData.widgetData = new ImageWidgetData();
 
     // Name
     if (this.name != 'Image') imageWidgetData.name = this.name;
     
     // Border
-    this.border.save(imageWidgetData.border);
+    this.border.getData(imageWidgetData.border);
 
     // Corners
-    this.corners.save(imageWidgetData.corners);
+    this.corners.getData(imageWidgetData.corners);
 
     // Shadow
-    this.shadow.save(imageWidgetData.shadow);
+    this.shadow.getData(imageWidgetData.shadow);
 
     // Image
-    this.image.save(imageWidgetData.image);
+    this.image.getData(imageWidgetData.image);
 
     // Link
-    this.link.save(imageWidgetData.link);
+    this.link.getData(imageWidgetData.link);
 
-    super.save(columnData);
+    super.getData(columnData);
   }
 
 

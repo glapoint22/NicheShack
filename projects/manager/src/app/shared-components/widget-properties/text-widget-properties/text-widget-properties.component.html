@@ -1,12 +1,13 @@
 <div class="grooved-container-bottom">
-    <div class="button-center" (click)="textWidget.setEditMode()">{{textWidget.inEditMode ? 'Exit Edit Mode' : 'Enter Edit Mode'}}</div>
+    <div class="button-center" (click)="textWidget.setEditMode()">
+        {{textWidget.inEditMode ? 'Exit Edit Mode' : 'Enter Edit Mode'}}</div>
 </div>
 
 
 <!-- background -->
 <div id="first-property">
     <panel [title]="'Background'">
-        <background [background]="textWidget.background"></background>
+        <background [background]="textWidget.background" (onChange)="pageService.save()"></background>
     </panel>
 </div>
 
@@ -15,16 +16,16 @@
 
 
 <!-- Dimensions -->
-<dimensions [widget]="textWidget"></dimensions>
+<dimensions [widget]="textWidget" (onChange)="pageService.save()"></dimensions>
 
 
 <!-- Padding -->
-<padding [paddingComponent]="textWidget"></padding>
+<padding [paddingComponent]="textWidget" (onChange)="pageService.save()"></padding>
 
 
 <!-- Columns -->
-<columns [column]="textWidget.column"></columns>
+<columns [column]="textWidget.column" (onChange)="pageService.save()"></columns>
 
 
 <!-- Visibility -->
-<visibility [column]="textWidget.column"></visibility>
+<visibility [column]="textWidget.column" (onChange)="pageService.save()"></visibility>

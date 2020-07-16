@@ -17,6 +17,6 @@
 
 
         <!-- Category Icon -->
-        <image [image]="category.icon" [mediaType]="mediaType.CategoryImage" [noDelete]="true"></image>
+        <image [image]="category.icon" [mediaType]="mediaType.CategoryImage" [noDelete]="true" (onChange)="onChange()"></image>
     </ng-container>
 </div>

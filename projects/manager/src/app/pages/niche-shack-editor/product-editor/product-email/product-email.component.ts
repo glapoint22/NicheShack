@@ -5,6 +5,7 @@ import { LoadingService } from 'projects/manager/src/app/services/loading.servic
 import { PageService } from 'projects/manager/src/app/services/page.service';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { PageType } from 'projects/manager/src/app/classes/page';
 
 @Component({
   selector: 'product-email',
@@ -31,8 +32,8 @@ export class ProductEmailComponent implements OnInit {
 
     // Set the page
     window.setTimeout(() => {
-      this.pageService.setDesigner('email');
-      this.pageService.page.width = this.pageService.emailDefaultWidth;
+      this.pageService.page.setWidgets('email');
+      this.pageService.page.width = this.pageService.page.defaultWidth;
     });
 
     // Get the email ids for this product
@@ -94,8 +95,8 @@ export class ProductEmailComponent implements OnInit {
           this.pageService.clearPage();
           this.currentEmailId = null;
           this.loadingService.loading = false;
-          this.pageService.widgetCursors = [];
-          this.pageService.page.width = this.pageService.emailDefaultWidth;
+          this.pageService.page.widgetCursors = [];
+          this.pageService.page.width = this.pageService.page.defaultWidth;
         }
       });
   }
@@ -147,6 +148,7 @@ export class ProductEmailComponent implements OnInit {
       id: null,
       name: 'New Email',
       width: 600,
+      type: PageType.Email,
       background: {
         color: '#ffffff',
         image: null,
@@ -184,7 +186,7 @@ export class ProductEmailComponent implements OnInit {
     if (!this.currentEmailId) return;
 
     this.loadingService.loading = true;
-    let pageData = this.pageService.getPageData();
+    let pageData = this.pageService.page.getData();
 
     this.dataService.post(this.emailUrl, pageData)
       .subscribe((leadPageId: string) => {
@@ -196,14 +198,5 @@ export class ProductEmailComponent implements OnInit {
         // Set the new page
         this.setNewEmail(pageData, paginator);
       });
-  }
-
-
-
-
-
-  // --------------------------------------------------------------------- On Save Click --------------------------------------------------------
-  onSaveClick() {
-    this.pageService.savePage(this.emailUrl);
   }
 }

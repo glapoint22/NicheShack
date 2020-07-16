@@ -22,7 +22,7 @@ export class Shadow implements Enableable {
         return '\n\tbox-shadow: ' + this.x + 'px ' + this.y + 'px ' + this.blur + 'px ' + this.size + 'px ' + this.color.toRGBString() + ';';
     }
 
-    load(shadowData: ShadowData) {
+    setData(shadowData: ShadowData) {
         if (shadowData) {
             this.enable = shadowData.enable;
             if (shadowData.x) this.x = shadowData.x;
@@ -34,7 +34,7 @@ export class Shadow implements Enableable {
     }
 
 
-    save(shadowData: ShadowData) {
+    getData(shadowData: ShadowData) {
         if (this.enable) {
             shadowData.enable = this.enable;
             if (this.x != this.default) shadowData.x = this.x;

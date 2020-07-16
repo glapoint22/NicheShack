@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TextWidgetComponent } from '../../../designer/widgets/text-widget/text-widget.component';
 
 @Component({
@@ -6,12 +6,6 @@ import { TextWidgetComponent } from '../../../designer/widgets/text-widget/text-
   templateUrl: './text.component.html',
   styleUrls: ['./text.component.scss']
 })
-export class TextComponent implements OnInit {
+export class TextComponent {
   @Input() textWidget: TextWidgetComponent;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

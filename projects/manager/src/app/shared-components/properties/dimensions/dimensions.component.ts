@@ -1,4 +1,4 @@
-import { Component, Input, ApplicationRef } from '@angular/core';
+import { Component, Input, ApplicationRef, Output, EventEmitter } from '@angular/core';
 import { BreakpointVerticalAlignment } from '../../../classes/breakpoint';
 import { EditableNumberFieldComponent } from '../../elements/number-fields/editable-number-field/editable-number-field.component';
 import { ProportionalWidgetComponent } from '../../designer/widgets/proportional-widget/proportional-widget.component';
@@ -11,6 +11,7 @@ import { FreeformWidgetComponent } from '../../designer/widgets/freeform-widget/
 })
 export class DimensionsComponent {
   @Input() widget: any;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
 
   constructor(private applicationRef: ApplicationRef) { };
 
@@ -85,7 +86,10 @@ export class DimensionsComponent {
         // Update the number field with the new value
         numberField.value = Math.round(freeformWidget.width);
       }
+      this.onChange.emit();
     }
+    
+    
   }
 
   setHeight(value, numberField: EditableNumberFieldComponent) {

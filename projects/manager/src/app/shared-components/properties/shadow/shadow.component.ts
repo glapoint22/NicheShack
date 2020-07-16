@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Shadow } from '../../../classes/shadow';
 
 @Component({
@@ -8,4 +8,5 @@ import { Shadow } from '../../../classes/shadow';
 })
 export class ShadowComponent {
   @Input() shadow: Shadow;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
 }

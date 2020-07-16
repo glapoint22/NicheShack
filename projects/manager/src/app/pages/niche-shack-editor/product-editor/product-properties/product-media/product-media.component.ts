@@ -1,22 +1,21 @@
-import { Component, Input, ViewChild, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input, ViewChild, OnChanges, DoCheck } from '@angular/core';
 import { Media, MediaType } from 'projects/manager/src/app/classes/media';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
-import { Subscription } from 'rxjs';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
+import { SaveService } from 'projects/manager/src/app/services/save.service';
 
 @Component({
   selector: 'product-media',
   templateUrl: './product-media.component.html',
   styleUrls: ['./product-media.component.scss']
 })
-export class ProductMediaComponent implements OnInit, OnChanges, OnDestroy {
+export class ProductMediaComponent implements OnChanges, DoCheck {
   @Input() media: Array<Media>;
   @ViewChild('paginator', { static: false }) paginator: PaginatorComponent;
   public mediaType = MediaType;
-  private subscription: Subscription;
   private currentMediaId: string;
 
 
@@ -24,30 +23,9 @@ export class ProductMediaComponent implements OnInit, OnChanges, OnDestroy {
     private popupService: PopupService,
     public productService: ProductService,
     private dataService: TempDataService,
-    private promptService: PromptService
+    private promptService: PromptService,
+    private saveService: SaveService
   ) { }
-
-
-  // -----------------------------( NG ON INIT )------------------------------ \\
-  ngOnInit() {
-    this.subscription = this.popupService.mediaBrowserPopup.onPopupClose
-      .subscribe(() => {
-        // Test to see if the media changed
-        if (this.currentMediaId != this.productService.currentSelectedMedia.id) {
-
-          // Update the media
-          this.dataService.put('api/Products/Media', {
-            productId: this.productService.product.id,
-            oldMediaId: this.currentMediaId,
-            newMediaId: this.productService.currentSelectedMedia.id
-          })
-            .subscribe(() => {
-              // Set the current media id as the new media id
-              this.currentMediaId = this.productService.currentSelectedMedia.id;
-            });
-        }
-      });
-  }
 
 
 
@@ -58,12 +36,34 @@ export class ProductMediaComponent implements OnInit, OnChanges, OnDestroy {
 
 
 
+
+
+  // -----------------------------( NG DO CHECK )------------------------------ \\
+  ngDoCheck() {
+    if (this.productService.currentSelectedMedia.url && this.currentMediaId != this.productService.currentSelectedMedia.id) {
+      this.currentMediaId = this.productService.currentSelectedMedia.id;
+
+      // Update the media
+      this.saveService.save({
+        url: 'api/Products/Media',
+        data: {
+          productId: this.productService.product.id,
+          oldMediaId: this.currentMediaId,
+          newMediaId: this.productService.currentSelectedMedia.id
+        }
+      });
+    }
+  }
+
+
+
   // -----------------------------( ON PAGINATOR CLICK )------------------------------ \\
   onPaginatorClick(pageIndex: number) {
     this.productService.currentSelectedMediaIndex = pageIndex;
     this.productService.currentSelectedMedia = this.media[this.productService.currentSelectedMediaIndex];
     this.productService.setCurrentSelectedMedia(this.media[this.productService.currentSelectedMediaIndex]);
     this.productService.scrollTop = pageIndex * 64;
+    this.currentMediaId = this.productService.currentSelectedMedia.id;
   }
 
 
@@ -130,16 +130,9 @@ export class ProductMediaComponent implements OnInit, OnChanges, OnDestroy {
       this.productService.currentSelectedMedia = this.media[this.productService.currentSelectedMediaIndex];
       this.productService.setCurrentSelectedMedia(this.media[this.productService.currentSelectedMediaIndex]);
       this.productService.scrollTop = this.productService.currentSelectedMediaIndex * 64;
+      this.currentMediaId = this.productService.currentSelectedMedia.id;
     } else {
       this.productService.currentSelectedMediaIndex = 0;
     }
-
-  }
-
-
-
-  // -----------------------------( NG ON DESTROY )------------------------------ \\
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }

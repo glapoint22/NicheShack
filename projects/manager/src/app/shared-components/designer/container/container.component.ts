@@ -4,6 +4,7 @@ import { WidgetService } from '../../../services/widget.service';
 import { Row } from '../../../classes/row';
 import { WidgetComponent } from '../widgets/widget/widget.component';
 import { RowData } from '../../../classes/row-data';
+import { PageService } from '../../../services/page.service';
 
 @Component({
   selector: 'container',
@@ -31,7 +32,11 @@ export class ContainerComponent {
 
 
 
-  constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService) { }
+  constructor(
+    private resolver: ComponentFactoryResolver,
+    public widgetService: WidgetService,
+    private pageService: PageService
+  ) { }
 
 
 
@@ -163,13 +168,18 @@ export class ContainerComponent {
     this.rows.forEach((row: Row) => row.component.buildHTML(div));
   }
 
-  save(rows: Array<RowData>) {
+  getData(rows: Array<RowData>) {
     if (this.rows.length > 0) {
       this.rows.forEach((row: Row) => {
         rows.push(new RowData());
         let rowData: RowData = rows[rows.length - 1];
-        row.component.save(rowData);
+        row.component.getData(rowData);
       });
     }
+  }
+
+  save() {
+    // Save the page
+    this.pageService.save();
   }
 }

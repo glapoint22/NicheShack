@@ -6,7 +6,7 @@ export class Link {
     public optionValue: string;
     public disabled: boolean;
 
-    load(linkData: LinkData) {
+    setData(linkData: LinkData) {
         if (linkData) {
             if (linkData.selectedOption) this.selectedOption = linkData.selectedOption as LinkOption;
             if (linkData.url) this.url = linkData.url;
@@ -15,7 +15,7 @@ export class Link {
     }
 
 
-    save(linkData: LinkData) {
+    getData(linkData: LinkData) {
         if (this.selectedOption != LinkOption.None) linkData.selectedOption = this.selectedOption;
         if (this.url) linkData.url = this.url;
         if (this.optionValue) linkData.optionValue = this.optionValue;

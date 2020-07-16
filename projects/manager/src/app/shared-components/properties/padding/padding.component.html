@@ -1,7 +1,7 @@
 <panel [title]="'Padding'">
     <!-- Constrain -->
     <checkbox style="color: white;" [label]="'Constrain'" [checked]="paddingComponent.padding.constrain"
-        (change)="paddingComponent.padding.constrain = !paddingComponent.padding.constrain">
+        (change)="paddingComponent.padding.constrain = !paddingComponent.padding.constrain; onChange.emit()">
     </checkbox>
 
 

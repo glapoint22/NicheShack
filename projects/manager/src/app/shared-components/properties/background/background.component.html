@@ -3,7 +3,7 @@
     <div class="label">Color:</div>
 
     <div style="flex: 1;">
-        <color-swatch [color]="background.color"></color-swatch>
+        <color-swatch [color]="background.color" (onChange)="onChange.emit()"></color-swatch>
     </div>
 </div>
 
@@ -16,7 +16,7 @@
 
 
 <!-- Image -->
-<image [image]="background.image" [mediaType]="mediaType.BackgroundImage"></image>
+<image [image]="background.image" [mediaType]="mediaType.BackgroundImage" (onChange)="onChange.emit()"></image>
 
 
 <!-- Image Options -->
@@ -27,7 +27,7 @@
             <div class="label">Position</div>
             <div style="flex: 1;">
                 <dropdown [height]="20" [dropdownList]="positionOptions" [selectedIndex]="selectedPositionIndex"
-                    (onChange)="background.image.position = $event">
+                    (onChange)="background.image.position = $event; onChange.emit()">
                 </dropdown>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="label">Repeat</div>
             <div style="flex: 1;">
                 <dropdown [height]="20" [dropdownList]="repeatOptions" [selectedIndex]="selectedRepeatIndex"
-                    (onChange)="background.image.repeat = $event">
+                    (onChange)="background.image.repeat = $event; onChange.emit()">
                 </dropdown>
             </div>
         </div>
@@ -54,7 +54,7 @@
             <div class="label">Attachment</div>
             <div style="flex: 1;">
                 <dropdown [height]="20" [dropdownList]="attachmentOptions" [selectedIndex]="selectedAttachmentIndex"
-                    (onChange)="background.image.attachment = $event">
+                    (onChange)="background.image.attachment = $event; onChange.emit()">
                 </dropdown>
             </div>
         </div>

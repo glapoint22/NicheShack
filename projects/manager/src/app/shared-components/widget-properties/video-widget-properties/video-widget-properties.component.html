@@ -1,20 +1,20 @@
 <!-- Video -->
-<video-property [video]="videoWidget.video"></video-property>
+<video-property [video]="videoWidget.video" (onChange)="pageService.save()"></video-property>
 
 <!-- Border -->
-<border [border]="videoWidget.border"></border>
+<border [border]="videoWidget.border" (onChange)="pageService.save()"></border>
 
 <!-- Corners -->
-<corners [corners]="videoWidget.corners"></corners>
+<corners [corners]="videoWidget.corners" (onChange)="pageService.save()"></corners>
 
 <!-- Shadow -->
-<shadow [shadow]="videoWidget.shadow"></shadow>
+<shadow [shadow]="videoWidget.shadow" (onChange)="pageService.save()"></shadow>
 
 <!-- Dimensions -->
-<dimensions [widget]="videoWidget"></dimensions>
+<dimensions [widget]="videoWidget" (onChange)="pageService.save()"></dimensions>
 
 <!-- Columns -->
-<columns [column]="videoWidget.column"></columns>
+<columns [column]="videoWidget.column" (onChange)="pageService.save()"></columns>
 
 <!-- Visibility -->
-<visibility [column]="videoWidget.column"></visibility>
+<visibility [column]="videoWidget.column" (onChange)="pageService.save()"></visibility>

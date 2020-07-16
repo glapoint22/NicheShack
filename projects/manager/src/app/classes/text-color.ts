@@ -11,7 +11,7 @@ export class TextColor {
         return '\n\tcolor: ' + this.value.toRGBString() + ';';
     }
 
-    load(color: string) {
+    setData(color: string) {
         if (color) this.value = Color.hexToRGB(color);
     }
 }

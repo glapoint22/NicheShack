@@ -34,23 +34,23 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     super.ngOnInit();
   }
 
-  load(widgetData: ProductGroupWidgetData) {
-    this.caption.load(widgetData.caption);
+  setData(widgetData: ProductGroupWidgetData) {
+    this.caption.setData(widgetData.caption);
     this.productGroupType = widgetData.productGroupType;
     this.featuredProducts = widgetData.featuredProducts;
-    super.load(widgetData);
+    super.setData(widgetData);
   }
 
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     let productGroupWidgetData = columnData.widgetData = new ProductGroupWidgetData();
 
     // Name
     if (this.name != 'Product Group') productGroupWidgetData.name = this.name;
 
     // Caption
-    this.caption.save(productGroupWidgetData.caption);
+    this.caption.getData(productGroupWidgetData.caption);
 
     // Product Group Type
     if (this.productGroupType != ProductGroupType.FeaturedProducts) productGroupWidgetData.productGroupType = this.productGroupType;
@@ -58,7 +58,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     // Featured Products
     if (this.featuredProducts.length > 0) productGroupWidgetData.featuredProducts = this.featuredProducts;
 
-    super.save(columnData);
+    super.getData(columnData);
   }
 
 

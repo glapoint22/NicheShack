@@ -39,7 +39,7 @@ export class Caption {
     }
 
 
-    load(captionData: CaptionData) {
+    setData(captionData: CaptionData) {
         if (captionData) {
             if (captionData.text) this.text = captionData.text;
 
@@ -84,7 +84,7 @@ export class Caption {
 
 
 
-    save(captionData: CaptionData) {
+    getData(captionData: CaptionData) {
         // Font
         if (this.font.styleValue != this.font.options[0].value) captionData.font = this.font.styleValue;
 

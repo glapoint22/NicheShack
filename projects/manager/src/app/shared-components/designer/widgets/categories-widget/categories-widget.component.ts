@@ -39,24 +39,24 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
     super.ngOnInit();
   }
 
-  load(widgetData: CategoriesWidgetData) {
-    this.caption.load(widgetData.caption);
+  setData(widgetData: CategoriesWidgetData) {
+    this.caption.setData(widgetData.caption);
     this.categories = widgetData.categories;
-    this.textColor.load(widgetData.textColor);
-    this.backgroundColor.load(widgetData.backgroundColor);
-    this.shadow.load(widgetData.shadow);
-    super.load(widgetData);
+    this.textColor.setData(widgetData.textColor);
+    this.backgroundColor.setData(widgetData.backgroundColor);
+    this.shadow.setData(widgetData.shadow);
+    super.setData(widgetData);
   }
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     let categoriesWidgetData = columnData.widgetData = new CategoriesWidgetData();
 
     // Name
     if (this.name != 'Categories') categoriesWidgetData.name = this.name;
 
     // Caption
-    this.caption.save(categoriesWidgetData.caption);
+    this.caption.getData(categoriesWidgetData.caption);
 
     // Categories
     if (this.categories.length > 0) categoriesWidgetData.categories = this.categories;
@@ -68,9 +68,9 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
     categoriesWidgetData.backgroundColor = this.backgroundColor.value.toHex();
 
     // Shadow
-    this.shadow.save(categoriesWidgetData.shadow);
+    this.shadow.getData(categoriesWidgetData.shadow);
 
-    super.save(columnData);
+    super.getData(columnData);
   }
 
   buildHTML(parent: HTMLElement) {

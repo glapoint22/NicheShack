@@ -70,6 +70,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
         this.height = Math.max(contentHeight, this.fixedHeight);
 
         this.column.row.positionNextRow(this.height - previousHeight);
+        this.column.row.container.save();
       });
     }
   }
@@ -130,31 +131,31 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
   }
 
 
-  load(widgetData: TextWidgetData) {
+  setData(widgetData: TextWidgetData) {
     this.htmlContent = widgetData.htmlContent;
     if (widgetData.height) this.fixedHeight = widgetData.height;
 
-    this.background.load(widgetData.background);
-    this.padding.load(widgetData.padding);
+    this.background.setData(widgetData.background);
+    this.padding.setData(widgetData.padding);
 
-    super.load(widgetData);
+    super.setData(widgetData);
   }
 
 
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     let textWidgetData = columnData.widgetData = new TextWidgetData();
 
     // Name
     if (this.name != 'Text') textWidgetData.name = this.name;
 
     // Background
-    this.background.save(textWidgetData.background);
+    this.background.getData(textWidgetData.background);
 
 
     // Padding
-    this.padding.save(textWidgetData.padding, this.breakpoints);
+    this.padding.getData(textWidgetData.padding, this.breakpoints);
     this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.top);
     this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.right);
     this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.bottom);
@@ -164,7 +165,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
     if (this.textBox.content.innerHTML) textWidgetData.htmlContent = this.textBox.content.innerHTML;
 
 
-    super.save(columnData);
+    super.getData(columnData);
   }
 
 

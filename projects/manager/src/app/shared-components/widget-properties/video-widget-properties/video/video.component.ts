@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, DoCheck } from '@angular/core';
 import { Video } from 'projects/manager/src/app/classes/video';
 import { MediaType } from 'projects/manager/src/app/classes/media';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
@@ -8,9 +8,28 @@ import { PopupService } from 'projects/manager/src/app/services/popup.service';
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss']
 })
-export class VideoComponent {
+export class VideoComponent implements OnChanges, DoCheck {
   constructor(private popupService: PopupService){}
   @Input() video: Video;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
+  private currentVideoId: string;
+
+
+  ngDoCheck() {
+    if (this.currentVideoId != this.video.id) {
+      this.currentVideoId = this.video.id;
+      this.onChange.emit();
+    }
+  }
+
+
+  ngOnChanges() {
+    this.currentVideoId = this.video.id;
+  }
+
+
+
+
 
   // -----------------------------( ON VIDEO ICON CLICK )------------------------------ \\
   onVideoIconClick(sourceElement: HTMLElement) {

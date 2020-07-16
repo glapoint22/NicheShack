@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ColumnComponent } from '../../designer/column/column.component';
 import { NumberFieldComponent } from '../../elements/number-fields/number-field/number-field.component';
 import { ColumnSpan } from '../../../classes/column-span';
@@ -14,6 +14,7 @@ import { Breakpoint } from '../../../classes/breakpoint';
 })
 export class ColumnsComponent implements OnInit {
   @Input() column: ColumnComponent;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
   public columns: Array<number> = new Array<number>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 
 
@@ -127,6 +128,8 @@ export class ColumnsComponent implements OnInit {
       // Add a new breakpoint
       this.addBreakpoint();
     }
+
+    this.onChange.emit();
   }
 
 
@@ -215,6 +218,8 @@ export class ColumnsComponent implements OnInit {
     } else {
       this.addBreakpoint();
     }
+
+    this.onChange.emit();
   }
 
 

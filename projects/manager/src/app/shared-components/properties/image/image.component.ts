@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter, DoCheck } from '@angular/core';
 import { Image } from '../../../classes/image';
 import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
@@ -9,11 +9,28 @@ import { MediaType } from '../../../classes/media';
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.scss']
 })
-export class ImageComponent {
+export class ImageComponent implements OnChanges, DoCheck {
   @Input() image: Image;
   @Input() mediaType: MediaType;
   @Input() noDelete: boolean;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
+  @Output() onLoad: EventEmitter<void> = new EventEmitter();
+  private currentImage: string;
+
   constructor(private promptService: PromptService, private popupService: PopupService) { }
+
+
+  ngDoCheck() {
+    if (this.image && this.currentImage != this.image.url) {
+      this.currentImage = this.image.url;
+      this.onChange.emit();
+    }
+  }
+
+
+  ngOnChanges() {
+    if (this.image) this.currentImage = this.image.url;
+  }
 
   onDeleteImageClick() {
     if (this.image.url) {
@@ -26,6 +43,8 @@ export class ImageComponent {
 
   deleteImage() {
     this.image.url = null;
+    this.currentImage = null;
+    this.onChange.emit();
   }
 
   onClick(sourceElement: HTMLElement) {

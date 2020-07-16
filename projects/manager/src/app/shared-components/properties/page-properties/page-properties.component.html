@@ -2,18 +2,19 @@
     <!-- Page Name -->
     <div class="property">
         <div class="label" style="margin-right: 9px;">Name:</div>
-        <input class="txt-20" [(ngModel)]="page.name">
+        <input class="txt-20" [(ngModel)]="page.name" (input)="pageService.save()">
     </div>
 
     <!-- Page Width -->
     <div class="property">
         <div class="label">Width:</div>
         <div style="flex: 1;">
-            <editable-number-field [value]="page.width ? page.width : ''" (onValueChange)="page.width = $event"></editable-number-field>
+            <editable-number-field [value]="page.width ? page.width : ''" (onValueChange)="page.width = $event; pageService.save()">
+            </editable-number-field>
         </div>
     </div>
 
 
     <!-- Background color & image -->
-    <background [background]="page.background"></background>
+    <background [background]="page.background" (onChange)="pageService.save()"></background>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CategoriesWidgetComponent } from '../../../designer/widgets/categories-widget/categories-widget.component';
 import { Searchable } from 'projects/manager/src/app/classes/searchable';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
@@ -13,10 +13,13 @@ import { Item } from 'projects/manager/src/app/classes/item';
 })
 export class CategoriesComponent implements Searchable {
   @Input() categoriesWidget: CategoriesWidgetComponent;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
   @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
   public apiUrl: string = 'api/Categories';
   public searchResults: Array<Item>;
   public items: Array<Item>;
+
+
   constructor(private popupService: PopupService, private promptService: PromptService) { }
 
 
@@ -42,6 +45,8 @@ export class CategoriesComponent implements Searchable {
   // -----------------------------( SET SEARCH ITEM )------------------------------ \\
   setSearchItem(searchItem: any) {
     // Add the item to the list
-    this.categoriesWidget.categories.push(searchItem)
+    this.categoriesWidget.categories.push(searchItem);
+
+    this.onChange.emit();
   }
 }

@@ -43,7 +43,7 @@ export class Background implements Enableable {
             (this.image && this.image.attachment ? '\n\tbackground-attachment: ' + this.image.attachment + ';' : '');
     }
 
-    load(backgroundData: BackgroundData) {
+    setData(backgroundData: BackgroundData) {
         if (backgroundData) {
             // Enable
             this.enable = backgroundData.enable;
@@ -52,12 +52,12 @@ export class Background implements Enableable {
             if (backgroundData.color) this.color = Color.hexToRGB(backgroundData.color);
 
             // Background image
-            if (backgroundData.image) this.image.load(backgroundData.image);
+            if (backgroundData.image) this.image.setData(backgroundData.image);
         }
     }
 
 
-    save(backgroundData: BackgroundData) {
+    getData(backgroundData: BackgroundData) {
         if (this.color.r > 0 ||
             this.color.g > 0 ||
             this.color.b > 0 ||
@@ -75,7 +75,7 @@ export class Background implements Enableable {
             // Background image
             if (this.image.url) {
                 backgroundData.image = new BackgroundImageData();
-                this.image.save(backgroundData.image);
+                this.image.getData(backgroundData.image);
             }
         }
     }

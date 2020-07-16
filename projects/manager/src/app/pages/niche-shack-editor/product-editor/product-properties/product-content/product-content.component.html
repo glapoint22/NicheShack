@@ -35,7 +35,8 @@
             <div class="property">
                 <div class="label">Title:</div>
             </div>
-            <input #titleInput class="txt-20" [(ngModel)]="content[contentIndex].title">
+            <input class="txt-20" [(ngModel)]="content[contentIndex].title"
+                (input)="onTitleChange($event.target.value)">
 
 
 
@@ -43,10 +44,14 @@
             <div class="property">
                 <div class="label">Icon:</div>
             </div>
-            <div class="property-box-dark">
+            
+            
+            <image [image]="content[contentIndex].icon" [mediaType]="mediaType.Icon" [noDelete]="true" (onChange)="onIconChange()"></image>
+            
+            <!-- <div class="property-box-dark">
 
 
-                <!-- Image Icon -->
+                
                 <div class="icons">
                     <div class="icon-container" (click)="onImageIconClick($event.target)" title="Open Media Browser">
                         <i class="fas fa-image"></i>
@@ -54,7 +59,7 @@
                 </div>
 
 
-                <!-- Image -->
+                
                 <div class="img-container">
                     <img *ngIf="content[contentIndex].icon.url" [src]="'images/' + content[contentIndex].icon.url"
                         style="padding: 10px;">
@@ -62,7 +67,7 @@
                         No icon available
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
 
@@ -102,11 +107,8 @@
                 </div>
 
                 <!-- Checkbox Item LIst -->
-                <checkbox-item-list 
-                    #itemList
-                    [listItems]="pricePointList"
-                    [checkList]="content[contentIndex].priceIndices"
-                    (onAddItem)="addPricePoint($event)"
+                <checkbox-item-list #itemList [listItems]="pricePointList"
+                    [checkList]="content[contentIndex].priceIndices" (onAddItem)="addPricePoint($event)"
                     (onEditItem)="editPricePoint($event, itemList.selectedListItemIndex)"
                     (onPricePointMove)="movePricePoint($event)"
                     [menuOptions]="['New Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">

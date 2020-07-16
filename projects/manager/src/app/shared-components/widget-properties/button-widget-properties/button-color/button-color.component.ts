@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Color } from 'projects/manager/src/app/classes/color';
 
 @Component({
@@ -10,4 +10,5 @@ export class ButtonColorComponent {
   @Input() backgroundColor: Color;
   @Input() borderColor: Color;
   @Input() textColor: Color;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
 }

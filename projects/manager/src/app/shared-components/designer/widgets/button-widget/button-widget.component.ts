@@ -141,54 +141,54 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   }
 
 
-  load(widgetData: ButtonWidgetData) {
-    this.background.load(widgetData.background);
-    this.border.load(widgetData.border);
-    this.caption.load(widgetData.caption);
-    this.corners.load(widgetData.corners);
-    this.shadow.load(widgetData.shadow);
-    this.padding.load(widgetData.padding);
-    this.link.load(widgetData.link);
-    this.backgroundHoverColor.load(widgetData.backgroundHoverColor);
-    this.backgroundActiveColor.load(widgetData.backgroundActiveColor);
-    this.borderHoverColor.load(widgetData.borderHoverColor);
-    this.borderActiveColor.load(widgetData.borderActiveColor);
-    this.textHoverColor.load(widgetData.textHoverColor);
-    this.textActiveColor.load(widgetData.textActiveColor);
-    super.load(widgetData);
+  setData(widgetData: ButtonWidgetData) {
+    this.background.setData(widgetData.background);
+    this.border.setData(widgetData.border);
+    this.caption.setData(widgetData.caption);
+    this.corners.setData(widgetData.corners);
+    this.shadow.setData(widgetData.shadow);
+    this.padding.setData(widgetData.padding);
+    this.link.setData(widgetData.link);
+    this.backgroundHoverColor.setData(widgetData.backgroundHoverColor);
+    this.backgroundActiveColor.setData(widgetData.backgroundActiveColor);
+    this.borderHoverColor.setData(widgetData.borderHoverColor);
+    this.borderActiveColor.setData(widgetData.borderActiveColor);
+    this.textHoverColor.setData(widgetData.textHoverColor);
+    this.textActiveColor.setData(widgetData.textActiveColor);
+    super.setData(widgetData);
   }
 
 
-  save(columnData: ColumnData) {
+  getData(columnData: ColumnData) {
     let buttonWidgetData = columnData.widgetData = new ButtonWidgetData();
 
     // Name
     if (this.name != 'Button') buttonWidgetData.name = this.name;
 
     // Background
-    this.background.save(buttonWidgetData.background);
+    this.background.getData(buttonWidgetData.background);
 
     // Border
-    this.border.save(buttonWidgetData.border);
+    this.border.getData(buttonWidgetData.border);
 
     // Corners
-    this.corners.save(buttonWidgetData.corners);
+    this.corners.getData(buttonWidgetData.corners);
 
     // Shadow
-    this.shadow.save(buttonWidgetData.shadow);
+    this.shadow.getData(buttonWidgetData.shadow);
 
     // Padding
-    this.padding.save(buttonWidgetData.padding, this.breakpoints);
+    this.padding.getData(buttonWidgetData.padding, this.breakpoints);
     this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.top);
     this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.right);
     this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.bottom);
     this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.left);
 
     // Text
-    this.caption.save(buttonWidgetData.caption);
+    this.caption.getData(buttonWidgetData.caption);
 
     // Link
-    this.link.save(buttonWidgetData.link);
+    this.link.getData(buttonWidgetData.link);
 
     // Background Hover Color
     buttonWidgetData.backgroundHoverColor = this.backgroundHoverColor.value.toHex();
@@ -213,7 +213,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     // Text Active Color
     buttonWidgetData.textActiveColor = this.textActiveColor.value.toHex();
 
-    super.save(columnData);
+    super.getData(columnData);
   }
 
 

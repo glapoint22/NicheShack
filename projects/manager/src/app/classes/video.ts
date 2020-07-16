@@ -75,7 +75,7 @@ export class Video implements Media{
 
 
 
-    load(videoData: VideoData) {
+    setData(videoData: VideoData) {
         if (videoData) {
             this.url = videoData.url;
             this.thumbnail = videoData.thumbnail;
@@ -84,7 +84,7 @@ export class Video implements Media{
 
 
 
-    save(videoData: VideoData) {
+    getData(videoData: VideoData) {
         if (this.url) videoData.url = this.url;
         if (this.thumbnail) videoData.thumbnail = this.thumbnail;
     }

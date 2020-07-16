@@ -8,6 +8,7 @@ import { Vendor } from 'projects/manager/src/app/classes/vendor';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { Product } from 'projects/manager/src/app/classes/product';
+import { SaveService } from 'projects/manager/src/app/services/save.service';
 
 @Component({
   selector: 'product-vendor',
@@ -25,7 +26,9 @@ export class ProductVendorComponent implements Searchable {
     private popupService: PopupService,
     private formService: FormService,
     private loadingService: LoadingService,
-    private dataService: TempDataService) { }
+    private dataService: TempDataService,
+    private saveService: SaveService
+  ) { }
 
 
   // --------------------------------( ON VENDOR SEARCH CLICK )-------------------------------- \\
@@ -70,8 +73,12 @@ export class ProductVendorComponent implements Searchable {
   setSearchItem(vendor: Item) {
     if (!this.product.vendor || this.product.vendor.id != vendor.id) {
       this.product.vendor = vendor;
-      this.dataService.put('api/Products/Vendor', this.product)
-        .subscribe();
+
+      // Update the vendor
+      this.saveService.save({
+        url: 'api/Products/Vendor',
+        data: this.product
+      });
     }
   }
 }
