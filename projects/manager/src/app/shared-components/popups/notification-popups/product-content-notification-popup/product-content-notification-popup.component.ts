@@ -192,6 +192,18 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   }
 
 
+  // --------------------------------( GO TO PRODUCT PAGE )-------------------------------- \\
+  goToProductPage() {
+    super.goToProductPage(this.notificationService.productContentNotification.productId);
+  }
+
+
+  // --------------------------------( GO TO VENDOR PRODUCT PAGE )-------------------------------- \\
+  goToVendorProductPage() {
+    super.goToVendorProductPage(this.notificationService.productContentNotification.hoplink);
+  }
+
+
   // -----------------------------(ON SUBMIT )------------------------------ \\
   onSubmit(notification: Notification) {
 

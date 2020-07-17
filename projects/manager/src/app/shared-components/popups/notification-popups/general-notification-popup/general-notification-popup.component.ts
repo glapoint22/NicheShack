@@ -12,6 +12,7 @@ import { Vendor } from 'projects/manager/src/app/classes/vendor';
 import { FormService } from 'projects/manager/src/app/services/form.service';
 import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 import { MenuDivider } from 'projects/manager/src/app/classes/menu-divider';
+import { NicheShackHierarchyItemType } from 'projects/manager/src/app/classes/hierarchy-item';
 
 @Component({
   selector: 'general-notification-popup',
@@ -58,7 +59,6 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
           new MenuDivider(),
           new MenuOption("Go To Vendor Product Page", false, this.goToVendorProductPage),
           new MenuOption("View Vendor Info", false, this.viewVendorInfo),
-          new MenuOption("Contact Vendor", true, this.contactVendor),
           new MenuDivider(),
           new MenuOption("Close", false, this.onClose, [notification]),
           new MenuDivider(),
@@ -74,7 +74,6 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
           new MenuDivider(),
           new MenuOption("Go To Vendor Product Page", false, this.goToVendorProductPage),
           new MenuOption("View Vendor Info", false, this.viewVendorInfo),
-          new MenuOption("Contact Vendor", true, this.contactVendor),
           new MenuDivider(),
           new MenuOption("Close", false, this.onClose, [notification])
         ]
@@ -84,14 +83,37 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
 
 
   // --------------------------------( GO TO PRODUCT PAGE )-------------------------------- \\
-  goToProductPage() {
+  goToProductPage(productId: string) {
+    // Get the product id
+    if (!productId) productId = this.notificationService.generalNotification.productId;
 
+    // This basically creates a selected item for the niche shack hierarchy popup
+    // and in turn will display the product
+    this.popupService.nicheShackHierarchyPopup.selectedItem = {
+      id: productId,
+      type: NicheShackHierarchyItemType.Product,
+      showChildren: false,
+      children: null,
+      parent: null,
+      childless: null,
+      url: null,
+      childrenUrl: null,
+      childrenParameters: null,
+      name: null
+    }
+
+    // Hide the cover
+    this.cover.showNormalCover = false;
   }
 
 
   // --------------------------------( GO TO VENDOR PRODUCT PAGE )-------------------------------- \\
-  goToVendorProductPage() {
+  goToVendorProductPage(hoplink: string) {
+    // Get the hoplink
+    if (!hoplink) hoplink = this.notificationService.generalNotification.hoplink;
 
+    // This will open the page
+    window.open(hoplink);
   }
 
 
@@ -111,12 +133,6 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
         this.formService.vendorForm.show = true;
         this.loadingService.loading = false;
       });
-  }
-
-
-  // --------------------------------( CONTACT VENDOR )-------------------------------- \\
-  contactVendor() {
-
   }
 
 

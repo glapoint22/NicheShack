@@ -32,4 +32,16 @@ export class ProductImageNotificationPopupComponent extends GeneralNotificationP
   viewVendorInfo() {
     super.viewVendorInfo(this.notificationService.productImageNotification.vendorId);
   }
+
+
+  // --------------------------------( GO TO PRODUCT PAGE )-------------------------------- \\
+  goToProductPage() {
+    super.goToProductPage(this.notificationService.productImageNotification.productId);
+  }
+
+
+  // --------------------------------( GO TO VENDOR PRODUCT PAGE )-------------------------------- \\
+  goToVendorProductPage() {
+    super.goToVendorProductPage(this.notificationService.productImageNotification.hoplink);
+  }
 }

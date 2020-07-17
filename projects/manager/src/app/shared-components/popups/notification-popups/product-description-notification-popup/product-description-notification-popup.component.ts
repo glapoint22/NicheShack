@@ -54,4 +54,16 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
     super.viewVendorInfo(this.notificationService.productDescriptionNotification.vendorId);
   }
 
+
+  // --------------------------------( GO TO PRODUCT PAGE )-------------------------------- \\
+  goToProductPage() {
+    super.goToProductPage(this.notificationService.productDescriptionNotification.productId);
+  }
+
+
+  // --------------------------------( GO TO VENDOR PRODUCT PAGE )-------------------------------- \\
+  goToVendorProductPage() {
+    super.goToVendorProductPage(this.notificationService.productDescriptionNotification.hoplink);
+  }
+
 }

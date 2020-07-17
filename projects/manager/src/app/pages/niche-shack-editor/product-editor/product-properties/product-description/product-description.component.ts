@@ -44,9 +44,6 @@ export class ProductDescriptionComponent implements AfterViewInit {
 
         // Initialize
         this.description.initialize();
-
-        // This will display the description in the product info window
-        this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.description.content.innerHTML);
       }
 
 
@@ -55,15 +52,12 @@ export class ProductDescriptionComponent implements AfterViewInit {
       });
 
 
-      // Update the description in the product info window
-      this.description.onChange.subscribe((description: string) => {
-        this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(description);
-      });
-
-
-      // Save the description to the database
       this.description.onChange
         .subscribe((description: string) => {
+          // Update the description in the product info window
+          this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(description);
+
+          // Update the database
           this.saveService.save({
             url: 'api/Products/Description',
             data: {
