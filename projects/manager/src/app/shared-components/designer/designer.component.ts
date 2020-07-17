@@ -4,6 +4,7 @@ import { WidgetService } from '../../services/widget.service';
 import { ContainerComponent } from './container/container.component';
 import { PageService } from '../../services/page.service';
 import { BreakpointService } from '../../services/breakpoint.service';
+import { PromptService } from '../../services/prompt.service';
 
 @Component({
   selector: 'designer',
@@ -22,7 +23,12 @@ export class DesignerComponent implements AfterViewInit {
   public widgetCursors: Array<WidgetCursor>;
 
 
-  constructor(public widgetService: WidgetService, public pageService: PageService, private breakpointService: BreakpointService) { }
+  constructor(
+    public widgetService: WidgetService,
+    public pageService: PageService,
+    private breakpointService: BreakpointService,
+    private promptService: PromptService
+  ) { }
 
   ngOnInit() {
     this.pageService.clearPage();
@@ -88,10 +94,22 @@ export class DesignerComponent implements AfterViewInit {
     window.addEventListener("mouseup", onMouseup);
   }
 
+
+
+  // ------------------( ON DELETE KEYDOWN )------------------- \\
   @HostListener('document:keydown.delete')
   onDeleteKeydown() {
-    if (this.widgetService.selectedWidget) {
-      this.widgetService.selectedWidget.column.row.deleteColumn(this.widgetService.selectedWidget.column);
-    }
+    window.setTimeout(() => {
+      if (this.widgetService.selectedWidget && !this.promptService.show) {
+        this.promptService.showPrompt('Delete Widget', 'Are you sure you want to delete this widget?', this.deleteWidget, this);
+      }
+    });
+  }
+
+
+
+  // ------------------( DELETE WIDGET )------------------- \\
+  deleteWidget() {
+    this.widgetService.selectedWidget.column.row.deleteColumn(this.widgetService.selectedWidget.column);
   }
 }
