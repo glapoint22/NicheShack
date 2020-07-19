@@ -38,7 +38,8 @@
             <div class="design-area">
 
                 <!-- Design Area Resizer Left -->
-                <div *ngIf="pageService.page.widgetCursors && pageService.page.widgetCursors.length > 0" class="design-area-resizer" (mousedown)="onDesignAreaResizerMousedown($event, 1)">
+                <div *ngIf="pageService.page.widgetCursors && pageService.page.widgetCursors.length > 0"
+                    class="design-area-resizer" (mousedown)="onDesignAreaResizerMousedown($event, 1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
@@ -48,7 +49,8 @@
 
 
                 <!-- Canvas -->
-                <div #canvasElement class="canvas" (mousedown)="widgetService.selectedWidget = null">
+                <div #canvasElement class="canvas"
+                    (click)="pageService.selectPage()">
                     <div #contentElement class="content" [style.maxWidth.px]="pageService.page.width"
                         [ngClass]="{'content-border': pageService.page.widgetCursors && pageService.page.widgetCursors.length > 0}"
                         [style.backgroundColor]="pageService.page.background.color ? pageService.page.background.color.toRGBString(): null"
@@ -62,7 +64,8 @@
 
 
                 <!-- Design Area Resizer Right -->
-                <div *ngIf="pageService.page.widgetCursors && pageService.page.widgetCursors.length > 0" class="design-area-resizer" (mousedown)="onDesignAreaResizerMousedown($event, -1)">
+                <div *ngIf="pageService.page.widgetCursors && pageService.page.widgetCursors.length > 0"
+                    class="design-area-resizer" (mousedown)="onDesignAreaResizerMousedown($event, -1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>

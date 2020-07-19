@@ -39,28 +39,42 @@
 
         <!-- Page, Row, Column, and Widget buttons -->
         <div class="grooved-container-bottom">
-            <div class="button-left" [ngClass]="{'button-selected': view == 'page' || view == 'email'}" (click)="setPageView()">Page</div>
-            <div class="button-center" [ngClass]="{'button-selected': view == 'row'}" (click)="view = 'row'">Row</div>
-            <div class="button-center" [ngClass]="{'button-selected': view == 'column'}" (click)="view = 'column'">
+            <!-- Page -->
+            <div class="button-left" [ngClass]="{'button-selected': pageService.propertyView == propertyView.Page}"
+                (click)="setPageView()">Page</div>
+
+
+            <!-- Row -->
+            <div class="button-center" [ngClass]="{'button-selected': pageService.propertyView == propertyView.Row}"
+                (click)="pageService.propertyView = propertyView.Row">Row</div>
+
+
+            <!-- Column -->
+            <div class="button-center" [ngClass]="{'button-selected': pageService.propertyView == propertyView.Column}"
+                (click)="pageService.propertyView = propertyView.Column">
                 Column</div>
-            <div class="button-right" [ngClass]="{'button-selected': view == 'widget'}" (click)="view = 'widget'">Widget
+
+
+            <!-- Widget -->
+            <div class="button-right" [ngClass]="{'button-selected': pageService.propertyView == propertyView.Widget}"
+                (click)="pageService.propertyView = propertyView.Widget">Widget
             </div>
         </div>
 
 
         <!-- Page Properties -->
-        <page-properties *ngIf="view == 'page'" [page]="pageService.page"></page-properties>
+        <page-properties *ngIf="pageService.propertyView == propertyView.Page && pageType == 'page'" [page]="pageService.page"></page-properties>
 
-        <email-properties *ngIf="view == 'email'" [page]="pageService.page"></email-properties>
+        <email-properties *ngIf="pageService.propertyView == propertyView.Page && pageType == 'email'" [page]="pageService.page"></email-properties>
 
         <!-- Row Propterties -->
-        <row-properties *ngIf="view == 'row'"></row-properties>
+        <row-properties *ngIf="pageService.propertyView == propertyView.Row"></row-properties>
 
         <!-- Column Propterties -->
-        <column-properties *ngIf="view == 'column'"></column-properties>
+        <column-properties *ngIf="pageService.propertyView == propertyView.Column"></column-properties>
 
         <!-- Widget Properties -->
-        <widget-properties *ngIf="view == 'widget'"></widget-properties>
+        <widget-properties *ngIf="pageService.propertyView == propertyView.Widget"></widget-properties>
     </ng-container>
 
 

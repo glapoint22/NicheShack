@@ -2,14 +2,11 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { ProportionalWidgetComponent } from '../proportional-widget/proportional-widget.component';
 import { Link } from 'projects/manager/src/app/classes/link';
 import { Image } from 'projects/manager/src/app/classes/image';
-import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
-import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
 import { ImageWidgetData } from 'projects/manager/src/app/classes/image-widget-data';
 import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
@@ -26,9 +23,6 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
   public image: Image = new Image();
   public link: Link = new Link();
   public imageLoaded: boolean;
-
-  constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
     // this.image.url = '0aada12f8b21471ea96aebe9a503977b.png';
@@ -64,7 +58,7 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
 
     // Name
     if (this.name != 'Image') imageWidgetData.name = this.name;
-    
+
     // Border
     this.border.getData(imageWidgetData.border);
 

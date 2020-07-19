@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { ColumnComponent } from '../../column/column.component';
 import { HorizontalAlignment } from 'projects/manager/src/app/classes/horizontal-alignment';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
@@ -8,6 +7,7 @@ import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoin
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
 import { ColumnData } from 'projects/manager/src/app/classes/column-data';
+import { PropertyView } from 'projects/manager/src/app/classes/property-view';
 
 @Component({
   template: '',
@@ -22,7 +22,7 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
   public name: string;
   public type: WidgetType;
 
-  constructor(public widgetService: WidgetService, public breakpointService: BreakpointService) { }
+  constructor(public breakpointService: BreakpointService) { }
 
   ngOnInit() {
     // When a breakpoint changes, this will update any property that has a value stored in the breakpoints array
@@ -32,17 +32,19 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
   }
 
   onMousedown() {
-    this.widgetService.selectedWidget = this;
     this.column.row.container.selectedRow = this.column.row;
   }
 
 
 
   mouseUp(onMousemove, onMouseup) {
-    window.removeEventListener("mousemove", onMousemove);
-    window.removeEventListener("mouseup", onMouseup);
-    document.body.removeAttribute('style');
-    document.body.removeAttribute('id');
+    window.setTimeout(() => {
+      window.removeEventListener("mousemove", onMousemove);
+      window.removeEventListener("mouseup", onMouseup);
+      document.body.removeAttribute('style');
+      document.body.removeAttribute('id');
+    });
+
   }
 
 
@@ -107,5 +109,14 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
     } else {
       this.breakpointService.saveBreakpoints(this.breakpoints, columnData.widgetData.breakpoints, this.horizontalAlignment);
     }
+  }
+
+  onClick(event: MouseEvent) {
+    event.stopPropagation();
+    if (document.body.id == 'widget-resize' || document.body.id == 'row-move') return;
+    this.column.row.pageService.selectedWidget = this;
+    this.column.row.pageService.propertyView = PropertyView.Widget;
+    this.column.row.pageService.selectedColumn = this.column;
+    this.column.row.pageService.selectedRow = this.column.row;
   }
 }

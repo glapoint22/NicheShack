@@ -5,6 +5,7 @@ import { PaginatorComponent } from 'projects/manager/src/app/shared-components/p
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { PropertyView } from 'projects/manager/src/app/classes/property-view';
 
 @Component({
   selector: 'lead-page-editor',
@@ -13,13 +14,13 @@ import { TempDataService } from 'projects/manager/src/app/services/temp-data.ser
 })
 export class LeadPageEditorComponent implements OnChanges {
   @Input() nicheId: string;
-  public view: string = 'page';
   public leadPageIds: Array<string>;
   public selectedTab: string;
   public currentLeadPageId: string;
   public initialPageLoaded: boolean;
   public leadPageUrl: string = 'api/Niches/LeadPages';
   public emailUrl: string = 'api/Niches/LeadPageEmails';
+  public propertyView = PropertyView;
 
   constructor(public pageService: PageService,
     private loadingService: LoadingService,
@@ -128,7 +129,7 @@ export class LeadPageEditorComponent implements OnChanges {
     this.selectedTab = pageType;
     this.pageService.page.setWidgets(pageType);
     this.pageService.loadPage(pageData);
-    this.view = 'page';
+    this.pageService.propertyView = PropertyView.Page;
     this.loadingService.loading = false;
   }
 
@@ -280,7 +281,7 @@ export class LeadPageEditorComponent implements OnChanges {
           this.pageService.clearPage();
           this.currentLeadPageId = null;
           this.loadingService.loading = false;
-          this.view = 'page';
+          this.pageService.propertyView = PropertyView.Page;
           this.pageService.page.widgetCursors = [];
           this.pageService.page.width = this.pageService.page.defaultWidth;
         }

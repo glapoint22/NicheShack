@@ -1,6 +1,5 @@
 import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, ElementRef, Output, EventEmitter, Type } from '@angular/core';
 import { RowComponent } from '../row/row.component';
-import { WidgetService } from '../../../services/widget.service';
 import { Row } from '../../../classes/row';
 import { WidgetComponent } from '../widgets/widget/widget.component';
 import { RowData } from '../../../classes/row-data';
@@ -34,14 +33,13 @@ export class ContainerComponent {
 
   constructor(
     private resolver: ComponentFactoryResolver,
-    public widgetService: WidgetService,
-    private pageService: PageService
+    public pageService: PageService
   ) { }
 
 
 
   onMouseup(event) {
-    if (this.widgetService.currentWidgetCursor) this.addRow(event.y - event.currentTarget.getBoundingClientRect().y, this.widgetService.currentWidgetCursor.widget);
+    if (this.pageService.currentWidgetCursor) this.addRow(event.y - event.currentTarget.getBoundingClientRect().y, this.pageService.currentWidgetCursor.widget);
   }
 
 
@@ -98,9 +96,29 @@ export class ContainerComponent {
 
 
   deleteRow(row: RowComponent) {
-    let rowIndex = this.rows.findIndex(x => x.component == row);
+    let rowIndex: number = this.rows.findIndex(x => x.component == row);
+    let lastRow: boolean = rowIndex == this.rows.length - 1;
+
+    // If not the last row, we need to calculate the top of the next row
+    if (!lastRow) {
+      if (rowIndex == 0) {
+        this.rows[rowIndex + 1].component.top = this.rows[rowIndex + 1].component.getPosition();
+      } else {
+        let pos1: number = this.rows[rowIndex - 1].component.getPosition() + this.rows[rowIndex - 1].element.getBoundingClientRect().height;
+        let pos2: number = this.rows[rowIndex + 1].component.getPosition();
+
+        this.rows[rowIndex + 1].component.top = pos2 - pos1;
+      }
+    }
+
+
+    // Remove the row
     this.viewContainerRef.remove(rowIndex);
     this.rows.splice(rowIndex, 1);
+
+    // Select the page and save
+    this.pageService.selectPage();
+    this.save();
   }
 
 
@@ -123,27 +141,27 @@ export class ContainerComponent {
 
 
   onMouseover() {
-    if (this.widgetService.currentWidgetCursor) {
+    if (this.pageService.currentWidgetCursor) {
 
       // If a container has not been set and the mouse is not over a column, set this container as the current container
-      if (!this.widgetService.currentContainerSet && !this.widgetService.overColumn) {
-        this.widgetService.currentContainerSet = true;
-        this.widgetService.currentContainer = this.containerElement.nativeElement;
-        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.allowed + '"), auto';
+      if (!this.pageService.widgetCursorIsOverContainer && !this.pageService.overColumn) {
+        this.pageService.widgetCursorIsOverContainer = true;
+        this.pageService.currentContainerWidgetCursorIsOver = this.containerElement.nativeElement;
+        document.body.style.cursor = 'url("assets/' + this.pageService.currentWidgetCursor.allowed + '"), auto';
       }
 
       // If we have reached the last container in the event chain, flag that the current container is not set and we are not over a column
-      // This basically reinitializes the currentContainerSet and overColumn properties
+      // This basically reinitializes the widgetCursorIsOverContainer and overColumn properties
       if (this.isLastContainer(this.containerElement.nativeElement)) {
-        this.widgetService.currentContainerSet = false;
-        this.widgetService.overColumn = false;
+        this.pageService.widgetCursorIsOverContainer = false;
+        this.pageService.overColumn = false;
       }
     }
   }
 
   onMouseleave() {
-    if (this.widgetService.currentWidgetCursor) {
-      document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.notAllowed + '"), auto';
+    if (this.pageService.currentWidgetCursor) {
+      document.body.style.cursor = 'url("assets/' + this.pageService.currentWidgetCursor.notAllowed + '"), auto';
     }
   }
 

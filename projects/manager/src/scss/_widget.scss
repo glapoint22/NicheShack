@@ -149,7 +149,7 @@ body {
             }
         }
 
-        &:not(#widget-resize):not(#row-move):not(#column-resize) {
+        &:not(#widget-resize):not(#row-move) {
             .top-left-handle {
                 &:hover {
                     cursor: nw-resize;

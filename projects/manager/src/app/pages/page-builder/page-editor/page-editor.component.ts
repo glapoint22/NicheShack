@@ -7,6 +7,7 @@ import { PopupService } from '../../../services/popup.service';
 import { Searchable } from '../../../classes/searchable';
 import { TempDataService } from '../../../services/temp-data.service';
 import { Item } from '../../../classes/item';
+import { PropertyView } from '../../../classes/property-view';
 
 @Component({
   selector: 'page-editor',
@@ -14,12 +15,12 @@ import { Item } from '../../../classes/item';
   styleUrls: ['./page-editor.component.scss']
 })
 export class PageEditorComponent implements OnInit, Searchable {
-  public view: string;
   public currentPageId: string;
   public apiUrl: string;
   public searchResults: Array<Item>;
   public items: Array<Item>;
   public pageType: string;
+  public propertyView = PropertyView;
 
   constructor(public pageService: PageService,
     private loadingService: LoadingService,
@@ -40,11 +41,11 @@ export class PageEditorComponent implements OnInit, Searchable {
 
   // ---------------------------------------------------------------------- Set Page View --------------------------------------------------------
   setPageView() {
-    this.view = this.pageType;
+    this.pageService.propertyView = PropertyView.Page;
   }
 
 
-  
+
   // ---------------------------------------------------------------------- Add Page --------------------------------------------------------
   addPage() {
     // Display the loading screen

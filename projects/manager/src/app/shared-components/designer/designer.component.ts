@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef, ViewEncapsulation, AfterViewInit, HostListener } from '@angular/core';
 import { WidgetCursor } from '../../classes/widget-cursor';
-import { WidgetService } from '../../services/widget.service';
 import { ContainerComponent } from './container/container.component';
 import { PageService } from '../../services/page.service';
 import { BreakpointService } from '../../services/breakpoint.service';
@@ -24,7 +23,6 @@ export class DesignerComponent implements AfterViewInit {
 
 
   constructor(
-    public widgetService: WidgetService,
     public pageService: PageService,
     private breakpointService: BreakpointService,
     private promptService: PromptService
@@ -43,14 +41,14 @@ export class DesignerComponent implements AfterViewInit {
 
   // -----------------------------( ON WIDGET ICON MOUSE DOWN )------------------------------ \\
   onWidgetIconMousedown(e: MouseEvent, widgetCursor: WidgetCursor) {
-    this.widgetService.currentWidgetCursor = widgetCursor;
+    this.pageService.currentWidgetCursor = widgetCursor;
     document.body.style.cursor = 'url("assets/' + widgetCursor.notAllowed + '"), auto';
     document.body.id = 'widget-cursor';
 
     // On Mouseup
     let onMouseup = () => {
       window.removeEventListener("mouseup", onMouseup);
-      this.widgetService.currentWidgetCursor = null;
+      this.pageService.currentWidgetCursor = null;
       document.body.removeAttribute('style');
       document.body.removeAttribute('id');
       document.body.removeAttribute('class');
@@ -100,8 +98,18 @@ export class DesignerComponent implements AfterViewInit {
   @HostListener('document:keydown.delete')
   onDeleteKeydown() {
     window.setTimeout(() => {
-      if (this.widgetService.selectedWidget && !this.promptService.show) {
-        this.promptService.showPrompt('Delete Widget', 'Are you sure you want to delete this widget?', this.deleteWidget, this);
+      if (!this.promptService.show) {
+        if (this.pageService.selectedWidget) {
+
+          // Delete widget
+          this.promptService.showPrompt('Delete Widget', 'Are you sure you want to delete this widget?', this.deleteWidget, this);
+
+
+
+          // Delete row
+        } else if (this.pageService.selectedRow) {
+          this.promptService.showPrompt('Delete Row', 'Are you sure you want to delete this row?', this.deleteRow, this);
+        }
       }
     });
   }
@@ -110,6 +118,20 @@ export class DesignerComponent implements AfterViewInit {
 
   // ------------------( DELETE WIDGET )------------------- \\
   deleteWidget() {
-    this.widgetService.selectedWidget.column.row.deleteColumn(this.widgetService.selectedWidget.column);
+    // Test to see if we need to delete the widget or the whole row
+    if (this.pageService.selectedWidget.column.row.columns.length == 1) {
+      this.pageService.selectedWidget.column.row.container.deleteRow(this.pageService.selectedWidget.column.row);
+    } else {
+
+      this.pageService.selectedWidget.column.row.deleteColumn(this.pageService.selectedWidget.column);
+    }
+  }
+
+
+
+
+  // ------------------( DELETE ROW )------------------- \\
+  deleteRow() {
+    this.pageService.selectedRow.container.deleteRow(this.pageService.selectedRow);
   }
 }

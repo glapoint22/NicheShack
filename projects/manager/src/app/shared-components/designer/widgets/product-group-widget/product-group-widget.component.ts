@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
-import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { ProductGroupType } from 'projects/manager/src/app/classes/product-group-type';
 import { Product } from 'projects/manager/src/app/classes/product';
@@ -16,10 +14,7 @@ import { Color } from 'projects/manager/src/app/classes/color';
   styleUrls: ['./product-group-widget.component.scss']
 })
 export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
-  constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
-
-    public caption: Caption = new Caption();
+  public caption: Caption = new Caption();
   public productGroupType: ProductGroupType = ProductGroupType.FeaturedProducts;
   public featuredProducts: Array<Product> = [];
 
@@ -74,7 +69,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     caption.style.wordBreak = 'break-word';
     caption.innerText = this.caption.text;
     this.caption.applyStyle(caption);
-    
+
     // Product Group
     let productGroup = document.createElement('div');
     productGroup.innerText = 'Product Group';

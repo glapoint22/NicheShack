@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
-import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Category } from 'projects/manager/src/app/classes/category';
 import { CategoriesWidgetData } from 'projects/manager/src/app/classes/categories-widget-data';
@@ -18,15 +16,11 @@ import { Shadow } from 'projects/manager/src/app/classes/shadow';
   styleUrls: ['./categories-widget.component.scss']
 })
 export class CategoriesWidgetComponent extends FreeformWidgetComponent {
-  constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
-
   public caption: Caption = new Caption();
   public categories: Array<Category> = [];
   public textColor: TextColor = new TextColor(new Color(255, 255, 255, 1));
   public backgroundColor: BackgroundColor = new BackgroundColor(new Color(66, 0, 51, 1));
   public shadow: Shadow = new Shadow();
-
 
   ngOnInit() {
     this.height = 250

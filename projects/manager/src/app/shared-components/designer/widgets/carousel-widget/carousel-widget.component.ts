@@ -1,7 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
-import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { CarouselBanner } from 'projects/manager/src/app/classes/carousel-banner';
 import { CarouselWidgetData } from 'projects/manager/src/app/classes/carousel-widget-data';
@@ -20,10 +18,6 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
   public currentBannerIndex: number = 0;
 
 
-  constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
-
-
   ngOnInit() {
     this.name = 'Carousel';
     this.type = WidgetType.Carousel;
@@ -31,7 +25,7 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
   }
 
 
-  
+
 
 
   setData(widgetData: CarouselWidgetData) {
@@ -47,7 +41,7 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
 
     // Name
     if (this.name != 'Carousel') carouselWidgetData.name = this.name;
-    
+
     // Categories
     if (this.banners.length > 0) carouselWidgetData.banners = this.banners;
 
@@ -79,7 +73,7 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
       img.style.objectFit = 'cover';
       img.alt = currentImage.name;
       img.title = currentImage.name;
-    
+
 
       // We use the placehoder
     } else {
@@ -101,10 +95,10 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
     // Styles and attributes
     img.style.width = '100%';
     img.style.maxWidth = '1496px';
-    
 
 
-   
+
+
 
     // If a link was applied
     if (this.banners.length > 0 && this.banners[this.currentBannerIndex].link.url) {

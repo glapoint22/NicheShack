@@ -1,5 +1,5 @@
-<div [ngClass]="{'column-indicator-container' : widgetService.currentWidgetCursor && 
-widgetService.currentColumn == columnElement && 
+<div [ngClass]="{'column-indicator-container' : row.pageService.currentWidgetCursor && 
+row.pageService.currentColumnWidgetCursorIsOver == columnElement && 
 row.columns.length < 6}" [style.paddingTop]="padding.top.value" [style.paddingRight]="padding.right.value"
     [style.paddingBottom]="padding.bottom.value" [style.paddingLeft]="padding.left.value"
     [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHex() : 'none'"
@@ -14,9 +14,12 @@ row.columns.length < 6}" [style.paddingTop]="padding.top.value" [style.paddingRi
 
 
 
-    <!-- Column area (Used for mouse events for the column) -->
-    <div class="column-area" [style.height.px]="rowHeight" [style.top.px]="rowTop">
+    <!-- Used for mouse over event for the column -->
+    <div class="mouse-over-area" [style.height.px]="rowHeight" [style.top.px]="rowTop">
     </div>
+
+    <!-- Used for click event for the column -->
+    <div (click)="onClick($event)" class="click-area"></div>
 
 
     <ng-template #viewContainerRef>

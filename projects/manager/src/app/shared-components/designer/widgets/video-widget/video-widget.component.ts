@@ -2,7 +2,6 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ProportionalWidgetComponent } from '../proportional-widget/proportional-widget.component';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
@@ -24,11 +23,6 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
   public shadow: Shadow = new Shadow();
   public video: Video;
   
-
-  constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
-
-
   ngOnInit() {
     this.name = 'Video';
     this.type = WidgetType.Video;

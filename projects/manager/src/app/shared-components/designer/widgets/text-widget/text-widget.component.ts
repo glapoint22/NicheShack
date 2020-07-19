@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, ApplicationRef } from '@angular/core';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { TextBox } from 'projects/manager/src/app/classes/text-box';
 import { Color } from 'projects/manager/src/app/classes/color';
@@ -32,9 +31,10 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
   public inEditMode: boolean;
   private htmlContent: string;
 
-  constructor(widgetService: WidgetService,
+  constructor(
     breakpointService: BreakpointService,
-    private applicationRef: ApplicationRef) { super(widgetService, breakpointService) }
+    private applicationRef: ApplicationRef
+  ) { super(breakpointService) }
 
   ngOnInit() {
     this.height = 64;
@@ -52,17 +52,17 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
       this.content = contentDocument.body.firstElementChild as HTMLElement;
 
       this.textBox = new TextBox(contentDocument, this.applicationRef, this.defaultColor);
-      
+
       if (this.htmlContent) {
         this.textBox.content.innerHTML = this.htmlContent;
         this.textBox.initialize();
       }
-      
-     
-      
+
+
+
       window.focus();
-      
-      
+
+
       this.textBox.onChange.subscribe(() => {
         let contentHeight = this.textBox.getContentHeight();
         let previousHeight = this.height;
@@ -101,11 +101,11 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
 
 
   ngDoCheck() {
-    if(this.textBox) this.iframeHeight = Math.max(this.height, this.textBox.getContentHeight());
-    
+    if (this.textBox) this.iframeHeight = Math.max(this.height, this.textBox.getContentHeight());
+
 
     // Set to be out of edit mode & remove selection
-    if (this.textBox && this.widgetService.selectedWidget != this) {
+    if (this.textBox && this.column.row.pageService.selectedWidget != this) {
       this.textBox.removeSelection();
       this.inEditMode = false
     }

@@ -2,10 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { ContainerComponent } from '../../container/container.component';
-import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Padding } from 'projects/manager/src/app/classes/padding';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
@@ -26,9 +24,6 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
   public padding: Padding = new Padding();
-
-  constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
     this.height = 250
@@ -108,7 +103,7 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
     this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.bottom);
     this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.left);
 
-    
+
 
     super.getData(columnData);
 
