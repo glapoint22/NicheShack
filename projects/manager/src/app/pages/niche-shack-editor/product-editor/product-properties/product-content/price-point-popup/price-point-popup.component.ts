@@ -18,28 +18,25 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
   @ViewChildren('txtInput') txtInput: QueryList<ElementRef>;
   public pricePoint: ProductPricePoint;
   public pricePointListItem: Item;
-
-
   constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, private productService: ProductService) { super(popupService, cover, menuService, dropdownMenuService, dataService) }
 
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
   ngOnInit() {
     this.popupService.pricePointPopup = this;
-    this.preventNoShow = true;
   }
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
+    this.bottomBuffer = this.popupService.bottomBuffer;
     window.addEventListener('keydown', this.onKeydown);
   }
 
 
   // -----------------------------( ON KEY DOWN )------------------------------ \\
   private onKeydown = (event: KeyboardEvent) => {
-    if (event.keyCode === 13) this.show = false;
     if (event.keyCode === 27) this.blurInput();
     if (event.keyCode === 9 && !event.shiftKey) this.tab();
     if (event.shiftKey && event.keyCode === 9) this.shiftTab();

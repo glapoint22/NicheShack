@@ -51,7 +51,6 @@ export class EditableItemListComponent extends ItemListComponent {
         if (this.newListItem) {
           // Remove the new list item
           this.listItems.splice(this.indexOfEditedListItem, 1);
-          this.indexOfEditedListItem = null;
 
           // If we were NOT adding a new list item
         } else {
@@ -101,7 +100,6 @@ export class EditableItemListComponent extends ItemListComponent {
         if (this.newListItem) {
           // Remove the new list item
           this.listItems.splice(this.indexOfEditedListItem, 1);
-          this.indexOfEditedListItem = null;
 
           // If we were NOT adding a new list item
         } else {
@@ -127,11 +125,11 @@ export class EditableItemListComponent extends ItemListComponent {
   setListItemName() {
     // If we're naming a new item
     if (this.newListItem) {
-      this.postItemName.emit(this.listItems[this.indexOfEditedListItem]);
+      this.listOptions.onAddItem.apply(this.listOptions.currentObj, [this.listItems[this.indexOfEditedListItem]]);
 
       // If we're editing an existing item
     } else {
-      this.updateItemName.emit(this.listItems[this.indexOfEditedListItem])
+      this.listOptions.onEditItem.apply(this.listOptions.currentObj, [this.listItems[this.indexOfEditedListItem]]);
     }
   }
 
@@ -213,14 +211,8 @@ export class EditableItemListComponent extends ItemListComponent {
     this.selectedListItemIndex = null;
     this.listItems.unshift({ id: "", name: "", selected: false, selectType: null });
 
-    for (let i = 0; i < this.listItems.length; i++) {
-      this.listItems[i].selected = false;
-      this.listItems[i].selectType = null;
-    }
-
-    window.setTimeout(() => {
-      this.setListItemFocus(this.indexOfEditedListItem);
-    });
+    // Set the new list item
+    this.setNewListItem(this.indexOfEditedListItem)
   }
 
 

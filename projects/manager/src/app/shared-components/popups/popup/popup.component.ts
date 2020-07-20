@@ -16,6 +16,7 @@ export class PopupComponent {
   private popup;
   private arrow;
   private popupTop: number;
+  public bottomBuffer: number = 20;
   public arrowOnTop: boolean = false;
   constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService, public dropdownMenuService: DropdownMenuService, public dataService: TempDataService) { }
 
@@ -63,7 +64,7 @@ export class PopupComponent {
             // And the mouse is beyond the top of the popup
             (e.clientY < this.popup.getBoundingClientRect().top - 20 ||
               // Or the mouse is below the bottom of the source element
-              (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + 20))))) {
+              (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + this.bottomBuffer))))) {
         this.onPopupOut();
       }
     }

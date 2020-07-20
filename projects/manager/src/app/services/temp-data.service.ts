@@ -210,8 +210,9 @@ export class TempDataService {
               id: 'fsdfsdasd',
             },
             {
-              id: 'rewqrewer',
               name: 'E-business & E-marketing',
+              id: 'rewqrewer'
+              
             }
           ]).pipe(delay(1000));
 
@@ -811,12 +812,26 @@ export class TempDataService {
                             url: '143968bba73642898bb4a6715a1efd3d.png',
                             name: 'self-help'
                           }
+                        },
+                        {
+                          name: 'E-business & E-marketing',
+                          id: 'rewqrewer',
+                          icon: {
+                            url: 'e6b1306f8f694e1595e0c84c096ede66.png',
+                            name: 'E-business & E-marketing'
+                          }
+                        },
+                        {
+                          name: 'Camping & Survival',
+                          id: 'rewqrewer',
+                          icon: {
+                            url: 'ab0bda0d51a5408788359471b337662f.png',
+                            name: 'Camping & Survival'
+                          }
                         }
                       ]
                     }
                   },
-
-
 
 
 

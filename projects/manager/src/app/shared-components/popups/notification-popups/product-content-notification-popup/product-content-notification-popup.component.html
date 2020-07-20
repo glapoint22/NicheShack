@@ -150,47 +150,43 @@
 
                         <!-- Delete -->
                         <div class="icon-container"
-                            [attr.title]="itemList.deleteIcon.isDisabled ? 'Delete Price Point (Delete)' : itemList.editIcon.isDisabled ? 'Delete Price Points (Delete)' : 'Delete Price Point (Delete)'"
-                            [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
-                            (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                            (click)="itemList.onListItemDelete()">
-                            <i class="fas fa-trash-alt"></i>
+                             (click)="onListItemDelete()"
+                             (mouseout)="itemList.onIconButtonMouseOut()"
+                             (mouseover)="itemList.isOverIconButton = true"
+                             [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                             [attr.title]="!itemList.isMultiSelected ? 'Delete Price Point (Delete)' : 'Delete Price Points (Delete)'"><i class="fas fa-trash-alt"></i>
                         </div>
 
                         <!-- Edit -->
-                        <div #editIcon class="icon-container" [attr.title]="'Edit Price Point (Ctrl+Alt+E)'"
-                            [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
-                            (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                            (click)="!itemList.editIcon.isDisabled ? editPricePoint($event.target, itemList.selectedListItemIndex) : null">
-                            <i class="fas fa-edit"></i>
+                        <div class="icon-container"
+                             (mouseout)="itemList.onIconButtonMouseOut()"
+                             [attr.title]="'Edit Price Point (Ctrl+Alt+E)'"
+                             (mouseover)="itemList.isOverIconButton = true"
+                             [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
+                             (click)="!itemList.addIcon.isDisabled ? editPricePoint($event.target, itemList.selectedListItemIndex) : null"><i class="fas fa-edit"></i>
                         </div>
 
                         <!-- Add -->
-                        <div #addIcon class="icon-container" [attr.title]="'Add Price Point (Ctrl+Alt+A)'"
-                            [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
-                            (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                            (click)="!itemList.addIcon.isDisabled ? addPricePoint($event.target) : null">
-                            <i class="fas fa-plus-circle"></i>
+                        <div class="icon-container"
+                             (mouseout)="itemList.onIconButtonMouseOut()"
+                             [attr.title]="'New Price Point (Ctrl+Alt+N)'"
+                             (mouseover)="itemList.isOverIconButton = true"
+                             [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                             (click)="!itemList.addIcon.isDisabled ? addPricePoint($event.target) : null"><i class="fas fa-plus-circle"></i>
                         </div>
                     </div>
 
 
-
+                    <!-- Checkbox Item LIst -->
                     <div class="list-container">
-                        <!-- Checkbox Item LIst -->
                         <checkbox-item-list 
-                            #itemList id="item-list"
+                            #itemList
                             [listItems]="pricePointList"
-                            [checkList]="notificationService.productContentNotification.content[contentIndex].priceIndices"
-                            (onAddItem)="addPricePoint($event)"
-                            (onEditItem)="editPricePoint($event, itemList.selectedListItemIndex)"
-                            (onPricePointMove)="movePricePoint($event)"
-                            [menuOptions]="['New Price Point', 'Edit Price Point', 'Delete Price Point', 'Delete Price Points']">
+                            [listOptions]="itemListOptions"
+                            [checkList]="notificationService.productContentNotification.content[contentIndex].priceIndices">
                         </checkbox-item-list>
                     </div>
                 </div>
-
-
             </div>
 
 

@@ -22,6 +22,7 @@ import { HighlightPopupComponent } from '../shared-components/popups/highlight-p
   providedIn: 'root'
 })
 export class PopupService {
+  public bottomBuffer: number = 20;
   public sourceElement: HTMLElement;
   public colorPickerPopup: ColorPickerPopupComponent;
   public pricePointPopup: PricePointPopupComponent;

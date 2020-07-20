@@ -6,6 +6,7 @@ import { SelectType } from '../../../classes/list-item-select-type';
 import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
 import { MenuOption } from '../../../classes/menu-option';
+import { ItemListOptions } from '../../../classes/item-list-options';
 
 @Component({
   selector: 'item-list',
@@ -34,9 +35,14 @@ export class ItemListComponent implements OnInit {
   public selectedListItemIndex: number = null;
   public unselectedListItemIndex: number = null;
   public preventDeselectionFromRightMouseDown: boolean;
+  public get isMultiSelected(): boolean {
+    return this.listItems.map(e => e.selected).indexOf(true) == this.listItems.map(e => e.selected).lastIndexOf(true) && this.unselectedListItemIndex == null ? false : true;
+  }
+
   // Decorators
   @Input() listItems: Array<ListItem>;
-  @Input() menuOptions: Array<string>;
+  @Input() listOptions: ItemListOptions;
+  @Input() menuOptionsOld: Array<string>;
   @Input() multiSelect: boolean = true;
   @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
   @Output() onAddItem: EventEmitter<HTMLElement> = new EventEmitter();
@@ -97,12 +103,12 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( SET SHORTCUT KEYS )------------------------------ \\
   setShortcutKeys(event: KeyboardEvent) {
-    if (event.keyCode === 46) this.onListItemDelete();
+    if (event.keyCode === 46) this.listOptions.onDeleteItem.apply(this.listOptions.currentObj);
     if (event.keyCode === 27) this.escape();
     if (event.keyCode === 38) this.arrowUp();
     if (event.keyCode === 40) this.arrowDown();
 
-    if (this.multiSelect) {
+    if (this.listOptions.multiSelect == null || this.listOptions.multiSelect) {
       if (event.ctrlKey) this.ctrlDown = true;
       if (event.shiftKey) this.shiftDown = true;
     }
@@ -148,10 +154,13 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( SET LIST ITEM FOCUS )------------------------------ \\
   setListItemFocus(listItemIndex: number) {
-    // Find the list item with the specified index and set focus to it
-    this.rowItem.find((item, index) => index == listItemIndex).nativeElement.focus();
-    // Then set the 'lastFocusedListItem' property as the list item we just set the focus to
-    this.lastFocusedListItem = document.activeElement;
+    window.setTimeout(() => {
+      // Find the list item with the specified index and set focus to it
+      this.rowItem.find((item, index) => index == listItemIndex).nativeElement.focus();
+      // Then set the 'lastFocusedListItem' property as the list item we just set the focus to
+      this.lastFocusedListItem = document.activeElement;
+      this.preventDeselectionFromRightMouseDown = false;
+    })
   }
 
 
@@ -185,7 +194,6 @@ export class ItemListComponent implements OnInit {
       // then remove all listeners and selections
       this.removeEventListeners();
     }
-
     // If a right mouse down event prevented the selections and listeners from being removed,
     // then we can reset this back to false, because it alreday served its purpose
     this.preventDeselectionFromRightMouseDown = false;
@@ -262,8 +270,9 @@ export class ItemListComponent implements OnInit {
       this.listItemDownNoModifierKey(index);
     }
     // Set edit on or off
-    this.editIcon.isDisabled = this.listItems.map(e => e.selected).indexOf(true) == this.listItems.map(e => e.selected).lastIndexOf(true) && this.unselectedListItemIndex == null ? false : true;
+    this.editIcon.isDisabled = this.isMultiSelected;
   }
+
 
 
   // -----------------------------( SET LIST ITEM SELECT TYPE )------------------------------ \\ 
@@ -428,7 +437,20 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( ADD LIST ITEM )------------------------------ \\
   addListItem() {
-    this.onAddItem.emit(this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement);
+    this.listOptions.onAddItem.apply(this.listOptions.currentObj, [this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement]);
+  }
+
+
+  // -----------------------------( SET NEW LIST ITEM )------------------------------ \\
+  setNewListItem(listItemIndex: number) {
+    for (let i = 0; i < this.listItems.length; i++) {
+      this.listItems[i].selected = false;
+      this.listItems[i].selectType = null;
+    }
+
+    window.setTimeout(() => {
+      this.setListItemFocus(listItemIndex);
+    });
   }
 
 
@@ -442,7 +464,7 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( EDIT LIST ITEM )------------------------------ \\
   editListItem() {
-    this.onEditItem.emit(this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement);
+    this.listOptions.onEditItem.apply(this.listOptions.currentObj, [this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement, this.selectedListItemIndex]);
   }
 
 
@@ -450,7 +472,7 @@ export class ItemListComponent implements OnInit {
   onListItemDelete() {
     if (!this.deleteIcon.isDisabled) {
       this.itemDeletionPending = true;
-      this.promptService.showPrompt(this.editIcon.isDisabled ? this.promptMultiTitle : this.promptTitle, this.editIcon.isDisabled ? this.propmtMultiMessage : this.propmtMessage, this.deleteListItem, this, null, this.onPromptCancel);
+      this.listOptions.onDeleteItem.apply(this.listOptions.currentObj);
     }
   }
 
@@ -459,6 +481,7 @@ export class ItemListComponent implements OnInit {
   deleteListItem() {
     let listItemCopy: any;
     let deletedListItemIndex: number;
+    let deletedListItems: Array<ListItem> = [];
 
     // If a list item is selected
     if (this.selectedListItemIndex != null) {
@@ -486,6 +509,8 @@ export class ItemListComponent implements OnInit {
       deletedListItemIndex = this.listItems.map(e => e.selected).indexOf(true);
       // As long as a list item that is marked as selected is found
       if (deletedListItemIndex != -1) {
+        // Make a copy of all the list items we're deleting so that the database can be updated accordingly
+        deletedListItems.push(this.listItems[deletedListItemIndex]);
 
         // Clear the selection properties
         // (In case the list item is still being referenced i.e. in media List where a media item gets moved)
@@ -544,6 +569,7 @@ export class ItemListComponent implements OnInit {
     // Now that the list item(s) have been deleted,
     // let it be known that item deletion is no longer pending
     this.itemDeletionPending = false;
+    return deletedListItems;
   }
 
 
@@ -558,7 +584,7 @@ export class ItemListComponent implements OnInit {
   setContextMenu(e: MouseEvent) {
 
     // As long as the right mouse button is being pressed
-    if (e.which == 3 && this.menuOptions != null) {
+    if (e.which == 3) {
       // Build the context menu
       this.buildContextMenu(e)
     }
@@ -568,16 +594,7 @@ export class ItemListComponent implements OnInit {
   // -----------------------------( BUILD CONTEXT MENU )------------------------------ \\
   buildContextMenu(e: MouseEvent) {
     // Build the context menu
-    this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-      [
-        // Add
-        new MenuOption(this.menuOptions[0],  this.addIcon.isDisabled, this.onListItemAdd, null, "Ctrl+Alt+N"),
-        // Edit
-        new MenuOption(this.menuOptions[1],  this.editIcon.isDisabled, this.onListItemEdit, null, "Ctrl+Alt+E"),
-        // Delete
-        new MenuOption(this.deleteIcon.isDisabled ? this.menuOptions[2] : this.editIcon.isDisabled ? this.menuOptions[3] : this.menuOptions[2],  this.deleteIcon.isDisabled, this.onListItemDelete, null, "Delete")
-      ]
-    );
+    this.menuService.buildMenu(this.listOptions.currentObj, e.clientX + 3, e.clientY, this.listOptions.menuOptions.apply(this.listOptions.currentObj));
   }
 
 

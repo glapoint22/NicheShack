@@ -127,34 +127,34 @@ export class MediaItemListComponent extends EditableItemListComponent implements
     if (this.selectedListItemIndex == null) {
 
       // Just provide the 'Add' option in the context menu
-      this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-        [
-          // Add
-          new MenuOption(this.menuOptions[0], this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() })
-        ]
-      );
+      // this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
+      //   [
+      //     // Add
+      //     new MenuOption(this.menuOptions[0], this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() })
+      //   ]
+      // );
 
       // But if a media item is selected
     } else {
 
-      // Provide all the following options
-      this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-        [
-          // Add
-          new MenuOption(this.menuOptions[0], this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() }, null, "Ctrl+Alt+N"),
-          new MenuDivider(),
-          // Update
-          new MenuOption(this.menuOptions[2], this.editIcon.isDisabled, () => { this.mediaUpdateInitiated = true; this.onUpdateMedia.emit(this.selectedListItemIndex) }, null, "Ctrl+Alt+U"),
-          // Edit
-          new MenuOption(this.menuOptions[1], this.editIcon.isDisabled, this.onListItemEdit, null, "Ctrl+Alt+E"),
-          // Divider
-          new MenuDivider(),
-          // Move To
-          // moveTo,
-          // Delete
-          new MenuOption(this.deleteIcon.isDisabled ? this.menuOptions[3] : this.editIcon.isDisabled ? this.menuOptions[4] : this.menuOptions[3],  this.deleteIcon.isDisabled, this.onListItemDelete, null, "Delete")
-        ]
-      );
+      // // Provide all the following options
+      // this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
+      //   [
+      //     // Add
+      //     new MenuOption(this.menuOptions[0], this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() }, null, "Ctrl+Alt+N"),
+      //     new MenuDivider(),
+      //     // Update
+      //     new MenuOption(this.menuOptions[2], this.editIcon.isDisabled, () => { this.mediaUpdateInitiated = true; this.onUpdateMedia.emit(this.selectedListItemIndex) }, null, "Ctrl+Alt+U"),
+      //     // Edit
+      //     new MenuOption(this.menuOptions[1], this.editIcon.isDisabled, this.onListItemEdit, null, "Ctrl+Alt+E"),
+      //     // Divider
+      //     new MenuDivider(),
+      //     // Move To
+      //     // moveTo,
+      //     // Delete
+      //     new MenuOption(this.deleteIcon.isDisabled ? this.menuOptions[3] : this.editIcon.isDisabled ? this.menuOptions[4] : this.menuOptions[3],  this.deleteIcon.isDisabled, this.onListItemDelete, null, "Delete")
+      //   ]
+      // );
     }
   }
 
@@ -182,12 +182,12 @@ export class MediaItemListComponent extends EditableItemListComponent implements
 
 
   // -----------------------------( DELETE LIST ITEM )------------------------------ \\
-  deleteListItem() {
-    super.deleteListItem();
-    window.setTimeout(() => {
-      this.onMediaSelect.emit(this.listItems[this.selectedListItemIndex]);
-    }, 50)
-  }
+  // deleteListItem() {
+  //   super.deleteListItem();
+  //   window.setTimeout(() => {
+  //     this.onMediaSelect.emit(this.listItems[this.selectedListItemIndex]);
+  //   }, 50)
+  // }
 
 
   // -----------------------------( SET LIST ITEM NAME )------------------------------ \\

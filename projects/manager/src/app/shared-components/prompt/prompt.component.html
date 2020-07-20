@@ -5,7 +5,7 @@
             <!-- Bar -->
             <div class="form-bar">
                 {{promptService.promptTitle}}
-                <div class="form-x-button" (click)="promptService.show = false">X</div>
+                <div class="form-x-button" (click)="promptService.onNoClick(); promptService.show = false">X</div>
             </div>
 
             <div class="content">

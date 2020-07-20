@@ -7,6 +7,8 @@ import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ItemListComponent } from '../../../item-lists/item-list/item-list.component';
 import { Item } from 'projects/manager/src/app/classes/item';
+import { ItemListOptions } from 'projects/manager/src/app/classes/item-list-options';
+import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 
 @Component({
   selector: 'product-group-type',
@@ -14,21 +16,44 @@ import { Item } from 'projects/manager/src/app/classes/item';
   styleUrls: ['./product-group-type.component.scss']
 })
 export class ProductGroupTypeComponent implements OnInit, Searchable {
+  // Constructor
+  constructor(private popupService: PopupService, private promptService: PromptService) { }
+
+  // Public
+  public items: Array<Item>;
+  public searchResults: Array<Item>;
+  public apiUrl: string = 'api/Products';
+  public itemListOptions: ItemListOptions;
+  public productGroupType = ProductGroupType;
+  public productGroupTypes: Array<KeyValue<string, string>>;
+
+  // Decorators
   @Input() productGroupWidget: ProductGroupWidgetComponent;
   @Output() onChange: EventEmitter<void> = new EventEmitter();
   @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
-  public productGroupTypes: Array<KeyValue<string, string>>;
-  public productGroupType = ProductGroupType;
-  public apiUrl: string = 'api/Products';
-  public searchResults: Array<Item>;
-  public items: Array<Item>;
-
-
-  constructor(private popupService: PopupService, private promptService: PromptService) { }
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
+    // Define the item list options
+    this.itemListOptions = {
+      // Current Object
+      currentObj: this,
+      // Menu Options
+      menuOptions: () => {
+        return [
+          // New Featured Product
+          new MenuOption('New Featured Product', this.itemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
+          // Delete Featured Product
+          new MenuOption(!this.itemList.isMultiSelected ? 'Delete Featured Product' : 'Delete Featured Products', this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+        ]
+      },
+      // On Add Item
+      onAddItem: this.openPopup,
+      // On Delete Item
+      onDeleteItem: this.openDeletePrompt
+    }
+
     this.productGroupTypes = [
       { key: 'Featured Products', value: 'Featured Products' },
       { key: 'Browsed Products', value: 'Browsed Products' },
@@ -41,16 +66,6 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
   }
 
 
-  // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
-  ngAfterViewInit() {
-    // Set delete prompt title and message
-    this.itemList.promptTitle = 'Delete Featured Product';
-    this.itemList.promptMultiTitle = 'Delete Featured Products';
-    this.itemList.propmtMessage = 'Are you sure you want to delete the selected Featured Product?';
-    this.itemList.propmtMultiMessage = 'Are you sure you want to delete all the selected Featured Products?';
-  }
-
-
   // -------------------------( ON DROPDOWN OPTION SELECT )------------------------ \\
   onDropdownOptionSelect(selectedOptionValue: string) {
     let index = this.productGroupTypes.findIndex(x => x.value == selectedOptionValue);
@@ -58,20 +73,57 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
   }
 
 
+  // -----------------------------( ON LIST ITEM ADD )------------------------------ \\
+  onListItemAdd() {
+    this.itemList.onListItemAdd();
+  }
+
+
+  // -----------------------------( ON LIST ITEM DELETE )------------------------------ \\
+  onListItemDelete() {
+    this.itemList.onListItemDelete();
+  }
+
+
+  // -----------------------------( OPEN DELETE PROMPT )------------------------------ \\
+  openDeletePrompt() {
+    // Prompt the user
+    let promptTitle = !this.itemList.isMultiSelected ? 'Delete Featured Product' : 'Delete Featured Products';
+    let promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected featured product?' : 'Are you sure you want to delete all the selected featured products?';
+    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteFeaturedProduct, this, null, this.onPromptCancel);
+  }
+
+
   // -----------------------------( ADD FEATURED PRODUCT )------------------------------ \\
-  addFeaturedProduct(sourceElement: HTMLElement) {
+  openPopup(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
     this.popupService.searchPopup.searchable = this;
     this.popupService.searchPopup.show = !this.popupService.searchPopup.show;
   }
 
 
-
   // -----------------------------( SET SEARCH ITEM )------------------------------ \\
   setSearchItem(searchItem: any) {
     // Add the item to the list
-    this.productGroupWidget.featuredProducts.push(searchItem);
-
+    this.productGroupWidget.featuredProducts.unshift(searchItem);
+    // Select the new list item
+    this.itemList.selectedListItemIndex = 0;
+    // Set the new list item
+    this.itemList.setNewListItem(this.itemList.selectedListItemIndex)
+    // Save the new item to the database
     this.onChange.emit();
+  }
+
+
+  // -----------------------------( DELETE FEATURED PRODUCT )------------------------------ \\
+  deleteFeaturedProduct() {
+    this.itemList.deleteListItem();
+    this.onChange.emit();
+  }
+
+
+  // -----------------------------( ON PROMPT CANCEL )------------------------------ \\
+  onPromptCancel() {
+    this.itemList.onPromptCancel()
   }
 }

@@ -1,53 +1,48 @@
 <!-- Panel -->
 <panel [title]="'Product Group Type'">
 
-    <dropdown [height]="22" [title]="''" [dropdownList]="productGroupTypes"
-        [selectedIndex]="productGroupWidget.productGroupType" (onChange)="onDropdownOptionSelect($event); onChange.emit()">
+    <!-- Dropdown -->
+    <dropdown [height]="22"
+              [dropdownList]="productGroupTypes"
+              [selectedIndex]="productGroupWidget.productGroupType"
+              (onChange)="onDropdownOptionSelect($event); onChange.emit()">
     </dropdown>
 
     <!-- Property Box -->
-    <div *ngIf="productGroupWidget.productGroupType == productGroupType.FeaturedProducts" class="property-box-dark"
-        style="margin-top: 10px;">
+    <div *ngIf="productGroupWidget.productGroupType == productGroupType.FeaturedProducts" class="property-box-dark">
 
         <!-- Icons -->
         <div class="icons">
 
             <!-- Delete -->
-            <div class="icon-container" [attr.title]="'Remove Featured Product'"
-                [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
-                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                (click)="itemList.onListItemDelete()">
-                <i class="fas fa-trash-alt"></i>
+            <div class="icon-container"
+                 (click)="onListItemDelete()"
+                 (mouseout)="itemList.onIconButtonMouseOut()"
+                 (mouseover)="itemList.isOverIconButton = true"
+                 [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                 [attr.title]="!itemList.isMultiSelected ? 'Delete Featured Product (Delete)' : 'Delete Featured Products (Delete)'"><i class="fas fa-trash-alt"></i>
             </div>
 
-
             <!-- Add -->
-            <div #addIcon class="icon-container" [attr.title]="'Add Featured Product (Ctrl+Alt+A)'"
-                [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
-                (mouseover)="itemList.isOverIconButton = true" (mouseout)="itemList.onIconButtonMouseOut()"
-                (click)="!itemList.addIcon.isDisabled ? addFeaturedProduct($event.target) : null">
-                <i class="fas fa-plus-circle"></i>
+            <div class="icon-container"
+                 (mouseout)="itemList.onIconButtonMouseOut()"
+                 (mouseover)="itemList.isOverIconButton = true"
+                 [attr.title]="'New Featured Product (Ctrl+Alt+N)'"
+                 [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                 (click)="!itemList.addIcon.isDisabled ? openPopup($event.target) : null"><i class="fas fa-plus-circle"></i>
             </div>
         </div>
 
-
-        <div
-            [ngStyle]="{'padding.px' : productGroupWidget.featuredProducts && productGroupWidget.featuredProducts.length == 0 ? 0 : 6,
-                         'paddingTop.px' : productGroupWidget.featuredProducts && productGroupWidget.featuredProducts.length == 0 ? 0 : 7}">
-            <!-- Item LIst -->
-            <item-list #itemList
-                       [listItems]="productGroupWidget.featuredProducts"
-                       (onAddItem)="addFeaturedProduct($event)"
-                       [menuOptions]="['New Featured Product', null, 'Delete Featured Product', 'Delete Featured Products']">
+        <!-- Item LIst -->
+        <div [ngStyle]="{'padding.px' : productGroupWidget.featuredProducts && productGroupWidget.featuredProducts.length == 0 ? 0 : 6, 'paddingTop.px' : productGroupWidget.featuredProducts && productGroupWidget.featuredProducts.length == 0 ? 0 : 7}">
+            <item-list
+                #itemList
+                [listOptions]="itemListOptions"
+                [listItems]="productGroupWidget.featuredProducts">
             </item-list>
         </div>
 
-
-
-
         <!-- Placeholder -->
-        <div *ngIf="productGroupWidget.featuredProducts && productGroupWidget.featuredProducts.length == 0"
-            class="no-property">No
-            featured products available</div>
+        <div *ngIf="productGroupWidget.featuredProducts && productGroupWidget.featuredProducts.length == 0" class="no-property">No featured products available</div>
     </div>
 </panel>
