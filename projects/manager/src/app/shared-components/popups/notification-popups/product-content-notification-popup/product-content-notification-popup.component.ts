@@ -101,7 +101,10 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   }
 
 
-  
+   // --------------------------------( SET PAGE )-------------------------------- \\
+   setPage() {
+    this.paginator.setPage(this.notificationService.productContentNotification.customerText.length);
+  }
 
 
 
