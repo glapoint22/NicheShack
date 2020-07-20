@@ -16,6 +16,7 @@ import { ItemListOptions } from 'projects/manager/src/app/classes/item-list-opti
 import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 import { MenuDivider } from 'projects/manager/src/app/classes/menu-divider';
 import { ListItem } from 'projects/manager/src/app/classes/list-item';
+import { Product } from 'projects/manager/src/app/classes/product';
 
 @Component({
   selector: 'product-content',
@@ -23,7 +24,7 @@ import { ListItem } from 'projects/manager/src/app/classes/list-item';
   styleUrls: ['./product-content.component.scss']
 })
 export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() content: Array<ProductContent>;
+  @Input() product: Product;
   @Input() pricePoints: Array<ProductPricePoint>;
   @ViewChild('itemList', { static: false }) itemList: CheckboxItemListComponent;
 
@@ -86,7 +87,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   }
 
 
-  
+
   // ===========================================================================================================================\\
   //                                                       [ CONTENT ]                                                          \\ 
   // ===========================================================================================================================\\
@@ -149,7 +150,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
       url: 'api/Content/Title',
       data: {
         productId: this.productService.product.id,
-        contentId: this.content[this.contentIndex].id,
+        contentId: this.product.content[this.contentIndex].id,
         title: value
       }
     });
@@ -168,7 +169,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     this.popupService.mediaType = MediaType.Icon;
     this.popupService.sourceElement = sourceElement;
     this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
-    this.popupService.mediaBrowserPopup.media = this.content[this.contentIndex].icon;
+    this.popupService.mediaBrowserPopup.media = this.product.content[this.contentIndex].icon;
   }
 
 
@@ -178,8 +179,8 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
       url: 'api/Content/Icon',
       data: {
         productId: this.productService.product.id,
-        contentId: this.content[this.contentIndex].id,
-        iconId: this.content[this.contentIndex].icon.id
+        contentId: this.product.content[this.contentIndex].id,
+        iconId: this.product.content[this.contentIndex].icon.id
       }
     });
   }
@@ -240,7 +241,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
 
 
   // -----------------------------( SET NEW PRICE POINT )------------------------------ \\
-  setNewPricePoint(){
+  setNewPricePoint() {
     // Create the new price point
     let pricePoint: ProductPricePoint = {
       id: null,
@@ -261,8 +262,8 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     // Push the new price point
     this.pricePoints.unshift(pricePoint);
 
-    for (let i = 0; i < this.content.length; i++) {
-      this.content[i].priceIndices.unshift(false);
+    for (let i = 0; i < this.product.content.length; i++) {
+      this.product.content[i].priceIndices.unshift(false);
     }
 
     this.pricePointList.unshift({
@@ -288,8 +289,8 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   addPricePointFromMenu(originalSourceElement: HTMLElement) {
     // Set the new price point
     this.setNewPricePoint();
-    
-    window.setTimeout(()=> {
+
+    window.setTimeout(() => {
       // Get reference to the new source element
       let newSourceElement: HTMLElement = this.itemList.rowItem.find((item, index) => index == 0).nativeElement;
       // Get the distance between the original source element and the new source element
@@ -331,18 +332,24 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     let deletedPricePoints: Array<ListItem> = this.itemList.deleteListItem();
 
     // Loop through all the deleted price points
-    for(let i = 0; i < deletedPricePoints.length; i++) {
+    for (let i = 0; i < deletedPricePoints.length; i++) {
 
       // Find a price point within the price point data list where its ID matches the ID of one of the deleted price points and record its index
       let index = this.pricePoints.map(x => x.id).indexOf(deletedPricePoints[i].id)
 
       // Remove the item from the checklist that has the recorded index
-      for (let j = 0; j < this.content.length; j++) {
-        this.content[j].priceIndices.splice(index, 1)
+      for (let j = 0; j < this.product.content.length; j++) {
+        this.product.content[j].priceIndices.splice(index, 1)
       }
       // Remove the item from the price point data list that has the recorded index 
       this.pricePoints.splice(index, 1);
     }
+
+    // Update the database
+    this.dataService.delete('api/Products/PricePoints', {
+      productId: this.product.id,
+      keywords: deletedPricePoints
+    }).subscribe();
   }
 
 
@@ -377,8 +384,8 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     this.moveArrayElement(this.pricePoints, fromIndex, toIndex);
 
     // Update the check list (Check list data coming in)
-    for (let i = 0; i < this.content.length; i++) {
-      this.moveArrayElement(this.content[i].priceIndices, fromIndex, toIndex);
+    for (let i = 0; i < this.product.content.length; i++) {
+      this.moveArrayElement(this.product.content[i].priceIndices, fromIndex, toIndex);
     }
 
     // Then update the price point list (String list)
@@ -392,6 +399,21 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
       this.itemList.setListItemFocus(this.itemList.selectedListItemIndex);
     })
   }
+
+
+
+
+  onPricePointChange() {
+    this.saveService.save({
+      url: 'api/Products/PricePoints',
+      data: {
+        productContentId: this.product.content[this.contentIndex].id,
+        priceIndices: this.product.content[this.contentIndex].priceIndices
+      }
+    });
+  }
+
+
 
 
   // -----------------------------( NG ON DESTROY )------------------------------ \\

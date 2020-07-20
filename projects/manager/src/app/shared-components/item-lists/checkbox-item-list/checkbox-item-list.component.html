@@ -5,7 +5,7 @@
                 <checkbox (mouseover)="isOverIconButton = true" 
                           (mouseout)="onIconButtonMouseOut()" 
                           [checked]="checkList[listItemIndex]"
-                          (change)="checkList[listItemIndex] = $event.target.checked">
+                          (change)="checkList[listItemIndex] = $event.target.checked; onChange.emit()">
                 </checkbox>
             </div>
         </div>

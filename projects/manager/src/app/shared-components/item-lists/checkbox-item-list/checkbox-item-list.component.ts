@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { SelectType } from '../../../classes/list-item-select-type';
 
@@ -9,6 +9,7 @@ import { SelectType } from '../../../classes/list-item-select-type';
 })
 export class CheckboxItemListComponent extends ItemListComponent implements OnInit {
   @Input() checkList: Array<boolean>;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
   public selectType = SelectType;
 
 
