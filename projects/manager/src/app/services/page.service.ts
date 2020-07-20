@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Page } from '../classes/page';
-import { WidgetService } from './widget.service';
+import { Page, PageType } from '../classes/page';
 import { PageData } from '../classes/page-data';
 import { BreakpointService } from './breakpoint.service';
 import { SaveService } from './save.service';
+import { PropertyView } from '../classes/property-view';
+import { RowComponent } from '../shared-components/designer/row/row.component';
+import { ColumnComponent } from '../shared-components/designer/column/column.component';
+import { WidgetComponent } from '../shared-components/designer/widgets/widget/widget.component';
+import { WidgetCursor } from '../classes/widget-cursor';
+import { EditableDropdownComponent } from '../shared-components/elements/dropdowns/editable-dropdown/editable-dropdown.component';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +16,22 @@ import { SaveService } from './save.service';
 export class PageService {
   public page: Page = new Page();
   public apiUrl: string;
+  public propertyView: PropertyView;
+  public selectedRow: RowComponent;
+  public selectedColumn: ColumnComponent;
+  public selectedWidget: WidgetComponent;
+  public buttonStylesDocumentFragment: DocumentFragment;
+  public designerBreakpointsDropdown: EditableDropdownComponent;
+
+  // Properties for widget cursor
+  public currentWidgetCursor: WidgetCursor;
+  public currentContainerWidgetCursorIsOver: HTMLElement;
+  public widgetCursorIsOverContainer: boolean;
+  public currentColumnWidgetCursorIsOver: HTMLElement;
+  public widgetCursorIsOverColumn: boolean;
+  public overColumn: boolean;
 
   constructor(
-    private widgetService: WidgetService,
     private breakpointService: BreakpointService,
     private saveService: SaveService
   ) { }
@@ -24,6 +42,14 @@ export class PageService {
       url: this.apiUrl,
       data: this.stringifyPage(this.page.getData())
     });
+  }
+
+
+
+  setPage(width: number) {
+    // this.page.type = type;
+    this.page.setWidgets();
+    this.designerBreakpointsDropdown.textInput.nativeElement.value = width;
   }
 
 
@@ -41,11 +67,11 @@ export class PageService {
     parent.style.margin = 'auto';
 
     // This documnet fragment will hold all the button styles for the buttons on the page
-    this.widgetService.buttonStylesDocumentFragment = document.createDocumentFragment();
+    this.buttonStylesDocumentFragment = document.createDocumentFragment();
 
     // Append the button styles style element to the button styles document fragment
     buttonStyles.type = 'text/css';
-    this.widgetService.buttonStylesDocumentFragment.appendChild(buttonStyles);
+    this.buttonStylesDocumentFragment.appendChild(buttonStyles);
 
     // This will build the HTML for each widget on the page
     this.page.rootContainer.buildHTML(parent);
@@ -75,7 +101,7 @@ export class PageService {
     pageStyles.type = 'text/css';
     pageStyles.innerHTML = document.head.querySelector('style').innerHTML;
     previewWindow.document.head.appendChild(pageStyles);
-    previewWindow.document.head.appendChild(this.widgetService.buttonStylesDocumentFragment);
+    previewWindow.document.head.appendChild(this.buttonStylesDocumentFragment);
 
     // Clear the background
     previewWindow.document.body.style.background = 'none';
@@ -89,7 +115,9 @@ export class PageService {
   // -----------------------------( CLEAR PAGE )------------------------------ \\
   clearPage() {
     this.page.clear();
-    this.widgetService.selectedWidget = null;
+    this.selectedWidget = null;
+    this.selectedColumn = null;
+    this.selectedRow = null;
   }
 
 
@@ -108,11 +136,19 @@ export class PageService {
   // -----------------------------( STRINGIFY PAGE )------------------------------ \\
   stringifyPage(pageData: PageData) {
     return JSON.stringify(pageData, (k, v) => {
-      if (typeof v == 'object' && Object.values(v).length == 0) {
+      if (!v || (typeof v == 'object' && Object.values(v).length == 0)) {
         return undefined;
       } else {
         return v;
       }
     });
+  }
+
+
+  selectPage() {
+    this.selectedWidget = null;
+    this.propertyView = PropertyView.Page;
+    this.selectedRow = null;
+    this.selectedColumn = null;
   }
 }

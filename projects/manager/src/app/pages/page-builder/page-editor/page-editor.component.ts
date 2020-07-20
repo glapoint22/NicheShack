@@ -7,6 +7,8 @@ import { PopupService } from '../../../services/popup.service';
 import { Searchable } from '../../../classes/searchable';
 import { TempDataService } from '../../../services/temp-data.service';
 import { Item } from '../../../classes/item';
+import { PropertyView } from '../../../classes/property-view';
+import { PageType } from '../../../classes/page';
 
 @Component({
   selector: 'page-editor',
@@ -14,12 +16,13 @@ import { Item } from '../../../classes/item';
   styleUrls: ['./page-editor.component.scss']
 })
 export class PageEditorComponent implements OnInit, Searchable {
-  public view: string;
   public currentPageId: string;
   public apiUrl: string;
   public searchResults: Array<Item>;
   public items: Array<Item>;
-  public pageType: string;
+  public pageType: PageType;
+  public PageType = PageType;
+  public propertyView = PropertyView;
 
   constructor(public pageService: PageService,
     private loadingService: LoadingService,
@@ -31,8 +34,15 @@ export class PageEditorComponent implements OnInit, Searchable {
   // ---------------------------------------------------------------------- Ng On Init --------------------------------------------------------
   ngOnInit() {
     this.apiUrl = 'api/Pages';
-    this.pageType = 'page';
+    this.pageType = PageType.Page;
     this.setPageView();
+  }
+
+
+
+  // ---------------------------------------------------------------------- Ng After View Init --------------------------------------------------------
+  ngAfterViewInit() {
+    this.pageService.designerBreakpointsDropdown.textInput.nativeElement.value = this.pageService.page.defaultWidth;
   }
 
 
@@ -40,11 +50,12 @@ export class PageEditorComponent implements OnInit, Searchable {
 
   // ---------------------------------------------------------------------- Set Page View --------------------------------------------------------
   setPageView() {
-    this.view = this.pageType;
+    this.pageService.propertyView = PropertyView.Page;
+    this.pageService.page.type = this.pageType;
   }
 
 
-  
+
   // ---------------------------------------------------------------------- Add Page --------------------------------------------------------
   addPage() {
     // Display the loading screen
@@ -61,7 +72,7 @@ export class PageEditorComponent implements OnInit, Searchable {
 
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
   loadPage(pageData: PageData) {
-    this.pageService.page.setWidgets(this.pageType);
+    this.pageService.setPage(pageData.width);
     this.pageService.loadPage(pageData);
     this.setPageView();
     this.loadingService.loading = false;
@@ -122,6 +133,7 @@ export class PageEditorComponent implements OnInit, Searchable {
         this.loadingService.loading = false;
         this.setPageView();
         this.pageService.page.widgetCursors = [];
+        this.pageService.designerBreakpointsDropdown.textInput.nativeElement.value = this.pageService.page.defaultWidth;
       });
   }
 

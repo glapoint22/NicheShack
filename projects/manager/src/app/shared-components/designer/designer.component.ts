@@ -1,9 +1,11 @@
 import { Component, ViewChild, ElementRef, ViewEncapsulation, AfterViewInit, HostListener } from '@angular/core';
 import { WidgetCursor } from '../../classes/widget-cursor';
-import { WidgetService } from '../../services/widget.service';
 import { ContainerComponent } from './container/container.component';
 import { PageService } from '../../services/page.service';
 import { BreakpointService } from '../../services/breakpoint.service';
+import { PromptService } from '../../services/prompt.service';
+import { KeyValue } from '@angular/common';
+import { EditableDropdownComponent } from '../elements/dropdowns/editable-dropdown/editable-dropdown.component';
 
 @Component({
   selector: 'designer',
@@ -19,32 +21,89 @@ export class DesignerComponent implements AfterViewInit {
   @ViewChild('workArea', { static: false }) workArea: ElementRef;
   @ViewChild('designAreaContainer', { static: false }) designAreaContainer: ElementRef;
   @ViewChild('PropertiesEditorContainer', { static: false }) PropertiesEditorContainer: ElementRef;
+  @ViewChild('breakpointsDropdown', { static: false }) breakpointsDropdown: EditableDropdownComponent;
   public widgetCursors: Array<WidgetCursor>;
+  public breakpoints: Array<KeyValue<string, string>> = [
+    {
+      key: 'Other',
+      value: ''
+    },
+    {
+      key: '320',
+      value: '320px'
+    },
+    {
+      key: '480',
+      value: '480px'
+    },
+    {
+      key: '600',
+      value: '600px'
+    },
+    {
+      key: '768',
+      value: '768px'
+    },
+    {
+      key: '1024',
+      value: '1024px'
+    },
+    {
+      key: '1280',
+      value: '1280px'
+    },
+    {
+      key: '1440',
+      value: '1440px'
+    },
+    {
+      key: '1600',
+      value: '1600px'
+    }
+  ];
 
 
-  constructor(public widgetService: WidgetService, public pageService: PageService, private breakpointService: BreakpointService) { }
+  constructor(
+    public pageService: PageService,
+    private breakpointService: BreakpointService,
+    private promptService: PromptService
+  ) { }
 
+
+
+
+
+
+  // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     this.pageService.clearPage();
     this.pageService.page.widgetCursors = []
   }
 
 
+
+
+
+  // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
   ngAfterViewInit() {
     this.pageService.page.rootContainer = this.rootContainer;
+    this.pageService.designerBreakpointsDropdown = this.breakpointsDropdown;
   }
+
+
+
 
 
   // -----------------------------( ON WIDGET ICON MOUSE DOWN )------------------------------ \\
   onWidgetIconMousedown(e: MouseEvent, widgetCursor: WidgetCursor) {
-    this.widgetService.currentWidgetCursor = widgetCursor;
+    this.pageService.currentWidgetCursor = widgetCursor;
     document.body.style.cursor = 'url("assets/' + widgetCursor.notAllowed + '"), auto';
     document.body.id = 'widget-cursor';
 
     // On Mouseup
     let onMouseup = () => {
       window.removeEventListener("mouseup", onMouseup);
-      this.widgetService.currentWidgetCursor = null;
+      this.pageService.currentWidgetCursor = null;
       document.body.removeAttribute('style');
       document.body.removeAttribute('id');
       document.body.removeAttribute('class');
@@ -75,6 +134,7 @@ export class DesignerComponent implements AfterViewInit {
 
       // Alert that the canvas width has changed
       this.breakpointService.onCanvasWidthChange.next(this.contentElement.nativeElement.getBoundingClientRect().width);
+      this.breakpointsDropdown.textInput.nativeElement.value = this.contentElement.nativeElement.getBoundingClientRect().width;
     }
 
     // On Mouseup
@@ -88,10 +148,57 @@ export class DesignerComponent implements AfterViewInit {
     window.addEventListener("mouseup", onMouseup);
   }
 
+
+
+
+
+  // -----------------------------( ON BREAKPOINT DROPDOWN CHANGE )------------------------------ \\
+  onBreakpointDropdownChange(value) {
+    this.canvasElement.nativeElement.style.maxWidth = value;
+
+    // Alert that the canvas width has changed
+    this.breakpointService.onCanvasWidthChange.next(this.contentElement.nativeElement.getBoundingClientRect().width);
+  }
+
+
+  // ------------------( ON DELETE KEYDOWN )------------------- \\
   @HostListener('document:keydown.delete')
   onDeleteKeydown() {
-    if (this.widgetService.selectedWidget) {
-      this.widgetService.selectedWidget.column.row.deleteColumn(this.widgetService.selectedWidget.column);
+    window.setTimeout(() => {
+      if (!this.promptService.show) {
+        if (this.pageService.selectedWidget) {
+
+          // Delete widget
+          this.promptService.showPrompt('Delete Widget', 'Are you sure you want to delete this widget?', this.deleteWidget, this);
+
+
+
+          // Delete row
+        } else if (this.pageService.selectedRow) {
+          this.promptService.showPrompt('Delete Row', 'Are you sure you want to delete this row?', this.deleteRow, this);
+        }
+      }
+    });
+  }
+
+
+
+  // ------------------( DELETE WIDGET )------------------- \\
+  deleteWidget() {
+    // Test to see if we need to delete the widget or the whole row
+    if (this.pageService.selectedWidget.column.row.columns.length == 1) {
+      this.pageService.selectedWidget.column.row.container.deleteRow(this.pageService.selectedWidget.column.row);
+    } else {
+
+      this.pageService.selectedWidget.column.row.deleteColumn(this.pageService.selectedWidget.column);
     }
+  }
+
+
+
+
+  // ------------------( DELETE ROW )------------------- \\
+  deleteRow() {
+    this.pageService.selectedRow.container.deleteRow(this.pageService.selectedRow);
   }
 }

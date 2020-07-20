@@ -1,10 +1,11 @@
-<div #widget class="widget" (mousedown)="onMousedown()"
+<div #widget class="widget" (mousedown)="onMousedown()" (click)="onClick($event)"
     style="width: 100%; display: flex; justify-content: center; align-items: center;"
-    [ngClass]="{'widget-selected': widgetService.selectedWidget == this}">
+    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}">
 
 
 
-    <ng-container *ngIf="banners.length > 0 && banners[currentBannerIndex].image && banners[currentBannerIndex].image.url; else placeholder">
+    <ng-container
+        *ngIf="banners.length > 0 && banners[currentBannerIndex].image && banners[currentBannerIndex].image.url; else placeholder">
         <img [src]="'images/' + banners[currentBannerIndex].image.url">
     </ng-container>
 

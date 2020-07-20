@@ -24,6 +24,12 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
   }
 
 
+  // --------------------------------( SET PAGE )-------------------------------- \\
+  setPage() {
+    this.paginator.setPage(this.notificationService.productMediaNotification.customerText.length);
+  }
+
+
   // -----------------------------( ON IMAGE ICON CLICK )------------------------------ \\
   onImageIconClick(sourceElement: HTMLElement) {
     this.popupService.mediaType = MediaType.ProductImage;
@@ -75,6 +81,18 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
   // -----------------------------( VIEW VENDOR INFO )------------------------------ \\
   viewVendorInfo() {
     super.viewVendorInfo(this.notificationService.productMediaNotification.vendorId);
+  }
+
+
+  // --------------------------------( GO TO PRODUCT PAGE )-------------------------------- \\
+  goToProductPage() {
+    super.goToProductPage(this.notificationService.productMediaNotification.productId);
+  }
+
+
+  // --------------------------------( GO TO VENDOR PRODUCT PAGE )-------------------------------- \\
+  goToVendorProductPage() {
+    super.goToVendorProductPage(this.notificationService.productMediaNotification.hoplink);
   }
 
 }

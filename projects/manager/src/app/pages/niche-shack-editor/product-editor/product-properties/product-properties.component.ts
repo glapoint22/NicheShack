@@ -1,8 +1,10 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ProductDescriptionComponent } from './product-description/product-description.component';
 
 @Component({
   selector: 'product-properties',
@@ -11,9 +13,15 @@ import { TempDataService } from 'projects/manager/src/app/services/temp-data.ser
 })
 export class ProductPropertiesComponent implements OnChanges {
   @Input() productId: string;
+  @ViewChild('productDescription', { static: false }) productDescription: ProductDescriptionComponent;
   public product: Product;
 
-  constructor(public loadingService: LoadingService, public productService: ProductService, private dataService: TempDataService) { }
+  constructor(
+    public loadingService: LoadingService,
+    public productService: ProductService,
+    private dataService: TempDataService,
+    private sanitizer: DomSanitizer
+  ) { }
 
   ngOnChanges() {
     if (this.productId) {
@@ -29,6 +37,16 @@ export class ProductPropertiesComponent implements OnChanges {
 
           // Assign the product
           this.productService.product = this.product = product;
+
+
+          // This will display the description in the product info window
+          this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(this.product.description);
+
+          // Assign the product description
+          if(this.productDescription) {
+            this.productDescription.description.content.innerHTML = product.description;
+          }
+
           this.loadingService.loading = false;
         });
     }

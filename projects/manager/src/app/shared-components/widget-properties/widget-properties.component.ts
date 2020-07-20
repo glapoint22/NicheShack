@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { WidgetService } from '../../services/widget.service';
 import { WidgetType } from '../../classes/widget-type';
 import { PageService } from '../../services/page.service';
 
@@ -11,8 +10,5 @@ import { PageService } from '../../services/page.service';
 export class WidgetPropertiesComponent {
   public widgetType = WidgetType;
 
-  constructor(
-    public widgetService: WidgetService,
-    public pageService: PageService,
-  ) { }
+  constructor(public pageService: PageService) { }
 }

@@ -376,7 +376,6 @@ export class TempDataService {
             id: 'FM1R8HAOEB',
             name: 'Campland',
             width: 1600,
-            type: 0,
             background: {
               enable: false,
               color: '#ffffff',

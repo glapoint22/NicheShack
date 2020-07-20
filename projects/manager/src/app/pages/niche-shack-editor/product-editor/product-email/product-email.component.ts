@@ -6,6 +6,7 @@ import { PageService } from 'projects/manager/src/app/services/page.service';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { PageType } from 'projects/manager/src/app/classes/page';
+import { PropertyView } from 'projects/manager/src/app/classes/property-view';
 
 @Component({
   selector: 'product-email',
@@ -16,7 +17,7 @@ export class ProductEmailComponent implements OnInit {
   @Input() productId: string;
   public currentEmailId: string;
   public emailIds: Array<string> = [];
-  public view: string;
+  public propertyView = PropertyView;
   public initialPageLoaded: boolean;
   private emailUrl: string = 'api/Products/Emails';
 
@@ -29,12 +30,6 @@ export class ProductEmailComponent implements OnInit {
   ngOnInit() {
     // Display the loading screen
     this.loadingService.loading = true;
-
-    // Set the page
-    window.setTimeout(() => {
-      this.pageService.page.setWidgets('email');
-      this.pageService.page.width = this.pageService.page.defaultWidth;
-    });
 
     // Get the email ids for this product
     this.dataService.get('api/Products/EmailIds', [{ key: 'productId', value: this.productId }])
@@ -53,6 +48,12 @@ export class ProductEmailComponent implements OnInit {
           this.loadingService.loading = false;
         }
       });
+  }
+
+
+  ngAfterViewInit() {
+    this.pageService.page.type = PageType.Email;
+    this.pageService.designerBreakpointsDropdown.textInput.nativeElement.value = this.pageService.page.defaultWidth;
   }
 
 
@@ -133,9 +134,10 @@ export class ProductEmailComponent implements OnInit {
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
   loadPage(pageData: PageData) {
     this.pageService.loadPage(pageData);
-    this.view = 'page';
+    this.pageService.propertyView = PropertyView.Page;
     this.loadingService.loading = false;
     this.initialPageLoaded = true;
+    this.pageService.setPage(pageData.width);
   }
 
 

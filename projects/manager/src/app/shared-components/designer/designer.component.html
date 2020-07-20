@@ -22,23 +22,24 @@
             <!-- Design Area Bar -->
             <div class="design-area-bar">
 
-                <!-- Design Area Dropdown -->
-                <!-- <div class="design-area-dropdown">
-                    <input #designAreaDropdown (click)="designAreaDropdown.select();"
-                        (keydown)="onDesignAreaDropdownKeydown($event)">
-
-                    
-                    <div class="design-area-dropdown-button">
-                        <div>></div>
+                <!-- Breakpoints Dropdown -->
+                <div style="width: 55px; position: relative;">
+                    <editable-dropdown #breakpointsDropdown [height]="24" [title]="'Breakpoints'"
+                        [dropdownList]="breakpoints" [selectedIndex]="0"
+                        (onChange)="onBreakpointDropdownChange($event)">
+                    </editable-dropdown>
+                    <div *ngIf="!pageService.page.widgetCursors || pageService.page.widgetCursors.length == 0"
+                        style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgb(46, 46, 46, 0.75);">
                     </div>
-                </div> -->
+                </div>
             </div>
 
             <!-- Design Area -->
             <div class="design-area">
 
                 <!-- Design Area Resizer Left -->
-                <div *ngIf="pageService.page.widgetCursors && pageService.page.widgetCursors.length > 0" class="design-area-resizer" (mousedown)="onDesignAreaResizerMousedown($event, 1)">
+                <div *ngIf="pageService.page.widgetCursors && pageService.page.widgetCursors.length > 0"
+                    class="design-area-resizer" (mousedown)="onDesignAreaResizerMousedown($event, 1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>
@@ -48,7 +49,7 @@
 
 
                 <!-- Canvas -->
-                <div #canvasElement class="canvas" (mousedown)="widgetService.selectedWidget = null">
+                <div #canvasElement class="canvas" (click)="pageService.selectPage()">
                     <div #contentElement class="content" [style.maxWidth.px]="pageService.page.width"
                         [ngClass]="{'content-border': pageService.page.widgetCursors && pageService.page.widgetCursors.length > 0}"
                         [style.backgroundColor]="pageService.page.background.color ? pageService.page.background.color.toRGBString(): null"
@@ -62,7 +63,8 @@
 
 
                 <!-- Design Area Resizer Right -->
-                <div *ngIf="pageService.page.widgetCursors && pageService.page.widgetCursors.length > 0" class="design-area-resizer" (mousedown)="onDesignAreaResizerMousedown($event, -1)">
+                <div *ngIf="pageService.page.widgetCursors && pageService.page.widgetCursors.length > 0"
+                    class="design-area-resizer" (mousedown)="onDesignAreaResizerMousedown($event, -1)">
                     <div class="ridge-container">
                         <div class="ridge"></div>
                         <div class="ridge"></div>

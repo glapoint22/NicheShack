@@ -21,6 +21,13 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
   }
 
 
+
+  // --------------------------------( SET PAGE )-------------------------------- \\
+  setPage() {
+    this.paginator.setPage(this.notificationService.productDescriptionNotification.customerText.length);
+  }
+
+
   // -----------------------------( ON SUBMIT )------------------------------ \\
   onSubmit(notification: Notification) {
     switch (notification.name) {
@@ -52,6 +59,18 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
   // -----------------------------( VIEW VENDOR INFO )------------------------------ \\
   viewVendorInfo() {
     super.viewVendorInfo(this.notificationService.productDescriptionNotification.vendorId);
+  }
+
+
+  // --------------------------------( GO TO PRODUCT PAGE )-------------------------------- \\
+  goToProductPage() {
+    super.goToProductPage(this.notificationService.productDescriptionNotification.productId);
+  }
+
+
+  // --------------------------------( GO TO VENDOR PRODUCT PAGE )-------------------------------- \\
+  goToVendorProductPage() {
+    super.goToVendorProductPage(this.notificationService.productDescriptionNotification.hoplink);
   }
 
 }

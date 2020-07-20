@@ -3,10 +3,8 @@ import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Caption } from 'projects/manager/src/app/classes/caption';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { Link, LinkOption } from 'projects/manager/src/app/classes/link';
-import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { Padding } from 'projects/manager/src/app/classes/padding';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { ButtonState } from 'projects/manager/src/app/classes/button-state';
@@ -47,13 +45,6 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
   // Current state of the button (ie. normal, hover, active)
   public currentState: ButtonState;
-
-
-  constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
-
-
-
 
 
   // ---------------------------------------------------------------- Ng On Init --------------------------------------------------------------
@@ -279,7 +270,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
 
     // Add this button style
-    this.widgetService.buttonStylesDocumentFragment.firstElementChild.appendChild(document.createTextNode(css));
+    this.column.row.pageService.buttonStylesDocumentFragment.firstElementChild.appendChild(document.createTextNode(css));
 
     // Append this button to the parent
     parent.appendChild(button);

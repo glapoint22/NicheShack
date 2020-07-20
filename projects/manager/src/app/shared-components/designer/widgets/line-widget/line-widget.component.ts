@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
-import { WidgetService } from 'projects/manager/src/app/services/widget.service';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
-import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { LineWidgetData } from 'projects/manager/src/app/classes/line-widget-data';
@@ -18,8 +16,6 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
   public border: Border = new Border();
   public shadow: Shadow = new Shadow();
 
-  constructor(widgetService: WidgetService,
-    breakpointService: BreakpointService) { super(widgetService, breakpointService) }
 
   ngOnInit() {
     this.name = 'Line';
@@ -39,7 +35,7 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
 
     // Name
     if (this.name != 'Line') lineWidgetData.name = this.name;
-    
+
     // Border
     this.border.getData(lineWidgetData.border);
 

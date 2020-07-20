@@ -1,6 +1,6 @@
-<div #widget class="widget" [ngClass]="{'widget-selected': widgetService.selectedWidget == this}"
-    (mousedown)="onMousedown()" [style.margin]="horizontalAlignment.value" [style.maxWidth.px]="width ? width : null"
-    [style.margin]="horizontalAlignment.value" [style.minHeight.px]="height">
+<div #widget class="widget" [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}"
+    (click)="onClick($event)" (mousedown)="onMousedown()" [style.margin]="horizontalAlignment.value"
+    [style.maxWidth.px]="width ? width : null" [style.margin]="horizontalAlignment.value" [style.minHeight.px]="height">
 
 
     <!-- Handles -->

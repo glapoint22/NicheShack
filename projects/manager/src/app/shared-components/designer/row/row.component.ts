@@ -1,5 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef, Type } from '@angular/core';
-import { WidgetService } from '../../../services/widget.service';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef, Type, ApplicationRef } from '@angular/core';
 import { Border } from '../../../classes/border';
 import { Corners } from '../../../classes/corners';
 import { Shadow } from '../../../classes/shadow';
@@ -17,11 +16,11 @@ import { RowData } from '../../../classes/row-data';
 import { Background } from '../../../classes/background';
 import { ColumnData } from '../../../classes/column-data';
 import { PageService } from '../../../services/page.service';
+import { PropertyView } from '../../../classes/property-view';
 
 @Component({
   selector: 'row',
-  templateUrl: './row.component.html',
-  styleUrls: ['./row.component.scss']
+  templateUrl: './row.component.html'
 })
 export class RowComponent implements BreakpointsComponent, BreakpointsPaddingComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
@@ -49,9 +48,9 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
   constructor(
     private resolver: ComponentFactoryResolver,
-    public widgetService: WidgetService,
     private breakpointService: BreakpointService,
-    private pageService: PageService
+    public pageService: PageService,
+    private applicationRef: ApplicationRef
   ) { }
 
 
@@ -65,20 +64,21 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
   onMousedown() {
     // If we are resizing a widget or resizing a column, return
-    if (document.body.id == 'widget-resize' || document.body.id == 'column-resize') return;
+    if (document.body.id == 'widget-resize') return;
 
     // flag that this row has been selected
     this.container.selectedRow = this;
 
     // Update the cursor
     document.body.style.cursor = 'move';
-    document.body.id = 'row-move';
 
     // Mousemove
     let onMousemove = (e: MouseEvent) => {
       // Position the row
       let delta = this.setPosition(e.movementY);
 
+      // Flag that we are moving the row
+      document.body.id = 'row-move';
 
       // Position the next row
       this.positionNextRow(delta);
@@ -86,10 +86,13 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
     // Mouseup
     let onMouseup = () => {
-      window.removeEventListener("mousemove", onMousemove);
-      window.removeEventListener("mouseup", onMouseup);
-      document.body.removeAttribute('style');
-      document.body.removeAttribute('id');
+      window.setTimeout(() => {
+        window.removeEventListener("mousemove", onMousemove);
+        window.removeEventListener("mouseup", onMouseup);
+        document.body.removeAttribute('style');
+        document.body.removeAttribute('id');
+      });
+
     }
 
     // Add the listeners
@@ -202,6 +205,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
     // flag that this row has been selected
     this.container.selectedRow = this;
+    this.pageService.propertyView = PropertyView.Widget;
 
     // Add or update each column with the correct column span based on the number of columns in this row
     this.setColumnSpans();
@@ -220,7 +224,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
     // Set the events
     columnComponentRef.location.nativeElement.addEventListener('mouseover', columnComponentRef.instance.onMouseover.bind(columnComponentRef.instance));
-    columnComponentRef.location.nativeElement.addEventListener('mouseup', () => { this.widgetService.currentWidgetCursor = null; });
+    columnComponentRef.location.nativeElement.addEventListener('mouseup', () => { this.pageService.currentWidgetCursor = null; });
 
 
     // Set the column's row as this row
@@ -235,17 +239,31 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
 
   deleteColumn(column: ColumnComponent) {
+    // Remove this column
     let columnIndex = this.columns.findIndex(x => x.component == column);
     this.viewContainerRef.remove(columnIndex);
     this.columns.splice(columnIndex, 1);
-    this.widgetService.selectedWidget = null;
 
-    if (this.columns.length > 0) {
-      this.setColumnSpans();
-    } else {
-      this.container.deleteRow(this);
+    // reset the column spans
+    this.setColumnSpans();
+
+
+    // See if this column is in the last row
+    let rowIndex: number = this.container.rows.findIndex(x => x.component == column.row);
+    let lastRow: boolean = rowIndex == this.container.rows.length - 1;
+
+    if (!lastRow) {
+      // Do change dectection. This is so we can get the new row height
+      this.applicationRef.tick();
+
+      // Get the position of the next row
+      let diff = column.rowHeight - column.row.rowElement.nativeElement.getBoundingClientRect().height;
+      this.container.rows[rowIndex + 1].component.top += diff;
     }
 
+
+    // Select the page and save
+    this.pageService.selectPage();
     this.container.save();
   }
 
@@ -353,5 +371,15 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     parent.appendChild(row);
 
     this.columns.forEach((column: Column) => column.component.buildHTML(row));
+  }
+
+
+  onClick(event: MouseEvent) {
+    event.stopPropagation();
+    if (document.body.id == 'widget-resize' || document.body.id == 'row-move') return;
+    this.pageService.propertyView = PropertyView.Row;
+    this.pageService.selectedRow = this;
+    this.pageService.selectedWidget = null;
+    this.pageService.selectedColumn = null;
   }
 }

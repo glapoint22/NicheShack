@@ -1,6 +1,5 @@
 import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, Type } from '@angular/core';
 import { RowComponent } from '../row/row.component';
-import { WidgetService } from '../../../services/widget.service';
 import { WidgetComponent } from '../widgets/widget/widget.component';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { ColumnSpan } from '../../../classes/column-span';
@@ -15,6 +14,7 @@ import { Column } from '../../../classes/column';
 import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-padding-component';
 import { Background } from '../../../classes/background';
 import { ColumnData } from '../../../classes/column-data';
+import { PropertyView } from '../../../classes/property-view';
 
 @Component({
   selector: '[column]',
@@ -39,7 +39,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();
   public name: string = 'Column';
 
-  constructor(private resolver: ComponentFactoryResolver, public widgetService: WidgetService, private breakpointService: BreakpointService) { }
+  constructor(private resolver: ComponentFactoryResolver, private breakpointService: BreakpointService) { }
 
   ngOnInit() {
     // When a breakpoint changes, this will update any property that has a value stored in the breakpoints array
@@ -74,7 +74,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
 
 
     // Set this widget as the selected widget
-    this.widgetService.selectedWidget = this.widget;
+    this.row.pageService.selectedWidget = this.widget;
 
 
     // Remove all column span breakpoints
@@ -108,51 +108,51 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
 
   onDropIndicatorEnter() {
     // Show the allowed cursor when entering the drop indicator
-    if (this.widgetService.currentWidgetCursor) {
-      document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.allowed + '"), auto'
+    if (this.row.pageService.currentWidgetCursor) {
+      document.body.style.cursor = 'url("assets/' + this.row.pageService.currentWidgetCursor.allowed + '"), auto'
     }
   }
 
 
   onDropIndicatorLeave() {
     // Show the not allowed cursor when leaving the drop indicator
-    if (this.widgetService.currentWidgetCursor) {
-      document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.notAllowed + '"), auto'
+    if (this.row.pageService.currentWidgetCursor) {
+      document.body.style.cursor = 'url("assets/' + this.row.pageService.currentWidgetCursor.notAllowed + '"), auto'
     }
   }
 
   onDropIndicatorMouseup(element: HTMLElement) {
     // Add a new column to the row with a new widget
-    if (this.widgetService.currentWidgetCursor) {
-      this.row.addColumn(this.widgetService.currentWidgetCursor.widget, element);
+    if (this.row.pageService.currentWidgetCursor) {
+      this.row.addColumn(this.row.pageService.currentWidgetCursor.widget, element);
     }
   }
 
 
   onMouseover(event: MouseEvent) {
-    if (this.widgetService.currentWidgetCursor) {
+    if (this.row.pageService.currentWidgetCursor) {
 
       // If no other column has been set, set the current column to be this column
-      if (!this.widgetService.currentColumnSet) {
-        this.widgetService.currentColumn = event.currentTarget as HTMLElement;
-        this.widgetService.currentColumnSet = true;
+      if (!this.row.pageService.widgetCursorIsOverColumn) {
+        this.row.pageService.currentColumnWidgetCursorIsOver = event.currentTarget as HTMLElement;
+        this.row.pageService.widgetCursorIsOverColumn = true;
       }
 
       // If we have reached the last column in the event chain, flag that the current column is not set
-      // This basically reinitializes the currentColumnSet property
+      // This basically reinitializes the widgetCursorIsOverColumn property
       if (this.isLastColumn(event.currentTarget as HTMLElement)) {
-        this.widgetService.currentColumnSet = false;
+        this.row.pageService.widgetCursorIsOverColumn = false;
       }
 
       // If a container has not been set for the mouse to be over, flag that we are over a column
-      if (!this.widgetService.currentContainerSet) {
-        this.widgetService.currentContainer = null;
-        this.widgetService.overColumn = true;
-        document.body.style.cursor = 'url("assets/' + this.widgetService.currentWidgetCursor.notAllowed + '"), auto';
+      if (!this.row.pageService.widgetCursorIsOverContainer) {
+        this.row.pageService.currentContainerWidgetCursorIsOver = null;
+        this.row.pageService.overColumn = true;
+        document.body.style.cursor = 'url("assets/' + this.row.pageService.currentWidgetCursor.notAllowed + '"), auto';
       } else {
-        this.widgetService.overColumn = false;
+        this.row.pageService.overColumn = false;
       }
-    } 
+    }
   }
 
 
@@ -231,5 +231,15 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
     parent.appendChild(col);
 
     this.widget.buildHTML(col);
+  }
+
+
+  onClick(event: MouseEvent) {
+    event.stopPropagation();
+    if (document.body.id == 'widget-resize' || document.body.id == 'row-move') return;
+    this.row.pageService.propertyView = PropertyView.Column;
+    this.row.pageService.selectedColumn = this;
+    this.row.pageService.selectedWidget = this.widget;
+    this.row.pageService.selectedRow = this.row;
   }
 }

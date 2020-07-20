@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { WidgetService } from '../../services/widget.service';
 import { PageService } from '../../services/page.service';
 
 @Component({
@@ -9,8 +8,5 @@ import { PageService } from '../../services/page.service';
 })
 export class RowPropertiesComponent {
 
-  constructor(
-    public widgetService: WidgetService,
-    public pageService: PageService,
-  ) { }
+  constructor(public pageService: PageService) { }
 }

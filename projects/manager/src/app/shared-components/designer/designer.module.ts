@@ -16,6 +16,7 @@ import { FreeformWidgetComponent } from './widgets/freeform-widget/freeform-widg
 import { ProductGroupWidgetComponent } from './widgets/product-group-widget/product-group-widget.component';
 import { CategoriesWidgetComponent } from './widgets/categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from './widgets/carousel-widget/carousel-widget.component';
+import { SharedModule } from '../shared.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { CarouselWidgetComponent } from './widgets/carousel-widget/carousel-widg
   ],
   imports: [
     CommonModule,
+    SharedModule
   ],
   exports: [DesignerComponent],
   entryComponents: [

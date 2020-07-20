@@ -72,7 +72,7 @@ export class EditableDropdownComponent extends DropdownComponent {
           this.onChange.emit(this.dropdownList[indexOfMenuOption].value);
         }
         // Remove the listener
-        window.removeEventListener('keydown', this.onKeyDown);
+        // window.removeEventListener('keydown', this.onKeyDown);
       }
     }
 

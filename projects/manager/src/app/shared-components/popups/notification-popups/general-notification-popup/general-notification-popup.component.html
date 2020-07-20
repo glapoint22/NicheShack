@@ -45,7 +45,7 @@
 
         <!-- Paginator -->
         <div class="paginator-bar">
-            <paginator [itemCount]="notificationService.generalNotification.customerText.length"
+            <paginator #paginator [itemCount]="notificationService.generalNotification.customerText.length"
                        (onItemChange)="paginatorIndex = $event">
             </paginator>
         </div>

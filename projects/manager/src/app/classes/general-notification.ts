@@ -5,4 +5,5 @@ export interface GeneralNotification extends Notification {
     productName: string;
     productId: string;
     vendorId: string;
+    hoplink: string;
 }

@@ -1,55 +1,55 @@
-<ng-container *ngIf="widgetService.selectedWidget">
+<ng-container *ngIf="pageService.selectedWidget">
     <!-- Widget ID -->
     <div class="grooved-container">
         <div class="label">Name:</div>
-        <input class="txt-20" [(ngModel)]="widgetService.selectedWidget.name" (input)="pageService.save()">
+        <input class="txt-20" [(ngModel)]="pageService.selectedWidget.name" (input)="pageService.save()">
     </div>
 
     <!-- Button -->
-    <button-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Button"
-        [buttonWidget]="widgetService.selectedWidget"></button-widget-properties>
+    <button-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Button"
+        [buttonWidget]="pageService.selectedWidget"></button-widget-properties>
 
 
     <!-- Text -->
-    <text-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Text"
-        [textWidget]="widgetService.selectedWidget"></text-widget-properties>
+    <text-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Text"
+        [textWidget]="pageService.selectedWidget"></text-widget-properties>
 
 
     <!-- Image -->
-    <image-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Image"
-        [imageWidget]="widgetService.selectedWidget"></image-widget-properties>
+    <image-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Image"
+        [imageWidget]="pageService.selectedWidget"></image-widget-properties>
 
 
     <!-- Container -->
-    <container-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Container"
-        [containerWidget]="widgetService.selectedWidget">
+    <container-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Container"
+        [containerWidget]="pageService.selectedWidget">
     </container-widget-properties>
 
 
     <!-- Line -->
-    <line-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Line"
-        [lineWidget]="widgetService.selectedWidget"></line-widget-properties>
+    <line-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Line"
+        [lineWidget]="pageService.selectedWidget"></line-widget-properties>
 
 
     <!-- Video -->
-    <video-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Video"
-        [videoWidget]="widgetService.selectedWidget"></video-widget-properties>
+    <video-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Video"
+        [videoWidget]="pageService.selectedWidget"></video-widget-properties>
 
 
     <!-- Product Group -->
-    <product-group-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.ProductGroup"
-        [productGroupWidget]="widgetService.selectedWidget">
+    <product-group-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.ProductGroup"
+        [productGroupWidget]="pageService.selectedWidget">
     </product-group-widget-properties>
 
 
     <!-- Categories -->
-    <categories-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Categories"
-        [categoriesWidget]="widgetService.selectedWidget">
+    <categories-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Categories"
+        [categoriesWidget]="pageService.selectedWidget">
     </categories-widget-properties>
 
 
     <!-- Carousel -->
-    <carousel-widget-properties *ngIf="widgetService.selectedWidget.type == widgetType.Carousel"
-        [carouselWidget]="widgetService.selectedWidget">
+    <carousel-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Carousel"
+        [carouselWidget]="pageService.selectedWidget">
     </carousel-widget-properties>
 </ng-container>

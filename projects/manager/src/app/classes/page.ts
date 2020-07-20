@@ -29,7 +29,19 @@ export class Page {
     public type: PageType = PageType.Page;
     public widgetCursors: Array<WidgetCursor>;
     public get defaultWidth(): number {
-        return this.type == PageType.Page ? 1600 : 600;;
+        let width: number;
+
+        switch (this.type) {
+            case PageType.Email:
+                width = 600;
+                break;
+        
+            default:
+                width = 1600;
+                break;
+        }
+
+        return width;
     }
 
 
@@ -49,8 +61,6 @@ export class Page {
 
     // -----------------------------( SET DATA )------------------------------ \\
     setData(pageData: PageData) {
-        // Set the page type
-        this.type = pageData.type;
 
         // Clear the page
         this.clear();
@@ -85,7 +95,6 @@ export class Page {
         pageData.name = this.name;
         pageData.width = this.width;
 
-        pageData.type = this.type;
 
         // Save the background
         this.background.getData(pageData.background);
@@ -203,7 +212,7 @@ export class Page {
 
 
     // -----------------------------( SET WIDGETS )------------------------------ \\
-    setWidgets(type: string) {
+    setWidgets() {
         this.widgetCursors = [
             {
                 title: 'Text',
@@ -243,11 +252,11 @@ export class Page {
         ]
 
 
-        switch (type) {
-            case 'email':
+        switch (this.type) {
+            case PageType.Email:
                 break;
 
-            case 'leadPage':
+            case PageType.LeadPage:
                 this.widgetCursors.push({
                     title: 'Video',
                     widget: VideoWidgetComponent,
@@ -257,7 +266,7 @@ export class Page {
                 })
                 break;
 
-            case 'page':
+            case PageType.Page:
                 this.widgetCursors.push.apply(this.widgetCursors,
                     [
                         {
@@ -298,5 +307,6 @@ export class Page {
 
 export enum PageType {
     Page,
-    Email
+    Email,
+    LeadPage
 }

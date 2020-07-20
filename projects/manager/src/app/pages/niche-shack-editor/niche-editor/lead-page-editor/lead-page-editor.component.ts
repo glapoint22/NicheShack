@@ -5,6 +5,8 @@ import { PaginatorComponent } from 'projects/manager/src/app/shared-components/p
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { PropertyView } from 'projects/manager/src/app/classes/property-view';
+import { PageType } from 'projects/manager/src/app/classes/page';
 
 @Component({
   selector: 'lead-page-editor',
@@ -13,13 +15,14 @@ import { TempDataService } from 'projects/manager/src/app/services/temp-data.ser
 })
 export class LeadPageEditorComponent implements OnChanges {
   @Input() nicheId: string;
-  public view: string = 'page';
   public leadPageIds: Array<string>;
-  public selectedTab: string;
+  public selectedTab: PageType;
   public currentLeadPageId: string;
   public initialPageLoaded: boolean;
   public leadPageUrl: string = 'api/Niches/LeadPages';
   public emailUrl: string = 'api/Niches/LeadPageEmails';
+  public propertyView = PropertyView;
+  public pageType = PageType;
 
   constructor(public pageService: PageService,
     private loadingService: LoadingService,
@@ -58,6 +61,10 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
 
+  ngAfterViewInit() {
+    this.pageService.page.type = PageType.LeadPage;
+    this.pageService.designerBreakpointsDropdown.textInput.nativeElement.value = this.pageService.page.defaultWidth;
+  }
 
 
 
@@ -68,6 +75,8 @@ export class LeadPageEditorComponent implements OnChanges {
   onPageChange(index: number) {
     // Return if the current lead page id is the same as the next page
     if (this.currentLeadPageId == this.leadPageIds[index]) return;
+
+    this.pageService.page.type = PageType.LeadPage;
 
     // Set the current lead page id and load
     this.currentLeadPageId = this.leadPageIds[index];
@@ -93,7 +102,7 @@ export class LeadPageEditorComponent implements OnChanges {
         this.initialPageLoaded = true;
 
         // Load the lead page
-        this.loadPage('leadPage', pageData);
+        this.loadPage(PageType.LeadPage, pageData);
       });
   }
 
@@ -112,7 +121,7 @@ export class LeadPageEditorComponent implements OnChanges {
       .subscribe((pageData: PageData) => {
 
         // Load the email
-        this.loadPage('email', pageData);
+        this.loadPage(PageType.Email, pageData);
       });
   }
 
@@ -124,11 +133,11 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
-  loadPage(pageType: string, pageData: PageData) {
+  loadPage(pageType: PageType, pageData: PageData) {
     this.selectedTab = pageType;
-    this.pageService.page.setWidgets(pageType);
+    this.pageService.setPage(pageData.width);
     this.pageService.loadPage(pageData);
-    this.view = 'page';
+    this.pageService.propertyView = PropertyView.Page;
     this.loadingService.loading = false;
   }
 
@@ -140,8 +149,9 @@ export class LeadPageEditorComponent implements OnChanges {
 
   // ---------------------------------------------------------------- On Lead Page Tab Click ----------------------------------------------------
   onLeadPageTabClick() {
-    if (this.selectedTab == 'email') {
+    if (this.selectedTab == PageType.Email) {
       this.pageService.apiUrl = this.leadPageUrl;
+      this.pageService.page.type = PageType.LeadPage;
 
       // Load the current lead page
       this.loadLeadPage(this.currentLeadPageId);
@@ -158,8 +168,9 @@ export class LeadPageEditorComponent implements OnChanges {
 
   // ------------------------------------------------------------------- On Email Tab Click ------------------------------------------------------
   onEmailTabClick() {
-    if (this.selectedTab == 'leadPage') {
+    if (this.selectedTab == PageType.LeadPage) {
       this.pageService.apiUrl = this.emailUrl;
+      this.pageService.page.type = PageType.Email;
 
       // Load the current lead page's email
       this.loadEmail(this.currentLeadPageId);
@@ -183,7 +194,7 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
         // Load the lead page
-        this.loadPage('leadPage', pageData);
+        this.loadPage(PageType.LeadPage, pageData);
 
         // Set the new page
         this.setNewPage(pageData, paginator);
@@ -208,7 +219,7 @@ export class LeadPageEditorComponent implements OnChanges {
         pageData.id = leadPageId;
 
         // Load the lead page
-        this.loadPage('leadPage', pageData);
+        this.loadPage(PageType.LeadPage, pageData);
 
         // Set the new page
         this.setNewPage(pageData, paginator);
@@ -280,9 +291,8 @@ export class LeadPageEditorComponent implements OnChanges {
           this.pageService.clearPage();
           this.currentLeadPageId = null;
           this.loadingService.loading = false;
-          this.view = 'page';
+          this.pageService.propertyView = PropertyView.Page;
           this.pageService.page.widgetCursors = [];
-          this.pageService.page.width = this.pageService.page.defaultWidth;
         }
       });
   }

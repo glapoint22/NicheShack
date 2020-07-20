@@ -117,10 +117,17 @@ export class EditableHierarchyComponent extends HierarchyComponent {
         } else {
           event.preventDefault();
 
+          if (el.innerText.length == 0) return;
+
+          // Set it to non editable
           el.contentEditable = 'false';
 
           // Save
-          this.saveItem(el);
+          if (el.innerText != this.selectedItem.name) {
+            this.saveItem(el);
+          } else {
+            this.editMode = false;
+          }
         }
 
         // remove the listeners
@@ -140,6 +147,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
           this.deleteItem();
         } else {
           el.innerText = this.selectedItem.name;
+          this.editMode = false;
         }
 
       } else {

@@ -1,5 +1,5 @@
-<div #widget class="widget" (mousedown)="onMousedown()"
-    [ngClass]="{'widget-selected': widgetService.selectedWidget == this}"
+<div #widget class="widget" (mousedown)="onMousedown()" (click)="onClick($event)"
+    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}"
     [style.backgroundColor]="background.enable ? background.color.toRGBString(): null"
     [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHex() : 'none'"
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
@@ -7,7 +7,7 @@
     [style.margin]="horizontalAlignment.value" [style.paddingTop]="padding.top.value"
     [style.paddingRight]="padding.right.value" [style.paddingBottom]="padding.bottom.value"
     [style.paddingLeft]="padding.left.value" [style.maxWidth.px]="width ? width : null" [style.minHeight.px]="height"
-    [style.height.px]="widgetService.currentWidgetCursor ? widget.getBoundingClientRect().height : null"
+    [style.height.px]="column.row.pageService.currentWidgetCursor ? widget.getBoundingClientRect().height : null"
     [ngStyle]="{ 'background-image': background.image && background.enable && background.image.url ? 'url(images/' + background.image.url + ')' : null,
                         'background-position': background.image && background.enable ? background.image.position : null,
                         'background-repeat': background.image && background.enable ? background.image.repeat : null,

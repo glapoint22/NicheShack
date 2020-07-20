@@ -1,5 +1,5 @@
 <div #widget class="widget" (mousedown)="onMousedown()" style="border: 1px solid white; width: 100%;"
-    [ngClass]="{'widget-selected': widgetService.selectedWidget == this}">
+    (click)="onClick($event)" [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}">
 
     <!-- Caption -->
     <div class="caption" [style.fontFamily]="caption.font.styleValue" [style.fontSize]="caption.fontSize.styleValue"
