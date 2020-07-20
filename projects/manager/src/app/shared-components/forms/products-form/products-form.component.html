@@ -10,7 +10,7 @@
         <!-- Panel -->
         <div class="panel-dark">
             <ng-container *ngIf="products">
-                <item-list [listItems]="products" [listOptions]="itemListOptions"></item-list>
+                <item-list #itemList [listItems]="products" [listOptions]="itemListOptions"></item-list>
             </ng-container>
 
         </div>

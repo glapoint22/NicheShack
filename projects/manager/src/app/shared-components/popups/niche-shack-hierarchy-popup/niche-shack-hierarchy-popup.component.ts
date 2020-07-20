@@ -334,4 +334,23 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
   onItemSelect() {
     this.router.navigate(['']);
   }
+
+
+
+
+  // -----------------------------( OPEN ITEM )------------------------------ \\
+  openItem(id: string, type: NicheShackHierarchyItemType) {
+    this.popupService.nicheShackHierarchyPopup.selectedItem = {
+      id: id,
+      type: type,
+      showChildren: false,
+      children: null,
+      parent: null,
+      childless: null,
+      url: null,
+      childrenUrl: null,
+      childrenParameters: null,
+      name: null
+    }
+  }
 }

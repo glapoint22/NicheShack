@@ -13,6 +13,7 @@ import { PopupService } from '../../../services/popup.service';
 import { Searchable } from '../../../classes/searchable';
 import { MenuOption } from '../../../classes/menu-option';
 import { MenuDivider } from '../../../classes/menu-divider';
+import { ProductListItem } from '../../../classes/product-list-item';
 
 @Component({
   selector: 'vendor-form',
@@ -220,7 +221,7 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
 
 
       this.dataService.get('api/Products/Vendor', [{ key: 'vendorId', value: this.vendor.id }])
-        .subscribe((products: Array<Item>) => {
+        .subscribe((products: Array<ProductListItem>) => {
           this.formService.productsForm.products = products;
           this.loadingService.loading = false;
           this.formService.productsForm.show = true;
