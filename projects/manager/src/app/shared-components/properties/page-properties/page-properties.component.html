@@ -9,7 +9,7 @@
     <div class="property">
         <div class="label">Width:</div>
         <div style="flex: 1;">
-            <editable-number-field [value]="page.width ? page.width : ''" (onValueChange)="page.width = $event; pageService.save()">
+            <editable-number-field [value]="page.width ? page.width : ''" (onValueChange)="setPageWidth($event)">
             </editable-number-field>
         </div>
     </div>

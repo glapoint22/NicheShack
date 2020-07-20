@@ -63,7 +63,10 @@ export class LeadPageEditorComponent implements OnChanges {
 
   ngAfterViewInit() {
     this.pageService.page.type = PageType.LeadPage;
-    this.pageService.designerBreakpointsDropdown.textInput.nativeElement.value = this.pageService.page.defaultWidth;
+    window.setTimeout(()=> {
+      this.pageService.designerBreakpointsDropdown.setValue(this.pageService.page.defaultWidth);
+    });
+    
   }
 
 

@@ -88,6 +88,7 @@ export class DesignerComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.pageService.page.rootContainer = this.rootContainer;
     this.pageService.designerBreakpointsDropdown = this.breakpointsDropdown;
+    this.pageService.designerCanvas = this.canvasElement;
   }
 
 
@@ -134,7 +135,7 @@ export class DesignerComponent implements AfterViewInit {
 
       // Alert that the canvas width has changed
       this.breakpointService.onCanvasWidthChange.next(this.contentElement.nativeElement.getBoundingClientRect().width);
-      this.breakpointsDropdown.textInput.nativeElement.value = this.contentElement.nativeElement.getBoundingClientRect().width;
+      this.breakpointsDropdown.setValue(this.contentElement.nativeElement.getBoundingClientRect().width);
     }
 
     // On Mouseup

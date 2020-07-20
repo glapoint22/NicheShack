@@ -11,4 +11,11 @@ export class PagePropertiesComponent {
   @Input() page: Page = new Page();
 
   constructor(public pageService: PageService) { }
+
+
+  setPageWidth(width: number) {
+    this.page.width = width;
+    this.pageService.setPageWidth(width);
+    this.pageService.save();
+  }
 }

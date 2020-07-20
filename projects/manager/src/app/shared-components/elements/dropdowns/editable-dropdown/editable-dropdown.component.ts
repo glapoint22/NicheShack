@@ -53,26 +53,9 @@ export class EditableDropdownComponent extends DropdownComponent {
     if (event.code === 'Enter' || event.code === 'NumpadEnter' || event.keyCode === 13) {
       // As long as the text input is NOT empty
       if (this.textInput.nativeElement.value.length != 0) {
-        let textInputValue = this.textInput.nativeElement.value;
-        let indexOfMenuOption = this.dropdownList.map(e => e.key).indexOf(textInputValue);
-
-        // If the value that is being displayed in the text input is not within the list of options in the dropdown menu
-        if (indexOfMenuOption == -1) {
-          // Update the 'Other' option using the value that's in the text input
-          this.dropdownList[0].key = textInputValue;
-          this.dropdownList[0].value = textInputValue + "px";
-          // Emit the value
-          this.selectedIndex = 0;
-          this.onChange.emit(this.dropdownList[0].value);
-          
-          // If the value that is being displayed in the text input is within the list of options in the dropdown menu 
-        } else {
-          // Emit the value
-          this.selectedIndex = indexOfMenuOption;
-          this.onChange.emit(this.dropdownList[indexOfMenuOption].value);
-        }
-        // Remove the listener
-        // window.removeEventListener('keydown', this.onKeyDown);
+        // Set the list with the current value
+        this.setList();
+        this.onChange.emit(this.dropdownList[this.selectedIndex].value);
       }
     }
 
@@ -87,6 +70,38 @@ export class EditableDropdownComponent extends DropdownComponent {
       }
       // Remove the listener
       window.removeEventListener('keydown', this.onKeyDown);
+
+
+    }
+  }
+
+
+
+  // --------------------------------------------------( SET VALUE )-------------------------------------- \\
+  setValue(value: any) {
+    // Assign the value to the input and set the list
+    this.textInput.nativeElement.value = value;
+    this.setList();
+  }
+
+
+
+
+
+  // --------------------------------------------------( SET LIST )-------------------------------------- \\
+  setList() {
+    // Get the index of the current value
+    let indexOfMenuOption = this.dropdownList.findIndex(x => x.key == this.textInput.nativeElement.value || x.value == this.textInput.nativeElement.value);
+
+    // If the value is in the list of options
+    if (indexOfMenuOption > 0) {
+      this.selectedIndex = indexOfMenuOption;
+
+      // The value is not in the list of options
+    } else {
+      this.selectedIndex = 0;
+      this.dropdownList[0].key = this.textInput.nativeElement.value;
+      this.dropdownList[0].value = this.textInput.nativeElement.value + 'px';
     }
   }
 }

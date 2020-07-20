@@ -23,14 +23,12 @@
             <div class="design-area-bar">
 
                 <!-- Breakpoints Dropdown -->
-                <div style="width: 55px; position: relative;">
+                <div class="breakpoints-dropdown-container">
                     <editable-dropdown #breakpointsDropdown [height]="24" [title]="'Breakpoints'"
                         [dropdownList]="breakpoints" [selectedIndex]="0"
+                        [disabled]="!pageService.page.widgetCursors || pageService.page.widgetCursors.length == 0"
                         (onChange)="onBreakpointDropdownChange($event)">
                     </editable-dropdown>
-                    <div *ngIf="!pageService.page.widgetCursors || pageService.page.widgetCursors.length == 0"
-                        style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgb(46, 46, 46, 0.75);">
-                    </div>
                 </div>
             </div>
 
