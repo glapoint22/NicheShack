@@ -51,6 +51,13 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   }
 
 
+
+  // --------------------------------( SET PAGE )-------------------------------- \\
+  setPage() {
+    this.paginator.setPage(this.notificationService.productContentNotification.customerText.length);
+  }
+
+
   // --------------------------------( SET POPUP )-------------------------------- \\
   setPopup() {
     let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });

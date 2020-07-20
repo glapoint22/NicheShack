@@ -1,3 +1,7 @@
+$row-color: #ff00ff;
+$column-color: #ff8903;
+$widget-color: #adff2f;
+
 %handle {
     position: absolute;
     width: 9px;
@@ -8,20 +12,24 @@
     z-index: 1;
 }
 
-.widget {
-    position: relative;
-    width: 100%;
-    &:not(.widget-selected) {
-        outline: 1px solid rgba(172, 255, 47, 0.5);
-    }
-}
+
 
 
 .canvas {
     .row {
+        width: 100%;
+        user-select: none;
+        min-height: 20px;
+
+        
         & .widget {
+            position: relative;
+            width: 100%;
+
+            
             &.widget-selected {
                 z-index: 1;
+                outline: 1px solid $selected-border-color;
     
                 // Top Left Handle
                 & > .top-left-handle {
@@ -146,6 +154,22 @@ body {
                 &:not(:active) {
                     cursor: move;
                 }
+                &:hover {
+                    outline: 1px dashed $row-color;
+
+                    & div[class*='col'] {
+                        outline: 1px solid $column-color;
+
+
+                        & .widget:not(.widget-selected) {
+                            outline: 1px solid $widget-color;
+    
+                            & .row {
+                                outline: 1px dashed $row-color;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -213,6 +237,21 @@ body {
         & .grid:hover {
             .row-indicator {
                 visibility: visible;
+            }
+        }
+
+        & .canvas {
+           & .row {
+                outline: 1px solid $row-color;
+
+                & div[class*='col'] {
+
+                    outline: 1px solid $column-color;
+
+                    & .widget {
+                        outline: 1px solid $widget-color;
+                    }
+                }
             }
         }
     }

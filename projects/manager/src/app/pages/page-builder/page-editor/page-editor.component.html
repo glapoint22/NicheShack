@@ -63,9 +63,9 @@
 
 
         <!-- Page Properties -->
-        <page-properties *ngIf="pageService.propertyView == propertyView.Page && pageType == 'page'" [page]="pageService.page"></page-properties>
+        <page-properties *ngIf="pageService.propertyView == propertyView.Page && pageType == PageType.Page" [page]="pageService.page"></page-properties>
 
-        <email-properties *ngIf="pageService.propertyView == propertyView.Page && pageType == 'email'" [page]="pageService.page"></email-properties>
+        <email-properties *ngIf="pageService.propertyView == propertyView.Page && pageType == PageType.Email" [page]="pageService.page"></email-properties>
 
         <!-- Row Propterties -->
         <row-properties *ngIf="pageService.propertyView == propertyView.Row"></row-properties>

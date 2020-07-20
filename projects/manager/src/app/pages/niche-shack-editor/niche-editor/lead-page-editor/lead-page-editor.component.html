@@ -36,9 +36,9 @@
 
         <!-- Tabs -->
         <div class="light-tabs-container">
-            <div class="light-tab" [ngClass]="{'selected-light-tab': selectedTab == 'leadPage'}"
+            <div class="light-tab" [ngClass]="{'selected-light-tab': selectedTab == pageType.LeadPage}"
                 (click)="onLeadPageTabClick()">Lead Page</div>
-            <div class="light-tab" [ngClass]="{'selected-light-tab': selectedTab == 'email'}"
+            <div class="light-tab" [ngClass]="{'selected-light-tab': selectedTab == pageType.Email}"
                 (click)="onEmailTabClick()">Email</div>
         </div>
 

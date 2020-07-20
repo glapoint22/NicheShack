@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Page } from '../classes/page';
+import { Page, PageType } from '../classes/page';
 import { PageData } from '../classes/page-data';
 import { BreakpointService } from './breakpoint.service';
 import { SaveService } from './save.service';
@@ -8,6 +8,7 @@ import { RowComponent } from '../shared-components/designer/row/row.component';
 import { ColumnComponent } from '../shared-components/designer/column/column.component';
 import { WidgetComponent } from '../shared-components/designer/widgets/widget/widget.component';
 import { WidgetCursor } from '../classes/widget-cursor';
+import { EditableDropdownComponent } from '../shared-components/elements/dropdowns/editable-dropdown/editable-dropdown.component';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class PageService {
   public selectedColumn: ColumnComponent;
   public selectedWidget: WidgetComponent;
   public buttonStylesDocumentFragment: DocumentFragment;
+  public designerBreakpointsDropdown: EditableDropdownComponent;
 
   // Properties for widget cursor
   public currentWidgetCursor: WidgetCursor;
@@ -40,6 +42,14 @@ export class PageService {
       url: this.apiUrl,
       data: this.stringifyPage(this.page.getData())
     });
+  }
+
+
+
+  setPage(width: number) {
+    // this.page.type = type;
+    this.page.setWidgets();
+    this.designerBreakpointsDropdown.textInput.nativeElement.value = width;
   }
 
 

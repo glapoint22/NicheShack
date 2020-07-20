@@ -24,6 +24,12 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
   }
 
 
+  // --------------------------------( SET PAGE )-------------------------------- \\
+  setPage() {
+    this.paginator.setPage(this.notificationService.productMediaNotification.customerText.length);
+  }
+
+
   // -----------------------------( ON IMAGE ICON CLICK )------------------------------ \\
   onImageIconClick(sourceElement: HTMLElement) {
     this.popupService.mediaType = MediaType.ProductImage;

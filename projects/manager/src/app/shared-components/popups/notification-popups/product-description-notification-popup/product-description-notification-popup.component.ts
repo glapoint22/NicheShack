@@ -21,6 +21,13 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
   }
 
 
+
+  // --------------------------------( SET PAGE )-------------------------------- \\
+  setPage() {
+    this.paginator.setPage(this.notificationService.productDescriptionNotification.customerText.length);
+  }
+
+
   // -----------------------------( ON SUBMIT )------------------------------ \\
   onSubmit(notification: Notification) {
     switch (notification.name) {

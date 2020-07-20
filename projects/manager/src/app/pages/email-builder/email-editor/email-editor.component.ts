@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEditorComponent } from '../../page-builder/page-editor/page-editor.component';
+import { PageType } from '../../../classes/page';
 
 @Component({
   selector: 'email-editor',
@@ -12,9 +13,10 @@ export class EmailEditorComponent extends PageEditorComponent implements OnInit 
   // ---------------------------------------------------------------------- Ng On Init --------------------------------------------------------
   ngOnInit() {
     this.apiUrl = 'api/Emails';
-    this.pageType = 'email';
+    this.pageType = PageType.Email;
     this.setPageView();
   }
+
 
 
   // --------------------------------------------------------------------- On Delete Click --------------------------------------------------------

@@ -21,6 +21,13 @@ export class ProductImageNotificationPopupComponent extends GeneralNotificationP
   }
 
 
+  // --------------------------------( SET PAGE )-------------------------------- \\
+  setPage() {
+    this.paginator.setPage(this.notificationService.productImageNotification.customerText.length);
+  }
+
+
+
   // -----------------------------(ON SUBMIT )------------------------------ \\
   onSubmit(notification: Notification) {
 

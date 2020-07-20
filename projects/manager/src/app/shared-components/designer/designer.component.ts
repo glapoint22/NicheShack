@@ -4,6 +4,8 @@ import { ContainerComponent } from './container/container.component';
 import { PageService } from '../../services/page.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { PromptService } from '../../services/prompt.service';
+import { KeyValue } from '@angular/common';
+import { EditableDropdownComponent } from '../elements/dropdowns/editable-dropdown/editable-dropdown.component';
 
 @Component({
   selector: 'designer',
@@ -19,7 +21,46 @@ export class DesignerComponent implements AfterViewInit {
   @ViewChild('workArea', { static: false }) workArea: ElementRef;
   @ViewChild('designAreaContainer', { static: false }) designAreaContainer: ElementRef;
   @ViewChild('PropertiesEditorContainer', { static: false }) PropertiesEditorContainer: ElementRef;
+  @ViewChild('breakpointsDropdown', { static: false }) breakpointsDropdown: EditableDropdownComponent;
   public widgetCursors: Array<WidgetCursor>;
+  public breakpoints: Array<KeyValue<string, string>> = [
+    {
+      key: 'Other',
+      value: ''
+    },
+    {
+      key: '320',
+      value: '320px'
+    },
+    {
+      key: '480',
+      value: '480px'
+    },
+    {
+      key: '600',
+      value: '600px'
+    },
+    {
+      key: '768',
+      value: '768px'
+    },
+    {
+      key: '1024',
+      value: '1024px'
+    },
+    {
+      key: '1280',
+      value: '1280px'
+    },
+    {
+      key: '1440',
+      value: '1440px'
+    },
+    {
+      key: '1600',
+      value: '1600px'
+    }
+  ];
 
 
   constructor(
@@ -28,15 +69,29 @@ export class DesignerComponent implements AfterViewInit {
     private promptService: PromptService
   ) { }
 
+
+
+
+
+
+  // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     this.pageService.clearPage();
     this.pageService.page.widgetCursors = []
   }
 
 
+
+
+
+  // -----------------------------( NG AFTER VIEW INIT )------------------------------ \\
   ngAfterViewInit() {
     this.pageService.page.rootContainer = this.rootContainer;
+    this.pageService.designerBreakpointsDropdown = this.breakpointsDropdown;
   }
+
+
+
 
 
   // -----------------------------( ON WIDGET ICON MOUSE DOWN )------------------------------ \\
@@ -79,6 +134,7 @@ export class DesignerComponent implements AfterViewInit {
 
       // Alert that the canvas width has changed
       this.breakpointService.onCanvasWidthChange.next(this.contentElement.nativeElement.getBoundingClientRect().width);
+      this.breakpointsDropdown.textInput.nativeElement.value = this.contentElement.nativeElement.getBoundingClientRect().width;
     }
 
     // On Mouseup
@@ -92,6 +148,17 @@ export class DesignerComponent implements AfterViewInit {
     window.addEventListener("mouseup", onMouseup);
   }
 
+
+
+
+
+  // -----------------------------( ON BREAKPOINT DROPDOWN CHANGE )------------------------------ \\
+  onBreakpointDropdownChange(value) {
+    this.canvasElement.nativeElement.style.maxWidth = value;
+
+    // Alert that the canvas width has changed
+    this.breakpointService.onCanvasWidthChange.next(this.contentElement.nativeElement.getBoundingClientRect().width);
+  }
 
 
   // ------------------( ON DELETE KEYDOWN )------------------- \\

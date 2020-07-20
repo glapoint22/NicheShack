@@ -47,6 +47,14 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
     this.paginatorIndex = this.notificationService.generalNotification.customerText.length - 1;
   }
 
+
+
+  // --------------------------------( SET PAGE )-------------------------------- \\
+  setPage() {
+    this.paginator.setPage(this.notificationService.generalNotification.customerText.length);
+  }
+
+
   // --------------------------------( SHOW CONTEXT MENU )-------------------------------- \\
   showContextMenu(notification: Notification) {
 

@@ -20,8 +20,7 @@ import { PropertyView } from '../../../classes/property-view';
 
 @Component({
   selector: 'row',
-  templateUrl: './row.component.html',
-  styleUrls: ['./row.component.scss']
+  templateUrl: './row.component.html'
 })
 export class RowComponent implements BreakpointsComponent, BreakpointsPaddingComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
