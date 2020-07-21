@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { PopupComponent } from '../popup/popup.component';
 import { MediaItem } from '../../../classes/media-item';
-import { Observable, of, fromEvent, Subscription } from 'rxjs';
-import { delay, debounceTime, switchMap, tap } from 'rxjs/operators';
+import { of, fromEvent, Subscription } from 'rxjs';
+import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { MediaType, Media } from '../../../classes/media';
 import { MediaItemListComponent } from '../../item-lists/media-item-list/media-item-list.component';
 import { DropdownComponent } from '../../elements/dropdowns/dropdown/dropdown.component';
@@ -14,7 +14,12 @@ import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 import { KeyValue } from '@angular/common';
 import { TempDataService } from '../../../services/temp-data.service';
 import { FormService } from '../../../services/form.service';
-import { DropdownOption } from '../../../classes/dropdown-option';
+import { ItemListOptions } from '../../../classes/item-list-options';
+import { MenuOption } from '../../../classes/menu-option';
+import { PromptService } from '../../../services/prompt.service';
+import { ListItem } from '../../../classes/list-item';
+import { MenuDivider } from '../../../classes/menu-divider';
+import { SubMenuOption } from '../../../classes/sub-menu-option';
 
 @Component({
   selector: 'media-browser-popup',
@@ -22,7 +27,14 @@ import { DropdownOption } from '../../../classes/dropdown-option';
   styleUrls: ['../popup/popup.component.scss', './media-browser-popup.component.scss']
 })
 export class MediaBrowserPopupComponent extends PopupComponent implements OnInit {
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, private productService: ProductService, private formService: FormService) {
+  constructor(popupService: PopupService,
+    cover: CoverService,
+    menuService: MenuService,
+    dropdownMenuService: DropdownMenuService,
+    dataService: TempDataService,
+    private productService: ProductService,
+    private formService: FormService,
+    private promptService: PromptService) {
     super(popupService, cover, menuService, dropdownMenuService, dataService);
   }
   public media: Media;
@@ -33,6 +45,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   public movingMediaInProgress: boolean;
   public loadingMediaInProgress: boolean;
   public indexOfCurrentMediaList: number;
+  public itemListOptions: ItemListOptions;
   public updatingMediaInProgress: boolean;
   public autoSelectedMediaItemIndex: number;
   public dropdownOptions: Array<KeyValue<any, MediaType>>;
@@ -48,24 +61,135 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       { key: 'Videos', value: MediaType.Video }
     ];
 
-
-
   public menuOptions = [
-    { add: 'New Image', edit: 'Edit Image Name', update: 'Update Image', delete: 'Delete Image', deletes: 'Delete Images' },
-    { add: 'New Background Image', edit: 'Edit Background Image Name', update: 'Update Background Image', delete: 'Delete Background Image', deletes: 'Delete Background Images' },
-    { add: 'New Banner Image', edit: 'Edit Banner Image Name', update: 'Update Banner Image', delete: 'Delete Banner Image', deletes: 'Delete Banner Images' },
-    { add: 'New Category Image', edit: 'Edit Category Image Name', update: 'Update Category Image', delete: 'Delete Category Image', deletes: 'Delete Category Images' },
-    { add: 'New Product Image', edit: 'Edit Product Image Name', update: 'Update Product Image', delete: 'Delete Product Image', deletes: 'Delete Product Images' },
-    { add: 'New Icon', edit: 'Edit Icon Name', update: 'Update Icon', delete: 'Delete Icon', deletes: 'Delete Icons' },
-    { add: 'New Video', edit: 'Edit Video Name', update: 'Update Video', delete: 'Delete Video', deletes: 'Delete Videos' }, {}
+    { new: 'New Image', edit: 'Edit Image Name', update: 'Update Image', delete: 'Delete Image', deletes: 'Delete Images' },
+    { new: 'New Background Image', edit: 'Edit Background Image Name', update: 'Update Background Image', delete: 'Delete Background Image', deletes: 'Delete Background Images' },
+    { new: 'New Banner Image', edit: 'Edit Banner Image Name', update: 'Update Banner Image', delete: 'Delete Banner Image', deletes: 'Delete Banner Images' },
+    { new: 'New Category Image', edit: 'Edit Category Image Name', update: 'Update Category Image', delete: 'Delete Category Image', deletes: 'Delete Category Images' },
+    { new: 'New Product Image', edit: 'Edit Product Image Name', update: 'Update Product Image', delete: 'Delete Product Image', deletes: 'Delete Product Images' },
+    { new: 'New Icon', edit: 'Edit Icon Name', update: 'Update Icon', delete: 'Delete Icon', deletes: 'Delete Icons' },
+    { new: 'New Video', edit: 'Edit Video Name', update: 'Update Video', delete: 'Delete Video', deletes: 'Delete Videos' }, {}
   ];
+
   @ViewChild('dropdown', { static: false }) dropdown: DropdownComponent;
-  @ViewChild('mediaItemList', { static: false }) mediaItemList: MediaItemListComponent;
+  @ViewChild('itemList', { static: false }) itemList: MediaItemListComponent;
+  @ViewChild('mediaSelectInput', { static: false }) mediaSelectInput: ElementRef;
 
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
   ngOnInit() {
     this.popupService.mediaBrowserPopup = this;
+
+    // Define the item list options
+    this.itemListOptions = {
+      // Current Object
+      currentObj: this,
+      // Menu Options
+      menuOptions: () => {
+
+
+        // If a media item is NOT selected
+        if (this.itemList.selectedListItemIndex == null) {
+          // New Media Item
+          return [new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].new, this.itemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N')]
+
+
+          // If a media item is selected
+        } else {
+
+
+          // If the media type is a video
+          if (this.popupService.mediaType == MediaType.Video) {
+            return [
+              // New Media Item
+              new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].new, this.itemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
+              // Divider
+              new MenuDivider(),
+              // Update
+              new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].update, this.itemList.editIcon.isDisabled, this.onListItemUpdate, null, 'Ctrl+Alt+U'),
+              // Edit Media Item
+              new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].edit, this.itemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E'),
+              // Divider
+              new MenuDivider(),
+              // Delete Media Item
+              new MenuOption(!this.itemList.isMultiSelected ? this.menuOptions[this.indexOfCurrentMediaList].delete : this.menuOptions[this.indexOfCurrentMediaList].deletes, this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+            ]
+
+            // If the media type is anything but a video
+          } else {
+
+            return [
+              // New Media Item
+              new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].new, this.itemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
+              // Divider
+              new MenuDivider(),
+              // Update
+              new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].update, this.itemList.editIcon.isDisabled, this.onListItemUpdate, null, 'Ctrl+Alt+U'),
+              // Edit Media Item
+              new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].edit, this.itemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E'),
+              // Divider
+              new MenuDivider(),
+              // Move To
+              this.moveTo(),
+              // Delete Media Item
+              new MenuOption(!this.itemList.isMultiSelected ? this.menuOptions[this.indexOfCurrentMediaList].delete : this.menuOptions[this.indexOfCurrentMediaList].deletes, this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+            ]
+          }
+        }
+      },
+      // // On Add Item
+      // onAddItem: this.openForm,
+      // On Add Item
+      onEditItem: this.updateMediaName,
+      // On Delete Item
+      onDeleteItem: this.openDeletePrompt
+    }
+  }
+
+
+  // --------------------------------( MOVE TO )-------------------------------- \\
+  moveTo() {
+    let options: Array<MenuOption> = [
+      new MenuOption('Images', false, this.onMoveMedia, [MediaType.Image]),
+      new MenuOption('Background Images', false, this.onMoveMedia, [MediaType.BackgroundImage]),
+      new MenuOption('Banner Images', false, this.onMoveMedia, [MediaType.BannerImage]),
+      new MenuOption('Category Images', false, this.onMoveMedia, [MediaType.CategoryImage]),
+      new MenuOption('Product Images', false, this.onMoveMedia, [MediaType.ProductImage]),
+      new MenuOption('Icons', false, this.onMoveMedia, [MediaType.Icon])
+    ];
+
+    let subMenus: Array<SubMenuOption> = [
+      new SubMenuOption('Move Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Background Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Banner Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Category Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Product Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Icon' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage],])
+    ];
+
+    switch (this.popupService.mediaType) {
+      case MediaType.Image: {
+        return subMenus[MediaType.Image];
+      }
+      case MediaType.BackgroundImage: {
+        return subMenus[MediaType.BackgroundImage];
+      }
+      case MediaType.BannerImage: {
+        return subMenus[MediaType.BannerImage];
+      }
+      case MediaType.CategoryImage: {
+        return subMenus[MediaType.CategoryImage];
+      }
+      case MediaType.ProductImage: {
+        return subMenus[MediaType.ProductImage];
+      }
+      case MediaType.Icon: {
+        return subMenus[MediaType.Icon];
+      }
+      case MediaType.Search: {
+        return subMenus[this.popupService.mediaType];
+      }
+    }
   }
 
 
@@ -75,6 +199,108 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     this.setMediaSearch();
     this.displayMedia(this.popupService.mediaType);
     this.setDropdownOptions();
+  }
+
+
+  // -----------------------------( ON LIST ITEM ADD )------------------------------ \\
+  onListItemAdd() {
+    this.itemList.mediaAddInitiated = true;
+    this.openForm(this.mediaSelectInput.nativeElement);
+  }
+
+
+  // -----------------------------( ON LIST ITEM UPDATE )------------------------------ \\
+  onListItemUpdate() {
+    this.itemList.mediaUpdateInitiated = true;
+    this.openForm(this.mediaSelectInput.nativeElement, this.itemList.selectedListItemIndex);
+  }
+
+
+  // -----------------------------( ON LIST ITEM EDIT )------------------------------ \\
+  onListItemEdit() {
+    this.itemList.onListItemEdit();
+  }
+
+
+  // -----------------------------( ON LIST ITEM DELETE )------------------------------ \\
+  onListItemDelete() {
+    this.itemList.onListItemDelete();
+  }
+
+
+  // -----------------------------( OPEN DELETE PROMPT )------------------------------ \\
+  openDeletePrompt() {
+    let promptTitle: string;
+    let promptMessage: string;
+
+    // Set delete prompt title and message
+    switch (this.popupService.mediaType) {
+      case MediaType.Image: {
+        promptTitle = !this.itemList.isMultiSelected ? 'Delete Image' : 'Delete Images';
+        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected image?' : 'Are you sure you want to delete all the selected images?';
+        break;
+      }
+      case MediaType.BackgroundImage: {
+        promptTitle = !this.itemList.isMultiSelected ? 'Delete Background Image' : 'Delete Background Images';
+        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected background image?' : 'Are you sure you want to delete all the selected background images?';
+        break;
+      }
+      case MediaType.BannerImage: {
+        promptTitle = !this.itemList.isMultiSelected ? 'Delete Banner Image' : 'Delete Banner Images';
+        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected banner image?' : 'Are you sure you want to delete all the selected banner images?';
+        break;
+      }
+      case MediaType.CategoryImage: {
+        promptTitle = !this.itemList.isMultiSelected ? 'Delete Category Image' : 'Delete Category Images';
+        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected category image?' : 'Are you sure you want to delete all the selected category images?';
+        break;
+      }
+      case MediaType.ProductImage: {
+        promptTitle = !this.itemList.isMultiSelected ? 'Delete Product Image' : 'Delete Product Images';
+        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected product image?' : 'Are you sure you want to delete all the selected product images?';
+        break;
+      }
+      case MediaType.Icon: {
+        promptTitle = !this.itemList.isMultiSelected ? 'Delete Icon' : 'Delete Icons';
+        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected icon?' : 'Are you sure you want to delete all the selected icons?';
+        break;
+      }
+      case MediaType.Video: {
+        promptTitle = !this.itemList.isMultiSelected ? 'Delete Video' : 'Delete Videos';
+        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected video?' : 'Are you sure you want to delete all the selected videos?';
+        break;
+      }
+    }
+    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteMediaItem, this, null, this.onPromptCancel);
+  }
+
+
+  // -----------------------------( UPDATE MEDIA NAME )------------------------------ \\
+  updateMediaName(mediaItem: MediaItem) {
+    mediaItem.loading = true;
+    this.dataService.put(
+
+      this.getUrl(this.popupService.mediaType), mediaItem)
+      .subscribe((id: string) => {
+        mediaItem.loading = false;
+        mediaItem.id = id;
+      });
+  }
+
+
+  // -----------------------------( DELETE MEDIA ITEM )------------------------------ \\
+  deleteMediaItem() {
+    let deletedMediaItems: Array<ListItem> = this.itemList.deleteListItem();
+
+    window.setTimeout(() => {
+      this.onMediaSelect(this.itemList.listItems[this.itemList.selectedListItemIndex]);
+    }, 50)
+  }
+
+
+  // -----------------------------( ON PROMPT CANCEL )------------------------------ \\
+  onPromptCancel() {
+    this.itemList.onPromptCancel()
   }
 
 
@@ -109,7 +335,6 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       this.mediaLists[this.indexOfCurrentMediaList] = mediaItems;
       // Select the appropriate media item in the list
       this.autoSelectMediaItem();
-      this.setDeletePrompt();
     });
   }
 
@@ -117,7 +342,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   // -----------------------------( SET MEDIA SEARCH MENU OPTIONS )------------------------------ \\
   setMediaSearchMenuOptions() {
     this.menuOptions[7] = {
-      add: this.menuOptions[this.popupService.mediaType].add,
+      new: this.menuOptions[this.popupService.mediaType].new,
       edit: this.menuOptions[this.popupService.mediaType].edit,
       update: this.menuOptions[this.popupService.mediaType].update,
       delete: this.menuOptions[this.popupService.mediaType].delete,
@@ -166,7 +391,6 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
           this.mediaLists[this.indexOfCurrentMediaList] = mediaItems;
           // Select the appropriate media item in the list
           this.autoSelectMediaItem();
-          this.setDeletePrompt();
         }
       })
 
@@ -174,68 +398,8 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     } else {
       // Select the appropriate media item in the list
       this.autoSelectMediaItem();
-      this.setDeletePrompt();
     }
     this.setMediaSearchMenuOptions();
-  }
-
-
-  // -----------------------------( SET DELETE PROMPT )------------------------------ \\
-  setDeletePrompt() {
-    window.setTimeout(() => {
-      // Set delete prompt title and message
-      switch (this.popupService.mediaType) {
-        case MediaType.Image: {
-          this.mediaItemList.promptTitle = 'Delete Image';
-          this.mediaItemList.promptMultiTitle = 'Delete Images';
-          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected image?';
-          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected images?';
-          break;
-        }
-        case MediaType.BackgroundImage: {
-          this.mediaItemList.promptTitle = 'Delete Background Image';
-          this.mediaItemList.promptMultiTitle = 'Delete Background Images';
-          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected background image?';
-          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected background images?';
-          break;
-        }
-        case MediaType.BannerImage: {
-          this.mediaItemList.promptTitle = 'Delete Banner Image';
-          this.mediaItemList.promptMultiTitle = 'Delete Banner Images';
-          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected banner image?';
-          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected banner images?';
-          break;
-        }
-        case MediaType.CategoryImage: {
-          this.mediaItemList.promptTitle = 'Delete Category Image';
-          this.mediaItemList.promptMultiTitle = 'Delete Category Images';
-          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected category image?';
-          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected category images?';
-          break;
-        }
-        case MediaType.ProductImage: {
-          this.mediaItemList.promptTitle = 'Delete Product Image';
-          this.mediaItemList.promptMultiTitle = 'Delete Product Images';
-          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected product image?';
-          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected product images?';
-          break;
-        }
-        case MediaType.Icon: {
-          this.mediaItemList.promptTitle = 'Delete Icon';
-          this.mediaItemList.promptMultiTitle = 'Delete Icons';
-          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected icon?';
-          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected icons?';
-          break;
-        }
-        case MediaType.Video: {
-          this.mediaItemList.promptTitle = 'Delete Video';
-          this.mediaItemList.promptMultiTitle = 'Delete Videos';
-          this.mediaItemList.propmtMessage = 'Are you sure you want to delete the selected video?';
-          this.mediaItemList.propmtMultiMessage = 'Are you sure you want to delete all the selected videos?';
-          break;
-        }
-      }
-    });
   }
 
 
@@ -249,7 +413,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       this.autoSelectedMediaItemIndex = this.mediaLists[this.indexOfCurrentMediaList].findIndex(x => {
         // As long as the media property is assigned, 
         // if the media property is NOT assigned, it means the target media was never loaded
-        if (this.media != null) x.thumbnail == this.media.thumbnail
+        if (this.media != null) return x.thumbnail == this.media.thumbnail
       });
 
       // When the current media list is everything other than videos
@@ -259,7 +423,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       this.autoSelectedMediaItemIndex = this.mediaLists[this.indexOfCurrentMediaList].findIndex(x => {
         // As long as the media property is assigned, 
         // if the media property is NOT assigned, it means the target media was never loaded
-        if (this.media != null) x.url == this.media.url
+        if (this.media != null) return x.url == this.media.url
       });
     }
   }
@@ -269,7 +433,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   onDropdownChange(mediaType: MediaType, searchInputValue: HTMLInputElement) {
     this.popupService.mediaType = mediaType;
     this.displayMedia(mediaType);
-    searchInputValue.value = "";
+    searchInputValue.value = '';
   }
 
 
@@ -336,7 +500,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
         }
 
         // Set the focus back to the list
-        this.mediaItemList.setFocusToList();
+        this.itemList.setFocusToList();
 
         videoSubscription.unsubscribe();
       });
@@ -345,7 +509,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     } else {
 
       // Clear the media select input (This is so the same filename can be entered again and again)
-      mediaSelectInput.value = "";
+      mediaSelectInput.value = '';
       // Open the file explorer window
       mediaSelectInput.click()
     }
@@ -365,17 +529,17 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // Populate the database with the new media
       this.dataService.post(this.getUrl(this.popupService.mediaType), event.target.files[0]).subscribe((media: any) => {
         // Update the empty item with the new media data
-        this.mediaItemList.listItems[0].id = media.id;
-        this.mediaItemList.listItems[0].url = media.url;
-        // this.mediaItemList.listItems[0].thumbnail = media.thumbnail;
-        this.onMediaSelect(this.mediaItemList.listItems[0]);
+        this.itemList.listItems[0].id = media.id;
+        this.itemList.listItems[0].url = media.url;
+        // this.itemList.listItems[0].thumbnail = media.thumbnail;
+        this.onMediaSelect(this.itemList.listItems[0]);
 
         // Now set the new image to be editable so it can be named
         this.preventNoShow = true;
         this.addingMediaInProgress = false;
-        this.mediaItemList.selectedListItemIndex = 0;
-        this.mediaItemList.addEventListeners();
-        this.mediaItemList.editListItem();
+        this.itemList.selectedListItemIndex = 0;
+        this.itemList.addEventListeners();
+        this.itemList.editListItem();
       })
     }
   }
@@ -389,10 +553,10 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       this.updatingMediaInProgress = true;
 
       this.dataService.put(this.getUrl(this.popupService.mediaType), {
-        id: this.mediaItemList.listItems[this.updatingMediaIndex].id,
+        id: this.itemList.listItems[this.updatingMediaIndex].id,
         image: event.target.files[0]
       }).subscribe(() => {
-        this.onMediaSelect(this.mediaItemList.listItems[this.updatingMediaIndex]);
+        this.onMediaSelect(this.itemList.listItems[this.updatingMediaIndex]);
         this.updatingMediaInProgress = false;
       })
     }
@@ -410,17 +574,17 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     // Populate the database with the new media
     this.dataService.post(this.getUrl(this.popupService.mediaType), url).subscribe((media: any) => {
       // Update the empty item with the new media data
-      this.mediaItemList.listItems[0].id = media.id;
-      this.mediaItemList.listItems[0].url = media.url;
-      this.mediaItemList.listItems[0].thumbnail = media.thumbnail;
-      this.onMediaSelect(this.mediaItemList.listItems[0])
+      this.itemList.listItems[0].id = media.id;
+      this.itemList.listItems[0].url = media.url;
+      this.itemList.listItems[0].thumbnail = media.thumbnail;
+      this.onMediaSelect(this.itemList.listItems[0])
 
       // Now set the new video to be editable so it can be named
       this.preventNoShow = true;
       this.addingMediaInProgress = false;
-      this.mediaItemList.selectedListItemIndex = 0;
-      this.mediaItemList.addEventListeners();
-      this.mediaItemList.editListItem();
+      this.itemList.selectedListItemIndex = 0;
+      this.itemList.addEventListeners();
+      this.itemList.editListItem();
     })
   }
 
@@ -431,12 +595,12 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     this.updatingMediaInProgress = true;
 
     this.dataService.put(this.getUrl(this.popupService.mediaType), {
-      id: this.mediaItemList.listItems[this.updatingMediaIndex].id,
+      id: this.itemList.listItems[this.updatingMediaIndex].id,
       url: url
     }).subscribe((media: any) => {
-      this.mediaItemList.listItems[this.updatingMediaIndex].url = media.url;
-      this.mediaItemList.listItems[this.updatingMediaIndex].thumbnail = media.thumbnail;
-      this.onMediaSelect(this.mediaItemList.listItems[this.updatingMediaIndex])
+      this.itemList.listItems[this.updatingMediaIndex].url = media.url;
+      this.itemList.listItems[this.updatingMediaIndex].thumbnail = media.thumbnail;
+      this.onMediaSelect(this.itemList.listItems[this.updatingMediaIndex])
       this.updatingMediaInProgress = false;
     })
   }
@@ -451,13 +615,13 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
     // Prepend the media item to its new list if it is selected
-    for (let i = 0; i < this.mediaItemList.listItems.length; i++) {
-      if (this.mediaItemList.listItems[i].selected) moveMediaItems.push(this.mediaItemList.listItems[i]);
+    for (let i = 0; i < this.itemList.listItems.length; i++) {
+      if (this.itemList.listItems[i].selected) moveMediaItems.push(this.itemList.listItems[i]);
     }
 
 
     // Update the database to reflect the move
-    this.dataService.put(this.getUrl(this.popupService.mediaType) + "/Move", {
+    this.dataService.put(this.getUrl(this.popupService.mediaType) + '/Move', {
       ids: moveMediaItems.map(x => x.id),
       destination: destinationMedia
     }).subscribe(() => {
@@ -467,18 +631,22 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       if (this.mediaLists[destinationMedia].length > 0) {
 
         // Prepend the media item to its new list if it is selected
-        for (let i = 0; i < this.mediaItemList.listItems.length; i++) {
-          if (this.mediaItemList.listItems[i].selected) this.mediaLists[destinationMedia].unshift(this.mediaLists[this.indexOfCurrentMediaList][i]);
+        for (let i = 0; i < this.itemList.listItems.length; i++) {
+          if (this.itemList.listItems[i].selected) this.mediaLists[destinationMedia].unshift(this.mediaLists[this.indexOfCurrentMediaList][i]);
         }
       }
       // Remove the media item from its original list
-      this.mediaItemList.deleteListItem();
+      this.itemList.deleteListItem();
+
+      window.setTimeout(() => {
+        this.onMediaSelect(this.itemList.listItems[this.itemList.selectedListItemIndex]);
+      }, 50)
     })
   }
 
 
   // -----------------------------( GET URL )------------------------------ \\
-   getUrl(mediaType: MediaType): string {
+  getUrl(mediaType: MediaType): string {
     let url: string;
 
     switch (mediaType) {
@@ -515,22 +683,9 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   }
 
 
-  // -----------------------------( UPDATE MEDIA NAME )------------------------------ \\
-  updateMediaName(mediaItem: MediaItem) {
-    mediaItem.loading = true;
-    this.dataService.put(
-
-      this.getUrl(this.popupService.mediaType), mediaItem)
-      .subscribe((id: string) => {
-        mediaItem.loading = false;
-        mediaItem.id = id;
-      });
-  }
-
-
   // --------------------------------( ON POPUP OUT )-------------------------------- \\
   onPopupOut() {
-    this.preventNoShow = (this.mediaItemList.promptService.show || this.mediaItemList.indexOfEditedListItem != null || this.addingMediaInProgress || this.updatingMediaInProgress || this.movingMediaInProgress || this.formService.videoUrlForm.show || (this.mediaItemList.selectedListItemIndex != null ? this.mediaItemList.listItems[this.mediaItemList.selectedListItemIndex].loading : null)) ? true : false;
+    this.preventNoShow = (this.itemList.promptService.show || this.itemList.indexOfEditedListItem != null || this.addingMediaInProgress || this.updatingMediaInProgress || this.movingMediaInProgress || this.formService.videoUrlForm.show || (this.itemList.selectedListItemIndex != null ? this.itemList.listItems[this.itemList.selectedListItemIndex].loading : null)) ? true : false;
     super.onPopupOut();
   }
 }

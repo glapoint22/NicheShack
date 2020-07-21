@@ -72,20 +72,18 @@
         <!-- Media List -->
         <div class="media-list">
             <media-item-list 
-                #mediaItemList
+                #itemList
+
+                [listOptions]="itemListOptions"
+
                 *ngIf="!loadingMediaInProgress"
-                (updateItemName)="updateMediaName($event)"
-                (onAddMedia)="openForm(mediaSelectInput)"
-                (onUpdateMedia)="openForm(mediaSelectInput, $event)"
-                (onMoveMedia)="onMoveMedia($event)"
                 (onMediaSelect)="onMediaSelect($event)"
                 [listItems]="mediaLists[indexOfCurrentMediaList]"
                 [mediaType]="indexOfCurrentMediaList"
                 [addingMediaInProgress]="addingMediaInProgress"
                 [updatingMediaInProgress]="updatingMediaInProgress"
                 [movingMediaInProgress]="movingMediaInProgress"
-                [autoSelectedMediaItemIndex]="autoSelectedMediaItemIndex"
-                [menuOptionsOld]="[menuOptions[indexOfCurrentMediaList].add, menuOptions[indexOfCurrentMediaList].edit, menuOptions[indexOfCurrentMediaList].update, menuOptions[indexOfCurrentMediaList].delete, menuOptions[indexOfCurrentMediaList].deletes]">
+                [autoSelectedMediaItemIndex]="autoSelectedMediaItemIndex">
             </media-item-list>
         </div>
     </div>

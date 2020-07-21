@@ -28,15 +28,6 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   public mediaAddInitiated: boolean;
   public mediaUpdateInitiated: boolean;
 
-  // Private
-  private moveTo = [];
-  // private mediaTypes = [this.menuService.option("Images", null, false, () => { this.onMoveMedia.emit(MediaType.Image) }),
-  // this.menuService.option("Background Images", null, false, () => { this.onMoveMedia.emit(MediaType.BackgroundImage) }),
-  // this.menuService.option("Banner Images", null, false, () => { this.onMoveMedia.emit(MediaType.BannerImage) }),
-  // this.menuService.option("Category Images", null, false, () => { this.onMoveMedia.emit(MediaType.CategoryImage) }),
-  // this.menuService.option("Product Images", null, false, () => { this.onMoveMedia.emit(MediaType.ProductImage) }),
-  // this.menuService.option("Icons", null, false, () => { this.onMoveMedia.emit(MediaType.Icon) })];
-
   // Decorators
   @Input() mediaType: MediaType;
   @Input() listItems: Array<MediaItem>;
@@ -45,10 +36,20 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   @Input() updatingMediaInProgress: boolean;
   @Input() autoSelectedMediaItemIndex: number;
   @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
-  @Output() onAddMedia: EventEmitter<void> = new EventEmitter();
-  @Output() onUpdateMedia: EventEmitter<number> = new EventEmitter();
-  @Output() onMoveMedia: EventEmitter<MediaType> = new EventEmitter();
   @Output() onMediaSelect: EventEmitter<MediaItem> = new EventEmitter();
+
+
+  // -----------------------------( NG ON INIT )------------------------------ \\
+  ngOnInit() {
+    // When the context menu becomes hidden
+    this.menuService.menu.onHide.subscribe(() => {
+      // As long as we weren't using the context menu to add a new media item and a list item is selected
+      if (!this.mediaAddInitiated && this.selectedListItemIndex != null) {
+        // Set the focus back to that list item
+        this.setListItemFocus(this.selectedListItemIndex)
+      }
+    });
+  }
 
 
   // -----------------------------( ON WINDOW FOCUS )------------------------------ \\
@@ -66,6 +67,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   ngOnChanges(changes: SimpleChanges) {
     // When a list gets loaded in the media browser popup, we want the list item associated with the targeted media to be selected, but only if target media is available
     if (changes['autoSelectedMediaItemIndex'] && changes['autoSelectedMediaItemIndex'].currentValue != null && changes['autoSelectedMediaItemIndex'].currentValue != -1) {
+
       // Call the function that is going to select the list item
       super.onListItemDown(this.autoSelectedMediaItemIndex);
 
@@ -77,90 +79,11 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   }
 
 
-  // -----------------------------( BUILD CONTEXT MENU )------------------------------ \\
-  buildContextMenu(e: MouseEvent) {
-    let moveTo = {};
-    // this.moveTo[MediaType.Image] = this.menuService.subMenu("Move Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
-    // this.moveTo[MediaType.BackgroundImage] = this.menuService.subMenu("Move Background Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
-    // this.moveTo[MediaType.BannerImage] = this.menuService.subMenu("Move Banner Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
-    // this.moveTo[MediaType.CategoryImage] = this.menuService.subMenu("Move Category Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.ProductImage], this.mediaTypes[MediaType.Icon]);
-    // this.moveTo[MediaType.ProductImage] = this.menuService.subMenu("Move Product Image" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.Icon]);
-    // this.moveTo[MediaType.Icon] = this.menuService.subMenu("Move Icon" + (this.editIcon.isDisabled ? "s" : "") + " To", this.selectedListItemIndex == null ? true : false, this.mediaTypes[MediaType.Image], this.mediaTypes[MediaType.BackgroundImage], this.mediaTypes[MediaType.BannerImage], this.mediaTypes[MediaType.CategoryImage], this.mediaTypes[MediaType.ProductImage]);
-    // this.moveTo[MediaType.Video] = {};
-
-    switch (this.mediaType) {
-      case MediaType.Image: {
-        moveTo = this.moveTo[MediaType.Image];
-        break;
-      }
-      case MediaType.BackgroundImage: {
-        moveTo = this.moveTo[MediaType.BackgroundImage];
-        break;
-      }
-      case MediaType.BannerImage: {
-        moveTo = this.moveTo[MediaType.BannerImage];
-        break;
-      }
-      case MediaType.CategoryImage: {
-        moveTo = this.moveTo[MediaType.CategoryImage];
-        break;
-      }
-      case MediaType.ProductImage: {
-        moveTo = this.moveTo[MediaType.ProductImage];
-        break;
-      }
-      case MediaType.Icon: {
-        moveTo = this.moveTo[MediaType.Icon];
-        break;
-      }
-      case MediaType.Video: {
-        moveTo = this.moveTo[MediaType.Video];
-        break;
-      }
-      case MediaType.Search: {
-        moveTo = this.moveTo[this.popupService.mediaType];
-        break;
-      }
-    }
-
-    // If a media item is NOT selected
-    if (this.selectedListItemIndex == null) {
-
-      // Just provide the 'Add' option in the context menu
-      // this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-      //   [
-      //     // Add
-      //     new MenuOption(this.menuOptions[0], this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() })
-      //   ]
-      // );
-
-      // But if a media item is selected
-    } else {
-
-      // // Provide all the following options
-      // this.menuService.buildMenu(this, e.clientX + 3, e.clientY,
-      //   [
-      //     // Add
-      //     new MenuOption(this.menuOptions[0], this.addIcon.isDisabled, () => { this.mediaAddInitiated = true; this.onAddMedia.emit() }, null, "Ctrl+Alt+N"),
-      //     new MenuDivider(),
-      //     // Update
-      //     new MenuOption(this.menuOptions[2], this.editIcon.isDisabled, () => { this.mediaUpdateInitiated = true; this.onUpdateMedia.emit(this.selectedListItemIndex) }, null, "Ctrl+Alt+U"),
-      //     // Edit
-      //     new MenuOption(this.menuOptions[1], this.editIcon.isDisabled, this.onListItemEdit, null, "Ctrl+Alt+E"),
-      //     // Divider
-      //     new MenuDivider(),
-      //     // Move To
-      //     // moveTo,
-      //     // Delete
-      //     new MenuOption(this.deleteIcon.isDisabled ? this.menuOptions[3] : this.editIcon.isDisabled ? this.menuOptions[4] : this.menuOptions[3],  this.deleteIcon.isDisabled, this.onListItemDelete, null, "Delete")
-      //   ]
-      // );
-    }
-  }
-
-
   // -----------------------------( SET FOCUS TO LIST )------------------------------ \\
   setFocusToList() {
+
+    
+
     // If we're adding an image
     if (this.mediaAddInitiated) this.mediaAddInitiated = false;
 
@@ -181,6 +104,16 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   }
 
 
+  // // -----------------------------( EVALUATE EDIT )------------------------------ \\
+  // evaluateEdit() {
+   
+
+
+
+
+  // }
+
+
   // -----------------------------( DELETE LIST ITEM )------------------------------ \\
   // deleteListItem() {
   //   super.deleteListItem();
@@ -190,11 +123,11 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   // }
 
 
-  // -----------------------------( SET LIST ITEM NAME )------------------------------ \\
-  setListItemName() {
-    // Update the item name
-    this.updateItemName.emit(this.listItems[this.indexOfEditedListItem]);
-  }
+  // // -----------------------------( SET LIST ITEM NAME )------------------------------ \\
+  // setListItemName() {
+  //   // Update the item name
+  //   this.updateItemName.emit(this.listItems[this.indexOfEditedListItem]);
+  // }
 
 
   // -----------------------------( REMOVE EVENT LISTENERS )------------------------------ \\

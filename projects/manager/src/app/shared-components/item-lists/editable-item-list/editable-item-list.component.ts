@@ -1,7 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { SelectType } from '../../../classes/list-item-select-type';
-import { ListItem } from '../../../classes/list-item';
 
 @Component({
   selector: 'editable-item-list',
@@ -11,8 +10,6 @@ import { ListItem } from '../../../classes/list-item';
 export class EditableItemListComponent extends ItemListComponent {
   public indexOfEditedListItem: number = null;
   public selectType = SelectType;
-  @Output() postItemName: EventEmitter<ListItem> = new EventEmitter();
-  @Output() updateItemName: EventEmitter<ListItem> = new EventEmitter();
 
   // -----------------------------( SET SHORTCUT KEYS )------------------------------ \\
   setShortcutKeys(event: KeyboardEvent) {
@@ -65,7 +62,7 @@ export class EditableItemListComponent extends ItemListComponent {
         // If we did NOT press the (Escape) key
         // But the (Enter) key was pressed or the list item was (Blurred)
       } else {
-
+        
         // As long as the list item named is different from what it was before the edit
         if (listItem.textContent != this.listItems[this.indexOfEditedListItem].name) {
           // Update the name property
@@ -92,7 +89,7 @@ export class EditableItemListComponent extends ItemListComponent {
       // But if the list item is empty
     } else {
 
-
+      
       // If we pressed the (Escape) key or the list item was (Blurred)
       if (isEscape || isBlur) {
 
@@ -103,7 +100,6 @@ export class EditableItemListComponent extends ItemListComponent {
 
           // If we were NOT adding a new list item
         } else {
-
           // Reset the list item back to the way it was before the edit
           listItem.textContent = this.listItems[this.indexOfEditedListItem].name;
         }

@@ -97,7 +97,7 @@ export class ItemListComponent implements OnInit {
   // -----------------------------( ON KEY DOWN )------------------------------ \\
   onKeyDown = (event: KeyboardEvent) => {
     this.setShortcutKeys(event)
-    if (!this.editIcon.isDisabled && event.ctrlKey && event.altKey && event.keyCode === 69) this.onEditItem.emit();
+    // if (!this.editIcon.isDisabled && event.ctrlKey && event.altKey && event.keyCode === 69) this.onEditItem.emit();
   };
 
 
@@ -582,7 +582,6 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( SET CONTEXT MENU )------------------------------ \\
   setContextMenu(e: MouseEvent) {
-
     // As long as the right mouse button is being pressed
     if (e.which == 3) {
       // Build the context menu
