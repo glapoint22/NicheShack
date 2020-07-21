@@ -186,14 +186,18 @@ export class ContainerComponent {
     this.rows.forEach((row: Row) => row.component.buildHTML(div));
   }
 
-  getData(rows: Array<RowData>) {
+  getData(): Array<RowData> {
+    let rows: Array<RowData> = [];
+
     if (this.rows.length > 0) {
       this.rows.forEach((row: Row) => {
-        rows.push(new RowData());
-        let rowData: RowData = rows[rows.length - 1];
-        row.component.getData(rowData);
+        let rowData: RowData = row.component.getData();
+
+        rows.push(rowData);
       });
     }
+
+    return rows;
   }
 
   save() {

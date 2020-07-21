@@ -13,6 +13,7 @@ export class DropdownComponent {
   @Input() height: number;
   @Input() selectedIndex: number;
   @Input() dropdownList: Array<KeyValue<any, any>>;
+  @Input() disabled: boolean;
   @Output() onChange: EventEmitter<string> = new EventEmitter();
   
   // Public

@@ -1,7 +1,7 @@
 import { BackgroundImageData } from './background-image-data';
 
-export class BackgroundData {
-    public color: string;
-    public image: BackgroundImageData;
-    public enable: boolean;
+export interface BackgroundData {
+    color: string;
+    image: BackgroundImageData;
+    enable: boolean;
 }

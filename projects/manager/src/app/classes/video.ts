@@ -3,7 +3,7 @@ import YouTubePlayer from 'youtube-player';
 import { VideoData } from './video-data';
 import { Media } from './media';
 
-export class Video implements Media{
+export class Video implements Media {
     public id: string;
     public name: string;
     private youTubePlayerSet: boolean;
@@ -15,15 +15,15 @@ export class Video implements Media{
         return this._url;
     }
     public set url(url: string) {
-        
+
 
         // If this url is from youtube
         if (url.match(/youtube/)) {
             // We need to append this to the url for playing to work
             url += '?enablejsapi=1';
-            
+
             // If the youTube player is not set yet
-            if(!this.youTubePlayerSet) {
+            if (!this.youTubePlayerSet) {
                 this.player = YouTubePlayer(this.iframe);
                 this.youTubePlayerSet = true;
             }
@@ -84,8 +84,12 @@ export class Video implements Media{
 
 
 
-    getData(videoData: VideoData) {
-        if (this.url) videoData.url = this.url;
-        if (this.thumbnail) videoData.thumbnail = this.thumbnail;
+    getData(): VideoData {
+        if(!this.url && !this.thumbnail) return null;
+        
+        return {
+            url: this.url ? this.url : null,
+            thumbnail: this.thumbnail ? this.thumbnail : null
+        }
     }
 }

@@ -95,20 +95,8 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
     // Get the product id
     if (!productId) productId = this.notificationService.generalNotification.productId;
 
-    // This basically creates a selected item for the niche shack hierarchy popup
-    // and in turn will display the product
-    this.popupService.nicheShackHierarchyPopup.selectedItem = {
-      id: productId,
-      type: NicheShackHierarchyItemType.Product,
-      showChildren: false,
-      children: null,
-      parent: null,
-      childless: null,
-      url: null,
-      childrenUrl: null,
-      childrenParameters: null,
-      name: null
-    }
+    // Open the product
+    this.popupService.nicheShackHierarchyPopup.openItem(productId, NicheShackHierarchyItemType.Product);
 
     // Hide the cover
     this.cover.showNormalCover = false;

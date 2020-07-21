@@ -1,10 +1,12 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { EditableItemListComponent } from 'projects/manager/src/app/shared-components/item-lists/editable-item-list/editable-item-list.component';
-import { Item } from 'projects/manager/src/app/classes/item';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ItemListOptions } from 'projects/manager/src/app/classes/item-list-options';
 import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 import { ListItem } from 'projects/manager/src/app/classes/list-item';
+import { Product } from 'projects/manager/src/app/classes/product';
+import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { SaveService } from 'projects/manager/src/app/services/save.service';
 
 @Component({
   selector: 'product-keywords',
@@ -12,15 +14,18 @@ import { ListItem } from 'projects/manager/src/app/classes/list-item';
   styleUrls: ['./product-keywords.component.scss']
 })
 export class ProductKeywordsComponent {
-  // Constructor
-  constructor(private promptService: PromptService) { }
-
-  // Public
-  public itemListOptions: ItemListOptions;
-
   // Decorators
-  @Input() keywords: Array<Item>;
+  @Input() product: Product;
   @ViewChild('itemList', { static: false }) itemList: EditableItemListComponent;
+  public itemListOptions: ItemListOptions;
+  private apiUrl: string = 'api/Products/Keywords';
+
+
+  constructor(
+    private promptService: PromptService,
+    private dataService: TempDataService,
+    private saveService: SaveService
+  ) { }
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
@@ -79,19 +84,37 @@ export class ProductKeywordsComponent {
 
   // -----------------------------( POST KEYWORD )------------------------------ \\
   postKeyword(keyword: ListItem) {
-    
+    this.dataService.post(this.apiUrl, {
+      productId: this.product.id,
+      keywordName: keyword.name
+    }).subscribe((id: string) => {
+      keyword.id = id;
+    });
   }
 
 
   // -----------------------------( UPDATE KEYWORD )------------------------------ \\
   updateKeyword(keyword: ListItem) {
-    
+    // Update the keyword
+    this.saveService.save({
+      url: this.apiUrl,
+      data: {
+        productId: this.product.id,
+        keywordId: keyword.id,
+        keywordName: keyword.name
+      }
+    });
   }
 
 
   // -----------------------------( DELETE KEYWORD )------------------------------ \\
   deleteKeyword() {
     let deletedKeywords: Array<ListItem> = this.itemList.deleteListItem();
+
+    this.dataService.delete(this.apiUrl, {
+      productId: this.product.id,
+      keywords: deletedKeywords
+    }).subscribe();
   }
 
 

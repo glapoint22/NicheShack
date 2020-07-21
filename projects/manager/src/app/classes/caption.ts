@@ -4,14 +4,16 @@ import { Font } from './font';
 import { FontSize } from './font-size';
 
 export class Caption {
+    private defaultColor: Color = new Color(200, 200, 200, 1);
     public font: Font = new Font(null, null);
     public fontSize: FontSize = new FontSize(null, null);
     public text: string;
     public fontWeight: string = 'normal';
     public fontStyle: string = 'normal';
     public textDecoration: string = 'none';
+    public color: Color = this.defaultColor;
 
-    constructor(public color: Color = new Color(200, 200, 200, 1)) {
+    constructor() {
         this.font.selectedIndex = 0;
         this.font.styleValue = this.font.options[this.font.selectedIndex].value;
 
@@ -84,30 +86,24 @@ export class Caption {
 
 
 
-    getData(captionData: CaptionData) {
-        // Font
-        if (this.font.styleValue != this.font.options[0].value) captionData.font = this.font.styleValue;
+    getData(): CaptionData {
+        return {
+            font: this.font.styleValue != this.font.options[0].value ? this.font.styleValue : null,
+            fontSize: this.getFontSize(),
+            text: this.text,
+            fontWeight: this.fontWeight != 'normal' ? this.fontWeight : null,
+            fontStyle: this.fontStyle != 'normal' ? this.fontStyle : null,
+            textDecoration: this.textDecoration != 'none' ? this.textDecoration : null,
+            color: !this.color.isEqual(this.defaultColor) ? this.color.toHex() : null
+        }
+    }
 
-        // Font Size
+    getFontSize() {
         if (this.fontSize.styleValue != this.fontSize.options[7].value) {
             let index = this.fontSize.options.findIndex(x => x.value == this.fontSize.styleValue);
-            captionData.fontSize = this.fontSize.options[index].key;
+            return this.fontSize.options[index].key;
         }
 
-
-        // Text
-        if (this.text) captionData.text = this.text;
-
-        // Font Weight
-        if (this.fontWeight != 'normal') captionData.fontWeight = this.fontWeight;
-
-        // Font Style
-        if (this.fontStyle != 'normal') captionData.fontStyle = this.fontStyle;
-
-        // Text Decoration
-        if (this.textDecoration != 'none') captionData.textDecoration = this.textDecoration;
-
-        // Color
-        if (!this.color.isEqual(new Color(200, 200, 200, 1))) captionData.color = this.color.toHex();
+        return null;
     }
 }

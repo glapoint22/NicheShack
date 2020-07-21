@@ -1,8 +1,8 @@
-export class ShadowData {
-    public enable: boolean;
-    public x: number;
-    public y: number;
-    public blur: number;
-    public size: number;
-    public color: string;
+export interface ShadowData {
+    enable: boolean;
+    x: number;
+    y: number;
+    blur: number;
+    size: number;
+    color: string;
 }

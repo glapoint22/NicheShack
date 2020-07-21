@@ -1,7 +1,6 @@
-import { BreakpointHorizontalAlignment, BreakpointType } from './breakpoint';
+import { BreakpointHorizontalAlignment, BreakpointType, Breakpoint } from './breakpoint';
 import { BreakpointObject } from './breakpoint-object';
 import { Alignment } from './alignment';
-import { WidgetData } from './widget-data';
 
 export class HorizontalAlignment extends Alignment implements BreakpointObject {
     public value: BreakpointHorizontalAlignment = BreakpointHorizontalAlignment.Left;
@@ -31,7 +30,13 @@ export class HorizontalAlignment extends Alignment implements BreakpointObject {
         }
     }
 
-    getData(widgetData: WidgetData) {
-        if (this.value != this.defaultValue) widgetData.horizontalAlignment = this.value;
+    getData(breakpoints: Array<Breakpoint>): BreakpointHorizontalAlignment {
+        let horizontalAlignment: BreakpointHorizontalAlignment;
+
+        if (!breakpoints.some(x => x.breakpointObject == this) && this.value != this.defaultValue) {
+            horizontalAlignment = this.value;
+        }
+
+        return horizontalAlignment;
     }
 }

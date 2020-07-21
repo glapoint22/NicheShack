@@ -53,7 +53,9 @@ export class ProductEmailComponent implements OnInit {
 
   ngAfterViewInit() {
     this.pageService.page.type = PageType.Email;
-    this.pageService.designerBreakpointsDropdown.textInput.nativeElement.value = this.pageService.page.defaultWidth;
+    window.setTimeout(() => {
+      this.pageService.designerBreakpointsDropdown.setValue(this.pageService.page.defaultWidth);
+    });
   }
 
 

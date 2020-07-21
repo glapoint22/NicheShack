@@ -42,7 +42,9 @@ export class PageEditorComponent implements OnInit, Searchable {
 
   // ---------------------------------------------------------------------- Ng After View Init --------------------------------------------------------
   ngAfterViewInit() {
-    this.pageService.designerBreakpointsDropdown.textInput.nativeElement.value = this.pageService.page.defaultWidth;
+    window.setTimeout(() => {
+      this.pageService.designerBreakpointsDropdown.setValue(this.pageService.page.defaultWidth);
+    });
   }
 
 
@@ -133,7 +135,7 @@ export class PageEditorComponent implements OnInit, Searchable {
         this.loadingService.loading = false;
         this.setPageView();
         this.pageService.page.widgetCursors = [];
-        this.pageService.designerBreakpointsDropdown.textInput.nativeElement.value = this.pageService.page.defaultWidth;
+        this.pageService.designerBreakpointsDropdown.setValue(this.pageService.page.defaultWidth);
       });
   }
 

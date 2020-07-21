@@ -9,7 +9,7 @@ import { Padding } from 'projects/manager/src/app/classes/padding';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
 import { TextWidgetData } from 'projects/manager/src/app/classes/text-widget-data';
-import { ColumnData } from 'projects/manager/src/app/classes/column-data';
+import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
 
 @Component({
   selector: 'text-widget',
@@ -39,7 +39,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
   ngOnInit() {
     this.height = 64;
     this.fixedHeight = this.height;
-    this.name = 'Text';
+    this.name = this.defaultName = 'Text';
     this.type = WidgetType.Text;
     this.background.color = new Color(255, 255, 255, 1);
     super.ngOnInit();
@@ -144,28 +144,34 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
 
 
 
-  getData(columnData: ColumnData) {
-    let textWidgetData = columnData.widgetData = new TextWidgetData();
+  getData(): TextWidgetData {
+    let widgetData = super.getData();
 
-    // Name
-    if (this.name != 'Text') textWidgetData.name = this.name;
+    return {
+      name: this.name != this.defaultName ? this.name : null,
+      widgetType: widgetData.widgetType,
+      width: widgetData.width,
+      height: widgetData.height,
+      horizontalAlignment: widgetData.horizontalAlignment,
+      background: this.background.getData(),
+      padding: this.padding.getData(this.breakpoints),
+      breakpoints: this.getBreakpointData(widgetData.breakpoints),
+      htmlContent: this.textBox && this.textBox.content.innerHTML ? this.textBox.content.innerHTML : null
+    }
+  }
 
-    // Background
-    this.background.getData(textWidgetData.background);
 
 
+
+
+  getBreakpointData(breakpointData: Array<BreakpointData>): Array<BreakpointData> {
     // Padding
-    this.padding.getData(textWidgetData.padding, this.breakpoints);
-    this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.top);
-    this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.right);
-    this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.bottom);
-    this.breakpointService.saveBreakpoints(this.breakpoints, textWidgetData.breakpoints, this.padding.left);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.top);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.right);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.bottom);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.left);
 
-    // HTML Content
-    if (this.textBox && this.textBox.content.innerHTML) textWidgetData.htmlContent = this.textBox.content.innerHTML;
-
-
-    super.getData(columnData);
+    return breakpointData;
   }
 
 

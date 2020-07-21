@@ -8,7 +8,6 @@ import { Image } from 'projects/manager/src/app/classes/image';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { ImageWidgetData } from 'projects/manager/src/app/classes/image-widget-data';
-import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'image-widget',
@@ -25,9 +24,7 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
   public imageLoaded: boolean;
 
   ngOnInit() {
-    // this.image.url = '0aada12f8b21471ea96aebe9a503977b.png';
-    // this.image.title = 'Alita';
-    this.name = 'Image';
+    this.name = this.defaultName = 'Image';
     this.type = WidgetType.Image;
     super.ngOnInit();
   }
@@ -53,28 +50,22 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
 
 
 
-  getData(columnData: ColumnData) {
-    let imageWidgetData = columnData.widgetData = new ImageWidgetData();
+  getData(): ImageWidgetData {
+    let widgetData = super.getData();
 
-    // Name
-    if (this.name != 'Image') imageWidgetData.name = this.name;
-
-    // Border
-    this.border.getData(imageWidgetData.border);
-
-    // Corners
-    this.corners.getData(imageWidgetData.corners);
-
-    // Shadow
-    this.shadow.getData(imageWidgetData.shadow);
-
-    // Image
-    this.image.getData(imageWidgetData.image);
-
-    // Link
-    this.link.getData(imageWidgetData.link);
-
-    super.getData(columnData);
+    return {
+      name: this.name != this.defaultName ? this.name : null,
+      widgetType: widgetData.widgetType,
+      width: widgetData.width,
+      height: this.height,
+      horizontalAlignment: widgetData.horizontalAlignment,
+      border: this.border.getData(),
+      corners: this.corners.getData(),
+      shadow: this.shadow.getData(),
+      link: this.link.getData(),
+      image: this.image.getData(),
+      breakpoints: []
+    }
   }
 
 

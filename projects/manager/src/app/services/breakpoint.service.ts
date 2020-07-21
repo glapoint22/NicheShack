@@ -303,12 +303,15 @@ export class BreakpointService {
 
 
 
-
   // -------------------------------------------------------------- Save Breakpoints ----------------------------------------------------------------------
   saveBreakpoints(breakpoints: Array<Breakpoint>, breakpointsData: Array<BreakpointData>, breakpointObject: BreakpointObject) {
     breakpoints.forEach((breakpoint: Breakpoint) => {
       if (breakpoint.breakpointObject == breakpointObject) {
-        breakpointsData.push(new BreakpointData(breakpoint.breakpointObject.breakpointType, breakpoint.screenSize, breakpoint.value));
+        breakpointsData.push({
+          breakpointType: breakpoint.breakpointObject.breakpointType,
+          screenSize: breakpoint.screenSize,
+          value: breakpoint.value
+        });
       }
     });
   }

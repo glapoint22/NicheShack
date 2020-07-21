@@ -1,4 +1,4 @@
-import { BreakpointVerticalAlignment, BreakpointType } from './breakpoint';
+import { BreakpointVerticalAlignment, BreakpointType, Breakpoint } from './breakpoint';
 import { BreakpointObject } from './breakpoint-object';
 import { Alignment } from './alignment';
 import { RowData } from './row-data';
@@ -32,7 +32,13 @@ export class VerticalAlignment extends Alignment implements BreakpointObject {
     }
 
 
-    getData(rowData: RowData) {
-        if (this.value != this.defaultValue) rowData.verticalAlignment = this.value;
+    getData(breakpoints: Array<Breakpoint>): BreakpointVerticalAlignment {
+        let verticalAlignment: BreakpointVerticalAlignment;
+
+        if (!breakpoints.some(x => x.breakpointObject == this) && this.value != this.defaultValue) {
+            verticalAlignment = this.value;
+        }
+
+        return verticalAlignment;
     }
 }

@@ -31,31 +31,20 @@ export class Padding {
     }
 
 
-    getData(paddingData: PaddingData, breakpoints: Array<Breakpoint>) {
-        if (this.constrain) paddingData.constrain = this.constrain;
+    getData(breakpoints: Array<Breakpoint>): PaddingData {
+        let top = this.top.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.top) ? this.top.value : null;
+        let right = this.right.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.right) ? this.right.value : null;
+        let bottom = this.bottom.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.bottom) ? this.bottom.value : null;
+        let left = this.left.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.left) ? this.left.value : null;
 
-        // Top
-        if (this.top.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.top)) {
-            paddingData.top = this.top.value;
-        }
+        if (!top && !right && !bottom && !left) return null;
 
-
-        // Right
-        if (this.right.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.right)) {
-            paddingData.right = this.right.value;
-        }
-
-
-
-        // Bottom
-        if (this.bottom.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.bottom)) {
-            paddingData.bottom = this.bottom.value;
-        }
-
-
-        // Left
-        if (this.left.value != BreakpointSpacing._0px && !breakpoints.some(x => x.breakpointObject == this.left)) {
-            paddingData.left = this.left.value;
+        return {
+            constrain: this.constrain,
+            top: top,
+            right: right,
+            bottom: bottom,
+            left: left
         }
     }
 }

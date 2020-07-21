@@ -7,18 +7,18 @@ import { ShadowData } from './shadow-data';
 import { PaddingData } from './padding-data';
 import { LinkData } from './link-data';
 
-export class ButtonWidgetData extends WidgetData {
-    public background: BackgroundData = new BackgroundData();
-    public border: BorderData = new BorderData();
-    public caption: CaptionData = new CaptionData();
-    public corners: CornersData = new CornersData();
-    public shadow: ShadowData = new ShadowData();
-    public padding: PaddingData = new PaddingData();
-    public link: LinkData = new LinkData();
-    public backgroundHoverColor: string;
-    public backgroundActiveColor: string;
-    public borderHoverColor: string;
-    public borderActiveColor: string;
-    public textHoverColor: string;
-    public textActiveColor: string;
+export interface ButtonWidgetData extends WidgetData {
+    background: BackgroundData;
+    border: BorderData;
+    caption: CaptionData;
+    corners: CornersData;
+    shadow: ShadowData;
+    padding: PaddingData;
+    link: LinkData;
+    backgroundHoverColor: string;
+    backgroundActiveColor: string;
+    borderHoverColor: string;
+    borderActiveColor: string;
+    textHoverColor: string;
+    textActiveColor: string;
 }

@@ -1,5 +1,5 @@
-export class ImageData {
-    public id: string;
-    public name: string;
-    public url: string;
+export interface ImageData {
+    id: string;
+    name: string;
+    url: string;
 }

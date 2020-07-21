@@ -15,7 +15,7 @@ import { BackgroundColor } from 'projects/manager/src/app/classes/background-col
 import { BorderColor } from 'projects/manager/src/app/classes/border-color';
 import { TextColor } from 'projects/manager/src/app/classes/text-color';
 import { ButtonWidgetData } from 'projects/manager/src/app/classes/button-widget-data';
-import { ColumnData } from 'projects/manager/src/app/classes/column-data';
+import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
 
 @Component({
   selector: 'button-widget',
@@ -23,6 +23,8 @@ import { ColumnData } from 'projects/manager/src/app/classes/column-data';
   styleUrls: ['./button-widget.component.scss']
 })
 export class ButtonWidgetComponent extends FreeformWidgetComponent implements OnInit, BreakpointsPaddingComponent {
+  private defaultBackgroundColor: Color = new Color(128, 128, 128, 1);
+  private defaultHeight: number = 40;
   public background: Background = new Background();
   public border: Border = new Border();
   public corners: Corners = new Corners();
@@ -32,16 +34,22 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   public padding: Padding = new Padding();
 
   // Background Hover & Active colors
-  public backgroundHoverColor: BackgroundColor = new BackgroundColor(new Color(150, 150, 150, 1));
-  public backgroundActiveColor: BackgroundColor = new BackgroundColor(new Color(135, 135, 135, 1));
+  private defaultBackgroundHoverColor = new Color(150, 150, 150, 1);
+  private defaultBackgroundActiveColor = new Color(135, 135, 135, 1);
+  public backgroundHoverColor: BackgroundColor = new BackgroundColor(this.defaultBackgroundHoverColor);
+  public backgroundActiveColor: BackgroundColor = new BackgroundColor(this.defaultBackgroundActiveColor);
 
   // Border Hover & Active colors
-  public borderHoverColor: BorderColor = new BorderColor(new Color(240, 240, 240, 1));
-  public borderActiveColor: BorderColor = new BorderColor(new Color(220, 220, 220, 1));
+  private defaultBorderHoverColor = new Color(240, 240, 240, 1);
+  private defaultBorderActiveColor = new Color(220, 220, 220, 1);
+  public borderHoverColor: BorderColor = new BorderColor(this.defaultBorderHoverColor);
+  public borderActiveColor: BorderColor = new BorderColor(this.defaultBorderActiveColor);
 
   // Text Hover & Active colors
-  public textHoverColor: TextColor = new TextColor(new Color(255, 255, 255, 1));
-  public textActiveColor: TextColor = new TextColor(new Color(225, 225, 225, 1));
+  private defaultTextHoverColor = new Color(255, 255, 255, 1);
+  private defaultTextActiveColor = new Color(225, 225, 225, 1);
+  public textHoverColor: TextColor = new TextColor(this.defaultTextHoverColor);
+  public textActiveColor: TextColor = new TextColor(this.defaultTextActiveColor);
 
   // Current state of the button (ie. normal, hover, active)
   public currentState: ButtonState;
@@ -49,11 +57,11 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
   // ---------------------------------------------------------------- Ng On Init --------------------------------------------------------------
   ngOnInit() {
-    this.height = 40;
-    this.caption.text = this.name = 'Button';
+    this.height = this.defaultHeight;
+    this.caption.text = this.name = this.defaultName = 'Button';
     this.type = WidgetType.Button;
     this.currentState = ButtonState.Normal;
-    this.background.color = new Color(128, 128, 128, 1);
+    this.background.color = this.defaultBackgroundColor;
     this.link.selectedOption = LinkOption.None;
     super.ngOnInit();
   }
@@ -150,62 +158,46 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   }
 
 
-  getData(columnData: ColumnData) {
-    let buttonWidgetData = columnData.widgetData = new ButtonWidgetData();
+  getData(): ButtonWidgetData {
+    let widgetData = super.getData();
 
-    // Name
-    if (this.name != 'Button') buttonWidgetData.name = this.name;
-
-    // Background
-    this.background.getData(buttonWidgetData.background);
-
-    // Border
-    this.border.getData(buttonWidgetData.border);
-
-    // Corners
-    this.corners.getData(buttonWidgetData.corners);
-
-    // Shadow
-    this.shadow.getData(buttonWidgetData.shadow);
-
-    // Padding
-    this.padding.getData(buttonWidgetData.padding, this.breakpoints);
-    this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.top);
-    this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.right);
-    this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.bottom);
-    this.breakpointService.saveBreakpoints(this.breakpoints, buttonWidgetData.breakpoints, this.padding.left);
-
-    // Text
-    this.caption.getData(buttonWidgetData.caption);
-
-    // Link
-    this.link.getData(buttonWidgetData.link);
-
-    // Background Hover Color
-    buttonWidgetData.backgroundHoverColor = this.backgroundHoverColor.value.toHex();
-
-    // Background Active Color
-    buttonWidgetData.backgroundActiveColor = this.backgroundActiveColor.value.toHex();
-
-
-
-    // Border Hover Color
-    buttonWidgetData.borderHoverColor = this.borderHoverColor.value.toHex();
-
-    // Border Active Color
-    buttonWidgetData.borderActiveColor = this.borderActiveColor.value.toHex();
-
-
-
-
-    // Text Hover Color
-    buttonWidgetData.textHoverColor = this.textHoverColor.value.toHex();
-
-    // Text Active Color
-    buttonWidgetData.textActiveColor = this.textActiveColor.value.toHex();
-
-    super.getData(columnData);
+    return {
+      name: this.name != this.defaultName ? this.name : null,
+      widgetType: widgetData.widgetType,
+      width: widgetData.width,
+      height: this.height != this.defaultHeight ? widgetData.height : 0,
+      horizontalAlignment: widgetData.horizontalAlignment,
+      background: this.background.getData(),
+      border: this.border.getData(),
+      corners: this.corners.getData(),
+      shadow: this.shadow.getData(),
+      padding: this.padding.getData(this.breakpoints),
+      caption: this.caption.text != this.defaultName ? this.caption.getData() : null,
+      link: this.link.getData(),
+      backgroundHoverColor: !this.backgroundHoverColor.value.isEqual(this.defaultBackgroundHoverColor) ? this.backgroundHoverColor.value.toHex() : null,
+      backgroundActiveColor: !this.backgroundActiveColor.value.isEqual(this.defaultBackgroundActiveColor) ? this.backgroundActiveColor.value.toHex() : null,
+      borderHoverColor: !this.borderHoverColor.value.isEqual(this.defaultBorderHoverColor) ? this.borderHoverColor.value.toHex() : null,
+      borderActiveColor: !this.borderActiveColor.value.isEqual(this.defaultBorderActiveColor) ? this.borderActiveColor.value.toHex() : null,
+      textHoverColor: !this.textHoverColor.value.isEqual(this.defaultTextHoverColor) ? this.textHoverColor.value.toHex() : null,
+      textActiveColor: !this.textActiveColor.value.isEqual(this.defaultTextActiveColor) ? this.textActiveColor.value.toHex() : null,
+      breakpoints: this.getBreakpointData(widgetData.breakpoints)
+    }
   }
+
+
+
+
+  getBreakpointData(breakpointData: Array<BreakpointData>): Array<BreakpointData> {
+    // Padding
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.top);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.right);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.bottom);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.left);
+
+    return breakpointData;
+  }
+
+
 
 
   // ------------------------------------------------------------------- Build HTML -----------------------------------------------------------

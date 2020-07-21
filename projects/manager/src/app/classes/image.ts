@@ -13,8 +13,11 @@ export class Image implements Media {
         }
     }
 
-    getData(imageData: ImageData) {
-        if (this.url) imageData.url = this.url;
-        if (this.name) imageData.name = this.name;
+    getData(): ImageData {
+        return {
+            id: this.id,
+            name: this.name,
+            url: this.url
+        }
     }
 }

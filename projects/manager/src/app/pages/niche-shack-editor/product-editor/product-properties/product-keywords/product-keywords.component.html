@@ -41,12 +41,12 @@
         <!-- Editable Item LIst -->
         <editable-item-list 
             #itemList
-            [listItems]="keywords"
+            [listItems]="product.keywords"
             [listOptions]="itemListOptions">
         </editable-item-list>
 
 
         <!-- Placeholder -->
-        <div *ngIf="keywords && keywords.length == 0" class="no-property">No keywords available</div>
+        <div *ngIf="product.keywords && product.keywords.length == 0" class="no-property">No keywords available</div>
     </div>
 </panel>

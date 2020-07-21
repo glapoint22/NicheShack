@@ -8,7 +8,7 @@
         <div class="property-box-light-icon-bar">
 
             <!-- Paginator -->
-            <paginator #paginator [itemCount]="content.length" (onItemChange)="onItemChange($event)">
+            <paginator #paginator [itemCount]="product.content.length" (onItemChange)="onItemChange($event)">
             </paginator>
 
             <!-- Icons -->
@@ -28,14 +28,14 @@
 
 
         <!-- Content -->
-        <div *ngIf="content.length > 0; else placeholder" class="content">
+        <div *ngIf="product.content.length > 0; else placeholder" class="content">
 
 
             <!-- Title -->
             <div class="property">
                 <div class="label">Title:</div>
             </div>
-            <input class="txt-20" [(ngModel)]="content[contentIndex].title"
+            <input class="txt-20" [(ngModel)]="product.content[contentIndex].title"
                 (input)="onTitleChange($event.target.value)">
 
 
@@ -46,7 +46,7 @@
             </div>
             
             
-            <image [image]="content[contentIndex].icon" [mediaType]="mediaType.Icon" [noDelete]="true" (onChange)="onIconChange()"></image>
+            <image [image]="product.content[contentIndex].icon" [mediaType]="mediaType.Icon" [noDelete]="true" (onChange)="onIconChange()"></image>
             
 
 
@@ -94,7 +94,8 @@
                     #itemList
                     [listItems]="pricePointList"
                     [listOptions]="itemListOptions"
-                    [checkList]="content[contentIndex].priceIndices">
+                    [checkList]="product.content[contentIndex].priceIndices"
+                    (onChange)="onPricePointChange()">
                 </checkbox-item-list>
             </div>
         </div>

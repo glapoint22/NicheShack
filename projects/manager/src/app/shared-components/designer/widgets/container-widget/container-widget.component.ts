@@ -10,7 +10,7 @@ import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/br
 import { Background } from 'projects/manager/src/app/classes/background';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { ContainerWidgetData } from 'projects/manager/src/app/classes/container-widget-data';
-import { ColumnData } from 'projects/manager/src/app/classes/column-data';
+import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
 
 @Component({
   selector: 'container-widget',
@@ -24,10 +24,11 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
   public padding: Padding = new Padding();
+  private defaultHeight: number = 250;
 
   ngOnInit() {
-    this.height = 250
-    this.name = 'Container';
+    this.height = this.defaultHeight;
+    this.name = this.defaultName = 'Container';
     this.type = WidgetType.Container;
     this.background.color = new Color(128, 128, 128, 1);
     super.ngOnInit();
@@ -78,37 +79,36 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
 
 
 
-  getData(columnData: ColumnData) {
-    let containerWidgetData = columnData.widgetData = new ContainerWidgetData();
+  getData(): ContainerWidgetData {
+    let widgetData = super.getData();
 
-    // Name
-    if (this.name != 'Container') containerWidgetData.name = this.name;
+    return {
+      name: this.name != this.defaultName ? this.name : null,
+      widgetType: widgetData.widgetType,
+      width: widgetData.width,
+      height: this.height != this.defaultHeight ? widgetData.height : 0,
+      horizontalAlignment: widgetData.horizontalAlignment,
+      background: this.background.getData(),
+      border: this.border.getData(),
+      corners: this.corners.getData(),
+      shadow: this.shadow.getData(),
+      padding: this.padding.getData(this.breakpoints),
+      breakpoints: this.getBreakpointData(widgetData.breakpoints),
+      rows: this.container.getData()
+    }
+  }
 
-    // Background
-    this.background.getData(containerWidgetData.background);
 
-    // Border
-    this.border.getData(containerWidgetData.border);
 
-    // Corners
-    this.corners.getData(containerWidgetData.corners);
 
-    // Shadow
-    this.shadow.getData(containerWidgetData.shadow);
-
+  getBreakpointData(breakpointData: Array<BreakpointData>): Array<BreakpointData> {
     // Padding
-    this.padding.getData(containerWidgetData.padding, this.breakpoints);
-    this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.top);
-    this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.right);
-    this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.bottom);
-    this.breakpointService.saveBreakpoints(this.breakpoints, containerWidgetData.breakpoints, this.padding.left);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.top);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.right);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.bottom);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.left);
 
-
-
-    super.getData(columnData);
-
-
-    this.container.getData(containerWidgetData.rows);
+    return breakpointData;
   }
 
 

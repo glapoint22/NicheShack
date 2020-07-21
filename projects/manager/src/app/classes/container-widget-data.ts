@@ -6,11 +6,11 @@ import { ShadowData } from './shadow-data';
 import { PaddingData } from './padding-data';
 import { RowData } from './row-data';
 
-export class ContainerWidgetData extends WidgetData {
-    background: BackgroundData = new BackgroundData();
-    border: BorderData = new BorderData();
-    corners: CornersData = new CornersData();
-    shadow: ShadowData = new ShadowData();
-    padding: PaddingData = new PaddingData();
-    rows: Array<RowData> = [];
+export interface ContainerWidgetData extends WidgetData {
+    background: BackgroundData;
+    border: BorderData;
+    corners: CornersData;
+    shadow: ShadowData;
+    padding: PaddingData;
+    rows: Array<RowData>;
 }

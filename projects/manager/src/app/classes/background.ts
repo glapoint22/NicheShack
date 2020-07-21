@@ -2,7 +2,6 @@ import { BackgroundData } from './background-data';
 import { Color } from './color';
 import { Enableable } from './enableable';
 import { BackgroundImage } from './background-image';
-import { BackgroundImageData } from './background-image-data';
 
 export class Background implements Enableable {
     public color: Color = new Color(0, 0, 0, 0);
@@ -57,26 +56,25 @@ export class Background implements Enableable {
     }
 
 
-    getData(backgroundData: BackgroundData) {
+    getData(): BackgroundData {
+        let backgroundData: BackgroundData;
+
         if (this.color.r > 0 ||
             this.color.g > 0 ||
             this.color.b > 0 ||
             this.color.a > 0 ||
             this.image.url) {
-            // Enable
-            if (this.enable) backgroundData.enable = this.enable;
 
-            // Background color
-            if (this.color.r > 0 ||
-                this.color.g > 0 ||
-                this.color.b > 0 ||
-                this.color.a > 0) backgroundData.color = this.color.toHex();
-
-            // Background image
-            if (this.image.url) {
-                backgroundData.image = new BackgroundImageData();
-                this.image.getData(backgroundData.image);
+            backgroundData = {
+                enable: this.enable,
+                color: this.color.r > 0 ||
+                    this.color.g > 0 ||
+                    this.color.b > 0 ||
+                    this.color.a > 0 ? this.color.toHex() : null,
+                image: this.image.url ? this.image.getData() : null
             }
         }
+
+        return backgroundData;
     }
 }

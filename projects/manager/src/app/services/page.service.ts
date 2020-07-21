@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import { Page, PageType } from '../classes/page';
 import { PageData } from '../classes/page-data';
 import { BreakpointService } from './breakpoint.service';
@@ -22,6 +22,7 @@ export class PageService {
   public selectedWidget: WidgetComponent;
   public buttonStylesDocumentFragment: DocumentFragment;
   public designerBreakpointsDropdown: EditableDropdownComponent;
+  public designerCanvas: ElementRef;
 
   // Properties for widget cursor
   public currentWidgetCursor: WidgetCursor;
@@ -47,9 +48,14 @@ export class PageService {
 
 
   setPage(width: number) {
-    // this.page.type = type;
     this.page.setWidgets();
-    this.designerBreakpointsDropdown.textInput.nativeElement.value = width;
+    this.setPageWidth(width);
+  }
+
+
+  setPageWidth(width: number) {
+    this.designerBreakpointsDropdown.setValue(width);
+    this.designerCanvas.nativeElement.style.maxWidth = width + 'px';
   }
 
 

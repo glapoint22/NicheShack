@@ -58,13 +58,19 @@ export class Corners {
     }
 
 
-    getData(cornersData: CornersData) {
+    getData(): CornersData {
+        let corners: CornersData
+
         if (this.topLeft > 0 || this.topRight > 0 || this.bottomRight > 0 || this.bottomLeft > 0) {
-            if (this.constrain) cornersData.constrain = this.constrain;
-            if (this.topLeft > 0) cornersData.topLeft = this.topLeft;
-            if (this.topRight > 0) cornersData.topRight = this.topRight;
-            if (this.bottomLeft > 0) cornersData.bottomLeft = this.bottomLeft;
-            if (this.bottomRight > 0) cornersData.bottomRight = this.bottomRight;
+            corners = {
+                constrain: this.constrain,
+                topLeft: this.topLeft,
+                topRight: this.topRight,
+                bottomRight: this.bottomRight,
+                bottomLeft: this.bottomLeft
+            }
         }
+
+        return corners;
     }
 }

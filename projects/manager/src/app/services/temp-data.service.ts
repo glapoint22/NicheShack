@@ -2025,23 +2025,28 @@ export class TempDataService {
         return of([
           {
             id: 'HGSGDGFFAFSD',
-            name: 'Flavor of the week: The Gumpy Way'
+            name: 'Flavor of the week: The Gumpy Way',
+            hoplink: 'https://d7c4efozzevfuniljjxksc8r3g.hop.clickbank.net/'
           },
           {
             id: 'REEQWRRE',
-            name: 'The Autobiography of Gabey Gump'
+            name: 'The Autobiography of Gabey Gump',
+            hoplink: 'https://d7c4efozzevfuniljjxksc8r3g.hop.clickbank.net/'
           },
           {
             id: 'JHGFJGHJHJ',
-            name: 'How To Be Successful Like the Gumpy\'s'
+            name: 'How To Be Successful Like the Gumpy\'s',
+            hoplink: 'https://d7c4efozzevfuniljjxksc8r3g.hop.clickbank.net/'
           },
           {
             id: 'QEQWREWERR',
-            name: 'The Gumpy\'s'
+            name: 'The Gumpy\'s',
+            hoplink: 'https://d7c4efozzevfuniljjxksc8r3g.hop.clickbank.net/'
           },
           {
             id: 'LKJHJKLJLK',
-            name: 'Once a Gumpy, Always a Gumpy'
+            name: 'Once a Gumpy, Always a Gumpy',
+            hoplink: 'https://d7c4efozzevfuniljjxksc8r3g.hop.clickbank.net/'
           }
         ]).pipe(delay(1000));
 

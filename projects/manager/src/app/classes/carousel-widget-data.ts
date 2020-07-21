@@ -1,6 +1,6 @@
 import { WidgetData } from './widget-data';
 import { CarouselBannerData } from './carousel-banner-data';
 
-export class CarouselWidgetData extends WidgetData {
+export interface CarouselWidgetData extends WidgetData {
     banners: Array<CarouselBannerData>;
 }

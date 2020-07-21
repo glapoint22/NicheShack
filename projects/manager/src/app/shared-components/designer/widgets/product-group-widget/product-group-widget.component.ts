@@ -4,7 +4,6 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { ProductGroupType } from 'projects/manager/src/app/classes/product-group-type';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { ProductGroupWidgetData } from 'projects/manager/src/app/classes/product-group-widget-data';
-import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 import { Caption } from 'projects/manager/src/app/classes/caption';
 import { Color } from 'projects/manager/src/app/classes/color';
 
@@ -20,7 +19,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
 
   ngOnInit() {
     this.height = 250
-    this.name = 'Product Group';
+    this.name = this.defaultName = 'Product Group';
     this.type = WidgetType.ProductGroup;
     this.caption.text = 'Check out these products';
     this.caption.color = new Color(255, 187, 0, 1);
@@ -38,22 +37,20 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
 
 
 
-  getData(columnData: ColumnData) {
-    let productGroupWidgetData = columnData.widgetData = new ProductGroupWidgetData();
+  getData(): ProductGroupWidgetData {
+    let widgetData = super.getData();
 
-    // Name
-    if (this.name != 'Product Group') productGroupWidgetData.name = this.name;
-
-    // Caption
-    this.caption.getData(productGroupWidgetData.caption);
-
-    // Product Group Type
-    if (this.productGroupType != ProductGroupType.FeaturedProducts) productGroupWidgetData.productGroupType = this.productGroupType;
-
-    // Featured Products
-    if (this.featuredProducts.length > 0) productGroupWidgetData.featuredProducts = this.featuredProducts;
-
-    super.getData(columnData);
+    return {
+      name: this.name != this.defaultName ? this.name : null,
+      widgetType: widgetData.widgetType,
+      width: widgetData.width,
+      height: null,
+      horizontalAlignment: widgetData.horizontalAlignment,
+      caption: this.caption.getData(),
+      productGroupType: this.productGroupType != ProductGroupType.FeaturedProducts ? this.productGroupType : 0,
+      featuredProducts: this.featuredProducts.length > 0 ? this.featuredProducts : [],
+      breakpoints: []
+    }
   }
 
 

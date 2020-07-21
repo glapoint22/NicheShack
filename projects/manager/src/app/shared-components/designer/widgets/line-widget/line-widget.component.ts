@@ -5,7 +5,6 @@ import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.comp
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { LineWidgetData } from 'projects/manager/src/app/classes/line-widget-data';
-import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'line-widget',
@@ -18,7 +17,7 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
 
 
   ngOnInit() {
-    this.name = 'Line';
+    this.name = this.defaultName = 'Line';
     this.type = WidgetType.Line;
     super.ngOnInit();
   }
@@ -30,19 +29,19 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
   }
 
 
-  getData(columnData: ColumnData) {
-    let lineWidgetData = columnData.widgetData = new LineWidgetData();
+  getData(): LineWidgetData {
+    let widgetData = super.getData();
 
-    // Name
-    if (this.name != 'Line') lineWidgetData.name = this.name;
-
-    // Border
-    this.border.getData(lineWidgetData.border);
-
-    // Shadow
-    this.shadow.getData(lineWidgetData.shadow);
-
-    super.getData(columnData);
+    return {
+      name: this.name != this.defaultName ? this.name : null,
+      widgetType: widgetData.widgetType,
+      width: widgetData.width,
+      height: this.height,
+      horizontalAlignment: widgetData.horizontalAlignment,
+      border: this.border.getData(),
+      shadow: this.shadow.getData(),
+      breakpoints: []
+    }
   }
 
 

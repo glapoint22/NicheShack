@@ -6,8 +6,9 @@ export class Border implements Enableable {
     public enable: boolean;
     public width: number = 1;
     public style: string = 'solid';
+    private defaultColor: Color = new Color(190, 190, 190, 1);
+    public color: Color = this.defaultColor;
 
-    constructor(public color: Color = new Color(190, 190, 190, 1)) { }
 
     applyStyle(element: HTMLElement) {
         if (this.enable) {
@@ -32,13 +33,18 @@ export class Border implements Enableable {
         }
     }
 
-    getData(borderData: BorderData) {
+    getData(): BorderData {
+        let borderData: BorderData;
+
         if (this.enable) {
-            borderData.enable = this.enable;
-            if (this.width > 1) borderData.width = this.width;
-            if (this.style != 'solid') borderData.style = this.style;
-            if (!this.color.isEqual(new Color(190, 190, 190, 1))) borderData.color = this.color.toHex();
+            borderData = {
+                enable: this.enable,
+                width: this.width,
+                style: this.style != 'solid' ? this.style : null,
+                color: !this.color.isEqual(this.defaultColor) ? this.color.toHex() : null
+            }
         }
 
+        return borderData;
     }
 }
