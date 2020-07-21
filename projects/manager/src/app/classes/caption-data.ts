@@ -1,4 +1,4 @@
-export class CaptionData {
+export interface CaptionData {
     text: string;
     fontWeight: string;
     fontStyle: string;

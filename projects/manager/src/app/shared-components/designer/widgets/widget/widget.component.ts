@@ -6,8 +6,8 @@ import { Breakpoint, BreakpointVerticalAlignment } from 'projects/manager/src/ap
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
-import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 import { PropertyView } from 'projects/manager/src/app/classes/property-view';
+import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
 
 @Component({
   template: '',
@@ -21,6 +21,7 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
   public horizontalAlignment: HorizontalAlignment = new HorizontalAlignment();
   public name: string;
   public type: WidgetType;
+  public defaultName: string;
 
   constructor(public breakpointService: BreakpointService) { }
 
@@ -93,23 +94,26 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
   }
 
 
-  getData(columnData: ColumnData) {
-    // Type
-    columnData.widgetData.widgetType = this.type;
-
-    // Width
-    if (this.width) columnData.widgetData.width = this.width;
-
-    // Height
-    if (this.height) columnData.widgetData.height = this.height;
-
-    // Horizontal Alignment
-    if (!this.breakpoints.some(x => x.breakpointObject == this.horizontalAlignment)) {
-      this.horizontalAlignment.getData(columnData.widgetData);
-    } else {
-      this.breakpointService.saveBreakpoints(this.breakpoints, columnData.widgetData.breakpoints, this.horizontalAlignment);
+  getData(): WidgetData {
+    return {
+      name: null,
+      widgetType: this.type,
+      width: this.width,
+      height: this.height,
+      horizontalAlignment: this.horizontalAlignment.getData(this.breakpoints),
+      breakpoints: this.getBreakpoints()
     }
   }
+
+
+  getBreakpoints(): Array<BreakpointData> {
+    let breakpointData: Array<BreakpointData> = [];
+
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.horizontalAlignment);
+    return breakpointData;
+  }
+
+
 
   onClick(event: MouseEvent) {
     event.stopPropagation();

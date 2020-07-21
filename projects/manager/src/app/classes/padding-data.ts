@@ -1,7 +1,7 @@
-export class PaddingData {
-    public constrain: boolean;
-    public top: string;
-    public right: string;
-    public bottom: string;
-    public left: string;
+export interface PaddingData {
+    constrain: boolean;
+    top: string;
+    right: string;
+    bottom: string;
+    left: string;
 }

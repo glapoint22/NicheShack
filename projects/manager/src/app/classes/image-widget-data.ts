@@ -3,12 +3,12 @@ import { BorderData } from './border-data';
 import { CornersData } from './corners-data';
 import { ShadowData } from './shadow-data';
 import { LinkData } from './link-data';
-import { Image } from './image';
+import { ImageData } from './image-data';
 
-export class ImageWidgetData extends WidgetData {
-    image: Image = new Image();
-    border: BorderData = new BorderData();
-    corners: CornersData = new CornersData();
-    shadow: ShadowData = new ShadowData();
-    link: LinkData = new LinkData();
+export interface ImageWidgetData extends WidgetData {
+    image: ImageData;
+    border: BorderData;
+    corners: CornersData;
+    shadow: ShadowData;
+    link: LinkData;
 }

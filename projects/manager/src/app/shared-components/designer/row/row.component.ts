@@ -17,6 +17,7 @@ import { Background } from '../../../classes/background';
 import { ColumnData } from '../../../classes/column-data';
 import { PageService } from '../../../services/page.service';
 import { PropertyView } from '../../../classes/property-view';
+import { BreakpointData } from '../../../classes/breakpoint-data';
 
 @Component({
   selector: 'row',
@@ -298,47 +299,51 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
   }
 
 
-  getData(rowData: RowData) {
-    // Name
-    if (this.name != 'Row') rowData.name = this.name;
-
-    // Top
-    rowData.top = this.getPosition();
-
-    // Background
-    this.background.getData(rowData.background);
-
-    // Border
-    this.border.getData(rowData.border);
-
-    // Corners
-    this.corners.getData(rowData.corners);
-
-    // Shadow
-    this.shadow.getData(rowData.shadow);
-
-    // Padding
-    this.padding.getData(rowData.padding, this.breakpoints);
-    this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.top);
-    this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.right);
-    this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.bottom);
-    this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.padding.left);
-
-    // Vertical Alignment
-    if (!this.breakpoints.some(x => x.breakpointObject == this.verticalAlignment)) {
-      this.verticalAlignment.getData(rowData);
-    } else {
-      this.breakpointService.saveBreakpoints(this.breakpoints, rowData.breakpoints, this.verticalAlignment);
+  getData(): RowData {
+    return {
+      name: this.name != 'Row' ? this.name : null,
+      top: this.getPosition(),
+      background: this.background.getData(),
+      border: this.border.getData(),
+      corners: this.corners.getData(),
+      shadow: this.shadow.getData(),
+      padding: this.padding.getData(this.breakpoints),
+      verticalAlignment: this.verticalAlignment.getData(this.breakpoints),
+      columns: this.getColumns(),
+      breakpoints: this.getBreakpoints()
     }
-
-    // Save the column data for each column
-    this.columns.forEach((column: Column) => {
-      rowData.columns.push(new ColumnData());
-      let columnData = rowData.columns[rowData.columns.length - 1];
-      column.component.getData(columnData);
-    });
   }
 
+
+
+  getColumns(): Array<ColumnData> {
+    let columns: Array<ColumnData> = [];
+
+    this.columns.forEach((column: Column) => {
+      let columnData: ColumnData = column.component.getData();
+
+      columns.push(columnData);
+    });
+
+    return columns;
+  }
+
+
+  getBreakpoints(): Array<BreakpointData> {
+    let breakpointData: Array<BreakpointData> = [];
+
+    // Padding
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.top);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.right);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.bottom);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.left);
+
+    // Vertical Alignment
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.verticalAlignment);
+
+
+    return breakpointData;
+  }
 
 
   buildHTML(parent: HTMLElement) {

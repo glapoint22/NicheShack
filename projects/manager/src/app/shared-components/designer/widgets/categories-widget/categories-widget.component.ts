@@ -3,7 +3,6 @@ import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.comp
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Category } from 'projects/manager/src/app/classes/category';
 import { CategoriesWidgetData } from 'projects/manager/src/app/classes/categories-widget-data';
-import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 import { Caption } from 'projects/manager/src/app/classes/caption';
 import { Color } from 'projects/manager/src/app/classes/color';
 import { TextColor } from 'projects/manager/src/app/classes/text-color';
@@ -24,7 +23,7 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
 
   ngOnInit() {
     this.height = 250
-    this.name = 'Categories';
+    this.name = this.defaultName = 'Categories';
     this.type = WidgetType.Categories;
     this.caption.text = 'Shop by category';
     this.caption.color = new Color(255, 187, 0, 1);
@@ -43,28 +42,22 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
   }
 
 
-  getData(columnData: ColumnData) {
-    let categoriesWidgetData = columnData.widgetData = new CategoriesWidgetData();
+  getData(): CategoriesWidgetData {
+    let widgetData = super.getData();
 
-    // Name
-    if (this.name != 'Categories') categoriesWidgetData.name = this.name;
-
-    // Caption
-    this.caption.getData(categoriesWidgetData.caption);
-
-    // Categories
-    if (this.categories.length > 0) categoriesWidgetData.categories = this.categories;
-
-    // Text Color
-    categoriesWidgetData.textColor = this.textColor.value.toHex();
-
-    // Background Color
-    categoriesWidgetData.backgroundColor = this.backgroundColor.value.toHex();
-
-    // Shadow
-    this.shadow.getData(categoriesWidgetData.shadow);
-
-    super.getData(columnData);
+    return {
+      name: this.name != this.defaultName ? this.name : null,
+      widgetType: widgetData.widgetType,
+      width: widgetData.width,
+      height: null,
+      horizontalAlignment: widgetData.horizontalAlignment,
+      shadow: this.shadow.getData(),
+      caption: this.caption.getData(),
+      textColor: this.textColor.value.toHex(),
+      backgroundColor: this.backgroundColor.value.toHex(),
+      categories: this.categories.length > 0 ? this.categories : [],
+      breakpoints: []
+    }
   }
 
   buildHTML(parent: HTMLElement) {

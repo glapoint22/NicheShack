@@ -1,14 +1,12 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ProportionalWidgetComponent } from '../proportional-widget/proportional-widget.component';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
-import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { Video } from 'projects/manager/src/app/classes/video';
 import { VideoWidgetData } from 'projects/manager/src/app/classes/video-widget-data';
-import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 
 @Component({
   selector: 'video-widget',
@@ -24,7 +22,7 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
   public video: Video;
   
   ngOnInit() {
-    this.name = 'Video';
+    this.name = this.defaultName = 'Video';
     this.type = WidgetType.Video;
     super.ngOnInit();
   }
@@ -32,9 +30,6 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
 
   ngAfterViewInit() {
     this.video = new Video(this.iframe.nativeElement);
-    // this.video.thumbnail = 'thumbnail1.png';
-    // this.video.url = 'https://www.youtube.com/embed/1AI6RS1st2E';
-    // this.video.url = '//player.vimeo.com/video/173192945?muted=false';
     super.ngAfterViewInit();
     
   }
@@ -50,25 +45,21 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
 
 
 
-  getData(columnData: ColumnData) {
-    let videoWidgetData = columnData.widgetData = new VideoWidgetData();
+  getData(): VideoWidgetData {
+    let widgetData = super.getData();
 
-    // Name
-    if (this.name != 'Video') videoWidgetData.name = this.name;
-    
-    // Border
-    this.border.getData(videoWidgetData.border);
-
-    // Corners
-    this.corners.getData(videoWidgetData.corners);
-
-    // Shadow
-    this.shadow.getData(videoWidgetData.shadow);
-
-    // Video
-    this.video.getData(videoWidgetData.video);
-
-    super.getData(columnData);
+    return {
+      name: this.name != this.defaultName ? this.name : null,
+      widgetType: widgetData.widgetType,
+      width: widgetData.width,
+      height: this.height,
+      horizontalAlignment: widgetData.horizontalAlignment,
+      border: this.border.getData(),
+      corners: this.corners.getData(),
+      shadow: this.shadow.getData(),
+      video: this.video.getData(),
+      breakpoints: []
+    }
   }
 
 

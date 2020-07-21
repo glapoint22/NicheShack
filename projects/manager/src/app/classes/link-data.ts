@@ -1,5 +1,5 @@
-export class LinkData {
-    public selectedOption: string;
-    public url: string;
-    public optionValue: string;
+export interface LinkData {
+    selectedOption: string;
+    url: string;
+    optionValue: string;
 }

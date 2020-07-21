@@ -15,10 +15,14 @@ export class Link {
     }
 
 
-    getData(linkData: LinkData) {
-        if (this.selectedOption != LinkOption.None) linkData.selectedOption = this.selectedOption;
-        if (this.url) linkData.url = this.url;
-        if (this.optionValue) linkData.optionValue = this.optionValue;
+    getData(): LinkData {
+        if (this.selectedOption == LinkOption.None) return null;
+
+        return {
+            selectedOption: this.selectedOption,
+            url: this.url,
+            optionValue: this.optionValue
+        }
     }
 }
 

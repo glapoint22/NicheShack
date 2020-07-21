@@ -4,9 +4,9 @@ import { CornersData } from './corners-data';
 import { ShadowData } from './shadow-data';
 import { VideoData } from './video-data';
 
-export class VideoWidgetData extends WidgetData {
-    border: BorderData = new BorderData();
-    corners: CornersData = new CornersData();
-    shadow: ShadowData = new ShadowData();
-    video: VideoData = new VideoData();
+export interface VideoWidgetData extends WidgetData {
+    border: BorderData;
+    corners: CornersData;
+    shadow: ShadowData;
+    video: VideoData;
 }

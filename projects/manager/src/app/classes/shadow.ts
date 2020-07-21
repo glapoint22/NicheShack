@@ -34,14 +34,20 @@ export class Shadow implements Enableable {
     }
 
 
-    getData(shadowData: ShadowData) {
+    getData(): ShadowData {
+        let shadow: ShadowData;
+
         if (this.enable) {
-            shadowData.enable = this.enable;
-            if (this.x != this.default) shadowData.x = this.x;
-            if (this.y != this.default) shadowData.y = this.y;
-            if (this.blur != this.default) shadowData.blur = this.blur;
-            if (this.size != this.default) shadowData.size = this.size;
-            if (!this.color.isEqual(new Color(0, 0, 0, 0.75))) shadowData.color = this.color.toHex();
+            shadow = {
+                enable: this.enable,
+                x: this.x != this.default ? this.x : 0,
+                y: this.y != this.default ? this.y : 0,
+                blur: this.blur != this.default ? this.blur : 0,
+                size: this.size != this.default ? this.size : 0,
+                color: !this.color.isEqual(new Color(0, 0, 0, 0.75)) ? this.color.toHex() : null
+            }
         }
+        
+        return shadow;
     }
 }

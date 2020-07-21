@@ -15,6 +15,7 @@ import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-paddin
 import { Background } from '../../../classes/background';
 import { ColumnData } from '../../../classes/column-data';
 import { PropertyView } from '../../../classes/property-view';
+import { BreakpointData } from '../../../classes/breakpoint-data';
 
 @Component({
   selector: '[column]',
@@ -179,39 +180,40 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   }
 
 
-  getData(columnData: ColumnData) {
-    // Name
-    if (this.name != 'Column') columnData.name = this.name;
+  getData(): ColumnData {
+    return {
+      name: this.name != 'Column' ? this.name : null,
+      background: this.background.getData(),
+      border: this.border.getData(),
+      corners: this.corners.getData(),
+      shadow: this.shadow.getData(),
+      padding: this.padding.getData(this.breakpoints),
+      columnSpan: this.columnSpan.value,
+      breakpoints: this.getBreakpoints(),
+      widgetData: this.widget.getData()
+    }
+  }
 
-    // Background
-    this.background.getData(columnData.background);
 
-    // Border
-    this.border.getData(columnData.border);
 
-    // Corners
-    this.corners.getData(columnData.corners);
 
-    // Shadow
-    this.shadow.getData(columnData.shadow);
+  getBreakpoints(): Array<BreakpointData> {
+    let breakpointData: Array<BreakpointData> = [];
 
     // Padding
-    this.padding.getData(columnData.padding, this.breakpoints);
-    this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.top);
-    this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.right);
-    this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.bottom);
-    this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.padding.left);
-
-    // Column Span
-    columnData.columnSpan = this.columnSpan.value;
-
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.top);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.right);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.bottom);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.left);
 
     // Visibility
-    this.breakpointService.saveBreakpoints(this.breakpoints, columnData.breakpoints, this.visibility);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.visibility);
 
-    // Save the widget data
-    this.widget.getData(columnData);
+
+    return breakpointData;
   }
+
+
 
 
   buildHTML(parent: HTMLElement) {

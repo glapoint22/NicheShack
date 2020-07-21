@@ -35,7 +35,7 @@ export class Page {
             case PageType.Email:
                 width = 600;
                 break;
-        
+
             default:
                 width = 1600;
                 break;
@@ -86,22 +86,13 @@ export class Page {
 
     // -----------------------------( GET DATA )------------------------------ \\
     getData(): PageData {
-        let pageData: PageData = new PageData();
-
-        // Assign the page id
-        pageData.id = this.id;
-
-        // Set the name and width of the page
-        pageData.name = this.name;
-        pageData.width = this.width;
-
-
-        // Save the background
-        this.background.getData(pageData.background);
-
-        this.rootContainer.getData(pageData.rows);
-
-        return pageData;
+        return {
+            id: this.id,
+            name: this.name,
+            width: this.width != this.defaultWidth ? this.width: 0,
+            background: this.background.getData(),
+            rows: this.rootContainer.getData()
+        }
     }
 
 

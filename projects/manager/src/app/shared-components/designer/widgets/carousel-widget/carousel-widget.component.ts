@@ -4,7 +4,6 @@ import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
 import { CarouselBanner } from 'projects/manager/src/app/classes/carousel-banner';
 import { CarouselWidgetData } from 'projects/manager/src/app/classes/carousel-widget-data';
 import { CarouselBannerData } from 'projects/manager/src/app/classes/carousel-banner-data';
-import { ColumnData } from 'projects/manager/src/app/classes/column-data';
 import { Image } from 'projects/manager/src/app/classes/image';
 
 @Component({
@@ -19,7 +18,7 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
 
 
   ngOnInit() {
-    this.name = 'Carousel';
+    this.name = this.defaultName = 'Carousel';
     this.type = WidgetType.Carousel;
     super.ngOnInit();
   }
@@ -36,16 +35,18 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
   }
 
 
-  getData(columnData: ColumnData) {
-    let carouselWidgetData = columnData.widgetData = new CarouselWidgetData();
+  getData(): CarouselWidgetData {
+    let widgetData = super.getData();
 
-    // Name
-    if (this.name != 'Carousel') carouselWidgetData.name = this.name;
-
-    // Categories
-    if (this.banners.length > 0) carouselWidgetData.banners = this.banners;
-
-    super.getData(columnData);
+    return {
+      name: this.name != this.defaultName ? this.name : null,
+      widgetType: widgetData.widgetType,
+      width: widgetData.width,
+      height: null,
+      horizontalAlignment: widgetData.horizontalAlignment,
+      banners: this.banners.length > 0 ? this.banners : [],
+      breakpoints: []
+    }
   }
 
 

@@ -18,11 +18,16 @@ export class BackgroundImage extends Image {
 
 
 
-    getData(backgroundImageData: BackgroundImageData) {
-        if (this.position) backgroundImageData.position = this.position;
-        if (this.repeat) backgroundImageData.repeat = this.repeat;
-        if (this.attachment) backgroundImageData.attachment = this.attachment;
+    getData(): BackgroundImageData {
+        let image = super.getData();
 
-        super.getData(backgroundImageData)
+        return {
+            id: image.id,
+            name: image.name,
+            url: image.url,
+            position: this.position,
+            repeat: this.repeat,
+            attachment: this.attachment,
+        }
     }
 }
