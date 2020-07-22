@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PageService } from '../../../services/page.service';
-import { PageData } from '../../../classes/page-data';
 import { LoadingService } from '../../../services/loading.service';
 import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
@@ -65,20 +64,20 @@ export class PageEditorComponent implements OnInit, Searchable {
 
 
     this.dataService.get(this.apiUrl + '/Create')
-      .subscribe((pageData: PageData) => {
-        this.loadPage(pageData);
+      .subscribe((page: string) => {
+        this.loadPage(page);
       });
   }
 
 
 
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
-  loadPage(pageData: PageData) {
-    this.pageService.setPage(pageData.width);
-    this.pageService.loadPage(pageData);
+  loadPage(page: string) {
+    this.pageService.loadPage(page);
+    this.pageService.setPage(this.pageService.page.width);
     this.setPageView();
     this.loadingService.loading = false;
-    this.currentPageId = pageData.id;
+    this.currentPageId = this.pageService.page.id;
   }
 
 
@@ -93,12 +92,9 @@ export class PageEditorComponent implements OnInit, Searchable {
     let pageData = this.pageService.page.getData();
 
     this.dataService.post(this.apiUrl, pageData)
-      .subscribe((pageId: string) => {
-
-        pageData.id = pageId;
-
+      .subscribe((page: string) => {
         // Load the page
-        this.loadPage(pageData);
+        this.loadPage(page);
       });
   }
 
@@ -155,10 +151,10 @@ export class PageEditorComponent implements OnInit, Searchable {
     this.loadingService.loading = true;
 
     this.dataService.get(this.apiUrl, [{ key: 'id', value: searchItem.id }])
-      .subscribe((pageData: PageData) => {
+      .subscribe((page: string) => {
 
-        // Load the lead page
-        this.loadPage(pageData);
+        // Load the page
+        this.loadPage(page);
       });
   }
 }

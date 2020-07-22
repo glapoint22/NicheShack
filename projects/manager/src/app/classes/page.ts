@@ -89,7 +89,7 @@ export class Page {
         return {
             id: this.id,
             name: this.name,
-            width: this.width != this.defaultWidth ? this.width: 0,
+            width: this.width != this.defaultWidth ? this.width : 0,
             background: this.background.getData(),
             rows: this.rootContainer.getData()
         }
@@ -103,9 +103,10 @@ export class Page {
     private setRows(rows: Array<RowData>, container: ContainerComponent) {
         // Loop through all the rows
         rows.forEach((rowData: RowData, index: number) => {
+            let top = rowData.top ? rowData.top : 0;
 
             // Create the row and load the row data
-            let rowComponent: RowComponent = container.createRow(index, rowData.top);
+            let rowComponent: RowComponent = container.createRow(index, top);
             rowComponent.setData(rowData);
 
             // Loop through each column
@@ -140,13 +141,6 @@ export class Page {
         let widget: Type<WidgetComponent>
 
         switch (widgetType) {
-
-            // Button
-            case WidgetType.Button:
-                widget = ButtonWidgetComponent;
-                break;
-
-
             // Text
             case WidgetType.Text:
                 widget = TextWidgetComponent;
@@ -192,6 +186,10 @@ export class Page {
             case WidgetType.Carousel:
                 widget = CarouselWidgetComponent;
                 break;
+
+            // Button
+            default:
+                widget = ButtonWidgetComponent;
         }
 
         return widget;

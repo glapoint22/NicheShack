@@ -199,7 +199,7 @@ export class TempDataService {
 
       // Categories
       case 'api/Categories':
-        if(!parameters) {
+        if (!parameters) {
           return of([
             {
               name: 'Health & Fitness',
@@ -212,11 +212,11 @@ export class TempDataService {
             {
               name: 'E-business & E-marketing',
               id: 'rewqrewer'
-              
+
             }
           ]).pipe(delay(1000));
 
-          
+
         } else {
           return of({
             id: 'GFDGSDFSDAFD',
@@ -224,7 +224,7 @@ export class TempDataService {
             url: '44d71fbf43904ffdbdece40a45bdf9db.png'
           }).pipe(delay(1000));
         }
-        
+
 
 
 
@@ -359,616 +359,21 @@ export class TempDataService {
 
 
       case 'api/Niches/LeadPages/Create':
-        return of({
-          id: '4LSN6AR0F5',
-          name: 'New Lead Page',
-          width: 1600,
-          background: {
-            color: '#ffffff',
-          }
-        }).pipe(delay(1000));
+        return of('{"id":"4LSN6AR0F5","name":"New Lead Page","width":1600,"background":{"color":"#ffffff","image":null,"enable":null},"rows":[]}').pipe(delay(1000));
 
 
       // Lead Pages
       case 'api/Niches/LeadPages':
         if (parameters[0].value == 'FM1R8HAOEB') {
-          return of({
-            id: 'FM1R8HAOEB',
-            name: 'Campland',
-            width: 1600,
-            background: {
-              enable: false,
-              color: '#ffffff',
-              image: {
-                id: 'GDGFAFSDAFQWRREW',
-                name: 'Campland',
-                url: 'campland-background.jpg',
-                position: 'center center',
-                repeat: 'no-repeat',
-                attachment: 'fixed'
-              }
-            },
-            rows: [
-              {
-                name: 'My Row',
-                top: 100,
-                background: null,
-                border: null,
-                corners: null,
-                shadow: null,
-                padding: null,
-                verticalAlignment: null,
-                breakpoints: [],
-                columns: [
-
-
-
-
-                  // Button
-                  {
-                    name: 'My Column',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 2,
-                    widgetData: {
-                      widgetType: 0,
-                      name: 'My Button',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: '0 auto',
-                      background: {
-                        color: '#ff0000',
-                        image: null,
-                        enable: null
-                      },
-                      border: {
-                        enable: true,
-                        width: 5,
-                        style: null,
-                        color: '#00ff00'
-                      },
-                      caption: {
-                        text: 'Alita',
-                        font: '"Comic Sans MS", cursive, sans-serif',
-                        fontSize: '24',
-                        fontWeight: 'bold',
-                        fontStyle: 'italic',
-                        textDecoration: 'underline',
-                        color: '#0000ff'
-                      },
-                      corners: {
-                        constrain: true,
-                        topLeft: 20,
-                        topRight: 20,
-                        bottomRight: 20,
-                        bottomLeft: 20
-                      },
-                      shadow: {
-                        enable: true,
-                        x: 10,
-                        y: 10,
-                        blur: 10,
-                        size: 10,
-                        color: '#3f573f70'
-                      },
-                      padding: {
-                        constrain: true,
-                        top: '24px',
-                        right: '24px',
-                        bottom: '24px',
-                        left: '24px'
-                      },
-                      link: {
-                        selectedOption: 'category',
-                        url: 'http://www.alitamovie.com',
-                        optionValue: 'Alita Category'
-                      },
-                      backgroundHoverColor: '#6b2456',
-                      backgroundActiveColor: '#446e05',
-                      borderHoverColor: '#ff05f3',
-                      borderActiveColor: '#acdb12',
-                      textHoverColor: '#2ad1c6',
-                      textActiveColor: '#36cc00'
-                    }
-                  },
-
-
-
-
-                  // Text
-                  {
-                    name: 'My Column2',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 2,
-                    widgetData: {
-                      widgetType: 1,
-                      name: 'My Text',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      background: {
-                        color: '#b01a65',
-                        image: null,
-                        enable: null
-                      },
-                      padding: null,
-                      htmlContent: '<div>Hello</div>'
-                    }
-                  },
-
-
-
-
-
-
-
-                  // Image
-                  {
-                    name: 'My Column3',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 2,
-                    widgetData: {
-                      widgetType: 2,
-                      name: 'My Image',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      border: {
-                        enable: true,
-                        width: 3,
-                        style: null,
-                        color: '#0000ff'
-                      },
-                      image: {
-                        url: '0aada12f8b21471ea96aebe9a503977b.png',
-                        name: 'Alita'
-                      },
-                      corners: null,
-                      shadow: null,
-                      link: {
-                        url: 'http://www.tama.com',
-                        selectedOption: 'niche'
-                      }
-
-                    }
-                  },
-
-
-
-
-
-
-
-
-
-                  // Container
-                  {
-                    name: 'My Column4',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 2,
-                    widgetData: {
-                      widgetType: 3,
-                      name: 'My Container',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      border: null,
-                      background: null,
-                      corners: null,
-                      shadow: null,
-                      padding: null,
-                      rows: [
-                        {
-                          name: 'My Row',
-                          top: 0,
-                          background: null,
-                          border: null,
-                          corners: null,
-                          shadow: null,
-                          padding: null,
-                          verticalAlignment: null,
-                          breakpoints: [],
-                          columns: [
-
-
-
-
-                            // Button
-                            {
-                              name: 'My Column',
-                              background: null,
-                              border: null,
-                              corners: null,
-                              shadow: null,
-                              padding: null,
-                              breakpoints: [],
-                              columnSpan: 12,
-                              widgetData: {
-                                widgetType: 0,
-                                name: 'My Button',
-                                width: null,
-                                height: null,
-                                breakpoints: [],
-                                horizontalAlignment: null,
-                                background: null,
-                                border: null,
-                                caption: null,
-                                corners: null,
-                                shadow: null,
-                                padding: null,
-                                link: null,
-                                backgroundHoverColor: null,
-                                backgroundActiveColor: null,
-                                borderHoverColor: null,
-                                borderActiveColor: null,
-                                textHoverColor: null,
-                                textActiveColor: null
-                              }
-                            }
-                          ]
-                        }
-                      ]
-
-                    }
-                  },
-
-
-
-
-
-
-
-                  // Line
-                  {
-                    name: 'My Column5',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 2,
-                    widgetData: {
-                      widgetType: 4,
-                      name: 'My Line',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      border: null,
-                      shadow: null,
-                    }
-                  },
-
-
-
-
-
-
-
-
-
-                  // Video
-                  {
-                    name: 'My Column6',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 2,
-                    widgetData: {
-                      widgetType: 5,
-                      name: 'My Video',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      border: null,
-                      video: {
-                        url: '//player.vimeo.com/video/173192945?muted=false',
-                        thumbnail: 'thumbnail1.png'
-                      },
-                      corners: null,
-                      shadow: null
-
-                    }
-                  }
-                ]
-              },
-
-
-
-              // Product Group
-              {
-                name: 'My Row2',
-                top: 400,
-                background: null,
-                border: null,
-                corners: null,
-                shadow: null,
-                padding: null,
-                verticalAlignment: null,
-                breakpoints: [],
-                columns: [
-                  {
-                    name: 'My Column',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 4,
-                    widgetData: {
-                      widgetType: 6,
-                      name: 'My Product Group',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      caption: {
-                        text: 'Check out our featured products',
-                        fontWeight: 'bold',
-                        fontSize: '44',
-                        fontStyle: 'italic',
-                        font: 'Impact, Charcoal, sans-serif',
-                        textDecoration: 'underline',
-                        color: '#ff0000'
-                      },
-                      productGroupType: 0,
-                      featuredProducts: [
-                        {
-                          id: 'FA24GDSETG',
-                          name: 'How To Be a Gumpy'
-                        },
-                        {
-                          id: '8RTIOFGBHE',
-                          name: 'Alita: Battle Angel'
-                        }
-                      ]
-
-                    }
-                  },
-
-
-
-
-
-                  // Categories
-                  {
-                    name: 'My Column2',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 4,
-                    widgetData: {
-                      widgetType: 7,
-                      name: 'My Categories',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      caption: {
-                        text: 'Welcome to Gumpy\'s',
-                        fontWeight: 'bold',
-                        fontSize: '44',
-                        fontStyle: 'italic',
-                        font: 'Impact, Charcoal, sans-serif',
-                        textDecoration: 'underline',
-                        color: '#ff0000'
-                      },
-                      backgroundColor: '#0000ff',
-                      textColor: '#00ff00',
-                      shadow: {
-                        enable: true,
-                        x: 10,
-                        y: 10,
-                        blur: 10,
-                        size: 10,
-                        color: '#3f573f70'
-                      },
-                      categories: [
-                        {
-                          name: 'Health & Fitness',
-                          id: 'fdsfafsdfdsds',
-                          icon: {
-                            url: '44d71fbf43904ffdbdece40a45bdf9db.png',
-                            name: 'Health & Fitness'
-                          }
-                        },
-                        {
-                          name: 'Self-Help',
-                          id: 1,
-                          icon: {
-                            url: '143968bba73642898bb4a6715a1efd3d.png',
-                            name: 'self-help'
-                          }
-                        },
-                        {
-                          name: 'E-business & E-marketing',
-                          id: 'rewqrewer',
-                          icon: {
-                            url: 'e6b1306f8f694e1595e0c84c096ede66.png',
-                            name: 'E-business & E-marketing'
-                          }
-                        },
-                        {
-                          name: 'Camping & Survival',
-                          id: 'rewqrewer',
-                          icon: {
-                            url: 'ab0bda0d51a5408788359471b337662f.png',
-                            name: 'Camping & Survival'
-                          }
-                        }
-                      ]
-                    }
-                  },
-
-
-
-
-
-
-
-
-                  // Carousel
-                  {
-                    name: 'My Column3',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 4,
-                    widgetData: {
-                      widgetType: 8,
-                      name: 'My Carousel',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      banners: [
-                        {
-                          image: {
-                            url: 'banner1.jpg',
-                            name: 'Keto'
-                          },
-                          link: {
-                            selectedOption: 'webAddress',
-                            url: 'http://www.alitamovie.com',
-                          }
-                        },
-                        {
-                          image: {
-                            url: 'banner2.jpg',
-                            name: 'Hyperbolic Stretching'
-                          },
-                          link: {
-                            selectedOption: 'page',
-                            url: 'http://www.tama.com',
-                          }
-                        },
-
-                        {
-                          image: {
-                            url: 'banner3.jpg',
-                            name: 'Google'
-                          },
-                          link: {
-                            selectedOption: 'page',
-                            url: 'http://www.google.com',
-                          }
-                        },
-
-
-                        {
-                          image: {
-                            url: 'banner4.jpg',
-                            name: 'YouTube'
-                          },
-                          link: {
-                            selectedOption: 'page',
-                            url: 'http://www.youtube.com',
-                          }
-                        },
-
-
-                        {
-                          image: {
-                            url: 'banner5.jpg',
-                            name: 'Avatar'
-                          },
-                          link: {
-                            selectedOption: 'page',
-                            url: 'http://www.avatarmovie.com',
-                          }
-                        }
-
-
-                      ]
-                    }
-                  }
-                ]
-              }
-            ]
-          }).pipe(delay(1000));
+          return of('{"id":"FM1R8HAOEB","name":"Campland","width":1600,"background":{"color":"#ffffff","image":{"id":"GDGFAFSDAFQWRREW","name":"Campland","url":"campland-background.jpg","position":"center center","repeat":"no-repeat","attachment":"fixed"}},"rows":[{"name":"My Row","top":100,"columns":[{"name":"My Column","columnSpan":2,"widgetData":{"name":"My Button","horizontalAlignment":"0 auto","background":{"color":"#ff0000"},"border":{"enable":true,"width":5,"color":"#00ff00"},"caption":{"text":"Alita","font":"Arial, Helvetica, sans-serif","fontSize":"24","fontWeight":"bold","fontStyle":"italic","textDecoration":"underline","color":"#0000ff"},"corners":{"constrain":true,"topLeft":20,"topRight":20,"bottomRight":20,"bottomLeft":20},"shadow":{"enable":true,"x":10,"y":10,"blur":10,"size":10,"color":"#3f573f70"},"padding":{"constrain":true,"top":"24px","right":"24px","bottom":"24px","left":"24px"},"link":{"selectedOption":"category","url":"http://www.alitamovie.com","optionValue":"Alita Category"},"backgroundHoverColor":"#6b2456","backgroundActiveColor":"#446e05","borderHoverColor":"#ff05f3","borderActiveColor":"#acdb12","textHoverColor":"#2ad1c6","textActiveColor":"#36cc00"}},{"name":"My Column2","columnSpan":2,"widgetData":{"widgetType":1,"name":"My Text","background":{"color":"#b01a65"},"htmlContent":"<div>Hello</div>"}},{"name":"My Column3","columnSpan":2,"widgetData":{"widgetType":2,"name":"My Image","border":{"enable":true,"width":3,"color":"#0000ff"},"image":{"url":"0aada12f8b21471ea96aebe9a503977b.png","name":"Alita"},"link":{"url":"http://www.tama.com","selectedOption":"niche"}}},{"name":"My Column4","columnSpan":2,"widgetData":{"widgetType":3,"name":"My Container","rows":[{"name":"My Row","columns":[{"name":"My Column","columnSpan":12,"widgetData":{"name":"My Button"}}]}]}},{"name":"My Column5","columnSpan":2,"widgetData":{"widgetType":4,"name":"My Line"}},{"name":"My Column6","columnSpan":2,"widgetData":{"widgetType":5,"name":"My Video","video":{"url":"//player.vimeo.com/video/173192945?muted=false","thumbnail":"thumbnail1.png"}}}]},{"name":"My Row2","top":400,"columns":[{"name":"My Column","columnSpan":4,"widgetData":{"widgetType":6,"name":"My Product Group","caption":{"text":"Check out our featured products","fontWeight":"bold","fontSize":"44","fontStyle":"italic","font":"Impact, Charcoal, sans-serif","textDecoration":"underline","color":"#ff0000"},"featuredProducts":[{"id":"FA24GDSETG","name":"How To Be a Gumpy"},{"id":"8RTIOFGBHE","name":"Alita: Battle Angel"}]}},{"name":"My Column2","columnSpan":4,"widgetData":{"widgetType":7,"name":"My Categories","caption":{"text":"Welcome to Gumpys","fontWeight":"bold","fontSize":"44","fontStyle":"italic","font":"Impact, Charcoal, sans-serif","textDecoration":"underline","color":"#ff0000"},"backgroundColor":"#0000ff","textColor":"#00ff00","shadow":{"enable":true,"x":10,"y":10,"blur":10,"size":10,"color":"#3f573f70"},"categories":[{"name":"Health & Fitness","id":"fdsfafsdfdsds","icon":{"url":"44d71fbf43904ffdbdece40a45bdf9db.png","name":"Health & Fitness"}},{"name":"Self-Help","id":1,"icon":{"url":"143968bba73642898bb4a6715a1efd3d.png","name":"self-help"}},{"name":"E-business & E-marketing","id":"rewqrewer","icon":{"url":"e6b1306f8f694e1595e0c84c096ede66.png","name":"E-business & E-marketing"}},{"name":"Camping & Survival","id":"rewqrewer","icon":{"url":"ab0bda0d51a5408788359471b337662f.png","name":"Camping & Survival"}}]}},{"name":"My Column3","columnSpan":4,"widgetData":{"widgetType":8,"name":"My Carousel","banners":[{"image":{"url":"banner1.jpg","name":"Keto"},"link":{"selectedOption":"webAddress","url":"http://www.alitamovie.com"}},{"image":{"url":"banner2.jpg","name":"Hyperbolic Stretching"},"link":{"selectedOption":"page","url":"http://www.tama.com"}},{"image":{"url":"banner3.jpg","name":"Google"},"link":{"selectedOption":"page","url":"http://www.google.com"}},{"image":{"url":"banner4.jpg","name":"YouTube"},"link":{"selectedOption":"page","url":"http://www.youtube.com"}},{"image":{"url":"banner5.jpg","name":"Avatar"},"link":{"selectedOption":"page","url":"http://www.avatarmovie.com"}}]}}]}]}').pipe(delay(1000));
         } else if (parameters[0].value == '5NOQOTV6KS') {
-          return of({
-            id: '5NOQOTV6KS',
-            name: 'Alita',
-            width: 1200,
-            background: {
-              enable: false,
-              color: '#ff0000',
-              image: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"5NOQOTV6KS","name":"Alita","width":1200,"background":{"enable":false,"color":"#ff0000","image":null},"rows":[]}').pipe(delay(1000));
         } else if (parameters[0].value == '026HJNAYPQ') {
-          return of({
-            id: '026HJNAYPQ',
-            name: 'Gumpy\'s',
-            width: 1600,
-            background: {
-              enable: false,
-              color: '#00ff00',
-              image: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"026HJNAYPQ","name":"Gumpys","width":1600,"background":{"enable":false,"color":"#00ff00","image":null},"rows":[]}').pipe(delay(1000));
         } else if (parameters[0].value == '4LSN6AR0F5') {
-          return of({
-            id: '4LSN6AR0F5',
-            name: 'New Lead Page',
-            width: 1600,
-            background: {
-              color: '#ffffff',
-              image: null,
-              enable: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"4LSN6AR0F5","name":"New Lead Page","width":1600,"background":{"color":"#ffffff","image":null,"enable":null},"rows":[]}').pipe(delay(1000));
         } else if (parameters[0].value == 'L2D8IEG9WL') {
-          return of({
-            id: 'L2D8IEG9WL',
-            name: 'Alita',
-            width: 1200,
-            background: {
-              enable: false,
-              color: '#ff0000',
-              image: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"L2D8IEG9WL","name":"Alita","width":1200,"background":{"enable":false,"color":"#ff0000","image":null},"rows":[]}').pipe(delay(1000));
         }
 
 
@@ -985,113 +390,15 @@ export class TempDataService {
       // Lead Page Emails
       case 'api/Niches/LeadPageEmails':
         if (parameters[0].value == 'FM1R8HAOEB') {
-          return of({
-            id: 'FM1R8HAOEB',
-            name: 'Campland Email',
-            width: 600,
-            background: {
-              enable: false,
-              color: '#0000ff',
-              image: null
-            },
-            rows: [
-              {
-                name: 'My Row',
-                top: 200,
-                background: null,
-                border: null,
-                corners: null,
-                shadow: null,
-                padding: null,
-                verticalAlignment: null,
-                breakpoints: [],
-                columns: [
-
-
-
-
-
-
-
-
-                  // Text
-                  {
-                    name: 'My Column',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 12,
-                    widgetData: {
-                      widgetType: 1,
-                      name: 'My Text',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      background: {
-                        color: '#afafaf',
-                        image: null,
-                        enable: null
-                      },
-                      padding: null,
-                      htmlContent: '<div>Thanks for your interest in Campland!</div>'
-                    }
-                  },
-                ]
-              },
-            ]
-          }).pipe(delay(1000));
+          return of('{"id":"FM1R8HAOEB","name":"Campland Email","width":600,"background":{"enable":false,"color":"#0000ff","image":null},"rows":[{"name":"My Row","top":200,"background":null,"border":null,"corners":null,"shadow":null,"padding":null,"verticalAlignment":null,"breakpoints":[],"columns":[{"name":"My Column","background":null,"border":null,"corners":null,"shadow":null,"padding":null,"breakpoints":[],"columnSpan":12,"widgetData":{"widgetType":1,"name":"My Text","width":null,"height":null,"breakpoints":[],"horizontalAlignment":null,"background":{"color":"#afafaf","image":null,"enable":null},"padding":null,"htmlContent":"<div>Thanks for your interest in Campland!</div>"}}]}]}').pipe(delay(1000));
         } else if (parameters[0].value == '5NOQOTV6KS') {
-          return of({
-            id: '5NOQOTV6KS',
-            name: 'Alita Email',
-            width: 500,
-            background: {
-              enable: false,
-              color: '00ff00',
-              image: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"5NOQOTV6KS","name":"Alita Email","width":500,"background":{"enable":false,"color":"00ff00","image":null},"rows":[]}').pipe(delay(1000));
         } else if (parameters[0].value == '026HJNAYPQ') {
-          return of({
-            id: '026HJNAYPQ',
-            name: 'Gumpy\'s Email',
-            width: 550,
-            background: {
-              enable: false,
-              color: '#0000ff',
-              image: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"026HJNAYPQ","name":"Gumpys Email","width":550,"background":{"enable":false,"color":"#0000ff","image":null},"rows":[]}').pipe(delay(1000));
         } else if (parameters[0].value == '4LSN6AR0F5') {
-          return of({
-            id: '4LSN6AR0F5',
-            name: 'New Lead Page Email',
-            width: 600,
-            background: {
-              color: '#ffffff',
-              image: null,
-              enable: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"4LSN6AR0F5","name":"New Lead Page Email","width":600,"background":{"color":"#ffffff","image":null,"enable":null},"rows":[]}').pipe(delay(1000));
         } else if (parameters[0].value == 'L2D8IEG9WL') {
-          return of({
-            id: 'L2D8IEG9WL',
-            name: 'Alita Email',
-            width: 500,
-            background: {
-              enable: false,
-              color: '00ff00',
-              image: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"L2D8IEG9WL","name":"Alita Email","width":500,"background":{"enable":false,"color":"00ff00","image":null},"rows":[]}').pipe(delay(1000));
         }
 
       // Products
@@ -1323,142 +630,33 @@ export class TempDataService {
       // Product emails
       case 'api/Products/Emails':
         if (parameters[0].value == 'FM1R8HAOEB') {
-          return of({
-            id: 'FM1R8HAOEB',
-            name: 'Campland Email',
-            width: 600,
-            background: {
-              enable: false,
-              color: '#0000ff',
-              image: null
-            },
-            rows: [
-              {
-                name: 'My Row',
-                top: 200,
-                background: null,
-                border: null,
-                corners: null,
-                shadow: null,
-                padding: null,
-                verticalAlignment: null,
-                breakpoints: [],
-                columns: [
-
-
-
-
-
-
-
-
-                  // Text
-                  {
-                    name: 'My Column',
-                    background: null,
-                    border: null,
-                    corners: null,
-                    shadow: null,
-                    padding: null,
-                    breakpoints: [],
-                    columnSpan: 12,
-                    widgetData: {
-                      widgetType: 1,
-                      name: 'My Text',
-                      width: null,
-                      height: null,
-                      breakpoints: [],
-                      horizontalAlignment: null,
-                      background: {
-                        color: '#afafaf',
-                        image: null,
-                        enable: null
-                      },
-                      padding: null,
-                      htmlContent: '<div>Thanks for your interest in Campland!</div>'
-                    }
-                  },
-                ]
-              },
-            ]
-          }).pipe(delay(1000));
+          return of('{"id":"FM1R8HAOEB","name":"Campland Email","width":600,"background":{"enable":false,"color":"#0000ff","image":null},"rows":[{"name":"My Row","top":200,"background":null,"border":null,"corners":null,"shadow":null,"padding":null,"verticalAlignment":null,"breakpoints":[],"columns":[{"name":"My Column","background":null,"border":null,"corners":null,"shadow":null,"padding":null,"breakpoints":[],"columnSpan":12,"widgetData":{"widgetType":1,"name":"My Text","width":null,"height":null,"breakpoints":[],"horizontalAlignment":null,"background":{"color":"#afafaf","image":null,"enable":null},"padding":null,"htmlContent":"<div>Thanks for your interest in Campland!</div>"}}]}]}').pipe(delay(1000));
         } else if (parameters[0].value == '5NOQOTV6KS') {
-          return of({
-            id: '5NOQOTV6KS',
-            name: 'Alita Email',
-            width: 500,
-            background: {
-              enable: false,
-              color: '00ff00',
-              image: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"5NOQOTV6KS","name":"Alita Email","width":500,"background":{"enable":false,"color":"00ff00","image":null},"rows":[]}').pipe(delay(1000));
         } else if (parameters[0].value == '026HJNAYPQ') {
-          return of({
-            id: '026HJNAYPQ',
-            name: 'Gumpy\'s Email',
-            width: 550,
-            background: {
-              enable: false,
-              color: '#0000ff',
-              image: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"026HJNAYPQ","name":"Gumpys Email","width":550,"background":{"enable":false,"color":"#0000ff","image":null},"rows":[]}').pipe(delay(1000));
         } else if (parameters[0].value == '4LSN6AR0F5') {
-          return of({
-            id: '4LSN6AR0F5',
-            name: 'New Lead Page Email',
-            width: 600,
-            background: {
-              color: '#ffffff',
-              image: null,
-              enable: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"4LSN6AR0F5","name":"New Lead Page Email","width":600,"background":{"color":"#ffffff","image":null,"enable":null},"rows":[]}').pipe(delay(1000));
         } else if (parameters[0].value == 'L2D8IEG9WL') {
-          return of({
-            id: 'L2D8IEG9WL',
-            name: 'Alita Email',
-            width: 500,
-            background: {
-              enable: false,
-              color: '00ff00',
-              image: null
-            },
-            rows: []
-          }).pipe(delay(1000));
+          return of('{"id":"L2D8IEG9WL","name":"Alita Email","width":500,"background":{"enable":false,"color":"00ff00","image":null},"rows":[]}').pipe(delay(1000));
         }
 
 
 
-      
+
+      case 'api/Products/Emails/Create':
+        return of('{"id":"FFSDAFAG","name":"New Email","width":600,"background":{"color":"#ffffff","image":null,"enable":null},"rows":[]}').pipe(delay(1000));
+
+
 
 
       case 'api/Pages/Create':
-        return of({
-          id: '4LSN6AR0F5',
-          name: 'New Page',
-          width: 1600,
-          background: {
-            color: '#ffffff',
-          }
-        }).pipe(delay(1000));
+        return of('{"id":"4LSN6AR0F5","name":"New Page","width":1600,"background":{"color":"#ffffff"}}').pipe(delay(1000));
 
 
 
       case 'api/Emails/Create':
-        return of({
-          id: '4LSN6AR0F5',
-          name: 'New Page',
-          width: 600,
-          type: 0,
-          background: {
-            color: '#ffffff',
-          }
-        }).pipe(delay(1000));
+        return of('{"id":"4LSN6AR0F5","name":"New Page","width":600,"type":0,"background":{"color":"#ffffff"}}').pipe(delay(1000));
 
 
 
@@ -1611,52 +809,7 @@ export class TempDataService {
 
       case 'api/Pages':
         if (parameters) {
-          return of({
-            "background": {
-              "color": "#2564a8"
-            },
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "widgetData": {
-                      "background": {
-                        "color": "#ffffff00"
-                      },
-                      "htmlContent": "<div style=\"text-align: center;\"><span style=\"font-weight: 700;\"><span style=\"font-family: &quot;Comic Sans MS&quot;, cursive, sans-serif;\"><span style=\"font-size: 36px;\"><span style=\"color: rgb(222, 82, 180);\">Welcome To Gumpy's</span></span></span></span></div>",
-                      "widgetType": 1,
-                      "height": 64
-                    },
-                    "columnSpan": 12
-                  }
-                ],
-                "top": 63.078125
-              },
-              {
-                "columns": [
-                  {
-                    "widgetData": {
-                      "image": {
-                        "url": "ca7d0d7b27b8475fbb55a4bf63617f2f.jpg"
-                      },
-                      "link": {
-
-                      },
-                      "widgetType": 2,
-                      "width": 300,
-                      "height": 300,
-                      "horizontalAlignment": "0 auto"
-                    },
-                    "columnSpan": 12
-                  }
-                ],
-                "top": 159.078125
-              }
-            ],
-            "id": "4LSN6AR0F5",
-            "name": "Gumpy's",
-            "width": 1600
-          }).pipe(delay(1000));
+          return of('{"id":"4LSN6AR0F5","name":"New Page","width":1600,"background":{"color":"#ffffff"}}').pipe(delay(1000));
         }
 
 
@@ -1715,53 +868,7 @@ export class TempDataService {
 
       case 'api/Emails':
         if (parameters) {
-          return of({
-            "background": {
-              "color": "#df136c"
-            },
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "widgetData": {
-                      "background": {
-                        "color": "#ffffff00"
-                      },
-                      "htmlContent": "<div style=\"text-align: center;\"><span style=\"font-weight: 700;\"><span style=\"font-family: &quot;Comic Sans MS&quot;, cursive, sans-serif;\"><span style=\"font-size: 36px;\"><span style=\"color: rgb(6, 80, 216);\">Welcome To Gumpy's</span></span></span></span></div>",
-                      "widgetType": 1,
-                      "height": 64
-                    },
-                    "columnSpan": 12
-                  }
-                ],
-                "top": 63.078125
-              },
-              {
-                "columns": [
-                  {
-                    "widgetData": {
-                      "image": {
-                        "url": "ca7d0d7b27b8475fbb55a4bf63617f2f.jpg"
-                      },
-                      "link": {
-
-                      },
-                      "widgetType": 2,
-                      "width": 300,
-                      "height": 300,
-                      "horizontalAlignment": "0 auto"
-                    },
-                    "columnSpan": 12
-                  }
-                ],
-                "top": 159.078125
-              }
-            ],
-            "id": "4LSN6AR0F5",
-            "name": "Gumpy's",
-            "width": 600,
-            "type": 3
-          }).pipe(delay(1000));
+          return of('{"id":"4LSN6AR0F5","name":"New Page","width":1600,"background":{"color":"#ffffff"}}').pipe(delay(1000));
         }
 
 

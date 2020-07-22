@@ -3,7 +3,6 @@ import { PaginatorComponent } from 'projects/manager/src/app/shared-components/p
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PageService } from 'projects/manager/src/app/services/page.service';
-import { PageData } from 'projects/manager/src/app/classes/page-data';
 import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { PageType } from 'projects/manager/src/app/classes/page';
 import { PropertyView } from 'projects/manager/src/app/classes/property-view';
@@ -124,22 +123,22 @@ export class ProductEmailComponent implements OnInit {
     this.loadingService.loading = true;
 
     this.dataService.get(this.emailUrl, [{ key: 'emailId', value: emailId }])
-      .subscribe((pageData: PageData) => {
+      .subscribe((page: string) => {
 
         // Load the email page
-        this.loadPage(pageData);
+        this.loadPage(page);
       });
   }
 
 
 
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
-  loadPage(pageData: PageData) {
-    this.pageService.loadPage(pageData);
+  loadPage(page: string) {
+    this.pageService.loadPage(page);
     this.pageService.propertyView = PropertyView.Page;
     this.loadingService.loading = false;
     this.initialPageLoaded = true;
-    this.pageService.setPage(pageData.width);
+    this.pageService.setPage(this.pageService.page.width);
   }
 
 
@@ -148,36 +147,23 @@ export class ProductEmailComponent implements OnInit {
     // Display the loading screen
     this.loadingService.loading = true;
 
-    let pageData = {
-      id: null,
-      name: 'New Email',
-      width: 600,
-      type: PageType.Email,
-      background: {
-        color: '#ffffff',
-        image: null,
-        enable: null
-      },
-      rows: []
-    }
 
 
-    this.dataService.post(this.emailUrl, pageData)
-      .subscribe((leadPageId: string) => {
-        pageData.id = leadPageId;
-        // Load the email
-        this.loadPage(pageData);
+    this.dataService.get(this.emailUrl + '/Create')
+      .subscribe((page: string) => {
+        // Load the page
+        this.loadPage(page);
 
         // Set the new page
-        this.setNewEmail(pageData, paginator);
+        this.setNewEmail(paginator);
       });
   }
 
 
   // ------------------------------------------------------------------------- Set New Email -----------------------------------------------------------
-  setNewEmail(pageData: PageData, paginator: PaginatorComponent) {
+  setNewEmail(paginator: PaginatorComponent) {
     // Add the new email id
-    this.currentEmailId = pageData.id;
+    this.currentEmailId = this.pageService.page.id;
     this.emailIds.push(this.currentEmailId);
 
     // Set the paginator to show the new page number
@@ -193,14 +179,13 @@ export class ProductEmailComponent implements OnInit {
     let pageData = this.pageService.page.getData();
 
     this.dataService.post(this.emailUrl, pageData)
-      .subscribe((leadPageId: string) => {
-        pageData.id = leadPageId;
+      .subscribe((page: string) => {
 
         // Load the email
-        this.loadPage(pageData);
+        this.loadPage(page);
 
         // Set the new page
-        this.setNewEmail(pageData, paginator);
+        this.setNewEmail(paginator);
       });
   }
 }

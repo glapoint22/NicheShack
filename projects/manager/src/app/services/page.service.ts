@@ -41,7 +41,10 @@ export class PageService {
   save() {
     this.saveService.save({
       url: this.apiUrl,
-      data: this.stringifyPage(this.page.getData())
+      data: {
+        pageId: this.page.id,
+        page: this.stringifyPage(this.page.getData())
+      }
     });
   }
 
@@ -131,7 +134,10 @@ export class PageService {
 
 
   // -----------------------------( LOAD PAGE )------------------------------ \\
-  loadPage(pageData: PageData) {
+  loadPage(page: string) {
+    // Convert the page into object form
+    let pageData: PageData = JSON.parse(page);
+
     this.page.setData(pageData);
     this.breakpointService.onBreakpointChange.next();
   }

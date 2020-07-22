@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { PageService } from 'projects/manager/src/app/services/page.service';
-import { PageData } from 'projects/manager/src/app/classes/page-data';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
@@ -101,11 +100,11 @@ export class LeadPageEditorComponent implements OnChanges {
     this.loadingService.loading = true;
 
     this.dataService.get(this.leadPageUrl, [{ key: 'leadPageId', value: leadPageId }])
-      .subscribe((pageData: PageData) => {
+      .subscribe((page: string) => {
         this.initialPageLoaded = true;
 
         // Load the lead page
-        this.loadPage(PageType.LeadPage, pageData);
+        this.loadPage(PageType.LeadPage, page);
       });
   }
 
@@ -121,10 +120,10 @@ export class LeadPageEditorComponent implements OnChanges {
   loadEmail(leadPageId: string) {
     this.loadingService.loading = true;
     this.dataService.get(this.emailUrl, [{ key: 'leadPageId', value: leadPageId }])
-      .subscribe((pageData: PageData) => {
+      .subscribe((page: string) => {
 
         // Load the email
-        this.loadPage(PageType.Email, pageData);
+        this.loadPage(PageType.Email, page);
       });
   }
 
@@ -136,10 +135,10 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
-  loadPage(pageType: PageType, pageData: PageData) {
+  loadPage(pageType: PageType, page: string) {
     this.selectedTab = pageType;
-    this.pageService.setPage(pageData.width);
-    this.pageService.loadPage(pageData);
+    this.pageService.loadPage(page);
+    this.pageService.setPage(this.pageService.page.width);
     this.pageService.propertyView = PropertyView.Page;
     this.loadingService.loading = false;
   }
@@ -193,14 +192,14 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
     this.dataService.get(this.leadPageUrl + '/Create')
-      .subscribe((pageData: PageData) => {
+      .subscribe((page: string) => {
 
 
         // Load the lead page
-        this.loadPage(PageType.LeadPage, pageData);
+        this.loadPage(PageType.LeadPage, page);
 
         // Set the new page
-        this.setNewPage(pageData, paginator);
+        this.setNewPage(paginator);
       });
   }
 
@@ -218,14 +217,14 @@ export class LeadPageEditorComponent implements OnChanges {
     let pageData = this.pageService.page.getData();
 
     this.dataService.post(this.leadPageUrl, pageData)
-      .subscribe((leadPageId: string) => {
-        pageData.id = leadPageId;
+      .subscribe((page: string) => {
+        
 
         // Load the lead page
-        this.loadPage(PageType.LeadPage, pageData);
+        this.loadPage(PageType.LeadPage, page);
 
         // Set the new page
-        this.setNewPage(pageData, paginator);
+        this.setNewPage(paginator);
       });
   }
 
@@ -234,9 +233,9 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // ------------------------------------------------------------------------- Set New Page -----------------------------------------------------------
-  setNewPage(pageData: PageData, paginator: PaginatorComponent) {
+  setNewPage(paginator: PaginatorComponent) {
     // Add the new lead page id
-    this.currentLeadPageId = pageData.id;
+    this.currentLeadPageId = this.pageService.page.id;
     this.leadPageIds.push(this.currentLeadPageId);
 
     // Set the paginator to show the new page number
