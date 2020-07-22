@@ -42,11 +42,7 @@ export class ItemListComponent implements OnInit {
   // Decorators
   @Input() listItems: Array<ListItem>;
   @Input() listOptions: ItemListOptions;
-  @Input() menuOptionsOld: Array<string>;
-  @Input() multiSelect: boolean = true;
   @ViewChildren('rowItem') rowItem: QueryList<ElementRef>;
-  @Output() onAddItem: EventEmitter<HTMLElement> = new EventEmitter();
-  @Output() onEditItem: EventEmitter<HTMLElement> = new EventEmitter();
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
@@ -97,7 +93,9 @@ export class ItemListComponent implements OnInit {
   // -----------------------------( ON KEY DOWN )------------------------------ \\
   onKeyDown = (event: KeyboardEvent) => {
     this.setShortcutKeys(event)
-    // if (!this.editIcon.isDisabled && event.ctrlKey && event.altKey && event.keyCode === 69) this.onEditItem.emit();
+    if (!this.editIcon.isDisabled && event.ctrlKey && event.altKey && event.keyCode === 69) {
+      this.listOptions.onEditItem.apply(this.listOptions.currentObj, [this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement, this.selectedListItemIndex]);
+    }
   };
 
 
