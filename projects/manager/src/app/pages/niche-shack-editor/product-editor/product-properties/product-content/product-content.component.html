@@ -31,12 +31,12 @@
         <div *ngIf="product.content.length > 0; else placeholder" class="content">
 
 
-            <!-- Title -->
+            <!-- Name -->
             <div class="property">
-                <div class="label">Title:</div>
+                <div class="label">Name:</div>
             </div>
-            <input class="txt-20" [(ngModel)]="product.content[contentIndex].title"
-                (input)="onTitleChange($event.target.value)">
+            <input class="txt-20" [(ngModel)]="product.content[contentIndex].name"
+                (input)="onNameChange($event.target.value)">
 
 
 

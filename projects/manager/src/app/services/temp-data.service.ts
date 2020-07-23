@@ -463,7 +463,7 @@ export class TempDataService {
           content: [
             {
               id: '0006C245A7',
-              title: 'Cooking Tips',
+              name: 'Cooking Tips',
               icon: {
                 id: 'FSDFASFFSDFA',
                 name: 'Video',
@@ -478,7 +478,7 @@ export class TempDataService {
             },
             {
               id: '0004B385G7',
-              title: 'Audio Cooking methods',
+              name: 'Audio Cooking methods',
               icon: {
                 id: 'JHFJSDRFGFFD',
                 name: 'Audio',
@@ -493,7 +493,7 @@ export class TempDataService {
             },
             {
               id: '0008R755Y2',
-              title: 'Recipes',
+              name: 'Recipes',
               icon: {
                 id: 'QRDFDDASFASDF',
                 name: 'PDF',
