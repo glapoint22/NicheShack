@@ -43,6 +43,7 @@ export class PageService {
       url: this.apiUrl,
       data: {
         pageId: this.page.id,
+        name: this.page.name,
         page: this.stringifyPage(this.page.getData())
       }
     });

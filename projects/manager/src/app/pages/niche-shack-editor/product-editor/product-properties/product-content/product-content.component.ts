@@ -105,7 +105,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     let content: ProductContent = {
       id: null,
       icon: new Image(),
-      title: null,
+      name: null,
       priceIndices: []
     }
     this.dataService.post('api/Products/Content', this.productService.product.id)

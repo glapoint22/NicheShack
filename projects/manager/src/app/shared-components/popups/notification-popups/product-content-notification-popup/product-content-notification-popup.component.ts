@@ -125,7 +125,7 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
     this.notificationService.productContentNotification.content.push({
       id: null,
       icon: new Image(),
-      title: null,
+      name: null,
       priceIndices: []
     });
 
