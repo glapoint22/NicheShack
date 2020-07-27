@@ -616,7 +616,8 @@ export class TempDataService {
               type: MediaType.ProductImage
             }
           ],
-          price: '$5.16 - $16.80'
+          minPrice: 5.16,
+          maxPrice: 16.80
         }).pipe(delay(1000));
 
 

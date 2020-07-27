@@ -63,7 +63,13 @@
 
             <!-- Price -->
             <div class="price">
-                {{productService.product.price}}
+                <div *ngIf="productService.product.maxPrice == 0">
+                    {{productService.product.minPrice | currency:'USD'}}
+                </div>
+                <div *ngIf="productService.product.maxPrice > 0">
+                    {{productService.product.minPrice | currency:'USD'}} -
+                    {{productService.product.maxPrice | currency:'USD'}}
+                </div>
 
 
             </div>

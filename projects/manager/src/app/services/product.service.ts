@@ -23,15 +23,16 @@ export class ProductService {
 
 
   setPrice() {
-    let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
     let prices: Array<number> = this.product.pricePoints.map(x => x.wholeNumber + (x.decimal * 0.01));
     let minPrice = Math.min(...prices);
     let maxPrice = Math.max(...prices);
 
     if(minPrice == maxPrice) {
-      this.product.price = formatter.format(minPrice);
+      this.product.minPrice = minPrice;
+      this.product.maxPrice = 0;
     } else {
-      this.product.price = formatter.format(minPrice) + ' - ' + formatter.format(maxPrice);
+      this.product.minPrice = minPrice;
+      this.product.maxPrice = maxPrice;
     }
   }
 }
