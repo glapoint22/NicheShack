@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
-import { Notification } from '../../classes/notification';
 import { PopupService } from '../../services/popup.service';
 import { NotificationService } from '../../services/notification.service';
 import { menuBarMenu } from '../../classes/menu-bar-menu';
@@ -8,6 +7,8 @@ import { FormService } from '../../services/form.service';
 import { RouterOption } from '../../classes/router-option';
 import { MenuDivider } from '../../classes/menu-divider';
 import { MenuOption } from '../../classes/menu-option';
+import { DataService } from 'services/data.service';
+import { NotificationListItem } from '../../classes/notification-list-item';
 
 @Component({
   selector: 'menu-bar',
@@ -66,15 +67,19 @@ export class MenuBarComponent implements OnInit {
     private menuService: MenuService,
     private popupService: PopupService,
     public notificationService: NotificationService,
-    private formService: FormService
+    private formService: FormService,
+    private dataService: DataService
   ) { }
 
 
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
-    this.notificationService.getNotifications().subscribe((notification: Notification) => {
-      this.notificationService.newNotifications.unshift(notification);
-    })
+    this.dataService.get('api/Notifications/Load')
+      .subscribe(((notifications: Array<NotificationListItem>) => {
+        this.notificationService.newNotifications = notifications.filter(x => x.state == 0);
+        this.notificationService.pendingNotifications = notifications.filter(x => x.state == 1);
+      }));
+
 
     // When the dropdown menu closes
     this.menuService.menu.onHide.subscribe(() => {

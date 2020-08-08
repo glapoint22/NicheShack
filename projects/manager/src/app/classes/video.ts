@@ -4,7 +4,7 @@ import { VideoData } from './video-data';
 import { Media } from './media';
 
 export class Video implements Media {
-    public id: string;
+    public id: number;
     public name: string;
     private youTubePlayerSet: boolean;
     private isCurrentPlayerYouTube: boolean;

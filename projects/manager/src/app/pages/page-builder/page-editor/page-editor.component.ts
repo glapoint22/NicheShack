@@ -4,10 +4,11 @@ import { LoadingService } from '../../../services/loading.service';
 import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
 import { Searchable } from '../../../classes/searchable';
-import { TempDataService } from '../../../services/temp-data.service';
 import { Item } from '../../../classes/item';
 import { PropertyView } from '../../../classes/property-view';
 import { PageType } from '../../../classes/page';
+import { PageData } from '../../../classes/page-data';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'page-editor',
@@ -27,7 +28,7 @@ export class PageEditorComponent implements OnInit, Searchable {
     private loadingService: LoadingService,
     public promptService: PromptService,
     private popupService: PopupService,
-    private dataService: TempDataService) { }
+    private dataService: DataService) { }
 
 
   // ---------------------------------------------------------------------- Ng On Init --------------------------------------------------------
@@ -64,7 +65,7 @@ export class PageEditorComponent implements OnInit, Searchable {
 
 
     this.dataService.get(this.apiUrl + '/Create')
-      .subscribe((page: string) => {
+      .subscribe((page: PageData) => {
         this.loadPage(page);
       });
   }
@@ -72,7 +73,7 @@ export class PageEditorComponent implements OnInit, Searchable {
 
 
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
-  loadPage(page: string) {
+  loadPage(page: PageData) {
     this.pageService.loadPage(page);
     this.pageService.setPage(this.pageService.page.width);
     this.setPageView();
@@ -92,7 +93,7 @@ export class PageEditorComponent implements OnInit, Searchable {
     let pageData = this.pageService.page.getData();
 
     this.dataService.post(this.apiUrl, pageData)
-      .subscribe((page: string) => {
+      .subscribe((page: PageData) => {
         // Load the page
         this.loadPage(page);
       });
@@ -151,7 +152,7 @@ export class PageEditorComponent implements OnInit, Searchable {
     this.loadingService.loading = true;
 
     this.dataService.get(this.apiUrl, [{ key: 'id', value: searchItem.id }])
-      .subscribe((page: string) => {
+      .subscribe((page: PageData) => {
 
         // Load the page
         this.loadPage(page);

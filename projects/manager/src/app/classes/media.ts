@@ -1,7 +1,7 @@
 import { SafeUrl } from '@angular/platform-browser';
 
 export interface Media {
-    id: string;
+    id: number;
     name: string;
     url: string;
     thumbnail?: string;

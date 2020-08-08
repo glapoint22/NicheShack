@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
-import { Notification, NotificationType } from 'projects/manager/src/app/classes/notification';
+import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
+import { ProductDescriptionNotification } from 'projects/manager/src/app/classes/product-description-notification';
 
 @Component({
   selector: 'product-description-notification-popup',
@@ -15,44 +16,40 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
   }
 
 
-  // --------------------------------( SET POPUP )-------------------------------- \\
-  setPopup() {
-    this.paginatorIndex = this.notificationService.productDescriptionNotification.customerText.length - 1;
-  }
-
-
-
-  // --------------------------------( SET PAGE )-------------------------------- \\
-  setPage() {
-    this.paginator.setPage(this.notificationService.productDescriptionNotification.customerText.length);
+  // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
+  onPaginatorClick(index: number) {
+    this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
+      .subscribe((notification: ProductDescriptionNotification) => {
+        this.notificationService.productDescriptionNotification = notification;
+      });
   }
 
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
-    switch (notification.name) {
+  onSubmit(notification: NotificationListItem) {
+    // switch (notification.name) {
 
-      case NotificationType.ProductNameDoesNotMatchWithProductDescription: {
+    //   case NotificationType.ProductNameDoesNotMatchWithProductDescription: {
         
-        break;
-      }
-      case NotificationType.ProductDescriptionIncorrect: {
+    //     break;
+    //   }
+    //   case NotificationType.ProductDescriptionIncorrect: {
         
-        break;
-      }
-      case NotificationType.ProductDescriptionTooVague: {
+    //     break;
+    //   }
+    //   case NotificationType.ProductDescriptionTooVague: {
         
-        break;
-      }
-      case NotificationType.ProductDescriptionMisleading: {
+    //     break;
+    //   }
+    //   case NotificationType.ProductDescriptionMisleading: {
         
-        break;
-      }
-      case NotificationType.ProductDescriptionOther: {
+    //     break;
+    //   }
+    //   case NotificationType.ProductDescriptionOther: {
         
-        break;
-      }
-    }
+    //     break;
+    //   }
+    // }
   }
 
 

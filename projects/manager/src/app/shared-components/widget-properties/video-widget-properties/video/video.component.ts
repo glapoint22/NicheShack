@@ -12,7 +12,7 @@ export class VideoComponent implements OnChanges, DoCheck {
   constructor(private popupService: PopupService){}
   @Input() video: Video;
   @Output() onChange: EventEmitter<void> = new EventEmitter();
-  private currentVideoId: string;
+  private currentVideoId: number;
 
 
   ngDoCheck() {

@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HierarchyItem, NicheShackHierarchyItemType } from '../../../classes/hierarchy-item';
 import { PopupComponent } from '../popup/popup.component';
-import { TempDataService } from '../../../services/temp-data.service';
 import { PopupService } from '../../../services/popup.service';
 import { EditableHierarchyComponent } from '../../hierarchy/editable-hierarchy/editable-hierarchy.component';
 import { PromptService } from '../../../services/prompt.service';
 import { Router } from '@angular/router';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'niche-shack-hierarchy-popup',
@@ -33,7 +33,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
 
 
   constructor(
-    dataService: TempDataService,
+    dataService: DataService,
     promptService: PromptService,
     private popupService: PopupService,
     private router: Router
@@ -100,7 +100,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
           item.type = NicheShackHierarchyItemType.Niche;
           item.url = this.getUrl(NicheShackHierarchyItemType.Niche);
           item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Product);
-          item.childrenParameters = [{ key: 'id', value: item.id }];
+          item.childrenParameters = [{ key: 'nicheId', value: item.id }];
         });
       } else
 
@@ -135,7 +135,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
             item.type = NicheShackHierarchyItemType.Niche;
             item.url = this.getUrl(NicheShackHierarchyItemType.Niche);
             item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Product);
-            item.childrenParameters = [{ key: 'id', value: item.id }];
+            item.childrenParameters = [{ key: 'nicheId', value: item.id }];
           });
           break;
 
@@ -147,7 +147,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
             item.type = NicheShackHierarchyItemType.Category;
             item.url = this.getUrl(NicheShackHierarchyItemType.Category);
             item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Niche);
-            item.childrenParameters = [{ key: 'id', value: item.id }];
+            item.childrenParameters = [{ key: 'categoryId', value: item.id }];
           });
           break;
       }
@@ -158,7 +158,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
         item.type = NicheShackHierarchyItemType.Category;
         item.url = this.getUrl(NicheShackHierarchyItemType.Category);
         item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Niche);
-        item.childrenParameters = [{ key: 'id', value: item.id }];
+        item.childrenParameters = [{ key: 'categoryId', value: item.id }];
       });
     }
   }
@@ -339,7 +339,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
 
 
   // -----------------------------( OPEN ITEM )------------------------------ \\
-  openItem(id: string, type: NicheShackHierarchyItemType) {
+  openItem(id: number, type: NicheShackHierarchyItemType) {
     this.popupService.nicheShackHierarchyPopup.selectedItem = {
       id: id,
       type: type,

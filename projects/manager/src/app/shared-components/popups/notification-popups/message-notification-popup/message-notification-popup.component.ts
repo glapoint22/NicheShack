@@ -4,10 +4,12 @@ import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { CoverService } from 'projects/manager/src/app/services/cover.service';
 import { MenuService } from 'projects/manager/src/app/services/menu.service';
 import { NotificationService } from 'projects/manager/src/app/services/notification.service';
-import { Notification, NotificationTab } from 'projects/manager/src/app/classes/notification';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { PaginatorComponent } from '../../../paginator/paginator.component';
+import { DataService } from 'services/data.service';
+import { NotificationTab } from 'projects/manager/src/app/classes/notification-tab';
+import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
+import { Notification } from 'projects/manager/src/app/classes/notification';
 
 @Component({
   selector: 'message-notification-popup',
@@ -21,7 +23,7 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
 
 
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, public notificationService: NotificationService) { super(popupService, cover, menuService, dropdownMenuService, dataService) }
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: DataService, public notificationService: NotificationService) { super(popupService, cover, menuService, dropdownMenuService, dataService) }
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
   ngOnInit() {
@@ -51,21 +53,31 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
   // --------------------------------( SET PAGE )-------------------------------- \\
   setPage() {
-    this.paginator.setPage(this.notificationService.messageNotification.customerText.length);
+    // this.paginator.setPage(this.notificationService.messageNotification.customerText.length);
   }
 
 
   // --------------------------------( SET POPUP )-------------------------------- \\
   setPopup() {
-    this.paginatorIndex = this.notificationService.messageNotification.customerText.length - 1;
+    // this.paginatorIndex = this.notificationService.messageNotification.customerText.length - 1;
+  }
+
+
+
+  // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
+  onPaginatorClick(index: number) {
+    this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
+      .subscribe((notification: Notification) => {
+        this.notificationService.messageNotification = notification;
+      });
   }
 
 
   // --------------------------------( SET NOTIFICATION )-------------------------------- \\
-  setNotification(notification: Notification, destinationArray: Notification[]) {
+  setNotification(notification: NotificationListItem, destinationArray: NotificationListItem[]) {
     this.show = false;
     let notificationIndex: number;
-    let startingArray: Notification[];
+    let startingArray: NotificationListItem[];
 
     // Check to see which notification tab we are currently on
     switch (this.notificationService.selectedNotificationsTab) {
@@ -92,21 +104,21 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
 
   // --------------------------------( SEND NOTIFICATION TO PENDING )-------------------------------- \\
-  sendNotificationToPending(notification: Notification) {
+  sendNotificationToPending(notification: NotificationListItem) {
     this.cover.showNormalCover = false;
     this.setNotification(notification, this.notificationService.pendingNotifications);
   }
 
 
   // --------------------------------( ARCHIVE NOTIFICATION )-------------------------------- \\
-  archiveNotification(notification: Notification) {
+  archiveNotification(notification: NotificationListItem) {
     this.cover.showNormalCover = false;
     this.setNotification(notification, this.notificationService.archiveNotifications);
   }
 
 
   // -----------------------------( ON CLOSE )------------------------------ \\
-  onClose(notification: Notification) {
+  onClose(notification: NotificationListItem) {
     if (this.notificationService.selectedNotificationsTab == NotificationTab.ArchiveNotifications) {
       this.archiveNotification(notification);
     } else {
@@ -116,14 +128,14 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
 
   // -----------------------------( ON RIGHT BUTTON CLICK )------------------------------ \\
-  onRightButtonClick(notification: Notification) {
+  onRightButtonClick(notification: NotificationListItem) {
     this.archiveNotification(notification);
     this.onSubmit(notification);
   }
 
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
+  onSubmit(notification: NotificationListItem) {
 
   }
 }

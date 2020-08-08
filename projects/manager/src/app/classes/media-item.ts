@@ -3,7 +3,7 @@ import { ListItem } from './list-item';
 import { SelectType } from './list-item-select-type';
 
 export class MediaItem implements ListItem, Media {
-    public id: string;
+    public id: number;
     public url: string;
     public selected: boolean;
     public selectType: SelectType;

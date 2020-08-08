@@ -4,7 +4,7 @@ import { SelectType } from '../../../classes/list-item-select-type';
 import { MenuService } from '../../../services/menu.service';
 import { NotificationService } from '../../../services/notification.service';
 import { PopupService } from '../../../services/popup.service';
-import { NotificationType, Notification } from '../../../classes/notification';
+import { NotificationListItem } from '../../../classes/notification-list-item';
 import { GeneralNotification } from '../../../classes/general-notification';
 import { ProductDescriptionNotification } from '../../../classes/product-description-notification';
 import { ProductImageNotification } from '../../../classes/product-image-notification';
@@ -12,6 +12,10 @@ import { ProductMediaNotification } from '../../../classes/product-media-notific
 import { ProductContentNotification } from '../../../classes/product-content-notification';
 import { ReviewComplaintNotification } from '../../../classes/review-complaint-notification';
 import { PromptService } from '../../../services/prompt.service';
+import { DataService } from 'services/data.service';
+import { NotificationType } from '../../../classes/notification-type';
+import { Notification } from '../../../classes/notification';
+import { Observable, Subscriber } from 'rxjs';
 
 @Component({
   selector: 'notifications-item-list',
@@ -19,76 +23,124 @@ import { PromptService } from '../../../services/prompt.service';
   styleUrls: ['./notifications-item-list.component.scss', '../media-item-list/media-item-list.component.scss']
 })
 export class NotificationsItemListComponent extends ItemListComponent {
-  constructor(menuService: MenuService,
-              promptService: PromptService,
-              popupService: PopupService,
-              private notificationService: NotificationService) { 
-                super(menuService, promptService, popupService) 
-              }
   public selectType = SelectType;
   public notificationImageList: Array<string>;
-  @Input() listItems: Array<Notification>;
+  @Input() listItems: Array<NotificationListItem>;
+
+
+
+  constructor(menuService: MenuService,
+    promptService: PromptService,
+    popupService: PopupService,
+    private notificationService: NotificationService,
+    private dataService: DataService
+  ) {
+    super(menuService, promptService, popupService)
+  }
+
+
+
 
 
   // -----------------------------( ON LIST ITEM CLICK )------------------------------ \\
-  onListItemClick(listItem: Notification) {
-    // Message
-    if (listItem.name == NotificationType.Message) {
-      this.popupService.messageNotificationPopup.show = true;
-      this.notificationService.messageNotification = listItem;
-    }
+  onListItemClick(listItem: NotificationListItem) {
+    this.dataService.post('api/Notifications/Ids',
+      {
+        type: listItem.type,
+        state: listItem.state,
+        productId: listItem.productId
+      }
+    ).subscribe((notificationIds: Array<number>) => {
+      this.notificationService.notificationIds = notificationIds;
 
-    // General Notification
-    if (listItem.name == NotificationType.ProductNameOther
-      || listItem.name == NotificationType.ProductReportedAsIllegal
-      || listItem.name == NotificationType.ProductReportedAsHavingAdultContent
-      || listItem.name == NotificationType.OffensiveProductOther
-      || listItem.name == NotificationType.ProductInactive
-      || listItem.name == NotificationType.ProductSiteNoLongerInService
-      || listItem.name == NotificationType.MissingProductOther) {
-      this.popupService.generalNotificationPopup.show = true;
-      this.notificationService.generalNotification = listItem as GeneralNotification;
-    }
+      // Message
+      if (listItem.type == NotificationType.Message) {
+        this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: notificationIds[0] }])
+          .subscribe((notification: Notification) => {
+            this.notificationService.messageNotification = notification;
+            this.popupService.messageNotificationPopup.show = true;
+          });
+      }
 
-    // Review Complaint Notification
-    if (listItem.name == NotificationType.ReviewComplaint) {
-      this.popupService.reviewComplaintNotificationPopup.show = true;
-      this.notificationService.reviewComplaintNotification = listItem as ReviewComplaintNotification;
-    }
+      // General Notification
+      if (listItem.type == NotificationType.ProductNameOther
+        || listItem.type == NotificationType.ProductReportedAsIllegal
+        || listItem.type == NotificationType.ProductReportedAsHavingAdultContent
+        || listItem.type == NotificationType.OffensiveProductOther
+        || listItem.type == NotificationType.ProductInactive
+        || listItem.type == NotificationType.ProductSiteNoLongerInService
+        || listItem.type == NotificationType.MissingProductOther) {
 
-    // Product Description Notification
-    if (listItem.name == NotificationType.ProductNameDoesNotMatchWithProductDescription
-      || listItem.name == NotificationType.ProductDescriptionIncorrect
-      || listItem.name == NotificationType.ProductDescriptionTooVague
-      || listItem.name == NotificationType.ProductDescriptionMisleading
-      || listItem.name == NotificationType.ProductDescriptionOther) {
-      this.popupService.productDescriptionNotificationPopup.show = true;
-      this.notificationService.productDescriptionNotification = listItem as ProductDescriptionNotification;
-    }
 
-    // Product Image Notification
-    if (listItem.name == NotificationType.ProductNameDoesNotMatchWithProductImage) {
-      this.popupService.productImageNotificationPopup.show = true;
-      this.notificationService.productImageNotification = listItem as ProductImageNotification;
-    }
+        this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: notificationIds[0] }])
+          .subscribe((notification: GeneralNotification) => {
+            this.notificationService.generalNotification = notification;
+            this.popupService.generalNotificationPopup.show = true;
+          });
+      }
 
-    // Product Media Notification
-    if (listItem.name == NotificationType.VideosAndImagesAreDifferentFromProduct
-      || listItem.name == NotificationType.NotEnoughVideosAndImages
-      || listItem.name == NotificationType.VideosAndImagesNotClear
-      || listItem.name == NotificationType.VideosAndImagesMisleading
-      || listItem.name == NotificationType.VideosAndImagesOther) {
-      this.popupService.productMediaNotificationPopup.show = true;
-      this.notificationService.productMediaNotification = listItem as ProductMediaNotification;
-    }
+      // Review Complaint Notification
+      if (listItem.type == NotificationType.ReviewComplaint) {
+        this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: notificationIds[0] }])
+          .subscribe((notification: ReviewComplaintNotification) => {
+            this.notificationService.reviewComplaintNotification = notification;
+            this.popupService.reviewComplaintNotificationPopup.show = true;
+          });
+      }
 
-    // Product Content Notification
-    if (listItem.name == NotificationType.ProductPriceTooHigh
-      || listItem.name == NotificationType.ProductPriceNotCorrect
-      || listItem.name == NotificationType.ProductPriceOther) {
-      this.popupService.productContentNotificationPopup.show = true;
-      this.notificationService.productContentNotification = listItem as ProductContentNotification;
-    }
+      // Product Description Notification
+      if (listItem.type == NotificationType.ProductNameDoesNotMatchWithProductDescription
+        || listItem.type == NotificationType.ProductDescriptionIncorrect
+        || listItem.type == NotificationType.ProductDescriptionTooVague
+        || listItem.type == NotificationType.ProductDescriptionMisleading
+        || listItem.type == NotificationType.ProductDescriptionOther) {
+
+        this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: notificationIds[0] }])
+          .subscribe((notification: ProductDescriptionNotification) => {
+            this.notificationService.productDescriptionNotification = notification;
+            this.popupService.productDescriptionNotificationPopup.show = true;
+          });
+      }
+
+      // Product Image Notification
+      if (listItem.type == NotificationType.ProductNameDoesNotMatchWithProductImage) {
+
+        this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: notificationIds[0] }])
+          .subscribe((notification: ProductImageNotification) => {
+            this.notificationService.productImageNotification = notification;
+            this.popupService.productImageNotificationPopup.show = true;
+          });
+      }
+
+      // Product Media Notification
+      if (listItem.type == NotificationType.VideosAndImagesAreDifferentFromProduct
+        || listItem.type == NotificationType.NotEnoughVideosAndImages
+        || listItem.type == NotificationType.VideosAndImagesNotClear
+        || listItem.type == NotificationType.VideosAndImagesMisleading
+        || listItem.type == NotificationType.VideosAndImagesOther) {
+
+        this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: notificationIds[0] }])
+          .subscribe((notification: ProductMediaNotification) => {
+            this.notificationService.productMediaNotification = notification;
+            this.popupService.productMediaNotificationPopup.show = true;
+          });
+      }
+
+      // Product Content Notification
+      if (listItem.type == NotificationType.ProductPriceTooHigh
+        || listItem.type == NotificationType.ProductPriceNotCorrect
+        || listItem.type == NotificationType.ProductPriceOther) {
+
+        this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: notificationIds[0] }])
+          .subscribe((notification: ProductContentNotification) => {
+            this.notificationService.productContentNotification = notification;
+            this.popupService.productContentNotificationPopup.show = true;
+          });
+      }
+    });
+
+
+    // Close the notification list popup
     this.popupService.notificationListPopup.show = false;
   }
 }

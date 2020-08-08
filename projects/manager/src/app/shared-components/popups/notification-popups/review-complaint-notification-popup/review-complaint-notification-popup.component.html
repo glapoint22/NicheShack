@@ -1,9 +1,6 @@
 <!-- Popup Base -->
-<div #popup transitionClass="fade-end"
-     class="popup-base fade-start"
-     (onShow)="onPopupShow(popup, arrow)"
-     *show="show">
-     
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)" *show="show">
+
     <!-- Arrow -->
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
 
@@ -12,8 +9,8 @@
         <div class="product-container">
 
             <!-- Product Thumbnail -->
-            <div class="thumbnail" 
-                 [ngStyle]="{ 'background-image': 'url(images/' + notificationService.reviewComplaintNotification.productThumbnail + ')'}">
+            <div class="thumbnail"
+                [ngStyle]="{ 'background-image': 'url(images/' + notificationService.reviewComplaintNotification.productThumbnail + ')'}">
             </div>
 
             <!-- Product Name -->
@@ -23,11 +20,10 @@
         </div>
 
         <!-- X -->
-        <div
-             class="icon-container"
-             (click)="sendNotificationToPending(notificationService.reviewComplaintNotification)">
+        <!-- <div class="icon-container"
+            (click)="sendNotificationToPending(notificationService.reviewComplaintNotification)">
             X
-        </div>
+        </div> -->
     </div>
 
 
@@ -43,8 +39,8 @@
 
         <!-- Paginator -->
         <div class="paginator-bar">
-            <paginator #paginator [itemCount]="notificationService.reviewComplaintNotification.customerText.length"
-                       (onItemChange)="paginatorIndex = $event">
+            <paginator #paginator [itemCount]="notificationService.notificationIds.length"
+                (onItemChange)="onPaginatorClick($event)">
             </paginator>
         </div>
 
@@ -56,27 +52,24 @@
 
                 <!-- Customer Thumbnail -->
                 <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.reviewComplaintNotification.customerText[paginatorIndex].thumbnail + ')'}">
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.reviewComplaintNotification.customerText.thumbnail + ')'}">
                 </div>
 
                 <!-- Time Stamp -->
                 <div class="time-stamp">
-                    {{notificationService.reviewComplaintNotification.customerText[paginatorIndex].timeStamp}}
+                    {{notificationService.reviewComplaintNotification.customerText.timeStamp}}
                 </div>
             </div>
 
             <!-- Customer Text -->
             <div class="user-text">
-                {{notificationService.reviewComplaintNotification.customerText[paginatorIndex].text}}
+                {{notificationService.reviewComplaintNotification.customerText.text}}
             </div>
             <div style="width: 100%; height: 45px; border-top: 1px solid #373737; padding: 10px;">
-            
+
                 <checkbox style="color: #898989;"
-                          [label]="'mark this user as having a strike against them for not complying with the terms of use.'"
-                          [checked]="notificationService.reviewComplaintNotification.isChecked[paginatorIndex]"
-                          (change)="notificationService.reviewComplaintNotification.isChecked[paginatorIndex] = !notificationService.reviewComplaintNotification.isChecked[paginatorIndex]"
-                
-                >
+                    [label]="'mark this user as having a strike against them for not complying with the terms of use.'"
+                    [checked]="false">
                 </checkbox>
             </div>
         </div>
@@ -86,21 +79,24 @@
         <div class="property-box-label">Complainant:</div>
         <div class="property-box">
             <div class="property-box-bar">
+                <ng-container *ngIf="notificationService.reviewComplaintNotification.notes">
+                    <!-- Employee Thumbnail -->
+                    <div class="account-thumbnail"
+                        [ngStyle]="{'background-image': 'url(images/' + notificationService.reviewComplaintNotification.notes.thumbnail + ')'}">
+                    </div>
 
-                <!-- Employee Thumbnail -->
-                <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.reviewComplaintNotification.notesText[paginatorIndex].thumbnail + ')'}">
-                </div>
-
-                <!-- Time Stamp -->
-                <div class="time-stamp">
-                    {{notificationService.reviewComplaintNotification.notesText[paginatorIndex].timeStamp}}
-                </div>
+                    <!-- Time Stamp -->
+                    <div class="time-stamp">
+                        {{notificationService.reviewComplaintNotification.notes.timeStamp}}
+                    </div>
+                </ng-container>
             </div>
 
             <!-- Employee Text -->
             <div class="user-text">
-                {{notificationService.reviewComplaintNotification.notesText[paginatorIndex].text}}
+                <ng-container *ngIf="notificationService.reviewComplaintNotification.notes">
+                    {{notificationService.reviewComplaintNotification.notes.text}}
+                </ng-container>
             </div>
         </div>
     </div>
@@ -108,10 +104,10 @@
 
     <!-- Button Container -->
     <div *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
-         class="button-container">
-         
-         <!-- Buttons -->
-        <button (click)="onDismissButtonClick(notificationService.reviewComplaintNotification)">Dismiss</button>
-        <button (click)="onRightButtonClick(notificationService.reviewComplaintNotification)">Remove Review</button>
+        class="button-container">
+
+        <!-- Buttons -->
+        <!-- <button (click)="onDismissButtonClick(notificationService.reviewComplaintNotification)">Dismiss</button>
+        <button (click)="onRightButtonClick(notificationService.reviewComplaintNotification)">Remove Review</button> -->
     </div>
 </div>

@@ -1,9 +1,6 @@
 <!-- Popup Base -->
-<div #popup transitionClass="fade-end"
-     class="popup-base fade-start"
-     (onShow)="onPopupShow(popup, arrow)"
-         *show="show">
- <!-- Arrow -->
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)" *show="show">
+    <!-- Arrow -->
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
 
 
@@ -19,8 +16,8 @@
 
         <!-- Paginator -->
         <div class="paginator-bar">
-            <paginator #paginator [itemCount]="notificationService.messageNotification.customerText.length"
-                       (onItemChange)="paginatorIndex = $event">
+            <paginator #paginator [itemCount]="notificationService.notificationIds.length"
+                (onItemChange)="onPaginatorClick($event)">
             </paginator>
         </div>
 
@@ -31,42 +28,48 @@
             <div class="property-box-bar">
 
                 <!-- Customer Thumbnail -->
-                <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.messageNotification.customerText[paginatorIndex].thumbnail + ')'}">
+                <div class="account-thumbnail" *ngIf="notificationService.messageNotification.customerText.thumbnail"
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.messageNotification.customerText.thumbnail + ')'}">
                 </div>
 
                 <!-- Time Stamp -->
                 <div class="time-stamp">
-                    {{notificationService.messageNotification.customerText[paginatorIndex].timeStamp}}
+                    {{notificationService.messageNotification.customerText.timeStamp}}
                 </div>
             </div>
 
             <!-- Customer Text -->
             <div class="user-text">
-                {{notificationService.messageNotification.customerText[paginatorIndex].text}}
+                {{notificationService.messageNotification.customerText.text}}
             </div>
         </div>
 
 
         <!-- Reply Property Box -->
-        <div class="property-box-label">Reply:</div>
+        <div class="property-box-label">Notes:</div>
         <div class="property-box">
             <div class="property-box-bar">
 
-                <!-- Employee Thumbnail -->
-                <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.messageNotification.notesText[paginatorIndex].thumbnail + ')'}">
-                </div>
+                <ng-container *ngIf="notificationService.messageNotification.notes">
+                    <!-- Employee Thumbnail -->
+                    <div class="account-thumbnail"
+                        [ngStyle]="{'background-image': 'url(images/' + notificationService.messageNotification.notes.thumbnail + ')'}">
+                    </div>
 
-                <!-- Time Stamp -->
-                <div class="time-stamp">
-                    {{notificationService.messageNotification.notesText[paginatorIndex].timeStamp}}
-                </div>
+                    <!-- Time Stamp -->
+                    <div class="time-stamp">
+                        {{notificationService.messageNotification.notes.timeStamp}}
+                    </div>
+                </ng-container>
+
             </div>
 
             <!-- Employee Text -->
             <div class="user-text">
-                {{notificationService.messageNotification.notesText[paginatorIndex].text}}
+                <ng-container *ngIf="notificationService.messageNotification.notes">
+                    {{notificationService.messageNotification.notes.text}}
+                </ng-container>
+
             </div>
         </div>
     </div>
@@ -75,8 +78,8 @@
     <div class="button-container">
 
         <!-- Buttons -->
-        <button (click)="onClose(notificationService.messageNotification)">Close</button>
+        <!-- <button (click)="onClose(notificationService.messageNotification)">Close</button>
         <button *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
-                (click)="onRightButtonClick(notificationService.messageNotification)">Send</button>
+            (click)="onRightButtonClick(notificationService.messageNotification)">Submit</button> -->
     </div>
 </div>

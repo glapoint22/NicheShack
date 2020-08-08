@@ -2,7 +2,7 @@ import { ImageData } from './image-data';
 import { Media } from './media';
 
 export class Image implements Media {
-    public id: string;
+    public id: number;
     public name: string;
     public url: string;
 

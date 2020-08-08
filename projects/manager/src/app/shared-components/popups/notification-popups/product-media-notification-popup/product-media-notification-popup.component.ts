@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
-import { Notification, NotificationType } from 'projects/manager/src/app/classes/notification';
 import { MediaType } from 'projects/manager/src/app/classes/media';
+import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
+import { ProductMediaNotification } from 'projects/manager/src/app/classes/product-media-notification';
 
 @Component({
   selector: 'product-media-notification-popup',
@@ -18,15 +19,12 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
   }
 
 
-  // --------------------------------( SET POPUP )-------------------------------- \\
-  setPopup() {
-    this.paginatorIndex = this.notificationService.productMediaNotification.customerText.length - 1;
-  }
-
-
-  // --------------------------------( SET PAGE )-------------------------------- \\
-  setPage() {
-    this.paginator.setPage(this.notificationService.productMediaNotification.customerText.length);
+  // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
+  onPaginatorClick(index: number) {
+    this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
+      .subscribe((notification: ProductMediaNotification) => {
+        this.notificationService.productMediaNotification = notification;
+      });
   }
 
 
@@ -50,30 +48,30 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
 
   
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
-    switch (notification.name) {
+  onSubmit(notification: NotificationListItem) {
+    // switch (notification.name) {
 
-      case NotificationType.VideosAndImagesAreDifferentFromProduct: {
+    //   case NotificationType.VideosAndImagesAreDifferentFromProduct: {
         
-        break;
-      }
-      case NotificationType.NotEnoughVideosAndImages: {
+    //     break;
+    //   }
+    //   case NotificationType.NotEnoughVideosAndImages: {
         
-        break;
-      }
-      case NotificationType.VideosAndImagesNotClear: {
+    //     break;
+    //   }
+    //   case NotificationType.VideosAndImagesNotClear: {
         
-        break;
-      }
-      case NotificationType.VideosAndImagesMisleading: {
+    //     break;
+    //   }
+    //   case NotificationType.VideosAndImagesMisleading: {
         
-        break;
-      }
-      case NotificationType.VideosAndImagesOther: {
+    //     break;
+    //   }
+    //   case NotificationType.VideosAndImagesOther: {
         
-        break;
-      }
-    }
+    //     break;
+    //   }
+    // }
   }
 
 

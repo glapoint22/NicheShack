@@ -41,8 +41,8 @@
 
         <!-- Paginator -->
         <div class="paginator-bar">
-            <paginator #paginator [itemCount]="notificationService.productContentNotification.customerText.length"
-                (onItemChange)="paginatorIndex = $event">
+            <paginator #paginator [itemCount]="notificationService.notificationIds.length"
+                (onItemChange)="onPaginatorClick($event)">
             </paginator>
         </div>
 
@@ -54,18 +54,18 @@
 
                 <!-- Customer Thumbnail -->
                 <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productContentNotification.customerText[paginatorIndex].thumbnail + ')'}">
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productContentNotification.customerText.thumbnail + ')'}">
                 </div>
 
                 <!-- Time Stamp -->
                 <div class="time-stamp">
-                    {{notificationService.productContentNotification.customerText[paginatorIndex].timeStamp}}
+                    {{notificationService.productContentNotification.customerText.timeStamp}}
                 </div>
             </div>
 
             <!-- Customer Text -->
             <div class="user-text">
-                {{notificationService.productContentNotification.customerText[paginatorIndex].text}}
+                {{notificationService.productContentNotification.customerText.text}}
             </div>
         </div>
 
@@ -149,40 +149,35 @@
                     <div class="icons">
 
                         <!-- Delete -->
-                        <div class="icon-container"
-                             (click)="onListItemDelete()"
-                             (mouseout)="itemList.onIconButtonMouseOut()"
-                             (mouseover)="itemList.isOverIconButton = true"
-                             [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
-                             [attr.title]="!itemList.isMultiSelected ? 'Delete Price Point (Delete)' : 'Delete Price Points (Delete)'"><i class="fas fa-trash-alt"></i>
+                        <div class="icon-container" (click)="onListItemDelete()"
+                            (mouseout)="itemList.onIconButtonMouseOut()" (mouseover)="itemList.isOverIconButton = true"
+                            [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                            [attr.title]="!itemList.isMultiSelected ? 'Delete Price Point (Delete)' : 'Delete Price Points (Delete)'">
+                            <i class="fas fa-trash-alt"></i>
                         </div>
 
                         <!-- Edit -->
-                        <div class="icon-container"
-                             (mouseout)="itemList.onIconButtonMouseOut()"
-                             [attr.title]="'Edit Price Point (Ctrl+Alt+E)'"
-                             (mouseover)="itemList.isOverIconButton = true"
-                             [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
-                             (click)="!itemList.addIcon.isDisabled ? editPricePoint($event.target, itemList.selectedListItemIndex) : null"><i class="fas fa-edit"></i>
+                        <div class="icon-container" (mouseout)="itemList.onIconButtonMouseOut()"
+                            [attr.title]="'Edit Price Point (Ctrl+Alt+E)'"
+                            (mouseover)="itemList.isOverIconButton = true"
+                            [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
+                            (click)="!itemList.addIcon.isDisabled ? editPricePoint($event.target, itemList.selectedListItemIndex) : null">
+                            <i class="fas fa-edit"></i>
                         </div>
 
                         <!-- Add -->
-                        <div class="icon-container"
-                             (mouseout)="itemList.onIconButtonMouseOut()"
-                             [attr.title]="'New Price Point (Ctrl+Alt+N)'"
-                             (mouseover)="itemList.isOverIconButton = true"
-                             [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
-                             (click)="!itemList.addIcon.isDisabled ? addPricePoint($event.target) : null"><i class="fas fa-plus-circle"></i>
+                        <div class="icon-container" (mouseout)="itemList.onIconButtonMouseOut()"
+                            [attr.title]="'New Price Point (Ctrl+Alt+N)'" (mouseover)="itemList.isOverIconButton = true"
+                            [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                            (click)="!itemList.addIcon.isDisabled ? addPricePoint($event.target) : null"><i
+                                class="fas fa-plus-circle"></i>
                         </div>
                     </div>
 
 
                     <!-- Checkbox Item LIst -->
                     <div class="list-container">
-                        <checkbox-item-list 
-                            #itemList
-                            [listItems]="pricePointList"
-                            [listOptions]="itemListOptions"
+                        <checkbox-item-list #itemList [listItems]="pricePointList" [listOptions]="itemListOptions"
                             [checkList]="notificationService.productContentNotification.content[contentIndex].priceIndices">
                         </checkbox-item-list>
                     </div>
@@ -202,20 +197,27 @@
         <div class="property-box">
             <div class="property-box-bar">
 
-                <!-- Employee Thumbnail -->
-                <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productContentNotification.notesText[paginatorIndex].thumbnail + ')'}">
-                </div>
+                <ng-container *ngIf="notificationService.productContentNotification.notes">
 
-                <!-- Time Stamp -->
-                <div class="time-stamp">
-                    {{notificationService.productContentNotification.notesText[paginatorIndex].timeStamp}}
-                </div>
+                    <!-- Employee Thumbnail -->
+                    <div class="account-thumbnail"
+                        [ngStyle]="{'background-image': 'url(images/' + notificationService.productContentNotification.notes.thumbnail + ')'}">
+                    </div>
+
+                    <!-- Time Stamp -->
+                    <div class="time-stamp">
+                        {{notificationService.productContentNotification.notes.timeStamp}}
+                    </div>
+                </ng-container>
+
+
             </div>
 
             <!-- Employee Text -->
             <div class="user-text">
-                {{notificationService.productContentNotification.notesText[paginatorIndex].text}}
+                <ng-container *ngIf="notificationService.productContentNotification.notes">
+                    {{notificationService.productContentNotification.notes.text}}
+                </ng-container>
             </div>
         </div>
     </div>
@@ -225,7 +227,7 @@
         class="button-container">
 
         <!-- Buttons -->
-        <button (click)="onDismissButtonClick(notificationService.productContentNotification)">Dismiss</button>
-        <button (click)="onRightButtonClick(notificationService.productContentNotification)">Publish</button>
+        <!-- <button (click)="onDismissButtonClick(notificationService.productContentNotification)">Dismiss</button>
+        <button (click)="onRightButtonClick(notificationService.productContentNotification)">Publish</button> -->
     </div>
 </div>

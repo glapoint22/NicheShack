@@ -2,10 +2,10 @@ import { Component, Input, ViewChild, OnChanges, DoCheck } from '@angular/core';
 import { Media, MediaType } from 'projects/manager/src/app/classes/media';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { SaveService } from 'projects/manager/src/app/services/save.service';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'product-media',
@@ -16,13 +16,13 @@ export class ProductMediaComponent implements OnChanges, DoCheck {
   @Input() media: Array<Media>;
   @ViewChild('paginator', { static: false }) paginator: PaginatorComponent;
   public mediaType = MediaType;
-  private currentMediaId: string;
+  private currentMediaId: number;
 
 
   constructor(
     private popupService: PopupService,
     public productService: ProductService,
-    private dataService: TempDataService,
+    private dataService: DataService,
     private promptService: PromptService,
     private saveService: SaveService
   ) { }
@@ -40,7 +40,7 @@ export class ProductMediaComponent implements OnChanges, DoCheck {
 
   // -----------------------------( NG DO CHECK )------------------------------ \\
   ngDoCheck() {
-    if (this.productService.currentSelectedMedia.url && this.currentMediaId != this.productService.currentSelectedMedia.id) {
+    if (this.productService.currentSelectedMedia && this.productService.currentSelectedMedia.url && this.currentMediaId != this.productService.currentSelectedMedia.id) {
       this.currentMediaId = this.productService.currentSelectedMedia.id;
 
       // Update the media
@@ -89,7 +89,7 @@ export class ProductMediaComponent implements OnChanges, DoCheck {
   // -----------------------------( ADD MEDIA ITEM )------------------------------ \\
   addMediaItem() {
     this.dataService.post('api/Products/Media', this.productService.product.id)
-      .subscribe((id: string) => {
+      .subscribe((id: number) => {
         this.media[this.productService.currentSelectedMediaIndex].id = id;
       });
 

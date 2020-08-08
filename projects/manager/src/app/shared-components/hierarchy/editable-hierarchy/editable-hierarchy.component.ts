@@ -1,10 +1,10 @@
 import { Component, HostListener } from '@angular/core';
 import { HierarchyComponent } from '../hierarchy.component';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
-import { TempDataService } from '../../../services/temp-data.service';
 import { PromptService } from '../../../services/prompt.service';
 import { fromEvent, of } from 'rxjs';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
+import { DataService } from 'services/data.service';
 
 @Component({
   template: '',
@@ -14,7 +14,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
   public searchResults: Array<HierarchyItem>;
   public searchInput: HTMLInputElement;
   public filterType: number;
-  constructor(dataService: TempDataService, public promptService: PromptService) { super(dataService) }
+  constructor(dataService: DataService, public promptService: PromptService) { super(dataService) }
 
 
   // -----------------------------( INIT SEARCH )------------------------------ \\
@@ -84,7 +84,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
     this.editMode = true;
 
     // Get the element
-    let el: HTMLElement = document.getElementById(this.selectedItem.id);
+    let el: HTMLElement = document.getElementById(this.selectedItem.id.toString());
 
     // Set the element to be editable
     el.contentEditable = 'true';
@@ -350,7 +350,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
     } else {
       // Post new item
       this.dataService.post(this.selectedItem.url, element.innerText)
-        .subscribe((id: string) => {
+        .subscribe((id: number) => {
           // Assign the new id
           this.selectedItem.id = id;
 
@@ -377,7 +377,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
     if (this.selectedItem) {
 
       // Get the element
-      let el: HTMLElement = document.getElementById(this.selectedItem.id);
+      let el: HTMLElement = document.getElementById(this.selectedItem.id.toString());
 
       // Set editable to false
       if (el && el.contentEditable == 'true') {

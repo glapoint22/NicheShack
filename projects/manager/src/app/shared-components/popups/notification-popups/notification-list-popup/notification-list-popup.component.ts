@@ -4,9 +4,10 @@ import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { CoverService } from 'projects/manager/src/app/services/cover.service';
 import { MenuService } from 'projects/manager/src/app/services/menu.service';
 import { NotificationService } from 'projects/manager/src/app/services/notification.service';
-import { NotificationTab } from 'projects/manager/src/app/classes/notification';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
+import { DataService } from 'services/data.service';
+import { NotificationTab } from 'projects/manager/src/app/classes/notification-tab';
+import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 
 @Component({
   selector: 'notification-list-popup',
@@ -14,7 +15,7 @@ import { TempDataService } from 'projects/manager/src/app/services/temp-data.ser
   styleUrls: ['../../popup/popup.component.scss', './notification-list-popup.component.scss']
 })
 export class NotificationListPopupComponent extends PopupComponent implements OnInit {
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: TempDataService, public notificationService: NotificationService) { super(popupService, cover, menuService, dropdownMenuService, dataService) }
+  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: DataService, public notificationService: NotificationService) { super(popupService, cover, menuService, dropdownMenuService, dataService) }
   public notificationTab = NotificationTab;
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
@@ -27,5 +28,18 @@ export class NotificationListPopupComponent extends PopupComponent implements On
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
     this.notificationService.selectedNotificationsTab = NotificationTab.NewNotifications;
+  }
+
+
+  // -----------------------------( ON POPUP SHOW )------------------------------ \\
+  loadArchive() {
+    this.notificationService.selectedNotificationsTab = this.notificationTab.ArchiveNotifications;
+
+    if(this.notificationService.archiveNotifications.length == 0) {
+      this.dataService.get('api/Notifications/Archive')
+      .subscribe((notifications: Array<NotificationListItem>) => {
+        this.notificationService.archiveNotifications = notifications;
+      });
+    }
   }
 }

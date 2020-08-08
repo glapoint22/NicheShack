@@ -6,9 +6,9 @@ import { FormService } from 'projects/manager/src/app/services/form.service';
 import { Subscription } from 'rxjs';
 import { Vendor } from 'projects/manager/src/app/classes/vendor';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { SaveService } from 'projects/manager/src/app/services/save.service';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'product-vendor',
@@ -26,7 +26,7 @@ export class ProductVendorComponent implements Searchable {
     private popupService: PopupService,
     private formService: FormService,
     private loadingService: LoadingService,
-    private dataService: TempDataService,
+    private dataService: DataService,
     private saveService: SaveService
   ) { }
 
@@ -50,7 +50,7 @@ export class ProductVendorComponent implements Searchable {
 
     if (this.product.vendor) {
       this.loadingService.loading = true;
-      this.dataService.get(this.apiUrl, [{ key: 'id', value: this.product.vendor.id }])
+      this.dataService.get(this.apiUrl + '/Vendor', [{ key: 'vendorId', value: this.product.vendor.id }])
         .subscribe((vendor: Vendor) => {
           // Give the vendor info to the vendor form
           this.formService.vendorForm.vendor = vendor;

@@ -1,9 +1,6 @@
 <!-- Popup Base -->
-<div #popup transitionClass="fade-end"
-     class="popup-base fade-start"
-     (onShow)="onPopupShow(popup, arrow)"
-     *show="show">
-     
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)" *show="show">
+
     <!-- Arrow -->
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
 
@@ -13,8 +10,8 @@
         <div class="product-container">
 
             <!-- Product Thumbnail -->
-            <div class="thumbnail" 
-                 [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productImageNotification.productThumbnail + ')'}">
+            <div class="thumbnail"
+                [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productImageNotification.productThumbnail + ')'}">
             </div>
 
             <!-- Product Name -->
@@ -24,9 +21,8 @@
         </div>
 
         <!-- Ellipsis -->
-        <div #ellipsis 
-             class="icon-container"
-             (mousedown)="showContextMenu(notificationService.productImageNotification)">
+        <div #ellipsis class="icon-container"
+            (mousedown)="showContextMenu(notificationService.productImageNotification)">
             <i class="fas fa-ellipsis-v"></i>
         </div>
     </div>
@@ -39,14 +35,14 @@
     </div>
     <div class="header-line"></div>
 
-    
+
     <!-- Main Property Box -->
     <div class="main-property-box">
 
         <!-- Paginator -->
         <div class="paginator-bar">
-            <paginator #paginator [itemCount]="notificationService.productImageNotification.customerText.length"
-                       (onItemChange)="paginatorIndex = $event">
+            <paginator #paginator [itemCount]="notificationService.notificationIds.length"
+                (onItemChange)="onPaginatorClick($event)">
             </paginator>
         </div>
 
@@ -58,18 +54,18 @@
 
                 <!-- Customer Thumbnail -->
                 <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productImageNotification.customerText[paginatorIndex].thumbnail + ')'}">
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productImageNotification.customerText.thumbnail + ')'}">
                 </div>
 
                 <!-- Time Stamp -->
                 <div class="time-stamp">
-                    {{notificationService.productImageNotification.customerText[paginatorIndex].timeStamp}}
+                    {{notificationService.productImageNotification.customerText.timeStamp}}
                 </div>
             </div>
 
             <!-- Customer Text -->
             <div class="user-text">
-                {{notificationService.productImageNotification.customerText[paginatorIndex].text}}
+                {{notificationService.productImageNotification.customerText.text}}
             </div>
         </div>
 
@@ -78,21 +74,21 @@
         <div class="property-box-label">Product Image:</div>
         <div class="property-box-dark">
             <div class="icons">
-                
+
                 <!-- Media browser icon -->
                 <div class="icon-container">
                     <i class="fas fa-image"></i>
-                </div>        
+                </div>
             </div>
-        
+
             <!-- Image -->
             <div class="img-container">
                 <div *ngIf="notificationService.productImageNotification.image && notificationService.productImageNotification.image.url"
-                     class="img"
-                     [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productImageNotification.image.url + ')'}">
+                    class="img"
+                    [ngStyle]="{ 'background-image': 'url(images/' + notificationService.productImageNotification.image.url + ')'}">
                 </div>
                 <div *ngIf="!notificationService.productImageNotification.image || !notificationService.productImageNotification.image.url"
-                     class="no-property">
+                    class="no-property">
                     No image available
                 </div>
             </div>
@@ -104,20 +100,28 @@
         <div class="property-box">
             <div class="property-box-bar">
 
-                <!-- Employee Thumbnail -->
-                <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productImageNotification.notesText[paginatorIndex].thumbnail + ')'}">
-                </div>
+                <ng-container *ngIf="notificationService.productImageNotification.notes">
 
-                <!-- Time Stamp -->
-                <div class="time-stamp">
-                    {{notificationService.productImageNotification.notesText[paginatorIndex].timeStamp}}
-                </div>
+                    <!-- Employee Thumbnail -->
+                    <div class="account-thumbnail"
+                        [ngStyle]="{'background-image': 'url(images/' + notificationService.productImageNotification.notes.thumbnail + ')'}">
+                    </div>
+
+                    <!-- Time Stamp -->
+                    <div class="time-stamp">
+                        {{notificationService.productImageNotification.notes.timeStamp}}
+                    </div>
+                </ng-container>
+
+
             </div>
 
             <!-- Employee Text -->
             <div class="user-text">
-                {{notificationService.productImageNotification.notesText[paginatorIndex].text}}
+                <ng-container *ngIf="notificationService.productImageNotification.notes">
+                    {{notificationService.productImageNotification.notes.text}}
+                </ng-container>
+                
             </div>
         </div>
     </div>
@@ -125,10 +129,10 @@
 
     <!-- Button Container -->
     <div *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
-         class="button-container">
+        class="button-container">
 
-         <!-- Buttons -->
-        <button (click)="onDismissButtonClick(notificationService.productImageNotification)">Dismiss</button>
-        <button (click)="onRightButtonClick(notificationService.productImageNotification)">Publish</button>
+        <!-- Buttons -->
+        <!-- <button (click)="onDismissButtonClick(notificationService.productImageNotification)">Dismiss</button>
+        <button (click)="onRightButtonClick(notificationService.productImageNotification)">Publish</button> -->
     </div>
 </div>

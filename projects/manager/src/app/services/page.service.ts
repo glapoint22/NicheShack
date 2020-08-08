@@ -135,10 +135,7 @@ export class PageService {
 
 
   // -----------------------------( LOAD PAGE )------------------------------ \\
-  loadPage(page: string) {
-    // Convert the page into object form
-    let pageData: PageData = JSON.parse(page);
-
+  loadPage(pageData: PageData) {
     this.page.setData(pageData);
     this.breakpointService.onBreakpointChange.next();
   }

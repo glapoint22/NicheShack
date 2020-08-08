@@ -6,7 +6,6 @@ import { MenuService } from '../../../services/menu.service';
 import { Subject } from 'rxjs';
 import { Item } from '../../../classes/item';
 import { PromptService } from '../../../services/prompt.service';
-import { TempDataService } from '../../../services/temp-data.service';
 import { LoadingService } from '../../../services/loading.service';
 import { ProductService } from '../../../services/product.service';
 import { PopupService } from '../../../services/popup.service';
@@ -14,6 +13,7 @@ import { Searchable } from '../../../classes/searchable';
 import { MenuOption } from '../../../classes/menu-option';
 import { MenuDivider } from '../../../classes/menu-divider';
 import { ProductListItem } from '../../../classes/product-list-item';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'vendor-form',
@@ -32,7 +32,7 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
     formService: FormService,
     private menuService: MenuService,
     private promptService: PromptService,
-    private dataService: TempDataService,
+    private dataService: DataService,
     private loadingService: LoadingService,
     private productService: ProductService,
     private popupService: PopupService
@@ -106,7 +106,7 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
         });
     } else {
       this.dataService.post(this.apiUrl, this.vendor)
-        .subscribe((id: string) => {
+        .subscribe((id: number) => {
           // New Id and name from the server
           this.onSubmit.next({
             id: id,
@@ -220,7 +220,7 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
       this.loadingService.loading = true;
 
 
-      this.dataService.get('api/Products/Vendor', [{ key: 'vendorId', value: this.vendor.id }])
+      this.dataService.get('api/Vendors/Products', [{ key: 'vendorId', value: this.vendor.id }])
         .subscribe((products: Array<ProductListItem>) => {
           this.formService.productsForm.products = products;
           this.loadingService.loading = false;

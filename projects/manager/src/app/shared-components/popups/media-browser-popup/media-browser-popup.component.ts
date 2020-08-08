@@ -12,7 +12,6 @@ import { MenuService } from '../../../services/menu.service';
 import { ProductService } from '../../../services/product.service';
 import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 import { KeyValue } from '@angular/common';
-import { TempDataService } from '../../../services/temp-data.service';
 import { FormService } from '../../../services/form.service';
 import { ItemListOptions } from '../../../classes/item-list-options';
 import { MenuOption } from '../../../classes/menu-option';
@@ -20,6 +19,7 @@ import { PromptService } from '../../../services/prompt.service';
 import { ListItem } from '../../../classes/list-item';
 import { MenuDivider } from '../../../classes/menu-divider';
 import { SubMenuOption } from '../../../classes/sub-menu-option';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'media-browser-popup',
@@ -31,7 +31,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     cover: CoverService,
     menuService: MenuService,
     dropdownMenuService: DropdownMenuService,
-    dataService: TempDataService,
+    dataService: DataService,
     private productService: ProductService,
     private formService: FormService,
     private promptService: PromptService) {
@@ -281,7 +281,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     this.dataService.put(
 
       this.getUrl(this.popupService.mediaType), mediaItem)
-      .subscribe((id: string) => {
+      .subscribe((id: number) => {
         mediaItem.loading = false;
         mediaItem.id = id;
       });
@@ -376,7 +376,9 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       this.loadingMediaInProgress = true;
 
       // Then fetch the data
-      this.dataService.get(this.getUrl(this.indexOfCurrentMediaList)).subscribe((mediaItems: MediaItem[]) => {
+      this.dataService.get('api/Media', [{ key: 'type', value: this.indexOfCurrentMediaList }])
+      // this.dataService.get(this.getUrl(this.indexOfCurrentMediaList))
+      .subscribe((mediaItems: MediaItem[]) => {
         // After loading is complete, hide the spinner
         this.loadingMediaInProgress = false;
 

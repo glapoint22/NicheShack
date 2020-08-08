@@ -5,8 +5,8 @@ import { ItemListOptions } from 'projects/manager/src/app/classes/item-list-opti
 import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 import { ListItem } from 'projects/manager/src/app/classes/list-item';
 import { Product } from 'projects/manager/src/app/classes/product';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { SaveService } from 'projects/manager/src/app/services/save.service';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'product-keywords',
@@ -23,7 +23,7 @@ export class ProductKeywordsComponent {
 
   constructor(
     private promptService: PromptService,
-    private dataService: TempDataService,
+    private dataService: DataService,
     private saveService: SaveService
   ) { }
 
@@ -87,7 +87,7 @@ export class ProductKeywordsComponent {
     this.dataService.post(this.apiUrl, {
       productId: this.product.id,
       keywordName: keyword.name
-    }).subscribe((id: string) => {
+    }).subscribe((id: number) => {
       keyword.id = id;
     });
   }

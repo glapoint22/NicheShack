@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
-import { Notification } from 'projects/manager/src/app/classes/notification';
+import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
+import { ProductImageNotification } from 'projects/manager/src/app/classes/product-image-notification';
 
 @Component({
   selector: 'product-image-notification-popup',
@@ -15,22 +16,19 @@ export class ProductImageNotificationPopupComponent extends GeneralNotificationP
   }
 
 
-  // --------------------------------( SET POPUP )-------------------------------- \\
-  setPopup() {
-    this.paginatorIndex = this.notificationService.productImageNotification.customerText.length - 1;
-  }
-
-
-  // --------------------------------( SET PAGE )-------------------------------- \\
-  setPage() {
-    this.paginator.setPage(this.notificationService.productImageNotification.customerText.length);
-  }
-
-
 
   // -----------------------------(ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
+  onSubmit(notification: NotificationListItem) {
 
+  }
+
+
+// --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
+  onPaginatorClick(index: number) {
+    this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
+      .subscribe((notification: ProductImageNotification) => {
+        this.notificationService.productImageNotification = notification;
+      });
   }
 
 

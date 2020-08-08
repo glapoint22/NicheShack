@@ -8,7 +8,7 @@ import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
 import { MenuService } from '../../../services/menu.service';
 import { DropdownMenuService } from '../../../services/dropdown-menu.service';
-import { TempDataService } from '../../../services/temp-data.service';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'search-popup',
@@ -26,7 +26,7 @@ export class SearchPopupComponent extends PopupComponent implements OnInit {
     cover: CoverService,
     menuService: MenuService,
     dropdownMenuService: DropdownMenuService,
-    dataService: TempDataService
+    dataService: DataService
   ) { super(popupService, cover, menuService, dropdownMenuService, dataService) }
 
 

@@ -1,5 +1,5 @@
 export interface ProductPricePoint {
-    id: string;
+    id: number;
     textBefore: string;
     wholeNumber: number;
     decimal: number;

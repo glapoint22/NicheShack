@@ -9,7 +9,7 @@ export interface HierarchyItem extends Item {
     childless: boolean;
     url: string;
     childrenUrl: string;
-    childrenParameters: Array<KeyValue<string, string>>;
+    childrenParameters: Array<KeyValue<string, any>>;
 }
 
 

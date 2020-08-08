@@ -3,9 +3,10 @@ import { PaginatorComponent } from 'projects/manager/src/app/shared-components/p
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PageService } from 'projects/manager/src/app/services/page.service';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { PageType } from 'projects/manager/src/app/classes/page';
 import { PropertyView } from 'projects/manager/src/app/classes/property-view';
+import { PageData } from 'projects/manager/src/app/classes/page-data';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'product-email',
@@ -18,12 +19,12 @@ export class ProductEmailComponent implements OnInit {
   public emailIds: Array<string> = [];
   public propertyView = PropertyView;
   public initialPageLoaded: boolean;
-  private emailUrl: string = 'api/Products/Emails';
+  private emailUrl: string = 'api/Products/Email';
 
   constructor(private promptService: PromptService,
     private loadingService: LoadingService,
     public pageService: PageService,
-    private dataService: TempDataService) { }
+    private dataService: DataService) { }
 
 
   ngOnInit() {
@@ -123,7 +124,7 @@ export class ProductEmailComponent implements OnInit {
     this.loadingService.loading = true;
 
     this.dataService.get(this.emailUrl, [{ key: 'emailId', value: emailId }])
-      .subscribe((page: string) => {
+      .subscribe((page: PageData) => {
 
         // Load the email page
         this.loadPage(page);
@@ -133,7 +134,7 @@ export class ProductEmailComponent implements OnInit {
 
 
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
-  loadPage(page: string) {
+  loadPage(page: PageData) {
     this.pageService.loadPage(page);
     this.pageService.propertyView = PropertyView.Page;
     this.loadingService.loading = false;
@@ -150,7 +151,7 @@ export class ProductEmailComponent implements OnInit {
 
 
     this.dataService.get(this.emailUrl + '/Create')
-      .subscribe((page: string) => {
+      .subscribe((page: PageData) => {
         // Load the page
         this.loadPage(page);
 
@@ -179,7 +180,7 @@ export class ProductEmailComponent implements OnInit {
     let pageData = this.pageService.page.getData();
 
     this.dataService.post(this.emailUrl, pageData)
-      .subscribe((page: string) => {
+      .subscribe((page: PageData) => {
 
         // Load the email
         this.loadPage(page);

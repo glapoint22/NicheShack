@@ -40,6 +40,7 @@ import { ShackIconComponent } from './shared-components/shack-icon/shack-icon.co
 import { MenuBarComponent } from './shared-components/menu-bar/menu-bar.component';
 import { SharedModule } from './shared-components/shared.module';
 import { NotificationProductDescriptionComponent } from './shared-components/popups/notification-popups/product-description-notification-popup/notification-product-description/notification-product-description.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { NotificationProductDescriptionComponent } from './shared-components/pop
     FormsModule,
     CustomInputModule,
     PromptModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

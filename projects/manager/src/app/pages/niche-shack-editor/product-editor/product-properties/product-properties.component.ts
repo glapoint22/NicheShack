@@ -2,9 +2,9 @@ import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { Product } from 'projects/manager/src/app/classes/product';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProductDescriptionComponent } from './product-description/product-description.component';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'product-properties',
@@ -19,7 +19,7 @@ export class ProductPropertiesComponent implements OnChanges {
   constructor(
     public loadingService: LoadingService,
     public productService: ProductService,
-    private dataService: TempDataService,
+    private dataService: DataService,
     private sanitizer: DomSanitizer
   ) { }
 
@@ -28,11 +28,11 @@ export class ProductPropertiesComponent implements OnChanges {
       // Display the loading screen
       this.loadingService.loading = true;
 
-      this.dataService.get('api/Products/Product', [{ key: 'id', value: this.productId }])
+      this.dataService.get('api/Products/Product', [{ key: 'productId', value: this.productId }])
         .subscribe((product: Product) => {
           // Set the current media as the first media
           if (product.media.length > 0) {
-            this.productService.currentSelectedMedia = product.media[0];
+            this.productService.setCurrentSelectedMedia(product.media[0]);
           }
 
           // Assign the product

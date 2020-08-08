@@ -1,11 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { MessageNotificationPopupComponent } from '../message-notification-popup/message-notification-popup.component';
-import { NotificationType, Notification, NotificationTab } from 'projects/manager/src/app/classes/notification';
+import { Notification} from 'projects/manager/src/app/classes/notification';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { CoverService } from 'projects/manager/src/app/services/cover.service';
 import { MenuService } from 'projects/manager/src/app/services/menu.service';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { NotificationService } from 'projects/manager/src/app/services/notification.service';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { Vendor } from 'projects/manager/src/app/classes/vendor';
@@ -13,6 +12,11 @@ import { FormService } from 'projects/manager/src/app/services/form.service';
 import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 import { MenuDivider } from 'projects/manager/src/app/classes/menu-divider';
 import { NicheShackHierarchyItemType } from 'projects/manager/src/app/classes/hierarchy-item';
+import { DataService } from 'services/data.service';
+import { NotificationType } from 'projects/manager/src/app/classes/notification-type';
+import { NotificationTab } from 'projects/manager/src/app/classes/notification-tab';
+import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
+import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 
 @Component({
   selector: 'general-notification-popup',
@@ -29,7 +33,7 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
     cover: CoverService,
     menuService: MenuService,
     dropdownMenuService: DropdownMenuService,
-    dataService: TempDataService,
+    dataService: DataService,
     notificationService: NotificationService,
     private loadingService: LoadingService,
     private formService: FormService
@@ -42,21 +46,17 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
   }
 
 
-  // --------------------------------( SET POPUP )-------------------------------- \\
-  setPopup() {
-    this.paginatorIndex = this.notificationService.generalNotification.customerText.length - 1;
-  }
-
-
-
-  // --------------------------------( SET PAGE )-------------------------------- \\
-  setPage() {
-    this.paginator.setPage(this.notificationService.generalNotification.customerText.length);
+  // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
+  onPaginatorClick(index: number) {
+    this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
+      .subscribe((notification: GeneralNotification) => {
+        this.notificationService.generalNotification = notification;
+      });
   }
 
 
   // --------------------------------( SHOW CONTEXT MENU )-------------------------------- \\
-  showContextMenu(notification: Notification) {
+  showContextMenu(notification: GeneralNotification) {
 
     if (this.notificationService.selectedNotificationsTab == NotificationTab.ArchiveNotifications) {
 
@@ -66,7 +66,7 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
           new MenuOption("Go To Product Page", false, this.goToProductPage),
           new MenuDivider(),
           new MenuOption("Go To Vendor Product Page", false, this.goToVendorProductPage),
-          new MenuOption("View Vendor Info", false, this.viewVendorInfo),
+          new MenuOption("View Vendor Info", false, this.viewVendorInfo, [notification.vendorId]),
           new MenuDivider(),
           new MenuOption("Close", false, this.onClose, [notification]),
           new MenuDivider(),
@@ -81,7 +81,7 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
           new MenuOption("Go To Product Page", false, this.goToProductPage),
           new MenuDivider(),
           new MenuOption("Go To Vendor Product Page", false, this.goToVendorProductPage),
-          new MenuOption("View Vendor Info", false, this.viewVendorInfo),
+          new MenuOption("View Vendor Info", false, this.viewVendorInfo, [notification.vendorId]),
           new MenuDivider(),
           new MenuOption("Close", false, this.onClose, [notification])
         ]
@@ -91,7 +91,7 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
 
 
   // --------------------------------( GO TO PRODUCT PAGE )-------------------------------- \\
-  goToProductPage(productId: string) {
+  goToProductPage(productId: number) {
     // Get the product id
     if (!productId) productId = this.notificationService.generalNotification.productId;
 
@@ -114,7 +114,7 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
 
 
   // --------------------------------( VIEW VENDOR INFO )-------------------------------- \\
-  viewVendorInfo(vendorId: string) {
+  viewVendorInfo(vendorId: number) {
     // If we don't have a vendor id, this means it's a general notification
     if (!vendorId) vendorId = this.notificationService.generalNotification.vendorId;
 
@@ -122,7 +122,7 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
     this.loadingService.loading = true;
 
     // Get the vendor info from the database
-    this.dataService.get('api/Vendors', [{ key: 'id', value: vendorId }])
+    this.dataService.get('api/Vendors/Vendor', [{ key: 'vendorId', value: vendorId }])
       .subscribe((vendor: Vendor) => {
         // Assign the vendor info and open the vendor form
         this.formService.vendorForm.vendor = vendor;
@@ -134,43 +134,43 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
 
 
   // -----------------------------( ON DISMISS BUTTON CLICK )------------------------------ \\
-  onDismissButtonClick(notification: Notification) {
+  onDismissButtonClick(notification: NotificationListItem) {
     this.archiveNotification(notification);
   }
 
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
-    switch (notification.name) {
+  onSubmit(notification: NotificationListItem) {
+    // switch (notification.name) {
 
-      case NotificationType.ProductNameOther: {
+    //   case NotificationType.ProductNameOther: {
 
-        break;
-      }
-      case NotificationType.ProductReportedAsIllegal: {
+    //     break;
+    //   }
+    //   case NotificationType.ProductReportedAsIllegal: {
 
-        break;
-      }
-      case NotificationType.ProductReportedAsHavingAdultContent: {
+    //     break;
+    //   }
+    //   case NotificationType.ProductReportedAsHavingAdultContent: {
 
-        break;
-      }
-      case NotificationType.OffensiveProductOther: {
+    //     break;
+    //   }
+    //   case NotificationType.OffensiveProductOther: {
 
-        break;
-      }
-      case NotificationType.ProductInactive: {
+    //     break;
+    //   }
+    //   case NotificationType.ProductInactive: {
 
-        break;
-      }
-      case NotificationType.ProductSiteNoLongerInService: {
+    //     break;
+    //   }
+    //   case NotificationType.ProductSiteNoLongerInService: {
 
-        break;
-      }
-      case NotificationType.MissingProductOther: {
+    //     break;
+    //   }
+    //   case NotificationType.MissingProductOther: {
 
-        break;
-      }
-    }
+    //     break;
+    //   }
+    // }
   }
 }

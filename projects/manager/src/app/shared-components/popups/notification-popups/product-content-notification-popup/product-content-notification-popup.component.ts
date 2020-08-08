@@ -1,6 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
-import { Notification } from 'projects/manager/src/app/classes/notification';
 import { Item } from 'projects/manager/src/app/classes/item';
 import { MediaType } from 'projects/manager/src/app/classes/media';
 import { ProductContent } from 'projects/manager/src/app/classes/product-content';
@@ -13,7 +12,6 @@ import { NotificationService } from 'projects/manager/src/app/services/notificat
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { PaginatorComponent } from '../../../paginator/paginator.component';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { Image } from 'projects/manager/src/app/classes/image';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { FormService } from 'projects/manager/src/app/services/form.service';
@@ -24,6 +22,9 @@ import { ProductService } from 'projects/manager/src/app/services/product.servic
 import { Subscription } from 'rxjs';
 import { SaveService } from 'projects/manager/src/app/services/save.service';
 import { ListItem } from 'projects/manager/src/app/classes/list-item';
+import { DataService } from 'services/data.service';
+import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
+import { ProductContentNotification } from 'projects/manager/src/app/classes/product-content-notification';
 
 @Component({
   selector: 'product-content-notification-popup',
@@ -48,7 +49,7 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
     cover: CoverService,
     menuService: MenuService,
     dropdownMenuService: DropdownMenuService,
-    dataService: TempDataService,
+    dataService: DataService,
     notificationService: NotificationService,
     loadingService: LoadingService,
     formService: FormService,
@@ -101,9 +102,12 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   }
 
 
-   // --------------------------------( SET PAGE )-------------------------------- \\
-   setPage() {
-    this.paginator.setPage(this.notificationService.productContentNotification.customerText.length);
+   // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
+  onPaginatorClick(index: number) {
+    this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
+      .subscribe((notification: ProductContentNotification) => {
+        this.notificationService.productContentNotification = notification;
+      });
   }
 
 
@@ -208,7 +212,7 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   // --------------------------------( SET POPUP )-------------------------------- \\
   setPopup() {
     let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
-    this.paginatorIndex = this.notificationService.productContentNotification.customerText.length - 1;
+    // this.paginatorIndex = this.notificationService.productContentNotification.customerText.length - 1;
 
     // Combine all the price point properties into one string
     if (this.notificationService.productContentNotification.pricePoints) {
@@ -432,7 +436,7 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
 
 
   // -----------------------------(ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
+  onSubmit(notification: NotificationListItem) {
 
   }
 }

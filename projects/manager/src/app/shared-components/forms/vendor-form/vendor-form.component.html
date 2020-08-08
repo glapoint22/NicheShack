@@ -64,14 +64,14 @@
                         <!-- Street -->
                         <div class="txt-property">
                             <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Street</div>
-                            <input [(ngModel)]="vendor.address.street" name="street" [readonly]="!editMode"
+                            <input [(ngModel)]="vendor.street" name="street" [readonly]="!editMode"
                                 [disabled]="!vendor.id && !editMode" autocomplete="off">
                         </div>
 
                         <!-- P.O. Box -->
                         <div class="txt-property">
                             <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">P.O Box</div>
-                            <input [(ngModel)]="vendor.address.poBox" name="po-box" [readonly]="!editMode"
+                            <input [(ngModel)]="vendor.poBox" name="po-box" [readonly]="!editMode"
                                 [disabled]="!vendor.id && !editMode" autocomplete="off">
                         </div>
                     </div>
@@ -82,14 +82,14 @@
                         <!-- City -->
                         <div class="txt-property">
                             <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">City</div>
-                            <input [(ngModel)]="vendor.address.city" name="city" [readonly]="!editMode"
+                            <input [(ngModel)]="vendor.city" name="city" [readonly]="!editMode"
                                 [disabled]="!vendor.id && !editMode" autocomplete="off">
                         </div>
 
                         <!-- State -->
                         <div class="txt-property">
                             <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">State</div>
-                            <input [(ngModel)]="vendor.address.state" name="state" [readonly]="!editMode"
+                            <input [(ngModel)]="vendor.state" name="state" [readonly]="!editMode"
                                 [disabled]="!vendor.id && !editMode" autocomplete="off">
                         </div>
                     </div>
@@ -100,14 +100,14 @@
                         <!-- Zip -->
                         <div class="txt-property">
                             <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Zip</div>
-                            <input [(ngModel)]="vendor.address.zip" name="zip" [readonly]="!editMode"
+                            <input [(ngModel)]="vendor.zip" name="zip" [readonly]="!editMode"
                                 [disabled]="!vendor.id && !editMode" autocomplete="off">
                         </div>
 
                         <!-- Country -->
                         <div class="txt-property">
                             <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Country</div>
-                            <input [(ngModel)]="vendor.address.country" name="country" [readonly]="!editMode"
+                            <input [(ngModel)]="vendor.country" name="country" [readonly]="!editMode"
                                 [disabled]="!vendor.id && !editMode" autocomplete="off">
                         </div>
                     </div>
@@ -125,7 +125,7 @@
                             <div class="txt-property">
                                 <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">First Name
                                 </div>
-                                <input [(ngModel)]="vendor.primaryContact.firstName" name="primary-firstName" [readonly]="!editMode"
+                                <input [(ngModel)]="vendor.primaryFirstName" name="primary-firstName" [readonly]="!editMode"
                                     [disabled]="!vendor.id && !editMode" autocomplete="off">
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                             <div class="txt-property">
                                 <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Last Name
                                 </div>
-                                <input [(ngModel)]="vendor.primaryContact.lastName" name="primary-lastName" [readonly]="!editMode"
+                                <input [(ngModel)]="vendor.primaryLastName" name="primary-lastName" [readonly]="!editMode"
                                     [disabled]="!vendor.id && !editMode" autocomplete="off">
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                             <div class="txt-property">
                                 <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Office Phone
                                 </div>
-                                <input [(ngModel)]="vendor.primaryContact.officePhone" name="primary-officePhone" [readonly]="!editMode"
+                                <input [(ngModel)]="vendor.primaryOfficePhone" name="primary-officePhone" [readonly]="!editMode"
                                     [disabled]="!vendor.id && !editMode" autocomplete="off">
                             </div>
                         </div>
@@ -159,7 +159,7 @@
                             <div class="txt-property">
                                 <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Mobile Phone
                                 </div>
-                                <input [(ngModel)]="vendor.primaryContact.mobilePhone" name="primary-mobilePhone" [readonly]="!editMode"
+                                <input [(ngModel)]="vendor.primaryMobilePhone" name="primary-mobilePhone" [readonly]="!editMode"
                                     [disabled]="!vendor.id && !editMode" autocomplete="off">
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                             <!-- Email -->
                             <div class="txt-property">
                                 <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Email</div>
-                                <input [(ngModel)]="vendor.primaryContact.email" name="primary-email" [readonly]="!editMode"
+                                <input [(ngModel)]="vendor.primaryEmail" name="primary-email" [readonly]="!editMode"
                                     [disabled]="!vendor.id && !editMode" autocomplete="off">
                             </div>
                         </div>
@@ -187,7 +187,7 @@
                             <div class="txt-property">
                                 <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">First Name
                                 </div>
-                                <input [(ngModel)]="vendor.secondaryContact.firstName" name="secondary-firstName" [readonly]="!editMode"
+                                <input [(ngModel)]="vendor.secondaryFirstName" name="secondary-firstName" [readonly]="!editMode"
                                     [disabled]="!vendor.id && !editMode" autocomplete="off">
                             </div>
                         </div>
@@ -199,7 +199,7 @@
                             <div class="txt-property">
                                 <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Last Name
                                 </div>
-                                <input [(ngModel)]="vendor.secondaryContact.lastName" name="secondary-lastName" [readonly]="!editMode"
+                                <input [(ngModel)]="vendor.secondaryLastName" name="secondary-lastName" [readonly]="!editMode"
                                     [disabled]="!vendor.id && !editMode" autocomplete="off">
                             </div>
                         </div>
@@ -211,7 +211,7 @@
                             <div class="txt-property">
                                 <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Office Phone
                                 </div>
-                                <input [(ngModel)]="vendor.secondaryContact.officePhone" name="secondary-officePhone" [readonly]="!editMode"
+                                <input [(ngModel)]="vendor.secondaryOfficePhone" name="secondary-officePhone" [readonly]="!editMode"
                                     [disabled]="!vendor.id && !editMode" autocomplete="off">
                             </div>
                         </div>
@@ -221,7 +221,7 @@
                             <div class="txt-property">
                                 <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Mobile Phone
                                 </div>
-                                <input [(ngModel)]="vendor.secondaryContact.mobilePhone" name="secondary-mobilePhone" [readonly]="!editMode"
+                                <input [(ngModel)]="vendor.secondaryMobilePhone" name="secondary-mobilePhone" [readonly]="!editMode"
                                     [disabled]="!vendor.id && !editMode" autocomplete="off">
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                             <!-- Email -->
                             <div class="txt-property">
                                 <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Email</div>
-                                <input [(ngModel)]="vendor.secondaryContact.email" name="secondary-email" [readonly]="!editMode"
+                                <input [(ngModel)]="vendor.secondaryEmail" name="secondary-email" [readonly]="!editMode"
                                     [disabled]="!vendor.id && !editMode" autocomplete="off">
                             </div>
                         </div>

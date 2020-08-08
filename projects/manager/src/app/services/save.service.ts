@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { TempDataService } from './temp-data.service';
 import { Subject } from 'rxjs';
 import { Save } from '../classes/save';
 import { debounceTime, switchMap } from 'rxjs/operators';
+import { DataService } from 'services/data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 export class SaveService {
   private saveData = new Subject<Save>();
 
-  constructor(private dataService: TempDataService) {
+  constructor(private dataService: DataService) {
     this.saveData.pipe(
       debounceTime(1000),
       switchMap((save: Save) => {

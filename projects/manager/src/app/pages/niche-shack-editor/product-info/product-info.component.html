@@ -27,7 +27,7 @@
             <div class="img-container">
                 <ng-container
                     *ngIf="productService.currentSelectedMedia.url || productService.currentSelectedMedia.safeUrl; else noMedia">
-                    <img *ngIf="productService.currentSelectedMedia.type == mediaType.ProductImage"
+                    <img *ngIf="productService.currentSelectedMedia.type == mediaType.ProductMediaImage"
                         [src]="'/images/' + productService.currentSelectedMedia.url">
 
                     <iframe *ngIf="productService.currentSelectedMedia.type == mediaType.Video" frameborder="0"

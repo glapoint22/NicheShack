@@ -1,12 +1,22 @@
-import { Address } from './address';
-import { Contact } from './contact';
-
 export class Vendor {
-    id: string;
+    id: number;
     name: string;
     webPage: string;
-    address: Address = new Address();
-    primaryContact: Contact = new Contact();
-    secondaryContact: Contact = new Contact();
+    street: string;
+    city: string;
+    zip: number;
+    poBox: number;
+    state: string;
+    country: string;
+    primaryFirstName: string;
+    primaryLastName: string;
+    primaryOfficePhone: string;
+    primaryMobilePhone: string;
+    primaryEmail: string;
+    secondaryFirstName: string;
+    secondaryLastName: string;
+    secondaryOfficePhone: string;
+    secondaryMobilePhone: string;
+    secondaryEmail: string;
     notes: string;
 }

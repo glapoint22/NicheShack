@@ -9,7 +9,6 @@ import { ProductService } from 'projects/manager/src/app/services/product.servic
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { MediaType } from 'projects/manager/src/app/classes/media';
 import { Image } from 'projects/manager/src/app/classes/image';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { Subscription } from 'rxjs';
 import { SaveService } from 'projects/manager/src/app/services/save.service';
 import { ItemListOptions } from 'projects/manager/src/app/classes/item-list-options';
@@ -17,6 +16,7 @@ import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 import { MenuDivider } from 'projects/manager/src/app/classes/menu-divider';
 import { ListItem } from 'projects/manager/src/app/classes/list-item';
 import { Product } from 'projects/manager/src/app/classes/product';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'product-content',
@@ -40,7 +40,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     public popupService: PopupService,
     private promptService: PromptService,
     private productService: ProductService,
-    private dataService: TempDataService,
+    private dataService: DataService,
     private saveService: SaveService
   ) { }
 
@@ -203,11 +203,11 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
       this.pricePointList = this.pricePoints.map(x => ({
         id: x.id,
         // Text Before
-        name: ((x.textBefore.length == 0 ? "" : x.textBefore) + " " +
+        name: ((!x.textBefore || x.textBefore.length == 0 ? "" : x.textBefore) + " " +
           // Price
           (formatter.format(parseFloat(x.wholeNumber + "." + x.decimal))) +
           // Text After
-          (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()
+          (!x.textAfter || x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()
       }));
     }
   }
@@ -255,7 +255,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
       productId: this.productService.product.id,
       order: 0
     })
-      .subscribe((id: string) => {
+      .subscribe((id: number) => {
         pricePoint.id = id;
       });
 

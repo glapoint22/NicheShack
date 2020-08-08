@@ -3,9 +3,10 @@ import { PageService } from 'projects/manager/src/app/services/page.service';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
-import { TempDataService } from 'projects/manager/src/app/services/temp-data.service';
 import { PropertyView } from 'projects/manager/src/app/classes/property-view';
 import { PageType } from 'projects/manager/src/app/classes/page';
+import { DataService } from 'services/data.service';
+import { PageData } from 'projects/manager/src/app/classes/page-data';
 
 @Component({
   selector: 'lead-page-editor',
@@ -18,15 +19,15 @@ export class LeadPageEditorComponent implements OnChanges {
   public selectedTab: PageType;
   public currentLeadPageId: string;
   public initialPageLoaded: boolean;
-  public leadPageUrl: string = 'api/Niches/LeadPages';
-  public emailUrl: string = 'api/Niches/LeadPageEmails';
+  public leadPageUrl: string = 'api/Niches/LeadPage';
+  public emailUrl: string = 'api/Niches/LeadPageEmail';
   public propertyView = PropertyView;
   public pageType = PageType;
 
   constructor(public pageService: PageService,
     private loadingService: LoadingService,
     private promptService: PromptService,
-    private dataService: TempDataService) { }
+    private dataService: DataService) { }
 
 
   // ----------------------------------------------------------------- Ng On Changes -----------------------------------------------------------
@@ -54,6 +55,7 @@ export class LeadPageEditorComponent implements OnChanges {
         } else {
           this.initialPageLoaded = true;
           this.loadingService.loading = false;
+          this.clearPage();
         }
       });
   }
@@ -62,10 +64,10 @@ export class LeadPageEditorComponent implements OnChanges {
 
   ngAfterViewInit() {
     this.pageService.page.type = PageType.LeadPage;
-    window.setTimeout(()=> {
+    window.setTimeout(() => {
       this.pageService.designerBreakpointsDropdown.setValue(this.pageService.page.defaultWidth);
     });
-    
+
   }
 
 
@@ -100,7 +102,7 @@ export class LeadPageEditorComponent implements OnChanges {
     this.loadingService.loading = true;
 
     this.dataService.get(this.leadPageUrl, [{ key: 'leadPageId', value: leadPageId }])
-      .subscribe((page: string) => {
+      .subscribe((page: PageData) => {
         this.initialPageLoaded = true;
 
         // Load the lead page
@@ -120,7 +122,7 @@ export class LeadPageEditorComponent implements OnChanges {
   loadEmail(leadPageId: string) {
     this.loadingService.loading = true;
     this.dataService.get(this.emailUrl, [{ key: 'leadPageId', value: leadPageId }])
-      .subscribe((page: string) => {
+      .subscribe((page: PageData) => {
 
         // Load the email
         this.loadPage(PageType.Email, page);
@@ -135,7 +137,7 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // -------------------------------------------------------------------- Load Page -----------------------------------------------------------
-  loadPage(pageType: PageType, page: string) {
+  loadPage(pageType: PageType, page: PageData) {
     this.selectedTab = pageType;
     this.pageService.loadPage(page);
     this.pageService.setPage(this.pageService.page.width);
@@ -192,7 +194,7 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
     this.dataService.get(this.leadPageUrl + '/Create')
-      .subscribe((page: string) => {
+      .subscribe((page: PageData) => {
 
 
         // Load the lead page
@@ -217,8 +219,8 @@ export class LeadPageEditorComponent implements OnChanges {
     let pageData = this.pageService.page.getData();
 
     this.dataService.post(this.leadPageUrl, pageData)
-      .subscribe((page: string) => {
-        
+      .subscribe((page: PageData) => {
+
 
         // Load the lead page
         this.loadPage(PageType.LeadPage, page);
@@ -289,13 +291,22 @@ export class LeadPageEditorComponent implements OnChanges {
 
           // We have no pages left
         } else {
-          // Reset the page to defaults
-          this.pageService.clearPage();
-          this.currentLeadPageId = null;
           this.loadingService.loading = false;
-          this.pageService.propertyView = PropertyView.Page;
-          this.pageService.page.widgetCursors = [];
+
+          // Reset the page to defaults
+          this.clearPage();
         }
       });
+  }
+
+
+
+
+  // --------------------------------------------------------------------- Clear Page --------------------------------------------------------
+  clearPage() {
+    this.pageService.clearPage();
+    this.currentLeadPageId = null;
+    this.pageService.propertyView = PropertyView.Page;
+    this.pageService.page.widgetCursors = [];
   }
 }

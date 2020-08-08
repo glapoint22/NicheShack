@@ -4,8 +4,8 @@ import { HierarchyItem, FilterHierarchyItemType } from '../../classes/hierarchy-
 import { HierarchyCheckboxItem } from '../../classes/hierarchy-checkbox-item';
 import { Product } from '../../classes/product';
 import { PanelComponent } from '../panel/panel.component';
-import { TempDataService } from '../../services/temp-data.service';
 import { SaveService } from '../../services/save.service';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'filters-hierarchy',
@@ -16,7 +16,7 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
   @Input() product: Product;
   @ViewChild('panel', { static: false }) panel: PanelComponent;
 
-  constructor(dataService: TempDataService, private saveService: SaveService) { super(dataService) }
+  constructor(dataService: DataService, private saveService: SaveService) { super(dataService) }
 
 
   ngOnChanges() {

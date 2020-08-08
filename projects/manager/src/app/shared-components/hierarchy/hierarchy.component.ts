@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { HierarchyItem } from '../../classes/hierarchy-item';
-import { TempDataService } from '../../services/temp-data.service';
 import { KeyValue } from '@angular/common';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { DataService } from 'services/data.service';
 
 @Component({
   template: '',
@@ -22,10 +22,10 @@ export class HierarchyComponent {
   }
 
 
-  constructor(public dataService: TempDataService) { }
+  constructor(public dataService: DataService) { }
 
   // -----------------------------( LOAD )------------------------------ \\
-  load(url: string, parameters?: Array<KeyValue<string, string>>, parent?: HierarchyItem, type?: number): Observable<Array<HierarchyItem>> {
+  load(url: string, parameters?: Array<KeyValue<string, any>>, parent?: HierarchyItem, type?: number): Observable<Array<HierarchyItem>> {
     return new Observable(subscriber => {
       this.dataService.get(url, parameters)
         .pipe(tap((items: Array<HierarchyItem>) => {

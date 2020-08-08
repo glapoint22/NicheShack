@@ -1,9 +1,6 @@
 <!-- Popup Base -->
-<div #popup transitionClass="fade-end"
-     class="popup-base fade-start"
-     (onShow)="onPopupShow(popup, arrow)"
-     *show="show">
-     
+<div #popup transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)" *show="show">
+
     <!-- Arrow -->
     <div #arrow [ngClass]="{'arrow-on-top': arrowOnTop, 'arrow-on-bottom': !arrowOnTop}"></div>
 
@@ -13,8 +10,8 @@
         <div class="product-container">
 
             <!-- Product Thumbnail -->
-            <div class="thumbnail" 
-                 [ngStyle]="{ 'background-image': 'url(images/' + notificationService.generalNotification.productThumbnail + ')'}">
+            <div class="thumbnail"
+                [ngStyle]="{ 'background-image': 'url(images/' + notificationService.generalNotification.productThumbnail + ')'}">
             </div>
 
             <!-- Product Name -->
@@ -24,9 +21,7 @@
         </div>
 
         <!-- Ellipsis -->
-        <div #ellipsis 
-             class="icon-container"
-             (mousedown)="showContextMenu(notificationService.generalNotification)">
+        <div #ellipsis class="icon-container" (mousedown)="showContextMenu(notificationService.generalNotification)">
             <i class="fas fa-ellipsis-v"></i>
         </div>
     </div>
@@ -39,14 +34,14 @@
     </div>
     <div class="header-line"></div>
 
-    
+
     <!-- Main Property Box -->
     <div class="main-property-box">
 
         <!-- Paginator -->
         <div class="paginator-bar">
-            <paginator #paginator [itemCount]="notificationService.generalNotification.customerText.length"
-                       (onItemChange)="paginatorIndex = $event">
+            <paginator #paginator [itemCount]="notificationService.notificationIds.length"
+                (onItemChange)="onPaginatorClick($event)">
             </paginator>
         </div>
 
@@ -58,18 +53,18 @@
 
                 <!-- Customer Thumbnail -->
                 <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.generalNotification.customerText[paginatorIndex].thumbnail + ')'}">
+                    [ngStyle]="{'background-image': 'url(images/' + notificationService.generalNotification.customerText.thumbnail + ')'}">
                 </div>
 
                 <!-- Time Stamp -->
                 <div class="time-stamp">
-                    {{notificationService.generalNotification.customerText[paginatorIndex].timeStamp}}
+                    {{notificationService.generalNotification.customerText.timeStamp}}
                 </div>
             </div>
 
             <!-- Customer Text -->
             <div class="user-text">
-                {{notificationService.generalNotification.customerText[paginatorIndex].text}}
+                {{notificationService.generalNotification.customerText.text}}
             </div>
         </div>
 
@@ -79,35 +74,39 @@
         <div class="property-box">
             <div class="property-box-bar">
 
-                <!-- Employee Thumbnail -->
-                <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.generalNotification.notesText[paginatorIndex].thumbnail + ')'}">
-                </div>
+                <ng-container *ngIf="notificationService.generalNotification.notes">
+                    <!-- Employee Thumbnail -->
+                    <div class="account-thumbnail"
+                        [ngStyle]="{'background-image': 'url(images/' + notificationService.generalNotification.notes.thumbnail + ')'}">
+                    </div>
 
-                <!-- Time Stamp -->
-                <div class="time-stamp">
-                    {{notificationService.generalNotification.notesText[paginatorIndex].timeStamp}}
-                </div>
+                    <!-- Time Stamp -->
+                    <div class="time-stamp">
+                        {{notificationService.generalNotification.notes.timeStamp}}
+                    </div>
+                </ng-container>
             </div>
 
             <!-- Employee Text -->
             <div class="user-text">
-                {{notificationService.generalNotification.notesText[paginatorIndex].text}}
+                <ng-container *ngIf="notificationService.generalNotification.notes">
+                    {{notificationService.generalNotification.notes.text}}
+                </ng-container>
             </div>
         </div>
     </div>
 
 
     <!-- Button Container -->
-    <div *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
-         class="button-container"
-         [ngClass]="{'resize-button': notificationService.generalNotification.name == notificationType.ProductReportedAsIllegal || 
+    <!-- <div *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
+        class="button-container"
+        [ngClass]="{'resize-button': notificationService.generalNotification.name == notificationType.ProductReportedAsIllegal || 
                                       notificationService.generalNotification.name == notificationType.ProductReportedAsHavingAdultContent}">
 
-        <!-- Buttons -->
+        
         <button (click)="onDismissButtonClick(notificationService.generalNotification)">Dismiss</button>
         <button (click)="onRightButtonClick(notificationService.generalNotification)">
             {{notificationService.generalNotification.name == notificationType.ProductReportedAsIllegal || notificationService.generalNotification.name == notificationType.ProductReportedAsHavingAdultContent ? 'Remove Product' : 'Publish'}}
         </button>
-    </div>
+    </div> -->
 </div>
