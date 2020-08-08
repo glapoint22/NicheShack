@@ -59,7 +59,7 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
 
       // FilterOptions
       case FilterHierarchyItemType.FilterOption:
-        return 'api/FilterOptions';
+        return 'api/Filters/Options';
     }
   }
 
@@ -77,7 +77,7 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
         items.map((item: HierarchyItem) => {
           item.parent = parent;
           item.type = FilterHierarchyItemType.FilterOption;
-          item.url = 'api/FilterOptions';
+          item.url = 'api/Filters/Options';
           item.childless = true;
         });
       }
@@ -104,7 +104,7 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
             item.type = FilterHierarchyItemType.Filter;
             item.url = this.getUrl(FilterHierarchyItemType.Filter);
             item.childrenUrl = this.getUrl(FilterHierarchyItemType.FilterOption);
-            item.childrenParameters = [{ key: 'id', value: item.id }];
+            item.childrenParameters = [{ key: 'filterId', value: item.id }];
           });
           break;
       }
@@ -115,7 +115,7 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
         item.type = FilterHierarchyItemType.Filter;
         item.url = this.getUrl(FilterHierarchyItemType.Filter);
         item.childrenUrl = this.getUrl(FilterHierarchyItemType.FilterOption);
-        item.childrenParameters = [{ key: 'id', value: item.id }];
+        item.childrenParameters = [{ key: 'filterId', value: item.id }];
       });
     }
   }

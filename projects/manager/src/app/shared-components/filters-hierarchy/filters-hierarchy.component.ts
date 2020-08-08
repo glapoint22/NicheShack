@@ -37,7 +37,7 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
         items.map((item: HierarchyItem) => {
           item.parent = parent;
           item.type = FilterHierarchyItemType.FilterOption;
-          item.url = 'api/FilterOptions';
+          item.url = 'api/Products/Filters';
           item.childless = true;
         });
       }
@@ -49,7 +49,7 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
       items.map((item: HierarchyItem) => {
         item.type = FilterHierarchyItemType.Filter;
         item.url = 'api/Filters';
-        item.childrenUrl = 'api/FilterOptions';
+        item.childrenUrl = 'api/Products/Filters';
         item.childrenParameters = [{ key: 'filterId', value: item.id }, { key: 'productId', value: this.product.id }];
       });
     }
