@@ -17,7 +17,8 @@ export interface Product {
     pricePoints: Array<ProductPricePoint>;
     image: ImageData;
     media: Array<Media>;
-    price: string;
+    minPrice: number;
+    maxPrice: number;
     keywords: Array<Item>;
     safeDescription?: SafeHtml;
 }
