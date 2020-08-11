@@ -61,8 +61,8 @@ export class ProductDescriptionComponent implements AfterViewInit {
           this.saveService.save({
             url: 'api/Products/Description',
             data: {
-              productId: this.productService.product.id,
-              description: description
+              id: this.productService.product.id,
+              name: description
             }
           });
         });

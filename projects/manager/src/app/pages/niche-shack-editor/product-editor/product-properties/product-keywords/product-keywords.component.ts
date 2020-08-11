@@ -18,7 +18,7 @@ export class ProductKeywordsComponent {
   @Input() product: Product;
   @ViewChild('itemList', { static: false }) itemList: EditableItemListComponent;
   public itemListOptions: ItemListOptions;
-  private apiUrl: string = 'api/Products/Keywords';
+  private apiUrl: string = 'api/Products/Keyword';
 
 
   constructor(
@@ -99,9 +99,8 @@ export class ProductKeywordsComponent {
     this.saveService.save({
       url: this.apiUrl,
       data: {
-        productId: this.product.id,
-        keywordId: keyword.id,
-        keywordName: keyword.name
+        id: keyword.id,
+        name: keyword.name
       }
     });
   }

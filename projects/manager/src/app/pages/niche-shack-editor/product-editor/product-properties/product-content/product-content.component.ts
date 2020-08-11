@@ -80,7 +80,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     this.pricePointPopupSubscription = this.popupService.pricePointPopup.onPopupClose
       .subscribe(() => {
         this.saveService.save({
-          url: 'api/Products/PricePoints',
+          url: 'api/Products/PricePoint',
           data: this.popupService.pricePointPopup.pricePoint
         });
       });
@@ -147,11 +147,10 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   // -----------------------------( ON NAME CHANGE )------------------------------ \\
   onNameChange(value: string) {
     this.saveService.save({
-      url: 'api/Content/Title',
+      url: 'api/Products/ContentTitle',
       data: {
-        productId: this.productService.product.id,
-        contentId: this.product.content[this.contentIndex].id,
-        title: value
+        id: this.product.content[this.contentIndex].id,
+        name: value
       }
     });
   }
@@ -176,11 +175,10 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   // -----------------------------( ON ICON CHANGE )------------------------------ \\
   onIconChange() {
     this.saveService.save({
-      url: 'api/Content/Icon',
+      url: 'api/Products/ContentIcon',
       data: {
-        productId: this.productService.product.id,
-        contentId: this.product.content[this.contentIndex].id,
-        iconId: this.product.content[this.contentIndex].icon.id
+        ItemId: this.product.content[this.contentIndex].id,
+        PropertyId: this.product.content[this.contentIndex].icon.id
       }
     });
   }
@@ -372,11 +370,11 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   movePricePoint(fromIndex: number, toIndex: number) {
     // Save the new order to the database
     this.saveService.save({
-      url: 'api/Products/PricePoints/Move',
+      url: 'api/Products/PricePointMove',
       data: {
         productId: this.productService.product.id,
-        pricePointId: this.pricePoints[fromIndex].id,
-        order: toIndex
+        fromIndex: fromIndex,
+        toIndex: toIndex
       }
     });
 
@@ -405,7 +403,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
 
   onPricePointChange() {
     this.saveService.save({
-      url: 'api/Products/PricePoints',
+      url: 'api/Products/PriceIndices',
       data: {
         productContentId: this.product.content[this.contentIndex].id,
         priceIndices: this.product.content[this.contentIndex].priceIndices

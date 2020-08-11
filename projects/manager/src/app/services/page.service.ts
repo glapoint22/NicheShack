@@ -44,7 +44,7 @@ export class PageService {
       data: {
         pageId: this.page.id,
         name: this.page.name,
-        page: this.stringifyPage(this.page.getData())
+        content: this.stringifyPage(this.page.getData())
       }
     });
   }

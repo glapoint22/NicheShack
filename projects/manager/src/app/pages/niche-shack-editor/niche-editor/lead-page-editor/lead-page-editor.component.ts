@@ -14,10 +14,10 @@ import { PageData } from 'projects/manager/src/app/classes/page-data';
   styleUrls: ['./lead-page-editor.component.scss']
 })
 export class LeadPageEditorComponent implements OnChanges {
-  @Input() nicheId: string;
-  public leadPageIds: Array<string>;
+  @Input() nicheId: number;
+  public leadPageIds: Array<number>;
   public selectedTab: PageType;
-  public currentLeadPageId: string;
+  public currentLeadPageId: number;
   public initialPageLoaded: boolean;
   public leadPageUrl: string = 'api/Niches/LeadPage';
   public emailUrl: string = 'api/Niches/LeadPageEmail';
@@ -42,7 +42,7 @@ export class LeadPageEditorComponent implements OnChanges {
 
     // Get the lead page ids for this niche
     this.dataService.get('api/Niches/LeadPageIds', [{ key: 'nicheId', value: this.nicheId }])
-      .subscribe((leadPageIds: Array<string>) => {
+      .subscribe((leadPageIds: Array<number>) => {
         // If there any lead page ids
         if (leadPageIds.length > 0) {
           this.leadPageIds = leadPageIds;
@@ -97,7 +97,7 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // ----------------------------------------------------------------- Load Lead Page -----------------------------------------------------------
-  loadLeadPage(leadPageId: string) {
+  loadLeadPage(leadPageId: number) {
     // Display the loading screen
     this.loadingService.loading = true;
 
@@ -119,7 +119,7 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // -------------------------------------------------------------------- Load Email -----------------------------------------------------------
-  loadEmail(leadPageId: string) {
+  loadEmail(leadPageId: number) {
     this.loadingService.loading = true;
     this.dataService.get(this.emailUrl, [{ key: 'leadPageId', value: leadPageId }])
       .subscribe((page: PageData) => {

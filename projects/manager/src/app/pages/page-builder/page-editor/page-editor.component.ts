@@ -16,7 +16,7 @@ import { DataService } from 'services/data.service';
   styleUrls: ['./page-editor.component.scss']
 })
 export class PageEditorComponent implements OnInit, Searchable {
-  public currentPageId: string;
+  public currentPageId: number;
   public apiUrl: string;
   public searchResults: Array<Item>;
   public items: Array<Item>;
@@ -34,6 +34,7 @@ export class PageEditorComponent implements OnInit, Searchable {
   // ---------------------------------------------------------------------- Ng On Init --------------------------------------------------------
   ngOnInit() {
     this.apiUrl = 'api/Pages';
+    this.pageService.apiUrl = this.apiUrl + '/Page';
     this.pageType = PageType.Page;
     this.setPageView();
   }
@@ -151,7 +152,7 @@ export class PageEditorComponent implements OnInit, Searchable {
   setSearchItem(searchItem: Item): void {
     this.loadingService.loading = true;
 
-    this.dataService.get(this.apiUrl, [{ key: 'id', value: searchItem.id }])
+    this.dataService.get(this.apiUrl + '/Page', [{ key: 'id', value: searchItem.id }])
       .subscribe((page: PageData) => {
 
         // Load the page

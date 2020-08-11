@@ -28,8 +28,12 @@ export class CategoryEditorComponent implements OnChanges {
   onChange() {
     // Update the icon
     this.saveService.save({
-      url: 'api/Categories/Icon',
-      data: this.category
+      url: 'api/Categories/Image',
+      data: {
+        itemId: this.category.id,
+        propertyId: this.category.icon.id
+      }
+      
     });
   }
 

@@ -77,7 +77,10 @@ export class ProductVendorComponent implements Searchable {
       // Update the vendor
       this.saveService.save({
         url: 'api/Products/Vendor',
-        data: this.product
+        data: {
+          itemId: this.product.id,
+          propertyId: this.product.vendor.id
+        }
       });
     }
   }

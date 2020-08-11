@@ -21,7 +21,7 @@ import { CarouselWidgetComponent } from '../shared-components/designer/widgets/c
 import { WidgetCursor } from './widget-cursor';
 
 export class Page {
-    public id: string;
+    public id: number;
     public name: string;
     public width: number;
     public background: Background = new Background();

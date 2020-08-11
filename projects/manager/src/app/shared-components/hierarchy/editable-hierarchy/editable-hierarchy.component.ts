@@ -84,7 +84,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
     this.editMode = true;
 
     // Get the element
-    let el: HTMLElement = document.getElementById(this.selectedItem.id.toString());
+    let el: HTMLElement = document.getElementById(this.selectedItem.hierarchyId);
 
     // Set the element to be editable
     el.contentEditable = 'true';

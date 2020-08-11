@@ -17,7 +17,10 @@ export class ProductImageComponent {
   onChange() {
       this.saveService.save({
         url: 'api/Products/Image',
-        data: this.product
+        data: {
+          itemId: this.product.id,
+          propertyId: this.product.image.id
+        }
       });
   }
 }

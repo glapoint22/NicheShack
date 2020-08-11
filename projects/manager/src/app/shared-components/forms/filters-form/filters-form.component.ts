@@ -79,6 +79,7 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
           item.type = FilterHierarchyItemType.FilterOption;
           item.url = 'api/Filters/Options';
           item.childless = true;
+          item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
         });
       }
 
@@ -95,6 +96,7 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
             item.type = FilterHierarchyItemType.FilterOption;
             item.childless = true;
             item.url = this.getUrl(FilterHierarchyItemType.FilterOption);
+            item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
           });
           break;
 
@@ -105,6 +107,7 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
             item.url = this.getUrl(FilterHierarchyItemType.Filter);
             item.childrenUrl = this.getUrl(FilterHierarchyItemType.FilterOption);
             item.childrenParameters = [{ key: 'filterId', value: item.id }];
+            item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
           });
           break;
       }
@@ -116,6 +119,7 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
         item.url = this.getUrl(FilterHierarchyItemType.Filter);
         item.childrenUrl = this.getUrl(FilterHierarchyItemType.FilterOption);
         item.childrenParameters = [{ key: 'filterId', value: item.id }];
+        item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
       });
     }
   }

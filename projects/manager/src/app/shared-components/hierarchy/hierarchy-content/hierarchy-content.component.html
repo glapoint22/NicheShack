@@ -6,13 +6,13 @@
 
             <!-- Arrow button -->
             <div *ngIf="!item.childless">
-                <input #input type="checkbox" [id]="item.name" [checked]="item.showChildren">
-                <label class="arrow-button" [for]="item.name" (click)="showHideChildren(item, input)"></label>
+                <input #input type="checkbox" [id]="item.name + '_' + item.hierarchyId" [checked]="item.showChildren">
+                <label class="arrow-button" [for]="item.name + '_' + item.hierarchyId" (click)="showHideChildren(item, input)"></label>
             </div>
 
 
             <!-- Item -->
-            <div [id]="item.id" class="item" (click)="hierarchy.selectedItem = item"
+            <div [id]="item.hierarchyId" class="item" (click)="hierarchy.selectedItem = item"
                 [ngClass]="{'selected': hierarchy.selectedItem == item}">
                 {{item.name}}
             </div>

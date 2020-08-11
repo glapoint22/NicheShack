@@ -39,6 +39,7 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
           item.type = FilterHierarchyItemType.FilterOption;
           item.url = 'api/Products/Filters';
           item.childless = true;
+          item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
         });
       }
 
@@ -51,6 +52,7 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
         item.url = 'api/Filters';
         item.childrenUrl = 'api/Products/Filters';
         item.childrenParameters = [{ key: 'filterId', value: item.id }, { key: 'productId', value: this.product.id }];
+        item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
       });
     }
   }
@@ -61,7 +63,7 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
   // -----------------------------( ON CHANGE )------------------------------ \\
   onChange(filterOption: HierarchyCheckboxItem) {
     this.saveService.save({
-      url: 'api/Products/Filters',
+      url: 'api/Products/Filter',
       data: {
         productId: this.product.id,
         filterOptionId: filterOption.id,

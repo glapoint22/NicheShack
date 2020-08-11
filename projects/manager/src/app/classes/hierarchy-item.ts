@@ -10,6 +10,7 @@ export interface HierarchyItem extends Item {
     url: string;
     childrenUrl: string;
     childrenParameters: Array<KeyValue<string, any>>;
+    hierarchyId: string;
 }
 
 

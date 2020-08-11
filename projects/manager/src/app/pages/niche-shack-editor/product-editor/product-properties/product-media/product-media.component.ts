@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnChanges, DoCheck } from '@angular/core';
+import { Component, Input, ViewChild, OnChanges, DoCheck, OnInit } from '@angular/core';
 import { Media, MediaType } from 'projects/manager/src/app/classes/media';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
@@ -12,7 +12,7 @@ import { DataService } from 'services/data.service';
   templateUrl: './product-media.component.html',
   styleUrls: ['./product-media.component.scss']
 })
-export class ProductMediaComponent implements OnChanges, DoCheck {
+export class ProductMediaComponent implements OnInit, OnChanges {
   @Input() media: Array<Media>;
   @ViewChild('paginator', { static: false }) paginator: PaginatorComponent;
   public mediaType = MediaType;
@@ -29,31 +29,34 @@ export class ProductMediaComponent implements OnChanges, DoCheck {
 
 
 
+  ngOnInit() {
+    this.popupService.mediaBrowserPopup.onPopupClose.subscribe(()=> {
+      if (this.productService.currentSelectedMedia && this.productService.currentSelectedMedia.url && this.currentMediaId != this.productService.currentSelectedMedia.id) {
+        
+  
+        // Update the media
+        this.saveService.save({
+          url: 'api/Products/Media',
+          data: {
+            productId: this.productService.product.id,
+            oldMediaId: this.currentMediaId,
+            newMediaId: this.productService.currentSelectedMedia.id
+          }
+        });
+
+        this.currentMediaId = this.productService.currentSelectedMedia.id;
+      }
+    });
+  }
+
+
+
   // -----------------------------( NG ON CHANGES )------------------------------ \\
   ngOnChanges() {
     if (this.media.length > 0) this.currentMediaId = this.media[0].id;
   }
 
 
-
-
-
-  // -----------------------------( NG DO CHECK )------------------------------ \\
-  ngDoCheck() {
-    if (this.productService.currentSelectedMedia && this.productService.currentSelectedMedia.url && this.currentMediaId != this.productService.currentSelectedMedia.id) {
-      this.currentMediaId = this.productService.currentSelectedMedia.id;
-
-      // Update the media
-      this.saveService.save({
-        url: 'api/Products/Media',
-        data: {
-          productId: this.productService.product.id,
-          oldMediaId: this.currentMediaId,
-          newMediaId: this.productService.currentSelectedMedia.id
-        }
-      });
-    }
-  }
 
 
 

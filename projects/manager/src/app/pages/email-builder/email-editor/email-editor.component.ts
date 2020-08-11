@@ -13,6 +13,7 @@ export class EmailEditorComponent extends PageEditorComponent implements OnInit 
   // ---------------------------------------------------------------------- Ng On Init --------------------------------------------------------
   ngOnInit() {
     this.apiUrl = 'api/Emails';
+    this.pageService.apiUrl = this.apiUrl + '/Page';
     this.pageType = PageType.Email;
     this.setPageView();
   }

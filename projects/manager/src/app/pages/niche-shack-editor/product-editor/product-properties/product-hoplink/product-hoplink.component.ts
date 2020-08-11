@@ -26,7 +26,10 @@ export class ProductHoplinkComponent implements OnInit, OnChanges, OnDestroy {
           // Update the hoplink
           this.saveService.save({
             url: 'api/Products/Hoplink',
-            data: this.product
+            data: {
+              id: this.product.id,
+              name: this.product.hoplink
+            }
           });
 
           this.currentHoplink = this.product.hoplink;

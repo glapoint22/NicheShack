@@ -6,7 +6,7 @@ import { Item } from './item';
 import { ImageData } from './image-data';
 
 export interface Product {
-    id: string;
+    id: number;
     vendor: Item;
     hoplink: string;
     name: string;

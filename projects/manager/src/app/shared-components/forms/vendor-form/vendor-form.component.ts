@@ -94,7 +94,7 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
     this.loadingService.loading = true;
 
     if (this.vendor.id) {
-      this.dataService.put(this.apiUrl, this.vendor)
+      this.dataService.put(this.apiUrl + '/Vendor', this.vendor)
         .subscribe(() => {
           this.editMode = false;
           this.loadingService.loading = false;
@@ -105,7 +105,7 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
           });
         });
     } else {
-      this.dataService.post(this.apiUrl, this.vendor)
+      this.dataService.post(this.apiUrl + '/Vendor', this.vendor)
         .subscribe((id: number) => {
           // New Id and name from the server
           this.onSubmit.next({
@@ -206,10 +206,11 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
   setSearchItem(vendor: Item) {
     this.loadingService.loading = true;
 
-    this.dataService.get(this.apiUrl, [{ key: 'id', value: vendor.id }])
+    this.dataService.get(this.apiUrl + '/Vendor', [{ key: 'vendorId', value: vendor.id }])
       .subscribe((vendor: Vendor) => {
         this.vendor = vendor;
         this.loadingService.loading = false;
+        this.formService.productsForm.products = null;
       });
   }
 

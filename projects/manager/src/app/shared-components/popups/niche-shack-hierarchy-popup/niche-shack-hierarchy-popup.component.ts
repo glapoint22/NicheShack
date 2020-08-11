@@ -101,6 +101,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
           item.url = this.getUrl(NicheShackHierarchyItemType.Niche);
           item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Product);
           item.childrenParameters = [{ key: 'nicheId', value: item.id }];
+          item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
         });
       } else
 
@@ -112,6 +113,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
             item.type = NicheShackHierarchyItemType.Product;
             item.childless = true;
             item.url = this.getUrl(NicheShackHierarchyItemType.Product);
+            item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
           });
         }
 
@@ -122,10 +124,10 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
       switch (type) {
         case NicheShackHierarchyItemType.Product:
           items.map((item: HierarchyItem) => {
-
             item.type = NicheShackHierarchyItemType.Product;
             item.childless = true;
             item.url = this.getUrl(NicheShackHierarchyItemType.Product);
+            item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
           });
           break;
 
@@ -136,6 +138,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
             item.url = this.getUrl(NicheShackHierarchyItemType.Niche);
             item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Product);
             item.childrenParameters = [{ key: 'nicheId', value: item.id }];
+            item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
           });
           break;
 
@@ -148,6 +151,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
             item.url = this.getUrl(NicheShackHierarchyItemType.Category);
             item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Niche);
             item.childrenParameters = [{ key: 'categoryId', value: item.id }];
+            item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
           });
           break;
       }
@@ -159,6 +163,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
         item.url = this.getUrl(NicheShackHierarchyItemType.Category);
         item.childrenUrl = this.getUrl(NicheShackHierarchyItemType.Niche);
         item.childrenParameters = [{ key: 'categoryId', value: item.id }];
+        item.hierarchyId = Math.floor((Math.random()) * 0x10000000000).toString(16).toUpperCase();
       });
     }
   }
@@ -350,7 +355,8 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
       url: null,
       childrenUrl: null,
       childrenParameters: null,
-      name: null
+      name: null,
+      hierarchyId: null
     }
   }
 }

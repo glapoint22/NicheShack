@@ -14,9 +14,9 @@ import { DataService } from 'services/data.service';
   styleUrls: ['./product-email.component.scss']
 })
 export class ProductEmailComponent implements OnInit {
-  @Input() productId: string;
-  public currentEmailId: string;
-  public emailIds: Array<string> = [];
+  @Input() productId: number;
+  public currentEmailId: number;
+  public emailIds: Array<number> = [];
   public propertyView = PropertyView;
   public initialPageLoaded: boolean;
   private emailUrl: string = 'api/Products/Email';
@@ -31,9 +31,11 @@ export class ProductEmailComponent implements OnInit {
     // Display the loading screen
     this.loadingService.loading = true;
 
+    this.pageService.apiUrl = this.emailUrl;
+
     // Get the email ids for this product
     this.dataService.get('api/Products/EmailIds', [{ key: 'productId', value: this.productId }])
-      .subscribe((emailIds: Array<string>) => {
+      .subscribe((emailIds: Array<number>) => {
         // If there are any email ids
         if (emailIds.length > 0) {
           this.emailIds = emailIds;
@@ -119,7 +121,7 @@ export class ProductEmailComponent implements OnInit {
 
 
   // ----------------------------------------------------------------- Load Email -----------------------------------------------------------
-  loadEmail(emailId: string) {
+  loadEmail(emailId: number) {
     // Display the loading screen
     this.loadingService.loading = true;
 

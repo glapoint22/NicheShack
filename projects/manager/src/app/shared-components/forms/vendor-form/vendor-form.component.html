@@ -71,7 +71,7 @@
                         <!-- P.O. Box -->
                         <div class="txt-property">
                             <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">P.O Box</div>
-                            <input [(ngModel)]="vendor.poBox" name="po-box" [readonly]="!editMode"
+                            <input [(ngModel)]="vendor.poBox" type="number" name="po-box" [readonly]="!editMode"
                                 [disabled]="!vendor.id && !editMode" autocomplete="off">
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                         <!-- Zip -->
                         <div class="txt-property">
                             <div class="label" [ngClass]="{'label-disabled': !vendor.id && !editMode}">Zip</div>
-                            <input [(ngModel)]="vendor.zip" name="zip" [readonly]="!editMode"
+                            <input [(ngModel)]="vendor.zip" type="number" name="zip" [readonly]="!editMode"
                                 [disabled]="!vendor.id && !editMode" autocomplete="off">
                         </div>
 
