@@ -85,8 +85,8 @@ export class ProductKeywordsComponent {
   // -----------------------------( POST KEYWORD )------------------------------ \\
   postKeyword(keyword: ListItem) {
     this.dataService.post(this.apiUrl, {
-      productId: this.product.id,
-      keywordName: keyword.name
+      id: this.product.id,
+      name: keyword.name
     }).subscribe((id: number) => {
       keyword.id = id;
     });
@@ -110,10 +110,7 @@ export class ProductKeywordsComponent {
   deleteKeyword() {
     let deletedKeywords: Array<ListItem> = this.itemList.deleteListItem();
 
-    this.dataService.delete(this.apiUrl, {
-      productId: this.product.id,
-      keywords: deletedKeywords
-    }).subscribe();
+    this.dataService.delete(this.apiUrl, {ids: deletedKeywords.map(x => x.id)}).subscribe();
   }
 
 

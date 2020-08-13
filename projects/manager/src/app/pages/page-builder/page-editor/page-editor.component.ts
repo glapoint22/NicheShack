@@ -91,9 +91,7 @@ export class PageEditorComponent implements OnInit, Searchable {
 
     this.loadingService.loading = true;
 
-    let pageData = this.pageService.page.getData();
-
-    this.dataService.post(this.apiUrl, pageData)
+    this.dataService.get(this.apiUrl + '/Duplicate', [{ key: 'pageId', value: this.currentPageId }])
       .subscribe((page: PageData) => {
         // Load the page
         this.loadPage(page);
@@ -126,7 +124,7 @@ export class PageEditorComponent implements OnInit, Searchable {
     this.loadingService.loading = true;
 
     // Delete the page in the database
-    this.dataService.delete(this.apiUrl, this.currentPageId)
+    this.dataService.delete(this.apiUrl, { pageId: this.currentPageId })
       .subscribe(() => {
         this.pageService.clearPage();
         this.currentPageId = null;

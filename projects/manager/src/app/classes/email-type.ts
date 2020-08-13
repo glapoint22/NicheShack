@@ -6,7 +6,7 @@ export enum EmailType {
     DeletedListItem = 'Deleted List Item',
     MovedListItem = 'Moved List Item',
     NameChange = 'Name Change',
-    EmailChange = 'EmailChange',
+    EmailChange = 'Email Change',
     PasswordUpdated = 'Password Updated',
     NewSubscription = 'New Subscription',
     RemoveSubscription = 'Remove Subscription',

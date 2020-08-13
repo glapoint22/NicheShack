@@ -18,7 +18,7 @@
         </div>
 
         <!-- Link -->
-        <ng-container *ngIf="product.vendor; else placeholder">
+        <ng-container *ngIf="product.vendor.id != 0; else placeholder">
             <div class="vendor">
                 {{product.vendor.name}}
             </div>

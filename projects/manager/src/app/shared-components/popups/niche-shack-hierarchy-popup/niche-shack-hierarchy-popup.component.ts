@@ -282,7 +282,8 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
     // Category
     if (!this.selectedItem) {
       item = {
-        name: ''
+        name: '',
+        url: this.getUrl(NicheShackHierarchyItemType.Category)
       }
 
       // Niche
@@ -290,6 +291,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
       item = {
         name: '',
         parent: this.selectedItem,
+        url: this.getUrl(NicheShackHierarchyItemType.Niche)
       }
 
       // Product
@@ -298,6 +300,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
         name: '',
         parent: this.selectedItem,
         childless: true,
+        url: this.getUrl(NicheShackHierarchyItemType.Product)
       }
     }
 

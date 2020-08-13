@@ -158,7 +158,7 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
   // --------------------------------( DELETE VENDOR )-------------------------------- \\
   deleteVendor() {
     this.loadingService.loading = true;
-    this.dataService.delete(this.apiUrl, this.vendor.id)
+    this.dataService.delete(this.apiUrl, {vendorId: this.vendor.id})
       .subscribe(() => {
         this.loadingService.loading = false;
 

@@ -6,6 +6,7 @@ import { MediaType } from '../../../classes/media';
 import { ImageData } from '../../../classes/image-data';
 import { SaveService } from '../../../services/save.service';
 import { DataService } from 'services/data.service';
+import { Image } from '../../../classes/image';
 
 @Component({
   selector: 'category-editor',
@@ -44,13 +45,13 @@ export class CategoryEditorComponent implements OnChanges {
 
     // Get the category icon based on the category Id
     this.dataService.get('api/Categories/Image', [{ key: 'categoryId', value: this.hierarchyItem.id }])
-      .subscribe((icon: ImageData) => {
+      .subscribe((icon: Image) => {
 
         // Set the category
         this.category = {
           id: this.hierarchyItem.id,
           name: this.hierarchyItem.name,
-          icon: icon
+          icon: icon ? icon : new Image()
         }
 
         // Hide loading

@@ -349,7 +349,10 @@ export class EditableHierarchyComponent extends HierarchyComponent {
       // This is a new item
     } else {
       // Post new item
-      this.dataService.post(this.selectedItem.url, element.innerText)
+      this.dataService.post(this.selectedItem.url, {
+        id: this.selectedItem.parent ? this.selectedItem.parent.id : 0,
+        name: element.innerText
+      })
         .subscribe((id: number) => {
           // Assign the new id
           this.selectedItem.id = id;

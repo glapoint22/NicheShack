@@ -48,7 +48,7 @@ export class ProductVendorComponent implements Searchable {
     });
 
 
-    if (this.product.vendor) {
+    if (this.product.vendor.id != 0) {
       this.loadingService.loading = true;
       this.dataService.get(this.apiUrl + '/Vendor', [{ key: 'vendorId', value: this.product.vendor.id }])
         .subscribe((vendor: Vendor) => {

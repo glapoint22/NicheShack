@@ -221,7 +221,8 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
     // Filter
     if (!this.selectedItem) {
       item = {
-        name: ''
+        name: '',
+        url: this.getUrl(FilterHierarchyItemType.Filter)
       }
 
       // Filter Option
@@ -230,6 +231,7 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
         name: '',
         parent: this.selectedItem,
         childless: true,
+        url: this.getUrl(FilterHierarchyItemType.FilterOption)
       }
     }
 

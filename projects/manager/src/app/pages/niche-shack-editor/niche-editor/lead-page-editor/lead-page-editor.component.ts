@@ -193,7 +193,7 @@ export class LeadPageEditorComponent implements OnChanges {
     this.loadingService.loading = true;
 
 
-    this.dataService.get(this.leadPageUrl + '/Create')
+    this.dataService.get(this.leadPageUrl + '/Add', [{ key: 'nicheId', value: this.nicheId }])
       .subscribe((page: PageData) => {
 
 
@@ -216,9 +216,9 @@ export class LeadPageEditorComponent implements OnChanges {
     if (!this.currentLeadPageId) return;
 
     this.loadingService.loading = true;
-    let pageData = this.pageService.page.getData();
+    // let pageData = this.pageService.page.getData();
 
-    this.dataService.post(this.leadPageUrl, pageData)
+    this.dataService.get(this.leadPageUrl + '/Duplicate', [{ key: 'leadPageId', value: this.currentLeadPageId }])
       .subscribe((page: PageData) => {
 
 
@@ -274,7 +274,7 @@ export class LeadPageEditorComponent implements OnChanges {
     this.loadingService.loading = true;
 
     // Delete the page in the database
-    this.dataService.delete(this.leadPageUrl, this.currentLeadPageId)
+    this.dataService.delete(this.leadPageUrl, { leadPageId: this.currentLeadPageId })
       .subscribe(() => {
         // Remove this lead page id from the lead page ids array
         let index = this.leadPageIds.findIndex(x => x == this.currentLeadPageId);

@@ -23,4 +23,18 @@ export class EmailPropertiesComponent extends PagePropertiesComponent {
       });
     });
   }
+
+
+  getIndex(emailType: EmailType) {
+    return this.emailTypes.findIndex(x => x.key == emailType);
+  }
+
+
+  onTypeChange(index: number) {
+   let emailType: string =  this.emailTypes.find(x => x.value == index).key;
+
+   this.page.name = emailType;
+
+   this.pageService.save();
+  }
 }
