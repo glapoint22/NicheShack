@@ -19,7 +19,6 @@ import { DimensionsComponent } from '../properties/dimensions/dimensions.compone
 import { ColumnsComponent } from '../properties/columns/columns.component';
 import { PaddingComponent } from '../properties/padding/padding.component';
 import { VisibilityComponent } from '../properties/visibility/visibility.component';
-import { ImageComponent } from '../properties/image/image.component';
 import { VideoComponent } from '../widget-properties/video-widget-properties/video/video.component';
 import { CaptionComponent } from '../properties/caption/caption.component';
 import { NumberFieldComponent } from '../elements/number-fields/number-field/number-field.component';
@@ -77,7 +76,6 @@ import { SharedModule } from '../shared.module';
     ColumnsComponent,
     PaddingComponent,
     VisibilityComponent,
-    ImageComponent,
     VideoComponent,
     CaptionComponent,
     NumberFieldComponent,
@@ -132,7 +130,6 @@ import { SharedModule } from '../shared.module';
     ColumnsComponent,
     PaddingComponent,
     VisibilityComponent,
-    ImageComponent,
     VideoComponent,
     CaptionComponent,
     NumberFieldComponent,

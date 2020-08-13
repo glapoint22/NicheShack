@@ -76,6 +76,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
       onDeleteItem: this.openDeletePrompt
     }
 
+
     // Update the price point
     this.pricePointPopupSubscription = this.popupService.pricePointPopup.onPopupClose
       .subscribe(() => {
@@ -399,8 +400,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   }
 
 
-
-
+  // -----------------------------( ON PRICE POINT CHANGE )------------------------------ \\
   onPricePointChange() {
     this.saveService.save({
       url: 'api/Products/PriceIndices',
@@ -410,8 +410,6 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
       }
     });
   }
-
-
 
 
   // -----------------------------( NG ON DESTROY )------------------------------ \\
