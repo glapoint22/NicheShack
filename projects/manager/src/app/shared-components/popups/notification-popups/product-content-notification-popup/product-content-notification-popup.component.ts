@@ -35,8 +35,9 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   public contentIndex: number = 0;
   public pricePointList: Array<Item>;
   public itemListOptions: ItemListOptions;
+  public mediaType = MediaType;
 
-  private saveService: SaveService
+  
   private pricePointPopupSubscription: Subscription;
   
   @Input() content: Array<ProductContent>;
@@ -54,13 +55,137 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
     loadingService: LoadingService,
     formService: FormService,
     private promptService: PromptService,
-    private productService: ProductService
+    private saveService: SaveService
   ) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService, loadingService, formService) }
 
 
   // --------------------------------( INITIALIZE POPUP )-------------------------------- \\
   initializePopup() {
     this.popupService.productContentNotificationPopup = this;
+  }
+
+
+  // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
+  onPaginatorClick(index: number) {
+    this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
+      .subscribe((notification: ProductContentNotification) => {
+        this.notificationService.productContentNotification = notification;
+      });
+  }
+
+
+
+
+   // ===========================================================================================================================\\
+  //                                                       [ CONTENT ]                                                          \\ 
+  // ===========================================================================================================================\\
+
+
+
+  // -----------------------------( ON ITEM CHANGE )------------------------------ \\
+  onItemChange(index: number) {
+    this.contentIndex = index;
+  }
+
+
+  // -----------------------------( ADD CONTENT )------------------------------ \\
+  addContent(paginator: PaginatorComponent) {
+    let content: ProductContent = {
+      id: null,
+      icon: new Image(),
+      name: null,
+      priceIndices: []
+    }
+    this.dataService.post('api/Products/Content', this.notificationService.productContentNotification.productId)
+      .subscribe((id: string) => {
+        content.id = id;
+      });
+
+      
+    this.notificationService.productContentNotification.content.push(content);
+    this.contentIndex = this.notificationService.productContentNotification.content.length - 1;
+    paginator.setPage(this.notificationService.productContentNotification.content.length);
+  }
+
+
+  // -----------------------------( ON DELETE CONTENT )------------------------------ \\
+  onDeleteContent(paginator: PaginatorComponent) {
+    this.promptService.showPrompt('Delete Content', 'Are you sure you want to delete this content?', this.deleteContent, this, [paginator]);
+  }
+
+
+  // -----------------------------( DELETE CONTENT )------------------------------ \\
+  deleteContent(paginator: PaginatorComponent) {
+    // Delete this content from the database
+    this.dataService.delete('api/Products/Content', this.notificationService.productContentNotification.content[this.contentIndex].id).subscribe();
+
+    // Delete this content from the content array
+    this.notificationService.productContentNotification.content.splice(this.contentIndex, 1);
+
+    // Set the page for the paginator
+    let index = Math.max(0, this.contentIndex = Math.min(this.notificationService.productContentNotification.content.length - 1, this.contentIndex));
+    paginator.setPage(index + 1);
+  }
+
+
+
+  // ===========================================================================================================================\\
+  //                                                       [ NAME ]                                                            \\
+  // ===========================================================================================================================\\
+
+
+  // -----------------------------( ON NAME CHANGE )------------------------------ \\
+  onNameChange(value: string) {
+    this.saveService.save({
+      url: 'api/Products/ContentTitle',
+      data: {
+        id: this.notificationService.productContentNotification.content[this.contentIndex].id,
+        name: value
+      }
+    });
+  }
+
+
+
+  // ===========================================================================================================================\\
+  //                                                       [ ICON ]                                                             \\
+  // ===========================================================================================================================\\
+
+
+
+  // -----------------------------( ON IMAGE ICON CLICK )------------------------------ \\
+  onImageIconClick(sourceElement: HTMLElement) {
+    this.popupService.mediaType = MediaType.Icon;
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
+    this.popupService.mediaBrowserPopup.media = this.notificationService.productContentNotification.content[this.contentIndex].icon;
+  }
+
+
+  // -----------------------------( ON ICON CHANGE )------------------------------ \\
+  onIconChange() {
+    this.saveService.save({
+      url: 'api/Products/ContentIcon',
+      data: {
+        ItemId: this.notificationService.productContentNotification.content[this.contentIndex].id,
+        PropertyId: this.notificationService.productContentNotification.content[this.contentIndex].icon.id
+      }
+    });
+  }
+
+
+
+  // ===========================================================================================================================\\
+  //                                                       [ PRICE POINTS ]                                                     \\
+  // ===========================================================================================================================\\
+
+
+
+  // -----------------------------( NG ON CHANGES )------------------------------ \\
+  setPopup() {
+
+
+
 
     // Define the item list options
     this.itemListOptions = {
@@ -91,139 +216,33 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
       onDeleteItem: this.openDeletePrompt
     }
 
-    // // Update the price point
-    // this.pricePointPopupSubscription = this.popupService.pricePointPopup.onPopupClose
-    //   .subscribe(() => {
-    //     this.saveService.save({
-    //       url: 'api/Products/PricePoints',
-    //       data: this.popupService.pricePointPopup.pricePoint
-    //     });
-    //   });
-  }
 
 
-   // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
-  onPaginatorClick(index: number) {
-    this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
-      .subscribe((notification: ProductContentNotification) => {
-        this.notificationService.productContentNotification = notification;
+    // Update the price point
+    this.pricePointPopupSubscription = this.popupService.pricePointPopup.onPopupClose
+      .subscribe(() => {
+        this.saveService.save({
+          url: 'api/Products/PricePoint',
+          data: this.popupService.pricePointPopup.pricePoint
+        });
       });
-  }
 
 
 
-  // ===========================================================================================================================\\
-  //                                                       [ CONTENT ]                                                          \\ 
-  // ===========================================================================================================================\\
-
-
-
-  // -----------------------------( ON ITEM CHANGE )------------------------------ \\
-  onItemChange(index: number) {
-    this.contentIndex = index;
-  }
-
-
-  // -----------------------------( ADD CONTENT )------------------------------ \\
-  addContent(paginator: PaginatorComponent) {
-    this.notificationService.productContentNotification.content.push({
-      id: null,
-      icon: new Image(),
-      name: null,
-      priceIndices: []
-    });
-
-    this.contentIndex = this.notificationService.productContentNotification.content.length - 1;
-    paginator.setPage(this.notificationService.productContentNotification.content.length);
-  }
-
-
-  // -----------------------------( ON DELETE CONTENT )------------------------------ \\
-  onDeleteContent(paginator: PaginatorComponent) {
-    this.promptService.showPrompt('Delete Content', 'Are you sure you want to delete this content?', this.deleteContent, this, [paginator]);
-  }
-
-
-  // -----------------------------( DELETE CONTENT )------------------------------ \\
-  deleteContent(paginator: PaginatorComponent) {
-    this.notificationService.productContentNotification.content.splice(this.contentIndex, 1);
-
-    // Set the page for the paginator
-    let index = Math.max(0, this.contentIndex = Math.min(this.notificationService.productContentNotification.content.length - 1, this.contentIndex));
-    paginator.setPage(index + 1);
-  }
-
-
-
-  // ===========================================================================================================================\\
-  //                                                       [ NAME ]                                                            \\
-  // ===========================================================================================================================\\
-
-
-  // -----------------------------( ON NAME CHANGE )------------------------------ \\
-  onTitleChange(value: string) {
-    this.saveService.save({
-      url: 'api/Content/Title',
-      data: {
-        productId: this.productService.product.id,
-        contentId: this.notificationService.productContentNotification.content[this.contentIndex].id,
-        title: value
-      }
-    });
-  }
-
-
-
-  // ===========================================================================================================================\\
-  //                                                       [ ICON ]                                                             \\
-  // ===========================================================================================================================\\
-
-
-
-  // -----------------------------( ON IMAGE ICON CLICK )------------------------------ \\
-  onImageIconClick(sourceElement: HTMLElement) {
-    this.popupService.mediaType = MediaType.Icon;
-    this.popupService.sourceElement = sourceElement;
-    this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
-    this.popupService.mediaBrowserPopup.media = this.notificationService.productContentNotification.content[this.contentIndex].icon;
-  }
-
-
-  // -----------------------------( ON ICON CHANGE )------------------------------ \\
-  onIconChange() {
-    this.saveService.save({
-      url: 'api/Content/Icon',
-      data: {
-        productId: this.productService.product.id,
-        contentId: this.notificationService.productContentNotification.content[this.contentIndex].id,
-        iconId: this.notificationService.productContentNotification.content[this.contentIndex].icon.id
-      }
-    });
-  }
-
-
-
-  // ===========================================================================================================================\\
-  //                                                       [ PRICE POINTS ]                                                     \\
-  // ===========================================================================================================================\\
-
-
-
-  // --------------------------------( SET POPUP )-------------------------------- \\
-  setPopup() {
     let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
     // this.paginatorIndex = this.notificationService.productContentNotification.customerText.length - 1;
 
     // Combine all the price point properties into one string
     if (this.notificationService.productContentNotification.pricePoints) {
+
       this.pricePointList = this.notificationService.productContentNotification.pricePoints.map(x => ({
         id: x.id,
         // Text Before
-        name: ((x.textBefore.length == 0 ? "" : x.textBefore) + " " +
+        name: ((!x.textBefore || x.textBefore.length == 0 ? "" : x.textBefore) + " " +
           // Price
           (formatter.format(parseFloat(x.wholeNumber + "." + x.decimal))) +
           // Text After
-          (x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()
+          (!x.textAfter || x.textAfter.length == 0 ? '' : " " + x.textAfter)).trim()
       }));
     }
   }
@@ -257,7 +276,7 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
 
 
   // -----------------------------( SET NEW PRICE POINT )------------------------------ \\
-  setNewPricePoint(){
+  setNewPricePoint() {
     // Create the new price point
     let pricePoint: ProductPricePoint = {
       id: null,
@@ -267,13 +286,13 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
       decimal: 0
     }
 
-    // this.dataService.post('api/Products/PricePoints', {
-    //   productId: this.productService.product.id,
-    //   order: 0
-    // })
-    //   .subscribe((id: string) => {
-    //     pricePoint.id = id;
-    //   });
+    this.dataService.post('api/Products/PricePoints', {
+      productId: this.notificationService.productContentNotification.productId,
+      order: 0
+    })
+      .subscribe((id: number) => {
+        pricePoint.id = id;
+      });
 
     // Push the new price point
     this.notificationService.productContentNotification.pricePoints.unshift(pricePoint);
@@ -305,8 +324,8 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   addPricePointFromMenu(originalSourceElement: HTMLElement) {
     // Set the new price point
     this.setNewPricePoint();
-    
-    window.setTimeout(()=> {
+
+    window.setTimeout(() => {
       // Get reference to the new source element
       let newSourceElement: HTMLElement = this.itemList.rowItem.find((item, index) => index == 0).nativeElement;
       // Get the distance between the original source element and the new source element
@@ -348,18 +367,24 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
     let deletedPricePoints: Array<ListItem> = this.itemList.deleteListItem();
 
     // Loop through all the deleted price points
-    for(let i = 0; i < deletedPricePoints.length; i++) {
+    for (let i = 0; i < deletedPricePoints.length; i++) {
 
       // Find a price point within the price point data list where its ID matches the ID of one of the deleted price points and record its index
-      let index = this.pricePoints.map(x => x.id).indexOf(deletedPricePoints[i].id)
+      let index = this.notificationService.productContentNotification.pricePoints.map(x => x.id).indexOf(deletedPricePoints[i].id)
 
       // Remove the item from the checklist that has the recorded index
       for (let j = 0; j < this.notificationService.productContentNotification.content.length; j++) {
         this.notificationService.productContentNotification.content[j].priceIndices.splice(index, 1)
       }
       // Remove the item from the price point data list that has the recorded index 
-      this.pricePoints.splice(index, 1);
+      this.notificationService.productContentNotification.pricePoints.splice(index, 1);
     }
+
+    // Update the database
+    this.dataService.delete('api/Products/PricePoints', {
+      // productId: this.product.id,
+      keywords: deletedPricePoints
+    }).subscribe();
   }
 
 
@@ -381,14 +406,14 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   // -----------------------------( MOVE PRICE POINT )------------------------------ \\
   movePricePoint(fromIndex: number, toIndex: number) {
     // Save the new order to the database
-    // this.saveService.save({
-    //   url: 'api/Products/PricePoints/Move',
-    //   data: {
-    //     productId: this.productService.product.id,
-    //     pricePointId: this.pricePoints[fromIndex].id,
-    //     order: toIndex
-    //   }
-    // });
+    this.saveService.save({
+      url: 'api/Products/PricePointMove',
+      data: {
+        productId: this.notificationService.productContentNotification.productId,
+        fromIndex: fromIndex,
+        toIndex: toIndex
+      }
+    });
 
     // Update the price points (Price point data coming in)
     this.moveArrayElement(this.notificationService.productContentNotification.pricePoints, fromIndex, toIndex);
@@ -411,32 +436,20 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   }
 
 
+  // -----------------------------( ON PRICE POINT CHANGE )------------------------------ \\
+  onPricePointChange() {
+    this.saveService.save({
+      url: 'api/Products/PriceIndices',
+      data: {
+        productContentId: this.notificationService.productContentNotification.content[this.contentIndex].id,
+        priceIndices: this.notificationService.productContentNotification.content[this.contentIndex].priceIndices
+      }
+    });
+  }
+
+
   // -----------------------------( NG ON DESTROY )------------------------------ \\
   ngOnDestroy() {
     this.pricePointPopupSubscription.unsubscribe();
-  }
-
-
-  // -----------------------------( VIEW VENDOR INFO )------------------------------ \\
-  viewVendorInfo() {
-    super.viewVendorInfo(this.notificationService.productContentNotification.vendorId);
-  }
-
-
-  // --------------------------------( GO TO PRODUCT PAGE )-------------------------------- \\
-  goToProductPage() {
-    super.goToProductPage(this.notificationService.productContentNotification.productId);
-  }
-
-
-  // --------------------------------( GO TO VENDOR PRODUCT PAGE )-------------------------------- \\
-  goToVendorProductPage() {
-    super.goToVendorProductPage(this.notificationService.productContentNotification.hoplink);
-  }
-
-
-  // -----------------------------(ON SUBMIT )------------------------------ \\
-  onSubmit(notification: NotificationListItem) {
-
   }
 }

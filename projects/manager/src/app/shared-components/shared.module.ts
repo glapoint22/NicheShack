@@ -11,6 +11,7 @@ import { CustomInputModule } from 'shared-components/custom-input/custom-input.m
 import { EditableDropdownComponent } from './elements/dropdowns/editable-dropdown/editable-dropdown.component';
 import { ColorIconComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-description/color-icon/color-icon.component';
 import { LinkIconComponent } from './link-icon/link-icon.component';
+import { ImageComponent } from './properties/image/image.component';
 
 
 
@@ -25,7 +26,8 @@ import { LinkIconComponent } from './link-icon/link-icon.component';
     MediaItemListComponent,
     NotificationsItemListComponent,
     ColorIconComponent,
-    LinkIconComponent
+    LinkIconComponent,
+    ImageComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { LinkIconComponent } from './link-icon/link-icon.component';
     MediaItemListComponent,
     NotificationsItemListComponent,
     ColorIconComponent,
-    LinkIconComponent
+    LinkIconComponent,
+    ImageComponent
   ]
 })
 export class SharedModule { }
