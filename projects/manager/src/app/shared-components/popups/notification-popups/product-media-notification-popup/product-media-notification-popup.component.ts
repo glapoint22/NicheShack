@@ -13,6 +13,7 @@ import { LoadingService } from 'projects/manager/src/app/services/loading.servic
 import { FormService } from 'projects/manager/src/app/services/form.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
+import { ProductService } from 'projects/manager/src/app/services/product.service';
 
 @Component({
   selector: 'product-media-notification-popup',
@@ -33,8 +34,9 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
     notificationService: NotificationService,
     loadingService: LoadingService,
     formService: FormService,
+    productService: ProductService,
     private promptService: PromptService
-  ) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService, loadingService, formService) }
+  ) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService, loadingService, formService, productService) }
 
   // --------------------------------( INITIALIZE POPUP )-------------------------------- \\
   initializePopup() {

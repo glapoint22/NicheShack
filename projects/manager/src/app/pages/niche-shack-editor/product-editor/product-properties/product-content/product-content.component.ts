@@ -25,7 +25,6 @@ import { DataService } from 'services/data.service';
 })
 export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   @Input() product: Product;
-  @Input() pricePoints: Array<ProductPricePoint>;
   @ViewChild('itemList', { static: false }) itemList: CheckboxItemListComponent;
 
 
@@ -109,13 +108,13 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
       name: null,
       priceIndices: []
     }
-    this.dataService.post('api/Products/Content', this.productService.product.id)
+    this.dataService.post('api/Products/Content', { id: this.product.id })
       .subscribe((id: string) => {
         content.id = id;
       });
-    this.productService.product.content.push(content);
-    this.contentIndex = this.productService.product.content.length - 1;
-    paginator.setPage(this.productService.product.content.length);
+    this.product.content.push(content);
+    this.contentIndex = this.product.content.length - 1;
+    paginator.setPage(this.product.content.length);
   }
 
 
@@ -128,13 +127,13 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   // -----------------------------( DELETE CONTENT )------------------------------ \\
   deleteContent(paginator: PaginatorComponent) {
     // Delete this content from the database
-    this.dataService.delete('api/Products/Content', this.productService.product.content[this.contentIndex].id).subscribe();
+    this.dataService.delete('api/Products/Content', { id: this.product.content[this.contentIndex].id }).subscribe();
 
     // Delete this content from the content array
-    this.productService.product.content.splice(this.contentIndex, 1);
+    this.product.content.splice(this.contentIndex, 1);
 
     // Set the page for the paginator
-    let index = Math.max(0, this.contentIndex = Math.min(this.productService.product.content.length - 1, this.contentIndex));
+    let index = Math.max(0, this.contentIndex = Math.min(this.product.content.length - 1, this.contentIndex));
     paginator.setPage(index + 1);
   }
 
@@ -197,9 +196,9 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
     // Combine all the price point properties into one string
-    if (this.pricePoints) {
+    if (this.product.pricePoints) {
 
-      this.pricePointList = this.pricePoints.map(x => ({
+      this.pricePointList = this.product.pricePoints.map(x => ({
         id: x.id,
         // Text Before
         name: ((!x.textBefore || x.textBefore.length == 0 ? "" : x.textBefore) + " " +
@@ -250,34 +249,32 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
       decimal: 0
     }
 
-    this.dataService.post('api/Products/PricePoints', {
-      productId: this.productService.product.id,
-      order: 0
-    })
+    this.dataService.get('api/Products/PricePoint', [{ key: 'productId', value: this.product.id }])
       .subscribe((id: number) => {
         pricePoint.id = id;
       });
 
     // Push the new price point
-    this.pricePoints.unshift(pricePoint);
+    this.product.pricePoints.push(pricePoint);
 
     for (let i = 0; i < this.product.content.length; i++) {
-      this.product.content[i].priceIndices.unshift(false);
+      this.product.content[i].priceIndices.push(false);
     }
 
-    this.pricePointList.unshift({
+    this.pricePointList.push({
       id: pricePoint.id,
       name: ''
     });
 
     // Select the new list item
-    this.itemList.selectedListItemIndex = 0;
+    this.itemList.selectedListItemIndex = this.product.pricePoints.length - 1;
     // Set the new list item
     this.itemList.setNewListItem(this.itemList.selectedListItemIndex);
 
     // Set the reference to this new price point
     this.popupService.pricePointPopup.pricePoint = pricePoint;
-    this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[0];
+    this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[this.product.pricePoints.length - 1];
+    this.popupService.pricePointPopup.product = this.product;
 
     // This will set the new price point in the product properties
     this.popupService.pricePointPopup.setPricePointListItem();
@@ -319,10 +316,10 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   // -----------------------------( EDIT PRICE POINT )------------------------------ \\
   editPricePoint(sourceElement: HTMLElement, index: number) {
     this.popupService.bottomBuffer = 50;
-    this.popupService.sourceElement = sourceElement;
-    this.popupService.pricePointPopup.show = true;
-    this.popupService.pricePointPopup.pricePoint = this.pricePoints[index];
+    this.showPricePointPopup(sourceElement);
+    this.popupService.pricePointPopup.pricePoint = this.product.pricePoints[index];
     this.popupService.pricePointPopup.pricePointListItem = this.pricePointList[index];
+    this.popupService.pricePointPopup.product = this.product;
   }
 
 
@@ -334,21 +331,18 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     for (let i = 0; i < deletedPricePoints.length; i++) {
 
       // Find a price point within the price point data list where its ID matches the ID of one of the deleted price points and record its index
-      let index = this.pricePoints.map(x => x.id).indexOf(deletedPricePoints[i].id)
+      let index = this.product.pricePoints.map(x => x.id).indexOf(deletedPricePoints[i].id)
 
       // Remove the item from the checklist that has the recorded index
       for (let j = 0; j < this.product.content.length; j++) {
         this.product.content[j].priceIndices.splice(index, 1)
       }
       // Remove the item from the price point data list that has the recorded index 
-      this.pricePoints.splice(index, 1);
+      this.product.pricePoints.splice(index, 1);
     }
 
     // Update the database
-    this.dataService.delete('api/Products/PricePoints', {
-      productId: this.product.id,
-      keywords: deletedPricePoints
-    }).subscribe();
+    this.dataService.delete('api/Products/PricePoint', { ids: deletedPricePoints.map(x => x.id) }).subscribe();
   }
 
 
@@ -373,14 +367,14 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     this.saveService.save({
       url: 'api/Products/PricePointMove',
       data: {
-        productId: this.productService.product.id,
+        productId: this.product.id,
         fromIndex: fromIndex,
         toIndex: toIndex
       }
     });
 
     // Update the price points (Price point data coming in)
-    this.moveArrayElement(this.pricePoints, fromIndex, toIndex);
+    this.moveArrayElement(this.product.pricePoints, fromIndex, toIndex);
 
     // Update the check list (Check list data coming in)
     for (let i = 0; i < this.product.content.length; i++) {

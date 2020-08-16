@@ -25,7 +25,7 @@ export class EmailPropertiesComponent extends PagePropertiesComponent {
   }
 
 
-  getIndex(emailType: EmailType) {
+  getIndex(emailType: string) {
     return this.emailTypes.findIndex(x => x.key == emailType);
   }
 

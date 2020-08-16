@@ -12,6 +12,8 @@ import { EditableDropdownComponent } from './elements/dropdowns/editable-dropdow
 import { ColorIconComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-description/color-icon/color-icon.component';
 import { LinkIconComponent } from './link-icon/link-icon.component';
 import { ImageComponent } from './properties/image/image.component';
+import { ProductContentComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-content/product-content.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -27,11 +29,13 @@ import { ImageComponent } from './properties/image/image.component';
     NotificationsItemListComponent,
     ColorIconComponent,
     LinkIconComponent,
-    ImageComponent
+    ImageComponent,
+    ProductContentComponent
   ],
   imports: [
     CommonModule,
-    CustomInputModule
+    CustomInputModule,
+    FormsModule
   ],
   exports: [
     PaginatorComponent,
@@ -44,7 +48,8 @@ import { ImageComponent } from './properties/image/image.component';
     NotificationsItemListComponent,
     ColorIconComponent,
     LinkIconComponent,
-    ImageComponent
+    ImageComponent,
+    ProductContentComponent
   ]
 })
 export class SharedModule { }

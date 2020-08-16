@@ -1,4 +1,3 @@
-import { Image } from './image';
 import { Item } from './item';
 import { ImageData } from './image-data';
 

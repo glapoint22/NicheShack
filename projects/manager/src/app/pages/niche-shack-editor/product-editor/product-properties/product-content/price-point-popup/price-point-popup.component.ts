@@ -5,9 +5,10 @@ import { Item } from 'projects/manager/src/app/classes/item';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { CoverService } from 'projects/manager/src/app/services/cover.service';
 import { MenuService } from 'projects/manager/src/app/services/menu.service';
-import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
 import { DataService } from 'services/data.service';
+import { Product } from 'projects/manager/src/app/classes/product';
+import { SaveService } from 'projects/manager/src/app/services/save.service';
 
 @Component({
   selector: 'price-point-popup',
@@ -18,7 +19,16 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
   @ViewChildren('txtInput') txtInput: QueryList<ElementRef>;
   public pricePoint: ProductPricePoint;
   public pricePointListItem: Item;
-  constructor(popupService: PopupService, cover: CoverService, menuService: MenuService, dropdownMenuService: DropdownMenuService, dataService: DataService, private productService: ProductService) { super(popupService, cover, menuService, dropdownMenuService, dataService) }
+  public product: Product;
+
+  constructor(
+    popupService: PopupService,
+    cover: CoverService,
+    menuService: MenuService,
+    dropdownMenuService: DropdownMenuService,
+    dataService: DataService,
+    private saveService: SaveService
+  ) { super(popupService, cover, menuService, dropdownMenuService, dataService) }
 
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
@@ -50,7 +60,7 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
     if (index == 1) this.pricePoint.wholeNumber = this.pricePoint.wholeNumber ? parseInt(txtInput[index].nativeElement.value) : 0;
     if (index == 2) this.pricePoint.decimal = this.pricePoint.decimal ? parseInt(txtInput[index].nativeElement.value) : 0;
 
-    this.productService.setPrice();
+    this.setPrice();
   }
 
 
@@ -110,5 +120,32 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
         (this.pricePoint.decimal ? this.pricePoint.decimal : 0))) +
       ' ' +
       this.pricePoint.textAfter;
+  }
+
+
+
+  setPrice() {
+    let prices: Array<number> = this.product.pricePoints.map(x => x.wholeNumber + (x.decimal * 0.01));
+    let minPrice = Math.min(...prices);
+    let maxPrice = Math.max(...prices);
+
+    if (minPrice == maxPrice) {
+      this.product.minPrice = minPrice;
+      this.product.maxPrice = 0;
+    } else {
+      this.product.minPrice = minPrice;
+      this.product.maxPrice = maxPrice;
+    }
+
+
+    // Update the price
+    this.saveService.save({
+      url: 'api/Products/Price',
+      data: {
+        id: this.product.id,
+        minPrice: this.product.minPrice,
+        maxPrice: this.product.maxPrice
+      }
+    });
   }
 }
