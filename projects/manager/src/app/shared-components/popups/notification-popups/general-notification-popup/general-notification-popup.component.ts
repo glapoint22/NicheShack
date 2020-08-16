@@ -134,13 +134,13 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
 
 
   // -----------------------------( ON DISMISS BUTTON CLICK )------------------------------ \\
-  onDismissButtonClick(notification: NotificationListItem) {
+  onDismissButtonClick(notification: GeneralNotification) {
     this.archiveNotification(notification);
   }
 
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: NotificationListItem) {
+  onSubmit(notification: GeneralNotification) {
     // switch (notification.name) {
 
     //   case NotificationType.ProductNameOther: {

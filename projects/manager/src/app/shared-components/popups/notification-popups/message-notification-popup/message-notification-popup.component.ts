@@ -10,6 +10,7 @@ import { DataService } from 'services/data.service';
 import { NotificationTab } from 'projects/manager/src/app/classes/notification-tab';
 import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 import { Notification } from 'projects/manager/src/app/classes/notification';
+import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 
 @Component({
   selector: 'message-notification-popup',
@@ -74,7 +75,7 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
 
   // --------------------------------( SET NOTIFICATION )-------------------------------- \\
-  setNotification(notification: NotificationListItem, destinationArray: NotificationListItem[]) {
+  setNotification(notification: GeneralNotification, destinationArray: NotificationListItem[]) {
     this.show = false;
     let notificationIndex: number;
     let startingArray: NotificationListItem[];
@@ -96,29 +97,39 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
     }
     // As long as we're not sending a notification to a tab that it already resides in
     if (startingArray != destinationArray) {
-      notificationIndex = startingArray.indexOf(notification);
+
+
+
+
+
+
+
+
+      notificationIndex = startingArray.findIndex(x => x.productId == notification.productId && x.type == 18);
+      destinationArray.unshift(startingArray[notificationIndex]);
+
       startingArray.splice(notificationIndex, 1);
-      destinationArray.unshift(notification);
+
     }
   }
 
 
   // --------------------------------( SEND NOTIFICATION TO PENDING )-------------------------------- \\
-  sendNotificationToPending(notification: NotificationListItem) {
+  sendNotificationToPending(notification: GeneralNotification) {
     this.cover.showNormalCover = false;
     this.setNotification(notification, this.notificationService.pendingNotifications);
   }
 
 
   // --------------------------------( ARCHIVE NOTIFICATION )-------------------------------- \\
-  archiveNotification(notification: NotificationListItem) {
+  archiveNotification(notification: GeneralNotification) {
     this.cover.showNormalCover = false;
     this.setNotification(notification, this.notificationService.archiveNotifications);
   }
 
 
   // -----------------------------( ON CLOSE )------------------------------ \\
-  onClose(notification: NotificationListItem) {
+  onClose(notification: GeneralNotification) {
     if (this.notificationService.selectedNotificationsTab == NotificationTab.ArchiveNotifications) {
       this.archiveNotification(notification);
     } else {
@@ -128,14 +139,14 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
 
   // -----------------------------( ON RIGHT BUTTON CLICK )------------------------------ \\
-  onRightButtonClick(notification: NotificationListItem) {
+  onRightButtonClick(notification: GeneralNotification) {
     this.archiveNotification(notification);
     this.onSubmit(notification);
   }
 
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: NotificationListItem) {
+  onSubmit(notification: GeneralNotification) {
 
   }
 }

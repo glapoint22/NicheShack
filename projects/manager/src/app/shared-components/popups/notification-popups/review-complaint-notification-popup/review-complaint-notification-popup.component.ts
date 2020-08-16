@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
 import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 import { ReviewComplaintNotification } from 'projects/manager/src/app/classes/review-complaint-notification';
+import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 
 @Component({
   selector: 'review-complaint-notification-popup',
@@ -26,7 +27,7 @@ export class ReviewComplaintNotificationPopupComponent extends GeneralNotificati
 
 
   // -----------------------------(ON SUBMIT )------------------------------ \\
-  onSubmit(notification: NotificationListItem) {
+  onSubmit(notification: GeneralNotification) {
 
   }
 }

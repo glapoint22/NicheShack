@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
 import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 import { ProductDescriptionNotification } from 'projects/manager/src/app/classes/product-description-notification';
+import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 
 @Component({
   selector: 'product-description-notification-popup',
@@ -26,7 +27,7 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
 
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: NotificationListItem) {
+  onSubmit(notification: GeneralNotification) {
     // switch (notification.name) {
 
     //   case NotificationType.ProductNameDoesNotMatchWithProductDescription: {
