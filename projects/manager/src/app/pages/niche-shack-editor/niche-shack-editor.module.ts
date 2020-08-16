@@ -7,7 +7,6 @@ import { NicheEditorComponent } from './niche-editor/niche-editor.component';
 import { LeadPageEditorComponent } from './niche-editor/lead-page-editor/lead-page-editor.component';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
 import { ProductPropertiesComponent } from './product-editor/product-properties/product-properties.component';
-import { ProductContentComponent } from './product-editor/product-properties/product-content/product-content.component';
 import { ProductDescriptionComponent } from './product-editor/product-properties/product-description/product-description.component';
 import { ProductHoplinkComponent } from './product-editor/product-properties/product-hoplink/product-hoplink.component';
 import { ProductKeywordsComponent } from './product-editor/product-properties/product-keywords/product-keywords.component';
@@ -34,7 +33,6 @@ import { ProductImageComponent } from './product-editor/product-properties/produ
     LeadPageEditorComponent,
     ProductEditorComponent,
     ProductPropertiesComponent,
-    ProductContentComponent,
     ProductDescriptionComponent,
     ProductHoplinkComponent,
     ProductKeywordsComponent,

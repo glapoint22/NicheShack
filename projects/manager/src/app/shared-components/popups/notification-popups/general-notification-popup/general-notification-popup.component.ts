@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { MessageNotificationPopupComponent } from '../message-notification-popup/message-notification-popup.component';
-import { Notification} from 'projects/manager/src/app/classes/notification';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { CoverService } from 'projects/manager/src/app/services/cover.service';
 import { MenuService } from 'projects/manager/src/app/services/menu.service';
@@ -11,12 +10,13 @@ import { Vendor } from 'projects/manager/src/app/classes/vendor';
 import { FormService } from 'projects/manager/src/app/services/form.service';
 import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 import { MenuDivider } from 'projects/manager/src/app/classes/menu-divider';
-import { NicheShackHierarchyItemType } from 'projects/manager/src/app/classes/hierarchy-item';
 import { DataService } from 'services/data.service';
 import { NotificationType } from 'projects/manager/src/app/classes/notification-type';
 import { NotificationTab } from 'projects/manager/src/app/classes/notification-tab';
 import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
+import { Product } from 'projects/manager/src/app/classes/product';
+import { ProductService } from 'projects/manager/src/app/services/product.service';
 
 @Component({
   selector: 'general-notification-popup',
@@ -26,6 +26,7 @@ import { GeneralNotification } from 'projects/manager/src/app/classes/general-no
 export class GeneralNotificationPopupComponent extends MessageNotificationPopupComponent {
   public notificationType = NotificationType;
   @ViewChild('ellipsis', { static: false }) ellipsis: ElementRef;
+  public product: Product;
 
 
   constructor(
@@ -36,7 +37,8 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
     dataService: DataService,
     notificationService: NotificationService,
     private loadingService: LoadingService,
-    private formService: FormService
+    private formService: FormService,
+    public productService: ProductService
   ) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService) }
 
 
@@ -96,7 +98,10 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
     if (!productId) productId = this.notificationService.generalNotification.productId;
 
     // Open the product
-    this.popupService.nicheShackHierarchyPopup.openItem(productId, NicheShackHierarchyItemType.Product);
+    this.productService.openProduct(productId)
+      .subscribe((product: Product) => {
+        this.product = product;
+      });
 
     // Hide the cover
     this.cover.showNormalCover = false;
