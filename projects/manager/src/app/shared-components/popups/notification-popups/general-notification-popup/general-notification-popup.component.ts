@@ -17,6 +17,7 @@ import { NotificationListItem } from 'projects/manager/src/app/classes/notificat
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
+import { Notification } from 'projects/manager/src/app/classes/notification';
 
 @Component({
   selector: 'general-notification-popup',
@@ -139,13 +140,13 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
 
 
   // -----------------------------( ON DISMISS BUTTON CLICK )------------------------------ \\
-  onDismissButtonClick(notification: GeneralNotification) {
+  onDismissButtonClick(notification: Notification) {
     this.archiveNotification(notification);
   }
 
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: GeneralNotification) {
+  onSubmit(notification: Notification) {
     // switch (notification.name) {
 
     //   case NotificationType.ProductNameOther: {

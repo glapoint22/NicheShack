@@ -3,6 +3,7 @@ import { GeneralNotificationPopupComponent } from '../general-notification-popup
 import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 import { ProductImageNotification } from 'projects/manager/src/app/classes/product-image-notification';
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
+import { Notification } from 'projects/manager/src/app/classes/notification';
 
 @Component({
   selector: 'product-image-notification-popup',
@@ -19,7 +20,7 @@ export class ProductImageNotificationPopupComponent extends GeneralNotificationP
 
 
   // -----------------------------(ON SUBMIT )------------------------------ \\
-  onSubmit(notification: GeneralNotification) {
+  onSubmit(notification: Notification) {
 
   }
 

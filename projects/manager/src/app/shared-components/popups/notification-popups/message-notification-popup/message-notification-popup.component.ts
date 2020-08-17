@@ -74,8 +74,8 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
   }
 
 
-  // --------------------------------( SET NOTIFICATION )-------------------------------- \\
-  setNotification(notification: GeneralNotification, destinationArray: NotificationListItem[]) {
+  // --------------------------------( RELOCATE NOTIFICATION )-------------------------------- \\
+  relocateNotification(notification: Notification, destinationArray: NotificationListItem[]) {
     this.show = false;
     let notificationIndex: number;
     let startingArray: NotificationListItem[];
@@ -98,38 +98,51 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
     // As long as we're not sending a notification to a tab that it already resides in
     if (startingArray != destinationArray) {
 
+      // Update
+      this.dataService.put('api/Notifications/State', {
+        productId: notification.productId,
+        type: notification.type,
+        currentState: this.notificationService.selectedNotificationsTab,
+        destinationState: destinationArray == this.notificationService.pendingNotifications ? 1 : 2
+      }).subscribe();
 
+      // Get the index of the notification that is being relocated
+      notificationIndex = startingArray.findIndex(x => x.productId == notification.productId && x.type == notification.type);
 
+      // Update the state of the notification to its destination state
+      startingArray[notificationIndex].state = destinationArray == this.notificationService.pendingNotifications ? 1 : 2;
 
+      // As long as the destination array is pending
+      if (destinationArray == this.notificationService.pendingNotifications &&
+        // And the pending array does NOT have a notification that is identical to the notification that is being relocated
+        destinationArray.find(x => x.productId == notification.productId && x.type == notification.type) == null) {
 
+        // Add that notification to the pending array
+        destinationArray.unshift(startingArray[notificationIndex]);
+      }
 
-
-
-      notificationIndex = startingArray.findIndex(x => x.productId == notification.productId && x.type == 18);
-      destinationArray.unshift(startingArray[notificationIndex]);
-
+      // Remove the notification that is being relocated from its current location
       startingArray.splice(notificationIndex, 1);
-
     }
   }
 
 
   // --------------------------------( SEND NOTIFICATION TO PENDING )-------------------------------- \\
-  sendNotificationToPending(notification: GeneralNotification) {
+  sendNotificationToPending(notification: Notification) {
     this.cover.showNormalCover = false;
-    this.setNotification(notification, this.notificationService.pendingNotifications);
+    this.relocateNotification(notification, this.notificationService.pendingNotifications);
   }
 
 
   // --------------------------------( ARCHIVE NOTIFICATION )-------------------------------- \\
-  archiveNotification(notification: GeneralNotification) {
+  archiveNotification(notification: Notification) {
     this.cover.showNormalCover = false;
-    this.setNotification(notification, this.notificationService.archiveNotifications);
+    this.relocateNotification(notification, this.notificationService.archiveNotifications);
   }
 
 
   // -----------------------------( ON CLOSE )------------------------------ \\
-  onClose(notification: GeneralNotification) {
+  onClose(notification: Notification) {
     if (this.notificationService.selectedNotificationsTab == NotificationTab.ArchiveNotifications) {
       this.archiveNotification(notification);
     } else {
@@ -139,14 +152,14 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
 
   // -----------------------------( ON RIGHT BUTTON CLICK )------------------------------ \\
-  onRightButtonClick(notification: GeneralNotification) {
+  onRightButtonClick(notification: Notification) {
     this.archiveNotification(notification);
     this.onSubmit(notification);
   }
 
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: GeneralNotification) {
+  onSubmit(notification: Notification) {
 
   }
 }

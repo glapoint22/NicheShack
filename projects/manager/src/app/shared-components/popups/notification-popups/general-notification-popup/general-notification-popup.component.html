@@ -100,13 +100,13 @@
     <!-- Button Container -->
     <div *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
         class="button-container"
-        [ngClass]="{'resize-button': notificationService.generalNotification.name == notificationType.ProductReportedAsIllegal || 
-                                      notificationService.generalNotification.name == notificationType.ProductReportedAsHavingAdultContent}">
+        [ngClass]="{'resize-button': notificationService.generalNotification.type == notificationType.ProductReportedAsIllegal || 
+                                      notificationService.generalNotification.type == notificationType.ProductReportedAsHavingAdultContent}">
 
         
         <button (click)="onDismissButtonClick(notificationService.generalNotification)">Dismiss</button>
         <button (click)="onRightButtonClick(notificationService.generalNotification)">
-            {{notificationService.generalNotification.name == notificationType.ProductReportedAsIllegal || notificationService.generalNotification.name == notificationType.ProductReportedAsHavingAdultContent ? 'Remove Product' : 'Publish'}}
+            {{notificationService.generalNotification.type == notificationType.ProductReportedAsIllegal || notificationService.generalNotification.type == notificationType.ProductReportedAsHavingAdultContent ? 'Remove Product' : 'Publish'}}
         </button>
     </div>
 </div>

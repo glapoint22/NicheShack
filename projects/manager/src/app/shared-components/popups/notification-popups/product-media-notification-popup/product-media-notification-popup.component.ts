@@ -14,6 +14,7 @@ import { FormService } from 'projects/manager/src/app/services/form.service';
 import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
+import { Notification } from 'projects/manager/src/app/classes/notification';
 
 @Component({
   selector: 'product-media-notification-popup',
@@ -128,7 +129,7 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
 
   
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: GeneralNotification) {
+  onSubmit(notification: Notification) {
     // switch (notification.name) {
 
     //   case NotificationType.VideosAndImagesAreDifferentFromProduct: {
