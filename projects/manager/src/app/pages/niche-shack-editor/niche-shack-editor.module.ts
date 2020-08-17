@@ -10,7 +10,6 @@ import { ProductPropertiesComponent } from './product-editor/product-properties/
 import { ProductDescriptionComponent } from './product-editor/product-properties/product-description/product-description.component';
 import { ProductHoplinkComponent } from './product-editor/product-properties/product-hoplink/product-hoplink.component';
 import { ProductKeywordsComponent } from './product-editor/product-properties/product-keywords/product-keywords.component';
-import { ProductMediaComponent } from './product-editor/product-properties/product-media/product-media.component';
 import { ProductEmailComponent } from './product-editor/product-email/product-email.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { PropertiesEditorModule } from '../../shared-components/properties-editor/properties-editor.module';
@@ -36,7 +35,6 @@ import { ProductImageComponent } from './product-editor/product-properties/produ
     ProductDescriptionComponent,
     ProductHoplinkComponent,
     ProductKeywordsComponent,
-    ProductMediaComponent,
     ProductEmailComponent,
     ProductVendorComponent,
     ProductInfoComponent,

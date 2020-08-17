@@ -1,84 +1,77 @@
-<panel [title]="'Media'">
+<!-- Property Box -->
+<div class="property-box-light">
+
+    <!-- Icon bar -->
+    <div class="property-box-light-icon-bar">
+
+        <!-- Paginator -->
+        <paginator #paginator [itemCount]="product.media ? product.media.length: 0"
+            [currentIndex]="getMediaIndex()" (onItemChange)="onPaginatorClick($event)">
+        </paginator>
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Delete Media Icon -->
+            <div class="icon-container" (click)="onDeleteClick()" title="Delete Media Item"
+                [ngClass]="{'icon-disabled': product.media.length == 0}">
+                <i class="fas fa-trash-alt"></i>
+            </div>
 
 
-
-
-
-    <!-- Property Box -->
-    <div class="property-box-light">
-
-        <!-- Icon bar -->
-        <div class="property-box-light-icon-bar">
-
-            <!-- Paginator -->
-            <paginator #paginator [itemCount]="media ? media.length: 0"
-                [currentIndex]="productService.currentSelectedMediaIndex" (onItemChange)="onPaginatorClick($event)">
-            </paginator>
-
-            <!-- Icons -->
-            <div class="icons">
-
-                <!-- Delete Media Icon -->
-                <div class="icon-container" (click)="onDeleteClick()" title="Delete Media Item"
-                    [ngClass]="{'icon-disabled': media.length == 0}">
-                    <i class="fas fa-trash-alt"></i>
-                </div>
-
-
-                <!-- Add Media -->
-                <div class="icon-container" (click)="addMediaItem()" title="Add Media Item">
-                    <i class="fas fa-plus-circle"></i>
-                </div>
+            <!-- Add Media -->
+            <div class="icon-container" (click)="addMediaItem()" title="Add Media Item">
+                <i class="fas fa-plus-circle"></i>
             </div>
         </div>
-
-
-        <!-- Property box dark -->
-        <div *ngIf="media.length > 0; else placeholder" class="property-box-dark">
-
-            <!-- Icons -->
-            <div class="icons">
-
-                <!-- Add Image Icon -->
-                <div class="icon-container" (click)="onImageIconClick($event.target)">
-                    <i class="fas fa-image"></i>
-                </div>
-
-                <!-- Add Video Icon -->
-                <div class="icon-container" (click)="onVideoIconClick($event.target)">
-                    <i class="fas fa-film"></i>
-                </div>
-            </div>
-
-
-
-
-
-            <!-- Media container -->
-            <div class="media-container">
-                <!-- Media -->
-                <div *ngIf="media[productService.currentSelectedMediaIndex].thumbnail || media[productService.currentSelectedMediaIndex].url; else noMedia"
-                    class="thumbnail"
-                    [ngStyle]="{ 'background-image': 'url(images/' + (media[productService.currentSelectedMediaIndex].type == mediaType.Video ? media[productService.currentSelectedMediaIndex].thumbnail : media[productService.currentSelectedMediaIndex].url) + ')'}">
-
-
-                    <i *ngIf="media[productService.currentSelectedMediaIndex].type == mediaType.Video"
-                        class="far fa-play-circle"></i>
-                </div>
-
-                <!-- No Media -->
-                <ng-template #noMedia>
-                    <div class="thumbnail no-media">
-                        No media available
-                    </div>
-                </ng-template>
-            </div>
-        </div>
-
-
-        <!-- Placeholder -->
-        <ng-template #placeholder>
-            <div class="no-property">No media available</div>
-        </ng-template>
     </div>
-</panel>
+
+
+    <!-- Property box dark -->
+    <div *ngIf="product.media.length > 0; else placeholder" class="property-box-dark">
+
+        <!-- Icons -->
+        <div class="icons">
+
+            <!-- Add Image Icon -->
+            <div class="icon-container" (click)="onImageIconClick($event.target)">
+                <i class="fas fa-image"></i>
+            </div>
+
+            <!-- Add Video Icon -->
+            <div class="icon-container" (click)="onVideoIconClick($event.target)">
+                <i class="fas fa-film"></i>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Media container -->
+        <div class="media-container">
+            <!-- Media -->
+            <div *ngIf="product.selectedMedia.thumbnail || product.selectedMedia.url; else noMedia"
+                class="thumbnail"
+                [ngStyle]="{ 'background-image': 'url(images/' + (product.selectedMedia.type == mediaType.Video ? product.selectedMedia.thumbnail : product.selectedMedia.url) + ')'}">
+
+
+                <i *ngIf="product.selectedMedia.type == mediaType.Video"
+                    class="far fa-play-circle"></i>
+            </div>
+
+            <!-- No Media -->
+            <ng-template #noMedia>
+                <div class="thumbnail no-media">
+                    No media available
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+
+    <!-- Placeholder -->
+    <ng-template #placeholder>
+        <div class="no-property">No media available</div>
+    </ng-template>
+</div>

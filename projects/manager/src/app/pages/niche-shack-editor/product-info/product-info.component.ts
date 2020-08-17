@@ -15,12 +15,13 @@ export class ProductInfoComponent implements OnInit {
     this.productService.product = null;
   }
 
-  onThumbnailClick(media: Media, thumbnailIndex: number) {
+  onThumbnailClick(media: Media) {
+    this.productService.product.selectedMedia = media;
     this.productService.setCurrentSelectedMedia(media);
-    this.productService.currentSelectedMediaIndex = thumbnailIndex;
   }
 
   onBuyClick(url: string) {
     window.open(url);
   }
+
 }

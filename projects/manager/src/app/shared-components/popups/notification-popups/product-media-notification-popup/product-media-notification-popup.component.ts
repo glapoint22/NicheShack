@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
-import { MediaType } from 'projects/manager/src/app/classes/media';
-import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 import { ProductMediaNotification } from 'projects/manager/src/app/classes/product-media-notification';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { CoverService } from 'projects/manager/src/app/services/cover.service';
@@ -11,7 +9,6 @@ import { DataService } from 'services/data.service';
 import { NotificationService } from 'projects/manager/src/app/services/notification.service';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { FormService } from 'projects/manager/src/app/services/form.service';
-import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { Notification } from 'projects/manager/src/app/classes/notification';
@@ -22,8 +19,6 @@ import { Notification } from 'projects/manager/src/app/classes/notification';
   styleUrls: ['../../popup/popup.component.scss', '../message-notification-popup/message-notification-popup.component.scss', './product-media-notification-popup.component.scss']
 })
 export class ProductMediaNotificationPopupComponent extends GeneralNotificationPopupComponent {
-  public mediaType = MediaType;
-  public currentIndex: number = 0;
 
 
   constructor(
@@ -36,7 +31,6 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
     loadingService: LoadingService,
     formService: FormService,
     productService: ProductService,
-    private promptService: PromptService
   ) { super(popupService, cover, menuService, dropdownMenuService, dataService, notificationService, loadingService, formService, productService) }
 
   // --------------------------------( INITIALIZE POPUP )-------------------------------- \\
@@ -54,73 +48,35 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
   }
 
 
-  // -----------------------------( ON IMAGE ICON CLICK )------------------------------ \\
-  onImageIconClick(sourceElement: HTMLElement) {
-    this.popupService.mediaType = MediaType.ProductImage;
-    this.popupService.sourceElement = sourceElement;
-    this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
-    this.popupService.mediaBrowserPopup.media = this.notificationService.productMediaNotification.media[this.currentIndex];
-  }
+  
+  // -----------------------------( ON POPUP SHOW )------------------------------ \\
+  onPopupShow(popup, arrow) {
+    super.onPopupShow(popup, arrow);
 
-
-  // -----------------------------( ON VIDEO ICON CLICK )------------------------------ \\
-  onVideoIconClick(sourceElement: HTMLElement) {
-    this.popupService.mediaType = MediaType.Video;
-    this.popupService.sourceElement = sourceElement;
-    this.popupService.mediaBrowserPopup.media = this.notificationService.productMediaNotification.media[this.currentIndex];
-    this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
-    this.popupService.mediaBrowserPopup.media = this.notificationService.productMediaNotification.media[this.currentIndex];
-  }
-
-
-
-  // -----------------------------( ADD MEDIA ITEM )------------------------------ \\
-  addMediaItem() {
-    this.dataService.post('api/Products/Media', this.notificationService.productMediaNotification.productId)
-      .subscribe((id: number) => {
-        this.notificationService.productMediaNotification.media[this.currentIndex].id = id;
-      });
-
-    this.notificationService.productMediaNotification.media.push({
-      id: null,
-      name: null,
-      url: null
-    });
-    this.paginator.setPage(this.notificationService.productMediaNotification.media.length);
-    this.currentIndex = this.notificationService.productMediaNotification.media.length - 1;
-    // this.productService.currentSelectedMedia = this.notificationService.productMediaNotification.media[this.currentIndex];
-    // this.productService.scrollTop = this.currentIndex * 64;
-  }
-
-
-
-
-  // -----------------------------( ON DELETE CLICK )------------------------------ \\
-  onDeleteClick() {
-    if (this.notificationService.productMediaNotification.media.length == 0) return;
-
-    let promptTitle = 'Delete';
-    let promptMessage = 'Are you sure you want to delete this media item?';
-
-    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteMediaItem, this);
-  }
-
-
-  // -----------------------------( DELETE ITEM )------------------------------ \\
-  deleteMediaItem() {
-    this.dataService.delete('api/Products/Media', this.notificationService.productMediaNotification.media[this.currentIndex].id)
-      .subscribe();
-
-    this.notificationService.productMediaNotification.media.splice(this.currentIndex, 1);
-    this.currentIndex = Math.min(this.notificationService.productMediaNotification.media.length - 1, this.currentIndex);
-
-    if (this.currentIndex >= 0) {
-      // this.productService.currentSelectedMedia = this.notificationService.productMediaNotification.media[this.currentIndex];
-      // this.productService.setCurrentSelectedMedia(this.notificationService.productMediaNotification.media[this.currentIndex]);
-      // this.productService.scrollTop = this.currentIndex * 64;
-      // this.currentMediaId = this.productService.currentSelectedMedia.id;
+    if (this.productService.product && this.productService.product.id == this.notificationService.productMediaNotification.productId) {
+      this.product = this.productService.product;
     } else {
-      this.currentIndex = 0;
+      this.product = {
+        id: this.notificationService.productMediaNotification.productId,
+        vendor: null,
+        hoplink: this.notificationService.productMediaNotification.hoplink,
+        name: this.notificationService.productMediaNotification.productName,
+        rating: null,
+        totalReviews: null,
+        description: null,
+        content: null,
+        pricePoints: null,
+        image: null,
+        media: this.notificationService.productMediaNotification.media,
+        minPrice: null,
+        maxPrice: null,
+        keywords: null
+      }
+
+      if (this.product.media.length > 0) {
+        this.productService.setCurrentSelectedMedia(this.product.media[0]);
+      }
+      this.product.selectedMedia = this.product.media[0];
     }
   }
 

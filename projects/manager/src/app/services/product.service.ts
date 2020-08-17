@@ -21,9 +21,6 @@ export class ProductService {
   }
 
 
-  public currentSelectedMedia: Media;
-  public currentSelectedMediaIndex: number = 0;
-  public scrollTop: number = 0;
   public onProductSet = new Subject<Product>();
 
 
@@ -35,8 +32,6 @@ export class ProductService {
     if (media.type == MediaType.Video) {
       media.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(media.url);
     }
-
-    this.currentSelectedMedia = media;
   }
 
 

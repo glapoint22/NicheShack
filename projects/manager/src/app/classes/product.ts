@@ -21,4 +21,5 @@ export interface Product {
     maxPrice: number;
     keywords: Array<Item>;
     safeDescription?: SafeHtml;
+    selectedMedia?: Media;
 }

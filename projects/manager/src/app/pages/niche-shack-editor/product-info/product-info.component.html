@@ -4,18 +4,18 @@
         <!-- Media -->
         <ng-container *ngIf="productService.product.media.length > 0">
             <!-- Thumbnails -->
-            <div *ngIf="productService.product.media.length > 1" class="media"
-                [scrollTop]="this.productService.scrollTop">
+            <div *ngIf="productService.product.media.length > 1" class="media">
 
-                <ng-container *ngFor="let media of productService.product.media; let thumbnailIndex = index">
+
+                <ng-container *ngFor="let media of productService.product.media">
                     <div *ngIf="media.url || media.thumbnail" class="thumbnail"
                         [ngStyle]="{ 'background-image': 'url(images/' + (media.type == mediaType.Video ? media.thumbnail : media.url) + ')'}"
-                        [ngClass]="{'selected-thumbnail': this.productService.currentSelectedMediaIndex == thumbnailIndex}"
-                        (click)="onThumbnailClick(media, thumbnailIndex)">
+                        [ngClass]="{'selected-thumbnail': media == productService.product.selectedMedia}"
+                        (click)="onThumbnailClick(media)">
                         <i *ngIf="media.type == mediaType.Video" class="far fa-play-circle"></i>
                     </div>
                     <div *ngIf="!media.url && !media.thumbnail" class="thumbnail no-thumbnail"
-                        [ngClass]="{'selected-thumbnail': this.productService.currentSelectedMediaIndex == thumbnailIndex}">
+                        [ngClass]="{'selected-thumbnail': media == productService.product.selectedMedia}">
                         No thumbnail available
                     </div>
                 </ng-container>
@@ -26,12 +26,12 @@
             <!-- Media display -->
             <div class="img-container">
                 <ng-container
-                    *ngIf="productService.currentSelectedMedia.url || productService.currentSelectedMedia.safeUrl; else noMedia">
-                    <img *ngIf="productService.currentSelectedMedia.type == mediaType.ProductMediaImage"
-                        [src]="'/images/' + productService.currentSelectedMedia.url">
+                    *ngIf="productService.product.selectedMedia.url || productService.product.selectedMedia.safeUrl; else noMedia">
+                    <img *ngIf="productService.product.selectedMedia.type == mediaType.ProductMediaImage"
+                        [src]="'/images/' + productService.product.selectedMedia.url">
 
-                    <iframe *ngIf="productService.currentSelectedMedia.type == mediaType.Video" frameborder="0"
-                        [src]="productService.currentSelectedMedia.safeUrl" allowfullscreen></iframe>
+                    <iframe *ngIf="productService.product.selectedMedia.type == mediaType.Video" frameborder="0"
+                        [src]="productService.product.selectedMedia.safeUrl" allowfullscreen></iframe>
                 </ng-container>
 
                 <ng-template #noMedia>

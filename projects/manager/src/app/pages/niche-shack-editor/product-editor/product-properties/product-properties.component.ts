@@ -30,10 +30,11 @@ export class ProductPropertiesComponent implements OnChanges {
 
       this.dataService.get('api/Products/Product', [{ key: 'productId', value: this.productId }])
         .subscribe((product: Product) => {
-          // Set the current media as the first media
+          // Set the current media
           if (product.media.length > 0) {
             this.productService.setCurrentSelectedMedia(product.media[0]);
           }
+          product.selectedMedia = product.media[0];
 
           // Assign the product
           this.productService.product = this.product = product;
