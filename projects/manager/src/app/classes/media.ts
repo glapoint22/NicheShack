@@ -15,8 +15,8 @@ export enum MediaType {
     BannerImage,
     CategoryImage,
     ProductImage,
+    ProductMediaImage,
     Icon,
     Video,
-    Search,
-    ProductMediaImage
+    Search
 }

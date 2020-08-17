@@ -98,7 +98,7 @@ export class ProductMediaComponent implements OnInit, OnChanges {
 
   // -----------------------------( ON IMAGE ICON CLICK )------------------------------ \\
   onImageIconClick(sourceElement: HTMLElement) {
-    this.popupService.mediaType = MediaType.ProductImage;
+    this.popupService.mediaType = MediaType.ProductMediaImage;
     this.popupService.sourceElement = sourceElement;
     this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
     this.popupService.mediaBrowserPopup.media = this.product.selectedMedia;
