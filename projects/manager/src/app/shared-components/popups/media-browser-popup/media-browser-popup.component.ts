@@ -48,6 +48,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       { key: 'Banner Images', value: MediaType.BannerImage },
       { key: 'Category Images', value: MediaType.CategoryImage },
       { key: 'Product Images', value: MediaType.ProductImage },
+      { key: 'Product Media Images', value: MediaType.ProductMediaImage },
       { key: 'Icons', value: MediaType.Icon },
       { key: 'Videos', value: MediaType.Video }
     ];
@@ -58,6 +59,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     { new: 'New Banner Image', edit: 'Edit Banner Image Name', update: 'Update Banner Image', delete: 'Delete Banner Image', deletes: 'Delete Banner Images' },
     { new: 'New Category Image', edit: 'Edit Category Image Name', update: 'Update Category Image', delete: 'Delete Category Image', deletes: 'Delete Category Images' },
     { new: 'New Product Image', edit: 'Edit Product Image Name', update: 'Update Product Image', delete: 'Delete Product Image', deletes: 'Delete Product Images' },
+    { new: 'New Product Media Image', edit: 'Edit Product Media Image Name', update: 'Update Product Media Image', delete: 'Delete Product Media Image', deletes: 'Delete Product Media Images' },
     { new: 'New Icon', edit: 'Edit Icon Name', update: 'Update Icon', delete: 'Delete Icon', deletes: 'Delete Icons' },
     { new: 'New Video', edit: 'Edit Video Name', update: 'Update Video', delete: 'Delete Video', deletes: 'Delete Videos' }, {}
   ];
@@ -146,8 +148,6 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
           }
         }
       },
-      // // On Add Item
-      // onAddItem: this.openForm,
       // On Add Item
       onEditItem: this.updateMediaName,
       // On Delete Item
@@ -164,16 +164,18 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       new MenuOption('Banner Images', false, this.onMoveMedia, [MediaType.BannerImage]),
       new MenuOption('Category Images', false, this.onMoveMedia, [MediaType.CategoryImage]),
       new MenuOption('Product Images', false, this.onMoveMedia, [MediaType.ProductImage]),
+      new MenuOption('Product Media Images', false, this.onMoveMedia, [MediaType.ProductMediaImage]),
       new MenuOption('Icons', false, this.onMoveMedia, [MediaType.Icon])
     ];
 
     let subMenus: Array<SubMenuOption> = [
-      new SubMenuOption('Move Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Background Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Banner Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Category Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Product Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Icon' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage],])
+      new SubMenuOption('Move Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Background Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Banner Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Category Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Product Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Product Media Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
+      new SubMenuOption('Move Icon' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage]])
     ];
 
     switch (this.popupService.mediaType) {
@@ -191,6 +193,9 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       }
       case MediaType.ProductImage: {
         return subMenus[MediaType.ProductImage];
+      }
+      case MediaType.ProductMediaImage: {
+        return subMenus[MediaType.ProductMediaImage];
       }
       case MediaType.Icon: {
         return subMenus[MediaType.Icon];
@@ -267,6 +272,11 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       case MediaType.ProductImage: {
         promptTitle = !this.itemList.isMultiSelected ? 'Delete Product Image' : 'Delete Product Images';
         promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected product image?' : 'Are you sure you want to delete all the selected product images?';
+        break;
+      }
+      case MediaType.ProductMediaImage: {
+        promptTitle = !this.itemList.isMultiSelected ? 'Delete Product Media Image' : 'Delete Product Media Images';
+        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected product Media image?' : 'Are you sure you want to delete all the selected product Media images?';
         break;
       }
       case MediaType.Icon: {
@@ -350,7 +360,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
   // -----------------------------( SET MEDIA SEARCH MENU OPTIONS )------------------------------ \\
   setMediaSearchMenuOptions() {
-    this.menuOptions[7] = {
+    this.menuOptions[MediaType.Search] = {
       new: this.menuOptions[this.popupService.mediaType].new,
       edit: this.menuOptions[this.popupService.mediaType].edit,
       update: this.menuOptions[this.popupService.mediaType].update,
@@ -365,9 +375,9 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     this.dropdownOptions = [];
 
     if (this.indexOfCurrentMediaList == MediaType.Video) {
-      this.dropdownOptions[0] = this.dropdownList[6];
+      this.dropdownOptions[0] = this.dropdownList[MediaType.Video];
     } else {
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 7; i++) {
         this.dropdownOptions[i] = this.dropdownList[i];
       }
     }
@@ -518,7 +528,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // If the media we're adding is an image
     } else {
 
-      // Clear the media select input (This is so the same filename can be entered again and again)
+      // Clear the media select input (This is so the same filename can be re-entered again and again)
       mediaSelectInput.value = '';
       // Open the file explorer window
       mediaSelectInput.click()
