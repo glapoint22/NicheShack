@@ -14,6 +14,7 @@ import { LinkIconComponent } from './link-icon/link-icon.component';
 import { ImageComponent } from './properties/image/image.component';
 import { ProductContentComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-content/product-content.component';
 import { FormsModule } from '@angular/forms';
+import { ProductMediaComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-media/product-media.component';
 
 
 
@@ -30,7 +31,8 @@ import { FormsModule } from '@angular/forms';
     ColorIconComponent,
     LinkIconComponent,
     ImageComponent,
-    ProductContentComponent
+    ProductContentComponent,
+    ProductMediaComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +51,8 @@ import { FormsModule } from '@angular/forms';
     ColorIconComponent,
     LinkIconComponent,
     ImageComponent,
-    ProductContentComponent
+    ProductContentComponent,
+    ProductMediaComponent
   ]
 })
 export class SharedModule { }

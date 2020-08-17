@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { PopupComponent } from '../popup/popup.component';
 import { MediaItem } from '../../../classes/media-item';
-import { of, fromEvent, Subscription } from 'rxjs';
+import { of, fromEvent, Subscription, Subject } from 'rxjs';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { MediaType, Media } from '../../../classes/media';
 import { MediaItemListComponent } from '../../item-lists/media-item-list/media-item-list.component';
@@ -27,16 +27,7 @@ import { DataService } from 'services/data.service';
   styleUrls: ['../popup/popup.component.scss', './media-browser-popup.component.scss']
 })
 export class MediaBrowserPopupComponent extends PopupComponent implements OnInit {
-  constructor(popupService: PopupService,
-    cover: CoverService,
-    menuService: MenuService,
-    dropdownMenuService: DropdownMenuService,
-    dataService: DataService,
-    private productService: ProductService,
-    private formService: FormService,
-    private promptService: PromptService) {
-    super(popupService, cover, menuService, dropdownMenuService, dataService);
-  }
+  public onMediaChange = new Subject<Media>();
   public media: Media;
   public noMedia: boolean;
   public mediaType = MediaType;
@@ -74,6 +65,24 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   @ViewChild('dropdown', { static: false }) dropdown: DropdownComponent;
   @ViewChild('itemList', { static: false }) itemList: MediaItemListComponent;
   @ViewChild('mediaSelectInput', { static: false }) mediaSelectInput: ElementRef;
+
+
+
+
+
+  constructor(popupService: PopupService,
+    cover: CoverService,
+    menuService: MenuService,
+    dropdownMenuService: DropdownMenuService,
+    dataService: DataService,
+    private productService: ProductService,
+    private formService: FormService,
+    private promptService: PromptService) {
+    super(popupService, cover, menuService, dropdownMenuService, dataService);
+  }
+
+
+
 
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
@@ -377,24 +386,24 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
       // Then fetch the data
       this.dataService.get('api/Media', [{ key: 'type', value: this.indexOfCurrentMediaList }])
-      // this.dataService.get(this.getUrl(this.indexOfCurrentMediaList))
-      .subscribe((mediaItems: MediaItem[]) => {
-        // After loading is complete, hide the spinner
-        this.loadingMediaInProgress = false;
+        // this.dataService.get(this.getUrl(this.indexOfCurrentMediaList))
+        .subscribe((mediaItems: MediaItem[]) => {
+          // After loading is complete, hide the spinner
+          this.loadingMediaInProgress = false;
 
-        // If the data came back empty
-        if (mediaItems.length == 0) {
-          // Display the no media text
-          this.noMedia = true;
+          // If the data came back empty
+          if (mediaItems.length == 0) {
+            // Display the no media text
+            this.noMedia = true;
 
-          // But if data was retrieved
-        } else {
-          // Display the media list
-          this.mediaLists[this.indexOfCurrentMediaList] = mediaItems;
-          // Select the appropriate media item in the list
-          this.autoSelectMediaItem();
-        }
-      })
+            // But if data was retrieved
+          } else {
+            // Display the media list
+            this.mediaLists[this.indexOfCurrentMediaList] = mediaItems;
+            // Select the appropriate media item in the list
+            this.autoSelectMediaItem();
+          }
+        })
 
       // If the list has already been loaded from the database
     } else {
@@ -458,16 +467,15 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // If the media item being passed in is still in the list
     } else {
 
-      // Update the media properties with the properties of the selected media item
-      this.media.id = mediaItem.id;
-      this.media.url = mediaItem.url;
-      this.media.type = mediaItem.type;
-      this.media.thumbnail = mediaItem.thumbnail;
-      this.media.name = mediaItem.name;
+      if (this.media.id != mediaItem.id) {
+        // Update the media properties with the properties of the selected media item
+        this.media.id = mediaItem.id;
+        this.media.url = mediaItem.url;
+        this.media.type = mediaItem.type;
+        this.media.thumbnail = mediaItem.thumbnail;
+        this.media.name = mediaItem.name;
 
-      // If the media item that is selected is either a video or a product image
-      if (mediaItem.type == MediaType.Video || mediaItem.type == MediaType.ProductMediaImage) {
-        this.productService.setCurrentSelectedMedia(this.media);
+        this.onMediaChange.next(this.media);
       }
     }
   }

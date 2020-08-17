@@ -98,10 +98,13 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
     if (!productId) productId = this.notificationService.generalNotification.productId;
 
     // Open the product
-    this.productService.openProduct(productId)
-      .subscribe((product: Product) => {
-        this.product = product;
-      });
+    if (!this.productService.product || this.productService.product.id != productId) {
+      this.productService.openProduct(productId)
+        .subscribe((product: Product) => {
+          this.product = product;
+        });
+    }
+
 
     // Hide the cover
     this.cover.showNormalCover = false;
