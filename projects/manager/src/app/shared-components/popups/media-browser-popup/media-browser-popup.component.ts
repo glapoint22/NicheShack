@@ -299,10 +299,9 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     mediaItem.loading = true;
     this.dataService.put(
 
-      this.getUrl(this.popupService.mediaType), mediaItem)
-      .subscribe((id: number) => {
+      'api/Media/Name', mediaItem)
+      .subscribe(() => {
         mediaItem.loading = false;
-        mediaItem.id = id;
       });
   }
 
@@ -545,9 +544,14 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // Create an empty item at the begining of the list where the new media will be placed
       this.mediaLists[this.indexOfCurrentMediaList].unshift(new MediaItem(this.indexOfCurrentMediaList));
 
+      let formData = new FormData()
+      formData.append('image', event.target.files[0]);
+      formData.append('type', this.indexOfCurrentMediaList.toString());
+
 
       // Populate the database with the new media
-      this.dataService.post(this.getUrl(this.popupService.mediaType), event.target.files[0]).subscribe((media: any) => {
+      this.dataService.post('api/Media/NewImage', formData)
+      .subscribe((media: Media) => {
         // Update the empty item with the new media data
         this.itemList.listItems[0].id = media.id;
         this.itemList.listItems[0].url = media.url;
