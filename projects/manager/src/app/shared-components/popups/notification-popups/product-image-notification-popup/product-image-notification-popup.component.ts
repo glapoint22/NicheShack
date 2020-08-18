@@ -4,6 +4,7 @@ import { NotificationListItem } from 'projects/manager/src/app/classes/notificat
 import { ProductImageNotification } from 'projects/manager/src/app/classes/product-image-notification';
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 import { Notification } from 'projects/manager/src/app/classes/notification';
+import { NotificationText } from 'projects/manager/src/app/classes/notification-text';
 
 @Component({
   selector: 'product-image-notification-popup',
@@ -18,13 +19,6 @@ export class ProductImageNotificationPopupComponent extends GeneralNotificationP
   }
 
 
-
-  // -----------------------------(ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
-
-  }
-
-
 // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
   onPaginatorClick(index: number) {
     this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
@@ -32,7 +26,6 @@ export class ProductImageNotificationPopupComponent extends GeneralNotificationP
         this.notificationService.productImageNotification = notification;
       });
   }
-
 
 
   // -----------------------------( VIEW VENDOR INFO )------------------------------ \\
@@ -50,5 +43,12 @@ export class ProductImageNotificationPopupComponent extends GeneralNotificationP
   // --------------------------------( GO TO VENDOR PRODUCT PAGE )-------------------------------- \\
   goToVendorProductPage() {
     super.goToVendorProductPage(this.notificationService.productImageNotification.hoplink);
+  }
+
+
+  // -----------------------------(ON SUBMIT )------------------------------ \\
+  onSubmit(notification: Notification, htmlNotes: HTMLElement, notes: NotificationText) {
+    super.onSubmit(notification, htmlNotes, notes);
+
   }
 }

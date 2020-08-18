@@ -4,6 +4,7 @@ import { NotificationListItem } from 'projects/manager/src/app/classes/notificat
 import { ReviewComplaintNotification } from 'projects/manager/src/app/classes/review-complaint-notification';
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 import { Notification } from 'projects/manager/src/app/classes/notification';
+import { NotificationText } from 'projects/manager/src/app/classes/notification-text';
 
 @Component({
   selector: 'review-complaint-notification-popup',
@@ -27,8 +28,9 @@ export class ReviewComplaintNotificationPopupComponent extends GeneralNotificati
   }
 
 
-  // -----------------------------(ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
+  // -----------------------------( ON SUBMIT )------------------------------ \\
+  onSubmit(notification: Notification, htmlNotes: HTMLElement, notes: NotificationText) {
+    super.onSubmit(notification, htmlNotes, notes);
 
   }
 }

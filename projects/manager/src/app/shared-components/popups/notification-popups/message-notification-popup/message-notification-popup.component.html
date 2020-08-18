@@ -64,12 +64,11 @@
 
             </div>
 
-            <!-- Employee Text -->
-            <div class="user-text">
+            <!-- Notes -->
+            <div #htmlNotes contenteditable="true" class="notes-text">
                 <ng-container *ngIf="notificationService.messageNotification.notes">
                     {{notificationService.messageNotification.notes.text}}
                 </ng-container>
-
             </div>
         </div>
     </div>
@@ -80,6 +79,6 @@
         <!-- Buttons -->
         <button (click)="onClose(notificationService.messageNotification)">Close</button>
         <button *ngIf="notificationService.selectedNotificationsTab != notificationTab.ArchiveNotifications"
-            (click)="onRightButtonClick(notificationService.messageNotification)">Submit</button>
+            (click)="onSubmit(notificationService.messageNotification, htmlNotes, notificationService.messageNotification.notes)">Submit</button>
     </div>
 </div>

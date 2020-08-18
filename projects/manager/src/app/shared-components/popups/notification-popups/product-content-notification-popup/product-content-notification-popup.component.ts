@@ -10,11 +10,13 @@ import { FormService } from 'projects/manager/src/app/services/form.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { DataService } from 'services/data.service';
 import { ProductContentNotification } from 'projects/manager/src/app/classes/product-content-notification';
+import { Notification } from 'projects/manager/src/app/classes/notification';
+import { NotificationText } from 'projects/manager/src/app/classes/notification-text';
 
 @Component({
   selector: 'product-content-notification-popup',
   templateUrl: './product-content-notification-popup.component.html',
-  styleUrls: ['../../popup/popup.component.scss', '../message-notification-popup/message-notification-popup.component.scss', './product-content-notification-popup.component.scss']
+  styleUrls: ['../../popup/popup.component.scss', '../message-notification-popup/message-notification-popup.component.scss']
 })
 export class ProductContentNotificationPopupComponent extends GeneralNotificationPopupComponent {
 
@@ -85,9 +87,14 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   }
 
 
-
   // --------------------------------( GO TO PRODUCT PAGE )-------------------------------- \\
   goToProductPage() {
     super.goToProductPage(this.notificationService.productContentNotification.productId);
+  }
+
+
+  // -----------------------------(ON SUBMIT )------------------------------ \\
+  onSubmit(notification: Notification, htmlNotes: HTMLElement, notes: NotificationText) {
+    super.onSubmit(notification, htmlNotes, notes);
   }
 }

@@ -101,8 +101,8 @@
                 </ng-container>
             </div>
 
-            <!-- Employee Text -->
-            <div class="user-text">
+            <!-- Notes -->
+            <div #htmlNotes contenteditable="true" class="notes-text">
                 <ng-container *ngIf="notificationService.productDescriptionNotification.notes">
                     {{notificationService.productDescriptionNotification.notes.text}}
                 </ng-container>
@@ -117,6 +117,6 @@
 
         <!-- Buttons -->
         <button (click)="onDismissButtonClick(notificationService.productDescriptionNotification)">Dismiss</button>
-        <button (click)="onRightButtonClick(notificationService.productDescriptionNotification)">Publish</button>
+        <button (click)="onSubmit(notificationService.productDescriptionNotification, htmlNotes, notificationService.productDescriptionNotification.notes)">Publish</button>
     </div>
 </div>

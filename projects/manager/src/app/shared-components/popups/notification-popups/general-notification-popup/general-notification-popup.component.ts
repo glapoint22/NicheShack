@@ -18,6 +18,7 @@ import { GeneralNotification } from 'projects/manager/src/app/classes/general-no
 import { Product } from 'projects/manager/src/app/classes/product';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { Notification } from 'projects/manager/src/app/classes/notification';
+import { NotificationText } from 'projects/manager/src/app/classes/notification-text';
 
 @Component({
   selector: 'general-notification-popup',
@@ -149,37 +150,39 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
 
 
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
-    // switch (notification.name) {
+  onSubmit(notification: Notification, htmlNotes: HTMLElement, notes: NotificationText) {
+    super.onSubmit(notification, htmlNotes, notes);
 
-    //   case NotificationType.ProductNameOther: {
+    switch (notification.type) {
 
-    //     break;
-    //   }
-    //   case NotificationType.ProductReportedAsIllegal: {
+      case NotificationType.ProductNameOther: {
 
-    //     break;
-    //   }
-    //   case NotificationType.ProductReportedAsHavingAdultContent: {
+        break;
+      }
+      case NotificationType.ProductReportedAsIllegal: {
 
-    //     break;
-    //   }
-    //   case NotificationType.OffensiveProductOther: {
+        break;
+      }
+      case NotificationType.ProductReportedAsHavingAdultContent: {
 
-    //     break;
-    //   }
-    //   case NotificationType.ProductInactive: {
+        break;
+      }
+      case NotificationType.OffensiveProductOther: {
 
-    //     break;
-    //   }
-    //   case NotificationType.ProductSiteNoLongerInService: {
+        break;
+      }
+      case NotificationType.ProductInactive: {
 
-    //     break;
-    //   }
-    //   case NotificationType.MissingProductOther: {
+        break;
+      }
+      case NotificationType.ProductSiteNoLongerInService: {
 
-    //     break;
-    //   }
-    // }
+        break;
+      }
+      case NotificationType.MissingProductOther: {
+
+        break;
+      }
+    }
   }
 }

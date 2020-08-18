@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { GeneralNotificationPopupComponent } from '../general-notification-popup/general-notification-popup.component';
-import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 import { ProductDescriptionNotification } from 'projects/manager/src/app/classes/product-description-notification';
-import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 import { Notification } from 'projects/manager/src/app/classes/notification';
+import { NotificationType } from 'projects/manager/src/app/classes/notification-type';
+import { NotificationText } from 'projects/manager/src/app/classes/notification-text';
 
 @Component({
   selector: 'product-description-notification-popup',
   templateUrl: './product-description-notification-popup.component.html',
-  styleUrls: ['../../popup/popup.component.scss', '../message-notification-popup/message-notification-popup.component.scss', './product-description-notification-popup.component.scss']
+  styleUrls: ['../../popup/popup.component.scss', '../message-notification-popup/message-notification-popup.component.scss']
 })
 export class ProductDescriptionNotificationPopupComponent extends GeneralNotificationPopupComponent {
 
@@ -24,34 +24,6 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
       .subscribe((notification: ProductDescriptionNotification) => {
         this.notificationService.productDescriptionNotification = notification;
       });
-  }
-
-
-  // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
-    // switch (notification.name) {
-
-    //   case NotificationType.ProductNameDoesNotMatchWithProductDescription: {
-        
-    //     break;
-    //   }
-    //   case NotificationType.ProductDescriptionIncorrect: {
-        
-    //     break;
-    //   }
-    //   case NotificationType.ProductDescriptionTooVague: {
-        
-    //     break;
-    //   }
-    //   case NotificationType.ProductDescriptionMisleading: {
-        
-    //     break;
-    //   }
-    //   case NotificationType.ProductDescriptionOther: {
-        
-    //     break;
-    //   }
-    // }
   }
 
 
@@ -72,4 +44,32 @@ export class ProductDescriptionNotificationPopupComponent extends GeneralNotific
     super.goToVendorProductPage(this.notificationService.productDescriptionNotification.hoplink);
   }
 
+
+  // -----------------------------( ON SUBMIT )------------------------------ \\
+  onSubmit(notification: Notification, htmlNotes: HTMLElement, notes: NotificationText) {
+    super.onSubmit(notification, htmlNotes, notes);
+
+    switch (notification.type) {
+      case NotificationType.ProductNameDoesNotMatchWithProductDescription: {
+        
+        break;
+      }
+      case NotificationType.ProductDescriptionIncorrect: {
+        
+        break;
+      }
+      case NotificationType.ProductDescriptionTooVague: {
+        
+        break;
+      }
+      case NotificationType.ProductDescriptionMisleading: {
+        
+        break;
+      }
+      case NotificationType.ProductDescriptionOther: {
+        
+        break;
+      }
+    }
+  }
 }
