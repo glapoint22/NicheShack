@@ -67,6 +67,7 @@ export class CategoriesComponent implements Searchable, OnInit {
   // -----------------------------( OPEN DELETE PROMPT )------------------------------ \\
   openDeletePrompt() {
     // Prompt the user
+    this.itemList.itemDeletionPending = true;
     let promptTitle = !this.itemList.isMultiSelected ? 'Delete Category' : 'Delete Categories';
     let promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected category?' : 'Are you sure you want to delete all the selected categories?';
     this.promptService.showPrompt(promptTitle, promptMessage, this.deleteCategory, this, null, this.onPromptCancel);
@@ -86,9 +87,7 @@ export class CategoriesComponent implements Searchable, OnInit {
     // Add the item to the list
     this.categoriesWidget.categories.unshift(searchItem);
     // Select the new list item
-    this.itemList.selectedListItemIndex = 0;
-    // Set the new list item
-    this.itemList.setNewListItem(this.itemList.selectedListItemIndex)
+    this.itemList.setListItemSelection(0)
     // Save the new item to the database
     this.onChange.emit();
   }

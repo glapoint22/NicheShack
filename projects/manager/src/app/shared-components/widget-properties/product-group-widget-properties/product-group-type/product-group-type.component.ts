@@ -88,6 +88,7 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
   // -----------------------------( OPEN DELETE PROMPT )------------------------------ \\
   openDeletePrompt() {
     // Prompt the user
+    this.itemList.itemDeletionPending = true;
     let promptTitle = !this.itemList.isMultiSelected ? 'Delete Featured Product' : 'Delete Featured Products';
     let promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected featured product?' : 'Are you sure you want to delete all the selected featured products?';
     this.promptService.showPrompt(promptTitle, promptMessage, this.deleteFeaturedProduct, this, null, this.onPromptCancel);
@@ -107,9 +108,7 @@ export class ProductGroupTypeComponent implements OnInit, Searchable {
     // Add the item to the list
     this.productGroupWidget.featuredProducts.unshift(searchItem);
     // Select the new list item
-    this.itemList.selectedListItemIndex = 0;
-    // Set the new list item
-    this.itemList.setNewListItem(this.itemList.selectedListItemIndex)
+    this.itemList.setListItemSelection(0)
     // Save the new item to the database
     this.onChange.emit();
   }

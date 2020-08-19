@@ -208,7 +208,14 @@ export class EditableItemListComponent extends ItemListComponent {
     this.listItems.unshift({ id: null, name: "", selected: false, selectType: null });
 
     // Set the new list item
-    this.setNewListItem(this.indexOfEditedListItem)
+    for (let i = 0; i < this.listItems.length; i++) {
+      this.listItems[i].selected = false;
+      this.listItems[i].selectType = null;
+    }
+
+    window.setTimeout(() => {
+      this.setListItemFocus(this.indexOfEditedListItem);
+    });
   }
 
 

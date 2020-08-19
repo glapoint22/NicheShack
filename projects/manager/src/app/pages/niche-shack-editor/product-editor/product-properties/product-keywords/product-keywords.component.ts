@@ -76,6 +76,7 @@ export class ProductKeywordsComponent {
   // -----------------------------( OPEN DELETE PROMPT )------------------------------ \\
   openDeletePrompt() {
     // Prompt the user
+    this.itemList.itemDeletionPending = true;
     let promptTitle = !this.itemList.isMultiSelected ? 'Delete Keyword' : 'Delete Keywords';
     let promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected keyword?' : 'Are you sure you want to delete all the selected keywords?';
     this.promptService.showPrompt(promptTitle, promptMessage, this.deleteKeyword, this, null, this.onPromptCancel);

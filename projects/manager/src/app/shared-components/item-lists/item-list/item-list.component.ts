@@ -442,19 +442,6 @@ export class ItemListComponent implements OnInit {
   }
 
 
-  // -----------------------------( SET NEW LIST ITEM )------------------------------ \\
-  setNewListItem(listItemIndex: number) {
-    for (let i = 0; i < this.listItems.length; i++) {
-      this.listItems[i].selected = false;
-      this.listItems[i].selectType = null;
-    }
-
-    window.setTimeout(() => {
-      this.setListItemFocus(listItemIndex);
-    });
-  }
-
-
   // -----------------------------( On LIST ITEM EDIT )------------------------------ \\
   onListItemEdit() {
     if (!this.editIcon.isDisabled) {

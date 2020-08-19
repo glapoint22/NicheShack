@@ -232,6 +232,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   // -----------------------------( OPEN DELETE PROMPT )------------------------------ \\
   openDeletePrompt() {
     // Prompt the user
+    this.itemList.itemDeletionPending = true;
     let promptTitle = !this.itemList.isMultiSelected ? 'Delete Price Point' : 'Delete Price Points';
     let promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected price point?' : 'Are you sure you want to delete all the selected price points?';
     this.promptService.showPrompt(promptTitle, promptMessage, this.deletePricePoint, this, null, this.onPromptCancel);
@@ -249,9 +250,12 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
       decimal: 0
     }
 
-    this.dataService.get('api/Products/PricePoint', [{ key: 'productId', value: this.product.id }])
+    this.dataService.post('api/Products/PricePoint', {
+      itemId: this.product.id
+    })
       .subscribe((id: number) => {
         pricePoint.id = id;
+        this.pricePointList[this.pricePointList.length-1].id = id;
       });
 
     // Push the new price point
@@ -262,14 +266,12 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     this.pricePointList.push({
-      id: pricePoint.id,
+      id: null,
       name: ''
     });
 
     // Select the new list item
-    this.itemList.selectedListItemIndex = this.product.pricePoints.length - 1;
-    // Set the new list item
-    this.itemList.setNewListItem(this.itemList.selectedListItemIndex);
+    this.itemList.setListItemSelection(this.product.pricePoints.length - 1);
 
     // Set the reference to this new price point
     this.popupService.pricePointPopup.pricePoint = pricePoint;
@@ -299,6 +301,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
 
   // -----------------------------( ADD PRICE POINT )------------------------------ \\
   addPricePoint(sourceElement: HTMLElement) {
+    this.itemList.deleteIcon.isDisabled = false;
     this.setNewPricePoint();
     this.popupService.bottomBuffer = 20;
     this.showPricePointPopup(sourceElement);
