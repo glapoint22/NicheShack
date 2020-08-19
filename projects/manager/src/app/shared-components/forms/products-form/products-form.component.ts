@@ -48,7 +48,8 @@ export class ProductsFormComponent extends FormComponent implements OnInit {
           })
         ]
       },
-      multiSelect: false
+      multiSelect: false,
+      doubleClick: false
     }
   }
 }

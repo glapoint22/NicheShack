@@ -403,9 +403,12 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( ON LIST ITEM DOUBLE CLICK )------------------------------ \\
   onListItemDoubleClick() {
-    // As long as the shift key and the ctrl key is not being pressed
-    if (!this.shiftDown && !this.ctrlDown) {
-      this.onListItemEdit();
+
+    if (this.listOptions.doubleClick == null || this.listOptions.doubleClick) {
+      // As long as the shift key and the ctrl key is not being pressed
+      if (!this.shiftDown && !this.ctrlDown) {
+        this.onListItemEdit();
+      }
     }
   }
 
