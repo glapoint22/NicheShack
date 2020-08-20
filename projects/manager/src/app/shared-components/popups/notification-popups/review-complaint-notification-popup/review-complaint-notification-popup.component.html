@@ -92,8 +92,8 @@
                 </ng-container>
             </div>
 
-            <!-- Employee Text -->
-            <div class="user-text">
+            <!-- Notes -->
+            <div #htmlNotes contenteditable="true" class="notes-text">
                 <ng-container *ngIf="notificationService.reviewComplaintNotification.notes">
                     {{notificationService.reviewComplaintNotification.notes.text}}
                 </ng-container>
@@ -108,6 +108,6 @@
 
         <!-- Buttons -->
         <button (click)="onDismissButtonClick(notificationService.reviewComplaintNotification)">Dismiss</button>
-        <button (click)="onRightButtonClick(notificationService.reviewComplaintNotification)">Remove Review</button>
+        <button (click)="onSubmit(notificationService.reviewComplaintNotification, htmlNotes, notificationService.reviewComplaintNotification.notes)">Remove Review</button>
     </div>
 </div>

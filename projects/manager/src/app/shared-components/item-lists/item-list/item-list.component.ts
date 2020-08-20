@@ -403,9 +403,12 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( ON LIST ITEM DOUBLE CLICK )------------------------------ \\
   onListItemDoubleClick() {
-    // As long as the shift key and the ctrl key is not being pressed
-    if (!this.shiftDown && !this.ctrlDown) {
-      this.onListItemEdit();
+
+    if (this.listOptions.doubleClick == null || this.listOptions.doubleClick) {
+      // As long as the shift key and the ctrl key is not being pressed
+      if (!this.shiftDown && !this.ctrlDown) {
+        this.onListItemEdit();
+      }
     }
   }
 
@@ -436,19 +439,6 @@ export class ItemListComponent implements OnInit {
   // -----------------------------( ADD LIST ITEM )------------------------------ \\
   addListItem() {
     this.listOptions.onAddItem.apply(this.listOptions.currentObj, [this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement]);
-  }
-
-
-  // -----------------------------( SET NEW LIST ITEM )------------------------------ \\
-  setNewListItem(listItemIndex: number) {
-    for (let i = 0; i < this.listItems.length; i++) {
-      this.listItems[i].selected = false;
-      this.listItems[i].selectType = null;
-    }
-
-    window.setTimeout(() => {
-      this.setListItemFocus(listItemIndex);
-    });
   }
 
 

@@ -6,4 +6,5 @@ export interface ItemListOptions {
     onAddItem?: Function;
     onEditItem?: Function;
     onDeleteItem?: Function;
+    doubleClick?: boolean;
 }

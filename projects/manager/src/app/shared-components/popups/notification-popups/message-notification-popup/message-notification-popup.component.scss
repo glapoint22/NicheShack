@@ -118,6 +118,11 @@
     font-size: 12px;
 }
 
+.notes-text {
+    @extend .user-text;
+    outline: none;
+}
+
 .button-container {
     display: flex;
     justify-content: center;

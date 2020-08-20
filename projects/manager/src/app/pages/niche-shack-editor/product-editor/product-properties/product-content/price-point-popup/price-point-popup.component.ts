@@ -42,6 +42,12 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
     super.onPopupShow(popup, arrow);
     this.bottomBuffer = this.popupService.bottomBuffer;
     window.addEventListener('keydown', this.onKeydown);
+
+    window.setTimeout(() => {
+      let txtInput = this.txtInput.toArray();
+      txtInput[0].nativeElement.focus();
+    },100)
+
   }
 
 

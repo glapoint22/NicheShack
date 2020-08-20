@@ -11,6 +11,7 @@ import { NotificationTab } from 'projects/manager/src/app/classes/notification-t
 import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 import { Notification } from 'projects/manager/src/app/classes/notification';
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
+import { NotificationText } from 'projects/manager/src/app/classes/notification-text';
 
 @Component({
   selector: 'message-notification-popup',
@@ -42,31 +43,18 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
-    this.setPopup();
+    this.paginatorIndex = 0;
 
     window.setTimeout(() => {
       this.cover.showNormalCover = true;
-      this.setPage();
     })
   }
 
 
-
-  // --------------------------------( SET PAGE )-------------------------------- \\
-  setPage() {
-    // this.paginator.setPage(this.notificationService.messageNotification.customerText.length);
-  }
-
-
-  // --------------------------------( SET POPUP )-------------------------------- \\
-  setPopup() {
-    // this.paginatorIndex = this.notificationService.messageNotification.customerText.length - 1;
-  }
-
-
-
   // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
   onPaginatorClick(index: number) {
+    this.paginatorIndex = index;
+
     this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
       .subscribe((notification: Notification) => {
         this.notificationService.messageNotification = notification;
@@ -151,15 +139,32 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
   }
 
 
-  // -----------------------------( ON RIGHT BUTTON CLICK )------------------------------ \\
-  onRightButtonClick(notification: Notification) {
-    this.archiveNotification(notification);
-    this.onSubmit(notification);
-  }
-
-
   // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
+  onSubmit(notification: Notification, htmlNotes: HTMLElement, notes: NotificationText) {
+    let notesText = htmlNotes.textContent.trim();
 
+    // If a record in the database for notes has NOT yet been created
+    if (notes == null) {
+      // As long as some notes have actually been written in the text area
+      if (notesText.length > 0) {
+        // Create a new record in the database with the new notes written in the text area
+        this.dataService.post('api/Notifications/NewNote', {
+          notificationId: this.notificationService.notificationIds[this.paginatorIndex],
+          notificationNote: htmlNotes.textContent
+        }).subscribe();
+      }
+
+      // If a record in the database for notes has already been created
+    } else {
+
+      // Update the record in the database with the updated notes
+      this.dataService.put('api/Notifications/UpdateNote', {
+        notificationId: this.notificationService.notificationIds[this.paginatorIndex],
+        notificationNote: htmlNotes.textContent
+      }).subscribe();
+    }
+
+    // Send the notification to archive
+    this.archiveNotification(notification);
   }
 }

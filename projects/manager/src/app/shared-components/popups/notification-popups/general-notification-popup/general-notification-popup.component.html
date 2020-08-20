@@ -87,8 +87,8 @@
                 </ng-container>
             </div>
 
-            <!-- Employee Text -->
-            <div class="user-text">
+            <!-- Notes -->
+            <div #htmlNotes contenteditable="true" class="notes-text">
                 <ng-container *ngIf="notificationService.generalNotification.notes">
                     {{notificationService.generalNotification.notes.text}}
                 </ng-container>
@@ -105,7 +105,7 @@
 
         
         <button (click)="onDismissButtonClick(notificationService.generalNotification)">Dismiss</button>
-        <button (click)="onRightButtonClick(notificationService.generalNotification)">
+        <button (click)="onSubmit(notificationService.generalNotification, htmlNotes, notificationService.generalNotification.notes)">
             {{notificationService.generalNotification.type == notificationType.ProductReportedAsIllegal || notificationService.generalNotification.type == notificationType.ProductReportedAsHavingAdultContent ? 'Remove Product' : 'Publish'}}
         </button>
     </div>

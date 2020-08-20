@@ -9,14 +9,15 @@ import { DataService } from 'services/data.service';
 import { NotificationService } from 'projects/manager/src/app/services/notification.service';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { FormService } from 'projects/manager/src/app/services/form.service';
-import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { Notification } from 'projects/manager/src/app/classes/notification';
+import { NotificationType } from 'projects/manager/src/app/classes/notification-type';
+import { NotificationText } from 'projects/manager/src/app/classes/notification-text';
 
 @Component({
   selector: 'product-media-notification-popup',
   templateUrl: './product-media-notification-popup.component.html',
-  styleUrls: ['../../popup/popup.component.scss', '../message-notification-popup/message-notification-popup.component.scss', './product-media-notification-popup.component.scss']
+  styleUrls: ['../../popup/popup.component.scss', '../message-notification-popup/message-notification-popup.component.scss']
 })
 export class ProductMediaNotificationPopupComponent extends GeneralNotificationPopupComponent {
 
@@ -81,38 +82,6 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
   }
 
 
-
-
-  
-  // -----------------------------( ON SUBMIT )------------------------------ \\
-  onSubmit(notification: Notification) {
-    // switch (notification.name) {
-
-    //   case NotificationType.VideosAndImagesAreDifferentFromProduct: {
-        
-    //     break;
-    //   }
-    //   case NotificationType.NotEnoughVideosAndImages: {
-        
-    //     break;
-    //   }
-    //   case NotificationType.VideosAndImagesNotClear: {
-        
-    //     break;
-    //   }
-    //   case NotificationType.VideosAndImagesMisleading: {
-        
-    //     break;
-    //   }
-    //   case NotificationType.VideosAndImagesOther: {
-        
-    //     break;
-    //   }
-    // }
-  }
-
-
-
   // -----------------------------( VIEW VENDOR INFO )------------------------------ \\
   viewVendorInfo() {
     super.viewVendorInfo(this.notificationService.productMediaNotification.vendorId);
@@ -128,5 +97,34 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
   // --------------------------------( GO TO VENDOR PRODUCT PAGE )-------------------------------- \\
   goToVendorProductPage() {
     super.goToVendorProductPage(this.notificationService.productMediaNotification.hoplink);
+  }
+
+
+  // -----------------------------( ON SUBMIT )------------------------------ \\
+  onSubmit(notification: Notification, htmlNotes: HTMLElement, notes: NotificationText) {
+    super.onSubmit(notification, htmlNotes, notes);
+
+    switch (notification.type) {
+      case NotificationType.VideosAndImagesAreDifferentFromProduct: {
+        
+        break;
+      }
+      case NotificationType.NotEnoughVideosAndImages: {
+        
+        break;
+      }
+      case NotificationType.VideosAndImagesNotClear: {
+        
+        break;
+      }
+      case NotificationType.VideosAndImagesMisleading: {
+        
+        break;
+      }
+      case NotificationType.VideosAndImagesOther: {
+        
+        break;
+      }
+    }
   }
 }

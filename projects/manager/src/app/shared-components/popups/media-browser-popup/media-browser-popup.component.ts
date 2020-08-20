@@ -247,6 +247,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   openDeletePrompt() {
     let promptTitle: string;
     let promptMessage: string;
+    this.itemList.itemDeletionPending = true;
 
     // Set delete prompt title and message
     switch (this.popupService.mediaType) {
