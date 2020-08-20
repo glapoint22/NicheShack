@@ -46,13 +46,16 @@ export class ProductMediaComponent implements OnInit, OnChanges {
       } else {
 
         // Update the media
-        this.saveService.save({
-          url: 'api/Products/Media',
-          data: {
-            itemId: this.product.selectedMedia.itemId,
-            propertyId: media.id
-          }
-        });
+        if (this.currentMediaId != media.id) {
+          this.saveService.save({
+            url: 'api/Products/Media',
+            data: {
+              itemId: this.product.selectedMedia.itemId,
+              propertyId: media.id
+            }
+          });
+        }
+
       }
 
       this.currentMediaId = media.id;

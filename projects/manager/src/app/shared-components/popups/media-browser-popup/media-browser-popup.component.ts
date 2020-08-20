@@ -9,14 +9,12 @@ import { DropdownComponent } from '../../elements/dropdowns/dropdown/dropdown.co
 import { PopupService } from '../../../services/popup.service';
 import { CoverService } from '../../../services/cover.service';
 import { MenuService } from '../../../services/menu.service';
-import { ProductService } from '../../../services/product.service';
 import { DropdownMenuService } from '../../../services/dropdown-menu.service';
 import { KeyValue } from '@angular/common';
 import { FormService } from '../../../services/form.service';
 import { ItemListOptions } from '../../../classes/item-list-options';
 import { MenuOption } from '../../../classes/menu-option';
 import { PromptService } from '../../../services/prompt.service';
-import { ListItem } from '../../../classes/list-item';
 import { MenuDivider } from '../../../classes/menu-divider';
 import { SubMenuOption } from '../../../classes/sub-menu-option';
 import { DataService } from 'services/data.service';
@@ -77,7 +75,6 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     menuService: MenuService,
     dropdownMenuService: DropdownMenuService,
     dataService: DataService,
-    private productService: ProductService,
     private formService: FormService,
     private promptService: PromptService) {
     super(popupService, cover, menuService, dropdownMenuService, dataService);
@@ -158,54 +155,54 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
   // --------------------------------( MOVE TO )-------------------------------- \\
-  moveTo() {
-    let options: Array<MenuOption> = [
-      new MenuOption('Images', false, this.onMoveMedia, [MediaType.Image]),
-      new MenuOption('Background Images', false, this.onMoveMedia, [MediaType.BackgroundImage]),
-      new MenuOption('Banner Images', false, this.onMoveMedia, [MediaType.BannerImage]),
-      new MenuOption('Category Images', false, this.onMoveMedia, [MediaType.CategoryImage]),
-      new MenuOption('Product Images', false, this.onMoveMedia, [MediaType.ProductImage]),
-      new MenuOption('Product Media Images', false, this.onMoveMedia, [MediaType.ProductMediaImage]),
-      new MenuOption('Icons', false, this.onMoveMedia, [MediaType.Icon])
-    ];
+  // moveTo() {
+  //   let options: Array<MenuOption> = [
+  //     new MenuOption('Images', false, this.onMoveMedia, [MediaType.Image]),
+  //     new MenuOption('Background Images', false, this.onMoveMedia, [MediaType.BackgroundImage]),
+  //     new MenuOption('Banner Images', false, this.onMoveMedia, [MediaType.BannerImage]),
+  //     new MenuOption('Category Images', false, this.onMoveMedia, [MediaType.CategoryImage]),
+  //     new MenuOption('Product Images', false, this.onMoveMedia, [MediaType.ProductImage]),
+  //     new MenuOption('Product Media Images', false, this.onMoveMedia, [MediaType.ProductMediaImage]),
+  //     new MenuOption('Icons', false, this.onMoveMedia, [MediaType.Icon])
+  //   ];
 
-    let subMenus: Array<SubMenuOption> = [
-      new SubMenuOption('Move Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Background Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Banner Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Category Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Product Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Product Media Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
-      new SubMenuOption('Move Icon' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage]])
-    ];
+  //   let subMenus: Array<SubMenuOption> = [
+  //     new SubMenuOption('Move Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
+  //     new SubMenuOption('Move Background Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
+  //     new SubMenuOption('Move Banner Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
+  //     new SubMenuOption('Move Category Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
+  //     new SubMenuOption('Move Product Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductMediaImage], options[MediaType.Icon]]),
+  //     new SubMenuOption('Move Product Media Image' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.Icon]]),
+  //     new SubMenuOption('Move Icon' + (!this.itemList.isMultiSelected ? '' : 's') + ' To', this.itemList.selectedListItemIndex == null ? true : false, [options[MediaType.Image], options[MediaType.BackgroundImage], options[MediaType.BannerImage], options[MediaType.CategoryImage], options[MediaType.ProductImage], options[MediaType.ProductMediaImage]])
+  //   ];
 
-    switch (this.popupService.mediaType) {
-      case MediaType.Image: {
-        return subMenus[MediaType.Image];
-      }
-      case MediaType.BackgroundImage: {
-        return subMenus[MediaType.BackgroundImage];
-      }
-      case MediaType.BannerImage: {
-        return subMenus[MediaType.BannerImage];
-      }
-      case MediaType.CategoryImage: {
-        return subMenus[MediaType.CategoryImage];
-      }
-      case MediaType.ProductImage: {
-        return subMenus[MediaType.ProductImage];
-      }
-      case MediaType.ProductMediaImage: {
-        return subMenus[MediaType.ProductMediaImage];
-      }
-      case MediaType.Icon: {
-        return subMenus[MediaType.Icon];
-      }
-      case MediaType.Search: {
-        return subMenus[this.popupService.mediaType];
-      }
-    }
-  }
+  //   switch (this.popupService.mediaType) {
+  //     case MediaType.Image: {
+  //       return subMenus[MediaType.Image];
+  //     }
+  //     case MediaType.BackgroundImage: {
+  //       return subMenus[MediaType.BackgroundImage];
+  //     }
+  //     case MediaType.BannerImage: {
+  //       return subMenus[MediaType.BannerImage];
+  //     }
+  //     case MediaType.CategoryImage: {
+  //       return subMenus[MediaType.CategoryImage];
+  //     }
+  //     case MediaType.ProductImage: {
+  //       return subMenus[MediaType.ProductImage];
+  //     }
+  //     case MediaType.ProductMediaImage: {
+  //       return subMenus[MediaType.ProductMediaImage];
+  //     }
+  //     case MediaType.Icon: {
+  //       return subMenus[MediaType.Icon];
+  //     }
+  //     case MediaType.Search: {
+  //       return subMenus[this.popupService.mediaType];
+  //     }
+  //   }
+  // }
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
@@ -638,50 +635,49 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       this.media.thumbnail = media.thumbnail;
       this.itemList.listItems[this.updatingMediaIndex].url = media.url;
       this.itemList.listItems[this.updatingMediaIndex].thumbnail = media.thumbnail;
-      this.onMediaSelect(this.itemList.listItems[this.updatingMediaIndex]);
+      this.onMediaChange.next(this.media);
       this.updatingMediaInProgress = false;
-      this.productService.setCurrentSelectedMedia(this.media);
     })
   }
 
 
   // -----------------------------( ON MOVE MEDIA )------------------------------ \\
-  onMoveMedia(destinationMedia: MediaType) {
-    // Let it be known that the moving of media is in progress
-    this.movingMediaInProgress = true;
+  // onMoveMedia(destinationMedia: MediaType) {
+  //   // Let it be known that the moving of media is in progress
+  //   this.movingMediaInProgress = true;
 
-    let moveMediaItems: Array<MediaItem> = [];
-
-
-    // Prepend the media item to its new list if it is selected
-    for (let i = 0; i < this.itemList.listItems.length; i++) {
-      if (this.itemList.listItems[i].selected) moveMediaItems.push(this.itemList.listItems[i]);
-    }
+  //   let moveMediaItems: Array<MediaItem> = [];
 
 
-    // Update the database to reflect the move
-    this.dataService.put('api/Media/Video/Move', {
-      ids: moveMediaItems.map(x => x.id),
-      destination: destinationMedia
-    }).subscribe(() => {
-      this.movingMediaInProgress = false;
+  //   // Prepend the media item to its new list if it is selected
+  //   for (let i = 0; i < this.itemList.listItems.length; i++) {
+  //     if (this.itemList.listItems[i].selected) moveMediaItems.push(this.itemList.listItems[i]);
+  //   }
 
-      // If the destination list has already been loaded
-      if (this.mediaLists[destinationMedia].length > 0) {
 
-        // Prepend the media item to its new list if it is selected
-        for (let i = 0; i < this.itemList.listItems.length; i++) {
-          if (this.itemList.listItems[i].selected) this.mediaLists[destinationMedia].unshift(this.mediaLists[this.indexOfCurrentMediaList][i]);
-        }
-      }
-      // Remove the media item from its original list
-      this.itemList.deleteListItem();
+  //   // Update the database to reflect the move
+  //   this.dataService.put('api/Media/Video/Move', {
+  //     ids: moveMediaItems.map(x => x.id),
+  //     destination: destinationMedia
+  //   }).subscribe(() => {
+  //     this.movingMediaInProgress = false;
 
-      window.setTimeout(() => {
-        this.onMediaSelect(this.itemList.listItems[this.itemList.selectedListItemIndex]);
-      }, 50)
-    })
-  }
+  //     // If the destination list has already been loaded
+  //     if (this.mediaLists[destinationMedia].length > 0) {
+
+  //       // Prepend the media item to its new list if it is selected
+  //       for (let i = 0; i < this.itemList.listItems.length; i++) {
+  //         if (this.itemList.listItems[i].selected) this.mediaLists[destinationMedia].unshift(this.mediaLists[this.indexOfCurrentMediaList][i]);
+  //       }
+  //     }
+  //     // Remove the media item from its original list
+  //     this.itemList.deleteListItem();
+
+  //     window.setTimeout(() => {
+  //       this.onMediaSelect(this.itemList.listItems[this.itemList.selectedListItemIndex]);
+  //     }, 50)
+  //   })
+  // }
 
 
   // -----------------------------( GET URL )------------------------------ \\
