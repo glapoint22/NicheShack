@@ -24,8 +24,8 @@ export class DataService {
   }
 
 
-  post(url: string, body: any) {
-    return this.http.post(url, body).pipe(catchError(this.handleError()));
+  post(url: string, body: any, responseType?: any): Observable<any> {
+    return this.http.post(url, body, { responseType: responseType }).pipe(catchError(this.handleError()));
   }
 
   put(url: string, body: any) {

@@ -119,11 +119,11 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
               // Update
               new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].update, this.itemList.editIcon.isDisabled, this.onListItemUpdate, null, 'Ctrl+Alt+U'),
               // Edit Media Item
-              new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].edit, this.itemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E'),
+              new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].edit, this.itemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E')
               // Divider
-              new MenuDivider(),
+              // new MenuDivider(),
               // Delete Media Item
-              new MenuOption(!this.itemList.isMultiSelected ? this.menuOptions[this.indexOfCurrentMediaList].delete : this.menuOptions[this.indexOfCurrentMediaList].deletes, this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+              // new MenuOption(!this.itemList.isMultiSelected ? this.menuOptions[this.indexOfCurrentMediaList].delete : this.menuOptions[this.indexOfCurrentMediaList].deletes, this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
             ]
 
             // If the media type is anything but a video
@@ -137,13 +137,13 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
               // Update
               new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].update, this.itemList.editIcon.isDisabled, this.onListItemUpdate, null, 'Ctrl+Alt+U'),
               // Edit Media Item
-              new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].edit, this.itemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E'),
+              new MenuOption(this.menuOptions[this.indexOfCurrentMediaList].edit, this.itemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E')
               // Divider
-              new MenuDivider(),
+              // new MenuDivider(),
               // Move To
-              this.moveTo(),
+              // this.moveTo(),
               // Delete Media Item
-              new MenuOption(!this.itemList.isMultiSelected ? this.menuOptions[this.indexOfCurrentMediaList].delete : this.menuOptions[this.indexOfCurrentMediaList].deletes, this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+              // new MenuOption(!this.itemList.isMultiSelected ? this.menuOptions[this.indexOfCurrentMediaList].delete : this.menuOptions[this.indexOfCurrentMediaList].deletes, this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
             ]
           }
         }
@@ -151,7 +151,8 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // On Add Item
       onEditItem: this.updateMediaName,
       // On Delete Item
-      onDeleteItem: this.openDeletePrompt
+      onDeleteItem: this.openDeletePrompt,
+      multiSelect: false
     }
   }
 
@@ -308,11 +309,13 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
   // -----------------------------( DELETE MEDIA ITEM )------------------------------ \\
   deleteMediaItem() {
-    let deletedMediaItems: Array<ListItem> = this.itemList.deleteListItem();
+    // let deletedMediaItems: Array<ListItem> = this.itemList.deleteListItem();
 
-    window.setTimeout(() => {
-      this.onMediaSelect(this.itemList.listItems[this.itemList.selectedListItemIndex]);
-    }, 50)
+    // this.dataService.delete('api/Media', {id: deletedMediaItems[0].id}).subscribe();
+
+    // window.setTimeout(() => {
+    //   this.onMediaSelect(this.itemList.listItems[this.itemList.selectedListItemIndex]);
+    // }, 50)
   }
 
 
@@ -395,7 +398,6 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
       // Then fetch the data
       this.dataService.get('api/Media', [{ key: 'type', value: this.indexOfCurrentMediaList }])
-        // this.dataService.get(this.getUrl(this.indexOfCurrentMediaList))
         .subscribe((mediaItems: MediaItem[]) => {
           // After loading is complete, hide the spinner
           this.loadingMediaInProgress = false;
@@ -544,27 +546,29 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // Create an empty item at the begining of the list where the new media will be placed
       this.mediaLists[this.indexOfCurrentMediaList].unshift(new MediaItem(this.indexOfCurrentMediaList));
 
+
+      // Create the form data object and append the image
       let formData = new FormData()
       formData.append('image', event.target.files[0]);
       formData.append('type', this.indexOfCurrentMediaList.toString());
 
 
       // Populate the database with the new media
-      this.dataService.post('api/Media/NewImage', formData)
-      .subscribe((media: Media) => {
-        // Update the empty item with the new media data
-        this.itemList.listItems[0].id = media.id;
-        this.itemList.listItems[0].url = media.url;
-        // this.itemList.listItems[0].thumbnail = media.thumbnail;
-        this.onMediaSelect(this.itemList.listItems[0]);
+      this.dataService.post('api/Media/Image', formData)
+        .subscribe((media: Media) => {
+          // Update the empty item with the new media data
+          this.itemList.listItems[0].id = media.id;
+          this.itemList.listItems[0].url = media.url;
+          // this.itemList.listItems[0].thumbnail = media.thumbnail;
+          this.onMediaSelect(this.itemList.listItems[0]);
 
-        // Now set the new image to be editable so it can be named
-        this.preventNoShow = true;
-        this.addingMediaInProgress = false;
-        this.itemList.selectedListItemIndex = 0;
-        this.itemList.addEventListeners();
-        this.itemList.editListItem();
-      })
+          // Now set the new image to be editable so it can be named
+          this.preventNoShow = true;
+          this.addingMediaInProgress = false;
+          this.itemList.selectedListItemIndex = 0;
+          this.itemList.addEventListeners();
+          this.itemList.editListItem();
+        })
     }
   }
 
@@ -576,11 +580,17 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       // Let it be known that the updating of media is in progress
       this.updatingMediaInProgress = true;
 
-      this.dataService.put(this.getUrl(this.popupService.mediaType), {
-        id: this.itemList.listItems[this.updatingMediaIndex].id,
-        image: event.target.files[0]
-      }).subscribe(() => {
+      // Create the form data object and append the image
+      let formData = new FormData()
+      formData.append('image', event.target.files[0]);
+      formData.append('id', this.itemList.listItems[this.updatingMediaIndex].id.toString());
+
+      
+      // Update the current image
+      this.dataService.post('api/Media/UpdateImage', formData, 'text').subscribe((url: string) => {
+        this.media.url = url;
         this.onMediaSelect(this.itemList.listItems[this.updatingMediaIndex]);
+        this.itemList.listItems[this.updatingMediaIndex].url = url;
         this.updatingMediaInProgress = false;
       })
     }
@@ -596,20 +606,21 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
     // Populate the database with the new media
-    this.dataService.post(this.getUrl(this.popupService.mediaType), url).subscribe((media: any) => {
-      // Update the empty item with the new media data
-      this.itemList.listItems[0].id = media.id;
-      this.itemList.listItems[0].url = media.url;
-      this.itemList.listItems[0].thumbnail = media.thumbnail;
-      this.onMediaSelect(this.itemList.listItems[0])
+    this.dataService.post('api/Media/Video', {name: url})
+      .subscribe((media: Media) => {
+        // Update the empty item with the new media data
+        this.itemList.listItems[0].id = media.id;
+        this.itemList.listItems[0].url = media.url;
+        this.itemList.listItems[0].thumbnail = media.thumbnail;
+        this.onMediaSelect(this.itemList.listItems[0])
 
-      // Now set the new video to be editable so it can be named
-      this.preventNoShow = true;
-      this.addingMediaInProgress = false;
-      this.itemList.selectedListItemIndex = 0;
-      this.itemList.addEventListeners();
-      this.itemList.editListItem();
-    })
+        // Now set the new video to be editable so it can be named
+        this.preventNoShow = true;
+        this.addingMediaInProgress = false;
+        this.itemList.selectedListItemIndex = 0;
+        this.itemList.addEventListeners();
+        this.itemList.editListItem();
+      })
   }
 
 
@@ -618,14 +629,17 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     // Let it be known that the updating of media is in progress
     this.updatingMediaInProgress = true;
 
-    this.dataService.put(this.getUrl(this.popupService.mediaType), {
+    this.dataService.put('api/Media/Video', {
       id: this.itemList.listItems[this.updatingMediaIndex].id,
-      url: url
-    }).subscribe((media: any) => {
+      name: url
+    }).subscribe((media: Media) => {
+      this.media.url = media.url;
+      this.media.thumbnail = media.thumbnail;
       this.itemList.listItems[this.updatingMediaIndex].url = media.url;
       this.itemList.listItems[this.updatingMediaIndex].thumbnail = media.thumbnail;
-      this.onMediaSelect(this.itemList.listItems[this.updatingMediaIndex])
+      this.onMediaSelect(this.itemList.listItems[this.updatingMediaIndex]);
       this.updatingMediaInProgress = false;
+      this.productService.setCurrentSelectedMedia(this.media);
     })
   }
 
@@ -645,7 +659,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
     // Update the database to reflect the move
-    this.dataService.put(this.getUrl(this.popupService.mediaType) + '/Move', {
+    this.dataService.put('api/Media/Video/Move', {
       ids: moveMediaItems.map(x => x.id),
       destination: destinationMedia
     }).subscribe(() => {
@@ -670,41 +684,41 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
   // -----------------------------( GET URL )------------------------------ \\
-  getUrl(mediaType: MediaType): string {
-    let url: string;
+  // getUrl(mediaType: MediaType): string {
+  //   let url: string;
 
-    switch (mediaType) {
-      case MediaType.Image: {
-        url = 'api/Images';
-        break;
-      }
-      case MediaType.BackgroundImage: {
-        url = 'api/BackgroundImages';
-        break;
-      }
-      case MediaType.BannerImage: {
-        url = 'api/Carousel/Images';
-        break;
-      }
-      case MediaType.CategoryImage: {
-        url = 'api/Categories/Images';
-        break;
-      }
-      case MediaType.ProductImage: {
-        url = 'api/Products/Images';
-        break;
-      }
-      case MediaType.Icon: {
-        url = 'api/ProductContent/Images';
-        break;
-      }
-      case MediaType.Video: {
-        url = 'api/Videos';
-        break;
-      }
-    }
-    return url;
-  }
+  //   switch (mediaType) {
+  //     case MediaType.Image: {
+  //       url = 'api/Images';
+  //       break;
+  //     }
+  //     case MediaType.BackgroundImage: {
+  //       url = 'api/BackgroundImages';
+  //       break;
+  //     }
+  //     case MediaType.BannerImage: {
+  //       url = 'api/Carousel/Images';
+  //       break;
+  //     }
+  //     case MediaType.CategoryImage: {
+  //       url = 'api/Categories/Images';
+  //       break;
+  //     }
+  //     case MediaType.ProductImage: {
+  //       url = 'api/Products/Images';
+  //       break;
+  //     }
+  //     case MediaType.Icon: {
+  //       url = 'api/ProductContent/Images';
+  //       break;
+  //     }
+  //     case MediaType.Video: {
+  //       url = 'api/Videos';
+  //       break;
+  //     }
+  //   }
+  //   return url;
+  // }
 
 
   // --------------------------------( ON POPUP OUT )-------------------------------- \\

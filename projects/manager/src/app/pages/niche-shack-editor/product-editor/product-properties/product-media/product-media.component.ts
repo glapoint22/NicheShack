@@ -41,7 +41,7 @@ export class ProductMediaComponent implements OnInit, OnChanges {
           PropertyId: media.id
         })
           .subscribe((id: number) => {
-            media.id = id;
+            this.product.selectedMedia.itemId = id;
           });
       } else {
 
@@ -49,9 +49,8 @@ export class ProductMediaComponent implements OnInit, OnChanges {
         this.saveService.save({
           url: 'api/Products/Media',
           data: {
-            productId: this.product.id,
-            oldMediaId: this.currentMediaId,
-            newMediaId: media.id
+            itemId: this.product.selectedMedia.itemId,
+            propertyId: media.id
           }
         });
       }
@@ -73,6 +72,7 @@ export class ProductMediaComponent implements OnInit, OnChanges {
   // -----------------------------( ADD MEDIA ITEM )------------------------------ \\
   addMediaItem() {
     this.product.media.push({
+      itemId: null,
       id: null,
       name: null,
       url: null

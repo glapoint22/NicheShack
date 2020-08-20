@@ -5,8 +5,8 @@
     <div class="property-box-light-icon-bar">
 
         <!-- Paginator -->
-        <paginator #paginator [itemCount]="product.media ? product.media.length: 0"
-            [currentIndex]="getMediaIndex()" (onItemChange)="onPaginatorClick($event)">
+        <paginator #paginator [itemCount]="product.media ? product.media.length: 0" [currentIndex]="getMediaIndex()"
+            (onItemChange)="onPaginatorClick($event)">
         </paginator>
 
         <!-- Icons -->
@@ -51,13 +51,11 @@
         <!-- Media container -->
         <div class="media-container">
             <!-- Media -->
-            <div *ngIf="product.selectedMedia.thumbnail || product.selectedMedia.url; else noMedia"
-                class="thumbnail"
-                [ngStyle]="{ 'background-image': 'url(images/' + (product.selectedMedia.type == mediaType.Video ? product.selectedMedia.thumbnail : product.selectedMedia.url) + ')'}">
+            <div *ngIf="product.selectedMedia.thumbnail || product.selectedMedia.url; else noMedia" class="thumbnail"
+                [ngStyle]="{ 'background-image': 'url(images/' + (product.selectedMedia.type == mediaType.Video ? product.selectedMedia.thumbnail : product.selectedMedia.url) + ')'}" [title]="product.selectedMedia.name">
 
 
-                <i *ngIf="product.selectedMedia.type == mediaType.Video"
-                    class="far fa-play-circle"></i>
+                <i *ngIf="product.selectedMedia.type == mediaType.Video" class="far fa-play-circle"></i>
             </div>
 
             <!-- No Media -->

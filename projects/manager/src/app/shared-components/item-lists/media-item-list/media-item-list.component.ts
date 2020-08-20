@@ -46,7 +46,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
       // As long as we weren't using the context menu to add a new media item and a list item is selected
       if (!this.mediaAddInitiated && this.selectedListItemIndex != null) {
         // Set the focus back to that list item
-        this.setListItemFocus(this.selectedListItemIndex)
+        this.setListItemFocus(this.selectedListItemIndex);
       }
     });
   }

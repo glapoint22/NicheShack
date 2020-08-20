@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { MediaType, Media } from '../../../classes/media';
+import { ProductMedia } from '../../../classes/product-media';
 
 @Component({
   selector: 'product-info',
@@ -15,7 +16,7 @@ export class ProductInfoComponent implements OnInit {
     this.productService.product = null;
   }
 
-  onThumbnailClick(media: Media) {
+  onThumbnailClick(media: ProductMedia) {
     this.productService.product.selectedMedia = media;
     this.productService.setCurrentSelectedMedia(media);
   }

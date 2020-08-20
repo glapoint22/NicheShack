@@ -1,6 +1,6 @@
 import { GeneralNotification } from './general-notification';
-import { Media } from './media';
+import { ProductMedia } from './product-media';
 
 export interface ProductMediaNotification extends GeneralNotification {
-    media: Media[];
+    media: ProductMedia[];
 }

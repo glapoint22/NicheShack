@@ -11,7 +11,7 @@
                     <div *ngIf="media.url || media.thumbnail" class="thumbnail"
                         [ngStyle]="{ 'background-image': 'url(images/' + (media.type == mediaType.Video ? media.thumbnail : media.url) + ')'}"
                         [ngClass]="{'selected-thumbnail': media == productService.product.selectedMedia}"
-                        (click)="onThumbnailClick(media)">
+                        (click)="onThumbnailClick(media)" [title]="media.name">
                         <i *ngIf="media.type == mediaType.Video" class="far fa-play-circle"></i>
                     </div>
                     <div *ngIf="!media.url && !media.thumbnail" class="thumbnail no-thumbnail"
@@ -28,7 +28,9 @@
                 <ng-container
                     *ngIf="productService.product.selectedMedia.url || productService.product.selectedMedia.safeUrl; else noMedia">
                     <img *ngIf="productService.product.selectedMedia.type == mediaType.ProductMediaImage"
-                        [src]="'/images/' + productService.product.selectedMedia.url">
+                        [src]="'/images/' + productService.product.selectedMedia.url"
+                        [alt]="productService.product.selectedMedia.name"
+                        [title]="productService.product.selectedMedia.name">
 
                     <iframe *ngIf="productService.product.selectedMedia.type == mediaType.Video" frameborder="0"
                         [src]="productService.product.selectedMedia.safeUrl" allowfullscreen></iframe>
