@@ -30,7 +30,9 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
 
   setData(widgetData: ProductGroupWidgetData) {
     this.caption.setData(widgetData.caption);
-    this.productGroupType = widgetData.productGroupType;
+    if(widgetData.productGroupType) {
+      this.productGroupType = widgetData.productGroupType;
+    }
     this.featuredProducts = widgetData.featuredProducts;
     super.setData(widgetData);
   }
