@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, OnChanges } from '@angular/core';
 import { Media, MediaType } from 'projects/manager/src/app/classes/media';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
@@ -7,17 +7,19 @@ import { PaginatorComponent } from 'projects/manager/src/app/shared-components/p
 import { SaveService } from 'projects/manager/src/app/services/save.service';
 import { DataService } from 'services/data.service';
 import { Product } from 'projects/manager/src/app/classes/product';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'product-media',
   templateUrl: './product-media.component.html',
   styleUrls: ['./product-media.component.scss']
 })
-export class ProductMediaComponent implements OnInit, OnChanges {
+export class ProductMediaComponent implements OnChanges {
   @Input() product: Product;
   @ViewChild('paginator', { static: false }) paginator: PaginatorComponent;
   public mediaType = MediaType;
   private currentMediaId: number;
+  private subscription: Subscription;
 
 
   constructor(
@@ -29,44 +31,43 @@ export class ProductMediaComponent implements OnInit, OnChanges {
   ) { }
 
 
-
-  ngOnInit() {
-    this.popupService.mediaBrowserPopup.onMediaChange.subscribe((media: Media) => {
-      this.productService.setCurrentSelectedMedia(media);
-
-      // Post new media
-      if (!this.currentMediaId) {
-        this.dataService.post('api/Products/Media', {
-          ItemId: this.product.id,
-          PropertyId: media.id
-        })
-          .subscribe((id: number) => {
-            this.product.selectedMedia.itemId = id;
-          });
-      } else {
-
-        // Update the media
-        if (this.currentMediaId != media.id) {
-          this.saveService.save({
-            url: 'api/Products/Media',
-            data: {
-              itemId: this.product.selectedMedia.itemId,
-              propertyId: media.id
-            }
-          });
-        }
-
-      }
-
-      this.currentMediaId = media.id;
-    });
+  // -----------------------------( NG ON CHANGES )------------------------------ \\
+  ngOnChanges() {
+    if (this.product.media.length > 0) this.currentMediaId = this.product.media[0].id;
   }
 
 
 
-  // -----------------------------( NG ON CHANGES )------------------------------ \\
-  ngOnChanges() {
-    if (this.product.media.length > 0) this.currentMediaId = this.product.media[0].id;
+
+// -----------------------------( SET MEDIA )------------------------------ \\
+  setMedia(media: Media) {
+    this.productService.setCurrentSelectedMedia(media);
+
+    // Post new media
+    if (!this.currentMediaId) {
+      this.dataService.post('api/Products/Media', {
+        ItemId: this.product.id,
+        PropertyId: media.id
+      })
+        .subscribe((id: number) => {
+          this.product.selectedMedia.itemId = id;
+        });
+    } else {
+
+      // Update the media
+      if (this.currentMediaId != media.id) {
+        this.saveService.save({
+          url: 'api/Products/Media',
+          data: {
+            itemId: this.product.selectedMedia.itemId,
+            propertyId: media.id
+          }
+        });
+      }
+
+    }
+
+    this.currentMediaId = media.id;
   }
 
 
@@ -105,6 +106,14 @@ export class ProductMediaComponent implements OnInit, OnChanges {
     this.popupService.sourceElement = sourceElement;
     this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
     this.popupService.mediaBrowserPopup.media = this.product.selectedMedia;
+
+
+    if (this.subscription) this.subscription.unsubscribe();
+
+    this.subscription = this.popupService.mediaBrowserPopup.onMediaChange
+      .subscribe((media: Media) => {
+        this.setMedia(media);
+      });
   }
 
 
@@ -114,6 +123,13 @@ export class ProductMediaComponent implements OnInit, OnChanges {
     this.popupService.sourceElement = sourceElement;
     this.popupService.mediaBrowserPopup.media = this.product.selectedMedia;
     this.popupService.mediaBrowserPopup.show = !this.popupService.mediaBrowserPopup.show;
+
+    if (this.subscription) this.subscription.unsubscribe();
+
+    this.subscription = this.popupService.mediaBrowserPopup.onMediaChange
+      .subscribe((media: Media) => {
+        this.setMedia(media);
+      });
   }
 
 

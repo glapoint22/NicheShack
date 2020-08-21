@@ -18,6 +18,7 @@
             overflow: auto;
             flex: 1;
             max-width: 100px;
+            margin-right: 15px;
 
             .thumbnail {
                 width: 88px; 
@@ -65,7 +66,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 15px;
+            // margin: 0 15px;
+            margin-right: 15px;
             flex: 1;
     
             img {
@@ -149,22 +151,32 @@
             border-bottom: 1px solid #464646;
         }
 
-        .content-item {
-            display: flex;
-            align-items: center;
+        
+    }
 
-            .img-container {
-                width: 16px;
-                height :16px;
+    .content-item {
+        display: flex;
+        align-items: flex-start;
 
-                img {
-                    display: block;
-                }
-            }
+        .img-container {
+            width: 16px;
+            height :16px;
 
-            .content-title {
-                margin-left: 5px;
+            img {
+                display: block;
             }
         }
+
+        .content-title {
+            margin-left: 5px;
+            margin-bottom: 6px;
+        }
+    }
+
+    .disclaimer {
+        margin-top: 5px;
+        color: #888888;
+        max-width: 900px;
+        font-style: italic;
     }
 }
