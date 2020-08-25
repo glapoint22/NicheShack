@@ -1,0 +1,58 @@
+@import '../../../scss/variables';
+
+.products-container {
+    border-top: 1px solid $border-color;
+    clear: both;
+
+    .product-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px;
+        flex-wrap: wrap;
+
+        .product {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 16px 0;
+            width: 100%;
+
+            .image {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 16px 10px 0;
+                flex-shrink: 0;
+                width: 150px;
+                height: 150px;
+                cursor: pointer;
+
+                img {
+                    max-width: 150px;
+                    max-height: 150px;
+                }
+            }
+
+            .title {
+                margin-right: 8px;
+                .title-text {
+                    cursor: pointer;
+                    font-size: 16px;
+                    font-weight: bold;
+                    display: inline-block;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+
+@media (min-width: map-get($breakpoints, md)) {
+    .product {
+        max-width: 480px;
+    }
+}

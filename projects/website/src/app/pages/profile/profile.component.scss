@@ -11,3 +11,31 @@ $max-widths: (140px, 235px, 395px, 515px, 615px);
         }
     }
 }
+
+
+.account-updated {
+    margin-bottom: 24px;
+    border: 1px solid $niche-shack-gold;
+    border-radius: 4px;
+    padding: 16px;
+
+    .fa-check {
+        margin-right: 8px;
+        color: $success-color;
+    }
+}
+
+.property-container {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid $border-color;
+    padding: 8px 0;
+
+    &:last-child {
+        border-bottom: 1px solid $border-color;
+    }
+
+    .property-name {
+        color: $niche-shack-gold;
+    }
+}

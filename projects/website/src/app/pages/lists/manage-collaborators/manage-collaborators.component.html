@@ -1,5 +1,5 @@
-<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0"
-    (onShow)="onShow()" (onHide)="show = false">
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onShow)="onShow()"
+    (onHide)="show = false">
     <div class="prompt" (mousedown)="$event.stopPropagation()">
         <div class="title-bar">
             Manage Collaborators
@@ -11,13 +11,13 @@
         <div class="prompt-content" style="max-height: 200px;">
 
             <!-- Collaborators -->
-            <div *ngIf="!confirm; else confirmRemove" class="border-top">
-                <div *ngFor="let collaborator of collaborators"
-                    class="display-flex justify-content-between align-items-center padding-8 border-bottom">
-                    <div class="text-truncate white-color" style="max-width: 190px">
+            <div *ngIf="!confirm; else confirmRemove" style="border-top: 1px solid #4f4f4f">
+                <div *ngFor="let collaborator of collaborators" class="collaborator">
+                    <div class="text-truncate" style="max-width: 190px">
                         {{collaborator.name}}
                     </div>
-                    <i class="fas fa-trash-alt" style="color: #929292; font-size: 18px; cursor: pointer;" [title]="'Remove ' + collaborator.name" (click)="currentCollaborator = collaborator; confirm = true"></i>
+                    <i class="fas fa-trash-alt" [title]="'Remove ' + collaborator.name"
+                        (click)="currentCollaborator = collaborator; confirm = true"></i>
                 </div>
             </div>
 
@@ -30,8 +30,9 @@
 
 
                 <!-- Buttons -->
-                <div class="float-right">
-                    <button class="margin-right-8" (mousedown)="$event.preventDefault()" (click)="confirm = false">Cancel</button>
+                <div style="float: right;">
+                    <button class="margin-right-8" (mousedown)="$event.preventDefault()"
+                        (click)="confirm = false">Cancel</button>
                     <button class="alt-button" (click)="onRemoveCollaborator()">Remove</button>
                 </div>
             </ng-template>

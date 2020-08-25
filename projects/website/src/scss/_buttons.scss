@@ -1,10 +1,9 @@
 button {
     border-radius: 0.25rem;
     border: none;
-    padding: 0.4rem 0.8rem;
+    padding: 4px 8px;
     outline: 0;
     white-space: nowrap;
-    font-weight: bold;
     @include button-colors(nth($default-button-colors, 1), nth($default-button-colors, 2), $default-font-color);
     &:disabled {
         background: linear-gradient(darken(nth($default-button-colors, 1), 20%), darken(nth($default-button-colors, 2), 10%));

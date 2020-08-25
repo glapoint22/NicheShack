@@ -3,3 +3,12 @@ iframe {
     user-select: none;
     height: 64px;
 }
+
+.cover {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    user-select: none;
+}

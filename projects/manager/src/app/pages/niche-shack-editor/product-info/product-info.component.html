@@ -24,7 +24,7 @@
             </div>
 
             <!-- Media display -->
-            <div class="img-container">
+            <div class="media-container">
                 <ng-container
                     *ngIf="productService.product.selectedMedia.url || productService.product.selectedMedia.safeUrl; else noMedia">
                     <img *ngIf="productService.product.selectedMedia.type == mediaType.ProductMediaImage"
@@ -99,7 +99,7 @@
 
         <!-- Content -->
         <div
-            [ngClass]="{'display-flex justify-content-center flex-wrap': productService.product.pricePoints.length > 1}">
+            [ngClass]="{'product-content-container': productService.product.pricePoints.length > 1}">
 
             <!-- Price Points -->
             <div *ngFor="let pricePoint of productService.product.pricePoints; let i = index"

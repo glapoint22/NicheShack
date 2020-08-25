@@ -2,32 +2,29 @@
 
 
     <!-- Lists Menu -->
-    <div *show="showListsMenu"
-        class="width-100 background-color-dark position-fixed border border-primary-color fade-translate-start outline-0"
-        style="z-index: 1000; min-height: 100%;" transitionClass="fade-translate-end" tabindex="0"
+    <div *show="showListsMenu" class="fade-translate-start lists-menu" transitionClass="fade-translate-end" tabindex="0"
         (onHide)="showListsMenu = false">
 
         <div (mousedown)="$event.stopPropagation()">
             <!-- Close header -->
-            <div class="background-color-dark-gray padding-top-8 padding-bottom-8 overflow-auto">
-                <i (click)="showListsMenu = false" class="fas fa-times margin-right-8 niche-shack-gold float-right"></i>
+            <div class="close-header">
+                <i (click)="showListsMenu = false" class="fas fa-times"></i>
             </div>
 
 
-            <div class="position-absolute-identity" style="top:30px;">
-                <div class="padding-8 overflow-auto height-100 position-relative">
+            <div class="mobile-lists">
+                <div class="overflow-container">
 
                     <!-- Lists -->
-                    <div class="width-100">
-                        <h2 class="niche-shack-gold">Your Lists</h2>
+                    <div style="width: 100%;">
+                        <h2>Your Lists</h2>
 
                         <!-- Each List -->
-                        <div class="margin-bottom-24 cursor-pointer padding-8" *ngFor="let list of lists"
-                            [ngClass]="{'background-color-dark-gray cursor-default border': list == selectedList}"
+                        <div class="list" *ngFor="let list of lists" [ngClass]="{'selected-list': list == selectedList}"
                             (click)="onListClick(list, lists); showListsMenu = false">
                             <h3>{{list.name}}</h3>
 
-                            <div class="niche-shack-gold">
+                            <div class="gold-text">
                                 Owner: {{list.owner}}
                             </div>
                             <div>
@@ -47,10 +44,6 @@
     </div>
 
 
-
-
-
-
     <navbar></navbar>
 
     <div class="page-container">
@@ -62,21 +55,24 @@
 
 
                         <!-- Manage list links -->
-
-                        <div
-                            class="width-100 background padding-8 background-color-dark-gray primary-color-light margin-bottom-16">
+                        <div class="links primary-color-light">
 
                             <!-- Non mobile -->
                             <div class="show-sm">
-                                <div class="display-flex  flex-row-reverse text-underline">
-                                    <div class="cursor-pointer" (click)="shareList.show = true">Share List</div>
-                                    <div *ngIf="listData.isOwner" class="margin-right-24 cursor-pointer"
-                                        (click)="editList.show = true">
+                                <div style="display: flex; flex-direction: row-reverse; text-decoration: underline;">
+
+                                    <div class="link" (click)="shareList.show = true">Share List</div>
+
+                                    <div *ngIf="listData.isOwner" class="link" (click)="editList.show = true">
                                         Edit List</div>
-                                    <div *ngIf="listData.isOwner" class="margin-right-24 cursor-pointer"
-                                        (click)="deleteList.show = true">Delete List</div>
-                                    <div *ngIf="listData.isOwner && listData.collaborators.length > 0"
-                                        class="margin-right-24 cursor-pointer" (click)="manageCollaborators.show = true">
+
+
+                                    <div *ngIf="listData.isOwner" class="link" (click)="deleteList.show = true">Delete
+                                        List</div>
+
+
+                                    <div *ngIf="listData.isOwner && listData.collaborators.length > 0" class="link"
+                                        (click)="manageCollaborators.show = true">
                                         Manage
                                         Collaborators</div>
                                 </div>
@@ -84,33 +80,27 @@
 
                             <!-- Mobile -->
                             <div class="hide-sm">
-                                <div class="display-flex cursor-pointer position-relative">
+                                <div style="display: flex; position: relative;">
 
                                     <!-- Your lists & Mange links -->
                                     <div (click)="showListsMenu = true"
-                                        class="margin-right-16 cursor-pointer text-underline">Your Lists</div>
-                                    <div (click)="showManageListMenu = true">Manage
-                                        <div class="arrow-down"></div>
-                                    </div>
+                                        style="text-decoration: underline; margin-right: 16px;">Your Lists</div>
+                                    <div (click)="showManageListMenu = true">Manage List</div>
+                                    <i class="fas fa-sort-down"></i>
 
 
                                     <!-- Manage List menu -->
                                     <div *show="showManageListMenu" tabindex="0" (onHide)="showManageListMenu = false"
                                         (blur)="showManageListMenu = false"
-                                        class="dropdown dropdown-menu-arrow fade-start white-color padding-left-8"
-                                        style="top: 26px; left: 9px; min-width: 167px;" transitionClass="fade-end">
+                                        class="dropdown dropdown-menu-arrow fade-start" transitionClass="fade-end">
 
-                                        <div class="cursor-pointer" (click)="shareList.show = true">Share List</div>
-                                        <div *ngIf="listData.isOwner" class="margin-right-24 cursor-pointer"
-                                            (click)="editList.show = true">
+                                        <div (click)="shareList.show = true">Share List</div>
+                                        <div *ngIf="listData.isOwner" (click)="editList.show = true">
                                             Edit List</div>
-                                        <div *ngIf="listData.isOwner" class="margin-right-24 cursor-pointer"
-                                            (click)="deleteList.show = true">Delete List</div>
+                                        <div *ngIf="listData.isOwner" (click)="deleteList.show = true">Delete List</div>
                                         <div *ngIf="listData.isOwner && listData.collaborators.length > 0"
-                                            class="margin-right-24 cursor-pointer"
                                             (click)="manageCollaborators.show = true">
-                                            Manage
-                                            Collaborators</div>
+                                            Manage Collaborators</div>
                                     </div>
                                 </div>
                             </div>
@@ -119,18 +109,20 @@
 
 
 
-                        <div class="display-flex">
+                        <div style="display: flex;">
+
+
                             <!-- Lists -->
-                            <div class="width-100 show-sm" style="max-width: 210px;">
-                                <h2 class="niche-shack-gold">Your Lists</h2>
+                            <div class="show-sm" style="width: 100%; max-width: 210px;">
+                                <h2>Your Lists</h2>
 
                                 <!-- Each List -->
-                                <div class="margin-bottom-24 cursor-pointer padding-8" *ngFor="let list of lists"
-                                    [ngClass]="{'background-color-dark-gray cursor-default border': list == selectedList}"
+                                <div class="list" *ngFor="let list of lists"
+                                    [ngClass]="{'selected-list': list == selectedList}"
                                     (click)="onListClick(list, lists)">
                                     <h3>{{list.name}}</h3>
 
-                                    <div class="niche-shack-gold">
+                                    <div class="gold-text">
                                         Owner: {{list.owner}}
                                     </div>
                                     <div>
@@ -151,7 +143,7 @@
 
 
                             <!-- Products container -->
-                            <div class="margin-left-24-xxs width-100">
+                            <div class="margin-left-24-xxs" style="width: 100%">
                                 <h1>{{selectedList.name}}</h1>
 
                                 <ng-container *ngIf="sortOptions$ | async">
@@ -160,7 +152,7 @@
                                         <ng-container *ngIf="products.length > 0; else noProducts">
 
                                             <!-- Sort -->
-                                            <select class="margin-bottom-8 float-right-sm"
+                                            <select class="margin-left-auto-sm" style="margin-bottom: 8px; display: block;"
                                                 [(ngModel)]="selectedSortOption" (change)="setSort()">
                                                 <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">
                                                     Sort by {{sortOption.key}}</option>
@@ -168,42 +160,44 @@
 
 
 
-                                            <div class="border-top  clear-both">
-                                                <div *ngFor="let product of products" class="border-bottom ">
+                                            <div class="products-container">
+                                                <div *ngFor="let product of products"
+                                                    style="border-bottom: 1px solid #4f4f4f">
                                                     <ng-container
                                                         *ngIf="!product.deleted && !product.movedToList; else removedProduct">
-                                                        <div class="display-flex justify-content-between flex-wrap">
-                                                            <div class="display-flex flex-wrap flex-nowrap-sm margin-top-16 margin-bottom-16 width-100"
-                                                                style="max-width: 400px">
+
+
+                                                        <div class="product-row">
+
+                                                            <!-- Product -->
+                                                            <div class="product">
 
 
                                                                 <!-- Product Image -->
-                                                                <div class="display-flex align-items-center justify-content-center margin-right-16 flex-shrink-0 cursor-pointer"
-                                                                    style="width: 150px; height: 150px"
+                                                                <div class="image"
                                                                     [routerLink]="['/' + product.urlTitle + '/' + product.id]">
-                                                                    <img [src]="'/images/' + product.image"
-                                                                        style="max-width: 150px; max-height: 150px;">
+                                                                    <img [src]="'/images/' + product.image">
                                                                 </div>
 
                                                                 <!-- Product Title -->
-                                                                <div class="width-100 text-break margin-top-16">
-                                                                    <h3 class="text-hover-underline cursor-pointer"
+                                                                <div class="title text-break">
+                                                                    <div class="title-text"
                                                                         [routerLink]="['/' + product.urlTitle + '/' + product.id]">
-                                                                        {{product.title}}</h3>
+                                                                        {{product.title}}</div>
 
 
                                                                     <!-- Rating & Reviews -->
-                                                                    <stars class="margin-right-4"
+                                                                    <stars style="margin-right: 4px; display: block;"
                                                                         [rating]="product.rating">
                                                                     </stars>
-                                                                    <span class="text-nowrap primary-color-light"
+                                                                    <span class="primary-color-light" style="white-space: nowrap;"
                                                                         *ngIf="product.rating > 0">
                                                                         {{product.totalReviews | number}} reviews
                                                                     </span>
 
 
                                                                     <!-- Price -->
-                                                                    <div class="niche-shack-gold">
+                                                                    <div class="gold-text">
                                                                         <div *ngIf="product.maxPrice === 0">
                                                                             {{product.minPrice | currency:'USD'}}
                                                                         </div>
@@ -219,18 +213,19 @@
 
 
                                                             <!-- Product Management -->
-                                                            <div class="margin-top-16 margin-bottom-16">
-                                                                <div class="margin-bottom-4 gray-color">Item added
+                                                            <div class="product-management align-items-end-md">
+                                                                <div class="gray-color" style="margin-bottom: 4px;">Item
+                                                                    added
                                                                     {{product.dateAdded}}
                                                                 </div>
-                                                                <div class="margin-bottom-4 niche-shack-gold">
+                                                                <div class="gold-text" style="margin-bottom: 4px;">
                                                                     Added by {{product.collaborator}}
                                                                 </div>
-                                                                <button class="alt-button margin-bottom-8"
+                                                                <button class="alt-button" style="margin-bottom: 8px;"
                                                                     (click)="onBuyClick(product.hoplink)">Visit
                                                                     Product Page To Buy</button>
 
-                                                                <div class="display-flex justify-content-between">
+                                                                <div class="button-container">
                                                                     <dropdown-button [caption]="'Move'"
                                                                         style="width: 95px" [items]="moveToLists"
                                                                         (itemClick)="onMoveProduct($event, product)">
@@ -245,11 +240,11 @@
 
                                                     <!-- Removed Product -->
                                                     <ng-template #removedProduct>
-                                                        <div class="padding-24 display-flex align-items-center"
-                                                            style="height: 182px;">
+                                                        <div
+                                                            style="height: 182px; padding: 24px; display: flex; align-items: center;">
                                                             <div>
-                                                                <i
-                                                                    class="fas fa-check success-color font-size-4 margin-right-8"></i>
+                                                                <i class="fas fa-check success-color"
+                                                                    style="font-size: 20px; margin-right: 8px"></i>
                                                                 <span *ngIf="product.deleted">{{product.title}} has been
                                                                     deleted.
                                                                 </span>
@@ -258,8 +253,8 @@
                                                                         (click)="onListClick(product.movedToList, lists)">{{product.movedToList}}</span><span>.
                                                                     </span>
                                                                 </span>
-                                                                <span
-                                                                    class="text-underline cursor-pointer primary-color-light"
+                                                                <span class="primary-color-light"
+                                                                    style="text-decoration: underline; cursor: pointer;"
                                                                     (click)="undo(product.deleted ? 'deleted' : 'movedTo', product)">Undo</span>
                                                             </div>
                                                         </div>
@@ -271,7 +266,7 @@
 
                                         <!-- No Products -->
                                         <ng-template #noProducts>
-                                            <div class="text-center font-size-3">0 items in this list</div>
+                                            <div style="text-align: center; font-size: 16px;">0 items in this list</div>
                                         </ng-template>
                                     </ng-container>
                                 </ng-container>
@@ -296,15 +291,15 @@
 
                 <!-- No Lists -->
                 <ng-template #noLists>
-                    <div class="display-flex align-items-center">
-                        <div class="width-100" style="max-width: 210px;">
+                    <div class="no-lists">
+                        <div style="width: 100%; max-width: 210px;">
                             <h1>Your Lists</h1>
                             <!-- Create list button -->
                             <button class="primary-button" (click)="createList.show = true">Create a List</button>
                         </div>
 
-                        <div class="margin-left-24 width-100 text-center border padding-16 font-size-3"
-                            style="max-width: 600px;">
+                        <div class="no-lists-text">
+                            <i class="fas fa-info-circle"></i>
                             You currently have no lists. Click the "Create a List" button to create your list.
                         </div>
                     </div>

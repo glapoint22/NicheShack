@@ -5,20 +5,19 @@
 
     <!-- Positive & Negagive Reviews -->
     <ng-container *ngIf="positiveReview || negativeReview">
-        <div class="display-flex justify-content-center margin-top-24 margin-bottom-24 flex-wrap flex-nowrap-sm">
+        <div class="flex-wrap flex-nowrap-sm" style="display: flex; justify-content: center; margin: 24px 0">
 
             <!-- Postive Review -->
-            <div *ngIf="positiveReview"
-                class="border padding-8 margin-right-24-sm background-color-dark-gray"
+            <div *ngIf="positiveReview" class="review margin-right-24-sm"
                 [ngClass]="{'margin-bottom-24 margin-bottom-0-sm': negativeReview}">
 
                 <!-- Header -->
-                <h2 class="niche-shack-gold">
+                <h2 class="niche-shack-gold-color">
                     Most helpful positive review
                 </h2>
 
                 <!-- Likes -->
-                <div class="margin-bottom-8 font-italic">{{positiveReview.likes}} customers found this helpful</div>
+                <div class="like">{{positiveReview.likes}} customers found this helpful</div>
 
                 <!-- Review -->
                 <review [review]="positiveReview"></review>
@@ -27,15 +26,15 @@
 
 
             <!-- Negative Review -->
-            <div *ngIf="negativeReview" class="border padding-8 background-color-dark-gray">
+            <div *ngIf="negativeReview" class="review">
 
                 <!-- Header -->
-                <h2 class="niche-shack-gold">
+                <h2 class="niche-shack-gold-color">
                     Most helpful negative review
                 </h2>
 
                 <!-- Likes -->
-                <div class="margin-bottom-8 font-italic">{{negativeReview.likes}} customers found this helpful</div>
+                <div class="like">{{negativeReview.likes}} customers found this helpful</div>
 
                 <!-- Review -->
                 <review [review]="negativeReview"></review>
@@ -45,13 +44,12 @@
 
 
     <!-- Reviews -->
-    <div id="reviews"
-        class="margin-top-16 margin-bottom-24 border-top  padding-top-16 display-flex justify-content-between flex-wrap">
+    <div id="reviews" class="reviews-header">
 
         <!-- Showing -->
-        <div class="text-nowrap width-100 width-auto-xs margin-bottom-16 margin-bottom-0-xs">
-                Showing {{reviewsStart}} - {{reviewsEnd}} of {{product.totalReviews | number}}
-                review{{product.totalReviews > 1 ? 's' : ''}}
+        <div class="width-100 width-auto-xs margin-bottom-16 margin-bottom-0-xs" style="white-space: nowrap;">
+            Showing {{reviewsStart}} - {{reviewsEnd}} of {{product.totalReviews | number}}
+            review{{product.totalReviews > 1 ? 's' : ''}}
         </div>
 
         <!-- Sort Options -->
@@ -62,24 +60,27 @@
     </div>
 
     <!-- View All Button -->
-    <button *ngIf="!paging && product.totalReviews > reviewsPerPage" class="primary-button margin-bottom-24" (click)="onViewAllReviewsClick()">
+    <button *ngIf="!paging && product.totalReviews > reviewsPerPage" class="primary-button" style="margin-bottom: 24px;"
+        (click)="onViewAllReviewsClick()">
         View all {{product.totalReviews | number}} reviews
     </button>
 
-    
-    
+
+
     <!-- Customer Reviews -->
     <review *ngFor="let review of reviews; trackBy:trackReview" [review]="review" [showReviewHelpful]="true"
         (onReportReviewClick)="reportReview.show = true"></review>
 
-    
-    
-        <!-- View All Button -->
-    <button *ngIf="!paging && product.totalReviews > reviewsPerPage" class="primary-button" (click)="onViewAllReviewsClick()">
+
+
+    <!-- View All Button -->
+    <button *ngIf="!paging && product.totalReviews > reviewsPerPage" class="primary-button"
+        (click)="onViewAllReviewsClick()">
         View all {{product.totalReviews | number}} reviews
     </button>
 
-    <paginator *ngIf="paging" [currentPage]="currentPage" [pageCount]="pageCount" (onPageChange)="setPage($event)"></paginator>
+    <paginator *ngIf="paging" [currentPage]="currentPage" [pageCount]="pageCount" (onPageChange)="setPage($event)">
+    </paginator>
 
 
     <!-- Report Review -->

@@ -21,9 +21,9 @@
         <input required email [(ngModel)]="account.email" name="email" #email="ngModel">
 
         <!-- Password -->
-        <div *ngIf="valid(password); else invalidPassword" class="margin-auto" style="width: 88%">
-            <h4 class="display-inline">Password:</h4>
-            <a class="niche-shack-gold float-right font-size-2" style="text-decoration: underline;" tabindex="10"
+        <div *ngIf="valid(password); else invalidPassword" style="width: 88%; margin: auto">
+            <h4 style="display: inline;">Password:</h4>
+            <a class="niche-shack-gold-color" style="text-decoration: underline; float: right; font-size: 12px;" tabindex="10"
                 routerLink="/forgot-password">Forgot your password?</a>
         </div>
 
@@ -31,8 +31,8 @@
         <!-- Invalid password -->
         <ng-template #invalidPassword>
             <h4 class="error">Passwords must be at least 6 characters.</h4>
-            <a class="niche-shack-gold font-size-2 margin-auto display-block"
-                style="text-decoration: underline; width: 88%; margin-bottom: 5px;" tabindex="10"
+            <a class="niche-shack-gold-color"
+                style="text-decoration: underline; width: 88%; margin-bottom: 5px; font-size: 12px; margin: auto; display: block;" tabindex="10"
                 routerLink="/forgot-password">Forgot your password?</a>
         </ng-template>
         <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="account.password" name="password"
@@ -41,7 +41,7 @@
         <!-- Sign in button -->
         <button class="alt-button">Sign in</button>
 
-        <div class="margin-auto" style="width: 88%">
+        <div style="width: 88%; margin: auto">
             <input type="checkbox" (change)="account.isPersistent = !account.isPersistent"
                 [checked]="account.isPersistent"><label>Keep me signed in.</label>
         </div>
@@ -49,12 +49,12 @@
 
         <hr>
 
-        <div class="text-center margin-bottom-8">Don’t have an account?</div>
+        <div style="text-align: center; margin-bottom: 8px;">Don’t have an account?</div>
         <button type="button" (click)="onCreateAccountClick()">Create an account</button>
     </form>
 
-    <div class="text-center margin-top-16 margin-bottom-16 text-underline disabled-color">
-        <a class="margin-right-16" routerLink="/terms">Terms of Use</a>
+    <div class="footer">
+        <a routerLink="/terms">Terms of Use</a>
         <a routerLink="/privacy-policy">Privacy Policy</a>
     </div>
 </div>

@@ -1,76 +1,126 @@
-<div class="display-flex flex-wrap flex-nowrap-sm">
-    <div class="display-flex flex-shrink-1 flex-shrink-0-sm">
+<div class="container">
 
-        <!-- Media group -->
-        <div *ngIf="productInfo.media.length > 0" class="media-group">
-            <div *ngFor="let media of productInfo.media" class="media-thumbnail">
-                <i *ngIf="media.type == 'Video'" class="far fa-play-circle"></i>
-            </div>
-        </div>
-
-        <!-- Image -->
-        <div class="margin-top-16">
-            <img [src]="'/images/' + productInfo.product.image" class="width-100 width-auto-xs">
+    <!-- Media Group -->
+    <div *ngIf="productInfo.media.length > 0" class="media-group show-lg">
+        <div *ngFor="let media of productInfo.media" class="media-thumbnail">
+            <i *ngIf="media.type == 'Video'" class="far fa-play-circle"></i>
         </div>
     </div>
 
 
-    <!-- Product -->
-    <div class="margin-left-0 margin-left-16-sm">
-        <div>
+
+
+    <!-- Media Display -->
+    <div class="media-display show-lg">
+        <img [src]="'/images/8d5741456a824e8981efdfa348d2cb0d.jpg'">
+    </div>
+
+
+
+
+    <!-- Product Info -->
+    <div class="product-info">
+
+        <!-- Title Container -->
+        <div class="title-container">
+
             <!-- Title -->
-            <div class="text-break font-size-5 font-bold white-color">{{productInfo.product.title}}</div>
+            <div class="title text-break">{{productInfo.product.title}}</div>
 
-            <!-- Rating -->
-            <stars class="margin-right-4" [rating]="productInfo.product.rating"></stars>
-            <span class="text-nowrap primary-color-light" *ngIf="productInfo.product.rating > 0">
-                {{productInfo.product.totalReviews | number}} reviews
-            </span>
 
-            <!-- Price -->
-            <div class="niche-shack-gold">
-                <div *ngIf="productInfo.product.maxPrice === 0">
-                    {{productInfo.product.minPrice | currency:'USD'}}
-                </div>
-                <div *ngIf="productInfo.product.maxPrice > 0">
-                    {{productInfo.product.minPrice | currency:'USD'}} -
-                    {{productInfo.product.maxPrice | currency:'USD'}}
-                </div>
-            </div>
-
-            <button class="alt-button margin-top-8 margin-bottom-8"
-                (click)="onBuyClick(productInfo.product.hoplink)">Visit Product Page To Buy</button>
-
-            <!-- Description -->
-            <div class="margin-top-8">{{productInfo.product.description}}</div>
-
-            <!-- Share -->
-            <div class="display-flex margin-top-16 flex-wrap">
-                <div class="margin-right-16 cursor-pointer" (click)="shareService.onFacebookClick(getProductUrl())">
+            <!-- Social Media -->
+            <div class="social-media-container">
+                <div class="social-media" (click)="shareService.onFacebookClick(getProductUrl())">
                     <img src="assets/Facebook.png" title="Share on Facebook">
                 </div>
-                <div class="margin-right-16 cursor-pointer" (click)="shareService.onTwitterClick(getProductUrl(), 'Check out what I found at NicheShack.com!')">
+                <div class="social-media"
+                    (click)="shareService.onTwitterClick(getProductUrl(), 'Check out what I found at NicheShack.com!')">
                     <img src="assets/Twitter.png" title="Share on Twitter">
                 </div>
-                <div class="cursor-pointer margin-right-16 margin-bottom-8" (click)="shareService.onPinterestClick(getProductUrl(), productInfo.product.shareImage, productInfo.product.description)">
+                <div class="social-media"
+                    (click)="shareService.onPinterestClick(getProductUrl(), productInfo.product.shareImage, productInfo.product.description)">
                     <img src="assets/Pinterest.png" title="Share on Pinterest">
                 </div>
+            </div>
+        </div>
 
-                <!-- Report item & Add to List -->
-                <div class="primary-color-light text-underline margin-left-auto">
-                    <div class="cursor-pointer font-size-2" (click)="reportItem.show = true">
-                        <i class="fas fa-flag margin-right-4"></i>
-                        <span>Report this item</span>
-                    </div>
+        <!-- Stars & Reviews -->
+        <stars [rating]="productInfo.product.rating"></stars>
+        <span class="primary-color-light" style="margin-left: 4px; white-space: nowrap;"
+            *ngIf="productInfo.product.rating > 0">
+            {{productInfo.product.totalReviews | number}} reviews
+        </span>
+
+
+        <!-- Price -->
+        <div class="niche-shack-gold-color">
+            <div *ngIf="productInfo.product.maxPrice === 0">
+                {{productInfo.product.minPrice | currency:'USD'}}
+            </div>
+            <div *ngIf="productInfo.product.maxPrice > 0">
+                {{productInfo.product.minPrice | currency:'USD'}} -
+                {{productInfo.product.maxPrice | currency:'USD'}}
+            </div>
+        </div>
+
+        <!-- Buy Button -->
+        <button class="alt-button" style="margin: 8px 0;" (click)="onBuyClick(productInfo.product.hoplink)">Visit
+            Product Page To Buy</button>
+
+
+        <!-- Description -->
+        <div class="show-lg">{{productInfo.product.description}}</div>
+
+
+        <!-- Product Utilities -->
+        <div class="show-lg">
+            <div class="product-utilities">
+                <button class="primary-button" (click)="addToList.show = true">Add to List</button>
+
+                <div class="report-item primary-color-light" (click)="reportItem.show = true">
+                    <i class="fas fa-flag"></i>
+                    <span style="margin-left: 5px;">Report this item</span>
                 </div>
             </div>
-
-            <!-- Add to list button -->
-            <button class="primary-button margin-top-8" (click)="addToList.show = true">Add to List</button>
         </div>
     </div>
 </div>
 
+
+
+
+
+
+
+<!-- Media Display -->
+<div class="media-display hide-lg">
+    <img [src]="'/images/8d5741456a824e8981efdfa348d2cb0d.jpg'">
+</div>
+
+
+
+<!-- Description -->
+<div class="hide-lg" style="margin-top: 8px;">{{productInfo.product.description}}</div>
+
+
+<!-- Product Utilities -->
+<div class="hide-lg">
+    <div class="product-utilities" style="flex-wrap: wrap">
+        <button class="primary-button margin-bottom-0-xxs margin-bottom-12" style="margin-right: 10px" (click)="addToList.show = true">Add to List</button>
+
+        <div class="report-item primary-color-light" (click)="reportItem.show = true">
+            <i class="fas fa-flag"></i>
+            <span style="margin-left: 5px;">Report this item</span>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 <report-item #reportItem></report-item>
-<add-to-list #addToList [product]="productInfo.product" (onCreateListClick)="createList.show = true; addToList.show = false"></add-to-list>
+<add-to-list #addToList [product]="productInfo.product"
+    (onCreateListClick)="createList.show = true; addToList.show = false"></add-to-list>
 <create-list #createList (onCreateListHide)="addToList.show = true"></create-list>

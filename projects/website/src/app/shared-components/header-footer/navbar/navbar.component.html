@@ -1,26 +1,26 @@
-<nav class="primary-color-gradient shadow padding-16 fixed-top display-flex align-items-center" style="min-height: 79px;">
+<nav class="primary-color-gradient shadow">
     
     <!-- Logo and menu bars -->
-    <div class="display-flex margin-bottom-8">
-        <i class="fas fa-bars margin-right-16 niche-shack-gold" (click)="navMenu.onClick()"></i>
-        <img src="assets/Logo.png" class="flex-shrink-0 margin-right-8 show-sm cursor-pointer" routerLink="" title="Niche Shack Homepage">
+    <div class="logo-container">
+        <i class="fas fa-bars niche-shack-gold-color" (click)="navMenu.onClick()"></i>
+        <img src="assets/Logo.png" class="show-sm" routerLink="" title="Niche Shack Homepage">
     </div>
     
     <!-- Container for search and navigation text -->
-    <div class="display-flex flex-fill">
+    <!-- <div class="display-flex flex-fill"> -->
 
         <!-- Search container -->
-        <div class="display-flex flex-fill">
+        <!-- <div class="display-flex flex-fill">
             <category-dropdown-button [items]="categories" [defaultIndex]="selectedCategoryIndex" class="show-xl"></category-dropdown-button>
-            <input class="flex-fill border-oval-left border-rounded-0-xl width-100" placeholder="Search">
+            <input  placeholder="Search">
             <button class="alt-button button-rounded-right"><i class="fas fa-search"></i></button>
-        </div>
+        </div> -->
 
         <!-- Navigation container -->
-        <div class="margin-left-16 margin-bottom-n2 show-md">
+        <!-- <div class="margin-left-16 margin-bottom-n2 show-md">
             <div class="text-truncate show-md customer-name">{{customerName ? 'Hello, ' + customerName : 'Sign in'}}</div>
-            <div class="display-flex niche-shack-gold text-nowrap">
-                <div class="margin-right-48-md margin-top-16 margin-top-0-md position-relative cursor-pointer" (click)="accountMenu.onClick()" (mousedown)="accountMenu.onMousedown()">
+            <div class="display-flex niche-shack-gold-color text-nowrap">
+                <div class="margin-right-48-md margin-top-16 margin-top-0-md" (click)="accountMenu.onClick()" (mousedown)="accountMenu.onMousedown()">
                     Account
                     <div class="arrow-down"></div>
                     <account-menu #accountMenu></account-menu>
@@ -28,9 +28,9 @@
                 <a class="margin-right-48-lg" routerLink="/account/orders">Your Orders</a>
                 <a class="show-lg" href="https://www.clkbank.com">Order Support</a>
             </div>
-        </div>
+        </div> -->
         
-    </div>
+    <!-- </div> -->
 </nav>
 
 <nav-menu #navMenu></nav-menu>

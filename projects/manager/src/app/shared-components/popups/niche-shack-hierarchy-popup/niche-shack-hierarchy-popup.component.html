@@ -1,9 +1,9 @@
 <popup #popup (onPopupClose)="show = false">
     <!-- Search bar & filter menu -->
-    <div class="position-relative">
+    <div style="position: relative;">
         <!-- Search bar -->
         <div class="search-bar">
-            <input #searchInput id="search-input" class="border-oval-left" autocomplete="off">
+            <input #searchInput id="search-input" autocomplete="off">
             <div (mousedown)="showMenu = true">{{getItemName(filterType)}}</div>
         </div>
 
@@ -84,7 +84,7 @@
 
         <ng-template #loading>
             <div class="loading-container">
-                <i class="fas fa-spinner fa-pulse font-size-3"></i>
+                <i class="fas fa-spinner fa-pulse"></i>
             </div>
         </ng-template>
 

@@ -27,6 +27,11 @@ $fixed-width: 88%;
         }
     }
 
+    .caption {
+        margin: auto;
+        margin-bottom: 16px;
+    }
+
     form {
         border: 1px solid $validation-form-color;
         border-radius: $border-radius;
@@ -63,5 +68,15 @@ $fixed-width: 88%;
 
     .error {
         color: $error-color;
+    }
+
+    .footer {
+        text-align: center;
+        margin: 16px 0;
+        text-decoration: underline;
+        color: #545454;
+        a:first-child {
+            margin-right: 16px;
+        }
     }
 }

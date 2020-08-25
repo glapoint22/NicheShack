@@ -13,7 +13,7 @@
 }
 
 @include generate-colors($primary-color-map, 'primary');
-@include generate-colors($niche-shack-gold-map, 'alt');
+@include generate-colors($niche-shack-gold-map, 'niche-shack-gold');
 
 .background-color-dark-gray {
     background-color: $dark-gray-color;

@@ -1,5 +1,16 @@
 @import "../../../../../scss/variables";
 
+.close-container {
+    padding: 8px 0;
+    overflow: auto;
+    display: flex;
+    justify-content: flex-end;
+
+    .fa-times {
+        margin-right: 8px;
+    }
+}
+
 .modal-background {
     top: 79px;
     z-index: 90;
@@ -15,6 +26,40 @@
         max-width: 270px;
     }
 }
+
+.menu-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 40px;
+}
+
+.fa-arrow-left {
+    font-size: 16px;
+}
+
+.heading {
+    padding-left: 8px;
+    color: $niche-shack-gold;
+
+    &:not(:first-child) {
+        margin-top: 24px;
+    }
+}
+
+.menu-item {
+    padding: 4px 4px 4px 8px;
+    cursor: pointer;
+    color: white;
+
+    &:hover {
+        background-color: #680059;
+    }
+}
+
+
 
 .fa-times {
     font-size: 1rem;

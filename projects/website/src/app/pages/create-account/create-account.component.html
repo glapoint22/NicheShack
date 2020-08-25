@@ -56,9 +56,9 @@
         <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="account.password" name="password"
             #_password="ngModel" autocomplete="off">
 
-        <div class="fixed-width margin-auto margin-top-n3 margin-bottom-16 font-size-2">
-            <i class="fas fa-info margin-right-8 primary-color-light font-italic"></i>
-            <span class="niche-shack-gold">Passwords must be at least 6 characters.</span>
+        <div class="fixed-width password-info">
+            <i class="fas fa-info primary-color-light"></i>
+            <span class="niche-shack-gold-color">Passwords must be at least 6 characters.</span>
         </div>
 
 
@@ -75,7 +75,7 @@
 
 
         <!-- Disclaimer -->
-        <div class="text-center font-size-2 gray-color margin-8">
+        <div class="disclaimer gray-color">
             <span>By clicking Create Account, you acknowledge you have read and agreed to our </span><a style="text-decoration: underline;"
                 routerLink="/terms">Terms of Use</a><span> and </span><a style="text-decoration: underline;" routerLink="/privacy-policy">Privacy
                 Policy</a>
@@ -87,12 +87,12 @@
         <hr>
 
 
-        <div class="text-center margin-bottom-4">Already have an account?</div>
+        <div style="text-align: center; margin-bottom: 4px;">Already have an account?</div>
         <button type="button" (click)="onSignInClick()">Sign in</button>
     </form>
 
-    <div class="text-center margin-top-16 margin-bottom-16 text-underline disabled-color">
-        <a class="margin-right-16" routerLink="/terms">Terms of Use</a>
+    <div class="footer">
+        <a routerLink="/terms">Terms of Use</a>
         <a routerLink="/privacy-policy">Privacy Policy</a>
     </div>
 </div>

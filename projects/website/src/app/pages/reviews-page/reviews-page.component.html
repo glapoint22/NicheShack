@@ -6,40 +6,32 @@
             <div class="content" style="max-width: 1200px;">
                 <h1>Customer Reviews</h1>
 
-                <div class="display-flex flex-wrap margin-bottom-16">
-                    <img [src]="'/images/' + product.image" class="width-100 height-100 margin-right-16 margin-bottom-16" style="max-width: 200px;">
+                
+                <div class="product-container">
 
-                    <!-- Product -->
-                    <div>
-                        <div class="text-break font-size-5 font-bold white-color">
-                            {{product.title}}
+                    <!-- Title -->
+                    <div class="title text-break">{{product.title}}</div>
+
+                    <!-- Price -->
+                    <!-- <div class="niche-shack-gold-color">
+                        <div *ngIf="product.maxPrice === 0">
+                            {{product.minPrice | currency:'USD'}}
                         </div>
-
-                        <!-- Price -->
-                        <div class="niche-shack-gold">
-                            <div *ngIf="product.maxPrice === 0">
-                                {{product.minPrice | currency:'USD'}}
-                            </div>
-                            <div *ngIf="product.maxPrice > 0">
-                                {{product.minPrice | currency:'USD'}} -
-                                {{product.maxPrice | currency:'USD'}}
-                            </div>
+                        <div *ngIf="product.maxPrice > 0">
+                            {{product.minPrice | currency:'USD'}} -
+                            {{product.maxPrice | currency:'USD'}}
                         </div>
-                    </div>
+                    </div> -->
 
+                    <!-- Image -->
+                    <img [src]="'/images/8d5741456a824e8981efdfa348d2cb0d.jpg'">
                 </div>
-
-
-
-
 
                 <!-- Reviews -->
                 <reviews [product]="product" [paging]="true"></reviews>
 
                 <navfooter></navfooter>
             </div>
-
-
         </div>
     </div>
 </ng-container>

@@ -1,0 +1,16 @@
+@import '../../../../scss/variables';
+
+.collaborator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid $border-color;
+    color: $niche-shack-gold;
+
+    .fa-trash-alt {
+        color: #c1c1c1;
+        font-size: 18px;
+        cursor: pointer;
+    }
+}

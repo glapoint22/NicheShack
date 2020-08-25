@@ -63,6 +63,10 @@ $product-width: 216px;
 }
 
 
+.border-bottom {
+    border-bottom: 1px solid $border-color;
+}
+
 
 @each $key, $value in $breakpoints {
     @if($value >= map-get($breakpoints, md)) {
@@ -79,6 +83,10 @@ $product-width: 216px;
             
                 .left-button, .right-button {
                     visibility: visible;
+                }
+
+                .border-none {
+                    border: none;
                 }
             }
 

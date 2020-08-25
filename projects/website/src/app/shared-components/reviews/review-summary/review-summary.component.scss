@@ -1,13 +1,32 @@
 @import '../../../../scss/variables';
 
-.bar-base {
-    width: 200px;
-    height: 15px;
-    background: $border-color;
-    border-radius: 10px;
-    .bar {
-        height: 15px;
-        background: $niche-shack-gold;
-        border-radius: 10px;
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .rating-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .bars-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+
+            .bar-base {
+                width: 200px;
+                height: 15px;
+                background: $border-color;
+                border-radius: 10px;
+                .bar {
+                    height: 15px;
+                    background: $niche-shack-gold;
+                    border-radius: 10px;
+                }
+            }
+        }
     }
 }

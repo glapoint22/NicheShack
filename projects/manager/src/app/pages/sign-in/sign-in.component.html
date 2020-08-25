@@ -19,8 +19,8 @@
 
         <!-- Password -->
         <div *ngIf="valid(password); else invalidPassword" class="margin-auto" style="width: 88%">
-            <h4 class="display-inline">Password:</h4>
-            <a class="niche-shack-gold float-right font-size-2" style="text-decoration: underline;" tabindex="10"
+            <h4 style="display: inline;">Password:</h4>
+            <a style="text-decoration: underline; float: right; font-size: 12px;" tabindex="10"
                 routerLink="/forgot-password">Forgot your password?</a>
         </div>
 
@@ -28,9 +28,8 @@
         <!-- Invalid password -->
         <ng-template #invalidPassword>
             <h4 class="error">Passwords must be at least 6 characters.</h4>
-            <a class="niche-shack-gold font-size-2 margin-auto display-block"
-                style="text-decoration: underline; width: 88%; margin-bottom: 5px;" tabindex="10"
-                routerLink="/forgot-password">Forgot your password?</a>
+            <a style="text-decoration: underline; width: 88%; margin-bottom: 5px; display: block; margin: auto; font-size: 12px;"
+                tabindex="10" routerLink="/forgot-password">Forgot your password?</a>
         </ng-template>
         <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="account.password" name="password"
             #password="ngModel">

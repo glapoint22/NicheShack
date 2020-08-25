@@ -19,9 +19,9 @@
     </div>
 
     <!-- Notifications -->
-    <div class="icon-container position-relative"
+    <div class="icon-container"
             (click)="showNotificationsPopup(bell)">
-        <i #bell class="fas fa-bell font-size-4"></i>
+        <i #bell class="fas fa-bell"></i>
         <div *ngIf="notificationService.newNotifications.length + notificationService.pendingNotifications.length > 0"
             class="notification-circle">
             <div>{{notificationService.newNotifications.length + notificationService.pendingNotifications.length}}

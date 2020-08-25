@@ -59,14 +59,13 @@
 
 
 
-        .img-container {
+        .media-container {
             width: 100%;
             max-width: 880px;
             max-height: 500px;
             display: flex;
             justify-content: center;
             align-items: center;
-            // margin: 0 15px;
             margin-right: 15px;
             flex: 1;
     
@@ -133,6 +132,12 @@
         color: $niche-shack-gold;
         margin-top: 48px;
     }
+
+    .product-content-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
     
     .price-points-container {
         margin-bottom: 24px;
@@ -150,8 +155,6 @@
             background: #242424;
             border-bottom: 1px solid #464646;
         }
-
-        
     }
 
     .content-item {

@@ -1,0 +1,21 @@
+@import '../../../scss/variables';
+
+.review {
+    border: 1px solid $border-color;
+    padding: 8px;
+    background-color: $dark-gray-color;
+}
+
+.reviews-header {
+    margin: 16px 0 24px;
+    border-top: 1px solid $border-color;
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.like {
+    margin-bottom: 8px;
+    font-style: italic;
+}

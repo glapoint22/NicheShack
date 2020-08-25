@@ -1,10 +1,10 @@
-<div class="width-100 display-flex justify-content-center">
-    <div *ngIf="product.rating > 0; else noRating" class="display-flex flex-wrap justify-content-center">
+<div class="container">
+    <div *ngIf="product.rating > 0; else noRating" class="rating-container">
 
         <!-- Rating & Stars -->
-        <div class="text-center margin-right-16-sm width-100 width-auto-sm">
-            <div class="display-flex align-items-center justify-content-center">
-                <div style="font-size: 46px" class="niche-shack-gold font-bold margin-right-8">
+        <div class="margin-right-16-sm width-100 width-auto-sm" style="text-align: center;">
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <div class="niche-shack-gold-color" style="font-size: 46px; font-weight: bold; margin-right: 8px;">
                     {{product.rating | number:'1.1-1'}}</div>
 
                 <div>
@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <button class="alt-button width-100-sm margin-bottom-16"
+            <button class="alt-button width-100-sm" style="margin-bottom: 16px;"
                     (click)="onWriteReviewClick(product.id)">Write a Review</button>
         </div>
 
@@ -22,14 +22,14 @@
 
         <!-- bars -->
         <div>
-            <div class="display-flex align-items-center flex-wrap justify-content-center"
+            <div class="bars-container"
                 *ngFor="let stat of reviewStats; let i = index">
                 <div style="width:50px">{{stat.name}}</div>
                 <div class="bar-base">
                     <div class="bar" [style.width.px]="stat.percentage * 2"></div>
                 </div>
 
-                <div class="margin-left-4 show-xs">
+                <div class="show-xs" style="margin-left: 4px;">
                     {{(stat.percentage)}}%
                 </div>
             </div>
@@ -39,7 +39,7 @@
     <!-- No Rating -->
     <ng-template #noRating>
         <div class="text-center">
-            <div class="primary-color-light margin-bottom-8">Be the first to review this item!</div>
+            <div class="primary-color-light" style="margin-bottom: 8px;">Be the first to review this item!</div>
             <button class="alt-button" (click)="onWriteReviewClick(product.id)">Write a Review</button>
         </div>
 

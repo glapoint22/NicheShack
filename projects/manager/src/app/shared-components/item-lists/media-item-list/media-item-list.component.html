@@ -33,7 +33,7 @@
                                   'transparent-listItem': indexOfEditedListItem != null && indexOfEditedListItem != listItemIndex}">
                 </div> 
                 <div *ngIf="(listItemIndex == 0 && addingMediaInProgress) || (listItem.selected && updatingMediaInProgress)" style="width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;">
-                    <i  class="fas fa-spinner fa-pulse font-size-3"></i>
+                    <i  class="fas fa-spinner fa-pulse"></i>
                 </div>  
             </td>
 
@@ -57,7 +57,7 @@
 
     <div *ngIf="(movingMediaInProgress && listItem.selected) || listItem.loading" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 42px; height: 42px; right: 12px;" [style.top.px]="(listItemIndex * 42) - overflowContainer.scrollTop">
 
-        <i  class="fas fa-spinner fa-pulse font-size-3"></i>
+        <i  class="fas fa-spinner fa-pulse"></i>
 
     </div>
 </ng-container>

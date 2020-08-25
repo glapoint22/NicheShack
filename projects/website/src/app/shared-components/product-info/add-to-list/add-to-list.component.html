@@ -1,4 +1,5 @@
-<div #modal *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onShow)="setDefault()" (onHide)="show = false">
+<div #modal *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0"
+    (onShow)="setDefault()" (onHide)="show = false">
     <div class="prompt" (mousedown)="$event.stopPropagation()">
         <div class="title-bar">
             Add to List
@@ -9,49 +10,38 @@
 
         <div class="prompt-content">
 
-            <div class="display-flex margin-bottom-16">
-                <img [src]="'/images/' + product.image" class="width-50">
-                <h2 class="text-break white-color margin-left-8">{{product.title}}</h2>
-            </div>
+            <!-- Title & Image -->
+            <div class="title text-truncate">{{product.title}}</div>
+            <img [src]="'/images/8d5741456a824e8981efdfa348d2cb0d.jpg'">
 
+            <!-- Not submitted -->
             <ng-container *ngIf="!submitted; else isSubmitted">
-                <select [(ngModel)]="selectedList" class="width-100">
+                <select [(ngModel)]="selectedList">
                     <option *ngFor="let list of lists" [ngValue]="list">{{list.value}}</option>
                 </select>
 
-                <div class="margin-top-16">
-                    <button class="primary-button" (click)="onCreateListClick.emit()">Create a List</button>
-                    <div class="float-right">
-                        <button class="margin-right-8" (click)="show = false">Cancel</button>
-
-                        <button class="alt-button" (click)="onSubmit(); modal.focus()"
-                            [disabled]="selectedList.value === 'Select your list'">Submit</button>
-                    </div>
+                <!-- Buttons -->
+                <div class="button-container">
+                    <button class="primary-button" (click)="onCreateListClick.emit()">Create List</button>
+                    <button (click)="show = false">Cancel</button>
+                    <button class="alt-button" (click)="onSubmit(); modal.focus()"
+                        [disabled]="selectedList.value === 'Select your list'">Submit</button>
                 </div>
             </ng-container>
 
 
+            <!-- Submitted -->
             <ng-template #isSubmitted>
-                <h4 class="margin-bottom-16 text-center niche-shack-gold">
+                <h4 style="text-align: center; margin-bottom: 10px;">
                     This item was added to {{selectedList.value}}.
                 </h4>
 
-                <div class="float-right">
-                    <button class="margin-right-8" (click)="show = false">Done</button>
-
-                    <button class="alt-button">View List</button>
+                <div class="button-container" style="justify-content: flex-end;">
+                    <button (click)="show = false">Done</button>
+                    <button class="alt-button" style="margin-left: 5px">View List</button>
                 </div>
 
             </ng-template>
-
-
-
-
-
-
-
-
-
         </div>
     </div>
 </div>

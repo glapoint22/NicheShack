@@ -10,8 +10,8 @@
 
 
     <!-- Resent code -->
-    <div *ngIf="resentCode" class="margin-bottom-24 border border-niche-shack-gold border-rounded padding-16">
-        <i class="fas fa-check margin-right-8 success-color"></i>
+    <div *ngIf="resentCode" class="resent-code">
+        <i class="fas fa-check"></i>
         A verification code has been sent to {{email}}.
     </div>
 
@@ -20,7 +20,7 @@
         <h1>Verification</h1>
 
         <!-- Caption -->
-        <div class="fixed-width margin-auto margin-bottom-16">Please enter the code we sent to {{email}} to verify your
+        <div class="fixed-width caption">Please enter the code we sent to {{email}} to verify your
             identity.</div>
 
 
@@ -38,13 +38,14 @@
         <!-- Continue button -->
         <button class="alt-button">Continue</button>
 
-        <div class="niche-shack-gold text-underline margin-bottom-16 cursor-pointer text-center" (click)="onResendCodeClick()">
+        <div class="niche-shack-gold-color resend-code-text"
+            (click)="onResendCodeClick()">
             Resend code
         </div>
     </form>
 
-    <div class="text-center margin-top-16 margin-bottom-16 text-underline disabled-color">
-        <a class="margin-right-16" routerLink="/terms">Terms of Use</a>
+    <div class="footer">
+        <a routerLink="/terms">Terms of Use</a>
         <a routerLink="/privacy-policy">Privacy Policy</a>
     </div>
 </div>

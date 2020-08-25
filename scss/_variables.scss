@@ -68,21 +68,3 @@ $sizes: (
 
 // Displays
 $displays: inline, inline-block, block, table, table-row, table-cell, flex, inline-flex;
-
-// Positions
-$positions: static, relative, absolute, fixed, sticky;
-
-// Overflows
-$overflows: auto, hidden;
-
-// Font Sizes
-$font-sizes: (
-    1: 0.5,
-    2: 0.75,
-    3: 1,
-    4: 1.25,
-    5: 1.5,
-    6: 1.75,
-    7: 2,
-    8: 3
-);

@@ -2,11 +2,49 @@
 
 $img-size: 60px;
 
-input[type="text"] {
-    height: 34px;
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+
+    .fa-bars {
+        font-size: 20px;
+        color: $niche-shack-gold;
+    }
+
+    form {
+        display: flex;
+        align-items: center;
+    }
 }
 
+.products-matching {
+    margin-bottom: 8px;
+    color: $gray-color;
+}
+
+
+input[type="text"] {
+    height: 34px;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    padding-left: 16px;
+    width: 100%;
+}
+
+
+
+
+
 .img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px;
+    flex-shrink: 0;
+    cursor: pointer;
     width: $img-size;
     height: $img-size;
     img {
@@ -28,27 +66,168 @@ h4, h1 {
 }
 
 
-.purchase-info {
+.purchase-info-container {
     min-width: initial;
     padding: 0.5rem;
     flex: 1;
 
-    .line-item {
+    .purchase-info {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        height: 100%;
         justify-content: space-between;
-        div:first-child {
-            color: $gray-color;
-            margin-right: 10px;
+
+        .line-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            div:first-child {
+                color: $gray-color;
+                margin-right: 10px;
+            }
+            div:last-child {
+                color: $niche-shack-gold;
+            }
         }
-        div:last-child {
+    }
+
+    
+}
+
+
+.filter-menu {
+    width: 100%;
+    background-color: $default-background-color-dark;
+    position: fixed;
+    border: 1px solid $primary-color;
+    outline: 0;
+    z-index: 1000;
+    min-height: 100%;
+
+    .close-header {
+        background-color: $dark-gray-color;
+        padding: 8px 0;
+        overflow: auto;
+        display: flex;
+        justify-content: flex-end;
+
+        .fa-times {
+            margin-right: 8px;
             color: $niche-shack-gold;
         }
     }
 }
 
+
+.mobile-orders {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top:30px;
+
+    .overflow-container {
+        overflow: auto;
+        padding: 8px;
+        height: 100%;
+        position: relative;
+
+        h3 {
+            color: $niche-shack-gold;
+        }
+
+        .apply-button {
+            background-color: $dark-gray-color;
+            position: fixed;
+            text-align: center;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            button {
+                margin-top: 8px;
+                width: 95%;
+            }
+        }
+    }
+}
+
+.no-orders {
+    text-align: center;
+    margin-top: 48px;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    padding: 24px;
+    color: #c3c3c3
+}
+
+.navigation-box {
+    border: 1px solid $border-color;
+    border-bottom: none;
+    padding: 16px;
+    background-color: $default-background-color-dark;
+
+    .fa-chevron-right, .fa-chevron-left {
+        font-size: 20px;
+        color: $niche-shack-gold;
+    }
+}
+
+
+.order-container {
+    background-color: $dark-gray-color;
+    padding: 8px;
+    border: 1px solid $border-color;
+    border-bottom: none;
+    justify-content: space-between;
+}
+
+
+.order-info-container {
+    border: 1px solid $border-color;
+    display: flex;
+    margin-bottom: 24px;
+    justify-content: space-between;
+
+    .product-info {
+        margin: 8px 8px 0 0;
+    }
+}
+
+.product-title {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.products-container {
+    border-top: 1px solid $border-color;
+    margin-top: 16px;
+
+    .product {
+        display: flex;
+        border-bottom: 1px solid $border-color;
+        padding: 16px;
+
+        .view-order {
+            display: inline-block;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+        
+        .alt-button {
+            display: block;
+        }
+    }
+}
+
 @media (min-width: map-get($breakpoints, sm)) {
-    .purchase-info {
+    .purchase-info-container {
         min-width: 250px;
     }
 }

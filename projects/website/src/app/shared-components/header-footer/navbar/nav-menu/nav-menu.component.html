@@ -4,30 +4,30 @@
     <div class="menu" (mousedown)="$event.stopPropagation()">
         
         <!-- Close -->
-        <div class="background-color-dark-gray padding-top-8 padding-bottom-8 overflow-auto">
-            <i (click)="show = false" class="fas fa-times margin-right-8 niche-shack-gold float-right"></i>
+        <div class="close-container background-color-dark-gray">
+            <i (click)="show = false" class="fas fa-times niche-shack-gold-color"></i>
         </div>
 
 
         <!-- Content -->
-        <div class="position-absolute-identity" style="top: 40px;">
-            <div class="height-100 overflow-auto">
+        <div class="menu-content">
+            <div style="height: 100%; overflow: auto;">
 
                 <!-- Account & Categories -->
                 <div *ngIf="!nicheView">
                     <!-- Account Heading -->
-                    <h3 class="padding-left-8 niche-shack-gold">Account</h3>
+                    <h3 class="heading">Account</h3>
 
                     <!-- Account Navigation -->
                     <account-navigation></account-navigation>
 
                     <!-- Heading -->
-                    <h3 class="padding-left-8 niche-shack-gold margin-top-24">Categories</h3>
+                    <h3 class="heading">Categories</h3>
 
 
                     <!-- Categories -->
                     <div *ngFor="let category of categories"
-                        class="padding-4 padding-left-8 primary-background-color-dark-hover cursor-pointer"
+                        class="menu-item"
                         (click)="onCategoryClick(category.id)">
                         <span>{{category.name}}</span>
                     </div>
@@ -38,19 +38,19 @@
                 <div *ngIf="nicheView">
 
                     <!-- Main Menu -->
-                    <div class="border-bottom  margin-bottom-8 margin-top-8 padding-8 primary-background-color-dark-hover cursor-pointer"
+                    <div class="menu-item"
                         (click)="nicheView = false">
-                        <i class="fas fa-arrow-left font-size-3">
+                        <i class="fas fa-arrow-left">
                             Main Menu
                         </i>
                     </div>
 
                     <!-- Category Heading -->
-                    <h3 class="padding-left-8 niche-shack-gold margin-top-24">{{currentCategory.name}}</h3>
+                    <h3 class="heading">{{currentCategory.name}}</h3>
 
                     <!-- Niches -->
                     <div *ngFor="let niche of niches"
-                        class="padding-4 padding-left-8 primary-background-color-dark-hover cursor-pointer"
+                        class="menu-item"
                         (click)="onNicheClick(niche.id)">
                         <span>{{niche.name}}</span>
                     </div>

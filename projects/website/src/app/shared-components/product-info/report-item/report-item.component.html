@@ -35,8 +35,8 @@
 
 
                 <!-- Buttons -->
-                <div class="float-right">
-                    <button class="margin-right-8" (click)="show = false">Cancel</button>
+                <div style="float: right;">
+                    <button style="margin-right: 8px" (click)="show = false">Cancel</button>
 
                     <button class="alt-button" (click)="onSubmit(); modal.focus()"
                         [disabled]="selectedWhatOption.name === 'What is the issue?'">Submit</button>
@@ -45,13 +45,13 @@
 
 
             <ng-template #isSubmitted>
-                <h2 class="niche-shack-gold">Thank You!</h2>
+                <h2 class="niche-shack-gold-color">Thank You!</h2>
 
-                <div class="margin-bottom-16">
+                <div style="margin-bottom: 16px;">
                     Your feedback helps us make Niche Shack shopping better for millions of customers.
                 </div>
 
-                <button class="alt-button float-right" (click)="show = false">Done</button>
+                <button class="alt-button" style="float: right" (click)="show = false">Done</button>
             </ng-template>
 
 

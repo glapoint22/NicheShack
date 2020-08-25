@@ -10,16 +10,21 @@
         width: 100px;
         height: auto;
         flex-shrink: 0;
+        margin-bottom: 8px;
+        text-align: center;
         img {
             max-width: 100px;
             max-height: 100px;
         }
     }
 
-    &:hover {
-        .quick-look {
-            visibility: visible;
-        }
+    .title {
+        font-weight: bold;
+    }
+
+    .reviews {
+        white-space: nowrap;
+        margin-left: 4px;
     }
 }
 
@@ -52,22 +57,4 @@
             }
         }
     }
-}
-
-// .product:hover .quick-look {
-//     visibility: visible;
-// }
-
-.quick-look {
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 90%;
-    text-align: center; 
-    font-weight: bold;
-    visibility: hidden;
-    padding: 0.25rem;
-    line-height: 22px;
 }

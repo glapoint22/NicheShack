@@ -9,13 +9,13 @@
         <!-- Products -->
         <div *ngFor="let product of products; let i = index">
             <div *ngIf="i < (showAll ? products.length : 4)"
-                class="product-container border-bottom  border-none-md padding-bottom-8 padding-bottom-0-md">
-                <product [product]="product" (quickLookClick)="quickLook.show($event)"></product>
+                class="product-container border-bottom  border-none padding-bottom-8 padding-bottom-0-md">
+                <product [product]="product"></product>
             </div>
         </div>
 
         <!-- See more/See less -->
-        <div (click)="showAll = !showAll" class="hide-md margin-bottom-16 niche-shack-gold width-100 text-center">
+        <div (click)="showAll = !showAll" class="hide-md margin-bottom-16 niche-shack-gold-color width-100 text-center">
             {{showAll ? 'See less' : 'See more'}}</div>
     </div>
 
@@ -24,5 +24,3 @@
     <div class="right-button" *ngIf="!isLastPage(container.offsetWidth)"
         (click)="onRightButtonClick(container.offsetWidth)"></div>
 </div>
-
-<quick-look #quickLook></quick-look>

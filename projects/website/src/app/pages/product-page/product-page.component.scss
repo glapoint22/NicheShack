@@ -1,0 +1,37 @@
+@import '../../../scss/variables';
+
+.price-point-container {
+    margin: 0 8px 24px 8px;
+    border: 1px solid $border-color;
+
+    .price-point {
+        color: $niche-shack-gold;
+        font-size: 16px;
+        font-weight: bold;
+        border-bottom: 1px solid $border-color;
+        text-align: center;
+        padding: 8px;
+        background-color: $dark-gray-color;
+    }
+}
+
+.content {
+    max-width: 928px;
+}
+
+.content-heading {
+    margin-top: 48px;
+    color: white;
+}
+
+.product-content-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+    .content {
+        max-width: 1800px;
+    }
+}
