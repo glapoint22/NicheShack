@@ -11,7 +11,7 @@ export class ContextMenuComponent {
   constructor(public menuService: MenuService) { }
   public menuOptionType = MenuOptionType;
 
-  // -----------------------------( HOST LISTENER )------------------------------ \\
+  // -----------------------------( KEY DOWN )------------------------------ \\
   @HostListener('keydown', ['$event'])
   onKeydown(event: KeyboardEvent) {
     if (event.code === 'Escape' || event.keyCode === 27) {

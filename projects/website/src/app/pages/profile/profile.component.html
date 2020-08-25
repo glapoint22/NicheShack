@@ -4,7 +4,7 @@
     <div class="content-container">
         <!-- Content -->
         <div class="content" style="max-width: 700px;">
-            
+
             <!-- breadcrumb -->
             <div class="breadcrumb">
                 <a routerLink="/account">Your Account</a>
@@ -14,7 +14,8 @@
 
 
             <!-- Account Updated -->
-            <div *ngIf="accountUpdated" class="margin-bottom-24 border border-niche-shack-gold border-rounded padding-16">
+            <div *ngIf="accountUpdated"
+                class="margin-bottom-24 border border-niche-shack-gold border-rounded padding-16">
                 <i class="fas fa-check margin-right-8 success-color"></i>
                 All changes have been successfully saved.
             </div>
@@ -25,8 +26,7 @@
 
 
             <!-- Name -->
-            <div
-                class="display-flex align-items-center border-top border-bottom padding-top-8 padding-bottom-8">
+            <div class="display-flex align-items-center border-top border-bottom padding-top-8 padding-bottom-8">
                 <div class="flex-fill">
                     <div class="niche-shack-gold">Name:</div>
                     <div class="text-truncate max-width">{{customer.firstName}} {{customer.lastName}}</div>
@@ -60,7 +60,35 @@
             </div>
 
 
+            <!-- Password -->
+            <div class="display-flex align-items-center border-bottom  padding-top-8 padding-bottom-8">
+                <div class="flex-fill">
+
+                    <div style="display: flex; align-items: center;">
+
+
+                        <div class="niche-shack-gold">Profile Picture:</div>
+
+
+                        <div style="margin-left: 8px; border-radius: 20px; background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center center; width: 40px; height: 40px;"
+                            [ngStyle]="{ 'background-image': 'url(images/bron.png'}"></div>
+
+                        <input #pictureSelectInput type="file" 
+                            style="width: 0; height: 0; visibility: hidden;"
+                            (change)="onPictureSelect($event, editProfilePicture)">
+                    </div>
+
+
+                </div>
+                <button class="alt-button" (click)="onEditProfilePictureClick(pictureSelectInput)">Edit</button>
+            </div>
+
+
         </div>
-        <navfooter></navfooter>
+        <!-- <navfooter></navfooter> -->
     </div>
 </div>
+
+<edit-profile-picture #editProfilePicture></edit-profile-picture>
