@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Customer } from 'classes/customer';
 import { AccountService } from 'services/account.service';
+import { EditProfilePictureComponent } from './edit-profile-picture/edit-profile-picture.component';
 
 @Component({
   templateUrl: './profile.component.html',
@@ -14,6 +15,7 @@ import { AccountService } from 'services/account.service';
 export class ProfileComponent extends PageComponent implements OnInit, OnDestroy {
   public accountUpdated: boolean;
   public customer: Customer = new Customer();
+  public showEditProfilePictureForm: boolean = false;
   private subscription: Subscription;
 
   constructor(
@@ -49,4 +51,15 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
     this.subscription.unsubscribe();
   }
 
+
+  onEditProfilePictureClick(pictureSelectInput) {
+    pictureSelectInput.click();
+  }
+
+
+
+  onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }, pictureSelectInput: EditProfilePictureComponent) {
+      pictureSelectInput.picUrl = event.target.files[0].name;
+      pictureSelectInput.show = true;
+  }
 }
