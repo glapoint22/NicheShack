@@ -1,32 +1,9 @@
-// Alignment
-.text-justify  { text-align: justify; }
-.text-wrap     { white-space: normal; }
-.text-nowrap   { white-space: nowrap; }
 .text-truncate { 
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-// Responsive alignment
-@each $key in map-keys($breakpoints) {
-    @include media-breakpoint($key) {
-        $extension: get-class-extension($key);
-
-        .text-left#{$extension}   { text-align: left; }
-        .text-right#{$extension}  { text-align: right; }
-        .text-center#{$extension} { text-align: center; }
-    }
-}
-
-// Weight and italics
-.font-weight-bold    { font-weight: bold; }
-.font-italic         { font-style: italic; }
-
-// Misc
-.text-decoration-none { text-decoration: none; }
-.text-underline {text-decoration: underline;}
-.text-hover-underline:hover {text-decoration: underline;}
 
 .text-break {
     word-break: break-word; // IE & < Edge 18

@@ -55,7 +55,7 @@
 
 
                         <!-- Manage list links -->
-                        <div class="links primary-color-light">
+                        <div class="links">
 
                             <!-- Non mobile -->
                             <div class="show-sm">
@@ -152,7 +152,8 @@
                                         <ng-container *ngIf="products.length > 0; else noProducts">
 
                                             <!-- Sort -->
-                                            <select class="margin-left-auto-sm" style="margin-bottom: 8px; display: block;"
+                                            <select class="margin-left-auto-sm"
+                                                style="margin-bottom: 8px; display: block;"
                                                 [(ngModel)]="selectedSortOption" (change)="setSort()">
                                                 <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">
                                                     Sort by {{sortOption.key}}</option>
@@ -190,7 +191,8 @@
                                                                     <stars style="margin-right: 4px; display: block;"
                                                                         [rating]="product.rating">
                                                                     </stars>
-                                                                    <span class="primary-color-light" style="white-space: nowrap;"
+                                                                    <span class="primary-color-light"
+                                                                        style="white-space: nowrap;"
                                                                         *ngIf="product.rating > 0">
                                                                         {{product.totalReviews | number}} reviews
                                                                     </span>
@@ -214,8 +216,8 @@
 
                                                             <!-- Product Management -->
                                                             <div class="product-management align-items-end-md">
-                                                                <div class="gray-color" style="margin-bottom: 4px;">Item
-                                                                    added
+                                                                <div class="gray-color" style="margin-bottom: 4px;">
+                                                                    Added
                                                                     {{product.dateAdded}}
                                                                 </div>
                                                                 <div class="gold-text" style="margin-bottom: 4px;">
@@ -225,6 +227,7 @@
                                                                     (click)="onBuyClick(product.hoplink)">Visit
                                                                     Product Page To Buy</button>
 
+                                                                <!-- Button Container -->
                                                                 <div class="button-container">
                                                                     <dropdown-button [caption]="'Move'"
                                                                         style="width: 95px" [items]="moveToLists"

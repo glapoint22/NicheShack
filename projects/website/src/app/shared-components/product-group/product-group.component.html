@@ -4,23 +4,29 @@
     <div class="page-section">{{caption}}</div>
 
     <!-- Slider -->
-    <div #slider class="slider justify-content-center justify-content-start-md" [style.transform]="'translateX(-' + translate + 'px)'">
+    <div #slider class="slider justify-content-center justify-content-start-md"
+        [style.transform]="'translateX(-' + translate + 'px)'">
 
         <!-- Products -->
         <div *ngFor="let product of products; let i = index">
             <div *ngIf="i < (showAll ? products.length : 4)"
-                class="product-container border-bottom  border-none padding-bottom-8 padding-bottom-0-md">
+                class="product-container border-bottom border-none padding-bottom-8 padding-bottom-0-md">
                 <product [product]="product"></product>
             </div>
         </div>
 
         <!-- See more/See less -->
-        <div (click)="showAll = !showAll" class="hide-md margin-bottom-16 niche-shack-gold-color width-100 text-center">
+        <div (click)="showAll = !showAll" class="hide-md margin-bottom-16 niche-shack-gold-color"
+            style="width: 100%; text-align: center">
             {{showAll ? 'See less' : 'See more'}}</div>
     </div>
 
     <!-- Buttons -->
-    <div class="left-button" *ngIf="translate != 0" (click)="onLeftButtonClick()"></div>
+    <div class="left-button" *ngIf="translate != 0" (click)="onLeftButtonClick()">
+        <i class="fas fa-caret-left"></i>
+    </div>
     <div class="right-button" *ngIf="!isLastPage(container.offsetWidth)"
-        (click)="onRightButtonClick(container.offsetWidth)"></div>
+        (click)="onRightButtonClick(container.offsetWidth)">
+        <i class="fas fa-caret-right"></i>
+    </div>
 </div>

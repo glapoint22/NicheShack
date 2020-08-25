@@ -17,6 +17,7 @@
 }
 a {
     margin-right: 0.6rem;
+    text-decoration: none;
 }
 
 footer {
@@ -38,5 +39,7 @@ footer {
         position: absolute;
         bottom: 0;
         right: 0;
+        text-align: left;
+        margin-right: 24px;
     }
 }

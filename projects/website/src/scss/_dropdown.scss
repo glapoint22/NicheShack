@@ -2,7 +2,7 @@
     position: absolute;
     outline: 0;
     background-color: $default-background-color-dark;
-    border: 1px solid $primary-color;
+    border: 1px solid map-get($primary-color-map, dark );
     border-radius: $border-radius;
     @include shadow;
 }

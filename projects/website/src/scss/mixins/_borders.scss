@@ -1,7 +1,0 @@
-@mixin generate-border-colors($color-map, $color-name) {
-    @each $color-grade, $color in $color-map {
-        $color-grade: if($color-grade == 'main', "", '-' + $color-grade);
-
-        .border-#{$color-name}-color#{$color-grade} { border-color: $color }
-    }
-}

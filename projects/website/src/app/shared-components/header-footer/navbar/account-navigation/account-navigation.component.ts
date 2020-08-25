@@ -46,13 +46,6 @@ export class AccountNavigationComponent implements OnInit, OnDestroy {
           click: () => { }
         },
         {
-          caption: 'Your Email Subscriptions',
-          url: 'account/email-subscriptions',
-          icon: 'fa-envelope',
-          show: true,
-          click: () => { }
-        },
-        {
           caption: 'Sign Out',
           url: 'sign-in',
           icon: 'fa-sign-out-alt',
