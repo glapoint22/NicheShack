@@ -8,7 +8,7 @@
     padding-top: 79px;
 
     // Padding for footer
-    padding-bottom: 309px;
+    padding-bottom: 280px;
 }
 
 
@@ -32,9 +32,9 @@
     margin: 2rem;
 }
 
-
+ 
 // Media queries for footer padding
-@each $min-width, $padding in (map-get($breakpoints, md): 196px, map-get($breakpoints, xl): 166px) {
+@each $min-width, $padding in (map-get($breakpoints, md): 167px, map-get($breakpoints, xl): 129px) {
     @media (min-width: $min-width) {
         .content-container {
             padding-bottom: $padding;

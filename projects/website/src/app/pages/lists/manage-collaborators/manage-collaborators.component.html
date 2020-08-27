@@ -24,14 +24,14 @@
 
             <!-- Confirm Remove -->
             <ng-template #confirmRemove>
-                <div class="text-break margin-bottom-16">
+                <div class="text-break" style="margin-bottom: 16px;">
                     Are you sure you want to remove {{currentCollaborator.name}} from this list?
                 </div>
 
 
                 <!-- Buttons -->
                 <div style="float: right;">
-                    <button class="margin-right-8" (mousedown)="$event.preventDefault()"
+                    <button style="margin-right: 8px;" (mousedown)="$event.preventDefault()"
                         (click)="confirm = false">Cancel</button>
                     <button class="alt-button" (click)="onRemoveCollaborator()">Remove</button>
                 </div>

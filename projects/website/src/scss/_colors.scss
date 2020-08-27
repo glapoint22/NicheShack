@@ -1,9 +1,7 @@
 .primary-color-gradient {
     @include gradient($primary-color-map);
 }
-.niche-shack-gold-gradient {
-    @include gradient($niche-shack-gold-map);
-}
+
 
 .background-color {
     background-color: $default-background-color;

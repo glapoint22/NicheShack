@@ -1,5 +1,4 @@
 @import '../../../scss/variables';
-@import '../../../../../../scss/arrows';
 
 $container-width: 632px;
 $product-width: 216px;
@@ -29,8 +28,8 @@ $product-width: 216px;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
+    width: 33px;
+    height: 33px;
     border: 1px solid $border-color;
     background: rgba(0, 0, 0, 0.9);
     cursor: pointer;
@@ -44,21 +43,19 @@ $product-width: 216px;
 
 .left-button {
     left: 10px;
-    &:after {
-        content: '';
-        width: 0; 
-        height: 0; 
-        @extend .arrow-left;
+
+    .fa-caret-left {
+        font-size: 22px;
+        transform: translateX(-1px);
     }
 }
 
 .right-button {
     right: 10px;
-    &:after {
-        content: '';
-        width: 0; 
-        height: 0; 
-        @extend .arrow-right;
+
+    .fa-caret-right {
+        font-size: 22px;
+        transform: translateX(1px);
     }
 }
 

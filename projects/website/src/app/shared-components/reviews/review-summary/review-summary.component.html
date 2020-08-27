@@ -24,7 +24,7 @@
         <div>
             <div class="bars-container"
                 *ngFor="let stat of reviewStats; let i = index">
-                <div style="width:50px">{{stat.name}}</div>
+                <div style="width: 50px">{{stat.name}}</div>
                 <div class="bar-base">
                     <div class="bar" [style.width.px]="stat.percentage * 2"></div>
                 </div>
@@ -38,7 +38,7 @@
 
     <!-- No Rating -->
     <ng-template #noRating>
-        <div class="text-center">
+        <div style="text-align: center;">
             <div class="primary-color-light" style="margin-bottom: 8px;">Be the first to review this item!</div>
             <button class="alt-button" (click)="onWriteReviewClick(product.id)">Write a Review</button>
         </div>

@@ -12,7 +12,7 @@ button {
 }
 
 .alt-button {
-    @include button-colors(map-get($niche-shack-gold-map, lighter), map-get($niche-shack-gold-map, dark), map-get($niche-shack-gold-map, darkest));
+    @include button-colors(map-get($niche-shack-gold-map, lighter), map-get($niche-shack-gold-map, dark), black);
 }
 
 .primary-button {
