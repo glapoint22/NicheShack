@@ -10,9 +10,13 @@ export class EditProfilePictureComponent implements OnInit {
   public show: boolean;
   public picUrl: string;
   public picMoveStartPos = { x: null, y: null };
+  public zoomHandleMoveStartPos: number;
   private circleOverlay = { left: null, top: null, bottom: null, right: null }
   @ViewChild('picArea', { static: false }) picArea: ElementRef;
+  @ViewChild('zoomBar', { static: false }) zoomBar: ElementRef;
   @ViewChild('profilePic', { static: false }) profilePic: ElementRef;
+  @ViewChild('zoomHandle', { static: false }) zoomHandle: ElementRef;
+  @ViewChild('zoomContainer', { static: false }) zoomContainer: ElementRef;
 
   ngOnInit() {
   }
@@ -24,26 +28,32 @@ export class EditProfilePictureComponent implements OnInit {
   @HostListener('mousemove', ['$event'])
   onMouseMove(e: MouseEvent) {
     if (this.picMoveStartPos.x != null) {
+      // Move the pic
       this.profilePic.nativeElement.style.left = ((e.clientX - this.picArea.nativeElement.getBoundingClientRect().left) - this.picMoveStartPos.x) + "px";
       this.profilePic.nativeElement.style.top = ((e.clientY - this.picArea.nativeElement.getBoundingClientRect().top) - this.picMoveStartPos.y) + "px";
+      // Set the boundarys
+      this.SetProfilePicBoundarys();
+    }
 
-      if (this.profilePic.nativeElement.getBoundingClientRect().left - this.picArea.nativeElement.getBoundingClientRect().left > this.circleOverlay.left) this.profilePic.nativeElement.style.left = this.circleOverlay.left + "px";
+    // Move the zoom handle
+    if (this.zoomHandleMoveStartPos != null) {
+      this.zoomHandle.nativeElement.style.left = ((e.clientX - this.zoomContainer.nativeElement.getBoundingClientRect().left) - this.zoomHandleMoveStartPos) + "px";
+      // Set the boundarys
+      this.SetZoomHandleBoundarys();
+
+      // console.log(this.zoomBar.nativeElement.getBoundingClientRect().width)
+
+      // this.profilePic.nativeElement.style.transform = "scale(3.3, 3.3)"
+
+      // 0.825
 
 
-      if ((this.profilePic.nativeElement.getBoundingClientRect().left - this.picArea.nativeElement.getBoundingClientRect().left) + this.profilePic.nativeElement.getBoundingClientRect().width < this.circleOverlay.right) {
-        this.profilePic.nativeElement.style.left = (-this.profilePic.nativeElement.getBoundingClientRect().width + this.circleOverlay.right) + "px";
-      }
+      let alita = this.zoomHandle.nativeElement.offsetLeft - 36;
+
+      console.log(1 + (alita * 0.00605))
 
 
-
-      if (this.profilePic.nativeElement.getBoundingClientRect().top - this.picArea.nativeElement.getBoundingClientRect().top > this.circleOverlay.top) this.profilePic.nativeElement.style.top = this.circleOverlay.top + "px";
-
-
-      if ((this.profilePic.nativeElement.getBoundingClientRect().top - this.picArea.nativeElement.getBoundingClientRect().top) + this.profilePic.nativeElement.getBoundingClientRect().height < this.circleOverlay.bottom) {
-        this.profilePic.nativeElement.style.top = (-this.profilePic.nativeElement.getBoundingClientRect().height + this.circleOverlay.bottom) + "px";
-      }
-
-     
+      this.profilePic.nativeElement.style.transform = "scale(" + (1 + (alita * 0.00605)) + "," + (1 + (alita * 0.00605)) + ")"
     }
   }
 
@@ -52,6 +62,7 @@ export class EditProfilePictureComponent implements OnInit {
   @HostListener('mouseup', ['$event'])
   onMouseUp(e: MouseEvent) {
     this.picMoveStartPos.x = null;
+    this.zoomHandleMoveStartPos = null;
   }
 
 
@@ -74,7 +85,7 @@ export class EditProfilePictureComponent implements OnInit {
       e.target.style.top = ((this.picArea.nativeElement.getBoundingClientRect().height / 2) - (newPicHeight / 2)) + "px";
       e.target.style.left = ((this.picArea.nativeElement.getBoundingClientRect().width / 2) - (e.target.getBoundingClientRect().width / 2)) + "px";
 
-      // If the pic's origianl height is larger than its original width
+      // But if the pic's origianl height is larger than its original width
     } else {
       // Get the ratio of height to width
       let ratio = originalPicHeight / originalPicWidth;
@@ -97,6 +108,58 @@ export class EditProfilePictureComponent implements OnInit {
   }
 
 
+  // -----------------------------( SET PROFILE PIC BOUNDARYS )------------------------------ \\
+  SetProfilePicBoundarys() {
+    // Left boundary
+    if (this.profilePic.nativeElement.getBoundingClientRect().left - this.picArea.nativeElement.getBoundingClientRect().left > this.circleOverlay.left) {
+      this.profilePic.nativeElement.style.left = this.circleOverlay.left + "px";
+    }
+
+    // Right boundary
+    if ((this.profilePic.nativeElement.getBoundingClientRect().left - this.picArea.nativeElement.getBoundingClientRect().left) + this.profilePic.nativeElement.getBoundingClientRect().width < this.circleOverlay.right) {
+      this.profilePic.nativeElement.style.left = (-this.profilePic.nativeElement.getBoundingClientRect().width + this.circleOverlay.right) + "px";
+    }
+
+    // Top boundary
+    if (this.profilePic.nativeElement.getBoundingClientRect().top - this.picArea.nativeElement.getBoundingClientRect().top > this.circleOverlay.top) {
+      this.profilePic.nativeElement.style.top = this.circleOverlay.top + "px";
+    }
+
+    // Bottom boundary
+    if ((this.profilePic.nativeElement.getBoundingClientRect().top - this.picArea.nativeElement.getBoundingClientRect().top) + this.profilePic.nativeElement.getBoundingClientRect().height < this.circleOverlay.bottom) {
+      this.profilePic.nativeElement.style.top = (-this.profilePic.nativeElement.getBoundingClientRect().height + this.circleOverlay.bottom) + "px";
+    }
+  }
+
+
+  // -----------------------------( ON ZOOM HANDLE MOUSE DOWN )------------------------------ \\
+  onZoomHandleMouseDown(e) {
+    this.zoomHandleMoveStartPos = (e.clientX - e.target.getBoundingClientRect().left);
+  }
+
+
+  // -----------------------------( ON ZOOM BAR MOUSE DOWN )------------------------------ \\
+  onZoomBarMouseDown(e) {
+    this.zoomHandle.nativeElement.style.left = ((e.clientX - this.zoomContainer.nativeElement.getBoundingClientRect().left) - 10) + "px";
+    this.zoomHandleMoveStartPos = 10;
+    this.SetZoomHandleBoundarys();
+  }
+
+
+  // -----------------------------( SET ZOOM HANDLE BOUNDARYS )------------------------------ \\
+  SetZoomHandleBoundarys() {
+    // Left boundary
+    if (this.zoomHandle.nativeElement.getBoundingClientRect().left - this.zoomContainer.nativeElement.getBoundingClientRect().left < 36) {
+      this.zoomHandle.nativeElement.style.left = 36 + "px";
+    }
+
+    // Right boundary
+    if ((this.zoomHandle.nativeElement.getBoundingClientRect().left - 20 - this.zoomContainer.nativeElement.getBoundingClientRect().left) + this.zoomHandle.nativeElement.getBoundingClientRect().width > this.zoomContainer.nativeElement.getBoundingClientRect().width - 56) {
+      this.zoomHandle.nativeElement.style.left = (this.zoomContainer.nativeElement.getBoundingClientRect().width - 56) + "px";
+    }
+  }
+
+
   // -----------------------------( SET CIRCLE OVERLAY DIMENSIONS )------------------------------ \\
   setCircleOverlayDimensions(picArea, circleOverlay) {
     circleOverlay.style.left = ((picArea.getBoundingClientRect().width / 2) - (circleOverlay.getBoundingClientRect().width / 2)) + "px";
@@ -107,5 +170,20 @@ export class EditProfilePictureComponent implements OnInit {
     this.circleOverlay.top = (picArea.getBoundingClientRect().height / 2) - (circleOverlay.getBoundingClientRect().height / 2);
     this.circleOverlay.right = this.circleOverlay.left + circleOverlay.getBoundingClientRect().width;
     this.circleOverlay.bottom = this.circleOverlay.top + circleOverlay.getBoundingClientRect().height;
+  }
+
+
+  // -----------------------------( ON MINUS BUTTON CLICK )------------------------------ \\
+  onMinusButtonClick() {
+    this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft - 30) + "px";
+    this.SetZoomHandleBoundarys();
+  }
+
+
+
+  // -----------------------------( ON PLUS BUTTON CLICK )------------------------------ \\
+  onPlusButtonClick() {
+    this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft + 30) + "px";
+    this.SetZoomHandleBoundarys();
   }
 }
