@@ -1,11 +1,11 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'edit-profile-picture',
   templateUrl: './edit-profile-picture.component.html',
   styleUrls: ['./edit-profile-picture.component.scss']
 })
-export class EditProfilePictureComponent implements OnInit {
+export class EditProfilePictureComponent {
   constructor() { }
   public show: boolean;
   public picUrl: string;
@@ -22,44 +22,32 @@ export class EditProfilePictureComponent implements OnInit {
   @ViewChild('zoomHandle', { static: false }) zoomHandle: ElementRef;
   @ViewChild('zoomContainer', { static: false }) zoomContainer: ElementRef;
 
-  ngOnInit() {
-  }
-
-  onShow() {
-  }
 
   // -----------------------------( ON MOUSE MOVE )------------------------------ \\
   @HostListener('mousemove', ['$event'])
   onMouseMove(e: MouseEvent) {
-    if (this.picMoveStartPos.x != null) {
-      // Move the pic
-      this.profilePic.nativeElement.style.left = ((e.clientX - this.picArea.nativeElement.offsetLeft) - this.picMoveStartPos.x) + "px";
-      this.profilePic.nativeElement.style.top = ((e.clientY - this.picArea.nativeElement.offsetTop) - this.picMoveStartPos.y) + "px";
-      // Set the boundarys
-      this.SetProfilePicBoundarys();
-
-      this.newPicDimensions.left = this.profilePic.nativeElement.offsetLeft;
-      this.newPicDimensions.top = this.profilePic.nativeElement.offsetTop;
-      this.newPicDimensions.width = this.profilePic.nativeElement.offsetWidth;
-      this.newPicDimensions.height = this.profilePic.nativeElement.offsetHeight;
-      this.pivot.x = ((this.picArea.nativeElement.offsetWidth / 2) - this.newPicDimensions.left) / this.newPicDimensions.width;
-      this.pivot.y = ((this.picArea.nativeElement.offsetHeight / 2) - this.newPicDimensions.top) / this.newPicDimensions.height;
+    this.onMove(e);
+  }
 
 
-    }
-
-    // Move the zoom handle
-    if (this.zoomHandleMoveStartPos != null) {
-      this.zoomHandle.nativeElement.style.left = ((e.clientX - this.zoomContainer.nativeElement.getBoundingClientRect().left) - this.zoomHandleMoveStartPos) + "px";
-      // Set the boundarys
-      this.SetZoomHandleBoundarys();
-    }
+  // -----------------------------( ON TOUCH MOVE )------------------------------ \\
+  @HostListener('touchmove', ['$event'])
+  onTouchMove(e: TouchEvent) {
+    this.onMove(e.touches[0]);
   }
 
 
   // -----------------------------( ON MOUSE UP )------------------------------ \\
-  @HostListener('mouseup', ['$event'])
-  onMouseUp(e: MouseEvent) {
+  @HostListener('mouseup')
+  onMouseUp() {
+    this.picMoveStartPos.x = null;
+    this.zoomHandleMoveStartPos = null;
+  }
+
+
+  // -----------------------------( ON TOUCH END )------------------------------ \\
+  @HostListener('touchend')
+  onTouchEnd() {
     this.picMoveStartPos.x = null;
     this.zoomHandleMoveStartPos = null;
   }
@@ -112,8 +100,41 @@ export class EditProfilePictureComponent implements OnInit {
 
   // -----------------------------( ON PROFILE PIC MOUSE DOWN )------------------------------ \\
   onProfilePicMouseDown(e) {
-    this.picMoveStartPos.x = (e.clientX - e.target.getBoundingClientRect().left);
-    this.picMoveStartPos.y = (e.clientY - e.target.getBoundingClientRect().top);
+    this.picMoveStartPos.x = e.clientX - e.target.getBoundingClientRect().left;
+    this.picMoveStartPos.y = e.clientY - e.target.getBoundingClientRect().top;
+  }
+
+
+  // -----------------------------( ON PROFILE PIC TOUCH START )------------------------------ \\
+  onProfilePicTouchStart(e) {
+    this.picMoveStartPos.x = e.touches[0].clientX - e.target.getBoundingClientRect().left;
+    this.picMoveStartPos.y = e.touches[0].clientY - e.target.getBoundingClientRect().top;
+  }
+
+
+  // -----------------------------( ON MOVE )------------------------------ \\
+  onMove(e) {
+    if (this.picMoveStartPos.x != null) {
+      // Move the pic
+      this.profilePic.nativeElement.style.left = ((e.clientX - this.picArea.nativeElement.offsetLeft) - this.picMoveStartPos.x) + "px";
+      this.profilePic.nativeElement.style.top = ((e.clientY - this.picArea.nativeElement.offsetTop) - this.picMoveStartPos.y) + "px";
+      // Set the boundarys
+      this.SetProfilePicBoundarys();
+
+      this.newPicDimensions.left = this.profilePic.nativeElement.offsetLeft;
+      this.newPicDimensions.top = this.profilePic.nativeElement.offsetTop;
+      this.newPicDimensions.width = this.profilePic.nativeElement.offsetWidth;
+      this.newPicDimensions.height = this.profilePic.nativeElement.offsetHeight;
+      this.pivot.x = ((this.picArea.nativeElement.offsetWidth / 2) - this.newPicDimensions.left) / this.newPicDimensions.width;
+      this.pivot.y = ((this.picArea.nativeElement.offsetHeight / 2) - this.newPicDimensions.top) / this.newPicDimensions.height;
+    }
+
+    // Move the zoom handle
+    if (this.zoomHandleMoveStartPos != null) {
+      this.zoomHandle.nativeElement.style.left = ((e.clientX - this.zoomContainer.nativeElement.getBoundingClientRect().left) - this.zoomHandleMoveStartPos) + "px";
+      // Set the boundarys
+      this.SetZoomHandleBoundarys();
+    }
   }
 
 
@@ -147,6 +168,12 @@ export class EditProfilePictureComponent implements OnInit {
   }
 
 
+  // -----------------------------( ON ZOOM HANDLE TOUCH START )------------------------------ \\
+  onZoomHandleTouchStart(e) {
+    this.zoomHandleMoveStartPos = (e.touches[0].clientX - e.target.getBoundingClientRect().left);
+  }
+
+
   // -----------------------------( ON ZOOM BAR MOUSE DOWN )------------------------------ \\
   onZoomBarMouseDown(e) {
     this.zoomHandle.nativeElement.style.left = (e.clientX - this.zoomContainer.nativeElement.offsetLeft - (this.zoomHandle.nativeElement.offsetWidth / 2)) + "px";
@@ -175,7 +202,6 @@ export class EditProfilePictureComponent implements OnInit {
     if (this.zoomHandle.nativeElement.offsetLeft + this.zoomHandle.nativeElement.offsetWidth > this.zoomBar.nativeElement.offsetLeft + this.zoomBar.nativeElement.offsetWidth) {
       this.zoomHandle.nativeElement.style.left = (this.zoomBar.nativeElement.offsetLeft + this.zoomBar.nativeElement.offsetWidth - this.zoomHandle.nativeElement.offsetWidth) + "px";
     }
-
     this.scaleProfilePic();
   }
 
