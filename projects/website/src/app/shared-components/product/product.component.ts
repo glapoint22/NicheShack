@@ -13,6 +13,6 @@ export class ProductComponent {
   constructor(private router: Router) { }
 
   onClick() {
-    this.router.navigate([this.product.urlTitle, this.product.id]);
+    this.router.navigate([this.product.urlName, this.product.id]);
   }
 }

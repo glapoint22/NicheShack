@@ -10,25 +10,25 @@
 
 
                 <!-- Product Conent -->
-                <ng-container *ngIf="productData.content.length > 1">
-                    <!-- Heading -->
+                <!-- <ng-container *ngIf="productData.content.length > 1">
+                    
                     <h3 class="content-heading"
                         [ngStyle]="{'text-align': productData.pricePoints.length > 1 ? 'center' : 'left'}">
                         {{productData.pricePoints.length > 1 ? 'Price points' : 'Included with your purchase'}}
                     </h3>
 
 
-                    <!-- Content -->
+                    
                     <div [ngClass]="{'product-content-container': productData.pricePoints.length > 1}">
 
-                        <!-- Price Points -->
+                        
                         <div *ngFor="let pricePoint of productData.pricePoints; let i = index"
                             [ngClass]="{'price-point-container': productData.pricePoints.length > 1}">
                             <div *ngIf="productData.pricePoints.length > 1" class="price-point">
                                 {{pricePoint}}
                             </div>
 
-                            <!-- Content Item -->
+                            
                             <div [ngStyle]="{'padding.px': productData.pricePoints.length > 1 ? 8 : 0}">
                                 <ng-container *ngFor="let content of productData.content">
                                     <div *ngIf="hasIndex(content.priceIndices, i)">
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                     </div>
-                </ng-container>
+                </ng-container> -->
 
 
                 <!-- Reviews -->

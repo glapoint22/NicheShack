@@ -25,9 +25,5 @@ export class HomeComponent extends SharePageComponent implements OnInit {
     // this.image = '/Images/tlou2.jpg';
 
     super.ngOnInit();
-    this.dataService.get('api/Home')
-      .subscribe(response => {
-        this.productGroups = response.productGroups;
-      });
   }
 }
