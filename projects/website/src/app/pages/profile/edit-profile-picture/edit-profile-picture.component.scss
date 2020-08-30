@@ -1,9 +1,185 @@
 .prompt {
+    display: flex;
+    flex-direction: column;
     max-width: 700px;
-    height: 585px;
+    height: 100%;
+    max-height: 585px;
     background-color: #1d1d1d;
+
+
+    .pic-area {
+        height: 100%;
+    
+        .profile-pic-container {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+    
+            img {
+                position: relative;
+                cursor: move;
+            }
+        }
+    
+        .circle-overlay-container {
+            position: relative;
+            top:-100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+    
+            .circle-overlay {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                border-radius: 100%;
+                pointer-events: none;
+                box-shadow: 0px 0px 0px 300px rgba(23, 23, 23, 0.7);
+            }
+        }
+    }
+
+
+    .bottom-container {
+        position: relative;
+        height: 100%;
+        max-height: 128px;
+        border-top: 1px solid #2a2a2a;
+
+        .zoom-area {
+            display: flex;
+            width: 100%;
+            height: 20px;
+            margin-top: 13px;
+            justify-content: center;
+
+            .zoom-container {
+                display: flex;
+                position: relative;
+                width: 100%;
+                max-width: 472px;
+                align-items: center;
+                margin-left: 10px;
+                margin-right: 10px;
+
+                .minus-button {
+                    display: flex;
+                    min-width: 36px;
+                    min-height: 36px;
+                    cursor: pointer;
+                    align-items: center;
+                    justify-content: center;
+
+                    .h-line {
+                        width: 14px;
+                        height: 2px;
+                        background: #d7d7d7;
+                    }
+
+                    &:hover {
+                        & .h-line {
+                            background: white;
+                        }
+                    }
+                }
+
+                .zoom-bar-container {
+                    display: flex;
+                    width: 100%;
+                    max-width: 400px;
+                    height: 100%;
+                    cursor: pointer;
+                    align-items: center;
+
+                    .zoom-bar {
+                        width: 100%;
+                        height: 4px;
+                        background: #3e4042;
+                    }
+                }
+
+                .zoom-handle-tail {
+                    position: absolute;
+                    left: 36px;
+                    height: 4px;
+                    background: #8a0077;
+                    pointer-events: none;
+                }
+
+                
+
+                .plus-button {
+                    display: flex;
+                    min-width: 36px;
+                    min-height: 36px;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+
+                    .v-line {
+                        width: 2px;
+                        height: 14px;
+                        background: #d7d7d7;
+                    }
+
+                    .h-line {
+                        position: absolute;
+                        width: 14px;
+                        height: 2px;
+                        background: #d7d7d7;
+                    }
+
+                    &:hover {
+                        & .v-line {
+                            background: white;
+                        }
+                        & .h-line {
+                            background: white;
+                        }
+                    }
+                }
+            }
+        }
+
+        .buttons-container {
+            position: absolute;
+            display: flex;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+            justify-content: space-between;
+        }
+    }
+}
+
+.cover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .alt-button {
     width: 60px;
+}
+
+.zoom-handle {
+    position: absolute;
+    left: 36px;
+    width: 20px;
+    height: 20px;
+    background: #dadada;
+    border-radius: 100%;
+    cursor: pointer;
+
+    &:hover  {
+        background: white;
+    }
+
+    
+}
+
+.handle-active {
+    background: white;
 }

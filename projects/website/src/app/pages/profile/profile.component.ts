@@ -62,7 +62,7 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
 
 
   onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }, pictureSelectInput: EditProfilePictureComponent) {
-      pictureSelectInput.picUrl = event.target.files[0].name;
-      pictureSelectInput.show = true;
+    pictureSelectInput.picUrl = event.target.files[0].name;
+    pictureSelectInput.show = true;
   }
 }
