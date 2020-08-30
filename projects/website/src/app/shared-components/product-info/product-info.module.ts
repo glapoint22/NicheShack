@@ -7,6 +7,7 @@ import { AddToListComponent } from './add-to-list/add-to-list.component';
 import { CreateListModule } from '../create-list/create-list.module';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { StarsModule } from 'shared-components/stars/stars.module';
+import { CarouselModule } from '../../directives/carousel.module';
 
 
 
@@ -21,7 +22,8 @@ import { StarsModule } from 'shared-components/stars/stars.module';
     ShowHideModule,
     FormsModule,
     CreateListModule,
-    StarsModule
+    StarsModule,
+    CarouselModule
   ],
   exports: [
     ProductInfoComponent,

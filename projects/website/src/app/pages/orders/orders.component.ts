@@ -131,6 +131,6 @@ export class OrdersComponent extends PageComponent implements OnInit {
   }
 
   onProductClick(product) {
-    this.router.navigate([product.urlTitle, product.id]);
+    this.router.navigate([product.urlName, product.id]);
   }
 }

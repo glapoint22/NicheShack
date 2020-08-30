@@ -137,17 +137,18 @@
 
                                         <!-- Product Image -->
                                         <div class="img-container"
-                                            (click)="onProductClick({id: order.productId, urlTitle: order.urlTitle})">
-                                            <img
-                                                [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">
+                                            (click)="onProductClick({id: order.productUrlId, urlName: order.urlName})">
+                                            <img [src]="product.image.url ? '/images/' + product.image.url : 'assets/no_image.png'"
+                                                [alt]="product.image.name ? product.image.name : 'No Image Available'"
+                                                [title]="product.image.name ? product.image.name : 'No Image Available'">
                                         </div>
 
                                         <!-- Product Info -->
                                         <div class="product-info text-break">
                                             <!-- Title -->
                                             <div class="product-title"
-                                                (click)="onProductClick({id: order.productId, urlTitle: order.urlTitle})">
-                                                {{product.title}}</div>
+                                                (click)="onProductClick({id: order.productUrlId, urlName: order.urlName})">
+                                                {{product.name}}</div>
 
                                             <!-- Product Type -->
                                             <div class="gray-color">{{product.type}}</div>
@@ -237,15 +238,17 @@
                     <div class="product">
                         <!-- Product Image -->
                         <div class="img-container"
-                            (click)="onProductClick({id: product.productId, urlTitle: product.urlTitle})">
-                            <img [src]="product.image ? '/images/' + product.image : 'assets/no_image.png'">
+                            (click)="onProductClick({id: product.productUrlId, urlName: product.urlName})">
+                            <img [src]="product.image.url ? '/images/' + product.image.url : 'assets/no_image.png'"
+                                [alt]="product.image.name ? product.image.name : 'No Image Available'"
+                                [title]="product.image.name ? product.image.name : 'No Image Available'">
                         </div>
 
                         <!-- Product Info -->
                         <div class="text-break">
                             <div class="product-title"
-                                (click)="onProductClick({id: product.productId, urlTitle: product.urlTitle})">
-                                {{product.title}}</div>
+                                (click)="onProductClick({id: product.productUrlId, urlName: product.urlName})">
+                                {{product.name}}</div>
                             <div class="gray-color">Ordered on {{product.date}}</div>
                             <div class="niche-shack-gold-color view-order"
                                 (click)="searchwords = product.orderNumber; onSearch()">View order</div>

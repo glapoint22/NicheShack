@@ -176,14 +176,16 @@
 
                                                                 <!-- Product Image -->
                                                                 <div class="image"
-                                                                    [routerLink]="['/' + product.urlTitle + '/' + product.id]">
-                                                                    <img [src]="'/images/' + product.image">
+                                                                    [routerLink]="['/' + product.urlTitle + '/' + product.urlId]">
+                                                                    <img [src]="'/images/' + product.image.url"
+                                                                        [alt]="product.image.name"
+                                                                        [title]="product.image.name">
                                                                 </div>
 
                                                                 <!-- Product Title -->
                                                                 <div class="title text-break">
                                                                     <div class="title-text"
-                                                                        [routerLink]="['/' + product.urlTitle + '/' + product.id]">
+                                                                        [routerLink]="['/' + product.urlTitle + '/' + product.urlId]">
                                                                         {{product.title}}</div>
 
 

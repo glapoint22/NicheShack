@@ -1,18 +1,30 @@
 <div class="container">
 
     <!-- Media Group -->
-    <div *ngIf="productInfo.media.length > 0" class="media-group show-lg">
-        <div *ngFor="let media of productInfo.media" class="media-thumbnail">
-            <i *ngIf="media.type == 'Video'" class="far fa-play-circle"></i>
-        </div>
+    <div *ngIf="productInfo.media.length > 1" class="media-group show-lg">
+        <ng-container *ngFor="let media of productInfo.media">
+            <div class="thumbnail"
+                [ngStyle]="{ 'background-image': 'url(images/' + (media.type == mediaType.Video ? media.thumbnail : media.url) + ')'}"
+                (click)="onThumbnailClick(media)" [title]="media.name">
+                <i *ngIf="media.type == mediaType.Video" class="far fa-play-circle"></i>
+            </div>
+        </ng-container>
     </div>
 
 
 
 
-    <!-- Media Display -->
+
+
+
+    <!-- Media display -->
     <div class="media-display show-lg">
-        <img [src]="'/images/8d5741456a824e8981efdfa348d2cb0d.jpg'">
+        <img *ngIf="selectedMedia && selectedMedia.type == mediaType.Image" [src]="'/images/' + selectedMedia.url"
+            [alt]="selectedMedia.name" [title]="selectedMedia.name">
+
+        <div class="iframe-container" *ngIf="selectedMedia && selectedMedia.type == mediaType.Video">
+            <iframe frameborder="0" [src]="selectedMedia.safeUrl" allowfullscreen></iframe>
+        </div>
     </div>
 
 
@@ -25,7 +37,7 @@
         <div class="title-container">
 
             <!-- Title -->
-            <div class="title text-break">{{productInfo.product.title}}</div>
+            <div class="title text-break">{{productInfo.product.name}}</div>
 
 
             <!-- Social Media -->
@@ -92,28 +104,60 @@
 
 
 
-<!-- Media Display -->
-<div class="media-display hide-lg">
-    <img [src]="'/images/8d5741456a824e8981efdfa348d2cb0d.jpg'">
-</div>
-
-
-
-<!-- Description -->
-<div class="hide-lg" style="margin-top: 8px;">{{productInfo.product.description}}</div>
-
-
-<!-- Product Utilities -->
+<!-- Mobile -->
 <div class="hide-lg">
-    <div class="product-utilities" style="flex-wrap: wrap">
-        <button class="primary-button margin-bottom-0-xxs margin-bottom-12" style="margin-right: 10px" (click)="addToList.show = true">Add to List</button>
 
-        <div class="report-item primary-color-light" (click)="reportItem.show = true">
-            <i class="fas fa-flag"></i>
-            <span style="margin-left: 5px;">Report this item</span>
+    <div class="carousel-container">
+        <!-- Media carousel -->
+
+        <div carousel (onChange)="currentMediaIndex = $event" class="carousel">
+
+            <!-- Carousel element -->
+            <div *ngFor="let media of productInfo.media" class="carousel-element" (click)="playVideo(media)">
+
+                <!-- Image -->
+                <img [src]="'/images/' + (media.type == mediaType.Image ? media.url : media.thumbnail)"
+                    [alt]="media.name" [title]="media.name">
+
+                <!-- Video Overlay -->
+                <div *ngIf="media.type == mediaType.Video" class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Paginator -->
+    <div class="paginator">
+        <div *ngFor="let media of productInfo.media; let i = index" class="pagination-dot"
+            [ngClass]="{'selected-pagination-dot': currentMediaIndex == i}"></div>
+    </div>
+
+
+
+    <!-- Description -->
+    <div style="margin-top: 8px;">{{productInfo.product.description}}</div>
+
+
+    <!-- Product Utilities -->
+    <div>
+        <div class="product-utilities" style="flex-wrap: wrap">
+            <button class="primary-button margin-bottom-0-xxs margin-bottom-12" style="margin-right: 10px"
+                (click)="addToList.show = true">Add to List</button>
+
+            <div class="report-item primary-color-light" (click)="reportItem.show = true">
+                <i class="fas fa-flag"></i>
+                <span style="margin-left: 5px;">Report this item</span>
+            </div>
         </div>
     </div>
 </div>
+
+
+
 
 
 

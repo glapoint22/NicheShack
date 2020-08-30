@@ -1,36 +1,81 @@
+@import '../../../scss/variables';
+
+
 .container {
     display: flex;
     margin: auto;
 
     // Media Group
     .media-group {
-        max-height: 248px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        flex-shrink: 0;
-        margin-right: 16px;
-        .media-thumbnail {
-            width: 88px;
+        overflow: auto;
+        flex: 1;
+        max-width: 88px;
+        margin-right: 15px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+
+        .thumbnail {
+            width: 88px; 
             height: 50px;
-            background-size: cover;
+            background-position: center;
             background-repeat: no-repeat;
-            background-position: 50% 50%;
-            margin-bottom: 16px;
-            text-align: center;
-            color: #e2e2e2;
-            line-height: 50px;
-            font-size: 30px;
-            cursor: pointer;
-            background: red;
-        }
-        .media-thumbnail:last-child {
-            margin-bottom: 0;
-        }
-        .media-thumbnail:hover {
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
             color: white;
+            cursor: pointer;
+            
+        
+            &:not(:last-child) {
+                margin-bottom: 14px;
+            }
+            
+        
+            i {
+                -webkit-text-stroke: 1px #808080;
+            }
         }
     }
     
+
+    // Media display
+    .media-display {
+        width: 100%;
+        max-width: 880px;
+        max-height: 500px;
+        margin-right: 15px;
+        flex: 1;
+    
+        img {
+            width: 100%;
+            max-width: 880px;
+            max-height: 500px;
+            object-fit: contain;
+        }
+    
+    
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.819%;
+    
+            iframe{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
 
 
 
@@ -66,24 +111,65 @@
 }
 
 
-
-// Media Display
-.media-display {
-    flex: 2;
-    width: 100%;
-    max-width: 880px;
-    max-height: 500px;
-    margin-right: 16px;
-    justify-content: center;
-    align-items: flex-start;
-
-    img {
-        width: 100%;
-        max-width: 880px;
-        max-height: 500px;
-        object-fit: contain;
+.carousel-container {
+    overflow: hidden;
+    .carousel {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+    
+        .carousel-element {
+            position: relative;
+            width: 100%;
+            padding: 0 10px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+    
+            img {
+                width: 100%;
+            }
+    
+            .video-overlay {
+                width: 34.09090909090909%;
+                height: 60%;
+                background-color: #0e0e0e70;
+                position: absolute;
+                border-radius: 50%;
+                border: 1px solid white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 10vw;
+            }
+        }
     }
 }
+
+
+
+
+.paginator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .pagination-dot {
+        border-radius: 20px;
+        background-color: #f3f3f3;
+        height: 9px;
+        margin: 3px;
+        width: 9px;
+    }
+    
+    .selected-pagination-dot {
+        background-color: $niche-shack-gold;
+    }
+}
+
+
 
 
 
@@ -103,10 +189,46 @@
 }
 
 
+@media (min-width: map-get($breakpoints, lg)) {
+    .container {
+        .product-info {
+            flex: 0.8;
+        }
+
+        .media-group {
+            height: 265px;
+        }
+    }
+}
+
+
+@media (min-width: map-get($breakpoints, xl)) {
+    .container {
+        .media-group {
+            height: 341px;
+        }
+    }
+}
 
 
 
 
 
+@media (min-width: map-get($breakpoints, xxl)) {
+    .container {
+        .media-group {
+            height: 391px;
+        }
+    }
+}
 
+
+
+@media (min-width: map-get($breakpoints, hd)) {
+    .container {
+        .media-group {
+            height: 500px;
+        }
+    }
+}
 
