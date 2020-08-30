@@ -52,7 +52,10 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
   }
 
 
-  onEditProfilePictureClick(pictureSelectInput) {
+  OpenFileExplorerWindow(pictureSelectInput: HTMLInputElement) {
+    // Clear the picture select input (This is so the same filename can be re-entered again and again)
+    pictureSelectInput.value = '';
+    // Open the file explorer window
     pictureSelectInput.click();
   }
 

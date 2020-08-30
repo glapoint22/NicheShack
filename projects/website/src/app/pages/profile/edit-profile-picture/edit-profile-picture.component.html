@@ -1,5 +1,4 @@
-<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onShow)="onShow()"
-    (onHide)="show = false" [ngStyle]="{'cursor': picMoveStartPos.x != null ? 'move' : 'default'}">
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onHide)="show = false">
 
     <div class="prompt" (mousedown)="$event.stopPropagation()">
         <div class="title-bar">
@@ -17,12 +16,12 @@
         <div #picArea style="height: 420px;">
 
 
-            <div style="height: 100%; overflow: hidden;">
+            <div style="height: 100%; overflow: hidden; position: relative;">
 
 
                 <img #profilePic [src]="'images/' + picUrl" (load)="onProfilePicLoad($event)"
                     style="position: relative; cursor: move; user-select: none; -webkit-user-drag: none; width: 100%;"
-                    (mousedown)="onProfilePicMouseDown($event)">
+                    (mousedown)="onProfilePicMouseDown($event)" (touchstart)="onProfilePicTouchStart($event)">
 
             </div>
 
@@ -48,14 +47,85 @@
 
 
 
-        <div style="height: 133px; border-top: 1px solid #2a2a2a;">
+        <div style="position: relative; height: 128px; border-top: 1px solid #2a2a2a;">
+
+            <!-- Zoom Area -->
+            <div style="width: 100%; height: 20px; margin-top: 13px; display: flex; justify-content: center;">
+
+                <!-- Zoom Container -->
+                <div #zoomContainer
+                    style="position: relative; width: 100%; max-width: 472px; display: flex; align-items: center; margin-left: 10px; margin-right: 10px;">
+
+                    <!-- Minus Button -->
+                    <div style="min-width: 36px; min-height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                        (click)="onMinusButtonClick()">
+                        <div style="background: white; width: 14px; height: 2px;"></div>
+                    </div>
+
+
+                    <!-- Zoom Bar -->
+                    <div #zoomBar style="width: 100%; max-width: 400px; height: 100%; cursor: pointer; display: flex; align-items: center;
+                    
+                    
+                    user-select: none;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    -webkit-user-drag: none;
+                    
+                    
+                    " (mousedown)="onZoomBarMouseDown($event)">
+
+                        <div style="background: #3e4042; width: 100%; height: 4px;"></div>
+
+                    </div>
+
+                    <!--  -->
+                    <div style="position: absolute; left: 36px; height: 4px; background: #8a0077; pointer-events: none;"
+                        [style.width.px]="zoomHandle.offsetLeft - 20"></div>
+
+                    <!-- Zoom Handle -->
+                    <div #zoomHandle style="position: absolute; background: white; left: 36px; width: 20px; height: 20px; border-radius: 100%; cursor: pointer; 
+                    
+                    user-select: none;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    -webkit-user-drag: none;
+                    
+                    " (mousedown)="onZoomHandleMouseDown($event)" (touchstart)="onZoomHandleTouchStart($event)"></div>
+
+                    <!-- Plus Button -->
+                    <div style="min-width: 36px; min-height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                        (click)="onPlusButtonClick()">
+
+                        <div style="background: white; width: 2px; height: 14px;">
+                        </div>
+                        <div style="position: absolute; background: white; width: 14px; height: 2px;"></div>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- Buttons -->
-            <!-- <div class="float-right">
-                <button class="margin-right-8">Cancel</button>
+            <div
+                style="position: absolute; bottom: 0; width: 100%; display: flex; justify-content: space-between; padding: 15px;">
 
-                <button class="alt-button">Save</button>
-            </div> -->
+                <div>
+                    <button>Upload</button>
+                </div>
+
+                <div>
+                    <button class="margin-right-8" (click)="show = false">Cancel</button>
+
+                    <button class="alt-button">Save</button>
+                </div>
+
+            </div>
         </div>
+    </div>
+    <div *ngIf="picMoveStartPos.x != null || zoomHandleMoveStartPos != null"
+        style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;"
+        [ngStyle]="{'cursor': picMoveStartPos.x != null ? 'move' : 'default' && zoomHandleMoveStartPos != null ? 'pointer' : 'default'}">
     </div>
 </div>

@@ -59,14 +59,16 @@
             </div>
 
 
-            <!-- Password -->
-            <div class="display-flex align-items-center padding-top-8 padding-bottom-8">
-                <div class="flex-fill">
+
+
+            <!-- Profile Picture -->
+            <div class="property-container">
+                <div style="flex: 1 1 auto;">
 
                     <div style="display: flex; align-items: center;">
 
 
-                        <div class="niche-shack-gold">Profile Picture:</div>
+                        <div class="property-name">Profile Picture:</div>
 
 
                         <div style="margin-left: 8px; border-radius: 20px; background-size: contain;
@@ -74,19 +76,18 @@
                         background-position: center center; width: 40px; height: 40px;"
                             [ngStyle]="{ 'background-image': 'url(images/bron.png'}"></div>
 
-                        <input #pictureSelectInput type="file" 
-                            style="width: 0; height: 0; visibility: hidden;"
+                        <input #pictureSelectInput type="file" style="width: 0; height: 0; visibility: hidden;"
                             (change)="onPictureSelect($event, editProfilePicture)">
                     </div>
 
 
                 </div>
-                <button class="alt-button" (click)="onEditProfilePictureClick(pictureSelectInput)">Edit</button>
+                <button class="alt-button" (click)="OpenFileExplorerWindow(pictureSelectInput)">Edit</button>
             </div>
 
 
         </div>
-        <!-- <navfooter></navfooter> -->
+        <navfooter></navfooter>
     </div>
 </div>
 
