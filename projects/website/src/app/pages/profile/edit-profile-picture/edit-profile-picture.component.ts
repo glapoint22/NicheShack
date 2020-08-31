@@ -16,11 +16,12 @@ export class EditProfilePictureComponent {
   private pivot = { x: null, y: null };
   private circleOverlay = { left: null, top: null, bottom: null, right: null };
   private newPicDimensions = { left: null, top: null, width: null, height: null };
-  @ViewChild('picArea', { static: false }) picArea: ElementRef;
   @ViewChild('zoomBar', { static: false }) zoomBar: ElementRef;
+  @ViewChild('picArea', { static: false }) picArea: ElementRef;
   @ViewChild('profilePic', { static: false }) profilePic: ElementRef;
   @ViewChild('zoomHandle', { static: false }) zoomHandle: ElementRef;
   @ViewChild('zoomContainer', { static: false }) zoomContainer: ElementRef;
+  
 
 
   // -----------------------------( ON MOUSE MOVE )------------------------------ \\
@@ -55,17 +56,12 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON PROFILE PIC LOAD )------------------------------ \\
   onProfilePicLoad(e) {
-    // Get the original dimensions of the pic before any alterations
-    let originalPicWidth = e.target.offsetWidth;
-    let originalPicHeight = e.target.offsetHeight;
-
-
     // If the pic's origianl width is larger than its original height
-    if (originalPicWidth > originalPicHeight) {
+    if (e.target.naturalWidth > e.target.naturalHeight) {
       // Get the ratio of width to height
-      let ratio = originalPicWidth / originalPicHeight;
+      let ratio = e.target.naturalWidth / e.target.naturalHeight;
       // Get the new height value of the pic based on the dimensions of the pic area
-      let newPicHeight = this.picArea.nativeElement.offsetWidth > 300 ? 300 : this.picArea.nativeElement.offsetWidth;
+      let newPicHeight = this.getSize(this.picArea.nativeElement);
 
       // Redefine the dimensions of the pic
       e.target.style.height = newPicHeight + "px";
@@ -75,10 +71,11 @@ export class EditProfilePictureComponent {
 
       // But if the pic's origianl height is larger than its original width
     } else {
+      
       // Get the ratio of height to width
-      let ratio = originalPicHeight / originalPicWidth;
+      let ratio = e.target.naturalHeight / e.target.naturalWidth;
       // Get the new width value of the pic based on the dimensions of the pic area
-      let newPicWidth = this.picArea.nativeElement.offsetWidth > 300 ? 300 : this.picArea.nativeElement.offsetWidth;
+      let newPicWidth = this.getSize(this.picArea.nativeElement);
 
       // Redefine the dimensions of the pic
       e.target.style.width = newPicWidth + "px";
@@ -176,7 +173,7 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON ZOOM BAR MOUSE DOWN )------------------------------ \\
   onZoomBarMouseDown(e) {
-    this.zoomHandle.nativeElement.style.left = (e.clientX - this.zoomContainer.nativeElement.offsetLeft - (this.zoomHandle.nativeElement.offsetWidth / 2)) + "px";
+    this.zoomHandle.nativeElement.style.left = (e.clientX - this.zoomContainer.nativeElement.getBoundingClientRect().left - (this.zoomHandle.nativeElement.offsetWidth / 2)) + "px";
     this.zoomHandleMoveStartPos = this.zoomHandle.nativeElement.offsetWidth / 2;
     this.SetZoomHandleBoundarys();
   }
@@ -207,10 +204,13 @@ export class EditProfilePictureComponent {
 
 
   // -----------------------------( SET CIRCLE OVERLAY DIMENSIONS )------------------------------ \\
-  setCircleOverlayDimensions(picArea: HTMLElement, circleOverlay: HTMLElement) {
+  setCircleOverlayDimensions(circleOverlay: HTMLElement, picArea: HTMLElement) {
+    let size: number = this.getSize(picArea);
+    circleOverlay.style.maxWidth = size + "px";
+    circleOverlay.style.maxHeight = size + "px";
     circleOverlay.style.left = ((picArea.offsetWidth / 2) - (circleOverlay.offsetWidth / 2)) + "px";
     circleOverlay.style.top = ((picArea.offsetHeight / 2) - (circleOverlay.offsetHeight / 2)) + "px";
-    circleOverlay.style.height = circleOverlay.offsetWidth + "px";
+
 
     this.circleOverlay.left = (picArea.offsetWidth / 2) - (circleOverlay.offsetWidth / 2);
     this.circleOverlay.top = (picArea.offsetHeight / 2) - (circleOverlay.offsetHeight / 2);
@@ -221,7 +221,8 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON MINUS BUTTON CLICK )------------------------------ \\
   onMinusButtonClick() {
-    this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft - 30) + "px";
+    let zoomHandleSteppingDistance = this.zoomBar.nativeElement.offsetWidth * 0.075;
+    this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft - zoomHandleSteppingDistance) + "px";
     this.SetZoomHandleBoundarys();
   }
 
@@ -229,7 +230,8 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON PLUS BUTTON CLICK )------------------------------ \\
   onPlusButtonClick() {
-    this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft + 30) + "px";
+    let zoomHandleSteppingDistance = this.zoomBar.nativeElement.offsetWidth * 0.075;
+    this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft + zoomHandleSteppingDistance) + "px";
     this.SetZoomHandleBoundarys();
   }
 
@@ -248,5 +250,40 @@ export class EditProfilePictureComponent {
     this.profilePic.nativeElement.style.top = (this.newPicDimensions.top - ((this.profilePic.nativeElement.offsetHeight - this.newPicDimensions.height)) * this.pivot.y) + "px";
 
     this.SetProfilePicBoundarys();
+  }
+
+
+  // -----------------------------( GET SIZE )------------------------------ \\
+  getSize(picArea): number {
+    let size: number;
+
+    // If the height of the pic area is less than its width
+    if (picArea.offsetHeight < picArea.offsetWidth) {
+      // And if its height is less than 300
+      if (picArea.offsetHeight < 300) {
+        // Make the size of the circle overlay to be the height of the pic area
+        size = picArea.offsetHeight;
+
+        // But if the height of the pic area is 300 or more
+      } else {
+        // Make the size of the circle overlay to be 300
+        size = 300;
+      }
+
+      // Or if the width of the pic area is less than its height
+    } else {
+
+      // And if its width is less than 300
+      if (picArea.offsetWidth < 300) {
+        // Make the size of the circle overlay to be the width of the pic area
+        size = picArea.offsetWidth;
+
+        // But if the width of the pic area is 300 or more
+      } else {
+        // Make the size of the circle overlay to be 300
+        size = 300;
+      }
+    }
+    return size;
   }
 }
