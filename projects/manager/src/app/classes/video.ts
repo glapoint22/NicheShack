@@ -75,6 +75,29 @@ export class Video implements Media {
 
 
 
+
+    stop() {
+        // If this video does not have a url, return
+        if (!this.url) return;
+
+        // If this video is youtube
+        if (this.isCurrentPlayerYouTube) {
+
+            this.playing = false;
+            this.player.pauseVideo();
+
+
+            // This video is vimeo
+        } else {
+
+            this.vimeoPlayer.pause();
+            this.playing = false;
+
+        }
+    }
+
+
+
     setData(videoData: VideoData) {
         if (videoData) {
             this.url = videoData.url;
@@ -85,8 +108,8 @@ export class Video implements Media {
 
 
     getData(): VideoData {
-        if(!this.url && !this.thumbnail) return null;
-        
+        if (!this.url && !this.thumbnail) return null;
+
         return {
             url: this.url ? this.url : null,
             thumbnail: this.thumbnail ? this.thumbnail : null

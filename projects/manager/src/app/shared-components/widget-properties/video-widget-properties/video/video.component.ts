@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, DoCheck } from '@angular/core';
-import { Video } from 'projects/manager/src/app/classes/video';
 import { MediaType } from 'projects/manager/src/app/classes/media';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
+import { Video } from 'projects/manager/src/app/classes/video';
 
 @Component({
   selector: 'video-property',

@@ -12,13 +12,6 @@
         max-width: 88px;
         margin-right: 15px;
 
-        &::-webkit-scrollbar {
-            display: none;
-        }
-
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
-
         .thumbnail {
             width: 88px; 
             height: 50px;
@@ -58,22 +51,6 @@
             max-width: 880px;
             max-height: 500px;
             object-fit: contain;
-        }
-    
-    
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.819%;
-    
-            iframe{
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
         }
     }
 
@@ -189,6 +166,57 @@
 }
 
 
+.modal-background {
+    background: rgba(0, 0, 0, 0.9);
+    display: block;
+}
+
+
+.iframe-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.819%;
+
+    iframe{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+.video-overlay-close-bar {
+    display: flex;
+    font-size: 18px;
+    justify-content: flex-end;
+
+    .video-overlay-close-button {
+        margin: 10px 10px 0;
+        z-index: 10;
+    }
+}
+
+.video-overlay-product-name {
+    font-size: 16px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+
+.mobile-video-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (min-width: map-get($breakpoints, lg)) {
     .container {
         .product-info {
@@ -231,4 +259,3 @@
         }
     }
 }
-

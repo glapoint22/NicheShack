@@ -5,8 +5,8 @@ import { Border } from 'projects/manager/src/app/classes/border';
 import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
-import { Video } from 'projects/manager/src/app/classes/video';
 import { VideoWidgetData } from 'projects/manager/src/app/classes/video-widget-data';
+import { Video } from 'projects/manager/src/app/classes/video';
 
 @Component({
   selector: 'video-widget',

@@ -110,10 +110,11 @@
     <div class="carousel-container">
         <!-- Media carousel -->
 
-        <div carousel (onChange)="currentMediaIndex = $event" class="carousel">
+        <div carousel class="carousel" (onChange)="currentMediaIndex = $event"
+            (onClick)="playVideo(productInfo.media[currentMediaIndex])">
 
             <!-- Carousel element -->
-            <div *ngFor="let media of productInfo.media" class="carousel-element" (click)="playVideo(media)">
+            <div *ngFor="let media of productInfo.media" class="carousel-element">
 
                 <!-- Image -->
                 <img [src]="'/images/' + (media.type == mediaType.Image ? media.url : media.thumbnail)"
@@ -131,7 +132,7 @@
 
 
     <!-- Paginator -->
-    <div class="paginator">
+    <div class="paginator" *ngIf="productInfo.media.length > 1">
         <div *ngFor="let media of productInfo.media; let i = index" class="pagination-dot"
             [ngClass]="{'selected-pagination-dot': currentMediaIndex == i}"></div>
     </div>
@@ -168,3 +169,35 @@
 <add-to-list #addToList [product]="productInfo.product"
     (onCreateListClick)="createList.show = true; addToList.show = false"></add-to-list>
 <create-list #createList (onCreateListHide)="addToList.show = true"></create-list>
+
+
+
+
+<!-- Video Player -->
+<div *show="showVideoPlayer" transitionClass="fade-end" class="modal-background fade-start"
+    (click)="onVideoPlayerClick()">
+
+    <!-- Video overlay -->
+    <div *show="showVideoOverlay" transitionClass="fade-end" class="fade-start">
+
+        <!-- Close -->
+        <div class="video-overlay-close-bar">
+            <div class="video-overlay-close-button niche-shack-gold-color" (click)="closeVideoPlayer()">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+        <!-- Product name -->
+        <div class="video-overlay-product-name">
+            {{productInfo.product.name}}
+        </div>
+    </div>
+
+
+    <!-- Video -->
+    <div class="mobile-video-container">
+        <div class="iframe-container">
+            <iframe id="video-iframe" frameborder="0" [src]="selectedMedia.safeUrl" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
