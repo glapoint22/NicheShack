@@ -73,8 +73,11 @@
 
                         <div style="margin-left: 8px; border-radius: 20px; background-size: contain;
                         background-repeat: no-repeat;
-                        background-position: center center; width: 40px; height: 40px;"
-                            [ngStyle]="{ 'background-image': 'url(images/bron.png'}"></div>
+                        background-position: center center; width: 30px; height: 30px;"
+
+                            [ngStyle]="{'background-image': 'url(images/' + customer.image + ')'}">
+                        
+                        </div>
 
                         <input #pictureSelectInput type="file" style="width: 0; height: 0; visibility: hidden;"
                             (change)="onPictureSelect($event, editProfilePicture)">

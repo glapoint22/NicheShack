@@ -11,9 +11,8 @@
         </div>
 
 
-
         <!-- Picture area -->
-        <div #picArea class="pic-area" [style.maxHeight.px]="picArea.offsetHeight">
+        <div #picArea class="pic-area">
 
             <!-- Profile Pic -->
             <div class="profile-pic-container">
@@ -24,7 +23,16 @@
             <!-- Circle Overlay -->
             <div class="circle-overlay-container">
                 <div #circleOverlay class="circle-overlay"
-                    [style.left]="setCircleOverlayDimensions(circleOverlay, picArea)">
+                    [style.left]="setCircleOverlay(circleOverlay, picArea)">
+                </div>
+            </div>
+
+            <div *ngIf="showDragMessage"
+                style="pointer-events: none; color: white; position: absolute; background: rgba(0, 0, 0, 0.45); width: 180px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; padding: 13px;"
+                [style.left.px]="(picArea.offsetWidth / 2) - 90" [style.top.px]="(picArea.offsetHeight * 0.33333) - 18">
+                <i class="fas fa-arrows-alt" style="font-size: 20px;"></i>
+                <div style="font-size: 15px;">
+                    Drag to Reposition
                 </div>
             </div>
         </div>
@@ -41,7 +49,8 @@
                 <div #zoomContainer class="zoom-container">
 
                     <!-- Minus Button -->
-                    <div class="minus-button" (click)="onMinusButtonClick()">
+                    <div class="minus-button" (click)="onMinusButtonClick()"
+                        [ngClass]="{'minus-button-disabled': minusButtonDisabled}" title="Zoom Out">
                         <div class="h-line"></div>
                     </div>
 
@@ -56,12 +65,12 @@
                     <!-- Zoom Handle -->
                     <div #zoomHandle class="zoom-handle" (mousedown)="onZoomHandleMouseDown($event)"
                         (touchstart)="onZoomHandleTouchStart($event)"
-                        [ngClass]="{'handle-active': zoomHandleMoveStartPos != null}"
-                        >
+                        [ngClass]="{'handle-active': zoomHandleMoveStartPos != null}">
                     </div>
 
                     <!-- Plus Button -->
-                    <div class="plus-button" (click)="onPlusButtonClick()">
+                    <div class="plus-button" (click)="onPlusButtonClick()"
+                        [ngClass]="{'plus-button-disabled': plusButtonDisabled}" title="Zoom In">
                         <div class="v-line"></div>
                         <div class="h-line"></div>
                     </div>

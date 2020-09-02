@@ -11,18 +11,69 @@ export class EditProfilePictureComponent {
   public picUrl: string;
   public picMoveStartPos = { x: null, y: null };
   public zoomHandleMoveStartPos: number;
+  public minusButtonDisabled: boolean;
+  public plusButtonDisabled: boolean;
+  public showDragMessage: boolean;
+  public isLandcscape: boolean;
   private profilePicBaseWidth: number;
   private profilePicBaseHeight: number;
   private pivot = { x: null, y: null };
   private circleOverlay = { left: null, top: null, bottom: null, right: null };
   private newPicDimensions = { left: null, top: null, width: null, height: null };
+  private profilePicSet: boolean;
+
   @ViewChild('zoomBar', { static: false }) zoomBar: ElementRef;
   @ViewChild('picArea', { static: false }) picArea: ElementRef;
   @ViewChild('profilePic', { static: false }) profilePic: ElementRef;
   @ViewChild('zoomHandle', { static: false }) zoomHandle: ElementRef;
   @ViewChild('zoomContainer', { static: false }) zoomContainer: ElementRef;
-  
 
+
+
+
+
+  @HostListener('window:resize') onResize() {
+    this.zoomHandle.nativeElement.style.left = "36px";
+
+    this.minusButtonDisabled = true;
+
+    // If the pic's origianl width is larger than its original height
+    if (this.profilePic.nativeElement.naturalWidth > this.profilePic.nativeElement.naturalHeight) {
+      // Get the ratio of width to height
+      let ratio = this.profilePic.nativeElement.naturalWidth / this.profilePic.nativeElement.naturalHeight;
+      // Get the new height value of the pic based on the dimensions of the pic area
+      let newPicHeight = this.getSize(this.picArea.nativeElement);
+
+      // Redefine the dimensions of the pic
+      this.profilePic.nativeElement.style.height = newPicHeight + "px";
+      this.profilePic.nativeElement.style.width = (newPicHeight * ratio) + "px";
+      this.profilePic.nativeElement.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (newPicHeight / 2)) + "px";
+      this.profilePic.nativeElement.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (this.profilePic.nativeElement.offsetWidth / 2)) + "px";
+
+      // But if the pic's origianl height is larger than its original width
+    } else {
+
+      // Get the ratio of height to width
+      let ratio = this.profilePic.nativeElement.naturalHeight / this.profilePic.nativeElement.naturalWidth;
+      // Get the new width value of the pic based on the dimensions of the pic area
+      let newPicWidth = this.getSize(this.picArea.nativeElement);
+
+      // Redefine the dimensions of the pic
+      this.profilePic.nativeElement.style.width = newPicWidth + "px";
+      this.profilePic.nativeElement.style.height = (newPicWidth * ratio) + "px";
+      this.profilePic.nativeElement.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (newPicWidth / 2)) + "px";
+      this.profilePic.nativeElement.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (this.profilePic.nativeElement.offsetHeight / 2)) + "px";
+    }
+
+    this.profilePicBaseWidth = this.profilePic.nativeElement.offsetWidth;
+    this.profilePicBaseHeight = this.profilePic.nativeElement.offsetHeight;
+    this.newPicDimensions.left = this.profilePic.nativeElement.offsetLeft;
+    this.newPicDimensions.top = this.profilePic.nativeElement.offsetTop;
+    this.newPicDimensions.width = this.profilePic.nativeElement.offsetWidth;
+    this.newPicDimensions.height = this.profilePic.nativeElement.offsetHeight;
+    this.pivot.x = ((this.picArea.nativeElement.offsetWidth / 2) - this.newPicDimensions.left) / this.newPicDimensions.width;
+    this.pivot.y = ((this.picArea.nativeElement.offsetHeight / 2) - this.newPicDimensions.top) / this.newPicDimensions.height;
+  }
 
   // -----------------------------( ON MOUSE MOVE )------------------------------ \\
   @HostListener('mousemove', ['$event'])
@@ -56,40 +107,43 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON PROFILE PIC LOAD )------------------------------ \\
   onProfilePicLoad(e) {
+    this.showDragMessage = true;
+    this.setProfilePic(e.target);
+  }
+
+
+  // -----------------------------( SET PROFILE PIC )------------------------------ \\
+  setProfilePic(profilePic) {
+    this.minusButtonDisabled = true;
+
     // If the pic's origianl width is larger than its original height
-    if (e.target.naturalWidth > e.target.naturalHeight) {
-      // Get the ratio of width to height
-      let ratio = e.target.naturalWidth / e.target.naturalHeight;
+    if (profilePic.naturalWidth > profilePic.naturalHeight) {
       // Get the new height value of the pic based on the dimensions of the pic area
       let newPicHeight = this.getSize(this.picArea.nativeElement);
 
       // Redefine the dimensions of the pic
-      e.target.style.height = newPicHeight + "px";
-      e.target.style.width = (newPicHeight * ratio) + "px";
-      e.target.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (newPicHeight / 2)) + "px";
-      e.target.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (e.target.offsetWidth / 2)) + "px";
+      profilePic.style.height = newPicHeight + "px";
+      profilePic.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (newPicHeight / 2)) + "px";
+      profilePic.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (profilePic.offsetWidth / 2)) + "px";
 
       // But if the pic's origianl height is larger than its original width
     } else {
-      
-      // Get the ratio of height to width
-      let ratio = e.target.naturalHeight / e.target.naturalWidth;
+
       // Get the new width value of the pic based on the dimensions of the pic area
       let newPicWidth = this.getSize(this.picArea.nativeElement);
 
       // Redefine the dimensions of the pic
-      e.target.style.width = newPicWidth + "px";
-      e.target.style.height = (newPicWidth * ratio) + "px";
-      e.target.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (newPicWidth / 2)) + "px";
-      e.target.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (e.target.offsetHeight / 2)) + "px";
+      profilePic.style.width = newPicWidth + "px";
+      profilePic.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (newPicWidth / 2)) + "px";
+      profilePic.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (profilePic.offsetHeight / 2)) + "px";
     }
 
-    this.profilePicBaseWidth = e.target.offsetWidth;
-    this.profilePicBaseHeight = e.target.offsetHeight;
-    this.newPicDimensions.left = e.target.offsetLeft;
-    this.newPicDimensions.top = e.target.offsetTop;
-    this.newPicDimensions.width = e.target.offsetWidth;
-    this.newPicDimensions.height = e.target.offsetHeight;
+    this.profilePicBaseWidth = profilePic.offsetWidth;
+    this.profilePicBaseHeight = profilePic.offsetHeight;
+    this.newPicDimensions.left = profilePic.offsetLeft;
+    this.newPicDimensions.top = profilePic.offsetTop;
+    this.newPicDimensions.width = profilePic.offsetWidth;
+    this.newPicDimensions.height = profilePic.offsetHeight;
     this.pivot.x = ((this.picArea.nativeElement.offsetWidth / 2) - this.newPicDimensions.left) / this.newPicDimensions.width;
     this.pivot.y = ((this.picArea.nativeElement.offsetHeight / 2) - this.newPicDimensions.top) / this.newPicDimensions.height;
   }
@@ -97,6 +151,7 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON PROFILE PIC MOUSE DOWN )------------------------------ \\
   onProfilePicMouseDown(e) {
+    this.showDragMessage = false;
     this.picMoveStartPos.x = e.clientX - e.target.getBoundingClientRect().left;
     this.picMoveStartPos.y = e.clientY - e.target.getBoundingClientRect().top;
   }
@@ -104,6 +159,7 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON PROFILE PIC TOUCH START )------------------------------ \\
   onProfilePicTouchStart(e) {
+    this.showDragMessage = false;
     this.picMoveStartPos.x = e.touches[0].clientX - e.target.getBoundingClientRect().left;
     this.picMoveStartPos.y = e.touches[0].clientY - e.target.getBoundingClientRect().top;
   }
@@ -190,21 +246,30 @@ export class EditProfilePictureComponent {
       this.pivot.y = ((this.picArea.nativeElement.offsetHeight / 2) - this.newPicDimensions.top) / this.newPicDimensions.height;
     }
 
+
     // Left boundary
-    if (this.zoomHandle.nativeElement.offsetLeft < this.zoomBar.nativeElement.offsetLeft) {
+    if (this.zoomHandle.nativeElement.offsetLeft <= this.zoomBar.nativeElement.offsetLeft) {
+      this.minusButtonDisabled = true;
       this.zoomHandle.nativeElement.style.left = this.zoomBar.nativeElement.offsetLeft + "px";
+    }
+    if (this.zoomHandle.nativeElement.offsetLeft > this.zoomBar.nativeElement.offsetLeft) {
+      this.minusButtonDisabled = false;
     }
 
     // Right boundary
-    if (this.zoomHandle.nativeElement.offsetLeft + this.zoomHandle.nativeElement.offsetWidth > this.zoomBar.nativeElement.offsetLeft + this.zoomBar.nativeElement.offsetWidth) {
+    if (this.zoomHandle.nativeElement.offsetLeft + this.zoomHandle.nativeElement.offsetWidth >= this.zoomBar.nativeElement.offsetLeft + this.zoomBar.nativeElement.offsetWidth) {
+      this.plusButtonDisabled = true;
       this.zoomHandle.nativeElement.style.left = (this.zoomBar.nativeElement.offsetLeft + this.zoomBar.nativeElement.offsetWidth - this.zoomHandle.nativeElement.offsetWidth) + "px";
+    }
+    if (this.zoomHandle.nativeElement.offsetLeft + this.zoomHandle.nativeElement.offsetWidth < this.zoomBar.nativeElement.offsetLeft + this.zoomBar.nativeElement.offsetWidth) {
+      this.plusButtonDisabled = false;
     }
     this.scaleProfilePic();
   }
 
 
-  // -----------------------------( SET CIRCLE OVERLAY DIMENSIONS )------------------------------ \\
-  setCircleOverlayDimensions(circleOverlay: HTMLElement, picArea: HTMLElement) {
+  // -----------------------------( SET CIRCLE OVERLAY )------------------------------ \\
+  setCircleOverlay(circleOverlay: HTMLElement, picArea: HTMLElement) {
     let size: number = this.getSize(picArea);
     circleOverlay.style.maxWidth = size + "px";
     circleOverlay.style.maxHeight = size + "px";
@@ -221,18 +286,22 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON MINUS BUTTON CLICK )------------------------------ \\
   onMinusButtonClick() {
-    let zoomHandleSteppingDistance = this.zoomBar.nativeElement.offsetWidth * 0.075;
-    this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft - zoomHandleSteppingDistance) + "px";
-    this.SetZoomHandleBoundarys();
+    if (!this.minusButtonDisabled) {
+      let zoomHandleSteppingDistance = this.zoomBar.nativeElement.offsetWidth * 0.075;
+      this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft - zoomHandleSteppingDistance) + "px";
+      this.SetZoomHandleBoundarys();
+    }
   }
 
 
 
   // -----------------------------( ON PLUS BUTTON CLICK )------------------------------ \\
   onPlusButtonClick() {
-    let zoomHandleSteppingDistance = this.zoomBar.nativeElement.offsetWidth * 0.075;
-    this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft + zoomHandleSteppingDistance) + "px";
-    this.SetZoomHandleBoundarys();
+    if (!this.plusButtonDisabled) {
+      let zoomHandleSteppingDistance = this.zoomBar.nativeElement.offsetWidth * 0.075;
+      this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft + zoomHandleSteppingDistance) + "px";
+      this.SetZoomHandleBoundarys();
+    }
   }
 
 
@@ -241,8 +310,6 @@ export class EditProfilePictureComponent {
     let zoomHandleLeft = this.zoomHandle.nativeElement.offsetLeft - 36;
     let zoomBarWidth = 2.3 / (this.zoomBar.nativeElement.offsetWidth - 20);
     let scaleValue = 1 + (zoomHandleLeft * zoomBarWidth);
-
-
 
     this.profilePic.nativeElement.style.width = (this.profilePicBaseWidth * scaleValue) + "px";
     this.profilePic.nativeElement.style.height = (this.profilePicBaseHeight * scaleValue) + "px";

@@ -8,15 +8,19 @@
 
 
     .pic-area {
+        position: relative;
         height: 100%;
     
         .profile-pic-container {
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100%;
             overflow: hidden;
     
             img {
-                position: relative;
+                position: absolute;
                 cursor: move;
             }
         }
@@ -66,20 +70,29 @@
                     display: flex;
                     min-width: 36px;
                     min-height: 36px;
-                    cursor: pointer;
                     align-items: center;
                     justify-content: center;
-
+                    border-radius: 100%;
+                
                     .h-line {
                         width: 14px;
                         height: 2px;
-                        background: #d7d7d7;
+                        background: #c0c0c0;
                     }
-
-                    &:hover {
+                    
+                    &:hover:not(.minus-button-disabled) {
+                        cursor: pointer;
+                        background: rgba(255, 255, 255, 0.05);
                         & .h-line {
                             background: white;
                         }
+                    }
+                }
+                
+                .minus-button-disabled {
+                    cursor: default;
+                    & .h-line {
+                        background: rgb(43, 43, 43);
                     }
                 }
 
@@ -88,8 +101,8 @@
                     width: 100%;
                     max-width: 400px;
                     height: 100%;
-                    cursor: pointer;
                     align-items: center;
+                    cursor: pointer;
 
                     .zoom-bar {
                         width: 100%;
@@ -106,7 +119,26 @@
                     pointer-events: none;
                 }
 
+                .zoom-handle {
+                    position: absolute;
+                    left: 36px;
+                    width: 20px;
+                    height: 20px;
+                    background: #dadada;
+                    border-radius: 100%;
+                    border: 1px solid #8a0077;
+                    cursor: pointer;
                 
+                    &:hover  {
+                        background: white;
+                        border: 1px solid #ff00dd;
+                    }
+                }
+                
+                .handle-active {
+                    background: white;
+                    border: 1px solid #ff00dd;
+                }
 
                 .plus-button {
                     display: flex;
@@ -114,28 +146,40 @@
                     min-height: 36px;
                     align-items: center;
                     justify-content: center;
-                    cursor: pointer;
-
+                    border-radius: 100%;
+                
                     .v-line {
                         width: 2px;
                         height: 14px;
-                        background: #d7d7d7;
+                        background: #c0c0c0;
                     }
-
+                
                     .h-line {
                         position: absolute;
                         width: 14px;
                         height: 2px;
-                        background: #d7d7d7;
+                        background: #c0c0c0;
                     }
-
-                    &:hover {
+                
+                    &:hover:not(.plus-button-disabled) {
+                        cursor: pointer;
+                        background: rgba(255, 255, 255, 0.05);
                         & .v-line {
                             background: white;
                         }
                         & .h-line {
                             background: white;
                         }
+                    }
+                }
+                
+                .plus-button-disabled {
+                    cursor: default;
+                    & .v-line {
+                        background: rgb(43, 43, 43);
+                    }
+                    & .h-line {
+                        background: rgb(43, 43, 43);
                     }
                 }
             }
@@ -148,6 +192,10 @@
             width: 100%;
             padding: 15px;
             justify-content: space-between;
+
+            .alt-button {
+                width: 60px;
+            }
         }
     }
 }
@@ -158,28 +206,4 @@
     top: 0;
     right: 0;
     bottom: 0;
-}
-
-.alt-button {
-    width: 60px;
-}
-
-.zoom-handle {
-    position: absolute;
-    left: 36px;
-    width: 20px;
-    height: 20px;
-    background: #dadada;
-    border-radius: 100%;
-    cursor: pointer;
-
-    &:hover  {
-        background: white;
-    }
-
-    
-}
-
-.handle-active {
-    background: white;
 }
