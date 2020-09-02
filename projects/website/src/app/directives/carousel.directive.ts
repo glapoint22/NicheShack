@@ -8,6 +8,7 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class CarouselDirective {
   @Output() onChange: EventEmitter<number> = new EventEmitter();
+  @Output() onClick: EventEmitter<void> = new EventEmitter();
   private carouselElements: Array<CarouselElement> = [];
   private translate: number = 0;
   private currentElementIndex: number = 0;
@@ -16,6 +17,8 @@ export class CarouselDirective {
 
 
   ngAfterViewInit() {
+    if (this.el.nativeElement.childElementCount <= 1) return;
+
     let elementArray = Array.from(this.el.nativeElement.children);
     let firstElement = this.el.nativeElement.children[0].cloneNode(true);
     let start = 0;
@@ -48,11 +51,16 @@ export class CarouselDirective {
       this.el.nativeElement.style.transition = '';
 
     });
+
+
+    this.el.nativeElement.addEventListener("click", ()=> this.onMediaClick());
   }
 
 
 
   @HostListener('document:touchstart', ['$event']) onTouchstart(touchStartEvent: TouchEvent) {
+    if (this.carouselElements.length == 0) return;
+
     let currentX = touchStartEvent.changedTouches[0].clientX;
     let delta: number = 0;
     let direction: number = 0;
@@ -69,10 +77,10 @@ export class CarouselDirective {
       // Get the direction the carousel is moving
       if (delta != 0) direction = Math.sign(delta);
 
-      
+
       // Calculate the translation of the carousel
       this.translate += delta;
-      
+
 
       // This will translate the carousel at the end when the carousel has moved beyond zero
       // This is needed for a seamless transition
@@ -140,7 +148,15 @@ export class CarouselDirective {
 
 
 
+  onMediaClick() {
+    this.onClick.emit();
+  }
+
+
+
+
   @HostListener('window:resize') onResize() {
+    if (this.carouselElements.length == 0) return;
     let start = 0;
 
     this.carouselElements.forEach((element: CarouselElement, index) => {
