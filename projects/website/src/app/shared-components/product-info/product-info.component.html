@@ -4,6 +4,7 @@
     <div *ngIf="productInfo.media.length > 1" class="media-group show-lg">
         <ng-container *ngFor="let media of productInfo.media">
             <div class="thumbnail"
+                [ngClass]="{'selected-media': media == selectedMedia}"
                 [ngStyle]="{ 'background-image': 'url(images/' + (media.type == mediaType.Video ? media.thumbnail : media.url) + ')'}"
                 (click)="onThumbnailClick(media)" [title]="media.name">
                 <i *ngIf="media.type == mediaType.Video" class="far fa-play-circle"></i>
@@ -87,9 +88,9 @@
         <!-- Product Utilities -->
         <div class="show-lg">
             <div class="product-utilities">
-                <button class="primary-button" (click)="addToList.show = true">Add to List</button>
+                <button class="primary-button" (click)="onAddToListClick()">Add to List</button>
 
-                <div class="report-item primary-color-light" (click)="reportItem.show = true">
+                <div class="report-item primary-color-light" (click)="onReportItemClick()">
                     <i class="fas fa-flag"></i>
                     <span style="margin-left: 5px;">Report this item</span>
                 </div>
@@ -147,9 +148,9 @@
     <div>
         <div class="product-utilities" style="flex-wrap: wrap">
             <button class="primary-button margin-bottom-0-xxs margin-bottom-12" style="margin-right: 10px"
-                (click)="addToList.show = true">Add to List</button>
+                (click)="onAddToListClick()">Add to List</button>
 
-            <div class="report-item primary-color-light" (click)="reportItem.show = true">
+            <div class="report-item primary-color-light" (click)="onReportItemClick()">
                 <i class="fas fa-flag"></i>
                 <span style="margin-left: 5px;">Report this item</span>
             </div>
@@ -165,7 +166,7 @@
 
 
 
-<report-item #reportItem></report-item>
+<report-item #reportItem [productId]="productInfo.product.id"></report-item>
 <add-to-list #addToList [product]="productInfo.product"
     (onCreateListClick)="createList.show = true; addToList.show = false"></add-to-list>
 <create-list #createList (onCreateListHide)="addToList.show = true"></create-list>

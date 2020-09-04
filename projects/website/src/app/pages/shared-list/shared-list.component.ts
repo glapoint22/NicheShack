@@ -29,6 +29,7 @@ export class SharedListComponent extends ListsComponent implements OnInit {
 
   ngOnInit() {
     this.selectedList = { id: this.route.snapshot.paramMap.get('listId') }
+    this.shared = true;
     super.ngOnInit();
   }
 

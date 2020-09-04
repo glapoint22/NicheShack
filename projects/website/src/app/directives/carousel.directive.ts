@@ -54,11 +54,13 @@ export class CarouselDirective {
 
 
     this.el.nativeElement.addEventListener("click", ()=> this.onMediaClick());
+
+    this.el.nativeElement.addEventListener("touchstart", (e: TouchEvent)=> this.onTouchstart(e));
   }
 
 
 
-  @HostListener('document:touchstart', ['$event']) onTouchstart(touchStartEvent: TouchEvent) {
+  onTouchstart(touchStartEvent: TouchEvent) {
     if (this.carouselElements.length == 0) return;
 
     let currentX = touchStartEvent.changedTouches[0].clientX;

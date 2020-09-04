@@ -1,5 +1,5 @@
 <div #modal *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0"
-    (onShow)="setDefault()" (onHide)="show = false">
+    (onShow)="onShow()" (onHide)="show = false">
     <div class="prompt" (mousedown)="$event.stopPropagation()">
         <div class="title-bar">
             Add to List
@@ -8,40 +8,65 @@
             </div>
         </div>
 
-        <div class="prompt-content">
+        <div class="prompt-content" *ngIf="selectedList">
 
             <!-- Title & Image -->
             <div class="title text-truncate">{{product.name}}</div>
             <img [src]="'/images/8d5741456a824e8981efdfa348d2cb0d.jpg'">
 
             <!-- Not submitted -->
-            <ng-container *ngIf="!submitted; else isSubmitted">
+            <ng-container *ngIf="!submitted && !isDuplicate">
                 <select [(ngModel)]="selectedList">
-                    <option *ngFor="let list of lists" [ngValue]="list">{{list.value}}</option>
+                    <option *ngFor="let list of lists" [ngValue]="list">{{list.key}}</option>
                 </select>
 
-                <!-- Buttons -->
+                
                 <div class="button-container">
                     <button class="primary-button" (click)="onCreateListClick.emit()">Create List</button>
-                    <button (click)="show = false">Cancel</button>
-                    <button class="alt-button" (click)="onSubmit(); modal.focus()"
-                        [disabled]="selectedList.value === 'Select your list'">Submit</button>
+                    <div>
+                        <button (click)="show = false">Cancel</button>
+                        <button class="alt-button" (click)="onSubmit(); modal.focus()" style="margin-left: 8px;"
+                            [disabled]="selectedList.key === 'Select your list'">Submit</button>
+                    </div>
+
                 </div>
             </ng-container>
 
 
             <!-- Submitted -->
-            <ng-template #isSubmitted>
-                <h4 style="text-align: center; margin-bottom: 10px;">
-                    This item was added to {{selectedList.value}}.
-                </h4>
-
-                <div class="button-container" style="justify-content: flex-end;">
-                    <button (click)="show = false">Done</button>
-                    <button class="alt-button" style="margin-left: 5px">View List</button>
+            <ng-container *ngIf="submitted">
+                <div class="message-container">
+                    <div class="list">{{selectedList.key}}</div>
+                    <div>1 item added.</div>
                 </div>
 
-            </ng-template>
+                <div class="button-container">
+                    <button (click)="show = false">Done</button>
+                    <button class="alt-button" (click)="onViewListClick()">View List</button>
+                </div>
+
+            </ng-container>
+
+
+            <!-- Duplicate -->
+            <ng-container *ngIf="isDuplicate">
+
+                <div class="message-container">
+                    <div class="list">{{selectedList.key}}</div>
+                    <div>already contains this item.</div>
+                </div>
+
+
+                <div class="button-container">
+                    <button (click)="isDuplicate = false;">Go Back</button>
+                    <div>
+                        <button (click)="show = false">Cancel</button>
+                        <button class="alt-button" style="margin-left: 8px;" (click)="onViewListClick()">View List</button>
+                    </div>
+
+                </div>
+
+            </ng-container>
         </div>
     </div>
 </div>

@@ -1,6 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Review } from '../../../classes/review';
 import { DataService } from 'services/data.service';
+import { Subscription } from 'rxjs';
+import { AccountService } from 'services/account.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { RedirectService } from '../../../services/redirect.service';
 
 @Component({
   selector: 'review',
@@ -11,8 +15,37 @@ export class ReviewComponent {
   @Input() review: Review;
   @Input() showReviewHelpful: boolean;
   @Output() onReportReviewClick: EventEmitter<void> = new EventEmitter();
+  private subscription: Subscription;
+  private isSignedIn: boolean;
 
-  constructor(private dataService: DataService) { }
+  constructor(
+    private dataService: DataService,
+    private accountService: AccountService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private redirectService: RedirectService
+  ) { }
+
+
+
+  ngAfterViewInit() {
+    // Find out if the customer is signed in
+    this.subscription = this.accountService.isSignedIn
+      .subscribe((value: boolean) => {
+        this.isSignedIn = value;
+
+        // If this is a redirect and we have a callback
+        if (this.redirectService.callback == 'reportReviewClick') {
+          window.setTimeout(() => {
+            this.redirectService.callback = null;
+            window.scrollTo(0, this.redirectService.scrollPosition);
+            this.reportReviewClick();
+          });
+        }
+      });
+  }
+
+
 
   onRateReviewClick(likes: number, dislikes: number) {
     this.dataService
@@ -27,6 +60,18 @@ export class ReviewComponent {
   }
 
   reportReviewClick() {
-    this.onReportReviewClick.emit();
+    if (this.isSignedIn) {
+      this.onReportReviewClick.emit();
+    } else {
+      this.redirectService.redirect = { path: location.pathname, queryParams: this.route.snapshot.queryParams };
+      this.redirectService.callback = 'reportReviewClick';
+      this.redirectService.scrollPosition = window.scrollY;
+      this.router.navigate(['/sign-in']);
+    }
+  }
+
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

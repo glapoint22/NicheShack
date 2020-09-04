@@ -56,7 +56,7 @@ export class ReviewsComponent implements OnInit {
 
 
     this.route.queryParamMap.subscribe((queryParams: ParamMap) => {
-      this.currentPage = queryParams.has('page') ? Math.max(1, Number.parseInt(queryParams.get('page'))) : 1;
+      let currentPage = queryParams.has('page') ? Math.max(1, Number.parseInt(queryParams.get('page'))) : 1;
 
       // Get the customer reviews
       this.dataService
@@ -67,7 +67,7 @@ export class ReviewsComponent implements OnInit {
           },
           {
             key: 'page',
-            value: this.currentPage
+            value: currentPage
           },
           {
             key: 'sortBy',
@@ -76,6 +76,7 @@ export class ReviewsComponent implements OnInit {
         ])
         .subscribe((reviews: Array<Review>) => {
           this.reviews = reviews;
+          this.currentPage = currentPage;
 
           // Set the properties that display the starting and ending of reviews
           this.reviewsStart = this.reviewsPerPage * (this.currentPage - 1) + 1;

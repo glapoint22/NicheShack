@@ -19,7 +19,7 @@ export class ProductPageComponent extends SharePageComponent implements OnInit {
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
     private dataService: DataService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) { super(titleService, metaService, document) }
 
   ngOnInit() {
@@ -29,16 +29,16 @@ export class ProductPageComponent extends SharePageComponent implements OnInit {
         if (!productData) {
           this.dataService.pageNotFound = true;
         } else {
-          this.title = productData.productInfo.product.title;
+          this.title = productData.productInfo.product.name;
           this.description = productData.productInfo.product.description;
           super.ngOnInit();
         }
       }));
+
+    
   }
 
   hasIndex(priceIndices, index) {
     return priceIndices.some(x => x == index);
   }
-
-
 }

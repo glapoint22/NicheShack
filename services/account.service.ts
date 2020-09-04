@@ -3,6 +3,7 @@ import { ReplaySubject } from 'rxjs';
 import { DataService } from 'services/data.service';
 import { Customer } from 'classes/customer';
 import { Router } from '@angular/router';
+import { Redirect } from 'projects/website/src/app/classes/redirect';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,6 @@ import { Router } from '@angular/router';
 export class AccountService {
     public customer = new ReplaySubject<Customer>(1);
     public isSignedIn = new ReplaySubject<boolean>(1);
-    public redirectUrl: string = '';
     public accountUpdated: boolean;
 
     constructor(private dataService: DataService, private router: Router) {
@@ -28,14 +28,17 @@ export class AccountService {
         this.isSignedIn.next(false);
     }
 
-    public setAccount(redirectUrl: string = null) {
+    public setAccount(redirect: Redirect = null) {
         // This will get the customer from the database setting firstName, lastName, and email
         // If the customer returns null, this means the customer is not signed in or doesn't have an account
         this.dataService.get('api/Account/GetCustomer')
             .subscribe((customer: Customer) => {
+
                 this.customer.next(customer);
                 this.isSignedIn.next(customer != null);
-                if (redirectUrl != null) this.router.navigate([redirectUrl]);
+                if (redirect != null) {
+                    this.router.navigate([redirect.path], { queryParams: redirect.queryParams });
+                }
             }, () => {
                 this.customer.next(null);
                 this.customer.complete();

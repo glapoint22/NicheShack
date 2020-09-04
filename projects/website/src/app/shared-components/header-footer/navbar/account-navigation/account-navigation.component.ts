@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'services/account.service';
 import { Subscription } from 'rxjs';
+import { RedirectService } from 'projects/website/src/app/services/redirect.service';
 
 @Component({
   selector: 'account-navigation',
@@ -12,7 +13,7 @@ export class AccountNavigationComponent implements OnInit, OnDestroy {
   public dropdownItems: Array<any> = [];
   private subscription: Subscription;
 
-  constructor(private router: Router, private accountService: AccountService) { }
+  constructor(private router: Router, private accountService: AccountService, private redirectService: RedirectService) { }
 
   ngOnInit() {
     this.subscription = this.accountService.isSignedIn.subscribe((isSignedIn: boolean) => {
@@ -22,7 +23,9 @@ export class AccountNavigationComponent implements OnInit, OnDestroy {
           url: 'sign-in',
           icon: 'fa-sign-in-alt',
           show: !isSignedIn,
-          click: () => { }
+          click: () => {
+            this.redirectService.redirect = { path: location.pathname, queryParams: null }
+          }
         },
         {
           caption: 'Your Account',

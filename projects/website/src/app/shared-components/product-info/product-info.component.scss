@@ -217,6 +217,12 @@
     align-items: center;
 }
 
+
+.selected-media {
+    outline: 2px solid $niche-shack-gold;
+    outline-offset: -1px;
+}
+
 @media (min-width: map-get($breakpoints, lg)) {
     .container {
         .product-info {

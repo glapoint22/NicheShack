@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'report-item',
@@ -7,14 +8,14 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ReportItemComponent implements OnInit {
   public show: boolean;
-  @Input() productId: string;
+  @Input() productId: number;
   public options: Array<any>;
   public selectedWhereOption: any;
   public selectedWhatOption: any;
   public comments: string;
   public submitted: boolean;
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
     this.options = [
@@ -38,15 +39,15 @@ export class ReportItemComponent implements OnInit {
           },
           {
             name: 'Doesn\'t match with product description',
-            value: 'not-match-description'
+            value: 2
           },
           {
             name: 'Doesn\'t match with product image',
-            value: 'not-match-image'
+            value: 3
           },
           {
             name: 'Other',
-            value: 'other'
+            value: 4
           }
         ]
       },
@@ -60,15 +61,15 @@ export class ReportItemComponent implements OnInit {
           },
           {
             name: 'Too high',
-            value: 'too-high'
+            value: 5
           },
           {
             name: 'Not correct',
-            value: 'not-correct'
+            value: 6
           },
           {
             name: 'Other',
-            value: 'other'
+            value: 7
           }
         ]
       },
@@ -82,23 +83,23 @@ export class ReportItemComponent implements OnInit {
           },
           {
             name: 'Different from product',
-            value: 'not-match'
+            value: 8
           },
           {
             name: 'Not enough',
-            value: 'not-enough'
+            value: 9
           },
           {
             name: 'Not clear',
-            value: 'not-clear'
+            value: 10
           },
           {
             name: 'Misleading',
-            value: 'misleading'
+            value: 11
           },
           {
             name: 'Other',
-            value: 'other'
+            value: 12
           }
         ]
       },
@@ -112,19 +113,19 @@ export class ReportItemComponent implements OnInit {
           },
           {
             name: 'Incorrect description',
-            value: 'bad-desc'
+            value: 13
           },
           {
             name: 'Too vague',
-            value: 'vague'
+            value: 14
           },
           {
             name: 'Misleading',
-            value: 'misleading'
+            value: 15
           },
           {
             name: 'Other',
-            value: 'other'
+            value: 16
           }
         ]
       },
@@ -138,15 +139,15 @@ export class ReportItemComponent implements OnInit {
           },
           {
             name: 'Illegal product',
-            value: 'illegal'
+            value: 17
           },
           {
             name: 'Adult content',
-            value: 'adult'
+            value: 18
           },
           {
             name: 'Other',
-            value: 'other'
+            value: 19
           }
         ]
       },
@@ -160,15 +161,15 @@ export class ReportItemComponent implements OnInit {
           },
           {
             name: 'Inactive product',
-            value: 'inactive'
+            value: 20
           },
           {
-            name: 'Product site is no longer in service' ,
-            value: 'site-down'
+            name: 'Product site is no longer in service',
+            value: 21
           },
           {
             name: 'Other',
-            value: 'other'
+            value: 22
           }
         ]
       }
@@ -185,8 +186,11 @@ export class ReportItemComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-    
+    this.dataService.post('api/Notifications', {
+      productId: this.productId,
+      type: this.selectedWhatOption.value,
+      comments: this.comments
+    }).subscribe(() => this.submitted = true);
   }
 
 }

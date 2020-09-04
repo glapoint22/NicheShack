@@ -9,6 +9,7 @@ import { AuthService } from 'services/auth.service';
 import { Account } from 'classes/account';
 import { AccountService } from 'services/account.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RedirectService } from '../../services/redirect.service';
 
 @Component({
   selector: 'sign-in',
@@ -18,7 +19,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class SignInComponent extends ValidationPageComponent implements OnInit {
   public account: Account = new Account();
   public conflictError: string;
-  private redirectUrl: string;
 
   constructor(
     titleService: Title,
@@ -28,15 +28,15 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
     public router: Router,
     private authService: AuthService,
     private dataService: DataService,
-    private accountService: AccountService) {
+    private accountService: AccountService,
+    private redirectService: RedirectService
+  ) {
     super(titleService, metaService, document, platformId);
   }
 
 
   ngOnInit() {
     this.title = 'Sign In';
-    this.redirectUrl = this.accountService.redirectUrl;
-    this.accountService.redirectUrl = '';
     this.account.isPersistent = true;
     super.ngOnInit();
   }
@@ -46,7 +46,7 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
       .subscribe((tokenData: TokenData) => {
         // Set the cookies and account
         this.authService.setCookies(tokenData.accessToken, tokenData.refreshToken);
-        this.accountService.setAccount(this.redirectUrl);
+        this.accountService.setAccount(this.redirectService.redirect);
       },
         (errorResponse: HttpErrorResponse) => {
           if (errorResponse.status == 409) {

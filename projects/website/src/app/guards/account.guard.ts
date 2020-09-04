@@ -3,12 +3,13 @@ import { CanActivate, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, Router
 import { Observable, Subscriber } from 'rxjs';
 import { AccountService } from 'services/account.service';
 import { tap, take } from 'rxjs/operators';
+import { RedirectService } from '../services/redirect.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountGuard implements CanActivate, CanLoad {
-  constructor(private accountService: AccountService, private router: Router) { }
+  constructor(private accountService: AccountService, private router: Router, private redirectService: RedirectService) { }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
     return this.isSignedIn().pipe(tap((signedIn: boolean) => {
@@ -21,7 +22,7 @@ export class AccountGuard implements CanActivate, CanLoad {
         }
 
         // Assign the redirect url and navigate to the sign in page
-        this.accountService.redirectUrl = url;
+        this.redirectService.redirect = { path: url, queryParams: null };
         this.router.navigate(['sign-in']);
       }
     }));
@@ -32,7 +33,7 @@ export class AccountGuard implements CanActivate, CanLoad {
 
       if (!signedIn) {
         // The customer is not signed in so assign the redirect url and navigate to the sign in page
-        this.accountService.redirectUrl = state.url;
+        this.redirectService.redirect = { path: state.url, queryParams: null }
         this.router.navigate(['sign-in']);
       }
     }));

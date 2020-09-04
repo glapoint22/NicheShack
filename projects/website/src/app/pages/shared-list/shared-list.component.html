@@ -33,8 +33,9 @@
 
                                                 <!-- Product Image -->
                                                 <div class="image"
-                                                    [routerLink]="['/' + product.urlTitle + '/' + product.id]">
-                                                    <img [src]="'/images/' + product.image">
+                                                    [routerLink]="['/' + product.urlTitle + '/' + product.urlId]">
+                                                    <img [src]="'/images/' + product.image.url"
+                                                        [alt]="product.image.name" [title]="product.image.name">
                                                 </div>
 
                                                 <!-- Product Title -->
@@ -45,7 +46,8 @@
 
 
                                                     <!-- Rating & Reviews -->
-                                                    <stars style="margin-right: 4px; display: block;" [rating]="product.rating">
+                                                    <stars style="margin-right: 4px; display: block;"
+                                                        [rating]="product.rating">
                                                     </stars>
                                                     <span class="primary-color-light" style="white-space: nowrap;"
                                                         *ngIf="product.rating > 0">
@@ -74,8 +76,7 @@
                                                 <div class="gray-color" style="margin-bottom: 4px;">Item added
                                                     {{product.dateAdded}}
                                                 </div>
-                                                <button class="alt-button"
-                                                    (click)="onBuyClick(product.hoplink)">Visit
+                                                <button class="alt-button" (click)="onBuyClick(product.hoplink)">Visit
                                                     Product Page To Buy</button>
                                             </div>
                                         </div>

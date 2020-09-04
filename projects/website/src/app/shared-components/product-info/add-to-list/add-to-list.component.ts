@@ -1,51 +1,69 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from '../../../interfaces/product';
 import { KeyValue } from '@angular/common';
+import { DataService } from 'services/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'add-to-list',
   templateUrl: './add-to-list.component.html',
   styleUrls: ['./add-to-list.component.scss']
 })
-export class AddToListComponent implements OnInit {
+export class AddToListComponent {
   @Input() product: Product;
   @Output() onCreateListClick: EventEmitter<void> = new EventEmitter();
   public show: boolean;
   public lists: Array<KeyValue<string, string>>;
   public selectedList: KeyValue<string, string>;
   public submitted: boolean;
+  public isDuplicate: boolean;
 
-  constructor() { }
+  constructor(private dataService: DataService, private router: Router) { }
 
-  ngOnInit() {
-    this.lists = [
-      {
-        key: 'QOGTUMWTSG',
-        value: 'Favorites',
-      },
-      {
-        key: 'KEOFUJWJCE',
-        value: 'Shopping'
-      }
-    ]
 
-    // Add this at the beginning of the list
-    this.lists.unshift({
-      key: '',
-      value: 'Select your list'
-    });
+  onShow() {
+    this.lists = [];
+    this.dataService.get('api/Lists/DropdownLists')
+      .subscribe(lists => {
+        lists.forEach(list => {
+          this.lists.push({
+            key: list.name,
+            value: list.id
+          });
+        });
 
-    this.setDefault();
+        this.lists.unshift({
+          key: 'Select your list',
+          value: ''
+        });
+
+        this.selectedList = this.lists[0];
+        this.submitted = false;
+        this.isDuplicate = false;
+      });
   }
+
+
 
   onSubmit() {
-    this.submitted = true;
-    
+    this.dataService.post('api/Lists/AddProduct', { productId: this.product.id, listId: this.selectedList.value })
+      .subscribe((isDuplicate: boolean) => {
+        if (isDuplicate) {
+          this.isDuplicate = true;
+        } else {
+          this.submitted = true;
+        }
+      });
+
+
   }
 
-  setDefault() {
-    this.selectedList = this.lists[0];
-    this.submitted = false;
+  
+
+
+
+  onViewListClick() {
+    this.router.navigate(['account', 'lists', this.selectedList.value]);
   }
 }
 
