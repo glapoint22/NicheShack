@@ -2,6 +2,6 @@ export class Customer {
     firstName: string;
     lastName: string;
     email: string;
-    thumbnail: string;
+    image: string;
     badBehavior: number;
 }

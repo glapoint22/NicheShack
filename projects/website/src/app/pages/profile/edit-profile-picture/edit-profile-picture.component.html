@@ -16,7 +16,7 @@
 
             <!-- Profile Pic -->
             <div class="profile-pic-container">
-                <img #profilePic [src]="'images/' + picUrl" (load)="onProfilePicLoad($event)"
+                <img #profilePic [src]="'images/' + picUrl.name" (load)="onProfilePicLoad($event)"
                     (mousedown)="onProfilePicMouseDown($event)" (touchstart)="onProfilePicTouchStart($event)">
             </div>
 
@@ -81,13 +81,15 @@
             <!-- Buttons -->
             <div class="buttons-container">
                 <!-- Upload button -->
-                <button>Upload</button>
+                <button (click)="OpenFileExplorerWindow(pictureSelectInput)">Update</button>
 
+                <input #pictureSelectInput type="file" style="width: 0; height: 0; visibility: hidden;"
+                            (change)="onPictureSelect($event)">
                 <div>
                     <!-- Cancel Button -->
                     <button class="margin-right-8" (click)="show = false">Cancel</button>
                     <!-- Save Button -->
-                    <button class="alt-button">Save</button>
+                    <button class="alt-button" (click)="onSaveButtonClick()">Save</button>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'edit-profile-picture',
@@ -6,21 +7,22 @@ import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./edit-profile-picture.component.scss']
 })
 export class EditProfilePictureComponent {
-  constructor() { }
+  constructor(private dataService: DataService) { }
   public show: boolean;
-  public picUrl: string;
+  public picUrl;
   public picMoveStartPos = { x: null, y: null };
   public zoomHandleMoveStartPos: number;
   public minusButtonDisabled: boolean;
   public plusButtonDisabled: boolean;
   public showDragMessage: boolean;
   public isLandcscape: boolean;
+
+  private scaleValue: number;
   private profilePicBaseWidth: number;
   private profilePicBaseHeight: number;
   private pivot = { x: null, y: null };
   private circleOverlay = { left: null, top: null, bottom: null, right: null };
   private newPicDimensions = { left: null, top: null, width: null, height: null };
-  private profilePicSet: boolean;
 
   @ViewChild('zoomBar', { static: false }) zoomBar: ElementRef;
   @ViewChild('picArea', { static: false }) picArea: ElementRef;
@@ -31,48 +33,14 @@ export class EditProfilePictureComponent {
 
 
 
-
-  @HostListener('window:resize') onResize() {
-    this.zoomHandle.nativeElement.style.left = "36px";
-
-    this.minusButtonDisabled = true;
-
-    // If the pic's origianl width is larger than its original height
-    if (this.profilePic.nativeElement.naturalWidth > this.profilePic.nativeElement.naturalHeight) {
-      // Get the ratio of width to height
-      let ratio = this.profilePic.nativeElement.naturalWidth / this.profilePic.nativeElement.naturalHeight;
-      // Get the new height value of the pic based on the dimensions of the pic area
-      let newPicHeight = this.getSize(this.picArea.nativeElement);
-
-      // Redefine the dimensions of the pic
-      this.profilePic.nativeElement.style.height = newPicHeight + "px";
-      this.profilePic.nativeElement.style.width = (newPicHeight * ratio) + "px";
-      this.profilePic.nativeElement.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (newPicHeight / 2)) + "px";
-      this.profilePic.nativeElement.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (this.profilePic.nativeElement.offsetWidth / 2)) + "px";
-
-      // But if the pic's origianl height is larger than its original width
-    } else {
-
-      // Get the ratio of height to width
-      let ratio = this.profilePic.nativeElement.naturalHeight / this.profilePic.nativeElement.naturalWidth;
-      // Get the new width value of the pic based on the dimensions of the pic area
-      let newPicWidth = this.getSize(this.picArea.nativeElement);
-
-      // Redefine the dimensions of the pic
-      this.profilePic.nativeElement.style.width = newPicWidth + "px";
-      this.profilePic.nativeElement.style.height = (newPicWidth * ratio) + "px";
-      this.profilePic.nativeElement.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (newPicWidth / 2)) + "px";
-      this.profilePic.nativeElement.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (this.profilePic.nativeElement.offsetHeight / 2)) + "px";
+  // -----------------------------( ON WINDOW RESIZE )------------------------------ \\
+  @HostListener('window:resize')
+  onWindowResize() {
+    if (this.profilePic != null) {
+      this.zoomHandle.nativeElement.style.left = "36px";
+      this.SetZoomHandleBoundarys();
+      this.setProfilePic(this.profilePic.nativeElement);
     }
-
-    this.profilePicBaseWidth = this.profilePic.nativeElement.offsetWidth;
-    this.profilePicBaseHeight = this.profilePic.nativeElement.offsetHeight;
-    this.newPicDimensions.left = this.profilePic.nativeElement.offsetLeft;
-    this.newPicDimensions.top = this.profilePic.nativeElement.offsetTop;
-    this.newPicDimensions.width = this.profilePic.nativeElement.offsetWidth;
-    this.newPicDimensions.height = this.profilePic.nativeElement.offsetHeight;
-    this.pivot.x = ((this.picArea.nativeElement.offsetWidth / 2) - this.newPicDimensions.left) / this.newPicDimensions.width;
-    this.pivot.y = ((this.picArea.nativeElement.offsetHeight / 2) - this.newPicDimensions.top) / this.newPicDimensions.height;
   }
 
   // -----------------------------( ON MOUSE MOVE )------------------------------ \\
@@ -118,22 +86,28 @@ export class EditProfilePictureComponent {
 
     // If the pic's origianl width is larger than its original height
     if (profilePic.naturalWidth > profilePic.naturalHeight) {
+      // Get the ratio of width to height
+      let ratio = profilePic.naturalWidth / profilePic.naturalHeight;
       // Get the new height value of the pic based on the dimensions of the pic area
       let newPicHeight = this.getSize(this.picArea.nativeElement);
 
       // Redefine the dimensions of the pic
       profilePic.style.height = newPicHeight + "px";
+      profilePic.style.width = (newPicHeight * ratio) + "px";
       profilePic.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (newPicHeight / 2)) + "px";
       profilePic.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (profilePic.offsetWidth / 2)) + "px";
 
       // But if the pic's origianl height is larger than its original width
     } else {
 
+      // Get the ratio of height to width
+      let ratio = profilePic.naturalHeight / profilePic.naturalWidth;
       // Get the new width value of the pic based on the dimensions of the pic area
       let newPicWidth = this.getSize(this.picArea.nativeElement);
 
       // Redefine the dimensions of the pic
       profilePic.style.width = newPicWidth + "px";
+      profilePic.style.height = (newPicWidth * ratio) + "px";
       profilePic.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (newPicWidth / 2)) + "px";
       profilePic.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (profilePic.offsetHeight / 2)) + "px";
     }
@@ -309,10 +283,10 @@ export class EditProfilePictureComponent {
   scaleProfilePic() {
     let zoomHandleLeft = this.zoomHandle.nativeElement.offsetLeft - 36;
     let zoomBarWidth = 2.3 / (this.zoomBar.nativeElement.offsetWidth - 20);
-    let scaleValue = 1 + (zoomHandleLeft * zoomBarWidth);
+    this.scaleValue = 1 + (zoomHandleLeft * zoomBarWidth);
 
-    this.profilePic.nativeElement.style.width = (this.profilePicBaseWidth * scaleValue) + "px";
-    this.profilePic.nativeElement.style.height = (this.profilePicBaseHeight * scaleValue) + "px";
+    this.profilePic.nativeElement.style.width = (this.profilePicBaseWidth * this.scaleValue) + "px";
+    this.profilePic.nativeElement.style.height = (this.profilePicBaseHeight * this.scaleValue) + "px";
     this.profilePic.nativeElement.style.left = (this.newPicDimensions.left - ((this.profilePic.nativeElement.offsetWidth - this.newPicDimensions.width)) * this.pivot.x) + "px";
     this.profilePic.nativeElement.style.top = (this.newPicDimensions.top - ((this.profilePic.nativeElement.offsetHeight - this.newPicDimensions.height)) * this.pivot.y) + "px";
 
@@ -353,4 +327,34 @@ export class EditProfilePictureComponent {
     }
     return size;
   }
+
+
+  OpenFileExplorerWindow(pictureSelectInput: HTMLInputElement) {
+    // Clear the picture select input (This is so the same filename can be re-entered again and again)
+    pictureSelectInput.value = '';
+    // Open the file explorer window
+    pictureSelectInput.click();
+  }
+
+
+  onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }) {
+    this.picUrl = event.target.files[0];
+
+    
+  }
+
+  onSaveButtonClick() {
+    // Create the form data object and append the image
+    let formData = new FormData()
+    formData.append('image', this.picUrl);
+    formData.append('width', this.profilePic.nativeElement.naturalWidth);
+    formData.append('height', this.profilePic.nativeElement.naturalHeight);
+    formData.append('scale', this.scaleValue.toString());
+
+    // Update the current image
+    this.dataService.post('api/Account/UpdateProfilePicture', formData, 'text').subscribe(() => {
+      
+    })
+  }
+
 }

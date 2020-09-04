@@ -38,6 +38,7 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
     // Get customer info
     this.subscription = this.accountService.customer
       .subscribe((customer: Customer) => {
+
         this.customer = customer;
       });
   }
@@ -62,7 +63,13 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
 
 
   onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }, pictureSelectInput: EditProfilePictureComponent) {
-    pictureSelectInput.picUrl = event.target.files[0].name;
+    pictureSelectInput.picUrl = event.target.files[0];
+    pictureSelectInput.show = true;
+  }
+
+  openEditProfilePictureForm(pictureSelectInput: EditProfilePictureComponent) {
+    let image = { name: this.customer.image };
+    pictureSelectInput.picUrl = image;
     pictureSelectInput.show = true;
   }
 }
