@@ -1,6 +1,7 @@
 <navbar></navbar>
 
-<div class="page-container">
+<!-- To prevent errors when signing out, check first if customer is null -->
+<div *ngIf="customer != null" class="page-container">
     <div class="content-container">
         <!-- Content -->
         <div class="content" style="max-width: 700px;">
@@ -73,16 +74,31 @@
 
                         <div style="margin-left: 8px; border-radius: 20px; background-size: contain;
                         background-repeat: no-repeat;
-                        background-position: center center; width: 40px; height: 40px;"
-                            [ngStyle]="{ 'background-image': 'url(images/bron.png'}"></div>
+                        background-position: center center; width: 30px; height: 30px;" [ngStyle]="{'background-image': 
+
+                            customer.image == null 
+                            
+                            ?
+
+                            'url(images/no-account-pic.png)' 
+                            
+                            : 
+                            
+                            'url(images/' + customer.image + ')'
+                        
+                        }">
+
+                        </div>
 
                         <input #pictureSelectInput type="file" style="width: 0; height: 0; visibility: hidden;"
                             (change)="onPictureSelect($event, editProfilePicture)">
                     </div>
-
-
                 </div>
-                <button class="alt-button" (click)="OpenFileExplorerWindow(pictureSelectInput)">Edit</button>
+
+
+                <button class="alt-button"
+                    (click)="customer.image == null ? OpenFileExplorerWindow(pictureSelectInput) : openEditProfilePictureForm(editProfilePicture)">Edit</button>
+
             </div>
 
 
