@@ -150,7 +150,7 @@ export class ListsComponent extends SharePageComponent implements OnInit {
 
 
   onBuyClick(hoplink: string) {
-    window.location.href = hoplink;
+    window.open(hoplink, '_blank');
   }
 
 

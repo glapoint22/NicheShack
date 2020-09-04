@@ -12,10 +12,10 @@
                 <!-- Product Conent -->
                 <ng-container *ngIf="productData.content.length > 1">
 
-                    <h3 class="content-heading"
+                    <div class="content-heading"
                         [ngStyle]="{'text-align': productData.pricePoints.length > 1 ? 'center' : 'left'}">
-                        {{productData.pricePoints.length > 1 ? 'Price points' : 'Included with your purchase'}}
-                    </h3>
+                        {{productData.pricePoints.length > 1 ? 'Price Points' : 'Included with your purchase'}}
+                </div>
 
 
 

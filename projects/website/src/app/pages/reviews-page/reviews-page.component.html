@@ -3,7 +3,7 @@
 
     <div class="page-container">
         <div class="content-container">
-            <div class="content" style="max-width: 1200px;">
+            <div class="content" style="max-width: 1600px;">
                 <h1>Customer Reviews</h1>
 
                 
@@ -13,7 +13,7 @@
                     <div class="title text-break">{{product.title}}</div>
 
                     <!-- Image -->
-                    <img [src]="'/images/8d5741456a824e8981efdfa348d2cb0d.jpg'">
+                    <img [src]="'/images/' + product.image.url" [alt]="product.image.name" [title]="product.image.name">
                 </div>
 
                 <!-- Reviews -->

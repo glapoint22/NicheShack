@@ -11,8 +11,8 @@
         <div class="prompt-content" *ngIf="selectedList">
 
             <!-- Title & Image -->
-            <div class="title text-truncate">{{product.name}}</div>
-            <img [src]="'/images/8d5741456a824e8981efdfa348d2cb0d.jpg'">
+            <div class="title text-truncate">{{productInfo.product.name}}</div>
+            <img [src]="'/images/' + productInfo.media[0].url">
 
             <!-- Not submitted -->
             <ng-container *ngIf="!submitted && !isDuplicate">
