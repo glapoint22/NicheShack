@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
-import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { WidgetType } from 'classes/widget-type';
 import { Category } from 'projects/manager/src/app/classes/category';
 import { CategoriesWidgetData } from 'projects/manager/src/app/classes/categories-widget-data';
 import { Caption } from 'projects/manager/src/app/classes/caption';
-import { Color } from 'projects/manager/src/app/classes/color';
+import { Color } from 'classes/color';
 import { TextColor } from 'projects/manager/src/app/classes/text-color';
 import { BackgroundColor } from 'projects/manager/src/app/classes/background-color';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';

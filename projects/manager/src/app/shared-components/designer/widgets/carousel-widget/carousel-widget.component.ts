@@ -1,10 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
-import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
-import { CarouselBanner } from 'projects/manager/src/app/classes/carousel-banner';
+import { WidgetType } from 'classes/widget-type';
+import { CarouselBanner } from 'classes/carousel-banner';
 import { CarouselWidgetData } from 'projects/manager/src/app/classes/carousel-widget-data';
-import { CarouselBannerData } from 'projects/manager/src/app/classes/carousel-banner-data';
+import { CarouselBannerData } from 'classes/carousel-banner-data';
 import { Image } from 'projects/manager/src/app/classes/image';
+import { ImageBase } from 'classes/Image-base';
 
 @Component({
   selector: 'carousel-widget',
@@ -60,7 +61,7 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
 
 
     let img: any;
-    let currentImage: Image;
+    let currentImage: ImageBase;
 
     // If we have an image
     if (this.banners.length > 0) {

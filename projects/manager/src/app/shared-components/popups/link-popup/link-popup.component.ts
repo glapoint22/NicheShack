@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupComponent } from '../popup/popup.component';
-import { Link, LinkOption } from '../../../classes/link';
+import { Link } from '../../../classes/link';
 import { fromEvent, of } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { LinkItem } from '../../../classes/link-item';
+import { LinkOption } from 'classes/link-base';
 
 @Component({
   selector: 'link-popup',

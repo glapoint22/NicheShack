@@ -1,17 +1,11 @@
-import { Color } from './color';
+import { BackgroundColorBase } from 'classes/background-color-base';
 
-export class BackgroundColor {
-    constructor(public value: Color = new Color(128, 128, 128, 1)) { }
-
+export class BackgroundColor extends BackgroundColorBase {
     applyStyle(element: HTMLElement) {
         element.style.backgroundColor = this.value.toRGBString();
     }
 
     getStyle() {
         return '\n\tbackground-color: ' + this.value.toRGBString() + ';';
-    }
-
-    setData(color: string) {
-        if (color) this.value = Color.hexToRGB(color);
     }
 }

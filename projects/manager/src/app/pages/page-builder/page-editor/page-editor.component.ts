@@ -7,8 +7,8 @@ import { Searchable } from '../../../classes/searchable';
 import { Item } from '../../../classes/item';
 import { PropertyView } from '../../../classes/property-view';
 import { PageType } from '../../../classes/page';
-import { PageData } from '../../../classes/page-data';
 import { DataService } from 'services/data.service';
+import { PageData } from 'projects/manager/src/app/classes/page-data';
 
 @Component({
   selector: 'page-editor',

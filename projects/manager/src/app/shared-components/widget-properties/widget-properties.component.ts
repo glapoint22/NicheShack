@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WidgetType } from '../../classes/widget-type';
+import { WidgetType } from '../../../../../../classes/widget-type';
 import { PageService } from '../../services/page.service';
 
 @Component({

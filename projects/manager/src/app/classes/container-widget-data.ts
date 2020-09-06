@@ -1,16 +1,7 @@
 import { WidgetData } from './widget-data';
-import { BackgroundData } from './background-data';
-import { BorderData } from './border-data';
-import { CornersData } from './corners-data';
-import { ShadowData } from './shadow-data';
-import { PaddingData } from './padding-data';
 import { RowData } from './row-data';
+import { ContainerWidgetDataBase } from 'classes/container-widget-data-base';
 
-export interface ContainerWidgetData extends WidgetData {
-    background: BackgroundData;
-    border: BorderData;
-    corners: CornersData;
-    shadow: ShadowData;
-    padding: PaddingData;
+export interface ContainerWidgetData extends WidgetData, ContainerWidgetDataBase {
     rows: Array<RowData>;
 }

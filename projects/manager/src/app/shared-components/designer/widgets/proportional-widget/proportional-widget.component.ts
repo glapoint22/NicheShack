@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { WidgetComponent } from '../widget/widget.component';
 import { Vector } from 'projects/manager/src/app/classes/vector';
-import { BreakpointHorizontalAlignment, BreakpointVerticalAlignment } from 'projects/manager/src/app/classes/breakpoint';
+import { HorizontalAlign } from 'classes/horizontal-align';
+import { VerticalAlign } from 'classes/vertical-align';
 
 @Component({
   template: '',
@@ -15,17 +16,17 @@ export class ProportionalWidgetComponent extends WidgetComponent {
   }
 
   onHandleMousedown(verticalHandle: string, horizontalHandle: string, event: MouseEvent) {
-    let anchorWidth: number = this.widgetElement.nativeElement.clientWidth * (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? 0.5 : 1);
+    let anchorWidth: number = this.widgetElement.nativeElement.clientWidth * (this.horizontalAlignment.value == HorizontalAlign.Center ? 0.5 : 1);
     let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().left +
-      (horizontalHandle == 'left' || this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? anchorWidth : 0);
+      (horizontalHandle == 'left' || this.horizontalAlignment.value == HorizontalAlign.Center ? anchorWidth : 0);
     let startWidth: number = this.widgetElement.nativeElement.clientWidth;
     let columnWidth: number = this.column.columnElement.clientWidth;
     let mouse: Vector = new Vector(event.clientX, event.clientY);
     let mouseX: number = mouse.x;
     let maxRowHeight: number = this.getMaxRowHeight();
     let previousHeight: number = this.widgetElement.nativeElement.getBoundingClientRect().height;
-    let maxHeight: number = this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
-      this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom ? this.getMaxHeight() : Infinity;
+    let maxHeight: number = this.column.row.verticalAlignment.value == VerticalAlign.Middle ||
+      this.column.row.verticalAlignment.value == VerticalAlign.Bottom ? this.getMaxHeight() : Infinity;
     let offset = event.clientX - (horizontalHandle == 'left' ? anchorPoint - anchorWidth : anchorPoint + anchorWidth);
 
     // Set the cursor
@@ -154,23 +155,23 @@ export class ProportionalWidgetComponent extends WidgetComponent {
 
 
     // Align Top
-    if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
+    if (this.column.row.verticalAlignment.value == VerticalAlign.Top) {
       this.column.row.positionNextRow(-deltaHeight);
 
       this.column.row.container.save();
 
       // Align Middle or Align Bottom
-    } else if ((this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
-      this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom) && this.width) {
+    } else if ((this.column.row.verticalAlignment.value == VerticalAlign.Middle ||
+      this.column.row.verticalAlignment.value == VerticalAlign.Bottom) && this.width) {
 
 
       // Align Middle
-      if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
+      if (this.column.row.verticalAlignment.value == VerticalAlign.Middle) {
         this.column.row.positionNextRow(-deltaHeight * 0.5);
       }
 
       // Position the row
-      this.column.row.setPosition((deltaHeight * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 0.5 : 1)));
+      this.column.row.setPosition((deltaHeight * (this.column.row.verticalAlignment.value == VerticalAlign.Middle ? 0.5 : 1)));
     }
   }
 }

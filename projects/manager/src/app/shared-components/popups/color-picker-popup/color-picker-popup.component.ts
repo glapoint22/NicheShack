@@ -1,8 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { Color } from '../../../classes/color';
-import { HSL } from '../../../classes/hsl';
-import { HSB } from '../../../classes/hsb';
 import { PopupComponent } from '../popup/popup.component';
+import { Color } from 'classes/color';
+import { HSB } from 'classes/hsb';
+import { HSL } from 'classes/hsl';
 
 @Component({
   selector: 'color-picker-popup',

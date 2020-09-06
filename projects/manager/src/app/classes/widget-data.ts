@@ -1,11 +1,7 @@
-import { WidgetType } from './widget-type';
 import { BreakpointData } from './breakpoint-data';
+import { WidgetDataBase } from 'classes/widget-data-base';
 
-export interface WidgetData {
+export interface WidgetData extends WidgetDataBase {
     name: string;
-    width: number;
-    height: number;
     breakpoints: Array<BreakpointData>;
-    widgetType: WidgetType;
-    horizontalAlignment: string;
 }

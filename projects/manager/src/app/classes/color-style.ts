@@ -1,4 +1,4 @@
-import { Color } from './color';
+import { Color } from '../../../../../classes/color';
 import { PersistentStyle } from './persistent-style';
 import { Subscription } from 'rxjs';
 import { ColorPickerPopupComponent } from '../shared-components/popups/color-picker-popup/color-picker-popup.component';

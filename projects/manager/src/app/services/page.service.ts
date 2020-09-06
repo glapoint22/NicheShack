@@ -1,6 +1,5 @@
 import { Injectable, ElementRef } from '@angular/core';
-import { Page, PageType } from '../classes/page';
-import { PageData } from '../classes/page-data';
+import { Page } from '../classes/page';
 import { BreakpointService } from './breakpoint.service';
 import { SaveService } from './save.service';
 import { PropertyView } from '../classes/property-view';
@@ -9,6 +8,7 @@ import { ColumnComponent } from '../shared-components/designer/column/column.com
 import { WidgetComponent } from '../shared-components/designer/widgets/widget/widget.component';
 import { WidgetCursor } from '../classes/widget-cursor';
 import { EditableDropdownComponent } from '../shared-components/elements/dropdowns/editable-dropdown/editable-dropdown.component';
+import { PageData } from 'projects/manager/src/app/classes/page-data';
 
 @Injectable({
   providedIn: 'root'

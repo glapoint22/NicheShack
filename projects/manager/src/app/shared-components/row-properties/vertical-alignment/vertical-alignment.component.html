@@ -4,24 +4,24 @@
 
         <!-- Top -->
         <div class="image-container" title="Align Top"
-            [ngClass]="{'selected': row.verticalAlignment.value == breakpointVerticalAlignment.Top}"
-            (click)="setValue(breakpointVerticalAlignment.Top)">
+            [ngClass]="{'selected': row.verticalAlignment.value == verticalAlign.Top}"
+            (click)="setValue(verticalAlign.Top)">
             <img src="assets/align-top.png">
         </div>
 
 
         <!-- Middle -->
         <div class="image-container" title="Align Middle"
-            [ngClass]="{'selected': row.verticalAlignment.value == breakpointVerticalAlignment.Middle}"
-            (click)="setValue(breakpointVerticalAlignment.Middle)">
+            [ngClass]="{'selected': row.verticalAlignment.value == verticalAlign.Middle}"
+            (click)="setValue(verticalAlign.Middle)">
             <img src="assets/align-middle.png">
         </div>
 
 
         <!-- Bottom -->
         <div class="image-container" title="Align Bottom"
-            [ngClass]="{'selected': row.verticalAlignment.value == breakpointVerticalAlignment.Bottom}"
-            (click)="setValue(breakpointVerticalAlignment.Bottom)">
+            [ngClass]="{'selected': row.verticalAlignment.value == verticalAlign.Bottom}"
+            (click)="setValue(verticalAlign.Bottom)">
             <img src="assets/align-bottom.png">
         </div>
 

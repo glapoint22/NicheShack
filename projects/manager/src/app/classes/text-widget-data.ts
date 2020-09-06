@@ -1,9 +1,4 @@
 import { WidgetData } from './widget-data';
-import { BackgroundData } from './background-data';
-import { PaddingData } from './padding-data';
+import { TextWidgetDataBase } from 'classes/text-widget-data-base';
 
-export interface TextWidgetData extends WidgetData {
-    background: BackgroundData;
-    padding: PaddingData;
-    htmlContent: string;
-}
+export interface TextWidgetData extends WidgetData, TextWidgetDataBase { }

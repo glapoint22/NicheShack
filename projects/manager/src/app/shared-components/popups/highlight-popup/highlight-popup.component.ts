@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupComponent } from '../popup/popup.component';
-import { Color } from '../../../classes/color';
+import { Color } from '../../../../../../../classes/color';
 import { Description } from '../../../classes/description';
 
 @Component({

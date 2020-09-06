@@ -1,5 +1,5 @@
 import { BreakpointObject } from './breakpoint-object';
-import { BreakpointType } from './breakpoint';
+import { BreakpointType } from 'projects/manager/src/app/classes/breakpoint';
 
 export class ColumnSpan implements BreakpointObject {
     private _value: number;

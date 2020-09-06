@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
-import { ProductGroupType } from 'projects/manager/src/app/classes/product-group-type';
+import { ProductGroupType } from 'classes/product-group-type';
 import { KeyValue } from '@angular/common';
 import { ProductGroupWidgetComponent } from '../../../designer/widgets/product-group-widget/product-group-widget.component';
 import { Searchable } from 'projects/manager/src/app/classes/searchable';

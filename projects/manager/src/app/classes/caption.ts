@@ -1,19 +1,15 @@
-import { Color } from './color';
-import { CaptionData } from './caption-data';
+import { CaptionData } from '../../../../../classes/caption-data';
 import { Font } from './font';
 import { FontSize } from './font-size';
+import { CaptionBase } from 'classes/caption-base';
 
-export class Caption {
-    private defaultColor: Color = new Color(200, 200, 200, 1);
+export class Caption extends CaptionBase {
     public font: Font = new Font(null, null);
     public fontSize: FontSize = new FontSize(null, null);
-    public text: string;
-    public fontWeight: string = 'normal';
-    public fontStyle: string = 'normal';
-    public textDecoration: string = 'none';
-    public color: Color = this.defaultColor;
 
     constructor() {
+        super();
+
         this.font.selectedIndex = 0;
         this.font.styleValue = this.font.options[this.font.selectedIndex].value;
 
@@ -43,7 +39,7 @@ export class Caption {
 
     setData(captionData: CaptionData) {
         if (captionData) {
-            if (captionData.text) this.text = captionData.text;
+            super.setData(captionData);
 
             // If we have font family data
             if (captionData.font) {
@@ -72,14 +68,6 @@ export class Caption {
                     this.fontSize.selectedIndex = index;
                 }
             }
-
-            // Styles
-            if (captionData.fontWeight) this.fontWeight = captionData.fontWeight;
-            if (captionData.fontStyle) this.fontStyle = captionData.fontStyle;
-            if (captionData.textDecoration) this.textDecoration = captionData.textDecoration;
-
-            // Color
-            if (captionData.color) this.color = Color.hexToRGB(captionData.color);
         }
     }
 

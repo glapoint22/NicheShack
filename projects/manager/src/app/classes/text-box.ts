@@ -15,7 +15,7 @@ import { IncreaseIndent } from './increase-indent';
 import { DecreaseIndent } from './decrease-indent';
 import { OrderedList } from './ordered-list';
 import { UnorderedList } from './unordered-list';
-import { Color } from './color';
+import { Color } from '../../../../../classes/color';
 import { LinkStyle } from './link-style';
 import { Subject } from 'rxjs';
 

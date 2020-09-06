@@ -3,7 +3,7 @@ import { Border } from 'projects/manager/src/app/classes/border';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
-import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { WidgetType } from 'classes/widget-type';
 import { LineWidgetData } from 'projects/manager/src/app/classes/line-widget-data';
 
 @Component({

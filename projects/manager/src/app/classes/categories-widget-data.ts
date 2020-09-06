@@ -1,12 +1,7 @@
-import { Category } from './category';
 import { WidgetData } from './widget-data';
-import { CaptionData } from './caption-data';
-import { ShadowData } from './shadow-data';
+import { CategoriesWidgetDataBase } from 'classes/categories-widget-data-base';
+import { Category } from './category';
 
-export interface CategoriesWidgetData extends WidgetData {
-    caption: CaptionData;
+export interface CategoriesWidgetData extends WidgetData, CategoriesWidgetDataBase {
     categories: Array<Category>;
-    textColor: string;
-    backgroundColor: string;
-    shadow: ShadowData;
-}
+ }

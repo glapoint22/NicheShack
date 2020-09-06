@@ -1,7 +1,7 @@
 import { TextBox } from './text-box';
 import { LowercaseStyle } from './lowercase-style';
 import { ApplicationRef } from '@angular/core';
-import { Color } from './color';
+import { Color } from '../../../../../classes/color';
 import { UppercaseStyle } from './uppercase-style';
 
 export class Description extends TextBox {

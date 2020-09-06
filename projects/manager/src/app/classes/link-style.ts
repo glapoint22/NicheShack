@@ -1,7 +1,8 @@
-import { Link, LinkOption } from './link';
+import { Link } from './link';
 import { NodeStyle } from './node-style';
 import { LinkPopupComponent } from '../shared-components/popups/link-popup/link-popup.component';
 import { Subscription, Subject } from 'rxjs';
+import { LinkOption } from 'classes/link-base';
 
 export class LinkStyle extends NodeStyle {
     public link: Link = new Link();

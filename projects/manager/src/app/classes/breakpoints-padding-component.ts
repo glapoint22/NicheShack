@@ -1,5 +1,5 @@
-import { Breakpoint } from './breakpoint';
 import { Padding } from './padding';
+import { Breakpoint } from './breakpoint';
 
 export interface BreakpointsPaddingComponent {
     breakpoints: Array<Breakpoint>;

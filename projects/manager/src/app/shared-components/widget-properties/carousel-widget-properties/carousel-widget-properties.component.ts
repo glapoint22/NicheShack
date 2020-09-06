@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { CarouselWidgetComponent } from '../../designer/widgets/carousel-widget/carousel-widget.component';
 import { MediaType } from '../../../classes/media';
-import { CarouselBanner } from '../../../classes/carousel-banner';
+import { CarouselBanner } from '../../../../../../../classes/carousel-banner';
 import { PaginatorComponent } from '../../paginator/paginator.component';
 import { PromptService } from '../../../services/prompt.service';
 import { PageService } from '../../../services/page.service';

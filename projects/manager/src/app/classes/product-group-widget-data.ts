@@ -1,10 +1,7 @@
 import { WidgetData } from './widget-data';
-import { ProductGroupType } from './product-group-type';
 import { Product } from './product';
-import { CaptionData } from './caption-data';
+import { ProductGroupWidgetDataBase } from 'classes/product-group-widget-data-base';
 
-export interface ProductGroupWidgetData extends WidgetData {
-    caption: CaptionData;
-    productGroupType: ProductGroupType;
+export interface ProductGroupWidgetData extends WidgetData, ProductGroupWidgetDataBase {
     featuredProducts: Array<Product>;
 }

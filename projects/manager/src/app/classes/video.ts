@@ -1,6 +1,6 @@
 import Player from '@vimeo/player';
 import YouTubePlayer from 'youtube-player';
-import { VideoData } from './video-data';
+import { VideoData } from '../../../../../classes/video-data';
 import { Media } from './media';
 
 export class Video implements Media {

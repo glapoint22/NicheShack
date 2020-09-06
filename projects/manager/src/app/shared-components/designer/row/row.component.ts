@@ -12,12 +12,12 @@ import { BreakpointsComponent } from '../../../classes/breakpoints-component';
 import { Padding } from '../../../classes/padding';
 import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-padding-component';
 import { WidgetComponent } from '../widgets/widget/widget.component';
-import { RowData } from '../../../classes/row-data';
 import { Background } from '../../../classes/background';
 import { ColumnData } from '../../../classes/column-data';
 import { PageService } from '../../../services/page.service';
 import { PropertyView } from '../../../classes/property-view';
-import { BreakpointData } from '../../../classes/breakpoint-data';
+import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
+import { RowData } from '../../../classes/row-data';
 
 @Component({
   selector: 'row',

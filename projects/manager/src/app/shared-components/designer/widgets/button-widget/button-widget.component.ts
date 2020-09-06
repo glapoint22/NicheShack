@@ -4,11 +4,11 @@ import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Caption } from 'projects/manager/src/app/classes/caption';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
-import { Link, LinkOption } from 'projects/manager/src/app/classes/link';
+import { Link } from 'projects/manager/src/app/classes/link';
 import { Padding } from 'projects/manager/src/app/classes/padding';
-import { Color } from 'projects/manager/src/app/classes/color';
+import { Color } from 'classes/color';
 import { ButtonState } from 'projects/manager/src/app/classes/button-state';
-import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { WidgetType } from 'classes/widget-type';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
 import { BackgroundColor } from 'projects/manager/src/app/classes/background-color';
@@ -16,6 +16,7 @@ import { BorderColor } from 'projects/manager/src/app/classes/border-color';
 import { TextColor } from 'projects/manager/src/app/classes/text-color';
 import { ButtonWidgetData } from 'projects/manager/src/app/classes/button-widget-data';
 import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
+import { LinkOption } from 'classes/link-base';
 
 @Component({
   selector: 'button-widget',

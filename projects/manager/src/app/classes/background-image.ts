@@ -1,30 +1,12 @@
-import { Image } from './image';
-import { BackgroundImageData } from './background-image-data';
+import { BackgroundImageBase } from 'classes/background-image-base';
+import { BackgroundImageData } from 'classes/background-image-data';
 
-export class BackgroundImage extends Image {
-    public position: string;
-    public repeat: string;
-    public attachment: string;
-
-    setData(backgroundImageData: BackgroundImageData) {
-        if (backgroundImageData) {
-            this.position = backgroundImageData.position;
-            this.repeat = backgroundImageData.repeat;
-            this.attachment = backgroundImageData.attachment;
-
-            super.setData(backgroundImageData);
-        }
-    }
-
-
-
+export class BackgroundImage extends BackgroundImageBase {
     getData(): BackgroundImageData {
-        let image = super.getData();
-
         return {
-            id: image.id,
-            name: image.name,
-            url: image.url,
+            id: this.id,
+            name: this.name,
+            url: this.url,
             position: this.position,
             repeat: this.repeat,
             attachment: this.attachment,
