@@ -21,7 +21,11 @@
 
 .content-heading {
     margin-top: 48px;
-    color: white;
+    color: #cecece;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .product-content-container {
@@ -32,6 +36,6 @@
 
 @media (min-width: map-get($breakpoints, lg)) {
     .content {
-        max-width: 1800px;
+        max-width: 1600px;
     }
 }

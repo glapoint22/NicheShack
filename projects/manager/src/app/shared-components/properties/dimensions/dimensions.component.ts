@@ -1,8 +1,8 @@
 import { Component, Input, ApplicationRef, Output, EventEmitter } from '@angular/core';
-import { BreakpointVerticalAlignment } from '../../../classes/breakpoint';
 import { EditableNumberFieldComponent } from '../../elements/number-fields/editable-number-field/editable-number-field.component';
 import { ProportionalWidgetComponent } from '../../designer/widgets/proportional-widget/proportional-widget.component';
 import { FreeformWidgetComponent } from '../../designer/widgets/freeform-widget/freeform-widget.component';
+import { VerticalAlign } from 'classes/vertical-align';
 
 @Component({
   selector: 'dimensions',
@@ -131,8 +131,8 @@ export class DimensionsComponent {
       freeformWidget.height = value;
 
       // If the widget's row vertical alignment is top or middle
-      if (freeformWidget.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top ||
-        freeformWidget.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
+      if (freeformWidget.column.row.verticalAlignment.value == VerticalAlign.Top ||
+        freeformWidget.column.row.verticalAlignment.value == VerticalAlign.Middle) {
 
         // Size the widget from the bottom
         freeformWidget.sizeBottom(maxHeight, minHeight, maxRowHeight, previousHeight);
@@ -151,8 +151,8 @@ export class DimensionsComponent {
     // We are setting up the parameters to be passed into the setDimensions method
     let columnWidth: number = proportionalWidget.column.columnElement.clientWidth;
     let maxRowHeight: number = proportionalWidget.getMaxRowHeight();
-    let maxHeight: number = proportionalWidget.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
-      proportionalWidget.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom ? proportionalWidget.getMaxHeight() : Infinity;
+    let maxHeight: number = proportionalWidget.column.row.verticalAlignment.value == VerticalAlign.Middle ||
+      proportionalWidget.column.row.verticalAlignment.value == VerticalAlign.Bottom ? proportionalWidget.getMaxHeight() : Infinity;
     let previousHeight: number = proportionalWidget.widgetElement.nativeElement.getBoundingClientRect().height;
 
     // Set the dimensions

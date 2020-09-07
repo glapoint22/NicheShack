@@ -4,11 +4,11 @@ import { Corners } from 'projects/manager/src/app/classes/corners';
 import { Shadow } from 'projects/manager/src/app/classes/shadow';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { ContainerComponent } from '../../container/container.component';
-import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { WidgetType } from 'classes/widget-type';
 import { Padding } from 'projects/manager/src/app/classes/padding';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
-import { Color } from 'projects/manager/src/app/classes/color';
+import { Color } from 'classes/color';
 import { ContainerWidgetData } from 'projects/manager/src/app/classes/container-widget-data';
 import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
 

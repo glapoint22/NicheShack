@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ColumnComponent } from '../../column/column.component';
 import { HorizontalAlignment } from 'projects/manager/src/app/classes/horizontal-alignment';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
-import { Breakpoint, BreakpointVerticalAlignment } from 'projects/manager/src/app/classes/breakpoint';
+import { Breakpoint } from 'projects/manager/src/app/classes/breakpoint';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
-import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { WidgetType } from 'classes/widget-type';
 import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
 import { PropertyView } from 'projects/manager/src/app/classes/property-view';
 import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
+import { VerticalAlign } from 'classes/vertical-align';
 
 @Component({
   template: '',
@@ -57,11 +58,11 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
 
 
   getMaxHeight() {
-    let maxHeight = this.column.row.top * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 2 : 1) +
-      (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top ? this.height : this.column.row.rowElement.nativeElement.getBoundingClientRect().height);
+    let maxHeight = this.column.row.top * (this.column.row.verticalAlignment.value == VerticalAlign.Middle ? 2 : 1) +
+      (this.column.row.verticalAlignment.value == VerticalAlign.Top ? this.height : this.column.row.rowElement.nativeElement.getBoundingClientRect().height);
 
     for (let i = this.column.row.container.selectedRowIndex - 1; i > -1; i--) {
-      maxHeight += this.column.row.container.rows[i].component.top * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 2 : 1);
+      maxHeight += this.column.row.container.rows[i].component.top * (this.column.row.verticalAlignment.value == VerticalAlign.Middle ? 2 : 1);
     }
 
     return maxHeight;

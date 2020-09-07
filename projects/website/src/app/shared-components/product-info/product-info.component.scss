@@ -226,11 +226,11 @@
 @media (min-width: map-get($breakpoints, lg)) {
     .container {
         .product-info {
-            flex: 0.8;
+            flex: 0.6;
         }
 
         .media-group {
-            height: 265px;
+            height: 306px;
         }
     }
 }
@@ -239,7 +239,7 @@
 @media (min-width: map-get($breakpoints, xl)) {
     .container {
         .media-group {
-            height: 341px;
+            height: 370px;
         }
     }
 }
@@ -251,7 +251,7 @@
 @media (min-width: map-get($breakpoints, xxl)) {
     .container {
         .media-group {
-            height: 391px;
+            height: 434px;
         }
     }
 }

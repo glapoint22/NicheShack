@@ -1,5 +1,5 @@
 import { BreakpointsPaddingComponent } from './breakpoints-padding-component';
-import { PaddingData } from './padding-data';
+import { PaddingData } from '../../../../../classes/padding-data';
 import { PaddingTop } from './padding-top';
 import { PaddingRight } from './padding-right';
 import { PaddingBottom } from './padding-bottom';

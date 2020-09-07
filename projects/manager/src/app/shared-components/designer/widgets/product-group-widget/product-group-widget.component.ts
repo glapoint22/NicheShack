@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
-import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
-import { ProductGroupType } from 'projects/manager/src/app/classes/product-group-type';
+import { WidgetType } from 'classes/widget-type';
+import { ProductGroupType } from 'classes/product-group-type';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { ProductGroupWidgetData } from 'projects/manager/src/app/classes/product-group-widget-data';
 import { Caption } from 'projects/manager/src/app/classes/caption';
-import { Color } from 'projects/manager/src/app/classes/color';
+import { Color } from 'classes/color';
 
 @Component({
   selector: 'product-group-widget',

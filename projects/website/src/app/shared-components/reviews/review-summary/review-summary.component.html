@@ -15,7 +15,7 @@
                 </div>
             </div>
             <button class="alt-button width-100-sm" style="margin-bottom: 16px;"
-                    (click)="onWriteReviewClick(product.id)">Write a Review</button>
+                    (click)="onWriteReviewClick(product.urlId)">Write a Review</button>
         </div>
 
 
@@ -40,7 +40,7 @@
     <ng-template #noRating>
         <div style="text-align: center;">
             <div class="primary-color-light" style="margin-bottom: 8px;">Be the first to review this item!</div>
-            <button class="alt-button" (click)="onWriteReviewClick(product.id)">Write a Review</button>
+            <button class="alt-button" (click)="onWriteReviewClick(product.urlId)">Write a Review</button>
         </div>
 
     </ng-template>

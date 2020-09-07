@@ -3,7 +3,6 @@ import { Category } from '../../../classes/category';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
 import { LoadingService } from '../../../services/loading.service';
 import { MediaType } from '../../../classes/media';
-import { ImageData } from '../../../classes/image-data';
 import { SaveService } from '../../../services/save.service';
 import { DataService } from 'services/data.service';
 import { Image } from '../../../classes/image';

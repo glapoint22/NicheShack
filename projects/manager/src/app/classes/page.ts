@@ -1,11 +1,9 @@
 import { Background } from './background';
 import { ContainerComponent } from '../shared-components/designer/container/container.component';
-import { PageData } from './page-data';
-import { RowData } from './row-data';
 import { RowComponent } from '../shared-components/designer/row/row.component';
 import { ColumnData } from './column-data';
 import { ColumnComponent } from '../shared-components/designer/column/column.component';
-import { WidgetType } from './widget-type';
+import { WidgetType } from '../../../../../classes/widget-type';
 import { ContainerWidgetComponent } from '../shared-components/designer/widgets/container-widget/container-widget.component';
 import { ContainerWidgetData } from './container-widget-data';
 import { Type } from '@angular/core';
@@ -19,6 +17,8 @@ import { ProductGroupWidgetComponent } from '../shared-components/designer/widge
 import { CategoriesWidgetComponent } from '../shared-components/designer/widgets/categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from '../shared-components/designer/widgets/carousel-widget/carousel-widget.component';
 import { WidgetCursor } from './widget-cursor';
+import { RowData } from 'projects/manager/src/app/classes/row-data';
+import { PageData } from 'projects/manager/src/app/classes/page-data';
 
 export class Page {
     public id: number;

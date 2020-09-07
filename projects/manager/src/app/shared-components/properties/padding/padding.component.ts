@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { BreakpointSpacing } from '../../../classes/breakpoint';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-padding-component';
+import { BreakpointSpacing } from 'projects/manager/src/app/classes/breakpoint';
 
 @Component({
   selector: 'padding',

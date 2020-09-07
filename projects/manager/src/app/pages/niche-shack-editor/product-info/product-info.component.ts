@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
-import { MediaType, Media } from '../../../classes/media';
+import { MediaType } from '../../../classes/media';
 import { ProductMedia } from '../../../classes/product-media';
 
 @Component({

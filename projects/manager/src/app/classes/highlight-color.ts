@@ -1,5 +1,5 @@
 import { ColorStyle } from './color-style';
-import { Color } from './color';
+import { Color } from '../../../../../classes/color';
 import { Subject } from 'rxjs';
 
 export class HighlightColor extends ColorStyle {

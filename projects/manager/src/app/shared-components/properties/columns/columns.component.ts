@@ -4,7 +4,7 @@ import { NumberFieldComponent } from '../../elements/number-fields/number-field/
 import { ColumnSpan } from '../../../classes/column-span';
 import { Column } from '../../../classes/column';
 import { BreakpointService } from '../../../services/breakpoint.service';
-import { Breakpoint } from '../../../classes/breakpoint';
+import { Breakpoint } from 'projects/manager/src/app/classes/breakpoint';
 
 
 @Component({

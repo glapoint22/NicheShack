@@ -51,7 +51,7 @@
                     <img src="assets/Twitter.png" title="Share on Twitter">
                 </div>
                 <div class="social-media"
-                    (click)="shareService.onPinterestClick(getProductUrl(), productInfo.product.shareImage, productInfo.product.description)">
+                    (click)="shareService.onPinterestClick(getProductUrl(), productInfo.media[0].url, productInfo.product.description)">
                     <img src="assets/Pinterest.png" title="Share on Pinterest">
                 </div>
             </div>
@@ -167,7 +167,7 @@
 
 
 <report-item #reportItem [productId]="productInfo.product.id"></report-item>
-<add-to-list #addToList [product]="productInfo.product"
+<add-to-list #addToList [productInfo]="productInfo"
     (onCreateListClick)="createList.show = true; addToList.show = false"></add-to-list>
 <create-list #createList (onCreateListHide)="addToList.show = true"></create-list>
 

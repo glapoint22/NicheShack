@@ -2,8 +2,8 @@ import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, Compo
 import { RowComponent } from '../row/row.component';
 import { Row } from '../../../classes/row';
 import { WidgetComponent } from '../widgets/widget/widget.component';
-import { RowData } from '../../../classes/row-data';
 import { PageService } from '../../../services/page.service';
+import { RowData } from '../../../classes/row-data';
 
 @Component({
   selector: 'container',

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { BreakpointScreenSize, Breakpoint, BreakpointType } from '../classes/breakpoint';
 import { BreakpointObject } from '../classes/breakpoint-object';
 import { BreakpointsComponent } from '../classes/breakpoints-component';
+import { BreakpointScreenSize, Breakpoint, BreakpointType } from '../classes/breakpoint';
 import { BreakpointData } from '../classes/breakpoint-data';
 
 @Injectable({

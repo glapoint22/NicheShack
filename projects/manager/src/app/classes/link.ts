@@ -1,20 +1,7 @@
-import { LinkData } from './link-data';
+import { LinkBase, LinkOption } from 'classes/link-base';
+import { LinkData } from 'classes/link-data';
 
-export class Link {
-    public selectedOption: LinkOption;
-    public url: string;
-    public optionValue: string;
-    public disabled: boolean;
-
-    setData(linkData: LinkData) {
-        if (linkData) {
-            if (linkData.selectedOption) this.selectedOption = linkData.selectedOption as LinkOption;
-            if (linkData.url) this.url = linkData.url;
-            if (linkData.optionValue) this.optionValue = linkData.optionValue;
-        }
-    }
-
-
+export class Link extends LinkBase {
     getData(): LinkData {
         if (this.selectedOption == LinkOption.None) return null;
 
@@ -24,14 +11,4 @@ export class Link {
             optionValue: this.optionValue
         }
     }
-}
-
-export enum LinkOption {
-    None = 'none',
-    Page = 'page',
-    Category = 'category',
-    Niche = 'niche',
-    Product = 'product',
-    WebAddress = 'webAddress',
-    OnClick = 'onClick'
 }

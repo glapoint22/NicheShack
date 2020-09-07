@@ -3,6 +3,7 @@ import { Product } from '../../../interfaces/product';
 import { KeyValue } from '@angular/common';
 import { DataService } from 'services/data.service';
 import { Router } from '@angular/router';
+import { ProductInfo } from '../../../interfaces/product-info';
 
 @Component({
   selector: 'add-to-list',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-to-list.component.scss']
 })
 export class AddToListComponent {
-  @Input() product: Product;
+  @Input() productInfo: ProductInfo;
   @Output() onCreateListClick: EventEmitter<void> = new EventEmitter();
   public show: boolean;
   public lists: Array<KeyValue<string, string>>;
@@ -46,7 +47,7 @@ export class AddToListComponent {
 
 
   onSubmit() {
-    this.dataService.post('api/Lists/AddProduct', { productId: this.product.id, listId: this.selectedList.value })
+    this.dataService.post('api/Lists/AddProduct', { productId: this.productInfo.product.id, listId: this.selectedList.value })
       .subscribe((isDuplicate: boolean) => {
         if (isDuplicate) {
           this.isDuplicate = true;

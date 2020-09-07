@@ -1,15 +1,8 @@
-import { BorderData } from './border-data';
-import { Color } from './color';
 import { Enableable } from './enableable';
+import { BorderBase } from 'classes/border-base';
+import { BorderData } from 'classes/border-data';
 
-export class Border implements Enableable {
-    public enable: boolean;
-    public width: number = 1;
-    public style: string = 'solid';
-    private defaultColor: Color = new Color(190, 190, 190, 1);
-    public color: Color = this.defaultColor;
-
-
+export class Border extends BorderBase implements Enableable {
     applyStyle(element: HTMLElement) {
         if (this.enable) {
             element.style.borderColor = this.color.toRGBString();
@@ -24,14 +17,7 @@ export class Border implements Enableable {
     }
 
 
-    setData(borderData: BorderData) {
-        if (borderData) {
-            this.enable = borderData.enable;
-            if (borderData.width) this.width = borderData.width;
-            if (borderData.style) this.style = borderData.style;
-            if (borderData.color) this.color = Color.hexToRGB(borderData.color);
-        }
-    }
+    
 
     getData(): BorderData {
         let borderData: BorderData;

@@ -4,7 +4,6 @@ import { WidgetComponent } from '../widgets/widget/widget.component';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { ColumnSpan } from '../../../classes/column-span';
 import { BreakpointsComponent } from '../../../classes/breakpoints-component';
-import { Breakpoint, BreakpointVerticalAlignment } from '../../../classes/breakpoint';
 import { Visibility } from '../../../classes/visibility';
 import { Padding } from '../../../classes/padding';
 import { Corners } from '../../../classes/corners';
@@ -15,7 +14,9 @@ import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-paddin
 import { Background } from '../../../classes/background';
 import { ColumnData } from '../../../classes/column-data';
 import { PropertyView } from '../../../classes/property-view';
-import { BreakpointData } from '../../../classes/breakpoint-data';
+import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
+import { Breakpoint } from 'projects/manager/src/app/classes/breakpoint';
+import { VerticalAlign } from 'classes/vertical-align';
 
 @Component({
   selector: '[column]',
@@ -61,10 +62,10 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
 
     // Used to position the column divider & column indicators
     if (this.widget) {
-      if (this.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
+      if (this.row.verticalAlignment.value == VerticalAlign.Top) {
         this.rowTop = 0;
       } else {
-        this.rowTop = (this.widget.height - this.rowHeight) * (this.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 0.5 : 1);
+        this.rowTop = (this.widget.height - this.rowHeight) * (this.row.verticalAlignment.value == VerticalAlign.Middle ? 0.5 : 1);
       }
     }
   }

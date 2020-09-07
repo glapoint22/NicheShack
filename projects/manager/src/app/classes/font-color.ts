@@ -1,5 +1,5 @@
 import { ColorStyle } from './color-style';
-import { Color } from './color';
+import { Color } from '../../../../../classes/color';
 import { Underline } from './underline';
 import { Style } from './style';
 import { Subject } from 'rxjs';

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { BreakpointVisibility } from '../../../classes/breakpoint';
 import { ColumnComponent } from '../../designer/column/column.component';
 import { BreakpointService } from '../../../services/breakpoint.service';
+import { BreakpointVisibility } from 'projects/manager/src/app/classes/breakpoint';
 
 @Component({
   selector: 'visibility',

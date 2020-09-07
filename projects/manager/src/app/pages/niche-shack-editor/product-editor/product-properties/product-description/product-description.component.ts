@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, ApplicationRef, AfterViewInit } from '@angular/core';
 import { Description } from 'projects/manager/src/app/classes/description';
-import { Color } from 'projects/manager/src/app/classes/color';
+import { Color } from 'classes/color';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PanelComponent } from 'projects/manager/src/app/shared-components/panel/panel.component';

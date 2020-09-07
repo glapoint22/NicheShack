@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, DoCheck, OnChanges } from '@angular/core';
-import { Color } from '../../../classes/color';
+import { Color } from '../../../../../../../classes/color';
 import { PopupService } from '../../../services/popup.service';
 import { ColorPickerPopupComponent } from '../../popups/color-picker-popup/color-picker-popup.component';
 

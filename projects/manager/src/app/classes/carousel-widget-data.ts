@@ -1,6 +1,4 @@
 import { WidgetData } from './widget-data';
-import { CarouselBannerData } from './carousel-banner-data';
+import { CarouselWidgetDataBase } from 'classes/carousel-widget-data-base';
 
-export interface CarouselWidgetData extends WidgetData {
-    banners: Array<CarouselBannerData>;
-}
+export interface CarouselWidgetData extends WidgetData, CarouselWidgetDataBase { }

@@ -2,8 +2,8 @@ import { ProductContent } from './product-content';
 import { ProductPricePoint } from './product-price-point';
 import { SafeHtml } from '@angular/platform-browser';
 import { Item } from './item';
-import { ImageData } from './image-data';
 import { ProductMedia } from './product-media';
+import { ImageData } from 'classes/image-data';
 
 export interface Product {
     id: number;

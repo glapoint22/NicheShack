@@ -87,11 +87,11 @@ export class ProductInfoComponent implements OnChanges, AfterViewInit {
 
 
   onBuyClick(hoplink: string) {
-    window.location.href = hoplink;
+    window.open(hoplink, '_blank');
   }
 
   getProductUrl(): string {
-    return '/' + this.productInfo.product.urlName + '/' + this.productInfo.product.id;
+    return '/' + this.productInfo.product.urlName + '/' + this.productInfo.product.urlId;
   }
 
 

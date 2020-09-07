@@ -6,7 +6,7 @@ import { ProportionalWidgetComponent } from '../proportional-widget/proportional
 import { Link } from 'projects/manager/src/app/classes/link';
 import { Image } from 'projects/manager/src/app/classes/image';
 import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoints-component';
-import { WidgetType } from 'projects/manager/src/app/classes/widget-type';
+import { WidgetType } from 'classes/widget-type';
 import { ImageWidgetData } from 'projects/manager/src/app/classes/image-widget-data';
 
 @Component({

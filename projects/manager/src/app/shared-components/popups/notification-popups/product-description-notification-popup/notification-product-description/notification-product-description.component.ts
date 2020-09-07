@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, ApplicationRef, Input } from '@angular/core';
 import { Description } from 'projects/manager/src/app/classes/description';
-import { Color } from 'projects/manager/src/app/classes/color';
+import { Color } from 'classes/color';
 
 @Component({
   selector: 'notification-product-description',

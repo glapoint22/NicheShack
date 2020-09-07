@@ -123,7 +123,7 @@ export class OrdersComponent extends PageComponent implements OnInit {
 
   onBuyAgainClick(hoplink: string) {
     // Navigate to the product page
-    window.location.href = hoplink;
+    window.open(hoplink, '_blank');
   }
 
   onWriteReviewClick(productId: string) {

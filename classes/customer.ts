@@ -3,5 +3,4 @@ export class Customer {
     lastName: string;
     email: string;
     image: string;
-    badBehavior: number;
 }

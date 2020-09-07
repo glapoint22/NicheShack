@@ -1,18 +1,8 @@
-import { ImageData } from './image-data';
 import { Media } from './media';
+import { ImageBase } from 'classes/Image-base';
+import { ImageData } from 'classes/image-data';
 
-export class Image implements Media {
-    public id: number;
-    public name: string;
-    public url: string;
-
-    setData(imageData: ImageData) {
-        if (imageData) {
-            this.url = imageData.url;
-            this.name = imageData.name;
-        }
-    }
-
+export class Image extends ImageBase implements Media {
     getData(): ImageData {
         return {
             id: this.id,

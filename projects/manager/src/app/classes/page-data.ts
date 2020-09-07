@@ -1,10 +1,8 @@
-import { BackgroundData } from './background-data';
 import { RowData } from './row-data';
+import { PageDataBase } from 'classes/page-data-base';
 
-export interface PageData {
+export interface PageData extends PageDataBase {
     id: number;
     name: string;
-    width: number;
-    background: BackgroundData;
     rows: Array<RowData>;
 }

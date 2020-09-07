@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { WidgetComponent } from '../widget/widget.component';
-import { BreakpointHorizontalAlignment, BreakpointVerticalAlignment } from 'projects/manager/src/app/classes/breakpoint';
+import { HorizontalAlign } from 'classes/horizontal-align';
+import { VerticalAlign } from 'classes/vertical-align';
 
 @Component({
   template: '',
@@ -60,7 +61,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
   onLeftHandleMousedown(event: MouseEvent) {
-    let anchorWidth: number = this.widgetElement.nativeElement.clientWidth * (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? 0.5 : 1);
+    let anchorWidth: number = this.widgetElement.nativeElement.clientWidth * (this.horizontalAlignment.value == HorizontalAlign.Center ? 0.5 : 1);
     let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().left + anchorWidth;
     let startWidth: number = this.widgetElement.nativeElement.clientWidth;
     let offset = event.clientX - (anchorPoint - anchorWidth);
@@ -82,8 +83,8 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
   onRightHandleMousedown(event: MouseEvent) {
-    let anchorWidth: number = this.widgetElement.nativeElement.clientWidth * (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? 0.5 : 1);
-    let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().left + (this.horizontalAlignment.value == BreakpointHorizontalAlignment.Center ? anchorWidth : 0);
+    let anchorWidth: number = this.widgetElement.nativeElement.clientWidth * (this.horizontalAlignment.value == HorizontalAlign.Center ? 0.5 : 1);
+    let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().left + (this.horizontalAlignment.value == HorizontalAlign.Center ? anchorWidth : 0);
     let startWidth: number = this.widgetElement.nativeElement.clientWidth;
     let offset = (anchorPoint + anchorWidth) - event.clientX;
 
@@ -104,7 +105,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
   onTopHandleMousedown(event: MouseEvent) {
-    let anchorHeight: number = this.widgetElement.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 0.5 : 1);
+    let anchorHeight: number = this.widgetElement.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == VerticalAlign.Middle ? 0.5 : 1);
     let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().top + anchorHeight;
     let startHeight: number = this.widgetElement.nativeElement.clientHeight;
     let previousHeight: number = startHeight;
@@ -153,7 +154,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
     // The row's vertical alignment is set to top
-    if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
+    if (this.column.row.verticalAlignment.value == VerticalAlign.Top) {
       // Set the row's position
       this.column.row.setPosition(-delta);
 
@@ -198,8 +199,8 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
       // The row's vertical alignment is set to middle or bottom
-    } else if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ||
-      this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom) {
+    } else if (this.column.row.verticalAlignment.value == VerticalAlign.Middle ||
+      this.column.row.verticalAlignment.value == VerticalAlign.Bottom) {
 
 
 
@@ -235,7 +236,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
       // The row's vertical alignment is set to middle
-      if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
+      if (this.column.row.verticalAlignment.value == VerticalAlign.Middle) {
         delta *= 0.5;
         this.column.row.positionNextRow(delta);
       }
@@ -248,12 +249,12 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
   onBottomHandleMousedown(event: MouseEvent) {
-    let anchorHeight: number = this.widgetElement.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? 0.5 : 1);
-    let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().top + (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle ? anchorHeight : 0);
+    let anchorHeight: number = this.widgetElement.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == VerticalAlign.Middle ? 0.5 : 1);
+    let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().top + (this.column.row.verticalAlignment.value == VerticalAlign.Middle ? anchorHeight : 0);
     let startHeight: number = this.widgetElement.nativeElement.clientHeight;
     let previousHeight: number = startHeight;
     let maxRowHeight: number = this.getMaxRowHeight();
-    let minHeight: number = this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom ? Math.max(this.getMinHeightAlt(), this.getMinHeight()) : this.getMinHeight();
+    let minHeight: number = this.column.row.verticalAlignment.value == VerticalAlign.Bottom ? Math.max(this.getMinHeightAlt(), this.getMinHeight()) : this.getMinHeight();
     let maxHeight = this.getMaxHeight();
     let offset = (anchorPoint + anchorHeight) - event.clientY;
 
@@ -290,8 +291,8 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
     // The row's vertical alignment is set to top or middle
-    if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top ||
-      this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
+    if (this.column.row.verticalAlignment.value == VerticalAlign.Top ||
+      this.column.row.verticalAlignment.value == VerticalAlign.Middle) {
 
 
 
@@ -325,7 +326,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
       }
 
 
-      if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Top) {
+      if (this.column.row.verticalAlignment.value == VerticalAlign.Top) {
         this.column.row.container.save();
       }
 
@@ -334,7 +335,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
       // The row's vertical alignment is set to middle
-      if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Middle) {
+      if (this.column.row.verticalAlignment.value == VerticalAlign.Middle) {
 
         // Make sure the widget's height does not go above the max height
         if (this.height > maxHeight) {
@@ -360,7 +361,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
       // The row's vertical alignment is set to bottom
-    } else if (this.column.row.verticalAlignment.value == BreakpointVerticalAlignment.Bottom) {
+    } else if (this.column.row.verticalAlignment.value == VerticalAlign.Bottom) {
 
 
       // Set the next row's top

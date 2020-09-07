@@ -18,7 +18,7 @@
                     <h2>{{product.title}}</h2>
 
                     <!-- Image -->
-                    <img [src]="'/images/' + product.image">
+                    <img [src]="'/images/' + product.image.url" [alt]="product.image.name" [title]="product.image.name">
 
                     <!-- Form -->
                     <form (ngSubmit)="onSubmit()" #form="ngForm">

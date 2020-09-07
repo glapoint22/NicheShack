@@ -37,17 +37,6 @@ export enum BreakpointSpacing {
     _48px = '48px',
 }
 
-export enum BreakpointHorizontalAlignment {
-    Left = '0',
-    Center = '0 auto',
-    Right = '0 0 0 auto'
-}
-
-export enum BreakpointVerticalAlignment {
-    Top = 'flex-start',
-    Middle = 'center',
-    Bottom = 'flex-end'
-}
 
 export enum BreakpointType {
     PaddingTop,
