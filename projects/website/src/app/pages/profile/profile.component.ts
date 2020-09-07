@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { Customer } from 'classes/customer';
 import { AccountService } from 'services/account.service';
 import { EditProfilePictureComponent } from './edit-profile-picture/edit-profile-picture.component';
+import { DataService } from 'services/data.service';
 
 @Component({
   templateUrl: './profile.component.html',
@@ -23,7 +24,9 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
     private router: Router,
-    private accountService: AccountService) {
+    private accountService: AccountService,
+    private dataService: DataService
+    ) {
     super(titleService, metaService, document);
   }
 
@@ -63,13 +66,18 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
 
 
   onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }, pictureSelectInput: EditProfilePictureComponent) {
-    pictureSelectInput.picUrl = event.target.files[0];
-    pictureSelectInput.show = true;
+    let formData = new FormData();
+    formData.append('image', event.target.files[0]);
+
+    this.dataService.post('api/Account/CopyProfilePicture', formData, 'text').subscribe((url) => {
+      pictureSelectInput.picUrl = url;
+      pictureSelectInput.show = true;
+    })
   }
 
+  
   openEditProfilePictureForm(pictureSelectInput: EditProfilePictureComponent) {
-    let image = { name: this.customer.image };
-    pictureSelectInput.picUrl = image;
+    pictureSelectInput.picUrl = this.customer.image;
     pictureSelectInput.show = true;
   }
 }

@@ -16,7 +16,7 @@
 
             <!-- Profile Pic -->
             <div class="profile-pic-container">
-                <img #profilePic [src]="'images/' + picUrl.name" (load)="onProfilePicLoad($event)"
+                <img #profilePic [src]="'images/' + picUrl" (load)="onProfilePicLoad($event)"
                     (mousedown)="onProfilePicMouseDown($event)" (touchstart)="onProfilePicTouchStart($event)">
             </div>
 

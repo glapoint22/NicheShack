@@ -9,7 +9,7 @@ import { DataService } from 'services/data.service';
 export class EditProfilePictureComponent {
   constructor(private dataService: DataService) { }
   public show: boolean;
-  public picUrl;
+  public picUrl: string;
   public picMoveStartPos = { x: null, y: null };
   public zoomHandleMoveStartPos: number;
   public minusButtonDisabled: boolean;
@@ -18,10 +18,11 @@ export class EditProfilePictureComponent {
   public isLandcscape: boolean;
 
   private scaleValue: number;
+  private initialScaleValue: number;
   private profilePicBaseWidth: number;
   private profilePicBaseHeight: number;
   private pivot = { x: null, y: null };
-  private circleOverlay = { left: null, top: null, bottom: null, right: null };
+  private circleOverlay = { left: null, top: null, bottom: null, right: null, radius: null };
   private newPicDimensions = { left: null, top: null, width: null, height: null };
 
   @ViewChild('zoomBar', { static: false }) zoomBar: ElementRef;
@@ -37,8 +38,6 @@ export class EditProfilePictureComponent {
   @HostListener('window:resize')
   onWindowResize() {
     if (this.profilePic != null) {
-      this.zoomHandle.nativeElement.style.left = "36px";
-      this.SetZoomHandleBoundarys();
       this.setProfilePic(this.profilePic.nativeElement);
     }
   }
@@ -75,6 +74,7 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON PROFILE PIC LOAD )------------------------------ \\
   onProfilePicLoad(e) {
+    this.scaleValue = 1;
     this.showDragMessage = true;
     this.setProfilePic(e.target);
   }
@@ -83,6 +83,8 @@ export class EditProfilePictureComponent {
   // -----------------------------( SET PROFILE PIC )------------------------------ \\
   setProfilePic(profilePic) {
     this.minusButtonDisabled = true;
+    this.zoomHandle.nativeElement.style.left = "36px";
+    this.SetZoomHandleBoundarys();
 
     // If the pic's origianl width is larger than its original height
     if (profilePic.naturalWidth > profilePic.naturalHeight) {
@@ -111,6 +113,10 @@ export class EditProfilePictureComponent {
       profilePic.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (newPicWidth / 2)) + "px";
       profilePic.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (profilePic.offsetHeight / 2)) + "px";
     }
+
+    this.initialScaleValue = profilePic.offsetWidth / profilePic.naturalWidth;
+
+
 
     this.profilePicBaseWidth = profilePic.offsetWidth;
     this.profilePicBaseHeight = profilePic.offsetHeight;
@@ -255,6 +261,8 @@ export class EditProfilePictureComponent {
     this.circleOverlay.top = (picArea.offsetHeight / 2) - (circleOverlay.offsetHeight / 2);
     this.circleOverlay.right = this.circleOverlay.left + circleOverlay.offsetWidth;
     this.circleOverlay.bottom = this.circleOverlay.top + circleOverlay.offsetHeight;
+    this.circleOverlay.radius = circleOverlay.offsetWidth / 2;
+
   }
 
 
@@ -337,24 +345,45 @@ export class EditProfilePictureComponent {
   }
 
 
-  onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }) {
-    this.picUrl = event.target.files[0];
+  // onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }) {
+  //   this.picUrl = event.target.files[0].name;
+  // }
 
-    
-  }
 
-  onSaveButtonClick() {
-    // Create the form data object and append the image
-    let formData = new FormData()
-    formData.append('image', this.picUrl);
-    formData.append('width', this.profilePic.nativeElement.naturalWidth);
-    formData.append('height', this.profilePic.nativeElement.naturalHeight);
-    formData.append('scale', this.scaleValue.toString());
+  onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }, pictureSelectInput: EditProfilePictureComponent) {
+    let formData = new FormData();
+    formData.append('image', event.target.files[0]);
 
-    // Update the current image
-    this.dataService.post('api/Account/UpdateProfilePicture', formData, 'text').subscribe(() => {
-      
+    this.dataService.post('api/Account/CopyProfilePicture', formData, 'text').subscribe((url) => {
+      this.picUrl = url;
+      this.show = true;
     })
   }
 
+
+ 
+
+  onSaveButtonClick() {
+    let newWidth: number;
+    let newHeight: number;
+
+    if (this.profilePic.nativeElement.naturalWidth > this.profilePic.nativeElement.naturalHeight) {
+      newWidth = (this.profilePic.nativeElement.naturalWidth / this.profilePic.nativeElement.naturalHeight) * 300;
+      newHeight = 300;
+
+    } else {
+
+      newWidth = 300;
+      newHeight = (this.profilePic.nativeElement.naturalHeight / this.profilePic.nativeElement.naturalWidth) * 300;
+    }
+
+    // Update the current image
+    this.dataService.post('api/Account/UpdateProfilePicture', {
+      image: this.picUrl,
+      width: Math.round(newWidth * this.scaleValue),
+      height: Math.round(newHeight * this.scaleValue),
+      cropLeft: Math.round(((newWidth * this.scaleValue) * this.pivot.x) - 150),
+      cropTop: Math.round(((newHeight * this.scaleValue) * this.pivot.y) - 150)
+    }).subscribe();
+  }
 }
