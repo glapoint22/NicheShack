@@ -1,7 +1,8 @@
-import { BreakpointType, Breakpoint } from './breakpoint';
+import { Breakpoint } from './breakpoint';
 import { BreakpointObject } from './breakpoint-object';
 import { Alignment } from './alignment';
 import { VerticalAlign } from 'classes/vertical-align';
+import { BreakpointType } from 'classes/breakpoint-type';
 
 export class VerticalAlignment extends Alignment implements BreakpointObject {
     public value: VerticalAlign = VerticalAlign.Top;

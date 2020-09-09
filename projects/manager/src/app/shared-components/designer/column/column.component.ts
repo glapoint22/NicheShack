@@ -14,7 +14,7 @@ import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-paddin
 import { Background } from '../../../classes/background';
 import { ColumnData } from '../../../classes/column-data';
 import { PropertyView } from '../../../classes/property-view';
-import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
+import { BreakpointData } from 'classes/breakpoint-data';
 import { Breakpoint } from 'projects/manager/src/app/classes/breakpoint';
 import { VerticalAlign } from 'classes/vertical-align';
 
@@ -189,7 +189,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
       corners: this.corners.getData(),
       shadow: this.shadow.getData(),
       padding: this.padding.getData(this.breakpoints),
-      columnSpan: this.columnSpan.value,
+      columnSpan: !this.breakpoints.find(x => x.breakpointObject == this.columnSpan) ? this.columnSpan.value : null,
       breakpoints: this.getBreakpoints(),
       widgetData: this.widget.getData()
     }
@@ -210,6 +210,9 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
     // Visibility
     this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.visibility);
 
+
+    // Column Span
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.columnSpan);
 
     return breakpointData;
   }

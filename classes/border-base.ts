@@ -6,7 +6,11 @@ export class BorderBase {
     public width: number = 1;
     public style: string = 'solid';
     public defaultColor: Color = new Color(190, 190, 190, 1);
-    public color: Color = this.defaultColor;
+    public color: Color = new Color();
+
+    constructor() {
+        this.color.copy(this.defaultColor);
+    }
 
 
     setData(borderData: BorderData) {

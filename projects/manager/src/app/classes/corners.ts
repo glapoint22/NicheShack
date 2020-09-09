@@ -2,6 +2,8 @@ import { CornersData } from '../../../../../classes/corners-data';
 import { CornersBase } from 'classes/corners-base';
 
 export class Corners extends CornersBase{
+    public constrain: boolean = true;
+
     applyStyle(element: HTMLElement) {
         if (this.topLeft > 0) {
             element.style.borderTopLeftRadius = this.topLeft + 'px';
@@ -42,6 +44,14 @@ export class Corners extends CornersBase{
         return style;
     }
 
+
+
+    setData(cornersData: CornersData) {
+        if (cornersData) {
+            this.constrain = cornersData.constrain;
+            super.setData(cornersData);
+        }
+    }
     
 
 

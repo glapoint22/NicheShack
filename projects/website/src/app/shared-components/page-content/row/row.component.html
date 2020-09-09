@@ -1,0 +1,22 @@
+<div class="row" [ngClass]="{'flex-10': columnCount == 5}" [style.marginTop.px]="top"
+    [style.backgroundColor]="background.enable ? background.color.toRGBString(): null"
+    [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHex() : null"
+    [style.borderRadius]="
+        corners.topLeft > 0 ||
+        corners.topRight > 0 ||
+        corners.bottomRight > 0 ||
+        corners.bottomLeft > 0 ?
+        corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px': null"
+    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : null"
+    [style.paddingTop]="padding.top" [style.paddingRight]="padding.right" [style.paddingBottom]="padding.bottom"
+    [style.paddingLeft]="padding.left"
+    [style.alignItems]="verticalAlignment.value != verticalAlign.Top ? verticalAlignment.value : null"
+    [ngStyle]="{ 'background-image': background.image && background.enable && background.image.url ? 'url(images/' + background.image.url + ')' : null,
+                        'background-position': background.image && background.enable ? background.image.position : null,
+                        'background-repeat': background.image && background.enable ? background.image.repeat : null,
+                        'background-attachment': background.image && background.enable ? background.image.attachment : null}">
+
+    <ng-template #viewContainerRef>
+        <!-- Columns go here -->
+    </ng-template>
+</div>

@@ -15,7 +15,7 @@ import { BackgroundColor } from 'projects/manager/src/app/classes/background-col
 import { BorderColor } from 'projects/manager/src/app/classes/border-color';
 import { TextColor } from 'projects/manager/src/app/classes/text-color';
 import { ButtonWidgetData } from 'projects/manager/src/app/classes/button-widget-data';
-import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
+import { BreakpointData } from 'classes/breakpoint-data';
 import { LinkOption } from 'classes/link-base';
 
 @Component({

@@ -3,7 +3,7 @@ import { BorderData } from './border-data';
 import { CornersData } from './corners-data';
 import { ShadowData } from './shadow-data';
 import { PaddingData } from './padding-data';
-import { ColumnDataBase } from './column-data-base';
+import { BreakpointData } from './breakpoint-data';
 
 export interface RowDataBase {
     top: number;
@@ -13,5 +13,5 @@ export interface RowDataBase {
     shadow: ShadowData;
     padding: PaddingData;
     verticalAlignment: string;
-    columns: Array<ColumnDataBase>;
+    breakpoints: Array<BreakpointData>;
 }

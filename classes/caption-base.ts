@@ -7,7 +7,11 @@ export class CaptionBase {
     public fontWeight: string = 'normal';
     public fontStyle: string = 'normal';
     public textDecoration: string = 'none';
-    public color: Color = this.defaultColor;
+    public color: Color = new Color();
+
+    constructor() {
+        this.color.copy(this.defaultColor);
+    }
 
 
     setData(captionData: CaptionData) {

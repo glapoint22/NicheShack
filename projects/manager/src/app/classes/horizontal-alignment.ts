@@ -1,7 +1,8 @@
 import { BreakpointObject } from './breakpoint-object';
 import { Alignment } from './alignment';
 import { HorizontalAlign } from 'classes/horizontal-align';
-import { BreakpointType, Breakpoint } from './breakpoint';
+import { Breakpoint } from './breakpoint';
+import { BreakpointType } from 'classes/breakpoint-type';
 
 export class HorizontalAlignment extends Alignment implements BreakpointObject {
     public value: HorizontalAlign = HorizontalAlign.Left;

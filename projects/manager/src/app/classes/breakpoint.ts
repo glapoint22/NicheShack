@@ -36,15 +36,3 @@ export enum BreakpointSpacing {
     _44px = '44px',
     _48px = '48px',
 }
-
-
-export enum BreakpointType {
-    PaddingTop,
-    PaddingRight,
-    PaddingBottom,
-    PaddingLeft,
-    HorizontalAlignment,
-    VerticalAlignment,
-    Visibility,
-    ColumnSpan
-}

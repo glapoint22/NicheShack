@@ -10,7 +10,7 @@ import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/br
 import { Background } from 'projects/manager/src/app/classes/background';
 import { Color } from 'classes/color';
 import { ContainerWidgetData } from 'projects/manager/src/app/classes/container-widget-data';
-import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
+import { BreakpointData } from 'classes/breakpoint-data';
 
 @Component({
   selector: 'container-widget',

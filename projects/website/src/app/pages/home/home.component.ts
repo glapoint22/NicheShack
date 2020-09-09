@@ -1,16 +1,16 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ProductGroup } from '../../interfaces/product-group';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { DataService } from 'services/data.service';
 import { SharePageComponent } from '../share-page/share-page.component';
+import { PageData } from '../../classes/page-data';
 
 @Component({
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent extends SharePageComponent implements OnInit {
-  public productGroups: Array<ProductGroup>;
+  public pageData: PageData;
 
   constructor(titleService: Title,
     metaService: Meta,
@@ -25,5 +25,10 @@ export class HomeComponent extends SharePageComponent implements OnInit {
     // this.image = '/Images/tlou2.jpg';
 
     super.ngOnInit();
+
+    this.dataService.get('api/Home')
+    .subscribe((pageData: PageData)=> {
+      this.pageData = pageData;
+    });
   }
 }
