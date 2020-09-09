@@ -1,11 +1,11 @@
-<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onHide)="show = false">
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onShow)="onShow()" (onHide)="onHide()">
 
     <div class="prompt" (mousedown)="$event.stopPropagation()">
 
         <!-- Title Bar -->
         <div class="title-bar">
             Edit Profile Picture
-            <div class="close-button" (click)="show = false" title="Close">
+            <div class="close-button" (click)="onHide()" title="Close">
                 <i class="fas fa-times"></i>
             </div>
         </div>
@@ -16,7 +16,7 @@
 
             <!-- Profile Pic -->
             <div class="profile-pic-container">
-                <img #profilePic [src]="'images/' + picUrl" (load)="onProfilePicLoad($event)"
+                <img id="profilePic" #profilePic (load)="onProfilePicLoad($event)"
                     (mousedown)="onProfilePicMouseDown($event)" (touchstart)="onProfilePicTouchStart($event)">
             </div>
 
@@ -27,7 +27,8 @@
                 </div>
             </div>
 
-            <div *ngIf="showDragMessage"
+            <!-- Drag Message -->
+            <div *ngIf="showDragMessage && (profilePic.offsetWidth > circleOverlaySize || profilePic.offsetHeight > circleOverlaySize)"
                 style="pointer-events: none; color: white; position: absolute; background: rgba(0, 0, 0, 0.45); width: 180px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; padding: 13px;"
                 [style.left.px]="(picArea.offsetWidth / 2) - 90" [style.top.px]="(picArea.offsetHeight * 0.33333) - 18">
                 <i class="fas fa-arrows-alt" style="font-size: 20px;"></i>
@@ -87,7 +88,7 @@
                             (change)="onPictureSelect($event)">
                 <div>
                     <!-- Cancel Button -->
-                    <button class="margin-right-8" (click)="show = false">Cancel</button>
+                    <button class="margin-right-8" (click)="onHide()">Cancel</button>
                     <!-- Save Button -->
                     <button class="alt-button" (click)="onSaveButtonClick()">Save</button>
                 </div>

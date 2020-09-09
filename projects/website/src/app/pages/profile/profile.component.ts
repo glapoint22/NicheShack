@@ -65,19 +65,14 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
 
 
 
-  onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }, pictureSelectInput: EditProfilePictureComponent) {
-    let formData = new FormData();
-    formData.append('image', event.target.files[0]);
-
-    this.dataService.post('api/Account/CopyProfilePicture', formData, 'text').subscribe((url) => {
-      pictureSelectInput.picUrl = url;
-      pictureSelectInput.show = true;
-    })
+  onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }, editProfilePictureForm: EditProfilePictureComponent) {
+    editProfilePictureForm.newImage = event.target.files[0];
+    editProfilePictureForm.show = true;
   }
 
   
-  openEditProfilePictureForm(pictureSelectInput: EditProfilePictureComponent) {
-    pictureSelectInput.picUrl = this.customer.image;
-    pictureSelectInput.show = true;
+  openEditProfilePictureForm(editProfilePictureForm: EditProfilePictureComponent) {
+    editProfilePictureForm.customerImage = this.customer.image;
+    editProfilePictureForm.show = true;
   }
 }

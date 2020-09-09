@@ -1,4 +1,4 @@
-import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, HostListener, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { DataService } from 'services/data.service';
 
 @Component({
@@ -8,30 +8,52 @@ import { DataService } from 'services/data.service';
 })
 export class EditProfilePictureComponent {
   constructor(private dataService: DataService) { }
-  public show: boolean;
-  public picUrl: string;
-  public picMoveStartPos = { x: null, y: null };
-  public zoomHandleMoveStartPos: number;
-  public minusButtonDisabled: boolean;
-  public plusButtonDisabled: boolean;
-  public showDragMessage: boolean;
-  public isLandcscape: boolean;
 
+  // Private
   private scaleValue: number;
-  private initialScaleValue: number;
   private profilePicBaseWidth: number;
   private profilePicBaseHeight: number;
   private pivot = { x: null, y: null };
-  private circleOverlay = { left: null, top: null, bottom: null, right: null, radius: null };
   private newPicDimensions = { left: null, top: null, width: null, height: null };
+  private circleOverlay = { left: null, top: null, bottom: null, right: null };
+
+  // Public
+  public show: boolean;
+  public newImage: Blob;
+  public customerImage: string;
+  public showDragMessage: boolean;
+  public circleOverlaySize: number;
+  public plusButtonDisabled: boolean;
+  public minusButtonDisabled: boolean;
+  public zoomHandleMoveStartPos: number;
+  public picMoveStartPos = { x: null, y: null };
 
   @ViewChild('zoomBar', { static: false }) zoomBar: ElementRef;
   @ViewChild('picArea', { static: false }) picArea: ElementRef;
   @ViewChild('profilePic', { static: false }) profilePic: ElementRef;
   @ViewChild('zoomHandle', { static: false }) zoomHandle: ElementRef;
   @ViewChild('zoomContainer', { static: false }) zoomContainer: ElementRef;
+  @Output() onProfilePicUpdate: EventEmitter<string> = new EventEmitter();
 
 
+
+  // -----------------------------( ON SHOW )------------------------------ \\
+  onShow() {
+
+    // When a customer does NOT currently have a profile picutre and they have selected an image for the first time
+    if (this.newImage != null) {
+
+      const reader = new FileReader();
+      reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(document.getElementById("profilePic") as HTMLImageElement);
+      reader.readAsDataURL(this.newImage);
+
+      // When a customer already has a profile picture
+    } else {
+
+      let profilePic = document.getElementById("profilePic") as HTMLImageElement;
+      profilePic.src = "images\\" + this.customerImage;
+    }
+  }
 
 
   // -----------------------------( ON WINDOW RESIZE )------------------------------ \\
@@ -113,11 +135,7 @@ export class EditProfilePictureComponent {
       profilePic.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (newPicWidth / 2)) + "px";
       profilePic.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (profilePic.offsetHeight / 2)) + "px";
     }
-
-    this.initialScaleValue = profilePic.offsetWidth / profilePic.naturalWidth;
-
-
-
+    
     this.profilePicBaseWidth = profilePic.offsetWidth;
     this.profilePicBaseHeight = profilePic.offsetHeight;
     this.newPicDimensions.left = profilePic.offsetLeft;
@@ -131,7 +149,9 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON PROFILE PIC MOUSE DOWN )------------------------------ \\
   onProfilePicMouseDown(e) {
-    this.showDragMessage = false;
+    if (this.profilePic.nativeElement.offsetWidth > this.circleOverlaySize || this.profilePic.nativeElement.offsetHeight > this.circleOverlaySize) {
+      this.showDragMessage = false;
+    }
     this.picMoveStartPos.x = e.clientX - e.target.getBoundingClientRect().left;
     this.picMoveStartPos.y = e.clientY - e.target.getBoundingClientRect().top;
   }
@@ -139,7 +159,9 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON PROFILE PIC TOUCH START )------------------------------ \\
   onProfilePicTouchStart(e) {
-    this.showDragMessage = false;
+    if (this.profilePic.nativeElement.offsetWidth > this.circleOverlaySize || this.profilePic.nativeElement.offsetHeight > this.circleOverlaySize) {
+      this.showDragMessage = false;
+    }
     this.picMoveStartPos.x = e.touches[0].clientX - e.target.getBoundingClientRect().left;
     this.picMoveStartPos.y = e.touches[0].clientY - e.target.getBoundingClientRect().top;
   }
@@ -261,8 +283,7 @@ export class EditProfilePictureComponent {
     this.circleOverlay.top = (picArea.offsetHeight / 2) - (circleOverlay.offsetHeight / 2);
     this.circleOverlay.right = this.circleOverlay.left + circleOverlay.offsetWidth;
     this.circleOverlay.bottom = this.circleOverlay.top + circleOverlay.offsetHeight;
-    this.circleOverlay.radius = circleOverlay.offsetWidth / 2;
-
+    this.circleOverlaySize = circleOverlay.offsetWidth;
   }
 
 
@@ -337,6 +358,7 @@ export class EditProfilePictureComponent {
   }
 
 
+  // -----------------------------( OPEN FILE EXPLORER WINDOW )------------------------------ \\
   OpenFileExplorerWindow(pictureSelectInput: HTMLInputElement) {
     // Clear the picture select input (This is so the same filename can be re-entered again and again)
     pictureSelectInput.value = '';
@@ -345,24 +367,16 @@ export class EditProfilePictureComponent {
   }
 
 
-  // onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }) {
-  //   this.picUrl = event.target.files[0].name;
-  // }
-
-
-  onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }, pictureSelectInput: EditProfilePictureComponent) {
-    let formData = new FormData();
-    formData.append('image', event.target.files[0]);
-
-    this.dataService.post('api/Account/CopyProfilePicture', formData, 'text').subscribe((url) => {
-      this.picUrl = url;
-      this.show = true;
-    })
+  // -----------------------------( ON PICTURE SELECT )------------------------------ \\
+  onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }) {
+    this.newImage = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(document.getElementById("profilePic") as HTMLImageElement);
+    reader.readAsDataURL(this.newImage);
   }
 
 
- 
-
+  // -----------------------------( ON SAVE BUTTON CLICK )------------------------------ \\
   onSaveButtonClick() {
     let newWidth: number;
     let newHeight: number;
@@ -377,13 +391,47 @@ export class EditProfilePictureComponent {
       newHeight = (this.profilePic.nativeElement.naturalHeight / this.profilePic.nativeElement.naturalWidth) * 300;
     }
 
-    // Update the current image
-    this.dataService.post('api/Account/UpdateProfilePicture', {
-      image: this.picUrl,
-      width: Math.round(newWidth * this.scaleValue),
-      height: Math.round(newHeight * this.scaleValue),
-      cropLeft: Math.round(((newWidth * this.scaleValue) * this.pivot.x) - 150),
-      cropTop: Math.round(((newHeight * this.scaleValue) * this.pivot.y) - 150)
-    }).subscribe();
+
+    // If the customer is editing their current profile picture
+    if (this.customerImage != null && this.newImage == null) {
+
+      this.dataService.post('api/Account/EditProfilePicture', {
+        image: this.customerImage,
+        width: Math.round(newWidth * this.scaleValue),
+        height: Math.round(newHeight * this.scaleValue),
+        cropLeft: Math.round(((newWidth * this.scaleValue) * this.pivot.x) - 150),
+        cropTop: Math.round(((newHeight * this.scaleValue) * this.pivot.y) - 150)
+      }, 'text').subscribe((editedImage) => {
+        this.onProfilePicUpdate.emit(editedImage);
+        this.onHide();
+      });
+
+      // If the customer is updating their profile picture with a new image
+    } else {
+
+      let formData = new FormData()
+      formData.append('newImage', this.newImage);
+      formData.append('currentImage', this.customerImage == null ? "" : this.customerImage);
+      formData.append('width', Math.round(newWidth * this.scaleValue).toString());
+      formData.append('height', Math.round(newHeight * this.scaleValue).toString());
+      formData.append('cropLeft', Math.round(((newWidth * this.scaleValue) * this.pivot.x) - 150).toString());
+      formData.append('cropTop', Math.round(((newHeight * this.scaleValue) * this.pivot.y) - 150).toString());
+
+      // Update the current image
+      this.dataService.post('api/Account/NewProfilePicture', formData, 'text').subscribe((newImage) => {
+        this.onProfilePicUpdate.emit(newImage);
+        this.onHide();
+      })
+    }
+  }
+
+
+  // -----------------------------( ON HIDE )------------------------------ \\
+  onHide() {
+    this.show = false;
+    this.newImage = null;
+    this.customerImage = null;
+    this.picMoveStartPos.x = null;
+    this.zoomHandleMoveStartPos = null;
   }
 }

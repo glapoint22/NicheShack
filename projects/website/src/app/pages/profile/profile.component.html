@@ -107,4 +107,4 @@
     </div>
 </div>
 
-<edit-profile-picture #editProfilePicture></edit-profile-picture>
+<edit-profile-picture #editProfilePicture (onProfilePicUpdate)="customer.image = $event"></edit-profile-picture>
