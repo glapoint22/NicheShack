@@ -1,0 +1,8 @@
+<div class="content" [style.maxWidth.px]="page.width">
+    <div [style.backgroundColor]="page.background.color ? page.background.color.toRGBString(): null" [ngStyle]="{ 'background-image': page.background.image && page.background.image.url ? 'url(images/' + page.background.image.url + ')' : null,
+                'background-position': page.background.image ? page.background.image.position : null,
+                'background-repeat': page.background.image ? page.background.image.repeat : null,
+                'background-attachment': page.background.image ? page.background.image.attachment : null}">
+        <container #rootContainer></container>
+    </div>
+</div>

@@ -7,7 +7,7 @@ import { BreakpointsComponent } from 'projects/manager/src/app/classes/breakpoin
 import { WidgetType } from 'classes/widget-type';
 import { WidgetData } from 'projects/manager/src/app/classes/widget-data';
 import { PropertyView } from 'projects/manager/src/app/classes/property-view';
-import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
+import { BreakpointData } from 'classes/breakpoint-data';
 import { VerticalAlign } from 'classes/vertical-align';
 
 @Component({

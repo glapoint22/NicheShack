@@ -4,7 +4,6 @@ import { BackgroundImageBase } from './background-image-base';
 
 export class BackgroundBase {
     public color: Color = new Color(0, 0, 0, 0);
-    public image: BackgroundImageBase = new BackgroundImageBase();
     public enable: boolean;
 
     setData(backgroundData: BackgroundData) {
@@ -14,9 +13,6 @@ export class BackgroundBase {
 
             // Background color
             if (backgroundData.color) this.color = Color.hexToRGB(backgroundData.color);
-
-            // Background image
-            if (backgroundData.image) this.image.setData(backgroundData.image);
         }
     }
 }

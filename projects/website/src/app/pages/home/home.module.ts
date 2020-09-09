@@ -7,6 +7,7 @@ import { HeaderFooterModule } from '../../shared-components/header-footer/header
 import { HomeComponentsModule } from './components/home-components.module';
 import { ProductGroupModule } from '../../shared-components/product-group/product-group.module';
 import { SharePageModule } from '../share-page/share-page.module';
+import { PageContentModule } from '../../shared-components/page-content/page-content.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SharePageModule } from '../share-page/share-page.module';
     HeaderFooterModule,
     HomeComponentsModule,
     ProductGroupModule,
-    SharePageModule
+    SharePageModule,
+    PageContentModule
   ]
 })
 export class HomeModule { }

@@ -9,7 +9,7 @@ import { Padding } from 'projects/manager/src/app/classes/padding';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
 import { TextWidgetData } from 'projects/manager/src/app/classes/text-widget-data';
-import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
+import { BreakpointData } from 'classes/breakpoint-data';
 
 @Component({
   selector: 'text-widget',

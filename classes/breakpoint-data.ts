@@ -1,4 +1,4 @@
-import { BreakpointType } from './breakpoint';
+import { BreakpointType } from 'classes/breakpoint-type';
 
 export interface BreakpointData {
     breakpointType: BreakpointType;

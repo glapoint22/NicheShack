@@ -89,7 +89,7 @@ export class Page {
         return {
             id: this.id,
             name: this.name,
-            width: this.width != this.defaultWidth ? this.width : 0,
+            width: this.width,
             background: this.background.getData(),
             rows: this.rootContainer.getData()
         }
@@ -127,7 +127,9 @@ export class Page {
                     let containerWidgetData = columnData.widgetData as ContainerWidgetData;
 
                     // Load this container's widgets
-                    this.setRows(containerWidgetData.rows, containerWidget.container);
+                    if(containerWidgetData.rows) {
+                        this.setRows(containerWidgetData.rows, containerWidget.container);
+                    }
                 }
             })
         });

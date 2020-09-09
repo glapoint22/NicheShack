@@ -1,5 +1,6 @@
 import { BreakpointObject } from './breakpoint-object';
-import { BreakpointVisibility, BreakpointType } from './breakpoint';
+import { BreakpointVisibility } from './breakpoint';
+import { BreakpointType } from 'classes/breakpoint-type';
 
 export class Visibility implements BreakpointObject {
     public value: string = BreakpointVisibility.Visible;
@@ -7,7 +8,7 @@ export class Visibility implements BreakpointObject {
     public breakpointSet: boolean;
     public breakpointType: BreakpointType = BreakpointType.Visibility;
 
-    setClass(value:string, element: HTMLElement, screenSize?: string) {
+    setClass(value: string, element: HTMLElement, screenSize?: string) {
         let className: string;
 
         if (value == BreakpointVisibility.Visible) {
@@ -16,6 +17,7 @@ export class Visibility implements BreakpointObject {
             className = 'hide';
         }
 
-        element.classList.add(className + (screenSize ? '-' + screenSize : ''));
+        if (screenSize != 'z')
+            element.classList.add(className + (screenSize ? '-' + screenSize : ''));
     }
 }

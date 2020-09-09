@@ -49,6 +49,12 @@ export class ContainerComponent {
     let rowIndex = this.rows.findIndex(x => this.getBoundingClientTop(x) > top);
     if (rowIndex == -1) rowIndex = this.rows.length;
 
+
+    if (rowIndex > 0) {
+      top = top - this.getBoundingClientTop(this.rows[rowIndex - 1]) - this.rows[rowIndex - 1].element.clientHeight;
+    }
+
+
     // Create the new row
     let rowComponent = this.createRow(rowIndex, top);
 
@@ -79,11 +85,7 @@ export class ContainerComponent {
     this.rows.splice(index, 0, new Row(rowComponentRef.instance, rowComponentRef.location.nativeElement.firstElementChild));
 
     // Set the position of the row
-    if (index == 0) {
-      rowComponentRef.instance.top = top;
-    } else {
-      rowComponentRef.instance.top = top - this.getBoundingClientTop(this.rows[index - 1]) - this.rows[index - 1].element.clientHeight;
-    }
+    rowComponentRef.instance.top = top;
 
     // Detect changes
     rowComponentRef.hostView.detectChanges();

@@ -1,5 +1,5 @@
 import { BreakpointObject } from './breakpoint-object';
-import { BreakpointType } from 'projects/manager/src/app/classes/breakpoint';
+import { BreakpointType } from 'classes/breakpoint-type';
 
 export class ColumnSpan implements BreakpointObject {
     private _value: number;
@@ -13,7 +13,7 @@ export class ColumnSpan implements BreakpointObject {
 
             // Add the first column span value to this column
         } else {
-            this.columnElement.classList.add('col-' + newValue);
+            if (newValue) this.columnElement.classList.add('col-' + newValue);
         }
 
         this._value = newValue;

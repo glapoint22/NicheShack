@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BreakpointObject } from '../classes/breakpoint-object';
 import { BreakpointsComponent } from '../classes/breakpoints-component';
-import { BreakpointScreenSize, Breakpoint, BreakpointType } from '../classes/breakpoint';
-import { BreakpointData } from '../classes/breakpoint-data';
+import { BreakpointScreenSize, Breakpoint } from '../classes/breakpoint';
+import { BreakpointData } from '../../../../../classes/breakpoint-data';
+import { BreakpointType } from 'classes/breakpoint-type';
 
 @Injectable({
   providedIn: 'root'
@@ -171,7 +172,7 @@ export class BreakpointService {
 
           // Set the class for each breakpoint
           breakpoints.forEach((breakpoint: Breakpoint) => {
-            breakpoint.breakpointObject.setClass(breakpoint.value, element, this.getScreenSizeKey(breakpoint.screenSize));
+            breakpoint.breakpointObject.setClass(breakpoint.value, element, this.getScreenSize(breakpoint.screenSize));
           });
 
           // No breakpoints have been set to this property
@@ -235,7 +236,7 @@ export class BreakpointService {
 
 
   // ---------------------------------------------------------- Get Screen Size Key -------------------------------------------------------------------
-  private getScreenSizeKey(screenSize: string) {
+  private getScreenSize(screenSize: string) {
     // This will return the key based on the screenSize value (eg. MD)
     return Object.keys(BreakpointScreenSize).filter(x => BreakpointScreenSize[x] == screenSize)[0].toLowerCase();
   }
@@ -293,7 +294,7 @@ export class BreakpointService {
   loadBreakpoints(breakpoints: Array<BreakpointData>, breakpointsComponent: BreakpointsComponent) {
     if (breakpoints) {
       breakpoints.forEach((breakpoint: BreakpointData) => {
-        this.addBreakpoint(breakpointsComponent.breakpoints, this.getBreakpointObject(breakpoint.breakpointType, breakpointsComponent), breakpoint.value, breakpoint.screenSize);
+        this.addBreakpoint(breakpointsComponent.breakpoints, this.getBreakpointObject(breakpoint.breakpointType, breakpointsComponent), breakpoint.value, BreakpointScreenSize[breakpoint.screenSize.toUpperCase()]);
       });
     }
   }
@@ -309,7 +310,7 @@ export class BreakpointService {
       if (breakpoint.breakpointObject == breakpointObject) {
         breakpointsData.push({
           breakpointType: breakpoint.breakpointObject.breakpointType,
-          screenSize: breakpoint.screenSize,
+          screenSize: this.getScreenSize(breakpoint.screenSize),
           value: breakpoint.value
         });
       }
@@ -350,6 +351,11 @@ export class BreakpointService {
       case BreakpointType.VerticalAlignment:
         breakpointObject = breakpointsComponent.verticalAlignment;
         break;
+
+      case BreakpointType.Visibility:
+        breakpointObject = breakpointsComponent.visibility;
+        break;
+
 
       case BreakpointType.ColumnSpan:
         breakpointObject = breakpointsComponent.columnSpan;

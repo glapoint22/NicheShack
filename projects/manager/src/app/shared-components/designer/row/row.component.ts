@@ -16,7 +16,7 @@ import { Background } from '../../../classes/background';
 import { ColumnData } from '../../../classes/column-data';
 import { PageService } from '../../../services/page.service';
 import { PropertyView } from '../../../classes/property-view';
-import { BreakpointData } from 'projects/manager/src/app/classes/breakpoint-data';
+import { BreakpointData } from 'classes/breakpoint-data';
 import { RowData } from '../../../classes/row-data';
 
 @Component({
@@ -210,7 +210,22 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
     // Add or update each column with the correct column span based on the number of columns in this row
     this.setColumnSpans();
-    this.container.save();
+
+
+    // Get the position of the next row
+    if (this.container.selectedRowIndex != this.container.rows.length - 1 &&
+      this.rowElement.nativeElement.getBoundingClientRect().height > columnComponent.rowHeight &&
+      this.columns.length > 1) {
+
+      let diff = this.rowElement.nativeElement.getBoundingClientRect().height - columnComponent.rowHeight;
+      this.container.rows[this.container.selectedRowIndex + 1].component.top -= diff;
+    }
+
+    // Save
+    window.setTimeout(() => {
+      this.container.save();
+    });
+
   }
 
 
@@ -288,6 +303,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
 
   setData(rowData: RowData) {
+    // this.top = this.getPosition();
     this.name = rowData.name;
     this.background.setData(rowData.background);
     this.border.setData(rowData.border);
@@ -302,7 +318,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
   getData(): RowData {
     return {
       name: this.name != 'Row' ? this.name : null,
-      top: this.getPosition(),
+      top: this.top,// this.getPosition(),
       background: this.background.getData(),
       border: this.border.getData(),
       corners: this.corners.getData(),
