@@ -1,6 +1,7 @@
-<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onShow)="onShow()" (onHide)="onHide()">
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (onShow)="onShow()"
+    (onHide)="onHide()">
 
-    <div class="prompt" (mousedown)="$event.stopPropagation()">
+    <div class="prompt" (mousedown)="$event.stopPropagation()" [style.visibility]="visibility">
 
         <!-- Title Bar -->
         <div class="title-bar">
@@ -12,29 +13,33 @@
 
 
         <!-- Picture area -->
-        <div #picArea class="pic-area">
+        <div #picArea class="pic-area" (mousewheel)="onMouseWheel($event)">
 
             <!-- Profile Pic -->
             <div class="profile-pic-container">
                 <img id="profilePic" #profilePic (load)="onProfilePicLoad($event)"
+                    [ngStyle]="{'cursor': profilePic.offsetWidth > circle.size || profilePic.offsetHeight > circle.size ? 'move' : 'default'}"
                     (mousedown)="onProfilePicMouseDown($event)" (touchstart)="onProfilePicTouchStart($event)">
             </div>
 
             <!-- Circle Overlay -->
             <div class="circle-overlay-container">
-                <div #circleOverlay class="circle-overlay"
-                    [style.left]="setCircleOverlay(circleOverlay, picArea)">
-                </div>
+                <div #circleOverlay class="circle-overlay"></div>
             </div>
 
             <!-- Drag Message -->
-            <div *ngIf="showDragMessage && (profilePic.offsetWidth > circleOverlaySize || profilePic.offsetHeight > circleOverlaySize)"
-                style="pointer-events: none; color: white; position: absolute; background: rgba(0, 0, 0, 0.45); width: 180px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; padding: 13px;"
+            <div class="drag-message-container"
+                *ngIf="showDragMessage && (profilePic.offsetWidth > circle.size || profilePic.offsetHeight > circle.size)"
                 [style.left.px]="(picArea.offsetWidth / 2) - 90" [style.top.px]="(picArea.offsetHeight * 0.33333) - 18">
-                <i class="fas fa-arrows-alt" style="font-size: 20px;"></i>
-                <div style="font-size: 15px;">
+                <i class="fas fa-arrows-alt"></i>
+                <div class="drag-message-text">
                     Drag to Reposition
                 </div>
+            </div>
+
+            <!-- New Pic Loading Spinner -->
+            <div class="new-pic-loading-spinner" *ngIf="!newPicLoaded">
+                <i class="fas fa-spinner fa-pulse"></i>
             </div>
         </div>
 
@@ -85,7 +90,7 @@
                 <button (click)="OpenFileExplorerWindow(pictureSelectInput)">Update</button>
 
                 <input #pictureSelectInput type="file" style="width: 0; height: 0; visibility: hidden;"
-                            (change)="onPictureSelect($event)">
+                    (change)="onPictureSelect($event)">
                 <div>
                     <!-- Cancel Button -->
                     <button class="margin-right-8" (click)="onHide()">Cancel</button>
@@ -96,8 +101,13 @@
         </div>
     </div>
 
+    <!-- Pic Loading Spinner -->
+    <div class="pic-loading-spinner" *ngIf="visibility=='hidden'">
+        <i class="fas fa-spinner fa-pulse"></i>
+    </div>
 
-    <div *ngIf="picMoveStartPos.x != null || zoomHandleMoveStartPos != null" class="cover"
+    <!-- Cover -->
+    <div class="cover" *ngIf="picMoveStartPos.x != null || zoomHandleMoveStartPos != null"
         [ngStyle]="{'cursor': picMoveStartPos.x != null ? 'move' : 'default' && zoomHandleMoveStartPos != null ? 'pointer' : 'default'}">
     </div>
 </div>

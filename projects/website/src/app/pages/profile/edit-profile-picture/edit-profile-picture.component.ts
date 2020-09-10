@@ -15,34 +15,37 @@ export class EditProfilePictureComponent {
   private profilePicBaseHeight: number;
   private pivot = { x: null, y: null };
   private newPicDimensions = { left: null, top: null, width: null, height: null };
-  private circleOverlay = { left: null, top: null, bottom: null, right: null };
 
   // Public
   public show: boolean;
   public newImage: Blob;
+  public visibility: string;
+  public newPicLoaded: boolean;
   public customerImage: string;
   public showDragMessage: boolean;
-  public circleOverlaySize: number;
   public plusButtonDisabled: boolean;
   public minusButtonDisabled: boolean;
   public zoomHandleMoveStartPos: number;
   public picMoveStartPos = { x: null, y: null };
+  public circle = { left: null, top: null, bottom: null, right: null, size: null };
 
+  // Decorators
   @ViewChild('zoomBar', { static: false }) zoomBar: ElementRef;
   @ViewChild('picArea', { static: false }) picArea: ElementRef;
   @ViewChild('profilePic', { static: false }) profilePic: ElementRef;
   @ViewChild('zoomHandle', { static: false }) zoomHandle: ElementRef;
-  @ViewChild('zoomContainer', { static: false }) zoomContainer: ElementRef;
   @Output() onProfilePicUpdate: EventEmitter<string> = new EventEmitter();
-
+  @ViewChild('zoomContainer', { static: false }) zoomContainer: ElementRef;
+  @ViewChild('circleOverlay', { static: false }) circleOverlay: ElementRef;
 
 
   // -----------------------------( ON SHOW )------------------------------ \\
   onShow() {
+    this.visibility = "hidden";
+    this.showDragMessage = true;
 
     // When a customer does NOT currently have a profile picutre and they have selected an image for the first time
     if (this.newImage != null) {
-
       const reader = new FileReader();
       reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(document.getElementById("profilePic") as HTMLImageElement);
       reader.readAsDataURL(this.newImage);
@@ -96,8 +99,9 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON PROFILE PIC LOAD )------------------------------ \\
   onProfilePicLoad(e) {
+    this.visibility = "visible";
+    this.newPicLoaded = true;
     this.scaleValue = 1;
-    this.showDragMessage = true;
     this.setProfilePic(e.target);
   }
 
@@ -107,18 +111,17 @@ export class EditProfilePictureComponent {
     this.minusButtonDisabled = true;
     this.zoomHandle.nativeElement.style.left = "36px";
     this.SetZoomHandleBoundarys();
+    let size: number = this.getSize();
 
     // If the pic's origianl width is larger than its original height
     if (profilePic.naturalWidth > profilePic.naturalHeight) {
       // Get the ratio of width to height
       let ratio = profilePic.naturalWidth / profilePic.naturalHeight;
-      // Get the new height value of the pic based on the dimensions of the pic area
-      let newPicHeight = this.getSize(this.picArea.nativeElement);
 
       // Redefine the dimensions of the pic
-      profilePic.style.height = newPicHeight + "px";
-      profilePic.style.width = (newPicHeight * ratio) + "px";
-      profilePic.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (newPicHeight / 2)) + "px";
+      profilePic.style.height = size + "px";
+      profilePic.style.width = (size * ratio) + "px";
+      profilePic.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (size / 2)) + "px";
       profilePic.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (profilePic.offsetWidth / 2)) + "px";
 
       // But if the pic's origianl height is larger than its original width
@@ -126,44 +129,58 @@ export class EditProfilePictureComponent {
 
       // Get the ratio of height to width
       let ratio = profilePic.naturalHeight / profilePic.naturalWidth;
-      // Get the new width value of the pic based on the dimensions of the pic area
-      let newPicWidth = this.getSize(this.picArea.nativeElement);
 
       // Redefine the dimensions of the pic
-      profilePic.style.width = newPicWidth + "px";
-      profilePic.style.height = (newPicWidth * ratio) + "px";
-      profilePic.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (newPicWidth / 2)) + "px";
+      profilePic.style.width = size + "px";
+      profilePic.style.height = (size * ratio) + "px";
+      profilePic.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (size / 2)) + "px";
       profilePic.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (profilePic.offsetHeight / 2)) + "px";
     }
-    
+
+    // Set the base width and height for scaling
     this.profilePicBaseWidth = profilePic.offsetWidth;
     this.profilePicBaseHeight = profilePic.offsetHeight;
+
+    // Set the pic scaling starting values
     this.newPicDimensions.left = profilePic.offsetLeft;
     this.newPicDimensions.top = profilePic.offsetTop;
     this.newPicDimensions.width = profilePic.offsetWidth;
     this.newPicDimensions.height = profilePic.offsetHeight;
     this.pivot.x = ((this.picArea.nativeElement.offsetWidth / 2) - this.newPicDimensions.left) / this.newPicDimensions.width;
     this.pivot.y = ((this.picArea.nativeElement.offsetHeight / 2) - this.newPicDimensions.top) / this.newPicDimensions.height;
+
+    // Set the circle overlay size
+    this.circleOverlay.nativeElement.style.maxWidth = size + "px";
+    this.circleOverlay.nativeElement.style.maxHeight = size + "px";
+    this.circleOverlay.nativeElement.style.left = ((this.picArea.nativeElement.offsetWidth / 2) - (this.circleOverlay.nativeElement.offsetWidth / 2)) + "px";
+    this.circleOverlay.nativeElement.style.top = ((this.picArea.nativeElement.offsetHeight / 2) - (this.circleOverlay.nativeElement.offsetHeight / 2)) + "px";
+
+    // Set the circle overlay boundarys
+    this.circle.left = (this.picArea.nativeElement.offsetWidth / 2) - (this.circleOverlay.nativeElement.offsetWidth / 2);
+    this.circle.top = (this.picArea.nativeElement.offsetHeight / 2) - (this.circleOverlay.nativeElement.offsetHeight / 2);
+    this.circle.right = this.circle.left + this.circleOverlay.nativeElement.offsetWidth;
+    this.circle.bottom = this.circle.top + this.circleOverlay.nativeElement.offsetHeight;
+    this.circle.size = this.circleOverlay.nativeElement.offsetWidth;
   }
 
 
   // -----------------------------( ON PROFILE PIC MOUSE DOWN )------------------------------ \\
   onProfilePicMouseDown(e) {
-    if (this.profilePic.nativeElement.offsetWidth > this.circleOverlaySize || this.profilePic.nativeElement.offsetHeight > this.circleOverlaySize) {
+    if (this.profilePic.nativeElement.offsetWidth > this.circle.size || this.profilePic.nativeElement.offsetHeight > this.circle.size) {
       this.showDragMessage = false;
+      this.picMoveStartPos.x = e.clientX - e.target.getBoundingClientRect().left;
+      this.picMoveStartPos.y = e.clientY - e.target.getBoundingClientRect().top;
     }
-    this.picMoveStartPos.x = e.clientX - e.target.getBoundingClientRect().left;
-    this.picMoveStartPos.y = e.clientY - e.target.getBoundingClientRect().top;
   }
 
 
   // -----------------------------( ON PROFILE PIC TOUCH START )------------------------------ \\
   onProfilePicTouchStart(e) {
-    if (this.profilePic.nativeElement.offsetWidth > this.circleOverlaySize || this.profilePic.nativeElement.offsetHeight > this.circleOverlaySize) {
+    if (this.profilePic.nativeElement.offsetWidth > this.circle.size || this.profilePic.nativeElement.offsetHeight > this.circle.size) {
       this.showDragMessage = false;
+      this.picMoveStartPos.x = e.touches[0].clientX - e.target.getBoundingClientRect().left;
+      this.picMoveStartPos.y = e.touches[0].clientY - e.target.getBoundingClientRect().top;
     }
-    this.picMoveStartPos.x = e.touches[0].clientX - e.target.getBoundingClientRect().left;
-    this.picMoveStartPos.y = e.touches[0].clientY - e.target.getBoundingClientRect().top;
   }
 
 
@@ -196,23 +213,23 @@ export class EditProfilePictureComponent {
   // -----------------------------( SET PROFILE PIC BOUNDARYS )------------------------------ \\
   SetProfilePicBoundarys() {
     // Left boundary
-    if (this.profilePic.nativeElement.offsetLeft > this.circleOverlay.left) {
-      this.profilePic.nativeElement.style.left = this.circleOverlay.left + "px";
+    if (this.profilePic.nativeElement.offsetLeft > this.circle.left) {
+      this.profilePic.nativeElement.style.left = this.circle.left + "px";
     }
 
     // Right boundary
-    if ((this.profilePic.nativeElement.offsetLeft) + this.profilePic.nativeElement.offsetWidth < this.circleOverlay.right) {
-      this.profilePic.nativeElement.style.left = (-this.profilePic.nativeElement.offsetWidth + this.circleOverlay.right) + "px";
+    if ((this.profilePic.nativeElement.offsetLeft) + this.profilePic.nativeElement.offsetWidth < this.circle.right) {
+      this.profilePic.nativeElement.style.left = (-this.profilePic.nativeElement.offsetWidth + this.circle.right) + "px";
     }
 
     // Top boundary
-    if (this.profilePic.nativeElement.offsetTop > this.circleOverlay.top) {
-      this.profilePic.nativeElement.style.top = this.circleOverlay.top + "px";
+    if (this.profilePic.nativeElement.offsetTop > this.circle.top) {
+      this.profilePic.nativeElement.style.top = this.circle.top + "px";
     }
 
     // Bottom boundary
-    if ((this.profilePic.nativeElement.offsetTop) + this.profilePic.nativeElement.offsetHeight < this.circleOverlay.bottom) {
-      this.profilePic.nativeElement.style.top = (-this.profilePic.nativeElement.offsetHeight + this.circleOverlay.bottom) + "px";
+    if ((this.profilePic.nativeElement.offsetTop) + this.profilePic.nativeElement.offsetHeight < this.circle.bottom) {
+      this.profilePic.nativeElement.style.top = (-this.profilePic.nativeElement.offsetHeight + this.circle.bottom) + "px";
     }
   }
 
@@ -237,18 +254,17 @@ export class EditProfilePictureComponent {
   }
 
 
+  // -----------------------------( ON MOUSE WHEEL )------------------------------ \\
+  onMouseWheel(event: MouseWheelEvent) {
+    let wheelDelta = Math.max(-1, Math.min(1, (event.deltaY || -event.detail)));
+    let zoomHandleSteppingDistance = this.zoomBar.nativeElement.offsetWidth * 0.075;
+    this.zoomHandle.nativeElement.style.left = (this.zoomHandle.nativeElement.offsetLeft + (zoomHandleSteppingDistance * -wheelDelta)) + "px";
+    this.SetZoomHandleBoundarys();
+  }
+
+
   // -----------------------------( SET ZOOM HANDLE BOUNDARYS )------------------------------ \\
   SetZoomHandleBoundarys() {
-    if (this.zoomHandle.nativeElement.offsetLeft == this.zoomBar.nativeElement.offsetLeft) {
-      this.newPicDimensions.left = this.profilePic.nativeElement.offsetLeft;
-      this.newPicDimensions.top = this.profilePic.nativeElement.offsetTop;
-      this.newPicDimensions.width = this.profilePic.nativeElement.offsetWidth;
-      this.newPicDimensions.height = this.profilePic.nativeElement.offsetHeight;
-      this.pivot.x = ((this.picArea.nativeElement.offsetWidth / 2) - this.newPicDimensions.left) / this.newPicDimensions.width;
-      this.pivot.y = ((this.picArea.nativeElement.offsetHeight / 2) - this.newPicDimensions.top) / this.newPicDimensions.height;
-    }
-
-
     // Left boundary
     if (this.zoomHandle.nativeElement.offsetLeft <= this.zoomBar.nativeElement.offsetLeft) {
       this.minusButtonDisabled = true;
@@ -256,6 +272,16 @@ export class EditProfilePictureComponent {
     }
     if (this.zoomHandle.nativeElement.offsetLeft > this.zoomBar.nativeElement.offsetLeft) {
       this.minusButtonDisabled = false;
+    }
+
+    // Reset the pic scaling starting values
+    if (this.zoomHandle.nativeElement.offsetLeft == this.zoomBar.nativeElement.offsetLeft) {
+      this.newPicDimensions.left = this.profilePic.nativeElement.offsetLeft;
+      this.newPicDimensions.top = this.profilePic.nativeElement.offsetTop;
+      this.newPicDimensions.width = this.profilePic.nativeElement.offsetWidth;
+      this.newPicDimensions.height = this.profilePic.nativeElement.offsetHeight;
+      this.pivot.x = ((this.picArea.nativeElement.offsetWidth / 2) - this.newPicDimensions.left) / this.newPicDimensions.width;
+      this.pivot.y = ((this.picArea.nativeElement.offsetHeight / 2) - this.newPicDimensions.top) / this.newPicDimensions.height;
     }
 
     // Right boundary
@@ -270,23 +296,6 @@ export class EditProfilePictureComponent {
   }
 
 
-  // -----------------------------( SET CIRCLE OVERLAY )------------------------------ \\
-  setCircleOverlay(circleOverlay: HTMLElement, picArea: HTMLElement) {
-    let size: number = this.getSize(picArea);
-    circleOverlay.style.maxWidth = size + "px";
-    circleOverlay.style.maxHeight = size + "px";
-    circleOverlay.style.left = ((picArea.offsetWidth / 2) - (circleOverlay.offsetWidth / 2)) + "px";
-    circleOverlay.style.top = ((picArea.offsetHeight / 2) - (circleOverlay.offsetHeight / 2)) + "px";
-
-
-    this.circleOverlay.left = (picArea.offsetWidth / 2) - (circleOverlay.offsetWidth / 2);
-    this.circleOverlay.top = (picArea.offsetHeight / 2) - (circleOverlay.offsetHeight / 2);
-    this.circleOverlay.right = this.circleOverlay.left + circleOverlay.offsetWidth;
-    this.circleOverlay.bottom = this.circleOverlay.top + circleOverlay.offsetHeight;
-    this.circleOverlaySize = circleOverlay.offsetWidth;
-  }
-
-
   // -----------------------------( ON MINUS BUTTON CLICK )------------------------------ \\
   onMinusButtonClick() {
     if (!this.minusButtonDisabled) {
@@ -295,7 +304,6 @@ export class EditProfilePictureComponent {
       this.SetZoomHandleBoundarys();
     }
   }
-
 
 
   // -----------------------------( ON PLUS BUTTON CLICK )------------------------------ \\
@@ -324,15 +332,15 @@ export class EditProfilePictureComponent {
 
 
   // -----------------------------( GET SIZE )------------------------------ \\
-  getSize(picArea): number {
+  getSize(): number {
     let size: number;
 
     // If the height of the pic area is less than its width
-    if (picArea.offsetHeight < picArea.offsetWidth) {
+    if (this.picArea.nativeElement.offsetHeight < this.picArea.nativeElement.offsetWidth) {
       // And if its height is less than 300
-      if (picArea.offsetHeight < 300) {
+      if (this.picArea.nativeElement.offsetHeight < 300) {
         // Make the size of the circle overlay to be the height of the pic area
-        size = picArea.offsetHeight;
+        size = this.picArea.nativeElement.offsetHeight;
 
         // But if the height of the pic area is 300 or more
       } else {
@@ -344,9 +352,9 @@ export class EditProfilePictureComponent {
     } else {
 
       // And if its width is less than 300
-      if (picArea.offsetWidth < 300) {
+      if (this.picArea.nativeElement.offsetWidth < 300) {
         // Make the size of the circle overlay to be the width of the pic area
-        size = picArea.offsetWidth;
+        size = this.picArea.nativeElement.offsetWidth;
 
         // But if the width of the pic area is 300 or more
       } else {
@@ -369,6 +377,7 @@ export class EditProfilePictureComponent {
 
   // -----------------------------( ON PICTURE SELECT )------------------------------ \\
   onPictureSelect(event: UIEvent & { target: HTMLInputElement & { files: Array<string> } }) {
+    this.newPicLoaded = false;
     this.newImage = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(document.getElementById("profilePic") as HTMLImageElement);
