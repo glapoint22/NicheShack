@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { RowComponent } from '../../designer/row/row.component';
 import { VerticalAlign } from 'classes/vertical-align';
+import { BreakpointType } from 'classes/breakpoint-type';
 
 @Component({
   selector: 'vertical-alignment',
@@ -12,6 +13,7 @@ export class VerticalAlignmentComponent implements OnInit {
   @Input() row: RowComponent;
   @Output() onChange: EventEmitter<void> = new EventEmitter();
   public verticalAlign = VerticalAlign;
+  public breakpointType = BreakpointType;
 
   constructor(public breakpointService: BreakpointService) { }
 
@@ -30,7 +32,7 @@ export class VerticalAlignmentComponent implements OnInit {
 
   // ------------------------------------------------------------------ Set Value --------------------------------------------------------------------------  
   setValue(value: VerticalAlign) {
-    this.breakpointService.setBreakpointValue(value, this.row.breakpoints, this.row.verticalAlignment);
+    this.breakpointService.setBreakpointValue(value, this.row.breakpoints, this.row.verticalAlignment, BreakpointType.VerticalAlignment);
     this.onChange.emit();
   }
 }

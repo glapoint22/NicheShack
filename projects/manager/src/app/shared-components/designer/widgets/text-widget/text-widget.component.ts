@@ -178,7 +178,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
 
 
 
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     let text = document.createElement('div');
     let links = text.getElementsByTagName('a');
 
@@ -207,13 +207,9 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
       link.setAttribute('href', url);
     }
 
-    // This will add padding positions to this component (ie. top, right, bottom, left)
-    this.padding.setPaddingComponent(this);
+    // Add the padding classes to the text element
+    this.padding.addClasses(this.breakpoints, text, this.padding.getValues());
 
-    // Set the classes
-    this.breakpointService.setBreakpointClasses(this, text);
-
-    // Append the text to the parent
-    parent.appendChild(text);
+    super.buildPreview(parent, text);
   }
 }

@@ -53,7 +53,7 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
 
 
 
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     let container = document.createElement('div');
     container.style.display = 'flex';
     container.style.justifyContent = 'center';
@@ -114,18 +114,10 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
       anchor.href = link.url;
       anchor.target = '_blank';
 
-      // Set the classes
-      this.breakpointService.setBreakpointClasses(this, anchor);
-
-
       // Place the image inside the anchor and place the anchor inside the parent
       anchor.appendChild(img);
       container.appendChild(anchor);
     } else {
-
-      // Set the classes
-      this.breakpointService.setBreakpointClasses(this, img);
-
       container.appendChild(img);
     }
 

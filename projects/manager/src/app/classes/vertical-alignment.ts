@@ -1,30 +1,12 @@
 import { Breakpoint } from './breakpoint';
 import { BreakpointObject } from './breakpoint-object';
-import { Alignment } from './alignment';
 import { VerticalAlign } from 'classes/vertical-align';
-import { BreakpointType } from 'classes/breakpoint-type';
+import { VerticalAlignmentBase } from 'classes/vertical-alignment-base';
 
-export class VerticalAlignment extends Alignment implements BreakpointObject {
+export class VerticalAlignment extends VerticalAlignmentBase implements BreakpointObject {
     public value: VerticalAlign = VerticalAlign.Top;
     public defaultValue: VerticalAlign = VerticalAlign.Top;
     public breakpointSet: boolean;
-    public breakpointType: BreakpointType = BreakpointType.VerticalAlignment;
-
-    setClass(value: string, element: HTMLElement, screenSize?: string) {
-        switch (value) {
-            case VerticalAlign.Top:
-                this.applyClass(element, screenSize, 'vertical-align-top');
-                break;
-
-            case VerticalAlign.Middle:
-                this.applyClass(element, screenSize, 'vertical-align-middle');
-                break;
-
-            case VerticalAlign.Bottom:
-                this.applyClass(element, screenSize, 'vertical-align-bottom');
-                break;
-        }
-    }
 
     setData(value: string) {
         if (value) {

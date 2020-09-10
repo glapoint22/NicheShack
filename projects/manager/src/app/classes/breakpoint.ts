@@ -1,7 +1,9 @@
 import { BreakpointObject } from './breakpoint-object';
+import { BreakpointData } from 'classes/breakpoint-data';
+import { BreakpointType } from 'classes/breakpoint-type';
 
-export class Breakpoint {
-    constructor(public breakpointObject: BreakpointObject, public screenSize: string, public value: any) {}
+export class Breakpoint implements BreakpointData {
+    constructor(public breakpointObject: BreakpointObject, public breakpointType: BreakpointType, public screenSize: string, public value: any) {}
 }
 
 export enum BreakpointScreenSize {
@@ -16,10 +18,6 @@ export enum BreakpointScreenSize {
     HD = '1600'
 }
 
-export enum BreakpointVisibility {
-    Visible = 'block',
-    Hidden = 'none',
-}
 
 export enum BreakpointSpacing {
     _0px = '0px',

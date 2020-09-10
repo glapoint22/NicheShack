@@ -27,8 +27,8 @@
 
         <!-- Breakpoint checkbox -->
         <checkbox
-            (change)="breakpointService.toggleBreakpoint(widget.breakpoints, widget.horizontalAlignment); onChange.emit()"
+            (change)="breakpointService.toggleBreakpoint(widget.breakpoints, widget.horizontalAlignment, breakpointType.HorizontalAlignment); onChange.emit()"
             [checked]="widget.horizontalAlignment.breakpointSet"
-            [disabled]="breakpointService.currentBreakpointScreenSize == '0'"></checkbox>
+            [disabled]="breakpointService.currentBreakpointScreenSize == 'Z'"></checkbox>
     </div>
 </panel>

@@ -70,7 +70,7 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
 
 
 
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     let img: any;
 
     // If we have an image
@@ -121,20 +121,13 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
       // If we have an image, display it as inline
       if (this.image.url) img.style.display = 'inline';
 
-      // Set the classes
-      this.breakpointService.setBreakpointClasses(this, anchor);
 
-
-      // Place the image inside the anchor and place the anchor inside the parent
+      // Place the image inside the anchor
       anchor.appendChild(img);
-      parent.appendChild(anchor);
+
+      super.buildPreview(parent, anchor);
     } else {
-
-      // Set the classes
-      this.breakpointService.setBreakpointClasses(this, img);
-
-      // Place the image inside the parent
-      parent.appendChild(img);
+      super.buildPreview(parent, img);
     }
   }
 }

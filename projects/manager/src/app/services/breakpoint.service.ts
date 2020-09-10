@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BreakpointObject } from '../classes/breakpoint-object';
 import { BreakpointsComponent } from '../classes/breakpoints-component';
-import { BreakpointScreenSize, Breakpoint } from '../classes/breakpoint';
+import { Breakpoint, BreakpointScreenSize } from '../classes/breakpoint';
 import { BreakpointData } from '../../../../../classes/breakpoint-data';
 import { BreakpointType } from 'classes/breakpoint-type';
 
@@ -12,19 +12,19 @@ import { BreakpointType } from 'classes/breakpoint-type';
 export class BreakpointService {
   public onCanvasWidthChange = new Subject<number>();
   public onBreakpointChange = new Subject<void>();
-  public currentBreakpointScreenSize: string = BreakpointScreenSize.HD;
+  public currentBreakpointScreenSize: string = 'HD';
 
 
   constructor() {
     // When the canvas has a width change, test to see if we are at a new breakpoint
     this.onCanvasWidthChange.subscribe((width: number) => {
-      for (let item in BreakpointScreenSize) {
-        let minSize: number = parseInt(BreakpointScreenSize[item]);
-        let maxSize = this.getNextBreakpointScreenSize(BreakpointScreenSize[item]);
+      for (let key in BreakpointScreenSize) {
+        let minSize: number = parseInt(BreakpointScreenSize[key]);
+        let maxSize = this.getNextBreakpointScreenSize(BreakpointScreenSize[key]);
 
         // Test to see if the width falls between a new breakpoint
-        if (width >= minSize && width < maxSize && this.currentBreakpointScreenSize != BreakpointScreenSize[item]) {
-          this.currentBreakpointScreenSize = BreakpointScreenSize[item];
+        if (width >= minSize && width < maxSize && this.currentBreakpointScreenSize != key) {
+          this.currentBreakpointScreenSize = key;
           this.onBreakpointChange.next();
           break;
         }
@@ -40,7 +40,7 @@ export class BreakpointService {
     breakpoints.forEach(x => x.breakpointObject.value = x.breakpointObject.defaultValue);
 
     // Filter the breakpoints based on screen size
-    let filteredBreakpoints = breakpoints.filter((x) => parseInt(this.currentBreakpointScreenSize) >= parseInt(x.screenSize))
+    let filteredBreakpoints = breakpoints.filter((x) => parseInt(BreakpointScreenSize[this.currentBreakpointScreenSize]) >= parseInt(BreakpointScreenSize[x.screenSize]))
       .filter((v, i, a) => a.map(x => x.breakpointObject).indexOf(v.breakpointObject) == i);
 
     // Set the values
@@ -57,9 +57,9 @@ export class BreakpointService {
 
 
   // ----------------------------------------------------------- Add Breakpoint ----------------------------------------------------------------------
-  addBreakpoint(breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject, value: any, screenSize: string) {
+  addBreakpoint(breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject, breakpointType: BreakpointType, value: any, screenSize: string) {
     // Add a new breakpoint to the passed in breakpoints array
-    breakpoints.push(new Breakpoint(breakpointObject, screenSize, value));
+    breakpoints.push(new Breakpoint(breakpointObject, breakpointType, screenSize, value));
 
     // Sort the breakpoints based on screeen size
     this.sortBreakpoints(breakpoints);
@@ -101,7 +101,7 @@ export class BreakpointService {
 
   // ----------------------------------------------------------- Get Breakpoint ----------------------------------------------------------------------
   getBreakpoint(breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject) {
-    return breakpoints.find(x => x.breakpointObject == breakpointObject && parseInt(x.screenSize) <= parseInt(this.currentBreakpointScreenSize));
+    return breakpoints.find(x => x.breakpointObject == breakpointObject && parseInt(BreakpointScreenSize[x.screenSize]) <= parseInt(BreakpointScreenSize[this.currentBreakpointScreenSize]));
   }
 
 
@@ -113,11 +113,13 @@ export class BreakpointService {
 
   // -------------------------------------------------------- Remove All Breakpoints -------------------------------------------------------------------
   removeAllBreakpoints(breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject) {
-    breakpoints.forEach((breakpoint: Breakpoint, index: number) => {
+    for (let i = 0; i < breakpoints.length; i++) {
+      let breakpoint = breakpoints[i];
       if (breakpoint.breakpointObject == breakpointObject) {
-        breakpoints.splice(index, 1);
+        breakpoints.splice(i, 1);
+        i--;
       }
-    });
+    };
   }
 
 
@@ -125,67 +127,11 @@ export class BreakpointService {
 
 
 
-
-  // --------------------------------------------------------- Add Remove Breakpoints --------------------------------------------------------------------
-  addRemoveBreakpoint(breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject, value: any) {
-    let breakpoint: Breakpoint = breakpoints.find(x => x.breakpointObject == breakpointObject && x.screenSize == this.currentBreakpointScreenSize);
-
-    if (breakpoint) {
-      this.removeBreakpoint(breakpoints, breakpoint);
-    } else {
-      this.addBreakpoint(breakpoints, breakpointObject, value, this.currentBreakpointScreenSize);
-    }
-  }
-
-
-
-
-
-
-
-  // -------------------------------------------------------- Remove All Breakpoints -------------------------------------------------------------------
+  // -------------------------------------------------------- Is Breakpoint Set -------------------------------------------------------------------
   isBreakpointSet(breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject) {
-    breakpointObject.breakpointSet = breakpoints.some(x => x.breakpointObject == breakpointObject && parseInt(this.currentBreakpointScreenSize) >= parseInt(x.screenSize));
+    breakpointObject.breakpointSet = breakpoints.some(x => x.breakpointObject == breakpointObject && parseInt(BreakpointScreenSize[this.currentBreakpointScreenSize]) >= parseInt(BreakpointScreenSize[x.screenSize]));
   }
 
-
-
-
-
-
-
-
-  // ------------------------------------------------------ Set Breakpoint Classes ---------------------------------------------------------------------
-  setBreakpointClasses(breakpointsComponent: BreakpointsComponent, element: HTMLElement) {
-    let properties = Object.keys(breakpointsComponent);
-
-    properties.forEach((property: string) => {
-      // If the type of property is a BreakpointType
-      if (breakpointsComponent[property] && typeof (breakpointsComponent[property]) == 'object' && 'setClass' in breakpointsComponent[property]) {
-
-
-        // If the current property has breakpoints applied to it
-        if (breakpointsComponent.breakpoints.find(x => x.breakpointObject == breakpointsComponent[property])) {
-
-          // Get all breakpoints of this type
-          let breakpoints = breakpointsComponent.breakpoints.filter(x => x.breakpointObject == breakpointsComponent[property]);
-
-          // Set the class for each breakpoint
-          breakpoints.forEach((breakpoint: Breakpoint) => {
-            breakpoint.breakpointObject.setClass(breakpoint.value, element, this.getScreenSize(breakpoint.screenSize));
-          });
-
-          // No breakpoints have been set to this property
-        } else {
-
-          // Set the class only if the property value is not the default value
-          if (breakpointsComponent[property].value != breakpointsComponent[property].defaultValue) {
-            breakpointsComponent[property].setClass(breakpointsComponent[property].value, element);
-          }
-        }
-      }
-    });
-  }
 
 
 
@@ -223,7 +169,7 @@ export class BreakpointService {
   // ---------------------------------------------------------- Sort Breakpoints -------------------------------------------------------------------
   private sortBreakpoints(breakpoints: Array<Breakpoint>) {
     breakpoints.sort((a, b) => {
-      if (parseInt(a.screenSize) < parseInt(b.screenSize)) return 1;
+      if (parseInt(BreakpointScreenSize[a.screenSize]) < parseInt(BreakpointScreenSize[b.screenSize])) return 1;
       return -1;
     });
   }
@@ -235,21 +181,8 @@ export class BreakpointService {
 
 
 
-  // ---------------------------------------------------------- Get Screen Size Key -------------------------------------------------------------------
-  private getScreenSize(screenSize: string) {
-    // This will return the key based on the screenSize value (eg. MD)
-    return Object.keys(BreakpointScreenSize).filter(x => BreakpointScreenSize[x] == screenSize)[0].toLowerCase();
-  }
-
-
-
-
-
-
-
-
   // ------------------------------------------------------------ Toggle Breakpoint -------------------------------------------------------------------
-  toggleBreakpoint(breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject) {
+  toggleBreakpoint(breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject, breakpointType: BreakpointType) {
     // If there is a breakpoint set for this breakpoint type
     if (breakpointObject.breakpointSet) {
       let breakpoint: Breakpoint = this.getBreakpoint(breakpoints, breakpointObject);
@@ -260,7 +193,7 @@ export class BreakpointService {
 
     } else {
       // Add the breakpoint
-      this.addBreakpoint(breakpoints, breakpointObject, breakpointObject.value, this.currentBreakpointScreenSize);
+      this.addBreakpoint(breakpoints, breakpointObject, breakpointType, breakpointObject.value, this.currentBreakpointScreenSize);
       breakpointObject.breakpointSet = true;
     }
   }
@@ -272,7 +205,7 @@ export class BreakpointService {
 
 
   // ------------------------------------------------------------- Set Breakpoint Value --------------------------------------------------------------------
-  setBreakpointValue(value: any, breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject) {
+  setBreakpointValue(value: any, breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject, breakpointType: BreakpointType) {
     // Set the value for this breakpoint type
     breakpointObject.value = value;
 
@@ -281,7 +214,7 @@ export class BreakpointService {
       this.removeBreakpointAtCurrentScreenSize(breakpoints, breakpointObject);
 
       // Add a new breakpoint
-      this.addBreakpoint(breakpoints, breakpointObject, breakpointObject.value, this.currentBreakpointScreenSize);
+      this.addBreakpoint(breakpoints, breakpointObject, breakpointType, breakpointObject.value, this.currentBreakpointScreenSize);
     }
   }
 
@@ -294,7 +227,7 @@ export class BreakpointService {
   loadBreakpoints(breakpoints: Array<BreakpointData>, breakpointsComponent: BreakpointsComponent) {
     if (breakpoints) {
       breakpoints.forEach((breakpoint: BreakpointData) => {
-        this.addBreakpoint(breakpointsComponent.breakpoints, this.getBreakpointObject(breakpoint.breakpointType, breakpointsComponent), breakpoint.value, BreakpointScreenSize[breakpoint.screenSize.toUpperCase()]);
+        this.addBreakpoint(breakpointsComponent.breakpoints, this.getBreakpointObject(breakpoint.breakpointType, breakpointsComponent), breakpoint.breakpointType, breakpoint.value, breakpoint.screenSize);
       });
     }
   }
@@ -309,8 +242,8 @@ export class BreakpointService {
     breakpoints.forEach((breakpoint: Breakpoint) => {
       if (breakpoint.breakpointObject == breakpointObject) {
         breakpointsData.push({
-          breakpointType: breakpoint.breakpointObject.breakpointType,
-          screenSize: this.getScreenSize(breakpoint.screenSize),
+          breakpointType: breakpoint.breakpointType,
+          screenSize: breakpoint.screenSize,
           value: breakpoint.value
         });
       }
@@ -353,7 +286,7 @@ export class BreakpointService {
         break;
 
       case BreakpointType.Visibility:
-        breakpointObject = breakpointsComponent.visibility;
+        breakpointObject = breakpointsComponent.display;
         break;
 
 

@@ -45,7 +45,7 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
   }
 
 
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     let lineContainer = document.createElement('div');
 
     // This is the line container
@@ -61,10 +61,9 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
     line.style.borderBottom = this.border.width + 'px ' + this.border.style + ' ' + this.border.color.toHex();
     this.shadow.applyStyle(line);
 
-    // Set the classes
-    this.breakpointService.setBreakpointClasses(this, lineContainer);
-
     lineContainer.appendChild(line);
-    parent.appendChild(lineContainer);
+
+
+    super.buildPreview(parent, lineContainer);
   }
 }

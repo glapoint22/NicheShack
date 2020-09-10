@@ -1,24 +1,15 @@
-import { BreakpointsPaddingComponent } from './breakpoints-padding-component';
 import { PaddingData } from '../../../../../classes/padding-data';
-import { PaddingTop } from './padding-top';
-import { PaddingRight } from './padding-right';
-import { PaddingBottom } from './padding-bottom';
-import { PaddingLeft } from './padding-left';
 import { BreakpointSpacing, Breakpoint } from './breakpoint';
+import { PaddingBase } from 'classes/padding-base';
+import { Spacing } from './spacing';
 
-export class Padding {
+export class Padding extends PaddingBase {
     public constrain: boolean = true;
-    public top: PaddingTop = new PaddingTop();
-    public right: PaddingRight = new PaddingRight();
-    public bottom: PaddingBottom = new PaddingBottom();
-    public left: PaddingLeft = new PaddingLeft();
+    public top: Spacing = new Spacing();
+    public right: Spacing = new Spacing();
+    public bottom: Spacing = new Spacing();
+    public left: Spacing = new Spacing();
 
-    setPaddingComponent(paddingComponent: BreakpointsPaddingComponent) {
-        paddingComponent['paddingTop'] = this.top;
-        paddingComponent['paddingRight'] = this.right;
-        paddingComponent['paddingBottom'] = this.bottom;
-        paddingComponent['paddingLeft'] = this.left;
-    }
 
     setData(paddingData: PaddingData) {
         if (paddingData) {
@@ -45,6 +36,16 @@ export class Padding {
             right: right,
             bottom: bottom,
             left: left
+        }
+    }
+
+    getValues(): PaddingData {
+        return {
+            constrain: false,
+            top: this.top.value,
+            right: this.right.value,
+            bottom: this.bottom.value,
+            left: this.left.value
         }
     }
 }

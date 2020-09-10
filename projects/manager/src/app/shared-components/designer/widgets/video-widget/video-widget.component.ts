@@ -63,7 +63,7 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
   }
 
 
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     let video: HTMLDivElement;
 
     // If we have a video
@@ -119,10 +119,6 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
     this.corners.applyStyle(video);
     this.shadow.applyStyle(video);
 
-    // Set the classes
-    this.breakpointService.setBreakpointClasses(this, video);
-
-    // Place the video inside the parent
-    parent.appendChild(video);
+    super.buildPreview(parent, video);
   }
 }

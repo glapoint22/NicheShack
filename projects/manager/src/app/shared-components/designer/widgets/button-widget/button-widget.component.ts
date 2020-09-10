@@ -202,7 +202,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
 
   // ------------------------------------------------------------------- Build HTML -----------------------------------------------------------
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     let button: any = document.createElement(this.link.url ? 'a' : 'div');
     let className = this.createClassName();
     let css = '.' + className + ' {' +
@@ -250,12 +250,8 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
       button.style.textDecoration = 'none';
     }
 
-    // This will add padding positions to this component (ie. top, right, bottom, left)
-    this.padding.setPaddingComponent(this);
-
-
-    // Set the breakpoint classes
-    this.breakpointService.setBreakpointClasses(this, button);
+    // Add the padding classes to the button element
+    this.padding.addClasses(this.breakpoints, button, this.padding.getValues());
 
 
     // Button caption
@@ -265,8 +261,8 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     // Add this button style
     this.column.row.pageService.buttonStylesDocumentFragment.firstElementChild.appendChild(document.createTextNode(css));
 
-    // Append this button to the parent
-    parent.appendChild(button);
+    
+    super.buildPreview(parent, button);
   }
 
 

@@ -1,7 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ColumnComponent } from '../../designer/column/column.component';
 import { BreakpointService } from '../../../services/breakpoint.service';
-import { BreakpointVisibility } from 'projects/manager/src/app/classes/breakpoint';
+import { Visibility } from 'classes/visibility';
+import { BreakpointType } from 'classes/breakpoint-type';
+import { Breakpoint } from '../../../classes/breakpoint';
+import { BreakpointObject } from '../../../classes/breakpoint-object';
 
 @Component({
   selector: 'visibility',
@@ -11,19 +14,32 @@ import { BreakpointVisibility } from 'projects/manager/src/app/classes/breakpoin
 export class VisibilityComponent {
   @Input() column: ColumnComponent;
   @Output() onChange: EventEmitter<void> = new EventEmitter();
-  public breakpointVisibility = BreakpointVisibility;
+  public visibility = Visibility;
 
   constructor(private breakpointService: BreakpointService) { }
 
   setVisibility() {
-    if (this.column.visibility.value == BreakpointVisibility.Visible) {
-      this.column.visibility.value = BreakpointVisibility.Hidden;
+    if (this.column.display.value == Visibility.Visible) {
+      this.column.display.value = Visibility.Hidden;
     } else {
-      this.column.visibility.value = BreakpointVisibility.Visible;
+      this.column.display.value = Visibility.Visible;
     }
 
-    this.breakpointService.addRemoveBreakpoint(this.column.breakpoints, this.column.visibility, this.column.visibility.value);
+    this.addRemoveBreakpoints(this.column.breakpoints, this.column.display, BreakpointType.Visibility, this.column.display.value);
 
     this.onChange.emit();
+  }
+
+
+
+  // --------------------------------------------------------- Add Remove Breakpoints --------------------------------------------------------------------
+  addRemoveBreakpoints(breakpoints: Array<Breakpoint>, breakpointObject: BreakpointObject, breakpointType: BreakpointType, value: any) {
+    let breakpoint: Breakpoint = breakpoints.find(x => x.breakpointObject == breakpointObject && x.screenSize == this.breakpointService.currentBreakpointScreenSize);
+
+    if (breakpoint) {
+      this.breakpointService.removeAllBreakpoints(breakpoints, breakpointObject);
+    } else {
+      this.breakpointService.addBreakpoint(breakpoints, breakpointObject, breakpointType, value, this.breakpointService.currentBreakpointScreenSize);
+    }
   }
 }

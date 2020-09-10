@@ -84,7 +84,7 @@ export class PageService {
     this.buttonStylesDocumentFragment.appendChild(buttonStyles);
 
     // This will build the HTML for each widget on the page
-    this.page.rootContainer.buildHTML(parent);
+    this.page.rootContainer.buildPreview(parent);
 
     // Add the grid class
     let grid = parent.firstElementChild as HTMLElement;
