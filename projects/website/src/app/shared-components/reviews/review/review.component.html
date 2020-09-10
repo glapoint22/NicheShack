@@ -1,4 +1,26 @@
 <div class="container" [ngClass]="{'review-bottom': showReviewHelpful}">
+
+    <div style="margin-right: 15px;">
+        <div style="width: 40px; height: 40px; border-radius: 100%; background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center; width: 40px; height: 40px;" [ngStyle]="{'background-image': 
+
+                                review.userImage == null 
+
+                                ?
+
+                                'url(assets/no-account-pic.png)' 
+
+                                : 
+
+                                'url(images/' + review.userImage + ')'
+
+                                }">
+
+        </div>
+
+    </div>
+
     <div class="review">
 
         <!-- Stars and review title -->
@@ -37,8 +59,7 @@
 
             <!-- Review rating container -->
             <span>
-                <span class="like" *ngIf="!review.hasBeenRated"
-                    (click)="onRateReviewClick(1, 0)">
+                <span class="like" *ngIf="!review.hasBeenRated" (click)="onRateReviewClick(1, 0)">
                     <i class="fas fa-thumbs-up primary-color-light"></i>
                     <span>{{review.likes}}</span>
                 </span>
