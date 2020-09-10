@@ -6,6 +6,6 @@
 
         <!-- Visibility icon -->
         <img src="assets/visibility-icon.png"
-            [ngClass]="{'hidden': column.visibility.value == breakpointVisibility.Hidden}" (click)="setVisibility()">
+            [ngClass]="{'hidden': column.display.value == visibility.Hidden}" (click)="setVisibility()">
     </div>
 </panel>

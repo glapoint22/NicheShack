@@ -4,7 +4,6 @@ import { WidgetComponent } from '../widgets/widget/widget.component';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { ColumnSpan } from '../../../classes/column-span';
 import { BreakpointsComponent } from '../../../classes/breakpoints-component';
-import { Visibility } from '../../../classes/visibility';
 import { Padding } from '../../../classes/padding';
 import { Corners } from '../../../classes/corners';
 import { Shadow } from '../../../classes/shadow';
@@ -17,6 +16,7 @@ import { PropertyView } from '../../../classes/property-view';
 import { BreakpointData } from 'classes/breakpoint-data';
 import { Breakpoint } from 'projects/manager/src/app/classes/breakpoint';
 import { VerticalAlign } from 'classes/vertical-align';
+import { Display } from '../../../classes/display';
 
 @Component({
   selector: '[column]',
@@ -37,7 +37,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   public padding: Padding = new Padding();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public visibility = new Visibility();
+  public display: Display = new Display();
   public breakpoints: Array<Breakpoint> = new Array<Breakpoint>();
   public name: string = 'Column';
 
@@ -208,7 +208,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
     this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.padding.left);
 
     // Visibility
-    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.visibility);
+    this.breakpointService.saveBreakpoints(this.breakpoints, breakpointData, this.display);
 
 
     // Column Span
@@ -220,23 +220,17 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
 
 
 
-  buildHTML(parent: HTMLElement) {
-    let col = document.createElement('div');
+  buildPreview(parent: HTMLElement) {
+    let column = document.createElement('div');
 
-    // If there are not any breakpoints set, set the class with the current col class
-    if (!this.breakpoints.find(x => x.breakpointObject == this.columnSpan)) {
-      col.className = this.columnElement.className;
-    }
+    // Add column span, display, and padding classes to the column element
+    this.columnSpan.addClasses(this.breakpoints, column, this.columnSpan.value);
+    this.display.addClasses(this.breakpoints, column);
+    this.padding.addClasses(this.breakpoints, column, this.padding.getValues());
 
-    // This will add padding positions to this component (ie. top, right, bottom, left)
-    this.padding.setPaddingComponent(this);
+    parent.appendChild(column);
 
-    // Set the classes
-    this.breakpointService.setBreakpointClasses(this, col);
-
-    parent.appendChild(col);
-
-    this.widget.buildHTML(col);
+    this.widget.buildPreview(column);
   }
 
 

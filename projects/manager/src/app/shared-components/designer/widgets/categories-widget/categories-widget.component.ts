@@ -60,7 +60,7 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
     }
   }
 
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     // Categories container
     let categoriesContainer = document.createElement('div');
     categoriesContainer.classList.add('categories-container');
@@ -109,9 +109,6 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
     categoriesContainer.appendChild(categories);
 
 
-    // Set the classes
-    this.breakpointService.setBreakpointClasses(this, categoriesContainer);
-
-    parent.appendChild(categoriesContainer);
+    super.buildPreview(parent, categoriesContainer);
   }
 }

@@ -56,7 +56,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
   }
 
 
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     // Product Group Container
     let productGroupContainer = document.createElement('div');
     productGroupContainer.style.width = '100%';
@@ -83,9 +83,6 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     // Append
     productGroupContainer.appendChild(caption);
     productGroupContainer.appendChild(productGroup);
-
-    // Set the classes
-    this.breakpointService.setBreakpointClasses(this, productGroupContainer);
 
     parent.appendChild(productGroupContainer);
   }

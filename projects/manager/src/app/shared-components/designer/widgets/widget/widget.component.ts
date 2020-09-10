@@ -84,7 +84,11 @@ export class WidgetComponent implements OnInit, BreakpointsComponent {
     return maxHeight;
   }
 
-  buildHTML(parent: HTMLElement) { }
+  buildPreview(parent: HTMLElement, element?: HTMLElement) { 
+    this.horizontalAlignment.addClasses(this.breakpoints, element, this.horizontalAlignment.value);
+
+    parent.appendChild(element);
+  }
 
   setData(widgetData: WidgetData) {
     if (widgetData.name) this.name = widgetData.name;

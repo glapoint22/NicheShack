@@ -1,30 +1,12 @@
 import { BreakpointObject } from './breakpoint-object';
-import { Alignment } from './alignment';
 import { HorizontalAlign } from 'classes/horizontal-align';
 import { Breakpoint } from './breakpoint';
-import { BreakpointType } from 'classes/breakpoint-type';
+import { HorizontalAlignmentBase } from 'classes/horizontal-alignment-base';
 
-export class HorizontalAlignment extends Alignment implements BreakpointObject {
+export class HorizontalAlignment extends HorizontalAlignmentBase implements BreakpointObject {
     public value: HorizontalAlign = HorizontalAlign.Left;
     public defaultValue: string = HorizontalAlign.Left;
     public breakpointSet: boolean;
-    public breakpointType: BreakpointType = BreakpointType.HorizontalAlignment;
-
-    setClass(value: string, element: HTMLElement, screenSize?: string) {
-        switch (value) {
-            case HorizontalAlign.Left:
-                this.applyClass(element, screenSize, 'horizontal-align-left');
-                break;
-
-            case HorizontalAlign.Center:
-                this.applyClass(element, screenSize, 'horizontal-align-center');
-                break;
-
-            case HorizontalAlign.Right:
-                this.applyClass(element, screenSize, 'horizontal-align-right');
-                break;
-        }
-    }
 
     setData(value: string) {
         if (value) {

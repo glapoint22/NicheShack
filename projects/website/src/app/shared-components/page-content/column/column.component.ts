@@ -6,7 +6,7 @@ import { BorderBase } from 'classes/border-base';
 import { CornersBase } from 'classes/corners-base';
 import { ShadowBase } from 'classes/shadow-base';
 import { Padding } from '../../../classes/padding';
-import { BreakpointData } from 'classes/breakpoint-data';
+import { displayBase } from 'classes/display-base';
 
 @Component({
   selector: '[column]',
@@ -21,6 +21,7 @@ export class ColumnComponent {
   public corners: CornersBase = new CornersBase();
   public shadow: ShadowBase = new ShadowBase();
   public padding: Padding = new Padding();
+  public display: displayBase = new displayBase();
 
 
   ngAfterViewInit() {
@@ -33,7 +34,7 @@ export class ColumnComponent {
   setData(columnData: ColumnData) {
     this.background.setData(columnData.background);
     this.setColumnSpan(columnData);
-    this.setVisibility(columnData.breakpoints);
+    this.display.addClasses(columnData.breakpoints, this.columnElement);
     this.border.setData(columnData.border);
     this.corners.setData(columnData.corners);
     this.shadow.setData(columnData.shadow);
@@ -52,23 +53,4 @@ export class ColumnComponent {
       });
     }
   }
-
-
-  setVisibility(breakpoints: Array<BreakpointData>) {
-    let visibilityBreakpoints = breakpoints.filter(x => x.breakpointType == BreakpointType.Visibility);
-
-    visibilityBreakpoints.forEach(breakpoint => {
-      let className: string;
-
-        if (breakpoint.value == 'block') {
-            className = 'show';
-        } else {
-            className = 'hide';
-        }
-
-      if (breakpoint.screenSize != 'z')
-            this.columnElement.classList.add(className + '-' + breakpoint.screenSize);
-    });
-  }
-
 }

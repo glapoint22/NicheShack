@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { BreakpointsPaddingComponent } from '../../../classes/breakpoints-padding-component';
 import { BreakpointSpacing } from 'projects/manager/src/app/classes/breakpoint';
+import { BreakpointType } from 'classes/breakpoint-type';
 
 @Component({
   selector: 'padding',
@@ -34,10 +35,10 @@ export class PaddingComponent {
   onValueChange(position: string, value: string) {
     // If constrained, set the value for each position
     if (this.paddingComponent.padding.constrain) {
-      this.setValue('top', value);
-      this.setValue('right', value);
-      this.setValue('bottom', value);
-      this.setValue('left', value);
+      this.setValue('Top', value);
+      this.setValue('Right', value);
+      this.setValue('Bottom', value);
+      this.setValue('Left', value);
     } else {
       this.setValue(position, value);
     }
@@ -51,7 +52,7 @@ export class PaddingComponent {
 
   // ------------------------------------------------------------------ Set Value --------------------------------------------------------------------------  
   setValue(position: string, value: string) {
-    this.breakpointService.setBreakpointValue(value, this.paddingComponent.breakpoints, this.paddingComponent.padding[position]);
+    this.breakpointService.setBreakpointValue(value, this.paddingComponent.breakpoints, this.paddingComponent.padding[position.toLowerCase()], BreakpointType['Padding' + position]);
   }
 
 
@@ -78,10 +79,10 @@ export class PaddingComponent {
   // ---------------------------------------------------------- On Breakpoint Change ------------------------------------------------------------------------  
   onBreakpointChange(position: string) {
     if (this.paddingComponent.padding.constrain) {
-      this.toggleBreakpoint('top');
-      this.toggleBreakpoint('right');
-      this.toggleBreakpoint('bottom');
-      this.toggleBreakpoint('left');
+      this.toggleBreakpoint('Top');
+      this.toggleBreakpoint('Right');
+      this.toggleBreakpoint('Bottom');
+      this.toggleBreakpoint('Left');
     } else {
       this.toggleBreakpoint(position);
     }
@@ -95,6 +96,6 @@ export class PaddingComponent {
 
   // ------------------------------------------------------------ Set Breakpoint ----------------------------------------------------------------------------  
   toggleBreakpoint(position: string) {
-    this.breakpointService.toggleBreakpoint(this.paddingComponent.breakpoints, this.paddingComponent.padding[position]);
+    this.breakpointService.toggleBreakpoint(this.paddingComponent.breakpoints, this.paddingComponent.padding[position.toLowerCase()], BreakpointType['Padding' + position]);
   }
 }

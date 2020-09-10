@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { WidgetComponent } from '../../designer/widgets/widget/widget.component';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { HorizontalAlign } from 'classes/horizontal-align';
+import { BreakpointType } from 'classes/breakpoint-type';
 
 @Component({
   selector: 'horizontal-alignment',
@@ -12,6 +13,7 @@ export class HorizontalAlignmentComponent {
   @Input() widget: WidgetComponent;
   @Output() onChange: EventEmitter<void> = new EventEmitter();
   public horizontalAlign = HorizontalAlign;
+  public breakpointType = BreakpointType;
 
   constructor(public breakpointService: BreakpointService) {}
 
@@ -31,7 +33,7 @@ export class HorizontalAlignmentComponent {
 
   // --------------------------------------------------------------- Set Value --------------------------------------------------------------------------  
   setValue(value: HorizontalAlign) {
-    this.breakpointService.setBreakpointValue(value, this.widget.breakpoints, this.widget.horizontalAlignment);
+    this.breakpointService.setBreakpointValue(value, this.widget.breakpoints, this.widget.horizontalAlignment, BreakpointType.HorizontalAlignment);
     this.onChange.emit();
   }
 }

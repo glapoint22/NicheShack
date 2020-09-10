@@ -303,7 +303,6 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
 
 
   setData(rowData: RowData) {
-    // this.top = this.getPosition();
     this.name = rowData.name;
     this.background.setData(rowData.background);
     this.border.setData(rowData.border);
@@ -318,7 +317,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
   getData(): RowData {
     return {
       name: this.name != 'Row' ? this.name : null,
-      top: this.top,// this.getPosition(),
+      top: this.top,
       background: this.background.getData(),
       border: this.border.getData(),
       corners: this.corners.getData(),
@@ -362,7 +361,7 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
   }
 
 
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     let row = document.createElement('div');
 
     // Added the classes
@@ -383,15 +382,13 @@ export class RowComponent implements BreakpointsComponent, BreakpointsPaddingCom
     // Shadow
     this.shadow.applyStyle(row);
 
-    // This will add padding positions to this component (ie. top, right, bottom, left)
-    this.padding.setPaddingComponent(this);
-
-    // Set the classes
-    this.breakpointService.setBreakpointClasses(this, row);
+    // Add vertical alignment & padding classes to the row element
+    this.verticalAlignment.addClasses(this.breakpoints, row, this.verticalAlignment.value);
+    this.padding.addClasses(this.breakpoints, row, this.padding.getValues());
 
     parent.appendChild(row);
 
-    this.columns.forEach((column: Column) => column.component.buildHTML(row));
+    this.columns.forEach((column: Column) => column.component.buildPreview(row));
   }
 
 

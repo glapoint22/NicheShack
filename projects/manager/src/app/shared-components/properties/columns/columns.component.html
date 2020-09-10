@@ -12,7 +12,7 @@
         <!-- Breakpoint checkbox -->
         <div class="checkbox-container">
             <checkbox
-                [disabled]="column.row.columns.length == 1 || breakpointService.currentBreakpointScreenSize == '0'"
+                [disabled]="column.row.columns.length == 1 || breakpointService.currentBreakpointScreenSize == 'Z'"
                 (change)="setBreakpoint()" [checked]="column.columnSpan.breakpointSet"></checkbox>
         </div>
     </div>

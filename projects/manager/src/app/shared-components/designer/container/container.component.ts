@@ -175,7 +175,7 @@ export class ContainerComponent {
     return element.parentElement.classList.contains('content');
   }
 
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     let div: HTMLDivElement = document.createElement('div');
 
     // Add the styles
@@ -185,7 +185,7 @@ export class ContainerComponent {
 
     // Append to the parent and add the rows
     parent.appendChild(div);
-    this.rows.forEach((row: Row) => row.component.buildHTML(div));
+    this.rows.forEach((row: Row) => row.component.buildPreview(div));
   }
 
   getData(): Array<RowData> {

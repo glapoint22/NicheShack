@@ -114,9 +114,9 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
 
 
 
-  buildHTML(parent: HTMLElement) {
+  buildPreview(parent: HTMLElement) {
     // Build the grid
-    this.container.buildHTML(parent);
+    this.container.buildPreview(parent);
 
     // Get the container
     let container = parent.firstElementChild as HTMLElement;
@@ -133,10 +133,9 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
     this.corners.applyStyle(container);
     this.shadow.applyStyle(container);
 
-    // This will add padding positions to this component (ie. top, right, bottom, left)
-    this.padding.setPaddingComponent(this);
 
-    // Set the breakpoint classes
-    this.breakpointService.setBreakpointClasses(this, container);
+    // Add the padding & horizontal alignment classes
+    this.padding.addClasses(this.breakpoints, container, this.padding.getValues());
+    this.horizontalAlignment.addClasses(this.breakpoints, container, this.horizontalAlignment.value);
   }
 }

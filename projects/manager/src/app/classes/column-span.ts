@@ -1,7 +1,7 @@
 import { BreakpointObject } from './breakpoint-object';
-import { BreakpointType } from 'classes/breakpoint-type';
+import { ColumnSpanBase } from 'classes/column-span-base';
 
-export class ColumnSpan implements BreakpointObject {
+export class ColumnSpan extends ColumnSpanBase implements BreakpointObject {
     private _value: number;
     public get value(): number {
         return this._value;
@@ -21,9 +21,8 @@ export class ColumnSpan implements BreakpointObject {
 
     public defaultValue: number = 12;
     public breakpointSet: boolean;
-    public breakpointType: BreakpointType = BreakpointType.ColumnSpan;
 
-    constructor(private columnElement: HTMLElement) { }
+    constructor(private columnElement: HTMLElement) { super(); }
 
 
     setClass(value: number, element: HTMLElement, screenSize?: string) {

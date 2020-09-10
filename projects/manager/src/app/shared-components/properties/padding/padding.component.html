@@ -15,14 +15,14 @@
         <!-- Padding value -->
         <div class="number-field-container">
             <number-field [value]="paddingComponent.padding.top.value" [values]="paddingValues"
-                (onValueChange)="onValueChange('top', $event)">
+                (onValueChange)="onValueChange('Top', $event)">
             </number-field>
         </div>
 
         <!-- Breakpoint checkbox -->
         <div class="checkbox-container">
-            <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == '0'"
-                (change)="onBreakpointChange('top')" [checked]="paddingComponent.padding.top.breakpointSet"></checkbox>
+            <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == 'Z'"
+                (change)="onBreakpointChange('Top')" [checked]="paddingComponent.padding.top.breakpointSet"></checkbox>
         </div>
     </div>
 
@@ -39,13 +39,13 @@
         <!-- Padding value -->
         <div class="number-field-container">
             <number-field [value]="paddingComponent.padding.right.value" [values]="paddingValues"
-                (onValueChange)="onValueChange('right', $event)">
+                (onValueChange)="onValueChange('Right', $event)">
             </number-field>
         </div>
 
         <!-- Breakpoint checkbox -->
-        <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == '0'"
-            (change)="onBreakpointChange('right')" [checked]="paddingComponent.padding.right.breakpointSet"></checkbox>
+        <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == 'Z'"
+            (change)="onBreakpointChange('Right')" [checked]="paddingComponent.padding.right.breakpointSet"></checkbox>
     </div>
 
 
@@ -63,14 +63,14 @@
         <!-- Padding value -->
         <div class="number-field-container">
             <number-field [value]="paddingComponent.padding.bottom.value" [values]="paddingValues"
-                (onValueChange)="onValueChange('bottom', $event)">
+                (onValueChange)="onValueChange('Bottom', $event)">
             </number-field>
         </div>
 
         <!-- Breakpoint checkbox -->
         <div class="checkbox-container">
-            <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == '0'"
-                (change)="onBreakpointChange('bottom')" [checked]="paddingComponent.padding.bottom.breakpointSet"></checkbox>
+            <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == 'Z'"
+                (change)="onBreakpointChange('Bottom')" [checked]="paddingComponent.padding.bottom.breakpointSet"></checkbox>
         </div>
     </div>
 
@@ -87,14 +87,14 @@
         <div class="label">Left</div>
         <div class="number-field-container">
             <number-field [value]="paddingComponent.padding.left.value" [values]="paddingValues"
-                (onValueChange)="onValueChange('left', $event)">
+                (onValueChange)="onValueChange('Left', $event)">
             </number-field>
         </div>
 
         <!-- Breakpoint checkbox -->
         <div class="checkbox-container">
-            <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == '0'"
-                (change)="onBreakpointChange('left')" [checked]="paddingComponent.padding.left.breakpointSet"></checkbox>
+            <checkbox class="checkbox-container" [disabled]="breakpointService.currentBreakpointScreenSize == 'Z'"
+                (change)="onBreakpointChange('Left')" [checked]="paddingComponent.padding.left.breakpointSet"></checkbox>
         </div>
     </div>
 </panel>

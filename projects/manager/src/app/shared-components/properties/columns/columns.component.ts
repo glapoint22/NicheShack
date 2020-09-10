@@ -5,6 +5,7 @@ import { ColumnSpan } from '../../../classes/column-span';
 import { Column } from '../../../classes/column';
 import { BreakpointService } from '../../../services/breakpoint.service';
 import { Breakpoint } from 'projects/manager/src/app/classes/breakpoint';
+import { BreakpointType } from 'classes/breakpoint-type';
 
 
 @Component({
@@ -233,7 +234,7 @@ export class ColumnsComponent implements OnInit {
   // ----------------------------------------------------------Add Breakpoint ----------------------------------------------------------------------
   addBreakpoint() {
     this.column.row.columns.forEach((column: Column) => {
-      this.breakpointService.addBreakpoint(column.component.breakpoints, column.component.columnSpan, column.component.columnSpan.value, this.breakpointService.currentBreakpointScreenSize);
+      this.breakpointService.addBreakpoint(column.component.breakpoints, column.component.columnSpan, BreakpointType.ColumnSpan, column.component.columnSpan.value, this.breakpointService.currentBreakpointScreenSize);
       column.component.columnSpan.breakpointSet = true;
     });
   }
