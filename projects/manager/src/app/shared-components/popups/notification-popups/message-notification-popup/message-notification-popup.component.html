@@ -28,8 +28,22 @@
             <div class="property-box-bar">
 
                 <!-- Customer Thumbnail -->
-                <div class="account-thumbnail" *ngIf="notificationService.messageNotification.customerText.thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.messageNotification.customerText.thumbnail + ')'}">
+                <div class="account-thumbnail"
+                    
+                    
+                    [ngStyle]="{'background-image': 
+
+                        notificationService.messageNotification.customerText.thumbnail == null 
+                        
+                        ?
+
+                        'url(assets/no-account-pic.png)' 
+                        
+                        : 
+                        
+                        'url(images/' + notificationService.messageNotification.customerText.thumbnail + ')'
+                    
+                        }">
                 </div>
 
                 <!-- Time Stamp -->
@@ -53,7 +67,20 @@
                 <ng-container *ngIf="notificationService.messageNotification.notes">
                     <!-- Employee Thumbnail -->
                     <div class="account-thumbnail"
-                        [ngStyle]="{'background-image': 'url(images/' + notificationService.messageNotification.notes.thumbnail + ')'}">
+
+                        [ngStyle]="{'background-image': 
+
+                            notificationService.messageNotification.notes.thumbnail == null 
+                            
+                            ?
+
+                            'url(assets/no-account-pic.png)' 
+                            
+                            : 
+                            
+                            'url(images/' + notificationService.messageNotification.notes.thumbnail + ')'
+                        
+                            }">
                     </div>
 
                     <!-- Time Stamp -->

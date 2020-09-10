@@ -41,7 +41,11 @@
     @extend .thumbnail;
     width: 20px;
     height: 20px;
-    margin-left: 6px;
+    margin-left: 9px;
+    margin-right: 2px;
+    border: none;
+    border-radius: 100%;
+    margin-bottom: 1px;
 }
 
 .header-line {
