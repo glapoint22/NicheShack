@@ -54,7 +54,19 @@
 
                 <!-- Customer Thumbnail -->
                 <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.productImageNotification.customerText.thumbnail + ')'}">
+                    [ngStyle]="{'background-image': 
+
+                        notificationService.productImageNotification.customerText.thumbnail == null 
+                        
+                        ?
+
+                        'url(assets/no-account-pic.png)' 
+                        
+                        : 
+                        
+                        'url(images/' + notificationService.productImageNotification.customerText.thumbnail + ')'
+                    
+                        }">
                 </div>
 
                 <!-- Time Stamp -->
@@ -104,7 +116,19 @@
 
                     <!-- Employee Thumbnail -->
                     <div class="account-thumbnail"
-                        [ngStyle]="{'background-image': 'url(images/' + notificationService.productImageNotification.notes.thumbnail + ')'}">
+                        [ngStyle]="{'background-image': 
+
+                            notificationService.productImageNotification.notes.thumbnail == null 
+                            
+                            ?
+
+                            'url(assets/no-account-pic.png)' 
+                            
+                            : 
+                            
+                            'url(images/' + notificationService.productImageNotification.notes.thumbnail + ')'
+                        
+                            }">
                     </div>
 
                     <!-- Time Stamp -->

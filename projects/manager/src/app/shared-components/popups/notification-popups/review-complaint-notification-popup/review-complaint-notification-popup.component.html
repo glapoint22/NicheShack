@@ -52,7 +52,19 @@
 
                 <!-- Customer Thumbnail -->
                 <div class="account-thumbnail"
-                    [ngStyle]="{'background-image': 'url(images/' + notificationService.reviewComplaintNotification.customerText.thumbnail + ')'}">
+                    [ngStyle]="{'background-image': 
+
+                        notificationService.reviewComplaintNotification.customerText.thumbnail == null 
+                        
+                        ?
+
+                        'url(assets/no-account-pic.png)' 
+                        
+                        : 
+                        
+                        'url(images/' + notificationService.reviewComplaintNotification.customerText.thumbnail + ')'
+                    
+                        }">
                 </div>
 
                 <!-- Time Stamp -->
@@ -82,7 +94,19 @@
                 <ng-container *ngIf="notificationService.reviewComplaintNotification.notes">
                     <!-- Employee Thumbnail -->
                     <div class="account-thumbnail"
-                        [ngStyle]="{'background-image': 'url(images/' + notificationService.reviewComplaintNotification.notes.thumbnail + ')'}">
+                        [ngStyle]="{'background-image': 
+
+                            notificationService.reviewComplaintNotification.notes.thumbnail == null 
+                            
+                            ?
+
+                            'url(assets/no-account-pic.png)' 
+                            
+                            : 
+                            
+                            'url(images/' + notificationService.reviewComplaintNotification.notes.thumbnail + ')'
+                        
+                            }">
                     </div>
 
                     <!-- Time Stamp -->
