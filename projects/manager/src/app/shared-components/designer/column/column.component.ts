@@ -223,6 +223,18 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   buildPreview(parent: HTMLElement) {
     let column = document.createElement('div');
 
+    // Add background if enabled
+    if (this.background.enable) this.background.applyStyles(column);
+
+    // Border
+    this.border.applyStyle(column);
+
+    // Corners
+    this.corners.applyStyle(column);
+
+    // Shadow
+    this.shadow.applyStyle(column);
+
     // Add column span, display, and padding classes to the column element
     this.columnSpan.addClasses(this.breakpoints, column, this.columnSpan.value);
     this.display.addClasses(this.breakpoints, column);

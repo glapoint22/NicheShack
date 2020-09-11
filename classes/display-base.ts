@@ -3,6 +3,8 @@ import { BreakpointType } from './breakpoint-type';
 
 export class displayBase {
     addClasses(breakpoints: Array<BreakpointData>, element: HTMLElement) {
+        if(!breakpoints) return;
+
         let visibilityBreakpoints = breakpoints.filter(x => x.breakpointType == BreakpointType.Visibility);
 
         visibilityBreakpoints.forEach((breakpoint: BreakpointData) => {

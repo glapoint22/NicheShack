@@ -4,7 +4,11 @@ import { VerticalAlign } from './vertical-align';
 
 export class VerticalAlignmentBase {
     addClasses(breakpoints: Array<BreakpointData>, element: HTMLElement, value: string) {
-        let verticalAlignmentBreakpoints = breakpoints.filter(x => x.breakpointType == BreakpointType.VerticalAlignment);
+        if (!breakpoints && !value) return;
+
+        let verticalAlignmentBreakpoints: Array<BreakpointData> = [];
+
+        if (breakpoints) verticalAlignmentBreakpoints = breakpoints.filter(x => x.breakpointType == BreakpointType.VerticalAlignment);
 
         // If there are any breakpoints, add each breakpoint class 
         if (verticalAlignmentBreakpoints.length > 0) {
@@ -13,7 +17,7 @@ export class VerticalAlignmentBase {
             });
 
             // We have no breakpoints, add a single class
-        } else {
+        } else if (value) {
             if (value != VerticalAlign.Top) element.classList.add(this.getClassName(value));
         }
     }
