@@ -3,11 +3,11 @@ import { Background } from '../../../classes/background';
 import { BorderBase } from 'classes/border-base';
 import { CornersBase } from 'classes/corners-base';
 import { ShadowBase } from 'classes/shadow-base';
-import { Padding } from '../../../classes/padding';
-import { VerticalAlignment } from '../../../classes/vertical-alignment';
 import { VerticalAlign } from 'classes/vertical-align';
 import { ColumnComponent } from '../column/column.component';
 import { RowData } from '../../../classes/row-data';
+import { PaddingBase } from 'classes/padding-base';
+import { VerticalAlignmentBase } from 'classes/vertical-alignment-base';
 
 @Component({
   selector: 'row',
@@ -21,13 +21,20 @@ export class RowComponent {
   public border: BorderBase = new BorderBase();
   public corners: CornersBase = new CornersBase();
   public shadow: ShadowBase = new ShadowBase();
-  public padding: Padding = new Padding();
-  public verticalAlignment: VerticalAlignment = new VerticalAlignment();
+  public verticalAlignment: VerticalAlignmentBase = new VerticalAlignmentBase();
+  public rowElement: HTMLElement;
+  public padding: PaddingBase = new PaddingBase();
   public verticalAlign = VerticalAlign;
   public columnCount: number = 0;
 
 
   constructor(private resolver: ComponentFactoryResolver) { }
+
+
+  ngAfterViewInit() {
+    // Get the html row element
+    this.rowElement = this.viewContainerRef.element.nativeElement.parentElement;
+  }
 
 
   createColumn(): ColumnComponent {
@@ -49,7 +56,7 @@ export class RowComponent {
     this.border.setData(rowData.border);
     this.corners.setData(rowData.corners);
     this.shadow.setData(rowData.shadow);
-    this.padding.setData(rowData.padding);
-    this.verticalAlignment.setData(rowData.verticalAlignment);
+    this.padding.addClasses(rowData.breakpoints, this.rowElement, rowData.padding);
+    this.verticalAlignment.addClasses(rowData.breakpoints, this.rowElement, rowData.verticalAlignment);
   }
 }

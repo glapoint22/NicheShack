@@ -1,5 +1,5 @@
 export enum BreakpointType {
-    PaddingTop,
+    PaddingTop = 1,
     PaddingRight,
     PaddingBottom,
     PaddingLeft,

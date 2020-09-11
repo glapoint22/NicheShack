@@ -4,6 +4,8 @@ import { PaddingData } from './padding-data';
 
 export class PaddingBase {
     addClasses(breakpoints: Array<BreakpointData>, element: HTMLElement, paddingData: PaddingData) {
+        if (!breakpoints && !paddingData) return;
+
         let paddingTypes = [
             'PaddingTop',
             'PaddingRight',
@@ -13,7 +15,11 @@ export class PaddingBase {
 
         // Loop through each of the padding types
         paddingTypes.forEach((paddingType: string) => {
-            let paddingBreakpoints = breakpoints.filter(x => x.breakpointType == BreakpointType[paddingType]);
+            let paddingBreakpoints: Array<BreakpointData> = [];
+
+
+            if (breakpoints) paddingBreakpoints = breakpoints.filter(x => x.breakpointType == BreakpointType[paddingType]);
+
 
             // If there any breakpoints for this padding type
             // Add the classes with the screen size
@@ -26,7 +32,7 @@ export class PaddingBase {
 
                 // There are no breakpoints for this padding type
                 // Add the classes without the screen size
-            } else {
+            } else if (paddingData) {
                 let paddingValue = paddingData[paddingType.substring(7).toLowerCase()];
 
                 // Only add class if value is not zero
@@ -39,7 +45,7 @@ export class PaddingBase {
     }
 
 
-    getClassName(breakpointType: BreakpointType): string {
+    private getClassName(breakpointType: BreakpointType): string {
         let className: string;
 
         switch (breakpointType) {

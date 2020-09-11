@@ -40,6 +40,13 @@ export class Padding extends PaddingBase {
     }
 
     getValues(): PaddingData {
+        if (
+            this.top.value == BreakpointSpacing._0px &&
+            this.right.value == BreakpointSpacing._0px &&
+            this.bottom.value == BreakpointSpacing._0px &&
+            this.left.value == BreakpointSpacing._0px
+        ) return null;
+
         return {
             constrain: false,
             top: this.top.value,
