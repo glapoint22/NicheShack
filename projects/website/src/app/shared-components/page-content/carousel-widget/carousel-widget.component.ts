@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { WidgetComponent } from '../widget/widget.component';
 
 @Component({
   selector: 'carousel-widget',
   templateUrl: './carousel-widget.component.html',
   styleUrls: ['./carousel-widget.component.scss']
 })
-export class CarouselWidgetComponent implements OnInit {
+export class CarouselWidgetComponent extends WidgetComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  
 
 }

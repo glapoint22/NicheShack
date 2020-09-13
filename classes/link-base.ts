@@ -17,11 +17,11 @@ export class LinkBase {
 
 
 export enum LinkOption {
-    None = 'none',
-    Page = 'page',
-    Category = 'category',
-    Niche = 'niche',
-    Product = 'product',
-    WebAddress = 'webAddress',
-    OnClick = 'onClick'
+    None,
+    Page,
+    Category,
+    Niche,
+    Product,
+    WebAddress,
+    OnClick
 }

@@ -1,5 +1,4 @@
 import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
-import { Background } from '../../../classes/background';
 import { BorderBase } from 'classes/border-base';
 import { CornersBase } from 'classes/corners-base';
 import { ShadowBase } from 'classes/shadow-base';
@@ -8,6 +7,7 @@ import { ColumnComponent } from '../column/column.component';
 import { RowData } from '../../../classes/row-data';
 import { PaddingBase } from 'classes/padding-base';
 import { VerticalAlignmentBase } from 'classes/vertical-alignment-base';
+import { BackgroundBase } from 'classes/background-base';
 
 @Component({
   selector: 'row',
@@ -17,14 +17,13 @@ import { VerticalAlignmentBase } from 'classes/vertical-alignment-base';
 export class RowComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   public top: number;
-  public background: Background = new Background();
+  public background: BackgroundBase = new BackgroundBase();
   public border: BorderBase = new BorderBase();
   public corners: CornersBase = new CornersBase();
   public shadow: ShadowBase = new ShadowBase();
   public verticalAlignment: VerticalAlignmentBase = new VerticalAlignmentBase();
   public rowElement: HTMLElement;
   public padding: PaddingBase = new PaddingBase();
-  public verticalAlign = VerticalAlign;
   public columnCount: number = 0;
 
 

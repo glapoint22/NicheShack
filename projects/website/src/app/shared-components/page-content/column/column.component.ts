@@ -1,5 +1,4 @@
 import { Component, ComponentFactoryResolver, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { Background } from '../../../classes/background';
 import { ColumnData } from '../../../classes/column-data';
 import { BorderBase } from 'classes/border-base';
 import { CornersBase } from 'classes/corners-base';
@@ -8,6 +7,7 @@ import { displayBase } from 'classes/display-base';
 import { ColumnSpanBase } from 'classes/column-span-base';
 import { PaddingBase } from 'classes/padding-base';
 import { WidgetComponent } from '../widget/widget.component';
+import { BackgroundBase } from 'classes/background-base';
 
 @Component({
   selector: '[column]',
@@ -17,7 +17,7 @@ import { WidgetComponent } from '../widget/widget.component';
 export class ColumnComponent {
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
   public columnElement: HTMLElement;
-  public background: Background = new Background();
+  public background: BackgroundBase = new BackgroundBase();
   public border: BorderBase = new BorderBase();
   public corners: CornersBase = new CornersBase();
   public shadow: ShadowBase = new ShadowBase();

@@ -22,27 +22,7 @@ export class Corners extends CornersBase{
         }
     }
 
-    getStyle() {
-        let style: string = '';
-
-        if (this.topLeft > 0) {
-            style += '\n\tborder-top-left-radius: ' + this.topLeft + 'px;';
-        }
-
-        if (this.topRight > 0) {
-            style += '\n\tborder-top-right-radius: ' + this.topRight + 'px;';
-        }
-
-        if (this.bottomRight > 0) {
-            style += '\n\tborder-bottom-right-radius: ' + this.bottomRight + 'px;';
-        }
-
-        if (this.bottomLeft > 0) {
-            style += '\n\tborder-bottom-left-radius: ' + this.bottomLeft + 'px;';
-        }
-
-        return style;
-    }
+    
 
 
 

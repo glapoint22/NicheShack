@@ -4,7 +4,11 @@ import { HorizontalAlign } from './horizontal-align';
 
 export class HorizontalAlignmentBase {
     addClasses(breakpoints: Array<BreakpointData>, element: HTMLElement, value: string) {
-        let horizontalAlignmentBreakpoints = breakpoints.filter(x => x.breakpointType == BreakpointType.HorizontalAlignment);
+        if (!breakpoints && !value) return;
+
+        let horizontalAlignmentBreakpoints: Array<BreakpointData> = [];
+
+        if (breakpoints) horizontalAlignmentBreakpoints = breakpoints.filter(x => x.breakpointType == BreakpointType.HorizontalAlignment);
 
         // If there are any breakpoints, add each breakpoint class 
         if (horizontalAlignmentBreakpoints.length > 0) {
@@ -13,14 +17,14 @@ export class HorizontalAlignmentBase {
             });
 
             // We have no breakpoints, add a single class
-        } else {
+        } else if (value) {
             if (value != HorizontalAlign.Left) element.classList.add(this.getClassName(value));
         }
     }
 
 
 
-    getClassName(value: string): string {
+    private getClassName(value: string): string {
         let className: string;
 
         switch (value) {

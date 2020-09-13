@@ -1,5 +1,7 @@
+import { LinkOption } from './link-base';
+
 export interface LinkData {
-    selectedOption: string;
+    selectedOption: LinkOption;
     url: string;
     optionValue: string;
 }

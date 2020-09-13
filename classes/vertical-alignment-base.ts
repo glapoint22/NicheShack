@@ -24,7 +24,7 @@ export class VerticalAlignmentBase {
 
 
 
-    getClassName(value: string): string {
+    private getClassName(value: string): string {
         let className: string;
 
         switch (value) {

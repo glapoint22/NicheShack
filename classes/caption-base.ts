@@ -27,4 +27,12 @@ export class CaptionBase {
             if (captionData.color) this.color = Color.hexToRGB(captionData.color);
         }
     }
+
+
+    getStyle() {
+        return '\n\tfont-weight: ' + this.fontWeight + ';' +
+            '\n\tfont-style: ' + this.fontStyle + ';' +
+            '\n\ttext-decoration: ' + this.textDecoration + ';' +
+            '\n\tcolor: ' + this.color.toRGBString() + ';';
+    }
 }
