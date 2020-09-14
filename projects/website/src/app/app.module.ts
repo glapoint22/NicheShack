@@ -12,6 +12,7 @@ import { ErrorComponent } from './error/error.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { ContactUsFormComponent } from './shared-components/contact-us-form/contact-us-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ContactUsFormComponent } from './shared-components/contact-us-form/cont
     AppRoutingModule,
     HttpClientModule,
     TransferHttpCacheModule,
-    ShowHideModule
+    ShowHideModule,
+    FormsModule
   ],
   providers: [
     {
