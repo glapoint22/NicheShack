@@ -3,8 +3,9 @@ import { BorderBase } from 'classes/border-base';
 import { CornersBase } from 'classes/corners-base';
 import { ImageBase } from 'classes/Image-base';
 import { ImageWidgetDataBase } from 'classes/image-widget-data-base';
-import { LinkBase } from 'classes/link-base';
+import { LinkBase, LinkOption } from 'classes/link-base';
 import { ShadowBase } from 'classes/shadow-base';
+import { LinkService } from 'services/link.service';
 import { WidgetComponent } from '../widget/widget.component';
 
 @Component({
@@ -18,6 +19,9 @@ export class ImageWidgetComponent extends WidgetComponent {
   public shadow: ShadowBase = new ShadowBase();
   public link: LinkBase = new LinkBase();
   public image: ImageBase = new ImageBase();
+  public linkOption = LinkOption;
+
+  constructor(public linkService: LinkService) { super() }
 
   setData(widgetData: ImageWidgetDataBase) {
     this.border.setData(widgetData.border);
@@ -26,15 +30,5 @@ export class ImageWidgetComponent extends WidgetComponent {
     this.link.setData(widgetData.link);
     this.image.setData(widgetData.image);
     super.setData(widgetData);
-
-    // If this image has a link
-    if (this.link.url) {
-      let anchorElement = this.widgetElement as HTMLAnchorElement;
-
-      anchorElement.href = this.link.url;
-      anchorElement.target = '_blank';
-    }
   }
-
-
 }

@@ -14,6 +14,7 @@ import { VideoWidgetComponent } from './video-widget/video-widget.component';
 import { ProductGroupWidgetComponent } from './product-group-widget/product-group-widget.component';
 import { CategoriesWidgetComponent } from './categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from './carousel-widget/carousel-widget.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -35,7 +36,8 @@ import { CarouselWidgetComponent } from './carousel-widget/carousel-widget.compo
     CarouselWidgetComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
     PageContentComponent,
