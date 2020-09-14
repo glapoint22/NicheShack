@@ -1,10 +1,6 @@
 <div #widget class="widget" [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}"
-    (click)="onClick($event)" (mousedown)="onMousedown()"
-    [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHex() : 'none'"
-    [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
-    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : 'none'"
-    [style.margin]="horizontalAlignment.value" [style.maxWidth.px]="width ? width : null"
-    [style.display]="!video || !video.url ? 'flex' : null"
+    (click)="onClick($event)" (mousedown)="onMousedown()" [style.margin]="horizontalAlignment.value"
+    [style.maxWidth.px]="width ? width : null" [style.display]="!video || !video.url ? 'flex' : null"
     [style.justifyContent]="!video || !video.url ? 'center' : null"
     [style.alignItems]="!video || !video.url ? 'center' : null"
     [style.background]="!video || !video.url ? 'white' : null">
@@ -20,7 +16,10 @@
     <div [ngClass]="{'container': video && video.url}">
         <!-- Had to add extra div here because vimeo script was adding padding -->
         <div>
-            <iframe #iframe frameborder="0" allowfullscreen class="video" allow="autoplay"></iframe>
+            <iframe #iframe frameborder="0" allowfullscreen class="video" allow="autoplay"
+                [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHex() : 'none'"
+                [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
+                [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : 'none'"></iframe>
         </div>
     </div>
 

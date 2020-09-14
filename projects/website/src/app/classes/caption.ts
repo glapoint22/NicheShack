@@ -2,8 +2,8 @@ import { CaptionBase } from 'classes/caption-base';
 import { CaptionData } from 'classes/caption-data';
 
 export class Caption extends CaptionBase {
-    font: string;
-    fontSize: string;
+    font: string = 'Arial, Helvetica, sans-serif';
+    fontSize: string = '14px';
 
     setData(captionData: CaptionData) {
         super.setData(captionData);

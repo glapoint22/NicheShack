@@ -19,6 +19,7 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
   ngOnInit() {
     this.name = this.defaultName = 'Line';
     this.type = WidgetType.Line;
+    this.border.enable = true;
     super.ngOnInit();
   }
 

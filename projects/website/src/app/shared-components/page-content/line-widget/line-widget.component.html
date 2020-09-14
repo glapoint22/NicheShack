@@ -1,1 +1,5 @@
-<p>line-widget works!</p>
+<div #widget
+    [style.borderBottom]="border.width + 'px ' + border.style + ' ' + border.color.toHex()"
+    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : null"
+    [style.maxWidth.px]="width ? width : null">
+</div>

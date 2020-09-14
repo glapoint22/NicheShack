@@ -65,10 +65,11 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
 
   buildPreview(parent: HTMLElement) {
     let video: HTMLDivElement;
+    let iframe: HTMLIFrameElement;
 
     // If we have a video
     if (this.video.url) {
-      let iframe = document.createElement('iframe');
+      iframe = document.createElement('iframe');
 
       video = document.createElement('div');
       let container = document.createElement('div');
@@ -115,9 +116,9 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
 
 
     // Border, corners, and show styles
-    this.border.applyStyle(video);
-    this.corners.applyStyle(video);
-    this.shadow.applyStyle(video);
+    this.border.applyStyle(iframe);
+    this.corners.applyStyle(iframe);
+    this.shadow.applyStyle(iframe);
 
     super.buildPreview(parent, video);
   }

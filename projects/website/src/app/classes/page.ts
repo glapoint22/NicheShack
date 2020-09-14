@@ -17,6 +17,8 @@ import { ProductGroupWidgetComponent } from '../shared-components/page-content/p
 import { CategoriesWidgetComponent } from '../shared-components/page-content/categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from '../shared-components/page-content/carousel-widget/carousel-widget.component';
 import { BackgroundBase } from 'classes/background-base';
+import { ContainerWidgetData } from './container-widget-data';
+import { RowDataBase } from 'classes/row-data-base';
 
 export class Page {
     public width: number;
@@ -39,7 +41,7 @@ export class Page {
 
 
     // -----------------------------( SET ROWS )------------------------------ \\
-    private setRows(rows: Array<RowData>, container: ContainerComponent) {
+    private setRows(rows: Array<RowDataBase>, container: ContainerComponent) {
         // Loop through all the rows
         rows.forEach((rowData: RowData) => {
             let top = rowData.top ? rowData.top : 0;
@@ -60,17 +62,16 @@ export class Page {
                 let widgetComponent = columnComponent.createWidget(this.getWidget(columnData.widgetData.widgetType));
                 widgetComponent.setData(columnData.widgetData);
 
-                // // If this widget is a container
-                // if (columnData.widgetData.widgetType == WidgetType.Container) {
-                //     let containerWidget = widgetComponent as ContainerWidgetComponent;
-                //     let containerWidgetData = columnData.widgetData as ContainerWidgetData;
+                // If this widget is a container
+                if (columnData.widgetData.widgetType == WidgetType.Container) {
+                    let containerWidget = widgetComponent as ContainerWidgetComponent;
+                    let containerWidgetData = columnData.widgetData as ContainerWidgetData;
 
-                //     // Load this container's widgets
-                //     if(containerWidgetData.rows) {
-                //         this.setRows(containerWidgetData.rows, containerWidget.container);
-                //     }
-                    
-                // }
+                    // Load this container's widgets
+                    if(containerWidgetData.rows) {
+                        this.setRows(containerWidgetData.rows, containerWidget.container);
+                    }
+                }
             })
         });
     }

@@ -15,7 +15,7 @@ export class CssButtonService {
       button.background.getStyle() +
       button.border.getStyle() +
       button.caption.getStyle() +
-      '\n\tmin-height: ' + button.height + 'px;' +
+      '\n\theight: ' + button.height + 'px;' +
       (button.width ? '\n\tmax-width: ' + button.width + 'px;' : '') +
       '\n}' +
 

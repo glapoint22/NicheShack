@@ -6,7 +6,7 @@ import { WidgetDataBase } from 'classes/widget-data-base';
   template: '',
 })
 export class WidgetComponent {
-  @ViewChild('widget', { static: false }) widgetElementRef: ElementRef<HTMLElement>;
+  @ViewChild('widget', { static: false }) private widgetElementRef: ElementRef<HTMLElement>;
   public widgetElement: HTMLElement;
   public width: number;
   public height: number;

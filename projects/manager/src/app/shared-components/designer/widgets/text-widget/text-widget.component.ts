@@ -180,7 +180,6 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
 
   buildPreview(parent: HTMLElement) {
     let text = document.createElement('div');
-    let links = text.getElementsByTagName('a');
 
     // Styles
     text.style.fontFamily = 'Arial, Helvetica, sans-serif';
@@ -197,15 +196,6 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
     // The content
     text.innerHTML = this.content.innerHTML;
 
-
-    // This will change the href attribute of each link to just the url
-    for (let i = 0; i < links.length; i++) {
-      let link = links[i];
-      let regex = new RegExp(/(?:url":")([a-zA-Z0-9./?=:_&%+-]+)/);
-      let url = regex.exec(link.getAttribute('href'))[1];
-      link.attributes.removeNamedItem('href');
-      link.setAttribute('href', url);
-    }
 
     // Add the padding classes to the text element
     this.padding.addClasses(this.breakpoints, text, this.padding.getValues());
