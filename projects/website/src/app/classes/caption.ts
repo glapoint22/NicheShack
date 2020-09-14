@@ -20,4 +20,11 @@ export class Caption extends CaptionBase {
             this.fontSize = captionData.fontSize + 'px';
         }
     }
+
+
+    getStyle() {
+        return '\n\tfont-family: ' + this.font + ';' +
+            '\n\tfont-size: ' + this.fontSize + ';' +
+            super.getStyle();
+    }
 }

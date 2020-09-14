@@ -10,11 +10,7 @@ export class Shadow extends ShadowBase implements Enableable {
         }
     }
 
-    getStyle() {
-        if (!this.enable) return '';
-        return '\n\tbox-shadow: ' + this.x + 'px ' + this.y + 'px ' + this.blur + 'px ' + this.size + 'px ' + this.color.toRGBString() + ';';
-    }
-
+    
     
 
 

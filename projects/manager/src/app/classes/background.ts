@@ -1,10 +1,8 @@
 import { Enableable } from './enableable';
 import { BackgroundBase } from 'classes/background-base';
 import { BackgroundData } from 'classes/background-data';
-import { BackgroundImage } from './background-image';
 
 export class Background extends BackgroundBase implements Enableable {
-    public image: BackgroundImage = new BackgroundImage();
 
     applyStyles(element: HTMLElement) {
         // Background Color
@@ -31,23 +29,7 @@ export class Background extends BackgroundBase implements Enableable {
         }
     }
 
-    getStyle() {
-        return '\n\tbackground-color: ' + this.color.toRGBString() + ';' +
-            (this.image && this.image.url ? '\n\tbackground-image: url("images/' + this.image.url + '");' : '') +
-            (this.image && this.image.position ? '\n\tbackground-position: ' + this.image.position + ';' : '') +
-            (this.image && this.image.repeat ? '\n\tbackground-repeat: ' + this.image.repeat + ';' : '') +
-            (this.image && this.image.attachment ? '\n\tbackground-attachment: ' + this.image.attachment + ';' : '');
-    }
-
-
-    setData(backgroundData: BackgroundData) {
-        if (backgroundData) {
-            super.setData(backgroundData);
-
-            // Background image
-            if (backgroundData.image) this.image.setData(backgroundData.image);
-        }
-    }
+    
 
 
 

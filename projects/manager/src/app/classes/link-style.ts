@@ -157,10 +157,9 @@ export class LinkStyle extends NodeStyle {
     // --------------------------------------------------------------------------- Get Link Data -------------------------------------------------------------
     getLinkData(node: HTMLElement): Link {
         let link = new Link();
-        // let data = JSON.parse(node.getAttribute('href'));
 
         // Assign the data and return the link object
-        link.selectedOption = node.getAttribute('option') as LinkOption;
+        link.selectedOption = Number(node.getAttribute('option')) as LinkOption;
         link.url = node.getAttribute('href');
         link.optionValue = node.getAttribute('optionvalue');
         return link;
@@ -178,11 +177,10 @@ export class LinkStyle extends NodeStyle {
 
     // --------------------------------------------------------------------------- Set Link Data -------------------------------------------------------------
     setLinkData(anchor: HTMLElement) {
-        // JSON.stringify({ selectedOption: this.link.selectedOption, url: this.link.url })
         // Assign the data to the anchor node
         anchor.setAttribute('href', this.link.url);
         anchor.setAttribute('target', '_blank');
-        anchor.setAttribute('option', this.link.selectedOption);
+        anchor.setAttribute('option', this.link.selectedOption.toString());
         anchor.setAttribute('optionValue', this.link.optionValue);
     }
 

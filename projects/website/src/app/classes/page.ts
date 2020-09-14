@@ -1,5 +1,4 @@
 import { PageData } from './page-data';
-import { Background } from './background';
 import { ContainerComponent } from '../shared-components/page-content/container/container.component';
 import { RowData } from './row-data';
 import { RowComponent } from '../shared-components/page-content/row/row.component';
@@ -17,10 +16,11 @@ import { VideoWidgetComponent } from '../shared-components/page-content/video-wi
 import { ProductGroupWidgetComponent } from '../shared-components/page-content/product-group-widget/product-group-widget.component';
 import { CategoriesWidgetComponent } from '../shared-components/page-content/categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from '../shared-components/page-content/carousel-widget/carousel-widget.component';
+import { BackgroundBase } from 'classes/background-base';
 
 export class Page {
     public width: number;
-    public background: Background = new Background();
+    public background: BackgroundBase = new BackgroundBase();
     public rootContainer: ContainerComponent;
 
 
@@ -58,7 +58,7 @@ export class Page {
 
                 // Create the widget and load the widget data
                 let widgetComponent = columnComponent.createWidget(this.getWidget(columnData.widgetData.widgetType));
-                // widgetComponent.setData(columnData.widgetData);
+                widgetComponent.setData(columnData.widgetData);
 
                 // // If this widget is a container
                 // if (columnData.widgetData.widgetType == WidgetType.Container) {

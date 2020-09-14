@@ -1,6 +1,6 @@
 import { Color } from './color';
 
-export class TextColorBase {
+export class BorderColor {
     public value: Color = new Color();
 
     constructor(color: Color) { 
@@ -11,8 +11,7 @@ export class TextColorBase {
         if (color) this.value = Color.hexToRGB(color);
     }
 
-
     getStyle() {
-        return '\n\tcolor: ' + this.value.toRGBString() + ';';
+        return '\n\tborder-color: ' + this.value.toRGBString() + ';';
     }
 }

@@ -12,18 +12,21 @@ import { WidgetType } from 'classes/widget-type';
 import { BreakpointsPaddingComponent } from 'projects/manager/src/app/classes/breakpoints-padding-component';
 import { Background } from 'projects/manager/src/app/classes/background';
 import { BackgroundColor } from 'projects/manager/src/app/classes/background-color';
-import { BorderColor } from 'projects/manager/src/app/classes/border-color';
 import { TextColor } from 'projects/manager/src/app/classes/text-color';
 import { ButtonWidgetData } from 'projects/manager/src/app/classes/button-widget-data';
 import { BreakpointData } from 'classes/breakpoint-data';
 import { LinkOption } from 'classes/link-base';
+import { BorderColor } from 'classes/border-color';
+import { Button } from 'classes/button';
+import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
+import { CssButtonService } from 'services/css-button.service';
 
 @Component({
   selector: 'button-widget',
   templateUrl: './button-widget.component.html',
   styleUrls: ['./button-widget.component.scss']
 })
-export class ButtonWidgetComponent extends FreeformWidgetComponent implements OnInit, BreakpointsPaddingComponent {
+export class ButtonWidgetComponent extends FreeformWidgetComponent implements Button, OnInit, BreakpointsPaddingComponent {
   private defaultBackgroundColor: Color = new Color(128, 128, 128, 1);
   private defaultHeight: number = 40;
   public background: Background = new Background();
@@ -54,6 +57,10 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
   // Current state of the button (ie. normal, hover, active)
   public currentState: ButtonState;
+
+
+
+  constructor(breakpointService: BreakpointService, private cssButtonService: CssButtonService) { super(breakpointService) }
 
 
   // ---------------------------------------------------------------- Ng On Init --------------------------------------------------------------
@@ -173,7 +180,7 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
       corners: this.corners.getData(),
       shadow: this.shadow.getData(),
       padding: this.padding.getData(this.breakpoints),
-      caption: this.caption.text != this.defaultName ? this.caption.getData() : null,
+      caption: this.caption.getData(),
       link: this.link.getData(),
       backgroundHoverColor: !this.backgroundHoverColor.value.isEqual(this.defaultBackgroundHoverColor) ? this.backgroundHoverColor.value.toHex() : null,
       backgroundActiveColor: !this.backgroundActiveColor.value.isEqual(this.defaultBackgroundActiveColor) ? this.backgroundActiveColor.value.toHex() : null,
@@ -204,34 +211,12 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
   // ------------------------------------------------------------------- Build HTML -----------------------------------------------------------
   buildPreview(parent: HTMLElement) {
     let button: any = document.createElement(this.link.url ? 'a' : 'div');
-    let className = this.createClassName();
-    let css = '.' + className + ' {' +
-      this.background.getStyle() +
-      this.border.getStyle() +
-      this.corners.getStyle() +
-      this.shadow.getStyle() +
-      this.caption.getStyle() +
-      '\n\tmin-height: ' + this.height + 'px;' +
-      (this.width ? '\n\tmax-width: ' + this.width + 'px;' : '') +
-      '\n}' +
-
-      // Hover
-      '\n.' + className + ':hover {' +
-      this.backgroundHoverColor.getStyle() +
-      (this.border.enable ? this.borderHoverColor.getStyle() : '') +
-      this.textHoverColor.getStyle() +
-      '\n}' +
-
-      // Active
-      '\n.' + className + ':active {' +
-      this.backgroundActiveColor.getStyle() +
-      (this.border.enable ? this.borderActiveColor.getStyle() : '') +
-      this.textActiveColor.getStyle() +
-      '\n}';
+    let buttonClassName = this.cssButtonService.getClassName();
+    let buttonClass = this.cssButtonService.createClass(buttonClassName, this);
 
     // Added the classes
     button.classList.add('text-break');
-    button.classList.add(className);
+    button.classList.add(buttonClassName);
 
 
     // Style
@@ -242,6 +227,9 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
     button.style.userSelect = 'none';
     button.style.textAlign = 'center';
     if (!this.link.url) button.style.cursor = 'pointer';
+
+    this.corners.applyStyle(button);
+    this.shadow.applyStyle(button);
 
     // Link
     if (this.link.url) {
@@ -259,24 +247,9 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements On
 
 
     // Add this button style
-    this.column.row.pageService.buttonStylesDocumentFragment.firstElementChild.appendChild(document.createTextNode(css));
+    this.column.row.pageService.buttonStylesDocumentFragment.firstElementChild.appendChild(document.createTextNode(buttonClass));
 
-    
+
     super.buildPreview(parent, button);
-  }
-
-
-
-
-
-  // ------------------------------------------------------------ Create Class Name -----------------------------------------------------------
-  createClassName() {
-    let result = '';
-    let characters = 'abcdefghijklmnopqrstuvwxyz';
-
-    for (let i = 0; i < 10; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
   }
 }

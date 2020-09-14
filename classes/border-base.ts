@@ -21,4 +21,11 @@ export class BorderBase {
             if (borderData.color) this.color = Color.hexToRGB(borderData.color);
         }
     }
+
+
+
+    getStyle() {
+        if (!this.enable) return '';
+        return '\n\tborder: ' + this.width + 'px ' + this.style + ' ' + this.color.toRGBString() + ';';
+    }
 }

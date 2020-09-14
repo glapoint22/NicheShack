@@ -30,10 +30,7 @@ export class Caption extends CaptionBase {
     getStyle() {
         return '\n\tfont-family: ' + this.font.styleValue + ';' +
             '\n\tfont-size: ' + this.fontSize.styleValue + ';' +
-            '\n\tfont-weight: ' + this.fontWeight + ';' +
-            '\n\tfont-style: ' + this.fontStyle + ';' +
-            '\n\ttext-decoration: ' + this.textDecoration + ';' +
-            '\n\tcolor: ' + this.color.toRGBString() + ';';
+            super.getStyle();
     }
 
 
