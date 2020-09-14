@@ -8,11 +8,12 @@ import { Button } from 'classes/button';
 import { ButtonWidgetDataBase } from 'classes/button-widget-data-base';
 import { Color } from 'classes/color';
 import { CornersBase } from 'classes/corners-base';
-import { LinkBase, LinkOption } from 'classes/link-base';
+import { LinkBase } from 'classes/link-base';
 import { PaddingBase } from 'classes/padding-base';
 import { ShadowBase } from 'classes/shadow-base';
 import { TextColorBase } from 'classes/text-color-base';
 import { CssButtonService } from 'services/css-button.service';
+import { LinkService } from 'services/link.service';
 import { Caption } from '../../../classes/caption';
 import { WidgetComponent } from '../widget/widget.component';
 
@@ -42,7 +43,7 @@ export class ButtonWidgetComponent extends WidgetComponent implements Button, On
   public textHoverColor: TextColorBase = new TextColorBase(new Color(255, 255, 255, 1));
   public textActiveColor: TextColorBase = new TextColorBase(new Color(225, 225, 225, 1));
 
-  constructor(private cssButtonService: CssButtonService, @Inject(DOCUMENT) public document: Document) { super() }
+  constructor(private cssButtonService: CssButtonService, @Inject(DOCUMENT) public document: Document, public linkService: LinkService) { super() }
 
 
   ngOnInit() {
@@ -80,15 +81,5 @@ export class ButtonWidgetComponent extends WidgetComponent implements Button, On
     // Add the button class to the document
     buttonStyles.appendChild(this.document.createTextNode(buttonClass));
     this.document.head.appendChild(buttonStyles);
-  }
-
-
-  onClick() {
-    if (this.link.selectedOption = LinkOption.WebAddress) {
-      if (this.link.url)
-        window.open(this.link.url, '_blank');
-    } else {
-
-    }
   }
 }

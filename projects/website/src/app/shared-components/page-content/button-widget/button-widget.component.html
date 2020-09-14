@@ -1,4 +1,8 @@
-<div #widget class="button text-break"
-    [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
-    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : 'none'"
-    (click)="onClick()">{{caption.text}}</div>
+<div #widget class="button text-break" [style.borderRadius]="
+corners.topLeft > 0 ||
+corners.topRight > 0 ||
+corners.bottomRight > 0 ||
+corners.bottomLeft > 0 ?
+corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px': null"
+    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : null"
+    (click)="linkService.navigate(link)">{{caption.text}}</div>
