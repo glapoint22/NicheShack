@@ -11,6 +11,7 @@ import { ClientInterceptor } from 'interceptors/client-interceptor';
 import { ErrorComponent } from './error/error.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
+import { ContactUsFormComponent } from './shared-components/contact-us-form/contact-us-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ShowHideModule } from 'directives/show-hide/show-hide.module';
     PageComponent,
     ValidationPageComponent,
     ErrorComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ContactUsFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
