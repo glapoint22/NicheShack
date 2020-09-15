@@ -19,15 +19,19 @@ export class ValidationPageComponent extends PageComponent implements AfterViewI
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      let interval = window.setInterval(() => {
-        if (this.form && this.form.controls) {
-          Object.keys(this.form.controls).forEach(key => {
-            this.form.controls[key].valueChanges.subscribe(() => this.form.controls[key].markAsPristine());
-          });
-          window.clearInterval(interval);
-        }
-      }, 1);
+      this.setControls();
     }
+  }
+
+  setControls() {
+    let interval = window.setInterval(() => {
+      if (this.form && this.form.controls) {
+        Object.keys(this.form.controls).forEach(key => {
+          this.form.controls[key].valueChanges.subscribe(() => this.form.controls[key].markAsPristine());
+        });
+        window.clearInterval(interval);
+      }
+    }, 1);
   }
 
   onSubmit() {
