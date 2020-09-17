@@ -1,0 +1,117 @@
+@import '../../../../scss/variables';
+
+.carousel-container {
+    user-select: none;
+    overflow: hidden;
+    max-width: 1496px;
+    max-height: 451px;
+    position: relative;
+    margin: auto;
+
+    .carousel {
+        user-select: none;
+        display: flex;
+        align-items: center;
+    
+        .carousel-element {
+            user-select: none;
+            position: relative;
+            width: 500px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            a {
+                user-select: none;
+                img {
+                    width: 100%;
+                    user-select: none;
+                    -webkit-user-drag: none;
+                }
+            }
+            
+        }
+    }
+
+    .arrow-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 8vw;
+        max-width: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: scaleX(-1);
+        cursor: pointer;
+
+        &:last-child {
+            right: 0;
+            transform: scaleX(1);
+        }
+
+        img {
+            width: 5vw;
+            max-width: 20px;
+        }
+    }
+
+    .paginator {
+        width: 140px;
+        height: 30px;
+        background: rgb(0, 0, 0, 0.8);
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        margin-left: -70px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        color: #e2e2e2;
+        font-size: 12px;
+
+        .pagination-dot-container {
+            width: 10px;
+            height: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            .pagination-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #e2e2e2;
+                
+            }
+
+            .selected-pagination-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+        .fa-play, .fa-pause {
+            cursor: pointer;
+        }
+    }
+}
+
+
+@media (min-width: map-get($breakpoints, xs)) {
+    .carousel-container {
+        .carousel {
+            .carousel-element {
+                width: 100%;
+            }
+        }
+
+        .paginator {
+            width: 180px;
+            margin-left: -90px;
+            bottom: 10px;
+        }
+    }
+}
