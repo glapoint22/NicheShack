@@ -1,11 +1,10 @@
-<div *show="contactUsService.show" transitionClass="fade-end" class="fade-start" tabindex="0" (onShow)="onShow()"
-    style="overflow: hidden; width: 100%; max-width: 354px; height: 100%; max-height: 512px; position: absolute; right: 0; bottom: 0; outline: none; pointer-events: none; z-index: 101;">
+<div *show="contactUsService.show" transitionClass="fade-end" class="fade-start form-container" tabindex="0"
+    (onShow)="onShow()">
 
 
-    <form (ngSubmit)="onSubmit()" #form="ngForm"
-        style="display: flex; flex-direction: column; width: 100%; max-width: 342px; height: 100%; max-height: 500px; pointer-events: all;"
-        class="prompt menu" (mousedown)="$event.stopPropagation()">
+    <form (ngSubmit)="onSubmit()" #form="ngForm" class="prompt form" (mousedown)="$event.stopPropagation()">
 
+        <!-- Title Bar -->
         <div class="title-bar">
             Contact Us
             <div class="close-button" (click)="contactUsService.show = false" title="Close">
@@ -14,75 +13,65 @@
         </div>
 
 
+        <!-- Fields -->
+        <div class="fields-container">
+            <div style="flex: 0.14;"></div>
 
-        <div style="display: flex; flex-direction: column; padding-left: 20px; padding-right: 15px; flex: 1;">
-
-            <div style="flex: .14;">
-
-            </div>
-
-            <div style="color: rgb(150, 150, 150); flex: 1.27; margin-bottom: 10px;">
+            <div class="description">
                 Thank you for contacting Niche Shack. Please fill out the form below and we will get back to you as
                 quickly as possible.
             </div>
 
-            <div *ngIf="valid(firstName); else invalidFirstName" style="flex: .48; padding-left: 3px;">
+            <!-- Name -->
+            <div class="field-name" *ngIf="valid(firstName); else invalidFirstName">
                 Name
             </div>
 
-            
             <ng-template #invalidFirstName>
-                <h4 class="error">Please provide a valid name.</h4>
+                <div class="error-field-name">
+                    Please provide a valid name.
+                </div>
             </ng-template>
 
-            <div style="flex: 0.9;">
+            <div class="input-container">
                 <input required pattern="^\b[a-zA-Z\s]{1,40}\b$" [(ngModel)]="name" name="name" #firstName="ngModel"
-                    style="margin-bottom: 0; height: 100%; max-height: 30px; color: rgb(150, 150, 150);"
-                    (input)="onInputChange()">
+                    (input)="onInputChange()" autocomplete="off">
             </div>
 
-            <div *ngIf="valid(emailAddress); else invalidEmail" style="flex: .48; padding-left: 3px;">
+
+            <!-- Email -->
+            <div *ngIf="valid(emailAddress); else invalidEmail" class="field-name">
                 Email
             </div>
 
             <ng-template #invalidEmail>
-                <h4 class="error">Please provide a valid email address.</h4>
+                <div class="error-field-name">
+                    Please provide a valid email.
+                </div>
             </ng-template>
 
-            <div style="flex: 0.895;">
-                <input required email [(ngModel)]="email" name="email" #emailAddress="ngModel"
-                    style="margin-bottom: 0;  height: 100%; max-height: 30px; color: rgb(150, 150, 150);"
-                    (input)="onInputChange()">
+            <div class="input-container">
+                <input required email [(ngModel)]="email" name="email" #emailAddress="ngModel" (input)="onInputChange()"
+                    autocomplete="off">
             </div>
 
-            <div style="flex: .5; padding-left: 3px;">
+
+            <!-- Message -->
+            <div class="field-name">
                 Write your message
             </div>
-
-            <div style="flex: 1.7;">
+            <div class="text-area-container">
                 <textarea [(ngModel)]="message" name="message"
-                    style="margin-bottom: 0; height: 100%; max-height: 110px; min-height: 0px; color: rgb(150, 150, 150);"
                     (input)="onInputChange()"></textarea>
             </div>
-
-
-
         </div>
 
-        <div style="display: flex; justify-content: flex-end; align-items: center; flex: .15; padding-right: 10px;">
 
-
-            <button (click)="contactUsService.show = false" style="width: 60px; height: 28px; margin-top: 5px;">
-                Cancel
-            </button>
-
-            <button type="submit" [disabled]="sendButtonDisabled" class="alt-button"
-                style="width: 60px; height: 28px; margin-left: 8px; margin-top: 5px;">
+        <!-- Send Buttton -->
+        <div class="button-container">
+            <button type="submit" [disabled]="sendButtonDisabled" class="alt-button">
                 Send
             </button>
         </div>
-
     </form>
-
-
 </div>
