@@ -1,1 +1,53 @@
-<div #widget></div>
+<div #widget class="carousel-container">
+    <!-- Media carousel -->
+
+
+    <div carousel class="carousel" (onClick)="onClick($event)" (onChange)="currentBannerIndex = $event">
+
+        <!-- Carousel element -->
+        <div *ngFor="let banner of banners" class="carousel-element" (click)="$event.preventDefault()">
+
+            <a [href]="banner.link.url" draggable="false">
+                <img [src]="'/images/' + banner.image.url" [alt]="banner.image.name" [title]="banner.image.name"
+                    draggable="false" (mousedown)="$event.preventDefault()">
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Paginator -->
+    <div *ngIf="carousel" class="paginator">
+
+        <!-- Play -->
+        <div *ngIf="!carousel.isPlaying" (click)="carousel.play()" title="Play" class="pagination-dot-container">
+            <i class="fas fa-play"></i>
+        </div>
+
+        <!-- Pause -->
+        <div *ngIf="carousel.isPlaying" (click)="carousel.pause()" class="pagination-dot-container">
+            <i class="fas fa-pause" title="Pause"></i>
+        </div>
+
+        <!-- Dots -->
+        <div *ngFor="let banner of banners; let i = index" [title]="banner.image.name" (click)="carousel.goto(i)"
+            class="pagination-dot-container">
+
+            <div class="pagination-dot" [ngClass]="{'selected-pagination-dot': i == currentBannerIndex}">
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Left Arrow -->
+    <div class="arrow-container" (mousedown)="carousel.next(1)">
+        <img src="assets/carousel_arrow.png">
+    </div>
+
+
+    <!-- Right Arrow -->
+    <div class="arrow-container" (mousedown)="carousel.next(-1)">
+        <img src="assets/carousel_arrow.png">
+    </div>
+</div>
