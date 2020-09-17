@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { CarouselBanner } from 'classes/carousel-banner';
 import { CarouselBannerData } from 'classes/carousel-banner-data';
 import { CarouselWidgetDataBase } from 'classes/carousel-widget-data-base';

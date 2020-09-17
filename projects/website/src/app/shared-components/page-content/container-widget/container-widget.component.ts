@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { BackgroundBase } from 'classes/background-base';
 import { BorderBase } from 'classes/border-base';
+import { ContainerWidgetDataBase } from 'classes/container-widget-data-base';
 import { CornersBase } from 'classes/corners-base';
 import { PaddingBase } from 'classes/padding-base';
 import { ShadowBase } from 'classes/shadow-base';
-import { ContainerWidgetData } from 'projects/manager/src/app/classes/container-widget-data';
 import { ContainerComponent } from '../container/container.component';
 import { WidgetComponent } from '../widget/widget.component';
 
@@ -26,7 +26,7 @@ export class ContainerWidgetComponent extends WidgetComponent {
   }
 
 
-  setData(widgetData: ContainerWidgetData) {
+  setData(widgetData: ContainerWidgetDataBase) {
     this.background.setData(widgetData.background);
     this.border.setData(widgetData.border);
     this.corners.setData(widgetData.corners);

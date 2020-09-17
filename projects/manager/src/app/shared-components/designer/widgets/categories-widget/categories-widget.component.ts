@@ -34,7 +34,8 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
 
   setData(widgetData: CategoriesWidgetData) {
     this.caption.setData(widgetData.caption);
-    this.categories = widgetData.categories;
+    if (widgetData.categories) this.categories = widgetData.categories;
+
     this.textColor.setData(widgetData.textColor);
     this.backgroundColor.setData(widgetData.backgroundColor);
     this.shadow.setData(widgetData.shadow);
@@ -55,7 +56,12 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
       caption: this.caption.getData(),
       textColor: this.textColor.value.toHex(),
       backgroundColor: this.backgroundColor.value.toHex(),
-      categories: this.categories.length > 0 ? this.categories : [],
+      categories: this.categories.length > 0 ? this.categories.map(x => ({
+        name: x.name,
+        urlName: x.urlName,
+        icon: x.icon,
+        id: x.id
+      })) : [],
       breakpoints: []
     }
   }

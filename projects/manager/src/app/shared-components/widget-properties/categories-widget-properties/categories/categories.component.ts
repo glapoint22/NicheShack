@@ -14,21 +14,22 @@ import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements Searchable, OnInit {
-  // Constructor
-  constructor(private popupService: PopupService, private promptService: PromptService) { }
+  @Input() categoriesWidget: CategoriesWidgetComponent;
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
+  @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
+
 
   // Public
   public items: Array<Item>;
   public searchResults: Array<Item>;
   public itemListOptions: ItemListOptions;
-  public apiUrl: string = 'api/Categories';
+  public apiUrl: string = 'api/Categories/Detail';
 
-  // Decorators
-  @Input() categoriesWidget: CategoriesWidgetComponent;
-  @Output() onChange: EventEmitter<void> = new EventEmitter();
-  @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
-  
-  
+
+
+  constructor(private popupService: PopupService, private promptService: PromptService) { }
+
+
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     // Define the item list options
