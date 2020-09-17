@@ -7,11 +7,11 @@
     <div class="dark-tabs-container">
         <!-- Normal Tab -->
         <div class="dark-tab" [ngClass]="{'selected-dark-tab': notificationService.selectedNotificationsTab == notificationTab.NewNotifications}"
-            (click)="notificationService.selectedNotificationsTab = notificationTab.NewNotifications">{{'New (' + notificationService.newNotifications.length + ')'}}</div>
+            (click)="notificationService.selectedNotificationsTab = notificationTab.NewNotifications">{{'New (' + notificationService.getNewNotificationsCount() + ')'}}</div>
 
         <!-- Hover Tab -->
         <div class="dark-tab" [ngClass]="{'selected-dark-tab': notificationService.selectedNotificationsTab == notificationTab.PendingNotifications}"
-            (click)="notificationService.selectedNotificationsTab = notificationTab.PendingNotifications">{{'Pending ('+ notificationService.pendingNotifications.length + ')'}}</div>
+            (click)="notificationService.selectedNotificationsTab = notificationTab.PendingNotifications">{{'Pending ('+ notificationService.getPendingNotificationsCount() + ')'}}</div>
 
         <!-- Active Tab -->
         <div id="active" class="dark-tab" [ngClass]="{'selected-dark-tab': notificationService.selectedNotificationsTab == notificationTab.ArchiveNotifications}"

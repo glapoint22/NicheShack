@@ -16,6 +16,7 @@ import { DataService } from 'services/data.service';
 import { NotificationType } from '../../../classes/notification-type';
 import { Notification } from '../../../classes/notification';
 import { Observable, Subscriber } from 'rxjs';
+import { MessageNotification } from '../../../classes/message-notification';
 
 @Component({
   selector: 'notifications-item-list',
@@ -56,7 +57,7 @@ export class NotificationsItemListComponent extends ItemListComponent {
       // Message
       if (listItem.type == NotificationType.Message) {
         this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: notificationIds[0] }])
-          .subscribe((notification: Notification) => {
+          .subscribe((notification: MessageNotification) => {
             this.notificationService.messageNotification = notification;
             this.popupService.messageNotificationPopup.show = true;
           });

@@ -12,6 +12,7 @@ import { NotificationListItem } from 'projects/manager/src/app/classes/notificat
 import { Notification } from 'projects/manager/src/app/classes/notification';
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 import { NotificationText } from 'projects/manager/src/app/classes/notification-text';
+import { MessageNotification } from 'projects/manager/src/app/classes/message-notification';
 
 @Component({
   selector: 'message-notification-popup',
@@ -56,7 +57,7 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
     this.paginatorIndex = index;
 
     this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
-      .subscribe((notification: Notification) => {
+      .subscribe((notification: MessageNotification) => {
         this.notificationService.messageNotification = notification;
       });
   }
@@ -88,29 +89,42 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
       // Update
       this.dataService.put('api/Notifications/State', {
-        productId: notification.productId,
-        type: notification.type,
-        currentState: this.notificationService.selectedNotificationsTab,
+        id: this.notificationService.notificationIds[this.paginatorIndex],
         destinationState: destinationArray == this.notificationService.pendingNotifications ? 1 : 2
       }).subscribe();
 
       // Get the index of the notification that is being relocated
       notificationIndex = startingArray.findIndex(x => x.productId == notification.productId && x.type == notification.type);
 
-      // Update the state of the notification to its destination state
-      startingArray[notificationIndex].state = destinationArray == this.notificationService.pendingNotifications ? 1 : 2;
 
-      // As long as the destination array is pending
-      if (destinationArray == this.notificationService.pendingNotifications &&
-        // And the pending array does NOT have a notification that is identical to the notification that is being relocated
-        destinationArray.find(x => x.productId == notification.productId && x.type == notification.type) == null) {
+      startingArray[notificationIndex].count--;
 
-        // Add that notification to the pending array
-        destinationArray.unshift(startingArray[notificationIndex]);
+
+      let index: number = destinationArray.findIndex(x => x.productId == notification.productId && x.type == notification.type)
+
+      if (index == -1) {
+
+        let alita: NotificationListItem = {
+          id: null,
+          selectType: null,
+          selected: null,
+          productId: startingArray[notificationIndex].productId,
+          name: startingArray[notificationIndex].name,
+          listIcon: startingArray[notificationIndex].listIcon,
+          type: startingArray[notificationIndex].type,
+          state: destinationArray == this.notificationService.pendingNotifications ? 1 : 2,
+          count: 1
+        }
+
+        destinationArray.unshift(alita);
+      }else {
+        destinationArray[index].count++;
       }
 
-      // Remove the notification that is being relocated from its current location
-      startingArray.splice(notificationIndex, 1);
+
+      if(startingArray[notificationIndex].count == 0) {
+        startingArray.splice(notificationIndex, 1);
+      }
     }
   }
 

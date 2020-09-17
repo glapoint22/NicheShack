@@ -31,15 +31,15 @@ export class NotificationListPopupComponent extends PopupComponent implements On
   }
 
 
-  // -----------------------------( ON POPUP SHOW )------------------------------ \\
+  // -----------------------------( LOAD ARCHIVE )------------------------------ \\
   loadArchive() {
     this.notificationService.selectedNotificationsTab = this.notificationTab.ArchiveNotifications;
 
-    if(this.notificationService.archiveNotifications.length == 0) {
+    if (this.notificationService.archiveNotifications.length == 0) {
       this.dataService.get('api/Notifications/Archive')
-      .subscribe((notifications: Array<NotificationListItem>) => {
-        this.notificationService.archiveNotifications = notifications;
-      });
+        .subscribe((notifications: Array<NotificationListItem>) => {
+          this.notificationService.archiveNotifications = notifications;
+        });
     }
   }
 }

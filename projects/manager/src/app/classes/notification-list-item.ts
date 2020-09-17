@@ -7,4 +7,5 @@ export interface NotificationListItem extends ListItem {
     listIcon: string;
     type: NotificationType;
     state: number;
+    count: number;
 }

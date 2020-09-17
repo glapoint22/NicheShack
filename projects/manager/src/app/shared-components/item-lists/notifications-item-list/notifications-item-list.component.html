@@ -1,24 +1,38 @@
-<div class="overflow-container" (contextmenu)="$event.preventDefault()" 
-(mouseup)="setContextMenu($event)" >
-        
+<div class="overflow-container" (contextmenu)="$event.preventDefault()" (mouseup)="setContextMenu($event)">
 
-    <table >
-            
+
+    <table>
+
         <tr #rowItem *ngFor="let listItem of listItems; let listItemIndex = index"
-                (mousedown)="onListItemClick(listItem)">
-                            
+            (mousedown)="onListItemClick(listItem)">
+
             <td>
-                 <div class="img"
-                      [ngStyle]="{ 'background-image': 'url(images/' + listItem.listIcon + ')'}"
-                      [ngClass]="{'highlight-image': selectedListItemIndex == listItemIndex }">
-                </div>   
+                <div style="position: relative;" class="img"
+                    [ngStyle]="{ 'background-image': 'url(images/' + listItem.listIcon + ')'}"
+                    [ngClass]="{'highlight-image': selectedListItemIndex == listItemIndex }">
+
+
+                    <div *ngIf="listItem.state != 2 && listItem.count > 1" style="position: absolute;
+                        padding-right: 3px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 50%;
+                        width: 18px;
+                        height: 18px;
+                        background: #fa3e3e;
+                        right: -7px;
+                        top: -2px;
+                        color: white;
+                        font-size: 0.75rem;">
+                        <div>{{listItem.count}}</div>
+                    </div>
+
+                </div>
             </td>
 
 
-            <td 
-                tabindex="-1"
-                (blur)="onListItemBlur()"
-                [textContent]="listItem.name">
+            <td tabindex="-1" (blur)="onListItemBlur()" [textContent]="listItem.name">
             </td>
         </tr>
     </table>

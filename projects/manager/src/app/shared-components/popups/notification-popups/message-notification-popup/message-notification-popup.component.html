@@ -22,16 +22,14 @@
         </div>
 
 
+
         <!-- Message Property Box -->
-        <div class="property-box-label">Message:</div>
+        <div class="property-box-label">Messenger:</div>
         <div class="property-box">
             <div class="property-box-bar">
 
                 <!-- Customer Thumbnail -->
-                <div class="account-thumbnail"
-                    
-                    
-                    [ngStyle]="{'background-image': 
+                <div class="account-thumbnail" [ngStyle]="{'background-image': 
 
                         notificationService.messageNotification.customerText.thumbnail == null 
                         
@@ -52,8 +50,22 @@
                 </div>
             </div>
 
-            <!-- Customer Text -->
-            <div class="user-text">
+            <!-- Name -->
+            <div class="property-box-label">Name:</div>
+            <div style="border: 1px solid #4f4f4f; margin-left: 10px; margin-right: 10px; cursor: text; padding-left: 5px; height: 30px; display: flex; align-items: center; border-radius: 4px; background: #1b1b1b;">
+                {{notificationService.messageNotification.messengerName}}
+            </div>
+
+            <!-- Email -->
+            <div class="property-box-label">Email:</div>
+            <!-- <input [value]="notificationService.messageNotification.email"> -->
+            <div style="border: 1px solid #4f4f4f; margin-left: 10px; margin-right: 10px; cursor: text; padding-left: 5px; height: 30px; display: flex; align-items: center; border-radius: 4px; background: #1b1b1b;">
+                {{notificationService.messageNotification.email}}
+            </div>
+
+            <!-- Message -->
+            <div class="property-box-label">Message:</div>
+            <div style="overflow: auto; border: 1px solid #4f4f4f; margin-left: 10px; margin-right: 10px; cursor: text; padding-left: 5px; padding-top: 5px; height: 100px; border-radius: 4px; background: #1b1b1b; margin-bottom: 17px;">
                 {{notificationService.messageNotification.customerText.text}}
             </div>
         </div>
@@ -66,9 +78,7 @@
 
                 <ng-container *ngIf="notificationService.messageNotification.notes">
                     <!-- Employee Thumbnail -->
-                    <div class="account-thumbnail"
-
-                        [ngStyle]="{'background-image': 
+                    <div class="account-thumbnail" [ngStyle]="{'background-image': 
 
                             notificationService.messageNotification.notes.thumbnail == null 
                             
