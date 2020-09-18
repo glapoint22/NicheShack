@@ -3,4 +3,5 @@ import { ImageData } from 'classes/image-data';
 
 export interface Category extends Item {
     icon: ImageData;
+    urlName?: string;
 }

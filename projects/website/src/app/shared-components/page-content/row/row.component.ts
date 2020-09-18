@@ -2,7 +2,6 @@ import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from
 import { BorderBase } from 'classes/border-base';
 import { CornersBase } from 'classes/corners-base';
 import { ShadowBase } from 'classes/shadow-base';
-import { VerticalAlign } from 'classes/vertical-align';
 import { ColumnComponent } from '../column/column.component';
 import { RowData } from '../../../classes/row-data';
 import { PaddingBase } from 'classes/padding-base';

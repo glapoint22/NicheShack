@@ -6,6 +6,7 @@ import { Product } from 'projects/manager/src/app/classes/product';
 import { ProductGroupWidgetData } from 'projects/manager/src/app/classes/product-group-widget-data';
 import { Caption } from 'projects/manager/src/app/classes/caption';
 import { Color } from 'classes/color';
+import { Item } from 'projects/manager/src/app/classes/item';
 
 @Component({
   selector: 'product-group-widget',
@@ -15,7 +16,7 @@ import { Color } from 'classes/color';
 export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
   public caption: Caption = new Caption();
   public productGroupType: ProductGroupType = ProductGroupType.FeaturedProducts;
-  public featuredProducts: Array<Product> = [];
+  public featuredProducts: Array<Item> = [];
 
   ngOnInit() {
     this.height = 250
@@ -30,10 +31,9 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
 
   setData(widgetData: ProductGroupWidgetData) {
     this.caption.setData(widgetData.caption);
-    if(widgetData.productGroupType) {
-      this.productGroupType = widgetData.productGroupType;
-    }
-    this.featuredProducts = widgetData.featuredProducts;
+    if (widgetData.productGroupType) this.productGroupType = widgetData.productGroupType;
+    if (widgetData.featuredProducts) this.featuredProducts = widgetData.featuredProducts;
+
     super.setData(widgetData);
   }
 
@@ -50,7 +50,10 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
       horizontalAlignment: widgetData.horizontalAlignment,
       caption: this.caption.getData(),
       productGroupType: this.productGroupType != ProductGroupType.FeaturedProducts ? this.productGroupType : 0,
-      featuredProducts: this.featuredProducts.length > 0 ? this.featuredProducts : [],
+      featuredProducts: this.featuredProducts.length > 0 ? this.featuredProducts.map(x => ({
+        id: x.id,
+        name: x.name
+      })) : [],
       breakpoints: []
     }
   }
