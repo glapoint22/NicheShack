@@ -12,11 +12,11 @@
 }
 
 .form-container {
-    position: absolute;
+    position: fixed;
     width: 100%;
     max-width: 354px;
     height: 100%;
-    max-height: 512px;
+    max-height: 510px;
     right: 0;
     bottom: 0;
     overflow: hidden;
@@ -41,13 +41,13 @@
             flex: 1;
 
             .description {
-                color: #969696;
-                flex: 1.27;
+                color: #b8b8b8;
+                flex: 1.1;
                 margin-bottom: 10px;
             }
 
             .field-name {
-                flex: 0.5;
+                flex: 0.37;
                 padding-left: 3px;
             }
 

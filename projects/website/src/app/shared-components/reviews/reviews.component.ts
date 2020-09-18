@@ -4,6 +4,7 @@ import { Product } from '../../interfaces/product';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DataService } from 'services/data.service';
 import { KeyValue } from '@angular/common';
+import { ReportReviewComponent } from './report-review/report-review.component';
 
 @Component({
   selector: 'reviews',
@@ -19,6 +20,7 @@ export class ReviewsComponent implements OnInit {
   public reviews: Array<Review>;
   public positiveReview: Review;
   public negativeReview: Review;
+  public reportedReview: Review;
   public currentPage: number;
   public pageCount: number;
   public reviewsStart: number;
@@ -118,5 +120,11 @@ export class ReviewsComponent implements OnInit {
     this.router.navigate(['reviews'], {
       relativeTo: this.route
     });
+  }
+
+
+  onReportReviewClick(reportReviewForm: ReportReviewComponent, reportedReview: Review) {
+    reportReviewForm.show = true
+    this.reportedReview = reportedReview;
   }
 }

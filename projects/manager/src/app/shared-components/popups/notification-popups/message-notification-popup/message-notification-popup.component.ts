@@ -66,8 +66,10 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
   // --------------------------------( RELOCATE NOTIFICATION )-------------------------------- \\
   relocateNotification(notification: Notification, destinationArray: NotificationListItem[]) {
     this.show = false;
-    let notificationIndex: number;
+    let startNotificationIndex: number;
+    let destinationNotificationIndex: number;
     let startingArray: NotificationListItem[];
+    
 
     // Check to see which notification tab we are currently on
     switch (this.notificationService.selectedNotificationsTab) {
@@ -94,36 +96,42 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
       }).subscribe();
 
       // Get the index of the notification that is being relocated
-      notificationIndex = startingArray.findIndex(x => x.productId == notification.productId && x.type == notification.type);
+      startNotificationIndex = startingArray.findIndex(x => x.productId == notification.productId && x.type == notification.type);
+      // Then take the notification that belongs to the index we just found and decrease its count value by one
+      startingArray[startNotificationIndex].count--;
+      // Get the index of the notification in the destination array that is identical to the notification that is being relocated
+      destinationNotificationIndex = destinationArray.findIndex(x => x.productId == notification.productId && x.type == notification.type)
 
+      
+      // If there is NOT a notification in the destination array that is identical to the notification that is being relocated
+      if (destinationNotificationIndex == -1) {
 
-      startingArray[notificationIndex].count--;
-
-
-      let index: number = destinationArray.findIndex(x => x.productId == notification.productId && x.type == notification.type)
-
-      if (index == -1) {
-
-        let alita: NotificationListItem = {
+        // Create a new notification with properties that match the properties of the notification that is being relocated
+        let newNotification: NotificationListItem = {
           id: null,
           selectType: null,
           selected: null,
-          productId: startingArray[notificationIndex].productId,
-          name: startingArray[notificationIndex].name,
-          listIcon: startingArray[notificationIndex].listIcon,
-          type: startingArray[notificationIndex].type,
+          productId: startingArray[startNotificationIndex].productId,
+          name: startingArray[startNotificationIndex].name,
+          listIcon: startingArray[startNotificationIndex].listIcon,
+          type: startingArray[startNotificationIndex].type,
           state: destinationArray == this.notificationService.pendingNotifications ? 1 : 2,
           count: 1
         }
+        // Then add that new notification to the destination array
+        destinationArray.unshift(newNotification);
 
-        destinationArray.unshift(alita);
-      }else {
-        destinationArray[index].count++;
+        // But if there is already a notification in the destination array that is identical to the notification that is being relocated
+      } else {
+
+        // Increase the count value of the notification in the destination array by one
+        destinationArray[destinationNotificationIndex].count++;
       }
 
-
-      if(startingArray[notificationIndex].count == 0) {
-        startingArray.splice(notificationIndex, 1);
+      // If the count value of the starting notification reaches zero
+      if (startingArray[startNotificationIndex].count == 0) {
+        // Remove that notification from the starting array
+        startingArray.splice(startNotificationIndex, 1);
       }
     }
   }

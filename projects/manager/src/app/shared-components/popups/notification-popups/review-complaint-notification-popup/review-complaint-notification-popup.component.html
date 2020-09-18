@@ -54,6 +54,53 @@
                 <div class="account-thumbnail"
                     [ngStyle]="{'background-image': 
 
+                        notificationService.reviewComplaintNotification.review.thumbnail == null 
+                        
+                        ?
+
+                        'url(assets/no-account-pic.png)' 
+                        
+                        : 
+                        
+                        'url(images/' + notificationService.reviewComplaintNotification.review.thumbnail + ')'
+                    
+                        }">
+                </div>
+
+                <!-- Time Stamp -->
+                <div class="time-stamp">
+                    {{notificationService.reviewComplaintNotification.review.timeStamp}}
+                </div>
+            </div>
+
+            <!-- Customer Text -->
+            <div class="user-text">
+                {{notificationService.reviewComplaintNotification.review.text}}
+            </div>
+            <div style="width: 100%; height: 45px; border-top: 1px solid #373737; padding: 10px;">
+
+                <checkbox style="color: #898989;"
+                    [label]="'mark this user as having a strike against them for not complying with the terms of use.'"
+                    [checked]="false">
+                </checkbox>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <!-- Complainant Property Box -->
+        <div class="property-box-label">Complainant:</div>
+        <div class="property-box">
+            <div class="property-box-bar">
+
+                <!-- Customer Thumbnail -->
+                <div class="account-thumbnail"
+                    [ngStyle]="{'background-image': 
+
                         notificationService.reviewComplaintNotification.customerText.thumbnail == null 
                         
                         ?
@@ -77,18 +124,27 @@
             <div class="user-text">
                 {{notificationService.reviewComplaintNotification.customerText.text}}
             </div>
-            <div style="width: 100%; height: 45px; border-top: 1px solid #373737; padding: 10px;">
-
-                <checkbox style="color: #898989;"
-                    [label]="'mark this user as having a strike against them for not complying with the terms of use.'"
-                    [checked]="false">
-                </checkbox>
-            </div>
         </div>
 
 
-        <!-- Complainant Property Box -->
-        <div class="property-box-label">Complainant:</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Notes Property Box -->
+        <div class="property-box-label">Notes:</div>
         <div class="property-box">
             <div class="property-box-bar">
                 <ng-container *ngIf="notificationService.reviewComplaintNotification.notes">

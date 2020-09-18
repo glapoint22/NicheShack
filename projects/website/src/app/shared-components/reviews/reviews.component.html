@@ -69,7 +69,7 @@
 
     <!-- Customer Reviews -->
     <review *ngFor="let review of reviews; trackBy:trackReview" [review]="review" [showReviewHelpful]="true"
-        (onReportReviewClick)="reportReview.show = true"></review>
+        (onReportReviewClick)="onReportReviewClick(reportReview, $event)"></review>
 
 
 
@@ -84,5 +84,5 @@
 
 
     <!-- Report Review -->
-    <report-review #reportReview [productId]="product.id"></report-review>
+    <report-review #reportReview [review]="reportedReview"></report-review>
 </ng-container>

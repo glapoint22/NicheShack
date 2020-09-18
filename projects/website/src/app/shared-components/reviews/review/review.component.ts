@@ -14,7 +14,7 @@ import { RedirectService } from '../../../services/redirect.service';
 export class ReviewComponent {
   @Input() review: Review;
   @Input() showReviewHelpful: boolean;
-  @Output() onReportReviewClick: EventEmitter<void> = new EventEmitter();
+  @Output() onReportReviewClick: EventEmitter<Review> = new EventEmitter();
   private subscription: Subscription;
   private isSignedIn: boolean;
 
@@ -61,7 +61,7 @@ export class ReviewComponent {
 
   reportReviewClick() {
     if (this.isSignedIn) {
-      this.onReportReviewClick.emit();
+      this.onReportReviewClick.emit(this.review);
     } else {
       this.redirectService.redirect = { path: location.pathname, queryParams: this.route.snapshot.queryParams };
       this.redirectService.callback = 'reportReviewClick';

@@ -11,10 +11,13 @@
 
             <!-- Content -->
             <ng-container *ngIf="!isSubmitted; else submitted">
-                <div style="margin-bottom: 16px;">
+                <div style="margin-bottom: 20px; color: #b8b8b8; margin-left: 4px;">
                     If you find this review to be offensive or irrelevant to the item in question, please let us know by
                     clicking the submit button below.
                 </div>
+
+                <div style="color: #dadada; margin-left: 5px; margin-bottom: 5px;">Additional Comments (optional)</div>
+                <textarea style="height: 100px; color: #969696;" [(ngModel)]="comments"></textarea>
 
                 <button class="alt-button" style="float: right" (mousedown)="$event.preventDefault()" (click)="onSubmit()">Submit</button>
                 <button style="float: right; margin-right: 16px;" (click)="show = false">Cancel</button>
