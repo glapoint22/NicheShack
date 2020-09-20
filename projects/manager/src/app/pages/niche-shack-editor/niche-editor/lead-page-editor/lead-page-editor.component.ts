@@ -2,11 +2,11 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { PageService } from 'projects/manager/src/app/services/page.service';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
-import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { PropertyView } from 'projects/manager/src/app/classes/property-view';
 import { PageType } from 'projects/manager/src/app/classes/page';
 import { DataService } from 'services/data.service';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'lead-page-editor',

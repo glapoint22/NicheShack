@@ -1,0 +1,25 @@
+<div *show="promptService.show" transitionClass="fade-end" class="modal-background fade-start" tabindex="0" (keydown)="onKeydown($event)">
+    <div class="prompt" (mousedown)="$event.stopPropagation()">
+        <div class="title-bar">
+            {{promptService.promptTitle}}
+            <div class="close-button" (click)="promptService.onNoClick(); promptService.show = false" title="Close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+        <div class="prompt-content">
+
+            <div class="text-break" style="margin-bottom: 16px;">
+                {{promptService.message}}
+            </div>
+
+
+            <!-- Buttons -->
+            <div style="float: right;">
+                <button style="margin-right: 8px;"
+                (click)="promptService.onNoClick(); promptService.show = false">Cancel</button>
+                <button class="alt-button" (click)="promptService.onYesClick(); promptService.show = false">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

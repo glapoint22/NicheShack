@@ -5,10 +5,10 @@ import { MediaItem } from '../../../classes/media-item';
 import { MediaType } from '../../../classes/media';
 import { MenuService } from '../../../services/menu.service';
 import { PopupService } from '../../../services/popup.service';
-import { PromptService } from '../../../services/prompt.service';
 import { FormService } from '../../../services/form.service';
 import { MenuOption } from '../../../classes/menu-option';
 import { MenuDivider } from '../../../classes/menu-divider';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'media-item-list',

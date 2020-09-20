@@ -1,12 +1,12 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { EditableItemListComponent } from 'projects/manager/src/app/shared-components/item-lists/editable-item-list/editable-item-list.component';
-import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ItemListOptions } from 'projects/manager/src/app/classes/item-list-options';
 import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 import { ListItem } from 'projects/manager/src/app/classes/list-item';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { SaveService } from 'projects/manager/src/app/services/save.service';
 import { DataService } from 'services/data.service';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'product-keywords',

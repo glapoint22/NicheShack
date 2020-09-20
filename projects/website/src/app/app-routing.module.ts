@@ -35,7 +35,9 @@ const routes: Routes = [
   },
   {
     path: 'collaborate-list/:collaborateListId',
-    loadChildren: () => import('./pages/collaborate-list/collaborate-list.module').then(m => m.CollaborateListModule)
+    loadChildren: () => import('./pages/collaborate-list/collaborate-list.module').then(m => m.CollaborateListModule),
+    canLoad: [AccountGuard],
+    canActivate: [AccountGuard]
   },
   {
     path: 'forgot-password',

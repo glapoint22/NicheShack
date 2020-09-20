@@ -1,1 +1,46 @@
-<p>collaborate-list works!</p>
+<ng-container *ngIf="listId">
+    <navbar></navbar>
+
+    <div class="page-container">
+        <div class="content-container">
+            <div class="content" style="max-width: 600px">
+
+                <!-- Logo -->
+                <img src="assets/Logo.png" routerLink="" title="Niche Shack Homepage">
+
+
+
+                <div class="container">
+
+                    <!-- Profile pic -->
+                    <div class="profile-pic-container">
+                        <div class="line"></div>
+
+                        <img [src]="profilePic ? 'images/' + profilePic : 'assets/no-account-pic.png'">
+
+                        <div class="line"></div>
+                    </div>
+
+
+
+                    <!-- Caption -->
+                    <div class="caption">
+                        You have been invited to collaborate on {{ownerName}}'s list
+                    </div>
+
+                    <!-- List name -->
+                    <div class="list-name">"{{listName}}"</div>
+
+
+                    <!-- Button Container -->
+                    <div class="button-container">
+                        <button (click)="onCancelClick()">Cancel</button>
+                        <button class="alt-button" (click)="onAcceptClick()">Accept</button>
+                    </div>
+                </div>
+
+            </div>
+            <navfooter></navfooter>
+        </div>
+    </div>
+</ng-container>

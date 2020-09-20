@@ -5,7 +5,6 @@ import { FormService } from '../../../services/form.service';
 import { MenuService } from '../../../services/menu.service';
 import { Subject } from 'rxjs';
 import { Item } from '../../../classes/item';
-import { PromptService } from '../../../services/prompt.service';
 import { LoadingService } from '../../../services/loading.service';
 import { ProductService } from '../../../services/product.service';
 import { PopupService } from '../../../services/popup.service';
@@ -14,6 +13,7 @@ import { MenuOption } from '../../../classes/menu-option';
 import { MenuDivider } from '../../../classes/menu-divider';
 import { ProductListItem } from '../../../classes/product-list-item';
 import { DataService } from 'services/data.service';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'vendor-form',

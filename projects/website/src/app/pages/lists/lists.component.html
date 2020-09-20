@@ -22,17 +22,26 @@
                         <!-- Each List -->
                         <div class="list" *ngFor="let list of lists" [ngClass]="{'selected-list': list == selectedList}"
                             (click)="onListClick(list, lists); showListsMenu = false">
-                            <h3>{{list.name}}</h3>
 
-                            <div class="gold-text">
-                                Owner: {{list.owner}}
+                            <div style="display: flex;">
+                                <img
+                                    [src]="list.profilePic ? 'images/' + list.profilePic : 'assets/no-account-pic.png'">
+                                <div>
+                                    <h3>{{list.name}}</h3>
+
+                                    <div class="gold-text">
+                                        Owner: {{list.owner}}
+                                    </div>
+                                    <div>
+                                        {{list.description}}
+                                    </div>
+                                    <div class="primary-color-light">
+                                        {{list.totalItems + ' item' + (list.totalItems == 1 ? '' : 's')}}
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                {{list.description}}
-                            </div>
-                            <div class="primary-color-light">
-                                {{list.totalItems + ' item' + (list.totalItems == 1 ? '' : 's')}}
-                            </div>
+
+
                         </div>
 
                         <!-- Create list button -->
@@ -67,7 +76,7 @@
                                         Edit List</div>
 
 
-                                    <div *ngIf="listData.isOwner" class="link" (click)="deleteList.show = true">Delete
+                                    <div *ngIf="listData.isOwner" class="link" (click)="onDeleteListClick()">Delete
                                         List</div>
 
 
@@ -97,7 +106,7 @@
                                         <div (click)="shareList.show = true">Share List</div>
                                         <div *ngIf="listData.isOwner" (click)="editList.show = true">
                                             Edit List</div>
-                                        <div *ngIf="listData.isOwner" (click)="deleteList.show = true">Delete List</div>
+                                        <div *ngIf="listData.isOwner" (click)="onDeleteListClick()">Delete List</div>
                                         <div *ngIf="listData.isOwner && listData.collaborators.length > 0"
                                             (click)="manageCollaborators.show = true">
                                             Manage Collaborators</div>
@@ -120,17 +129,29 @@
                                 <div class="list" *ngFor="let list of lists"
                                     [ngClass]="{'selected-list': list == selectedList}"
                                     (click)="onListClick(list, lists)">
-                                    <h3>{{list.name}}</h3>
 
-                                    <div class="gold-text">
-                                        Owner: {{list.owner}}
+                                    <div style="display: flex;">
+                                        <img
+                                            [src]="list.profilePic ? 'images/' + list.profilePic : 'assets/no-account-pic.png'">
+
+                                        <div>
+                                            <h3>{{list.name}}</h3>
+
+                                            <div class="gold-text">
+                                                Owner: {{list.owner}}
+                                            </div>
+
+                                            <div>
+                                                {{list.description}}
+                                            </div>
+                                            <div class="primary-color-light">
+                                                {{list.totalItems + ' item' + (list.totalItems == 1 ? '' : 's')}}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        {{list.description}}
-                                    </div>
-                                    <div class="primary-color-light">
-                                        {{list.totalItems + ' item' + (list.totalItems == 1 ? '' : 's')}}
-                                    </div>
+
+
+
                                 </div>
 
                                 <!-- Create list button -->
@@ -149,7 +170,8 @@
                                 <ng-container *ngIf="sortOptions$ | async">
                                     <!-- Products -->
                                     <ng-container *ngIf="products$ | async as products">
-                                        <ng-container *ngIf="products.length > 0; else noProducts">
+                                        <ng-container
+                                            *ngIf="products.length > 0 && selectedList.totalItems > 0; else noProducts">
 
                                             <!-- Sort -->
                                             <select class="margin-left-auto-sm"
@@ -162,13 +184,12 @@
 
 
                                             <div class="products-container">
-                                                <div *ngFor="let product of products"
-                                                    style="border-bottom: 1px solid #4f4f4f">
-                                                    <ng-container
-                                                        *ngIf="!product.deleted && !product.movedToList; else removedProduct">
+                                                <div *ngFor="let product of products">
+                                                    <ng-container *ngIf="!product.removed">
 
 
-                                                        <div class="product-row">
+                                                        <div class="product-row"
+                                                            style="border-bottom: 1px solid#3d3d3d">
 
                                                             <!-- Product -->
                                                             <div class="product">
@@ -218,12 +239,16 @@
 
                                                             <!-- Product Management -->
                                                             <div class="product-management align-items-end-md">
+                                                                <img
+                                                                    [src]="product.collaborator.image ? 'images/' + product.collaborator.image : 'assets/no-account-pic.png'">
+
+
                                                                 <div class="gray-color" style="margin-bottom: 4px;">
                                                                     Added
                                                                     {{product.dateAdded}}
                                                                 </div>
                                                                 <div class="gold-text" style="margin-bottom: 4px;">
-                                                                    Added by {{product.collaborator}}
+                                                                    Added by {{product.collaborator.name}}
                                                                 </div>
                                                                 <button class="alt-button" style="margin-bottom: 8px;"
                                                                     (click)="onBuyClick(product.hoplink)">Visit
@@ -233,37 +258,15 @@
                                                                 <div class="button-container">
                                                                     <dropdown-button [caption]="'Move'"
                                                                         style="width: 95px" [items]="moveToLists"
-                                                                        (itemClick)="onMoveProduct($event, product)">
+                                                                        (itemClick)="onMoveProductClick($event, product)"
+                                                                        [disabled]="moveToLists.length == 0">
                                                                     </dropdown-button>
                                                                     <button style="width: 95px"
-                                                                        (click)="onDelete(product)">Delete</button>
+                                                                        (click)="onRemoveProductClick(product)">Remove</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </ng-container>
-
-
-                                                    <!-- Removed Product -->
-                                                    <ng-template #removedProduct>
-                                                        <div
-                                                            style="height: 182px; padding: 24px; display: flex; align-items: center;">
-                                                            <div>
-                                                                <i class="fas fa-check success-color"
-                                                                    style="font-size: 20px; margin-right: 8px"></i>
-                                                                <span *ngIf="product.deleted">{{product.title}} has been
-                                                                    deleted.
-                                                                </span>
-                                                                <span *ngIf="product.movedToList">
-                                                                    {{product.title}} has been moved to <span
-                                                                        (click)="onListClick(product.movedToList, lists)">{{product.movedToList}}</span><span>.
-                                                                    </span>
-                                                                </span>
-                                                                <span class="primary-color-light"
-                                                                    style="text-decoration: underline; cursor: pointer;"
-                                                                    (click)="undo(product.deleted ? 'deleted' : 'movedTo', product)">Undo</span>
-                                                            </div>
-                                                        </div>
-                                                    </ng-template>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -286,7 +289,6 @@
                         <manage-collaborators #manageCollaborators [collaborators]="listData.collaborators"
                             [listId]="selectedList.id">
                         </manage-collaborators>
-                        <delete-list #deleteList [listId]="selectedList.id"></delete-list>
                         <edit-list #editList [list]="selectedList"></edit-list>
                         <share-list #shareList [list]="selectedList"></share-list>
 
@@ -317,3 +319,4 @@
     </div>
 </ng-container>
 <create-list #createList (onCreateListHide)="onCreateListHide($event)"></create-list>
+<prompt></prompt>

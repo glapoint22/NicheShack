@@ -11,12 +11,12 @@ import { ProductImageNotification } from '../../../classes/product-image-notific
 import { ProductMediaNotification } from '../../../classes/product-media-notification';
 import { ProductContentNotification } from '../../../classes/product-content-notification';
 import { ReviewComplaintNotification } from '../../../classes/review-complaint-notification';
-import { PromptService } from '../../../services/prompt.service';
 import { DataService } from 'services/data.service';
 import { NotificationType } from '../../../classes/notification-type';
 import { Notification } from '../../../classes/notification';
 import { Observable, Subscriber } from 'rxjs';
 import { MessageNotification } from '../../../classes/message-notification';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'notifications-item-list',

@@ -4,7 +4,6 @@ import { ProductContent } from 'projects/manager/src/app/classes/product-content
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { Item } from 'projects/manager/src/app/classes/item';
 import { CheckboxItemListComponent } from 'projects/manager/src/app/shared-components/item-lists/checkbox-item-list/checkbox-item-list.component';
-import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { MediaType } from 'projects/manager/src/app/classes/media';
@@ -17,6 +16,7 @@ import { MenuDivider } from 'projects/manager/src/app/classes/menu-divider';
 import { ListItem } from 'projects/manager/src/app/classes/list-item';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { DataService } from 'services/data.service';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'product-content',

@@ -8,18 +8,17 @@ import { DropdownButtonModule } from '../../shared-components/dropdown-button/dr
 import { FormsModule } from '@angular/forms';
 import { CreateListModule } from '../../shared-components/create-list/create-list.module';
 import { ManageCollaboratorsComponent } from './manage-collaborators/manage-collaborators.component';
-import { DeleteListComponent } from './delete-list/delete-list.component';
 import { EditListComponent } from './edit-list/edit-list.component';
 import { ShareListComponent } from './share-list/share-list.component';
 import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { StarsModule } from 'shared-components/stars/stars.module';
+import { PromptModule } from '../../shared-components/prompt/prompt.module';
 
 
 @NgModule({
   declarations: [
     ListsComponent,
     ManageCollaboratorsComponent,
-    DeleteListComponent,
     EditListComponent,
     ShareListComponent
   ],
@@ -31,7 +30,8 @@ import { StarsModule } from 'shared-components/stars/stars.module';
     FormsModule,
     CreateListModule,
     ShowHideModule,
-    StarsModule
+    StarsModule,
+    PromptModule
   ]
 })
 export class ListsModule { }

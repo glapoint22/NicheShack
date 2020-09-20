@@ -33,12 +33,8 @@ export class WriteReviewComponent extends ValidationPageComponent implements OnI
     this.title = 'Write a Review';
     this.product$ = this.dataService
       .get('api/ProductReviews/WriteReview', [{ key: 'productId', value: this.route.snapshot.params['id'] }])
-      .pipe(tap((response) => {
-        if (!response) {
-          this.dataService.pageNotFound = true;
-        } else {
-          this.review.productId = this.route.snapshot.params.id;
-        }
+      .pipe(tap(() => {
+        this.review.productId = this.route.snapshot.params.id;
       }));
 
     super.ngOnInit();

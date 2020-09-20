@@ -3,10 +3,10 @@ import { MenuService } from '../../../services/menu.service';
 import { ListItem } from '../../../classes/list-item';
 import { icon } from '../../../classes/icon';
 import { SelectType } from '../../../classes/list-item-select-type';
-import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
 import { MenuOption } from '../../../classes/menu-option';
 import { ItemListOptions } from '../../../classes/item-list-options';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'item-list',

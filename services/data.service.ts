@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -41,10 +41,17 @@ export class DataService {
       // Flag that we are not loading
       this.loading = false;
 
+      if(error.status == 404) {
+        this.pageNotFound = true;
+        return of()
+      };
+
       // If we don't have a conflict error
       if (error.status != 409) {
         this.error = error;
       }
+
+      
 
       return throwError(error);
     }

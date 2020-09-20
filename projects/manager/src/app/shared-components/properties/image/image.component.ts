@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, Output, EventEmitter, DoCheck } from '@angular/core';
 import { Image } from '../../../classes/image';
-import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
 import { MediaType } from '../../../classes/media';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'image',

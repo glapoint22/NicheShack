@@ -1,10 +1,10 @@
 import { Component, HostListener } from '@angular/core';
 import { HierarchyComponent } from '../hierarchy.component';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
-import { PromptService } from '../../../services/prompt.service';
 import { fromEvent, of } from 'rxjs';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { DataService } from 'services/data.service';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   template: '',

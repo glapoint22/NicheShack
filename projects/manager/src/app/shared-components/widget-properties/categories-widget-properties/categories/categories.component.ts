@@ -2,11 +2,11 @@ import { Component, Input, ViewChild, Output, EventEmitter, OnInit } from '@angu
 import { CategoriesWidgetComponent } from '../../../designer/widgets/categories-widget/categories-widget.component';
 import { Searchable } from 'projects/manager/src/app/classes/searchable';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
-import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ItemListComponent } from '../../../item-lists/item-list/item-list.component';
 import { Item } from 'projects/manager/src/app/classes/item';
 import { ItemListOptions } from 'projects/manager/src/app/classes/item-list-options';
 import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'categories',

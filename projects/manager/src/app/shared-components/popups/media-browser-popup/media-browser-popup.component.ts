@@ -14,10 +14,10 @@ import { KeyValue } from '@angular/common';
 import { FormService } from '../../../services/form.service';
 import { ItemListOptions } from '../../../classes/item-list-options';
 import { MenuOption } from '../../../classes/menu-option';
-import { PromptService } from '../../../services/prompt.service';
 import { MenuDivider } from '../../../classes/menu-divider';
 import { SubMenuOption } from '../../../classes/sub-menu-option';
 import { DataService } from 'services/data.service';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'media-browser-popup',

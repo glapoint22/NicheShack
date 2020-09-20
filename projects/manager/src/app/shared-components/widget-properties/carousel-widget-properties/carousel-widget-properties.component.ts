@@ -3,8 +3,8 @@ import { CarouselWidgetComponent } from '../../designer/widgets/carousel-widget/
 import { MediaType } from '../../../classes/media';
 import { CarouselBanner } from '../../../../../../../classes/carousel-banner';
 import { PaginatorComponent } from '../../paginator/paginator.component';
-import { PromptService } from '../../../services/prompt.service';
 import { PageService } from '../../../services/page.service';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'carousel-widget-properties',

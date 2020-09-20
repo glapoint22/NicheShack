@@ -4,11 +4,11 @@ import { KeyValue } from '@angular/common';
 import { ProductGroupWidgetComponent } from '../../../designer/widgets/product-group-widget/product-group-widget.component';
 import { Searchable } from 'projects/manager/src/app/classes/searchable';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
-import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { ItemListComponent } from '../../../item-lists/item-list/item-list.component';
 import { Item } from 'projects/manager/src/app/classes/item';
 import { ItemListOptions } from 'projects/manager/src/app/classes/item-list-options';
 import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'product-group-type',

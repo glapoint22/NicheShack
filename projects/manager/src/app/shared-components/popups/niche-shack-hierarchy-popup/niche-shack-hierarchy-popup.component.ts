@@ -3,9 +3,9 @@ import { HierarchyItem, NicheShackHierarchyItemType } from '../../../classes/hie
 import { PopupComponent } from '../popup/popup.component';
 import { PopupService } from '../../../services/popup.service';
 import { EditableHierarchyComponent } from '../../hierarchy/editable-hierarchy/editable-hierarchy.component';
-import { PromptService } from '../../../services/prompt.service';
 import { Router } from '@angular/router';
 import { DataService } from 'services/data.service';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'niche-shack-hierarchy-popup',
