@@ -19,5 +19,5 @@
     </div>
 
     <!-- Background color & image -->
-    <background [background]="page.background"></background>
+    <background [background]="page.background" (onChange)="pageService.save()"></background>
 </div>
