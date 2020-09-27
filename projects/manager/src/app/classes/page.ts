@@ -143,6 +143,11 @@ export class Page {
         let widget: Type<WidgetComponent>
 
         switch (widgetType) {
+            // Button
+            case WidgetType.Button:
+                widget = ButtonWidgetComponent;
+                break;
+
             // Text
             case WidgetType.Text:
                 widget = TextWidgetComponent;
@@ -188,10 +193,6 @@ export class Page {
             case WidgetType.Carousel:
                 widget = CarouselWidgetComponent;
                 break;
-
-            // Button
-            default:
-                widget = ButtonWidgetComponent;
         }
 
         return widget;

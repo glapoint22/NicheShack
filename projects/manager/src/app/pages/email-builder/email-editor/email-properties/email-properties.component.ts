@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { KeyValue } from '@angular/common';
-import { EmailType } from 'projects/manager/src/app/classes/email-type';
 import { PagePropertiesComponent } from 'projects/manager/src/app/shared-components/properties/page-properties/page-properties.component';
+import { PageService } from 'projects/manager/src/app/services/page.service';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'email-properties',
@@ -9,19 +10,21 @@ import { PagePropertiesComponent } from 'projects/manager/src/app/shared-compone
   styleUrls: ['./email-properties.component.scss']
 })
 export class EmailPropertiesComponent extends PagePropertiesComponent {
-  public emailTypes: Array<KeyValue<string, number>> = [];
+  public emailTypes: Array<KeyValue<string, string>> = [];
+
+  constructor(pageService: PageService, private dataService: DataService) { super(pageService) }
 
   ngOnInit() {
-    // This get the values from the EmailType enum
-    let values = Object.values(EmailType);
-
-    // Generate the email types for the dropdown list
-    values.forEach((key: string, index: number) => {
-      this.emailTypes.push({
-        key: key,
-        value: index
+    // Populate the email types
+    this.dataService.get('api/Emails/EmailTypes')
+      .subscribe((emailTypes: Array<string>) => {
+        emailTypes.forEach((emailType: string) => {
+          this.emailTypes.push({
+            key: emailType.replace(/([A-Z])/g, ' $1').trim(),
+            value: emailType
+          });
+        });
       });
-    });
   }
 
 
@@ -30,11 +33,8 @@ export class EmailPropertiesComponent extends PagePropertiesComponent {
   }
 
 
-  onTypeChange(index: number) {
-   let emailType: string =  this.emailTypes.find(x => x.value == index).key;
-
-   this.page.name = emailType;
-
-   this.pageService.save();
+  onTypeChange(emailType: string) {
+    this.page.name = emailType.replace(/([A-Z])/g, ' $1').trim();
+    this.pageService.save();
   }
 }

@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
-import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PageService } from 'projects/manager/src/app/services/page.service';
 import { PageType } from 'projects/manager/src/app/classes/page';
 import { PropertyView } from 'projects/manager/src/app/classes/property-view';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
 import { DataService } from 'services/data.service';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'product-email',

@@ -1,0 +1,52 @@
+img {
+    display: block;
+    margin: auto;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+}
+
+.container {
+    padding: 10px;
+    text-align: center;
+    
+    .profile-pic-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5px;
+
+        .line {
+            flex: 1;
+            border-bottom: 1px solid #5a5a5a;
+        }
+
+        img {
+            border-radius: 50%;
+            width: 40px;
+            margin: 0 20px;
+            cursor: default;
+        }
+    }
+
+    .caption {
+        font-size: 20px;
+    }
+    
+    .list-name {
+        color: #feb900;
+        margin-top: 4px;
+        font-style: italic;
+    }
+
+    .button-container {
+        border-top: 1px solid #5a5a5a;
+        padding-top: 16px;
+        display: flex;
+        margin-top: 16px;
+        justify-content: flex-end;
+
+        button:last-child {
+            margin-left: 15px;
+        }
+    }
+}

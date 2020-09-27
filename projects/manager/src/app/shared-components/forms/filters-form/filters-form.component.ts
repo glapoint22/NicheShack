@@ -1,9 +1,9 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { EditableHierarchyComponent } from '../../hierarchy/editable-hierarchy/editable-hierarchy.component';
-import { PromptService } from '../../../services/prompt.service';
 import { FormService } from '../../../services/form.service';
 import { FilterHierarchyItemType, HierarchyItem } from '../../../classes/hierarchy-item';
 import { DataService } from 'services/data.service';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'filters-form',

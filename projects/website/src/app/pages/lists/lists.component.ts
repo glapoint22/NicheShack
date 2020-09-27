@@ -6,6 +6,7 @@ import { DataService } from 'services/data.service';
 import { Observable, of, merge } from 'rxjs';
 import { tap, concatMap, map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   templateUrl: './lists.component.html',
@@ -24,6 +25,7 @@ export class ListsComponent extends SharePageComponent implements OnInit {
   public showManageListMenu: boolean;
   public showListsMenu: boolean;
   public shared: boolean = false;
+  private lists: any;
 
 
   constructor(
@@ -32,7 +34,8 @@ export class ListsComponent extends SharePageComponent implements OnInit {
     @Inject(DOCUMENT) document: Document,
     public dataService: DataService,
     private router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private promptService: PromptService
   ) { super(titleService, metaService, document) }
 
   ngOnInit() {
@@ -103,7 +106,7 @@ export class ListsComponent extends SharePageComponent implements OnInit {
 
                 // Set the array of lists to move products to
                 this.setMoveToLists(lists);
-
+                this.lists = lists;
 
               }
             }));
@@ -143,9 +146,12 @@ export class ListsComponent extends SharePageComponent implements OnInit {
 
 
   onListClick(list: any, lists: Array<any>) {
-    this.selectedList = list;
-    this.setMoveToLists(lists);
-    this.router.navigate(['account/lists', list.id]);
+    if (this.selectedList.id != list.id) {
+      this.selectedList = list;
+      this.setMoveToLists(lists);
+      this.router.navigate(['account/lists', list.id]);
+    }
+
   }
 
 
@@ -154,26 +160,45 @@ export class ListsComponent extends SharePageComponent implements OnInit {
   }
 
 
-  onDelete(product: any) {
-    product.deleted = true;
+
+  onRemoveProductClick(product: any) {
+    // Prompt the user
+    let promptTitle = 'Remove Product';
+    let promptMessage = 'Are you sure you want to remove this product from this list?';
+    this.promptService.showPrompt(promptTitle, promptMessage, this.removeProduct, this, [product]);
   }
 
-  onMoveProduct(list: any, product: any) {
-    product.movedToList = list.value;
 
-    // Update database!
+  removeProduct(product: any) {
+    this.dataService.delete('api/Lists/Product', { productId: product.id, collaboratorId: product.collaborator.id })
+      .subscribe(() => {
+        product.removed = true;
+        this.selectedList.totalItems--;
+      });
+
   }
 
 
-  undo(action: string, product: any) {
-    if (action == 'deleted') {
-      product.deleted = false;
-      // Update database
-    } else {
-      product.movedToList = null;
-      // Update database
-    }
+  onMoveProductClick(list: any, product: any) {
+    // Prompt the user
+    let promptTitle = 'Move Product';
+    let promptMessage = 'Are you sure you want to move this product from ' + this.selectedList.name + ' to ' + list.value + '?';
+    this.promptService.showPrompt(promptTitle, promptMessage, this.moveProduct, this, [list, product]);
   }
+
+  moveProduct(list: any, product: any) {
+    this.dataService.put('api/Lists/Product', {
+      productId: product.id,
+      collaboratorId: product.collaborator.id,
+      listId: list.key
+    }).subscribe(() => {
+      product.removed = true;
+      this.selectedList.totalItems--;
+      this.lists.filter(x => x.id == list.key)[0].totalItems++;
+    });
+  }
+
+
 
   setSort() {
     this.router.navigate([], {
@@ -185,6 +210,23 @@ export class ListsComponent extends SharePageComponent implements OnInit {
   onCreateListHide(listId: string) {
     if (listId) location.href = 'account/lists/' + listId;
 
+  }
+
+
+  onDeleteListClick() {
+    // Prompt the user
+    let promptTitle = 'Delete List';
+    let promptMessage = 'Are you sure you want to delete this list?';
+    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteList, this);
+  }
+
+
+  deleteList() {
+    this.dataService.delete('api/Lists', {
+      listId: this.selectedList.id
+    }).subscribe(() => {
+      location.href = 'account/lists';
+    });
   }
 
 }

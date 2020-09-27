@@ -2,12 +2,12 @@ import { Component, Input, ViewChild, OnChanges } from '@angular/core';
 import { Media, MediaType } from 'projects/manager/src/app/classes/media';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
-import { PromptService } from 'projects/manager/src/app/services/prompt.service';
 import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { SaveService } from 'projects/manager/src/app/services/save.service';
 import { DataService } from 'services/data.service';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { Subscription } from 'rxjs';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'product-media',

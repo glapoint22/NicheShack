@@ -10,13 +10,13 @@ export class PromptComponent {
 
   constructor(public promptService: PromptService) { }
 
-
   onKeydown(event: KeyboardEvent) {
     if (event.code == 'Escape') {
-      window.setTimeout(() => {
+      // window.setTimeout(() => {
         this.promptService.show = false;
-        this.promptService.onNoClick();
-      })
+        // this.promptService.onNoClick();
+      // })
     }
   }
+
 }

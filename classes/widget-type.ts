@@ -1,5 +1,5 @@
 export enum WidgetType {
-    Button,
+    Button = 1,
     Text,
     Image,
     Container,

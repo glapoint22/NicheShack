@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageService } from '../../../services/page.service';
 import { LoadingService } from '../../../services/loading.service';
-import { PromptService } from '../../../services/prompt.service';
 import { PopupService } from '../../../services/popup.service';
 import { Searchable } from '../../../classes/searchable';
 import { Item } from '../../../classes/item';
@@ -9,6 +8,7 @@ import { PropertyView } from '../../../classes/property-view';
 import { PageType } from '../../../classes/page';
 import { DataService } from 'services/data.service';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'page-editor',

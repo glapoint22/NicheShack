@@ -92,6 +92,11 @@
             display: flex;
             flex-direction: column;
             width: 200px;
+            img {
+                border-radius: 50%;
+                margin-bottom: 5px;
+                width: 30px;
+            }
             
             .alt-button {
                 width: 100%;
@@ -133,12 +138,22 @@
     margin-bottom: 24px;
     padding: 8px;
     cursor: pointer;
+    img {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+    
+    &:hover:not(.selected-list) {
+        background: #252525;
+    }
 }
 
 .selected-list {
     background-color: $dark-gray-color;
     cursor: default;
-    border: 1px solid $border-color;
+    outline: 1px solid $border-color;
 }
 
 h2, .gold-text {

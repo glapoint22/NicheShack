@@ -10,6 +10,7 @@ export class DropdownButtonComponent implements OnChanges {
   @Input() items: Array<KeyValue<string, string>>;
   @Input() defaultIndex: number = 0;
   @Input() caption: string;
+  @Input() disabled: boolean;
   @Output() itemClick: EventEmitter<KeyValue<string, string>> = new EventEmitter();
 
   public show: boolean;

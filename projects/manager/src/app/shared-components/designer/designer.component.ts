@@ -3,9 +3,9 @@ import { WidgetCursor } from '../../classes/widget-cursor';
 import { ContainerComponent } from './container/container.component';
 import { PageService } from '../../services/page.service';
 import { BreakpointService } from '../../services/breakpoint.service';
-import { PromptService } from '../../services/prompt.service';
 import { KeyValue } from '@angular/common';
 import { EditableDropdownComponent } from '../elements/dropdowns/editable-dropdown/editable-dropdown.component';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
   selector: 'designer',
