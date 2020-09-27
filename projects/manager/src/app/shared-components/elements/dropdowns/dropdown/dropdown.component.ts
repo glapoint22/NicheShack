@@ -19,6 +19,7 @@ export class DropdownComponent {
   // Public
   public initialSelectedIndex: number;
 
+
   // -----------------------------( ON DROPDOWN SELECT )------------------------------ \\
   onDropdownSelect(dropdown: HTMLElement) {
     // Build the menu

@@ -8,7 +8,7 @@
         <div class="label-container">
 
             <!-- Text Input -->
-            <input #textInput (blur)="onTextInputBlur()" (focus)="onTextInputFocus()" (input)="onTextInputChange()"
+            <input #textInput (blur)="onTextInputBlur()" (focus)="onTextInputFocus()" (input)="onTextInputChange()" style="cursor: text; background: rgb(54, 54, 54);"
                 [value]="selectedIndex == -1 ? '' : dropdownList[selectedIndex].key"
                 [ngClass]="{'hightlight-text': (dropdownMenuService.dropdownMenu.isVisible && dropdownMenuService.dropdownMenu.currentObj == this)}">
         </div>

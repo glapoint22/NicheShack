@@ -15,18 +15,28 @@
         width: 100%;
         height: 100%;
         padding-left: 2px;
-        padding-top: 3px;
-        padding-bottom: 3px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        display: flex;
+        align-items: center;
+        
 
-        .label {
-            display: flex;
+        input {
+            cursor: default;
             background: #4d4d4d;
             width: 100%;
             height: 100%;
-            font-size: 11px;
-            align-items: center;
+            font-size: 12px;
             padding-left: 3px;
+            text-overflow: ellipsis;
             user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            color: #aaaaaa;
 
             &:hover:not(.hightlight-label) {
                 color: #dddddd;

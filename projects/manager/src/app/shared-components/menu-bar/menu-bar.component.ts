@@ -9,6 +9,8 @@ import { MenuDivider } from '../../classes/menu-divider';
 import { MenuOption } from '../../classes/menu-option';
 import { DataService } from 'services/data.service';
 import { NotificationListItem } from '../../classes/notification-list-item';
+import { QueryService } from '../../services/query.service';
+import { Category } from '../../classes/category';
 
 @Component({
   selector: 'menu-bar',
@@ -68,7 +70,8 @@ export class MenuBarComponent implements OnInit {
     private popupService: PopupService,
     public notificationService: NotificationService,
     private formService: FormService,
-    private dataService: DataService
+    private dataService: DataService,
+    private queryService: QueryService
   ) { }
 
 
@@ -86,6 +89,31 @@ export class MenuBarComponent implements OnInit {
       // Deselect the selected menu bar menu
       this.selectedMenuBarMenu = null;
     })
+
+
+    // Get a list of all the categories for Query Builder
+    this.dataService.get('api/Categories')
+      .subscribe((categories: Array<Category>) => {
+
+        this.queryService.categoryList = categories.map(x => ({
+          id: x.id,
+          name: x.name,
+          icon: null
+        }));
+
+      });
+
+
+      // this.dataService.get('api/Niches/All')
+      // .subscribe((niches) => {
+      //   console.log(niches)
+      // });
+
+
+      this.dataService.get('api/Products/Alita')
+      .subscribe((niches) => {
+        // console.log(niches)
+      });
   }
 
 

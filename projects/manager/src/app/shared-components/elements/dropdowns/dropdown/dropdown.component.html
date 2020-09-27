@@ -6,10 +6,7 @@
 
         <!-- Label -->
         <div class="label-container">
-            <div class="label"
-                [ngClass]="{'hightlight-label': dropdownMenuService.dropdownMenu.isVisible && dropdownMenuService.dropdownMenu.currentObj == this}">
-                {{selectedIndex == -1 ? "" : dropdownList[selectedIndex].key}}
-            </div>
+            <input readonly="readonly" unselectable="on" [value]="selectedIndex == -1 ? '' : dropdownList[selectedIndex].key" [ngClass]="{'hightlight-label': dropdownMenuService.dropdownMenu.isVisible && dropdownMenuService.dropdownMenu.currentObj == this}" >
         </div>
 
         <!-- Button -->
