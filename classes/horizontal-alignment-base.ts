@@ -24,7 +24,7 @@ export class HorizontalAlignmentBase {
 
 
 
-    private getClassName(value: string): string {
+    public getClassName(value: string): string {
         let className: string;
 
         switch (value) {

@@ -23,4 +23,8 @@ export class HorizontalAlignment extends HorizontalAlignmentBase implements Brea
 
         return horizontalAlignment;
     }
+
+    getClass() {
+        return this.getClassName(this.value);
+    }
 }

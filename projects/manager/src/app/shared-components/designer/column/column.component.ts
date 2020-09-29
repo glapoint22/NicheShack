@@ -184,6 +184,7 @@ export class ColumnComponent implements BreakpointsComponent, BreakpointsPadding
   getData(): ColumnData {
     return {
       name: this.name != 'Column' ? this.name : null,
+      width: this.columnElement.getBoundingClientRect().width,
       background: this.background.getData(),
       border: this.border.getData(),
       corners: this.corners.getData(),

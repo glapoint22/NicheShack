@@ -88,10 +88,6 @@ export class TextBox {
             ul, ol {
                 margin-top: 0;
                 margin-bottom: 0;
-                list-style-position: inside;
-            }
-            li div {
-                display: inline;
             }
             a { 
                 color: inherit;
