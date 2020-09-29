@@ -49,6 +49,7 @@ import { EmailPropertiesComponent } from '../../pages/email-builder/email-editor
 import { PanelComponent } from '../panel/panel.component';
 import { HierarchyCheckboxContentComponent } from '../hierarchy/hierarchy-checkbox-content/hierarchy-checkbox-content.component';
 import { SharedModule } from '../shared.module';
+import { QueryBuilderComponent } from '../properties/query-builder/query-builder.component';
 
 
 @NgModule({
@@ -97,7 +98,8 @@ import { SharedModule } from '../shared.module';
     ColorComponent,
     FiltersHierarchyComponent,
     EmailPropertiesComponent,
-    HierarchyCheckboxContentComponent
+    HierarchyCheckboxContentComponent,
+    QueryBuilderComponent
   ],
   imports: [
     CommonModule,
@@ -151,7 +153,8 @@ import { SharedModule } from '../shared.module';
     ColorComponent,
     FiltersHierarchyComponent,
     EmailPropertiesComponent,
-    HierarchyCheckboxContentComponent
+    HierarchyCheckboxContentComponent,
+    QueryBuilderComponent
   ]
 })
 export class PropertiesEditorModule { }
