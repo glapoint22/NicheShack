@@ -16,10 +16,10 @@ import { ImageWidgetData } from 'projects/manager/src/app/classes/image-widget-d
 })
 export class ImageWidgetComponent extends ProportionalWidgetComponent implements BreakpointsComponent {
   @ViewChild('svg', { static: false }) placeholder: ElementRef;
+  public image: Image = new Image();
   public border: Border = new Border();
   public corners: Corners = new Corners();
   public shadow: Shadow = new Shadow();
-  public image: Image = new Image();
   public link: Link = new Link();
   public imageLoaded: boolean;
 
@@ -59,11 +59,11 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
       width: widgetData.width,
       height: this.height,
       horizontalAlignment: widgetData.horizontalAlignment,
+      image: this.image.getData(),
       border: this.border.getData(),
       corners: this.corners.getData(),
       shadow: this.shadow.getData(),
       link: this.link.getData(),
-      image: this.image.getData(),
       breakpoints: []
     }
   }
