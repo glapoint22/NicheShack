@@ -106,7 +106,7 @@ export class ItemListComponent implements OnInit {
     if (event.keyCode === 38) this.arrowUp();
     if (event.keyCode === 40) this.arrowDown();
 
-    if (this.listOptions.multiSelect == null || this.listOptions.multiSelect) {
+    if (this.listOptions == null || this.listOptions.multiSelect == null || this.listOptions.multiSelect) {
       if (event.ctrlKey) this.ctrlDown = true;
       if (event.shiftKey) this.shiftDown = true;
     }
@@ -404,7 +404,7 @@ export class ItemListComponent implements OnInit {
   // -----------------------------( ON LIST ITEM DOUBLE CLICK )------------------------------ \\
   onListItemDoubleClick() {
 
-    if (this.listOptions.doubleClick == null || this.listOptions.doubleClick) {
+    if (this.listOptions == null || this.listOptions.doubleClick == null || this.listOptions.doubleClick) {
       // As long as the shift key and the ctrl key is not being pressed
       if (!this.shiftDown && !this.ctrlDown) {
         this.onListItemEdit();
@@ -452,7 +452,9 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( EDIT LIST ITEM )------------------------------ \\
   editListItem() {
-    this.listOptions.onEditItem.apply(this.listOptions.currentObj, [this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement, this.selectedListItemIndex]);
+    if(this.listOptions.onEditItem != null) {
+      this.listOptions.onEditItem.apply(this.listOptions.currentObj, [this.rowItem.find((item, index) => index == this.selectedListItemIndex).nativeElement, this.selectedListItemIndex]);
+    }
   }
 
 
@@ -580,8 +582,10 @@ export class ItemListComponent implements OnInit {
 
   // -----------------------------( BUILD CONTEXT MENU )------------------------------ \\
   buildContextMenu(e: MouseEvent) {
-    // Build the context menu
-    this.menuService.buildMenu(this.listOptions.currentObj, e.clientX + 3, e.clientY, this.listOptions.menuOptions.apply(this.listOptions.currentObj));
+    if (this.listOptions != null) {
+      // Build the context menu
+      this.menuService.buildMenu(this.listOptions.currentObj, e.clientX + 3, e.clientY, this.listOptions.menuOptions.apply(this.listOptions.currentObj));
+    }
   }
 
 
