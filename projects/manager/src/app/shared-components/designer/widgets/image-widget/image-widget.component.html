@@ -1,9 +1,8 @@
-<div #widget class="widget" [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}"
-    (click)="onClick($event)" (mousedown)="onMousedown()"
-    
-    [style.margin]="horizontalAlignment.value" [style.maxWidth.px]="width ? width : null"
-    [style.display]="!image.url ? 'flex' : null" [style.justifyContent]="!image.url ? 'center' : null"
-    [style.alignItems]="!image.url ? 'center' : null" [style.background]="!image.url ? 'white' : null">
+<div #widget [class]="'widget ' + horizontalAlignment.getClass()"
+    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}" (click)="onClick($event)"
+    (mousedown)="onMousedown()" [style.maxWidth.px]="width ? width : null" [style.display]="!image.url ? 'flex' : null"
+    [style.justifyContent]="!image.url ? 'center' : null" [style.alignItems]="!image.url ? 'center' : null"
+    [style.background]="!image.url ? 'white' : null">
 
 
     <div class="top-left-handle" (mousedown)="onHandleMousedown('top', 'left', $event)"></div>
@@ -14,7 +13,8 @@
     <!-- Image -->
     <ng-container *ngIf="image.url; else placeholder">
         <img [src]="'images/' + image.url" (load)="onImageLoad($event)" [alt]="image.name" [title]="image.name"
-            [style.display]="imageLoaded ? 'inline' : 'none'" [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHex() : 'none'"
+            [style.display]="imageLoaded ? 'inline' : 'none'"
+            [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + border.color.toHex() : 'none'"
             [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
             [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : 'none'">
     </ng-container>

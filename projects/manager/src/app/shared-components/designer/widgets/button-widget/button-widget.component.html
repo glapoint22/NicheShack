@@ -1,12 +1,12 @@
-<div #widget class="widget text-break" (mousedown)="onMousedown()" (click)="onClick($event)"
-    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}" [style.backgroundColor]="getBackgroundColor()"
+<div #widget [class]="'widget text-break ' + horizontalAlignment.getClass()" (mousedown)="onMousedown()"
+    (click)="onClick($event)" [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}"
+    [style.backgroundColor]="getBackgroundColor()"
     [style.border]="border.enable ? border.width + 'px ' + border.style + ' ' + getBorderColor() : 'none'"
     [style.borderRadius]="corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px'"
     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : 'none'"
-    [style.margin]="horizontalAlignment.value" [style.paddingTop]="padding.top.value"
-    [style.paddingRight]="padding.right.value" [style.paddingBottom]="padding.bottom.value"
-    [style.paddingLeft]="padding.left.value" [style.maxWidth.px]="width ? width : null" [style.minHeight.px]="height"
-    [ngStyle]="{ 'background-image': background.image && background.image.url ? 'url(images/' + background.image.url + ')' : null,
+    [style.paddingTop]="padding.top.value" [style.paddingRight]="padding.right.value"
+    [style.paddingBottom]="padding.bottom.value" [style.paddingLeft]="padding.left.value"
+    [style.maxWidth.px]="width ? width : null" [style.minHeight.px]="height" [ngStyle]="{ 'background-image': background.image && background.image.url ? 'url(images/' + background.image.url + ')' : null,
                         'background-position': background.image ? background.image.position : null,
                         'background-repeat': background.image ? background.image.repeat : null,
                         'background-attachment': background.image ? background.image.attachment : null}">

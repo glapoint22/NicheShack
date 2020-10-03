@@ -86,7 +86,7 @@
         margin-right: auto;
         position: relative;
         overflow: auto;
-        padding: 5px;
+        // padding: 5px;
         
         &::-webkit-scrollbar {
             width: 0;
@@ -94,10 +94,6 @@
     }
 }
 
-.content-border {
-    border-left: 1px dashed rgb(77, 77, 77);
-    border-right: 1px dashed rgb(77, 77, 77);
-}
 
 .text-icon {
     font-family: 'Times New Roman', Times, serif;

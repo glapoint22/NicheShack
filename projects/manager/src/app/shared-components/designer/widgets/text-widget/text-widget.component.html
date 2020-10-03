@@ -1,6 +1,6 @@
-<div #widget class="widget" [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}"
-    (click)="onClick($event)" (mousedown)="onMousedown()" [style.margin]="horizontalAlignment.value"
-    [style.maxWidth.px]="width ? width : null" [style.margin]="horizontalAlignment.value" [style.minHeight.px]="height">
+<div #widget [class]="'widget ' + horizontalAlignment.getClass()"
+    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}" (click)="onClick($event)"
+    (mousedown)="onMousedown()" [style.maxWidth.px]="width ? width : null" [style.minHeight.px]="height">
 
 
     <!-- Handles -->
@@ -20,7 +20,6 @@
         [style.height.px]="iframeHeight"></iframe>
 
     <!-- Cover -->
-    <div *ngIf="!inEditMode || handleMove" class="cover"
-        (dblclick)="setEditMode()">
+    <div *ngIf="!inEditMode || handleMove" class="cover" (dblclick)="setEditMode()">
     </div>
 </div>

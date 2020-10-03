@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { DataService } from 'services/data.service';
 import { Account } from 'classes/account';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AccountService } from 'services/account.service';
 
 @Component({
   templateUrl: './create-account.component.html',
@@ -22,7 +23,8 @@ export class CreateAccountComponent extends ValidationPageComponent implements O
     @Inject(DOCUMENT) document: Document,
     @Inject(PLATFORM_ID) platformId: Object,
     private dataService: DataService,
-    public router: Router) {
+    public router: Router,
+    private accountService: AccountService) {
     super(titleService, metaService, document, platformId);
   }
 
@@ -34,7 +36,11 @@ export class CreateAccountComponent extends ValidationPageComponent implements O
 
   submitData(): void {
     this.dataService.post('api/Account/Register', this.account)
-      .subscribe(() => { },
+      .subscribe(() => {
+        this.accountService.email = this.account.email;
+        
+        this.router.navigate(['account-activation']);
+       },
         (errorResponse: HttpErrorResponse) => {
           if (errorResponse.status == 409) {
             this.conflictError = errorResponse.error;
@@ -45,5 +51,4 @@ export class CreateAccountComponent extends ValidationPageComponent implements O
   onSignInClick() {
     this.router.navigate(['/sign-in']);
   }
-
 }

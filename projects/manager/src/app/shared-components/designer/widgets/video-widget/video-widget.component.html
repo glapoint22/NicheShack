@@ -1,6 +1,7 @@
-<div #widget class="widget" [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}"
-    (click)="onClick($event)" (mousedown)="onMousedown()" [style.margin]="horizontalAlignment.value"
-    [style.maxWidth.px]="width ? width : null" [style.display]="!video || !video.url ? 'flex' : null"
+<div #widget [class]="'widget ' + horizontalAlignment.getClass()"
+    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}" (click)="onClick($event)"
+    (mousedown)="onMousedown()" [style.maxWidth.px]="width ? width : null"
+    [style.display]="!video || !video.url ? 'flex' : null"
     [style.justifyContent]="!video || !video.url ? 'center' : null"
     [style.alignItems]="!video || !video.url ? 'center' : null"
     [style.background]="!video || !video.url ? 'white' : null">

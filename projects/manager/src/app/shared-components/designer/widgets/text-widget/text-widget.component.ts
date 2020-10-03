@@ -42,6 +42,7 @@ export class TextWidgetComponent extends FreeformWidgetComponent implements Brea
     this.name = this.defaultName = 'Text';
     this.type = WidgetType.Text;
     this.background.color = new Color(255, 255, 255, 1);
+    this.background.enable = true;
     super.ngOnInit();
   }
 

@@ -1,8 +1,24 @@
 import { Enableable } from './enableable';
 import { BackgroundBase } from 'classes/background-base';
 import { BackgroundData } from 'classes/background-data';
+import { Color } from 'classes/color';
 
 export class Background extends BackgroundBase implements Enableable {
+    public enable: boolean;
+
+    constructor() {
+        super();
+        this.color = new Color(222, 222, 222, 1);
+    }
+
+
+    setData(backgroundData: BackgroundData) {
+        if (backgroundData) {
+            super.setData(backgroundData);
+            this.enable = backgroundData.enable;
+        }
+    }
+
 
     applyStyles(element: HTMLElement) {
         // Background Color
@@ -29,25 +45,17 @@ export class Background extends BackgroundBase implements Enableable {
         }
     }
 
-    
+
 
 
 
     getData(): BackgroundData {
         let backgroundData: BackgroundData;
 
-        if (this.color.r > 0 ||
-            this.color.g > 0 ||
-            this.color.b > 0 ||
-            this.color.a > 0 ||
-            this.image.url) {
-
+        if (this.enable) {
             backgroundData = {
                 enable: this.enable,
-                color: this.color.r > 0 ||
-                    this.color.g > 0 ||
-                    this.color.b > 0 ||
-                    this.color.a > 0 ? this.color.toHex() : null,
+                color: this.color.toHex(),
                 image: this.image.url ? {
                     id: this.image.id,
                     name: this.image.name,

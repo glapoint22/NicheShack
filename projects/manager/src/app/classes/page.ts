@@ -19,6 +19,7 @@ import { CarouselWidgetComponent } from '../shared-components/designer/widgets/c
 import { WidgetCursor } from './widget-cursor';
 import { RowData } from 'projects/manager/src/app/classes/row-data';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
+import { Color } from 'classes/color';
 
 export class Page {
     public id: number;
@@ -54,6 +55,8 @@ export class Page {
             this.name = '';
             this.width = this.defaultWidth;
             this.background = new Background();
+            this.background.enable = true;
+            this.background.color = new Color(0, 0, 0, 0);
         }
     }
 
@@ -73,6 +76,7 @@ export class Page {
         this.width = pageData.width ? pageData.width : this.width;
 
         // Set the background data
+        pageData.background.enable = true;
         this.background.setData(pageData.background);
 
         if (pageData.rows && pageData.rows.length > 0) {
@@ -127,7 +131,7 @@ export class Page {
                     let containerWidgetData = columnData.widgetData as ContainerWidgetData;
 
                     // Load this container's widgets
-                    if(containerWidgetData.rows) {
+                    if (containerWidgetData.rows) {
                         this.setRows(containerWidgetData.rows, containerWidget.container);
                     }
                 }

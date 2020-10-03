@@ -20,9 +20,9 @@ export class AppComponent {
     // Set error to false on each navigation
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationStart) {
-        this.dataService.error = null;
+        this.dataService.error = undefined;
         this.dataService.loading = false;
-        this.dataService.pageNotFound = false;
+        this.dataService.pageNotFound = undefined;
       }
     });
   }

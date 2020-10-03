@@ -4,6 +4,8 @@ import { DataService } from 'services/data.service';
 import { Customer } from 'classes/customer';
 import { Router } from '@angular/router';
 import { Redirect } from 'projects/website/src/app/classes/redirect';
+import { SignInData } from 'projects/website/src/app/classes/sign-in-data';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,9 +15,22 @@ export class AccountService {
     public customer = new ReplaySubject<Customer>(1);
     public isSignedIn = new ReplaySubject<boolean>(1);
     public accountUpdated: boolean;
+    public email: string;
 
-    constructor(private dataService: DataService, private router: Router) {
-        this.setAccount();
+    constructor(private dataService: DataService, private router: Router, private authService: AuthService) {
+        this.dataService.get('api/Account/GetCustomer')
+            .subscribe((customer: Customer) => {
+                this.setAccount(customer);
+            });
+
+
+    }
+
+
+    public signIn(signInData: SignInData, redirect: Redirect) {
+        // Set the cookies and account
+        this.authService.setCookies(signInData.tokenData.accessToken, signInData.tokenData.refreshToken);
+        this.setAccount(signInData.customer, redirect);
     }
 
 
@@ -28,22 +43,13 @@ export class AccountService {
         this.isSignedIn.next(false);
     }
 
-    public setAccount(redirect: Redirect = null) {
-        // This will get the customer from the database setting firstName, lastName, and email
-        // If the customer returns null, this means the customer is not signed in or doesn't have an account
-        this.dataService.get('api/Account/GetCustomer')
-            .subscribe((customer: Customer) => {
 
-                this.customer.next(customer);
-                this.isSignedIn.next(customer != null);
-                if (redirect != null) {
-                    this.router.navigate([redirect.path], { queryParams: redirect.queryParams });
-                }
-            }, () => {
-                this.customer.next(null);
-                this.customer.complete();
-                this.isSignedIn.next(true);
-                this.isSignedIn.complete();
-            });
+
+    public setAccount(customer: Customer, redirect: Redirect = null) {
+        this.customer.next(customer);
+        this.isSignedIn.next(customer != null);
+        if (redirect != null) {
+            this.router.navigate([redirect.path], { queryParams: redirect.queryParams });
+        }
     }
 }

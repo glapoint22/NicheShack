@@ -132,6 +132,7 @@ export class LinkStyle extends NodeStyle {
         if (!anchor) {
             // Create the anchor node and append the contents
             anchor = document.createElement('A');
+            anchor.style.textDecoration = 'underline';
             anchor.appendChild(range.extractContents());
             range.insertNode(anchor);
 
