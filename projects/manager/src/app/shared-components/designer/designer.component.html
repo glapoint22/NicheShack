@@ -49,7 +49,7 @@
                 <!-- Canvas -->
                 <div #canvasElement class="canvas" (click)="pageService.selectPage()">
                     <div #contentElement class="content" [style.maxWidth.px]="pageService.page.width"
-                        [style.backgroundColor]="pageService.page.background.color ? pageService.page.background.color.toRGBString(): null"
+                        [style.backgroundColor]="pageService.page.name ? pageService.page.background.color.toRGBString(): null"
                         [ngStyle]="{ 'background-image': pageService.page.background.image && pageService.page.background.image.url ? 'url(images/' + pageService.page.background.image.url + ')' : null,
                         'background-position': pageService.page.background.image ? pageService.page.background.image.position : null,
                         'background-repeat': pageService.page.background.image ? pageService.page.background.image.repeat : null,

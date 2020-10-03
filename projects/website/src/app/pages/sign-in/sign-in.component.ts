@@ -4,12 +4,11 @@ import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { DataService } from 'services/data.service';
-import { TokenData } from 'interfaces/token-data';
-import { AuthService } from 'services/auth.service';
 import { Account } from 'classes/account';
 import { AccountService } from 'services/account.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RedirectService } from '../../services/redirect.service';
+import { SignInData } from '../../classes/sign-in-data';
 
 @Component({
   selector: 'sign-in',
@@ -18,7 +17,8 @@ import { RedirectService } from '../../services/redirect.service';
 })
 export class SignInComponent extends ValidationPageComponent implements OnInit {
   public account: Account = new Account();
-  public conflictError: string;
+  public errorResponse: HttpErrorResponse;
+  public emailSent: boolean;
 
   constructor(
     titleService: Title,
@@ -26,7 +26,6 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
     @Inject(DOCUMENT) document: Document,
     @Inject(PLATFORM_ID) platformId: Object,
     public router: Router,
-    private authService: AuthService,
     private dataService: DataService,
     private accountService: AccountService,
     private redirectService: RedirectService
@@ -43,16 +42,24 @@ export class SignInComponent extends ValidationPageComponent implements OnInit {
 
   submitData(): void {
     this.dataService.post('api/Account/SignIn', this.account)
-      .subscribe((tokenData: TokenData) => {
-        // Set the cookies and account
-        this.authService.setCookies(tokenData.accessToken, tokenData.refreshToken);
-        this.accountService.setAccount(this.redirectService.redirect);
+      .subscribe((signInData: SignInData) => {
+        // Sign in
+        this.accountService.signIn(signInData, this.redirectService.redirect);
       },
         (errorResponse: HttpErrorResponse) => {
-          if (errorResponse.status == 409) {
-            this.conflictError = errorResponse.error;
+          if (errorResponse.status == 401 || errorResponse.status == 409) {
+            this.errorResponse = errorResponse;
           }
         });
+  }
+
+
+  resendEmail() {
+    this.dataService.get('api/Account/ResendAccountActivationEmail', [{ key: 'email', value: this.account.email }])
+      .subscribe(() => {
+        this.errorResponse = null;
+        this.emailSent = true;
+      });
   }
 
   onCreateAccountClick() {

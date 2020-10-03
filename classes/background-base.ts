@@ -3,15 +3,11 @@ import { BackgroundData } from './background-data';
 import { BackgroundImageBase } from './background-image-base';
 
 export class BackgroundBase {
-    public color: Color = new Color(0, 0, 0, 0);
-    public enable: boolean;
+    public color: Color;
     public image: BackgroundImageBase = new BackgroundImageBase();
 
     setData(backgroundData: BackgroundData) {
-        if (backgroundData) {
-            // Enable
-            this.enable = backgroundData.enable;
-
+        if (backgroundData && (backgroundData.color || backgroundData.image)) {
             // Background color
             if (backgroundData.color) this.color = Color.hexToRGB(backgroundData.color);
             

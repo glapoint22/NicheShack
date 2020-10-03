@@ -3,10 +3,25 @@
     <img src="assets/Logo.png" routerLink="" title="Niche Shack Homepage">
 
     <!-- Error -->
-    <div *ngIf="conflictError" class="error-box">
+    <div *ngIf="errorResponse" class="error-box">
         <i class="fas fa-exclamation-triangle"></i>
-        <div>{{conflictError}}</div>
+        <div>{{errorResponse.error}}
+
+            <div *ngIf="errorResponse && errorResponse.status == 401"
+            class="resend-email"
+            (click)="resendEmail()">
+                Click here to resend the account activation email.
+            </div>
+        </div>
     </div>
+
+
+    <div *ngIf="emailSent" class="email-sent">
+        <i class="fas fa-check"></i>
+        The account activation email has been resent to {{account.email}}. If you don't see this email in your inbox, check your junk or spam folder.
+    </div>
+
+
 
     <form (ngSubmit)="onSubmit()" #form="ngForm">
         <h1>Sign In</h1>
@@ -23,8 +38,8 @@
         <!-- Password -->
         <div *ngIf="valid(password); else invalidPassword" style="width: 88%; margin: auto">
             <h4 style="display: inline;">Password:</h4>
-            <a class="niche-shack-gold-color" style="text-decoration: underline; float: right; font-size: 12px;" tabindex="10"
-                routerLink="/forgot-password">Forgot your password?</a>
+            <a class="niche-shack-gold-color" style="text-decoration: underline; float: right; font-size: 12px;"
+                tabindex="10" routerLink="/forgot-password">Forgot your password?</a>
         </div>
 
 
@@ -32,8 +47,8 @@
         <ng-template #invalidPassword>
             <h4 class="error">Passwords must be at least 6 characters.</h4>
             <a class="niche-shack-gold-color"
-                style="text-decoration: underline; width: 88%; margin-bottom: 5px; font-size: 12px; margin: auto; display: block;" tabindex="10"
-                routerLink="/forgot-password">Forgot your password?</a>
+                style="text-decoration: underline; width: 88%; margin-bottom: 5px; font-size: 12px; margin: auto; display: block;"
+                tabindex="10" routerLink="/forgot-password">Forgot your password?</a>
         </ng-template>
         <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="account.password" name="password"
             #password="ngModel">

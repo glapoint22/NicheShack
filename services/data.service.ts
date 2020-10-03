@@ -47,7 +47,7 @@ export class DataService {
       };
 
       // If we don't have a conflict error
-      if (error.status != 409) {
+      if (error.status != 401 && error.status != 409) {
         this.error = error;
       }
 

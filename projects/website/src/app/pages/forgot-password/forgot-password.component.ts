@@ -3,6 +3,7 @@ import { ValidationPageComponent } from '../validation-page/validation-page.comp
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
+import { DataService } from 'services/data.service';
 
 @Component({
   templateUrl: './forgot-password.component.html',
@@ -10,14 +11,17 @@ import { Router } from '@angular/router';
 })
 export class ForgotPasswordComponent extends ValidationPageComponent implements OnInit {
   public emailAddress: string;
-  public conflictError: string;
+  public emailSent: boolean;
+
 
   constructor(
     titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
     @Inject(PLATFORM_ID) platformId: Object,
-    public router: Router) {
+    public router: Router,
+    private dataService: DataService
+  ) {
     super(titleService, metaService, document, platformId);
   }
 
@@ -27,7 +31,9 @@ export class ForgotPasswordComponent extends ValidationPageComponent implements 
   }
 
   submitData(): void {
-    this.conflictError = 'This email isn\'t associated with your account. Please try a different email.'
+    this.dataService.get('api/Account/ForgetPassword', [{ key: 'email', value: this.emailAddress }])
+      .subscribe(() => {
+        this.emailSent = true;
+      });
   }
-
 }

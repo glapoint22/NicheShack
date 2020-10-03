@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { VerificationComponent } from './verification.component';
+import { ResetPasswordComponent } from './reset-password.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: VerificationComponent
+    component: ResetPasswordComponent
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class VerificationRoutingModule { }
+export class ResetPasswordRoutingModule { }
