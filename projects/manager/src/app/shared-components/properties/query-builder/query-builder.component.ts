@@ -1,6 +1,6 @@
 import { KeyValue } from '@angular/common';
 import { Component } from '@angular/core';
-import { Query, QueryCategory, QueryDate, QueryFeatured, QueryKeywords, QueryNiche, QueryNone, QueryPrice, QueryRating, QueryRelated, QuerySubgroup, ValueType } from '../../../classes/query';
+import { OperatorType, Query, QueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType } from '../../../classes/query';
 import { QueryService } from '../../../services/query.service';
 
 @Component({
@@ -10,89 +10,42 @@ import { QueryService } from '../../../services/query.service';
 })
 export class QueryBuilderComponent {
   constructor(private queryService: QueryService) { }
-  public queries: Array<Query> = [];
+  public queryRows: Array<QueryRow> = [];
+  public operatorType = OperatorType;
   public valueType = ValueType;
+  public queries: Array<Query> = [];
 
-  public whereList: Array<KeyValue<any, Query>> = [
-    { key: "None", value: new QueryNone() },
-    { key: "Category", value: new QueryCategory(this.queryService.categoryList) },
-    { key: "Niche", value: new QueryNiche() },
-    { key: "Subgroup", value: new QuerySubgroup() },
-    { key: "Rating", value: new QueryRating() },
-    { key: "Price", value: new QueryPrice() },
-    { key: "Keywords", value: new QueryKeywords() },
-    { key: "Related", value: new QueryRelated() },
-    { key: "Featured", value: new QueryFeatured() },
-    { key: "Created", value: new QueryDate() }
+  public whereList: Array<KeyValue<any, QueryRow>> = [
+    { key: "None", value: new QueryRowNone(this.queryRows) },
+    { key: "Category", value: new CategoryQueryRow(this.queryRows, this.queryService.categoryList) },
+    { key: "Niche", value: new NicheQueryRow(this.queryRows) },
+    { key: "Product Subgroup", value: new ProductSubgroupQueryRow(this.queryRows) },
+    { key: "Featured Products", value: new FeaturedProductsQueryRow(this.queryRows) },
+    { key: "Customer Related Products", value: new CustomerRelatedProductsQueryRow(this.queryRows) },
+    { key: "Product Price", value: new ProductPriceQueryRow(this.queryRows) },
+    { key: "Product Rating", value: new ProductRatingQueryRow(this.queryRows) },
+    { key: "Product Keywords", value: new ProductKeywordsQueryRow(this.queryRows) },
+    { key: "Product Creation Date", value: new ProductCreationDateQueryRow(this.queryRows) }
   ];
 
 
   public operatorList: Array<KeyValue<any, any>> = [
-    { key: "=", value: "=" },
-    { key: ">", value: ">" },
-    { key: ">=", value: ">=" },
-    { key: "<", value: "<" },
-    { key: "<=", value: "<=" },
-    { key: "Is Between", value: "Is Between" }
+    { key: "=", value: OperatorType.Equals },
+    { key: ">", value: OperatorType.GreaterThan },
+    { key: ">=", value: OperatorType.GreaterThanOrEqualTo },
+    { key: "<", value: OperatorType.LessThan },
+    { key: "<=", value: OperatorType.LessThanOrEqualTo },
+    { key: "Is Between", value: OperatorType.IsBetween }
   ];
 
 
+
   onQueryAdd() {
-    this.queries.push(new QueryNone());
+    this.queryRows.push(new QueryRowNone(this.queryRows));
+    this.queries.push({ where: null, operator: null, value: null });
   }
 
 
-  onWhereDropdownChange(query: Query, index: number) {
+  
 
-
-
-
-
-
-
-
-    // console.log(query)
-
-
-
-    // Get the category icon based on the category Id
-
-
-
-    // Image
-    // Name
-    // Rating
-    // Total Reviews
-    // Min Price
-    // Max Price
-
-
-    // select 
-
-    // Image Name
-    // (select name from Media where Id = ImageId) as [Image Name], 
-
-    // Image URL
-    // (select url from Media where Id = ImageId) as [Image URL], 
-
-    // Product Name:
-    // Name, 
-
-    // Rating:
-    // Rating, 
-
-    // Total Reviews:
-    // TotalReviews, 
-
-    // Min Price:
-    // MinPrice,
-
-    // Max Price:
-    // MaxPrice from Products 
-
-
-    // where NicheId in (select id from Niches where CategoryId = (select [Id] from Categories where Name = 'Health & Fitness'))
-
-
-  }
 }

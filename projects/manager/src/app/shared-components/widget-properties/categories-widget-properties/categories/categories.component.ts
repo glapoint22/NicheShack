@@ -75,7 +75,7 @@ export class CategoriesComponent implements Searchable, OnInit {
   }
 
 
-  // -----------------------------( ADD CATEGORY )------------------------------ \\
+  // -----------------------------( OPEN POPUP )------------------------------ \\
   openPopup(sourceElement: HTMLElement) {
     this.popupService.sourceElement = sourceElement;
     this.popupService.searchPopup.searchable = this;

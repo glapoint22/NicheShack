@@ -39,10 +39,10 @@ export class DropdownComponent {
 
   // -----------------------------( ON MENU OPTION SELECT )------------------------------ \\
   onMenuOptionSelect() {
-    this.onChange.emit(this.dropdownMenuService.dropdownMenu.selectedOption.option.value);
     this.selectedIndex = this.dropdownMenuService.dropdownMenu.selectedIndex;
     // Record the index of the menu option that is selected for future reference
     this.initialSelectedIndex = this.selectedIndex;
+    this.onChange.emit(this.dropdownMenuService.dropdownMenu.selectedOption.option.value);
   }
 
 
