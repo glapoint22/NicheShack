@@ -17,8 +17,8 @@
             <!-- Buttons -->
             <div style="float: right;">
                 <button style="margin-right: 8px;"
-                (click)="promptService.onNoClick(); promptService.show = false">Cancel</button>
-                <button class="alt-button" (click)="promptService.onYesClick(); promptService.show = false">Yes</button>
+                (click)="promptService.onNoClick(); promptService.show = false">{{promptService.onYes ? 'Cancel': 'Ok'}}</button>
+                <button *ngIf="promptService.onYes" class="alt-button" (click)="promptService.onYesClick(); promptService.show = false">Yes</button>
             </div>
         </div>
     </div>
