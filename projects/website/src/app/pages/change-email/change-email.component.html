@@ -1,86 +1,63 @@
-<navbar></navbar>
+<ng-container *ngIf="newEmail && token">
+    <navbar></navbar>
 
-<div class="page-container">
-    <div class="content-container">
-
-        <div class="content form-page">
-            <!-- breadcrumb -->
-            <div class="breadcrumb">
-                <a routerLink="/account">Your Account</a>
-                <i class="fas fa-caret-right"></i>
-                <a routerLink="/account/profile">Profile</a>
-                <i class="fas fa-caret-right"></i>
-                <span>Change Email</span>
+    <div class="page-container">
+        <div class="content-container">
+    
+            <div class="content form-page">
+                <!-- breadcrumb -->
+                <div class="breadcrumb">
+                    <a routerLink="/account">Your Account</a>
+                    <i class="fas fa-caret-right"></i>
+                    <a routerLink="/account/profile">Profile</a>
+                    <i class="fas fa-caret-right"></i>
+                    <span>Change Email</span>
+                </div>
+    
+                <!-- Logo -->
+                <img src="assets/Logo.png" routerLink="" title="Niche Shack Homepage">
+    
+    
+                <!-- Error -->
+                <div *ngIf="conflictError" class="error-box">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>{{conflictError}}</div>
+                </div>
+    
+    
+                <!-- Form -->
+                <form (ngSubmit)="onSubmit()" #form="ngForm" [matchValue]="['newEmail', 'reEnteredEmail']">
+                    <h1>Change Email</h1>
+    
+                    <!-- Old email -->
+                    <h4>Previous email:</h4>
+                    <div class="fixed-width" style="color: #b9b9b9; margin: auto; margin-bottom: 16px;">{{previousEmail}}</div>
+    
+    
+                    <!-- New email -->
+                    <h4>New email:</h4>
+                    <div class="fixed-width" style="color: #b9b9b9; margin: auto; margin-bottom: 16px;">{{newEmail}}</div>
+    
+    
+    
+                    <!-- Password -->
+                    <h4 *ngIf="valid(password); else invalidPassword">Password:</h4>
+    
+                    <!-- Invalid password -->
+                    <ng-template #invalidPassword>
+                        <h4 class="error">Passwords must be at least 6 characters.</h4>
+                    </ng-template>
+                    <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="_password" name="password"
+                        #password="ngModel">
+    
+    
+                    <!-- Save button -->
+                    <button class="alt-button">Save</button>
+                </form>
             </div>
-
-            <!-- Logo -->
-            <img src="assets/Logo.png" routerLink="" title="Niche Shack Homepage">
-
-
-            <!-- Error -->
-            <div *ngIf="conflictError" class="error-box">
-                <i class="fas fa-exclamation-triangle"></i>
-                <div>{{conflictError}}</div>
-            </div>
-
-
-            <!-- Form -->
-            <form (ngSubmit)="onSubmit()" #form="ngForm" [matchValue]="['newEmail', 'reEnteredEmail']">
-                <h1>Change Email</h1>
-
-                <!-- Old email -->
-                <h4>Current email:</h4>
-                <div class="margin-bottom-16 fixed-width margin-auto disabled-color">{{currentEmail}}</div>
-
-
-                <!-- Email -->
-                <h4 *ngIf="valid(newEmailAddress); else invalidNewEmail">New email:</h4>
-
-                <!-- Invalid new email -->
-                <ng-template #invalidNewEmail>
-                    <!-- Emails are the same -->
-                    <h4 *ngIf="newEmailAddress.errors.emailMatch" class="error">
-                        The new email address is the same as your current email address.
-                    </h4>
-
-                    <!-- Invalid email -->
-                    <h4 *ngIf="newEmailAddress.errors.email || newEmailAddress.errors.required" class="error">
-                        Please provide a valid email address.
-                    </h4>
-                </ng-template>
-                <input required email [(ngModel)]="_email" name="newEmail" #newEmailAddress="ngModel"
-                    autocomplete="off">
-
-
-
-                <!-- Re-enter email -->
-                <h4 *ngIf="valid(reEnteredEmailAddress); else invalidReEnteredEmail">Re-enter email:</h4>
-
-                <!-- Invalid re-entered email -->
-                <ng-template #invalidReEnteredEmail>
-                    <h4 class="error">Please make sure emails match.</h4>
-                </ng-template>
-                <input required [(ngModel)]="reEnteredEmail" name="reEnteredEmail" #reEnteredEmailAddress="ngModel"
-                    autocomplete="off">
-
-
-
-                <!-- Password -->
-                <h4 *ngIf="valid(password); else invalidPassword">Password:</h4>
-
-                <!-- Invalid password -->
-                <ng-template #invalidPassword>
-                    <h4 class="error">Passwords must be at least 6 characters.</h4>
-                </ng-template>
-                <input type="password" required pattern="(?=.*\S).{6,}" [(ngModel)]="_password" name="password"
-                    #password="ngModel">
-
-
-                <!-- Save button -->
-                <button class="alt-button">Save</button>
-            </form>
+    
+            <navfooter></navfooter>
         </div>
-
-        <navfooter></navfooter>
     </div>
-</div>
+</ng-container>
+

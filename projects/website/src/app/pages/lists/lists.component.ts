@@ -164,13 +164,13 @@ export class ListsComponent extends SharePageComponent implements OnInit {
   onRemoveProductClick(product: any) {
     // Prompt the user
     let promptTitle = 'Remove Product';
-    let promptMessage = 'Are you sure you want to remove this product from this list?';
+    let promptMessage = 'Are you sure you want to remove "' + product.title + '" from this list?';
     this.promptService.showPrompt(promptTitle, promptMessage, this.removeProduct, this, [product]);
   }
 
 
   removeProduct(product: any) {
-    this.dataService.delete('api/Lists/Product', { productId: product.id, collaboratorId: product.collaborator.id })
+    this.dataService.delete('api/Lists/Product', { productId: product.id, collaboratorId: product.collaborator.id, listId: this.selectedList.id })
       .subscribe(() => {
         product.removed = true;
         this.selectedList.totalItems--;
@@ -181,8 +181,9 @@ export class ListsComponent extends SharePageComponent implements OnInit {
 
   onMoveProductClick(list: any, product: any) {
     // Prompt the user
+    let fromList = this.selectedList.name + (this.selectedList.owner != 'You' ? ' (' + this.selectedList.owner + ')' : '');
     let promptTitle = 'Move Product';
-    let promptMessage = 'Are you sure you want to move this product from ' + this.selectedList.name + ' to ' + list.value + '?';
+    let promptMessage = 'Are you sure you want to move "' + product.title + '" from ' + fromList + ' to ' + list.value + '?';
     this.promptService.showPrompt(promptTitle, promptMessage, this.moveProduct, this, [list, product]);
   }
 
@@ -190,11 +191,19 @@ export class ListsComponent extends SharePageComponent implements OnInit {
     this.dataService.put('api/Lists/Product', {
       productId: product.id,
       collaboratorId: product.collaborator.id,
-      listId: list.key
-    }).subscribe(() => {
-      product.removed = true;
-      this.selectedList.totalItems--;
-      this.lists.filter(x => x.id == list.key)[0].totalItems++;
+      fromListId: this.selectedList.id,
+      ToListId: list.key
+    }).subscribe((isDuplicate: boolean) => {
+      if (isDuplicate) {
+        let promptTitle = 'Duplicate';
+        let promptMessage = list.value + ' already contains ' + product.title;
+        this.promptService.showPrompt(promptTitle, promptMessage);
+
+      } else {
+        product.removed = true;
+        this.selectedList.totalItems--;
+        this.lists.filter(x => x.id == list.key)[0].totalItems++;
+      }
     });
   }
 

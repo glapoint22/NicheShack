@@ -12,7 +12,7 @@
 
             <!-- Title & Image -->
             <div class="title text-truncate">{{productInfo.product.name}}</div>
-            <img [src]="'/images/' + productInfo.media[0].url">
+            <img *ngIf="productInfo.media && productInfo.media.length > 0" [src]="'/images/' + productInfo.media[0].url">
 
             <!-- Not submitted -->
             <ng-container *ngIf="!submitted && !isDuplicate">

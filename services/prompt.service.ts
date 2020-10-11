@@ -14,7 +14,7 @@ export class PromptService {
   private argArray: any;
   public onPromptClose = new Subject<void>();
 
-  showPrompt(promptTitle: string, message: string, onYes: Function, currentObject: any, argArray?: any, onNo?: Function) {
+  showPrompt(promptTitle: string, message: string, onYes?: Function, currentObject?: any, argArray?: any, onNo?: Function) {
     this.show = true;
     this.promptTitle = promptTitle;
     this.message = message;

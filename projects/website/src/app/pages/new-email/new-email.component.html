@@ -1,0 +1,66 @@
+<navbar></navbar>
+
+
+<div class="page-container">
+    <div class="content-container">
+
+        <div class="content form-page">
+            <!-- breadcrumb -->
+            <div class="breadcrumb">
+                <a routerLink="/account">Your Account</a>
+                <i class="fas fa-caret-right"></i>
+                <a routerLink="/account/profile">Profile</a>
+                <i class="fas fa-caret-right"></i>
+                <span>New Email</span>
+            </div>
+
+
+            <!-- Logo -->
+            <img src="assets/Logo.png" routerLink="" title="Niche Shack Homepage">
+
+
+            <div *ngIf="emailSent" class="email-sent">
+                <i class="fas fa-check"></i>
+                An email has been sent to {{emailAddress}}. If you don't see this email in your inbox, check your junk
+                or spam folder.
+            </div>
+
+
+            <!-- Error -->
+            <div *ngIf="error" class="error-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>the email address, {{emailAddress}}, already exists with another Niche Shack account.</div>
+            </div>
+
+
+            <form *ngIf="!emailSent" (ngSubmit)="onSubmit()" #form="ngForm">
+                <h1>New Email</h1>
+
+                <!-- Caption -->
+                <div class="fixed-width caption">Enter the new email address below and we'll send a verification email
+                    to that address.</div>
+
+
+
+                <!-- Email -->
+                <h4 *ngIf="valid(email); else invalidEmail">Email:</h4>
+
+                <!-- Invalid email -->
+                <ng-template #invalidEmail>
+                    <h4 class="error">Please enter a valid email address.</h4>
+                </ng-template>
+                <input required email [(ngModel)]="emailAddress" name="email" #email="ngModel">
+
+
+                <!-- Continue button -->
+                <button class="alt-button">Continue</button>
+            </form>
+
+            <div class="footer">
+                <a routerLink="/terms">Terms of Use</a>
+                <a routerLink="/privacy-policy">Privacy Policy</a>
+            </div>
+        </div>
+        <navfooter></navfooter>
+    </div>
+</div>
