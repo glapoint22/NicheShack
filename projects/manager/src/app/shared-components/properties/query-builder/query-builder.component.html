@@ -1,6 +1,6 @@
 <panel [title]="'Query Builder'">
     <!--  -->
-    <div style="display: flex; justify-content: flex-end; margin-bottom: 2px; margin-top: -6px; margin-right: 1px;">
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 2px; margin-top: -11px; margin-right: 1px;">
         <div class="icon-container" (click)="onQueryAdd()" [attr.title]="'Add'">
             <i class="fas fa-plus-circle"></i>
         </div>
@@ -115,42 +115,69 @@
 
 
 
+                    <div *ngIf="queryRow.valueType == valueType.Dropdown">
+                        <dropdown *ngIf="queryRow.dropdownList; else spinner1" [height]="22" [title]="''" [dropdownList]="queryRow.dropdownList" [selectedIndex]="0"
+                            (onChange)="queryRow.updateValue($event)">
+                        </dropdown>
 
-                    <dropdown *ngIf="queryRow.valueType == valueType.Dropdown" [height]="22" [title]="''"
-                        [dropdownList]="queryRow.getList()" [selectedIndex]="0"
-                        (onChange)="queryRow.updateValue($event)"></dropdown>
+                        <ng-template #spinner1>
+                            <div style="width: 100%; height: 22px; display: flex; justify-content: center; align-items: center;">
+                                <i class="fas fa-spinner fa-pulse"></i>
+                            </div>
+                        </ng-template>
+
+                        <div *ngIf="queryRow.operatorType == operatorType.IsBetween">
+                            <div
+                                style="width: 100%x; height: 22px; display: flex; justify-content: center; align-items: center; font-size: 13px;">
+                                And
+                            </div>
+
+                            <dropdown *ngIf="queryRow.dropdownList; else spinner2" [height]="22" [title]="''" [dropdownList]="queryRow.dropdownList" [selectedIndex]="0"
+                                (onChange)="queryRow.updateValue2($event)">
+                            </dropdown>
+
+                            <ng-template #spinner2>
+                                <div style="width: 100%; height: 22px; display: flex; justify-content: center; align-items: center;">
+                                    <i class="fas fa-spinner fa-pulse"></i>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
 
 
 
-                    <div *ngIf="queryRow.valueType == valueType.Text">
+
+                    <div *ngIf="queryRow.valueType == valueType.Price">
                         <div style="display: flex; align-items: center;">
                             <div style="margin-left: 2px; margin-right: 2px;">$</div>
-                            <input #wholeNumberInput1
+                            <input #wholeNumberInput1 id="wholeNumber1"
                                 style="width: 100%; height: 22px; text-align: right; padding-right: 3px; padding-left: 0;"
                                 placeholder="0" (input)="queryRow.updateWholeNumberValue($event.target, decimalInput1)">
                             <div style="margin-left: 1px; margin-right: 1px; font-size: 17px; font-weight: bold;">.
                             </div>
-                            <input #decimalInput1 style="width: 100%; height: 22px; padding-left: 3px;" placeholder="00"
-                                maxlength="2" (input)="queryRow.updateDecimalValue(wholeNumberInput1, $event.target)"
+                            <input #decimalInput1 id="decimal1" style="width: 100%; height: 22px; padding-left: 3px;"
+                                placeholder="00" maxlength="2"
+                                (input)="queryRow.updateDecimalValue(wholeNumberInput1, $event.target)"
                                 (blur)="queryRow.onDecimalInputBlur($event.target)">
                         </div>
 
 
                         <div *ngIf="queryRow.operatorType == operatorType.IsBetween">
                             <div
-                                style="width: 100%x; height: 22px; display: flex; justify-content: center; align-items: center;">
+                                style="width: 100%x; height: 22px; display: flex; justify-content: center; align-items: center; font-size: 13px;">
                                 And
                             </div>
                             <div style="display: flex; align-items: center;">
                                 <div style="margin-left: 2px; margin-right: 2px;">$</div>
-                                <input #wholeNumberInput2
+                                <input #wholeNumberInput2 id="wholeNumber2"
                                     style="width: 100%; height: 22px; text-align: right; padding-right: 3px; padding-left: 0;"
                                     placeholder="0"
                                     (input)="queryRow.updateWholeNumberValue($event.target, decimalInput2)">
                                 <div style="margin-left: 1px; margin-right: 1px; font-size: 17px; font-weight: bold;">.
                                 </div>
-                                <input #decimalInput2 style="width: 100%; height: 22px; padding-left: 3px;"
-                                    placeholder="00" maxlength="2" (input)="queryRow.updateDecimalValue(wholeNumberInput2, $event.target)"
+                                <input #decimalInput2 id="decimal2"
+                                    style="width: 100%; height: 22px; padding-left: 3px;" placeholder="00" maxlength="2"
+                                    (input)="queryRow.updateDecimalValue(wholeNumberInput2, $event.target)"
                                     (blur)="queryRow.onDecimalInputBlur($event.target)">
                             </div>
                         </div>
@@ -291,30 +318,77 @@
 
 
 
-
-                    <div *ngIf="queryRow.valueType == valueType.Date"
-                        style="display: flex; flex-direction: row-reverse; position: relative;">
-                        <input #dateInput type="date" style="width: 55px; height: 22px; pointer-events: all;"
-                            (input)="queryRow.updateValue($event.target)">
-
-                        <div
-                            style="position: absolute; width: 100%; height: 100%; pointer-events: none; display: flex;">
+                    <div *ngIf="queryRow.valueType == valueType.Date">
 
 
-                            <input [value]="dateInput.value | date :'M/d/yy'" placeholder="mm/dd/yy"
-                                style="border-top-right-radius: 0; border-bottom-right-radius: 0;  border-right: none; width: 100%; height: 100%; display: flex; align-items: center; padding-left: 3px;">
+                        <div style="display: flex; flex-direction: row-reverse; position: relative;">
 
 
-
+                            <input #dateInput type="date" style="width: 55px; height: 22px; pointer-events: all;"
+                                (input)="queryRow.updateValue($event.target)">
 
                             <div
-                                style="background:#414141; border: 1px solid #4f4f4f; width: 25px; height: 100%; pointer-events:none; display: flex; justify-content: center; align-items: center; border-top-right-radius: 3px; border-bottom-right-radius: 3px;">
-                                <i class="far fa-calendar-alt" style="font-size: 12px;"></i>
+                                style="position: absolute; width: 100%; height: 100%; pointer-events: none; display: flex;">
+
+
+                                <input [value]="dateInput.value | date :'M/d/yy'" placeholder="mm/dd/yy"
+                                    style="border-top-right-radius: 0; border-bottom-right-radius: 0;  border-right: none; width: 100%; height: 100%; display: flex; align-items: center; padding-left: 3px;">
+
+
+
+
+                                <div
+                                    style="background:#414141; border: 1px solid #4f4f4f; width: 25px; height: 100%; pointer-events:none; display: flex; justify-content: center; align-items: center; border-top-right-radius: 3px; border-bottom-right-radius: 3px;">
+                                    <i class="far fa-calendar-alt" style="font-size: 12px;"></i>
+
+                                </div>
 
                             </div>
+                        </div>
+
+
+
+
+
+                        <div *ngIf="queryRow.operatorType == operatorType.IsBetween">
+                            <div
+                                style="width: 100%x; height: 22px; display: flex; justify-content: center; align-items: center; font-size: 13px;">
+                                And
+                            </div>
+
+
+                            <div style="display: flex; flex-direction: row-reverse; position: relative;">
+
+
+                                <input #dateInput type="date" style="width: 55px; height: 22px; pointer-events: all;"
+                                    (input)="queryRow.updateValue2($event.target)">
+
+                                <div
+                                    style="position: absolute; width: 100%; height: 100%; pointer-events: none; display: flex;">
+
+
+                                    <input [value]="dateInput.value | date :'M/d/yy'" placeholder="mm/dd/yy"
+                                        style="border-top-right-radius: 0; border-bottom-right-radius: 0;  border-right: none; width: 100%; height: 100%; display: flex; align-items: center; padding-left: 3px;">
+
+
+
+
+                                    <div
+                                        style="background:#414141; border: 1px solid #4f4f4f; width: 25px; height: 100%; pointer-events:none; display: flex; justify-content: center; align-items: center; border-top-right-radius: 3px; border-bottom-right-radius: 3px;">
+                                        <i class="far fa-calendar-alt" style="font-size: 12px;"></i>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
 
                         </div>
+
                     </div>
+
 
 
 
@@ -345,4 +419,6 @@
 
 
     </div>
+
+    <button style="margin-top: 10px; float: right; font-size: 12px; display: flex; height: 21px;" (click)="getProducts()">Get Products</button>
 </panel>
