@@ -22,12 +22,12 @@ export class ManageCollaboratorsComponent {
 
   onRemoveCollaborator() {
     // Update database!
-    this.dataService.delete('api/Lists/Collaborator', {
-      customerId: this.currentCollaborator.customerId,
+    this.dataService.put('api/Lists/RemoveCollaborator', {
+      id: this.currentCollaborator.id,
       listId: this.listId
     })
       .subscribe(() => {
-        let index = this.collaborators.findIndex(x => x.customerId == this.currentCollaborator.customerId);
+        let index = this.collaborators.findIndex(x => x.id == this.currentCollaborator.id);
         this.collaborators.splice(index, 1);
         this.confirm = false;
         if (this.collaborators.length == 0) this.show = false;
