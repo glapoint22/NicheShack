@@ -219,6 +219,7 @@ export class CategoryQueryRow extends QueryRowClass implements QueryRow {
         this.whereDropdownSelectedIndex = 1;
     }
     public valueDropdownSelectedIndex: number = 0;
+    public dropdownList: Array<KeyValue<any, any>>;
 
     newQueryRow(queryRowIndex: number) {
         let categories = [];
@@ -260,38 +261,21 @@ export class CategoryQueryRow extends QueryRowClass implements QueryRow {
 
 
     updateValue(newValue: number) {
-        // Create the niche query if it does NOT exist yet
+        let usedNiches = [];
+        let usedCategories = [];
+        let nicheQueryIndex: number;
+        let valueList: Array<string> = [];
+
+        // First, create the niche query if it has NOT been created already
         if (this.queries.findIndex(x => x.queryType == QueryType.Niche) == -1) {
             this.queries.push({ queryType: QueryType.Niche, operator: [OperatorType.Equals], value: [] });
         }
-        let valueList: Array<string> = [];
-        let nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
 
-
-
-        let categories = [];
-        let usedCategories = [];
-
-
-
-
-
-
+        // Then get the index of the niche query
+        nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
 
         // If the dropdown option that was selected is anything other than 'None'
         if (newValue != null) {
-
-            // // Get the index from the categories array that matches the category that was selected in the dropdown
-            // let categoryIndex = this.queryService.categories.findIndex(y => y.id == newValue);
-
-            // // Loop through all the niches of the category that was selected
-            // this.queryService.categories[categoryIndex].niches.forEach(x =>
-            //     // And add their ids to the value list
-            //     valueList.push(x.id.toString())
-            // );
-
-            // // Append the niche ids from the value list to any niche ids in the niche query and remove any duplicates
-            // this.queries[nicheQueryIndex].value = [...new Set(this.queries[nicheQueryIndex].value.concat(valueList))];
 
             // Save the id of the category that was selected in the dropdown
             this.value = newValue.toString();
@@ -309,13 +293,19 @@ export class CategoryQueryRow extends QueryRowClass implements QueryRow {
                     // Make a list of all the categories that have been used so far
                     if (x.value != null) usedCategories.push(parseInt(x.value));
                 }
-            })
+            });
+
+
+
+
 
             // Clear the value in the niche query
             this.queries[nicheQueryIndex].value = [];
 
+
             // Loop through all the query rows
             this.queryRows.forEach(x => {
+
 
                 // If we come across a query row where its type is category
                 if (x.queryType == QueryType.Category) {
@@ -326,10 +316,10 @@ export class CategoryQueryRow extends QueryRowClass implements QueryRow {
                     // Loop through all the categories of the category array
                     this.queryService.categories.forEach(y => {
 
-                        // If we come across a category that has NOT been used yet or is the selected category in that dropdown
+                        // If we come across a category that has NOT been used yet or is the selected category in the dropdown of the current category quryrow
                         if (usedCategories.indexOf(y.id) == -1 || y.id == parseInt(x.value)) {
 
-                            // Rebuild the dropdown list
+                            // Add it to the dropdown list of the current category quryrow
                             x.dropdownList.push({
                                 key: y.name,
                                 value: y.id
@@ -337,7 +327,7 @@ export class CategoryQueryRow extends QueryRowClass implements QueryRow {
                         }
                     })
 
-                    
+                    // Now that the dropdown list has been rebuilt for the current category quryrow, set the selected index for its dropdown
                     x.valueDropdownSelectedIndex = x.dropdownList.findIndex(y => y.value == x.value);
 
                     // Get the index from the categories array that matches the category that was selected in the dropdown
@@ -353,12 +343,70 @@ export class CategoryQueryRow extends QueryRowClass implements QueryRow {
 
                     // Append the niche ids from the value list to any niche ids in the niche query and remove any duplicates
                     this.queries[nicheQueryIndex].value = [...new Set(this.queries[nicheQueryIndex].value.concat(valueList))];
-
                 }
 
 
 
 
+
+
+                // If we come across a query row where its type is niche
+                if (x.queryType == QueryType.Niche) {
+                    let thisCategoryQueryRowIndex = this.queryRows.indexOf(this);
+                    let currentNicheQueryRowIndex = this.queryRows.indexOf(x);
+
+                    // As long as the current niche queryrow resides after this category queryrow
+                    if (currentNicheQueryRowIndex > thisCategoryQueryRowIndex) {
+
+                        // Reset the dropdown list for the current niche quryrow
+                        x.dropdownList = [{ key: "None", value: null }];
+
+                        // Loop through all the queryrows
+                        this.queryRows.forEach(y => {
+
+                            // When we come across a category queryrow
+                            if (y.queryType == QueryType.Category) {
+
+                                // As long as the value of that category queryrow has NOT been set to 'None'
+                                // And as long as this category queryrow is before the current niche queryrow
+                                if (y.value != null && this.queryRows.indexOf(y) < currentNicheQueryRowIndex) {
+
+                                    // Get the index of the category from the categories array that corresponds with the current category queryrow
+                                    let categoryIndex = this.queryService.categories.findIndex(z => z.id == parseInt(y.value));
+
+                                    // Then loop through each niche of that category
+                                    this.queryService.categories[categoryIndex].niches.forEach(z => {
+
+                                        // If we come across a niche that has NOT been used yet
+                                        if (usedNiches.indexOf(z.id) == -1) {
+
+                                            // Add it to the dropdown list of the current niche quryrow
+                                            x.dropdownList.push({
+                                                key: z.name,
+                                                value: z.id
+                                            })
+                                        }
+                                    });
+                                }
+                            }
+                        })
+
+
+
+
+
+                        // Now that the dropdown list has been rebuilt for the current category quryrow, set the selected index for its dropdown
+                        let valueDropdownSelectedIndex = x.dropdownList.findIndex(y => y.value == x.value);
+
+                        x.valueDropdownSelectedIndex = valueDropdownSelectedIndex == -1 ? 0 : valueDropdownSelectedIndex;
+                    }
+
+                    // As long as the value of the current niche is NOT 'None'
+                    if (x.value != null) {
+                        // Add the value of this current niche to the used list
+                        usedNiches.push(parseInt(x.value));
+                    }
+                }
             });
 
 
@@ -413,6 +461,7 @@ export class NicheQueryRow extends QueryRowClass implements QueryRow {
         this.whereDropdownSelectedIndex = 2;
     }
     public valueDropdownSelectedIndex: number = 0;
+    public dropdownList: Array<KeyValue<any, any>>;
 
     newQueryRow(queryRowIndex: number) {
         let niches = [];
@@ -435,13 +484,13 @@ export class NicheQueryRow extends QueryRowClass implements QueryRow {
             }
         })
 
-        // If a category queryrow has NOT been created
+        // If a category queryrow has NOT been created yet
         if (this.queryRows.findIndex(x => x.queryType == QueryType.Category) == -1) {
 
             // Loop through all the categories of the categories array
             this.queryService.categories.forEach(x => {
 
-                // Then loop through each niche of that category
+                // Then loop through each niche of that current category
                 x.niches.forEach(y => {
 
                     // If we come across a niche that has NOT been used yet
@@ -452,7 +501,7 @@ export class NicheQueryRow extends QueryRowClass implements QueryRow {
                 })
             });
 
-            // But if a category queryrow has been created
+            // But if a category queryrow has already been created
         } else {
 
             // Loop through all the queryrows
@@ -463,16 +512,16 @@ export class NicheQueryRow extends QueryRowClass implements QueryRow {
 
                     // And as long as the value of that category queryrow has NOT been set to 'None'
                     if (x.value != null) {
-                        // Get the index of the category from the categories array that corresponds with the category queryrow
+                        // Get the index of the category from the categories array that corresponds with the current category queryrow
                         let categoryIndex = this.queryService.categories.findIndex(y => y.id == parseInt(x.value));
 
                         // Then loop through each niche of that category
-                        this.queryService.categories[categoryIndex].niches.forEach(x => {
+                        this.queryService.categories[categoryIndex].niches.forEach(y => {
 
                             // If we come across a niche that has NOT been used yet
-                            if (usedNiches.indexOf(x.id) == -1) {
-                                // Add it to the categories list
-                                niches.push(x);
+                            if (usedNiches.indexOf(y.id) == -1) {
+                                // Add it to the niches list
+                                niches.push(y);
                             }
                         });
                     }
@@ -495,6 +544,10 @@ export class NicheQueryRow extends QueryRowClass implements QueryRow {
         if (newValue != null) {
             this.value = newValue.toString();
             this.setQueriesValue(QueryType.Niche);
+
+
+            this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == newValue);
+
 
             // If the dropdown option that was selected is 'None'
         } else {
