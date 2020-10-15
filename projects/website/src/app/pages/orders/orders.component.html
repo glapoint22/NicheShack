@@ -131,7 +131,7 @@
                         <div class="order-info-container">
 
                             <!-- Products -->
-                            <div *ngIf="!viewOrderDetails" style="flex: 1 1 auto;">
+                            <div *ngIf="!viewOrderDetails" style="flex: 2;">
                                 <div *ngFor="let product of order.products">
                                     <div style="display: flex;">
 
@@ -150,8 +150,7 @@
                                                 (click)="onProductClick({id: order.productUrlId, urlName: order.urlName})">
                                                 {{product.name}}</div>
 
-                                            <!-- Product Type -->
-                                            <div class="gray-color">{{product.type}}</div>
+                                            
 
                                             <!-- Product Quantity -->
                                             <div *ngIf="product.quantity > 0" class="gray-color">Quantity:
@@ -159,6 +158,9 @@
 
                                             <!-- Price -->
                                             <div class="niche-shack-gold-color">{{product.price | currency:'USD'}}</div>
+                                            <div *ngIf="product.rebillFrequency" style="font-style: italic;">
+                                                Recurring - {{getRecurringText(product)}} {{product.rebillAmount | currency:'USD'}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -219,7 +221,7 @@
                                     <div>
                                         <button (click)="onBuyAgainClick(order.hoplink)" class="alt-button"
                                             style="margin-bottom: 8px; width: 100%">Buy again</button>
-                                        <button style="width: 100%;" (click)="onWriteReviewClick(order.productId)">Write
+                                        <button style="width: 100%;" (click)="onWriteReviewClick(order.productUrlId)">Write
                                             a
                                             review</button>
                                     </div>
