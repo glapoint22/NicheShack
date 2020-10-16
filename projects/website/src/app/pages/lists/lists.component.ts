@@ -24,7 +24,6 @@ export class ListsComponent extends SharePageComponent implements OnInit {
   public selectedList: any;
   public showManageListMenu: boolean;
   public showListsMenu: boolean;
-  public shared: boolean = false;
   private lists: any;
 
 
@@ -139,7 +138,6 @@ export class ListsComponent extends SharePageComponent implements OnInit {
     return this.dataService
       .get('api/Lists/Products', [
         { key: 'listId', value: this.selectedList.id },
-        { key: 'shared', value: this.shared },
         { key: 'sort', value: this.route.snapshot.queryParamMap.get('sort') }
       ]);
   }

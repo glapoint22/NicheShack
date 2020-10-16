@@ -133,4 +133,46 @@ export class OrdersComponent extends PageComponent implements OnInit {
   onProductClick(product) {
     this.router.navigate([product.urlName, product.id]);
   }
+
+
+  getRecurringText(product) {
+    let paymentsRemaining: string = "";
+    let frequency: string;
+
+    if(product.paymentsRemaining < 50) paymentsRemaining = product.paymentsRemaining;
+
+    switch (product.rebillFrequency) {
+      case "DAYS":
+        frequency = "";
+        break;
+
+      case "WEEKS":
+        frequency = "";
+        break;
+
+      case "WEEKLY":
+        frequency = "weekly";
+        break;
+
+      case "BIWEEKLY":
+        frequency = "biweekly";
+        break;
+
+      case "MONTHS":
+        frequency = "";
+        break;
+
+      case "MONTHLY":
+        frequency = "monthly";
+        break;
+
+      case "QUARTERLY":
+        frequency = "quarterly";
+        break;
+    }
+
+
+    return paymentsRemaining + ' ' + frequency + ' payment' + (paymentsRemaining != '' ? 's': '') + ' of'
+    
+  }
 }
