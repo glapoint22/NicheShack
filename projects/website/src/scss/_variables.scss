@@ -22,7 +22,7 @@ $niche-shack-gold-map: generate-color-map($niche-shack-gold);
 
 
 // Custom Input
-$checkmark-background-color: #eee;
-$checkmark-background-hover-color: #ccc;
-$checkmark-background-checked-color: $white-color;
-$checkmark-indicator-color: $primary-color;
+$checkmark-background-color: $niche-shack-gold;
+$checkmark-background-hover-color: lighten($niche-shack-gold, 20%);
+$checkmark-background-checked-color: $niche-shack-gold;
+$checkmark-indicator-color: black;
