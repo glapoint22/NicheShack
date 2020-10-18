@@ -1,0 +1,217 @@
+<navbar></navbar>
+
+
+<div class="page-container">
+    <div class="content-container">
+        <!-- Content -->
+        <div class="content" style="max-width: 800px;">
+
+            <!-- breadcrumb -->
+            <div class="breadcrumb">
+                <a routerLink="/account">Your Account</a>
+                <i class="fas fa-caret-right"></i>
+                <span>Email Preferences</span>
+            </div>
+
+
+
+            <!-- Saved -->
+            <div *ngIf="isSaved" class="saved">
+                <i class="fas fa-check"></i>
+                All changes have been successfully saved.
+            </div>
+
+
+
+
+
+
+
+
+            <ng-container *ngIf="preferences && !isSaved">
+                <!-- Page Title -->
+                <h1>Email Preferences</h1>
+
+                <button (click)="unsubscibeAll()">{{getButtonText()}}</button>
+
+
+                <!-- Account -->
+                <div class="section">Account</div>
+
+
+
+                <div>
+
+                    <!-- Name change -->
+                    <div class="pref-row">
+                        <div>Notify me on a successful name change</div>
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.nameChange"
+                                (change)="preferences.nameChange = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Email change -->
+                    <div class="pref-row">
+                        <div>Notify me on a successful email change</div>
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.emailChange"
+                                (change)="preferences.emailChange = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+
+
+                    <!-- Password change -->
+                    <div class="pref-row">
+                        <div>Notify me on a successful password change</div>
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.passwordChange"
+                                (change)="preferences.passwordChange = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Profile pic change -->
+                    <div class="pref-row">
+                        <div>Notify me on a successful profile picture change</div>
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.profilePicChange"
+                                (change)="preferences.profilePicChange = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <!-- Lists -->
+                <div class="section">Lists</div>
+
+
+                <div>
+
+                    <!-- New Collaborator -->
+                    <div class="pref-row">
+                        <div>Notify me when a new collaborator has joined a list</div>
+
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.newCollaborator"
+                                (change)="preferences.newCollaborator = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- Removed from list -->
+                    <div class="pref-row">
+                        <div>Notify me when a list owner has removed me from their list</div>
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.removedCollaborator"
+                                (change)="preferences.removedCollaborator = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- Add item -->
+                    <div class="pref-row">
+                        <div>Notify me when a collaborator adds an item to a list</div>
+
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.addedListItem"
+                                (change)="preferences.addedListItem = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Remove item -->
+                    <div class="pref-row">
+                        <div>Notify me when a collaborator removes an item from a list</div>
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.removedListItem"
+                                (change)="preferences.removedListItem = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Move item -->
+                    <div class="pref-row">
+                        <div>Notify me when a collaborator has moved an item from one list to another</div>
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.movedListItem"
+                                (change)="preferences.movedListItem = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- Rename list -->
+                    <div class="pref-row">
+                        <div>Notify me when a list owner renames a list I'm a collaborator of</div>
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.listNameChange"
+                                (change)="preferences.listNameChange = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- Delete list -->
+                    <div class="pref-row">
+                        <div>Notify me when a list owner deletes a list I'm a collaborator of</div>
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.deletedList"
+                                (change)="preferences.deletedList = $event.target.checked"></checkbox>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+                <!-- Product Reviews -->
+                <div class="section">Product Reviews</div>
+
+                <div>
+
+                    <!-- Review -->
+                    <div class="pref-row">
+                        <div>Notify me when my product review is posted</div>
+                        <div class="checkbox-container">
+                            <checkbox [checked]="preferences.review"
+                                (change)="preferences.review = $event.target.checked">
+                            </checkbox>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Save changes button -->
+                <button class="alt-button" style="margin-top: 40px;" (click)="saveChanges()"
+                    [disabled]="isDisabled()">Save Changes</button>
+            </ng-container>
+        </div>
+        <navfooter></navfooter>
+    </div>
+</div>

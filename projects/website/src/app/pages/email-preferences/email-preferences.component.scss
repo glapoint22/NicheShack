@@ -1,0 +1,43 @@
+@import '../../../scss/variables';
+
+
+.section {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 40px;
+    color: $niche-shack-gold;
+}
+
+.pref-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #3e3e3e;
+    padding: 8px 0;
+
+    &:last-child {
+        border-bottom: 1px solid #3e3e3e;
+    }
+}
+
+
+
+
+.saved {
+    margin-bottom: 24px;
+    border: 1px solid $niche-shack-gold;
+    border-radius: 4px;
+    padding: 16px;
+
+    .fa-check {
+        margin-right: 8px;
+        color: $success-color;
+    }
+}
+
+.checkbox-container {
+    height: 16px;
+    margin-left: 20px;
+}
+
+
