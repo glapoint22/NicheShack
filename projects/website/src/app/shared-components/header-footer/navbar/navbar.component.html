@@ -1,36 +1,66 @@
 <nav class="primary-color-gradient shadow">
-    
+
     <!-- Logo and menu bars -->
     <div class="logo-container">
         <i class="fas fa-bars niche-shack-gold-color" (click)="navMenu.onClick()"></i>
-        <img src="assets/Logo.png" class="show-sm" routerLink="" title="Niche Shack Homepage">
+        <img src="assets/Logo.png" routerLink="" title="Niche Shack Homepage" class="show-sm">
     </div>
-    
-    <!-- Container for search and navigation text -->
-    <!-- <div class="display-flex flex-fill"> -->
 
-        <!-- Search container -->
-        <!-- <div class="display-flex flex-fill">
-            <category-dropdown-button [items]="categories" [defaultIndex]="selectedCategoryIndex" class="show-xl"></category-dropdown-button>
-            <input  placeholder="Search">
-            <button class="alt-button button-rounded-right"><i class="fas fa-search"></i></button>
-        </div> -->
 
-        <!-- Navigation container -->
-        <!-- <div class="margin-left-16 margin-bottom-n2 show-md">
-            <div class="text-truncate show-md customer-name">{{customerName ? 'Hello, ' + customerName : 'Sign in'}}</div>
-            <div class="display-flex niche-shack-gold-color text-nowrap">
-                <div class="margin-right-48-md margin-top-16 margin-top-0-md" (click)="accountMenu.onClick()" (mousedown)="accountMenu.onMousedown()">
-                    Account
-                    <div class="arrow-down"></div>
-                    <account-menu #accountMenu></account-menu>
-                </div>
-                <a class="margin-right-48-lg" routerLink="/account/orders">Your Orders</a>
-                <a class="show-lg" href="https://www.clkbank.com">Order Support</a>
-            </div>
-        </div> -->
+
+    <!-- Search -->
+    <div class="search-container">
+        <category-dropdown-button [items]="categories" [defaultIndex]="selectedCategoryIndex" class="show-xxs">
+        </category-dropdown-button>
+
+        <input placeholder="Search">
+        <button class="alt-button button-rounded-right"><i class="fas fa-search"></i></button>
+    </div>
+
+
+
+
+    <!-- Account -->
+    <div class="account-container">
         
-    <!-- </div> -->
+        <!-- Account Dropdown -->
+        <div (click)="accountMenu.onClick()" (mousedown)="accountMenu.onMousedown()" class="account-dropdown show-md">
+            <div style="cursor: pointer;">
+                Account
+                <i class="fas fa-caret-down"></i>
+            </div>
+
+            <account-menu #accountMenu></account-menu>
+        </div>
+
+
+        <!-- Orders -->
+        <a routerLink="/account/orders" class="link show-lg">Orders</a>
+
+
+
+
+        <!-- Order Support -->
+        <a href="https://www.clkbank.com" target="_blank"
+            style="min-width: 90px;" class="link show-lg">Order Support</a>
+
+
+        <!-- Account Image -->
+        <a *ngIf="customerName" class="customer-container show-md" style="max-width: 100px; margin-left: 40px; margin-right: 10px;"
+            routerLink="/account/profile">
+
+            <img [src]="customerImage ? 'images/' + customerImage : 'assets/no-account-pic.png'">
+            <div class="text-truncate" style="margin-top: 4px;">{{customerName}}</div>
+        </a>
+
+
+
+        <!-- Sign in -->
+        <a *ngIf="!customerName" class="customer-container show-md" style="margin-left: 34px; margin-right: 10px;" routerLink="/sign-in">
+            <i class="far fa-user"></i>
+            <div class="text-truncate">sign in</div>
+        </a>
+    </div>
 </nav>
 
 <nav-menu #navMenu></nav-menu>
