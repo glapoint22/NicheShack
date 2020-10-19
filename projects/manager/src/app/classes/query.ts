@@ -261,26 +261,27 @@ export class CategoryQueryRow extends QueryRowClass implements QueryRow {
 
 
     updateValue(newValue: number) {
+        let oldValue = this.value;
+        let usedCategories = [];
+        let categoryQueryIndex: number = this.queries.findIndex(x => x.queryType == QueryType.Category);
         let nicheQueryIndex: number = this.queries.findIndex(x => x.queryType == QueryType.Niche);
+
+
+        // Save the id of the category that was selected from the dropdown
+        this.value = newValue != null ? newValue.toString() : null;
+
+        // To get a list of all the categories that have been used so far, loop through all the queryrows
+        this.queryRows.forEach(x => {
+            // If we come across a query row where its type is category
+            if (x.queryType == QueryType.Category) {
+                // Add that category to the used list
+                if (x.value != null) usedCategories.push(parseInt(x.value));
+            }
+        });
+
 
         // If the dropdown option that was selected is anything other than 'None'
         if (newValue != null) {
-            let usedCategories = [];
-            let categoryQueryIndex: number = this.queries.findIndex(x => x.queryType == QueryType.Category);
-
-
-            // Save the id of the category that was selected from the dropdown
-            this.value = newValue.toString();
-
-            // To get a list of all the categories that have been used so far, loop through all the queryrows
-            this.queryRows.forEach(x => {
-                // If we come across a query row where its type is category
-                if (x.queryType == QueryType.Category) {
-                    // Add that category to the used list
-                    if (x.value != null) usedCategories.push(parseInt(x.value));
-                }
-            });
-
             // If the category query exists, clear its value
             if (categoryQueryIndex != -1) this.queries[categoryQueryIndex].value = [];
 
@@ -299,50 +300,10 @@ export class CategoryQueryRow extends QueryRowClass implements QueryRow {
                     let usingNiches: boolean;
                     let categoryIndex = this.queryService.categories.findIndex(y => y.id == parseInt(x.value));
 
+
+
                     // Rebuild the dropdown list for that current category quryrow
                     x.dropdownList = [{ key: "None", value: null }];
-
-                    // Loop through all the queryrows
-                    this.queryRows.forEach(y => {
-
-                        // When we come across a niche queryrow
-                        if (y.queryType == QueryType.Niche) {
-
-                            // Check to see if any of the niches from the current category is the selected niche in this niche queryrow
-                            if (this.queryService.categories[categoryIndex].niches.findIndex(z => z.id == parseInt(y.value)) != -1) {
-                                // If it is, mark the current category as using a niche
-                                usingNiches = true;
-                            }
-
-                        }
-                    })
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    // As long as no niches from the current category are being used
-                    // We don't want the current category to be added to the category query if any of its niches are being used
-                    if (!usingNiches) {
-
-                        // Create the category query if it has NOT been created already
-                        if (categoryQueryIndex == -1) {
-                            this.queries.push({ queryType: QueryType.Category, operator: [OperatorType.Equals], value: [] });
-                            categoryQueryIndex = this.queries.length - 1;
-                        }
-
-
-                        // Add the category id of the current category to the category query
-                        this.queries[categoryQueryIndex].value.push(x.value.toString());
-                    }
 
                     // Loop through all the categories of the category array
                     this.queryService.categories.forEach(y => {
@@ -360,6 +321,45 @@ export class CategoryQueryRow extends QueryRowClass implements QueryRow {
 
                     // Now that the dropdown list has been rebuilt for the current category quryrow, set the selected index for its dropdown
                     x.valueDropdownSelectedIndex = x.dropdownList.findIndex(y => y.value == x.value);
+
+
+
+
+
+
+                    if (x.value != null) {
+                        // Loop through all the queryrows
+                        this.queryRows.forEach(y => {
+
+                            // When we come across a niche queryrow
+                            if (y.queryType == QueryType.Niche) {
+
+                                // Check to see if any of the niches from the current category is the selected niche in this niche queryrow
+                                if (this.queryService.categories[categoryIndex].niches.findIndex(z => z.id == parseInt(y.value)) != -1) {
+                                    // If it is, mark the current category as using a niche
+                                    usingNiches = true;
+                                }
+                            }
+                        })
+
+                        // As long as no niches from the current category are being used
+                        // We don't want the current category to be added to the category query if any of its niches are being used
+                        if (!usingNiches) {
+
+                            // Create the category query if it has NOT been created already
+                            if (categoryQueryIndex == -1) {
+                                this.queries.push({ queryType: QueryType.Category, operator: [OperatorType.Equals], value: [] });
+                                categoryQueryIndex = this.queries.length - 1;
+                            }
+
+                            // Add the category id of the current category to the category query
+                            this.queries[categoryQueryIndex].value.push(x.value.toString());
+                        }
+                    }
+
+
+
+
                 }
 
 
@@ -428,57 +428,104 @@ export class CategoryQueryRow extends QueryRowClass implements QueryRow {
 
             // If the dropdown option that was selected is 'None'
         } else {
-            let categoryIndex = this.queryService.categories.findIndex(y => y.id == parseInt(this.value));
-            let usedNiches = [];
 
-            // Loop through all the queryrows
-            this.queryRows.forEach(y => {
+            // Loop through all the query rows
+            this.queryRows.forEach(x => {
 
-                // When we come across a niche queryrow
-                if (y.queryType == QueryType.Niche) {
+                // If we come across a query row where its type is category
+                if (x.queryType == QueryType.Category) {
 
-                    // If the current niche queryrow is before the category queryrow that was set to 'none'  
-                    if (this.queryRows.indexOf(y) < this.queryRows.indexOf(this)) {
-                        // Then add that niche to the used list
-                        usedNiches.push(y.value);
-                    }
+                    // Rebuild the dropdown list for that current category quryrow
+                    x.dropdownList = [{ key: "None", value: null }];
 
-                    // Check to see if the current niche belongs to the category that was set to 'none' and if that niche has NOT already been used
-                    let nicheIdIndex = this.queryService.categories[categoryIndex].niches.findIndex(z => z.id == parseInt(y.value) && usedNiches.indexOf(y.value) == -1);
+                    // Loop through all the categories of the category array
+                    this.queryService.categories.forEach(y => {
 
-                    // if the current niche belongs to the category that was set to 'none' and if that niche has NOT already been used
-                    if (nicheIdIndex != -1) {
-                        // Set the option to that niche queryrow's value dropdown to 'none'
-                        y.valueDropdownSelectedIndex = 0;
-                    }
+                        // If we come across a category that has NOT been used yet or is the selected category in the dropdown of the current category quryrow
+                        if (usedCategories.indexOf(y.id) == -1 || y.id == parseInt(x.value)) {
+
+                            // Add it to the dropdown list of the current category quryrow
+                            x.dropdownList.push({
+                                key: y.name,
+                                value: y.id
+                            })
+                        }
+                    })
+
+                    // Now that the dropdown list has been rebuilt for the current category quryrow, set the selected index for its dropdown
+                    x.valueDropdownSelectedIndex = x.dropdownList.findIndex(y => y.value == x.value);
                 }
             })
 
 
-            // Loop through all the niches that belongs to the category that was set to 'none'
-            this.queryService.categories[categoryIndex].niches.forEach(y => {
+            // Get the index of the category in the category query that matches the category id that was recorded
+            let categoryIdIndex = this.queries[categoryQueryIndex].value.indexOf(oldValue);
 
-                // Check to see if the current niche belongs to the category that was set to 'none' and if that niche has NOT already been used
-                let nicheIdIndex = this.queries[nicheQueryIndex].value.findIndex(z => z == y.id.toString() && usedNiches.indexOf(y.id.toString()) == -1);
-
-                // If the current niche belongs to the category that was set to 'none' and if that niche has NOT already been used
-                if (nicheIdIndex != -1) {
-                    // Remove that niche from the niche query
-                    this.queries[nicheQueryIndex].value.splice(nicheIdIndex, 1);
-                }
-            });
-
-
-
-
-
-            // If no more niche ids are in the niche query
-            if (this.queries[nicheQueryIndex].value.length == 0) {
-                // Remove the niche query
-                this.queries.splice(nicheQueryIndex, 1);
+            // If the category id is found within the value of the category query
+            if (categoryIdIndex != -1) {
+                // Remove the category from category query
+                this.queries[categoryQueryIndex].value.splice(categoryIdIndex, 1);
             }
 
-            this.value = null;
+            // If all categories are removed from the category query
+            if (this.queries[categoryQueryIndex].value.length == 0) {
+                // Then remove the category query
+                this.queries.splice(categoryQueryIndex, 1);
+            }
+
+
+
+
+
+
+            // If a niche query exists
+            if (nicheQueryIndex != -1) {
+                let categoryIndex = this.queryService.categories.findIndex(y => y.id == parseInt(oldValue));
+                let usedNiches = [];
+
+                // Loop through all the queryrows
+                this.queryRows.forEach(y => {
+
+                    // When we come across a niche queryrow
+                    if (y.queryType == QueryType.Niche) {
+
+                        // If the current niche queryrow is before the category queryrow that was set to 'none'  
+                        if (this.queryRows.indexOf(y) < this.queryRows.indexOf(this)) {
+                            // Then add that niche to the used list
+                            usedNiches.push(y.value);
+                        }
+
+                        // Check to see if the current niche belongs to the category that was set to 'none' and if that niche has NOT already been used
+                        let nicheIdIndex = this.queryService.categories[categoryIndex].niches.findIndex(z => z.id == parseInt(y.value) && usedNiches.indexOf(y.value) == -1);
+
+                        // if the current niche belongs to the category that was set to 'none' and if that niche has NOT already been used
+                        if (nicheIdIndex != -1) {
+                            // Set the option to that niche queryrow's value dropdown to 'none'
+                            y.valueDropdownSelectedIndex = 0;
+                        }
+                    }
+                })
+
+
+                // Loop through all the niches that belongs to the category that was set to 'none'
+                this.queryService.categories[categoryIndex].niches.forEach(y => {
+
+                    // Check to see if the current niche belongs to the category that was set to 'none' and if that niche has NOT already been used
+                    let nicheIdIndex = this.queries[nicheQueryIndex].value.findIndex(z => z == y.id.toString() && usedNiches.indexOf(y.id.toString()) == -1);
+
+                    // If the current niche belongs to the category that was set to 'none' and if that niche has NOT already been used
+                    if (nicheIdIndex != -1) {
+                        // Remove that niche from the niche query
+                        this.queries[nicheQueryIndex].value.splice(nicheIdIndex, 1);
+                    }
+                });
+
+                // If no more niche ids are in the niche query
+                if (this.queries[nicheQueryIndex].value.length == 0) {
+                    // Remove the niche query
+                    this.queries.splice(nicheQueryIndex, 1);
+                }
+            }
         }
     }
 }
@@ -576,12 +623,14 @@ export class NicheQueryRow extends QueryRowClass implements QueryRow {
 
 
     updateValue(newValue: number) {
+        let categoryQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Category);
+
         // If the dropdown option that was selected is anything other than 'None'
         if (newValue != null) {
             this.value = newValue.toString();
             this.setQueriesValue(QueryType.Niche);
             this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == newValue);
-            let categoryQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Category);
+
             let categoryId: number;
 
             // If a category query exists
@@ -590,7 +639,7 @@ export class NicheQueryRow extends QueryRowClass implements QueryRow {
                 for (let i = 0; i < this.queryService.categories.length; i++) {
                     // Loop through each niche of the curret category
                     for (let j = 0; j < this.queryService.categories[i].niches.length; j++) {
-                        // If we come across a niche where its id matches the dropdown option that was selected
+                        // If we come across a niche where its id matches the id of the dropdown option that was selected
                         if (this.queryService.categories[i].niches[j].id == newValue) {
                             // Look to the category where that niche resides and record the id of that category
                             categoryId = this.queryService.categories[i].id;
@@ -601,8 +650,11 @@ export class NicheQueryRow extends QueryRowClass implements QueryRow {
                 // Get the index of the category in the category query that matches the category id that was recorded
                 let categoryIdIndex = this.queries[categoryQueryIndex].value.indexOf(categoryId.toString());
 
-                // Remove the category from category query
-                this.queries[categoryQueryIndex].value.splice(categoryIdIndex, 1);
+                // If the category id is found within the value of the category query
+                if (categoryIdIndex != -1) {
+                    // Remove the category from category query
+                    this.queries[categoryQueryIndex].value.splice(categoryIdIndex, 1);
+                }
 
                 // If all categories are removed from the category query
                 if (this.queries[categoryQueryIndex].value.length == 0) {
@@ -615,48 +667,158 @@ export class NicheQueryRow extends QueryRowClass implements QueryRow {
 
             // If the dropdown option that was selected is 'None'
         } else {
+            let categoryIndex: number;
+            let categoryId: number;
+            let nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
+            let nicheQueryValueIndex = this.queries[nicheQueryIndex].value.indexOf(this.value);
             let categoryQueryRowIndex = this.queryRows.findIndex(x => x.queryType == QueryType.Category);
 
-            // If no category queryrows exist
-            if (categoryQueryRowIndex == -1) {
 
-                // Get the index of the niche query
-                let nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
-                // Get the index of the value in the niche query that was set to 'none'
-                let nicheQueryValueIndex = this.queries[nicheQueryIndex].value.indexOf(this.value);
-                // Remove that value from the niche query
-                this.queries[nicheQueryIndex].value.splice(nicheQueryValueIndex, 1);
+            // Remove that value from the niche query
+            this.queries[nicheQueryIndex].value.splice(nicheQueryValueIndex, 1);
 
-                // But if there is category queryrows
-            } else {
-                let nicheQueryRowIndex = this.queryRows.findIndex(x => x.queryType == QueryType.Niche && x.value != this.value);
 
-                // If there are niche queryrows that exist other than the one that was just set to 'none'
-                if (nicheQueryRowIndex != -1) {
 
-                    // Get the index of the niche query
-                    let nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
-                    // Get the index of the value in the niche query that was set to 'none'
-                    let nicheQueryValueIndex = this.queries[nicheQueryIndex].value.indexOf(this.value);
-                    // Remove that value from the niche query
-                    this.queries[nicheQueryIndex].value.splice(nicheQueryValueIndex, 1);
+            // If a category queryrows exists
+            if (categoryQueryRowIndex != -1) {
 
-                    // Or if no niche queryrows exist
-                } else {
-                    let nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
-
-                    // Clear the niche query value
-                    this.queries[nicheQueryIndex].value = [];
-
-                    // Update the niche query value with all the niches from category queryrows
-                    this.queryRows.forEach(x => {
-                        if (x.queryType == QueryType.Category) {
-                            let categoryIndex = this.queryService.categories.findIndex(y => y.id == parseInt(x.value));
-                            this.queryService.categories[categoryIndex].niches.forEach(x => this.queries[nicheQueryIndex].value = this.queries[nicheQueryIndex].value.concat(x.id.toString()));
+                // Loop through all the categories of the category array
+                for (let i = 0; i < this.queryService.categories.length; i++) {
+                    // Loop through each niche of the curret category
+                    for (let j = 0; j < this.queryService.categories[i].niches.length; j++) {
+                        // If we come across a niche where its id matches the id of the dropdown option that was selected
+                        if (this.queryService.categories[i].niches[j].id == parseInt(this.value)) {
+                            // Look to the category where that niche resides and record the id of that category
+                            categoryId = this.queryService.categories[i].id;
+                            categoryIndex = i;
+                            break;
                         }
-                    })
+                    }
                 }
+
+                categoryQueryRowIndex = this.queryRows.findIndex(x => x.value == categoryId.toString());
+
             }
+
+
+
+
+
+
+
+
+
+
+
+            this.value = null;
+
+            let categoryHasNiches: boolean;
+
+            // Loop through all the queryrows
+            this.queryRows.forEach(x => {
+
+                // When we come across a niche queryrow
+                if (x.queryType == QueryType.Niche) {
+
+                    // If the current niche queryrow is after the category queryrow of the niche that was set to 'none'  
+                    if (this.queryRows.indexOf(x) > categoryQueryRowIndex) {
+
+                        if (this.queryService.categories[categoryIndex].niches.findIndex(y => y.id == parseInt(x.value)) != -1) {
+                            categoryHasNiches = true;
+                        }
+
+
+                    }
+
+
+                }
+            })
+
+
+            if (!categoryHasNiches) {
+                if (categoryQueryIndex == -1) {
+                    this.queries.push({ queryType: QueryType.Category, operator: [OperatorType.Equals], value: [] });
+                    categoryQueryIndex = this.queries.length - 1;
+                }
+
+                this.queries[categoryQueryIndex].value.push(categoryId.toString());
+            }
+
+
+
+            // If no more niche ids are in the niche query
+            if (this.queries[nicheQueryIndex].value.length == 0) {
+                // Remove the niche query
+                this.queries.splice(nicheQueryIndex, 1);
+            }
+
+
+
+            // let categoryQueryRowIndex = this.queryRows.findIndex(x => x.queryType == QueryType.Category);
+
+            // // If no category queryrows exist
+            // if (categoryQueryRowIndex == -1) {
+            //     // Get the index of the niche query
+            //     let nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
+            //     // Get the index of the value in the niche query that was set to 'none'
+            //     let nicheQueryValueIndex = this.queries[nicheQueryIndex].value.indexOf(this.value);
+            //     // Remove that value from the niche query
+            //     this.queries[nicheQueryIndex].value.splice(nicheQueryValueIndex, 1);
+
+            //     // If no more niche ids are in the niche query
+            //     if (this.queries[nicheQueryIndex].value.length == 0) {
+            //         // Remove the niche query
+            //         this.queries.splice(nicheQueryIndex, 1);
+            //     }
+
+            //     // But if there are category queryrows
+            // } else {
+            //     let nicheQueryRowIndex = this.queryRows.findIndex(x => x.queryType == QueryType.Niche && x.value != this.value);
+
+            //     // If there are niche queryrows that exist other than the one that was just set to 'none'
+            //     if (nicheQueryRowIndex != -1) {
+
+            //         // Get the index of the niche query
+            //         let nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
+            //         // Get the index of the value in the niche query that was set to 'none'
+            //         let nicheQueryValueIndex = this.queries[nicheQueryIndex].value.indexOf(this.value);
+            //         // Remove that value from the niche query
+            //         this.queries[nicheQueryIndex].value.splice(nicheQueryValueIndex, 1);
+
+            //         // Or if no other niche queryrows exist
+            //     } else {
+            //         let nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
+            //         let categoryQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Category);
+
+            //         // Remove the niche query
+            //         this.queries.splice(nicheQueryIndex, 1);
+
+
+            //         // Create the category query if it has NOT been created already
+            //         if (categoryQueryIndex == -1) {
+            //             this.queries.push({ queryType: QueryType.Category, operator: [OperatorType.Equals], value: [] });
+            //             categoryQueryIndex = this.queries.length - 1;
+            //         }
+
+
+            //         // Update the niche query value with all the niches from category queryrows
+            //         this.queryRows.forEach(x => {
+            //             if (x.queryType == QueryType.Category) {
+            //                 let categoryIndex = this.queryService.categories.findIndex(y => y.id == parseInt(x.value));
+            //                 console.log(x.value)
+            //                 // this.queryService.categories[categoryIndex].niches.forEach(x => this.queries[nicheQueryIndex].value = this.queries[nicheQueryIndex].value.concat(x.id.toString()));
+            //             }
+            //         })
+            //     }
+            // }
+
+
+
+
+
+
+
+
         }
     }
 }
