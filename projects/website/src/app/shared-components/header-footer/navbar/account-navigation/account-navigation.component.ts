@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'services/account.service';
 import { Subscription } from 'rxjs';
 import { RedirectService } from 'projects/website/src/app/services/redirect.service';
+import { ContactUsService } from 'projects/website/src/app/services/contact-us.service';
 
 @Component({
   selector: 'account-navigation',
@@ -12,8 +13,9 @@ import { RedirectService } from 'projects/website/src/app/services/redirect.serv
 export class AccountNavigationComponent implements OnInit, OnDestroy {
   public dropdownItems: Array<any> = [];
   private subscription: Subscription;
+  @Output() hide: EventEmitter<void> = new EventEmitter();
 
-  constructor(private router: Router, private accountService: AccountService, private redirectService: RedirectService) { }
+  constructor(private router: Router, private accountService: AccountService, private redirectService: RedirectService, private contactUsService: ContactUsService) { }
 
   ngOnInit() {
     this.subscription = this.accountService.isSignedIn.subscribe((isSignedIn: boolean) => {
@@ -49,6 +51,30 @@ export class AccountNavigationComponent implements OnInit, OnDestroy {
           click: () => { }
         },
         {
+          caption: 'Your Profile',
+          url: 'account/profile',
+          icon: 'fa-address-card',
+          show: true,
+          click: () => { }
+        },
+        {
+          caption: 'Email Preferences',
+          url: 'account/email-preferences',
+          icon: 'fa-envelope',
+          show: true,
+          click: () => { }
+        },
+        {
+          caption: 'Contact Us',
+          url: null,
+          icon: 'fa-phone-alt',
+          show: true,
+          click: () => {
+            this.contactUsService.show = true;
+            this.hide.emit();
+          }
+        },
+        {
           caption: 'Sign Out',
           url: 'sign-in',
           icon: 'fa-sign-out-alt',
@@ -73,7 +99,10 @@ export class AccountNavigationComponent implements OnInit, OnDestroy {
   }
 
   onClick(dropdownItem: any) {
-    this.router.navigate([dropdownItem.url]);
+    if(dropdownItem.url) {
+      this.router.navigate([dropdownItem.url]);
+    }
+    
     dropdownItem.click();
   }
 

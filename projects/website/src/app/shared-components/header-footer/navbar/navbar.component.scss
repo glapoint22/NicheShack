@@ -1,5 +1,7 @@
+@import '../../../../scss/variables';
+
 nav {
-    padding: 16px;
+    padding: 0 16px;
     position: fixed;
     top: 0;
     right: 0;
@@ -7,11 +9,13 @@ nav {
     z-index: 100;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     min-height: 79px;
 
     .logo-container {
         display: flex;
-        margin-bottom: 8px;
+        
+        flex: 0.5;
 
         .fa-bars {
             font-size: 24px;
@@ -21,24 +25,88 @@ nav {
 
         img {
             flex-shrink: 0;
-            margin-right: 8px;
             cursor: pointer;
+            outline: none;
+            margin-right: 20px;
         }
     }
 
-    
-    
-    .customer-name {
-        max-width: 140px;
-        font-size: 0.75rem;
+
+    .search-container {
+        display: flex;
+        width: 100%;
+        max-width: 800px;
+
+        input {
+            flex: 1 1 auto;
+            background: white;
+            border-radius: 0;
+            border: none;
+            height: 36px;
+            color: black;
+            width: 100%;
+            border-top-left-radius: 100px;
+            border-bottom-left-radius: 100px;
+        }
     }
-    
-    input {
-        padding-left: 0.5rem;
-        border: 0;
-        outline: 0;
-        background: white;
-        color: black;
-        height: auto;
+
+
+    .account-container {
+        
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        
+
+        .account-dropdown {
+            margin-top: 39px;
+            min-width: 70px;
+            margin-left: 20px;
+            .fa-caret-down {
+                margin-left: 3px;
+                margin-bottom: 2px;
+            }
+        }
+
+        .link {
+            margin-top: 39px;
+            margin-left: 40px;
+            text-decoration: none;
+        }
+
+
+        .customer-container {
+            text-align: center;
+            margin-top: 5px;
+            text-decoration: none;
+
+            img {
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+            }
+
+            .fa-user {
+                font-size: 16px;
+                border: 1px solid white;
+                padding: 5px;
+                border-radius: 50%;
+                margin-bottom: 3px;
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
+}
+
+
+@media (min-width: map-get($breakpoints, xxs)) {
+    nav {
+        .search-container {
+            input {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
     }
 }

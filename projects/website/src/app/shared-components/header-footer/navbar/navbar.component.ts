@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public categories: Array<KeyValue<number, string>> = []
   public selectedCategoryIndex: number = 0;
   public customerName: string;
+  public customerImage: string;
   private subscription: Subscription;
 
   constructor(private categoriesService: CategoriesService, private route: ActivatedRoute, private accountService: AccountService) { }
@@ -24,7 +25,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // Get the customer's first name
     this.subscription = this.accountService.customer
       .subscribe((customer: Customer) => {
-        this.customerName = customer ? customer.firstName : null;
+        if(customer) {
+          this.customerName = customer.firstName;
+          this.customerImage = customer.image;
+        }
       });
 
 
