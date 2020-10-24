@@ -10,7 +10,11 @@ import { QueryService } from '../../../services/query.service';
   styleUrls: ['./query-builder.component.scss']
 })
 export class QueryBuilderComponent {
-  constructor(private queryService: QueryService, private dataService: DataService) { }
+  constructor(private queryService: QueryService, private dataService: DataService) {
+    if (this.queryService.subgroups.length == 0) {
+      this.queryService.getSubgroups();
+    }
+  }
   public queryRows: Array<QueryRow> = [];
   public operatorType = OperatorType;
   public valueType = ValueType;
@@ -20,7 +24,7 @@ export class QueryBuilderComponent {
     { key: "None", value: new QueryRowNone(this.queryRows, this.queries) },
     { key: "Category", value: new CategoryQueryRow(this.queryRows, this.queries, this.queryService) },
     { key: "Niche", value: new NicheQueryRow(this.queryRows, this.queries, this.queryService) },
-    { key: "Product Subgroup", value: new ProductSubgroupQueryRow(this.queryRows, this.queries, this.dataService) },
+    { key: "Product Subgroup", value: new ProductSubgroupQueryRow(this.queryRows, this.queries, this.queryService) },
     { key: "Featured Products", value: new FeaturedProductsQueryRow(this.queryRows, this.queries) },
     { key: "Customer Related Products", value: new CustomerRelatedProductsQueryRow(this.queryRows, this.queries) },
     { key: "Product Price", value: new ProductPriceQueryRow(this.queryRows, this.queries) },
@@ -57,15 +61,15 @@ export class QueryBuilderComponent {
 
   getProducts() {
 
-    console.log(this.queries)
+    // console.log(this.queries)
 
-    
 
-    // this.dataService.post('api/Products/Alita', this.queries)
-    //   .subscribe((products) => {
-    //     console.log(products)
-    //   });
 
-    
+    this.dataService.post('api/Products/Alita', this.queries)
+      .subscribe((products) => {
+        console.log(products)
+      });
+
+
   }
 }
