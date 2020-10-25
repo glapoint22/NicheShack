@@ -61,14 +61,14 @@ export class QueryBuilderComponent {
 
   getProducts() {
 
-    // console.log(this.queries)
+    console.log(this.queries)
 
 
 
-    this.dataService.post('api/Products/Alita', this.queries)
-      .subscribe((products) => {
-        console.log(products)
-      });
+    // this.dataService.post('api/Products/Alita', this.queries)
+    //   .subscribe((products) => {
+    //     console.log(products)
+    //   });
 
 
   }
