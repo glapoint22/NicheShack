@@ -132,7 +132,7 @@
                                 And
                             </div>
 
-                            <dropdown *ngIf="queryRow.dropdownList; else spinner2" [height]="22" [title]="''" [dropdownList]="queryRow.dropdownList" [selectedIndex]="0"
+                            <dropdown *ngIf="queryRow.dropdownList; else spinner2" [height]="22" [title]="''" [dropdownList]="queryRow.dropdownList" [selectedIndex]="queryRow.valueDropdownSelectedIndex"
                                 (onChange)="queryRow.updateValue2($event)">
                             </dropdown>
 

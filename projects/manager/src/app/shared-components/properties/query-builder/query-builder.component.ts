@@ -11,10 +11,11 @@ import { QueryService } from '../../../services/query.service';
 })
 export class QueryBuilderComponent {
   constructor(private queryService: QueryService, private dataService: DataService) {
-    if (this.queryService.subgroups.length == 0) {
-      this.queryService.getSubgroups();
-    }
+    if (this.queryService.categories.length == 0) this.queryService.getCategories();
+    if (this.queryService.subgroups.length == 0) this.queryService.getSubgroups();
   }
+
+  // Public
   public queryRows: Array<QueryRow> = [];
   public operatorType = OperatorType;
   public valueType = ValueType;
@@ -26,9 +27,9 @@ export class QueryBuilderComponent {
     { key: "Niche", value: new NicheQueryRow(this.queryRows, this.queries, this.queryService) },
     { key: "Product Subgroup", value: new ProductSubgroupQueryRow(this.queryRows, this.queries, this.queryService) },
     { key: "Featured Products", value: new FeaturedProductsQueryRow(this.queryRows, this.queries) },
-    { key: "Customer Related Products", value: new CustomerRelatedProductsQueryRow(this.queryRows, this.queries) },
+    { key: "Customer Related Products", value: new CustomerRelatedProductsQueryRow(this.queryRows, this.queries, this.queryService) },
     { key: "Product Price", value: new ProductPriceQueryRow(this.queryRows, this.queries) },
-    { key: "Product Rating", value: new ProductRatingQueryRow(this.queryRows, this.queries) },
+    { key: "Product Rating", value: new ProductRatingQueryRow(this.queryRows, this.queries, this.queryService) },
     { key: "Product Keywords", value: new ProductKeywordsQueryRow(this.queryRows, this.queries) },
     { key: "Product Creation Date", value: new ProductCreationDateQueryRow(this.queryRows, this.queries) }
   ];
