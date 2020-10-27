@@ -410,7 +410,10 @@ export interface QueryRow {
     value2?: string;
     whereDropdownSelectedIndex: number;
     dropdownList?: Array<KeyValue<any, any>>;
+    dropdownList2?: Array<KeyValue<any, any>>;
     valueDropdownSelectedIndex?: number;
+    valueDropdownSelectedIndex2?: number;
+    queryRowIndex?: number;
 }
 
 export interface Query {
@@ -855,21 +858,164 @@ export class ProductRatingQueryRow extends QueryRowClass implements QueryRow {
     public valueDropdownSelectedIndex: number = 0;
     public valueDropdownSelectedIndex2: number = 0;
     public dropdownList: Array<KeyValue<any, any>>;
+    public dropdownList2: Array<KeyValue<any, any>>;
     public value2: string;
+    public queryRowIndex: number;
+
+
+
+
+    getUsedRatingDropdownOptions(queryType: QueryType) {
+        let usedDropdownOptions = [];
+
+        // Loop through all the queryrows
+        this.queryRows.forEach(x => {
+            // If we come across the queryrow we're looking for
+            if (x.queryType == queryType) {
+
+
+                // And as long as that queryrow has NOT been set to 'none'
+                if (x.valueDropdownSelectedIndex != 0) {
+
+                    // Add the value of that queryrow to the used list
+                    usedDropdownOptions.push(parseInt(x.value));
+                }
+
+
+
+
+                if (x.operatorType == OperatorType.IsBetween) {
+
+                    // And as long as that queryrow has NOT been set to 'none'
+                    if (x.valueDropdownSelectedIndex2 != 0) {
+                        // Add the value of that queryrow to the used list
+                        usedDropdownOptions.push(parseInt(x.value2));
+                    }
+                }
+            }
+        });
+
+
+
+        return usedDropdownOptions;
+    }
+
+
+
+
+    buildRatingDropdown(queryRow: QueryRow, usedDropdownOptions: Array<number>, queryList: Array<QueryList>) {
+        // Create the first option in the dropdown list
+        queryRow.dropdownList = [{ key: "None", value: null }];
+
+        // Loop through all the items of the query list
+        queryList.forEach(y => {
+
+            // If we come across an item in the list that is NOT a dropdown option that has been used yet
+            // or the item happens to be the same as the selected option of this quryrow
+            if (usedDropdownOptions.indexOf(y.id) == -1 || y.id == parseInt(queryRow.value)) {
+
+                // Add it to the dropdown list of this quryrow
+                queryRow.dropdownList.push({
+                    key: y.name,
+                    value: y.id
+                })
+            }
+        })
+        // Now that the dropdown list has been created, set the option that will be selected
+        queryRow.valueDropdownSelectedIndex = queryRow.dropdownList.findIndex(y => y.value == queryRow.value);
+
+
+        if (queryRow.operatorType == OperatorType.IsBetween) {
+
+
+            // Create the first option in the dropdown list
+            queryRow.dropdownList2 = [{ key: "None", value: null }];
+
+            // Loop through all the items of the query list
+            queryList.forEach(y => {
+
+
+
+
+
+
+
+
+                // If we come across an item in the list that is NOT a dropdown option that has been used yet
+                // or the item happens to be the same as the selected option of this quryrow
+                if ((usedDropdownOptions.indexOf(y.id) == -1 || y.id == parseInt(queryRow.value2)) && y.id > parseInt(queryRow.value)) {
+
+                    // Add it to the dropdown list of this quryrow
+                    queryRow.dropdownList2.push({
+                        key: y.name,
+                        value: y.id
+                    })
+                }
+            })
+            // Now that the dropdown list has been created, set the option that will be selected
+            // queryRow.valueDropdownSelectedIndex2 = queryRow.dropdownList2.findIndex(y => y.value == queryRow.value2);
+
+
+            // Get the index of the option in the dropdown list where the option's value matches the current niche queryrow value
+            let valueDropdownSelectedIndex2 = queryRow.dropdownList2.findIndex(y => y.value == queryRow.value2);
+
+            // If an option value in the dropdown list does NOT match the current niche queryrow value, then assign the selected
+            // index as zero (None). But if a match is found, assign the selected index the index of that dropdown option
+            queryRow.valueDropdownSelectedIndex2 = valueDropdownSelectedIndex2 == -1 ? 0 : valueDropdownSelectedIndex2;
+
+
+
+            // if (queryRow.value2 != null && queryRow.valueDropdownSelectedIndex2 == 0) {
+
+
+            //     usedDropdownOptions = this.getUsedRatingDropdownOptions(QueryType.ProductRating);
+
+
+            //     // Create the first option in the dropdown list
+            //     queryRow.dropdownList = [{ key: "None", value: null }];
+
+            //     // Loop through all the items of the query list
+            //     queryList.forEach(y => {
+
+            //         // If we come across an item in the list that is NOT a dropdown option that has been used yet
+            //         // or the item happens to be the same as the selected option of this quryrow
+            //         if (usedDropdownOptions.indexOf(y.id) == -1 || y.id == parseInt(queryRow.value)) {
+
+            //             // Add it to the dropdown list of this quryrow
+            //             queryRow.dropdownList.push({
+            //                 key: y.name,
+            //                 value: y.id
+            //             })
+            //         }
+            //     })
+            //     // Now that the dropdown list has been created, set the option that will be selected
+            //     queryRow.valueDropdownSelectedIndex = queryRow.dropdownList.findIndex(y => y.value == queryRow.value);
+            // }
+
+
+
+
+        }
+    }
+
+
+
+
+
+
 
     newQueryRow(queryRowIndex: number) {
         // Create the new product rating query row
         this.queryRows.splice(queryRowIndex, 1);
         this.queryRows.splice(queryRowIndex, 0, new ProductRatingQueryRow(this.queryRows, this.queries, this.queryService));
+        this.queryRows[queryRowIndex].queryRowIndex = queryRowIndex;
 
-        this.queryRows[queryRowIndex].dropdownList = [
-            { key: "None", value: null },
-            { key: "1", value: 1 },
-            { key: "2", value: 2 },
-            { key: "3", value: 3 },
-            { key: "4", value: 4 },
-            { key: "5", value: 5 }
-        ];
+
+
+
+        // Build the dropdown for this new customer related products queryrow
+        let usedRatingDropdownOptions: Array<number> = this.getUsedRatingDropdownOptions(QueryType.ProductRating);
+        this.buildRatingDropdown(this.queryRows[queryRowIndex], usedRatingDropdownOptions, this.queryService.productRating);
     }
 
 
@@ -925,18 +1071,71 @@ export class ProductRatingQueryRow extends QueryRowClass implements QueryRow {
 
 
     updateOperator(operatorType: OperatorType) {
+
+
+
+
+
         this.operatorType = operatorType;
         this.setQueriesOperator(QueryType.ProductRating);
+
+
+        let usedRatingDropdownOptions: Array<number> = this.getUsedRatingDropdownOptions(QueryType.ProductRating);
+        this.buildRatingDropdown(this.queryRows[this.queryRowIndex], usedRatingDropdownOptions, this.queryService.productRating);
     }
 
+
+
+
+
+
     updateValue(newValue: string) {
-        this.value = newValue;
-        this.hello();
+        // Update the value and the selected index
+        this.value = newValue != null ? newValue.toString() : null;
+        this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.value);
+
+
+        let usedRatingDropdownOptions: Array<number> = this.getUsedRatingDropdownOptions(QueryType.ProductRating);
+        this.queryRows.forEach(x => {
+            if (x.queryType == QueryType.ProductRating) {
+                this.buildRatingDropdown(x, usedRatingDropdownOptions, this.queryService.productRating);
+            }
+        });
+
+
+
+        if (this.value2 != null && this.valueDropdownSelectedIndex2 == 0) {
+            let usedRatingDropdownOptions: Array<number> = this.getUsedRatingDropdownOptions(QueryType.ProductRating);
+            this.queryRows.forEach(x => {
+                if (x.queryType == QueryType.ProductRating) {
+                    this.buildRatingDropdown(x, usedRatingDropdownOptions, this.queryService.productRating);
+                }
+            });
+        }
+
+        // this.value = newValue;
+        // this.hello();
     }
 
     updateValue2(newValue2: string) {
-        this.value2 = newValue2;
-        this.hello();
+
+        // Update the value and the selected index
+        this.value2 = newValue2 != null ? newValue2.toString() : null;
+        this.valueDropdownSelectedIndex2 = this.dropdownList.findIndex(x => x.value == this.value2);
+
+
+        let usedRatingDropdownOptions: Array<number> = this.getUsedRatingDropdownOptions(QueryType.ProductRating);
+        this.queryRows.forEach(x => {
+            if (x.queryType == QueryType.ProductRating) {
+                this.buildRatingDropdown(x, usedRatingDropdownOptions, this.queryService.productRating);
+            }
+        });
+
+
+
+
+        // this.value2 = newValue2;
+        // this.hello();
     }
 
 

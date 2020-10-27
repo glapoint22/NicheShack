@@ -12,9 +12,16 @@ export class QueryService {
     { id: 1, name: "List Products" },
     { id: 2, name: "Purchased Products" },
     { id: 3, name: "Browsed Products" }];
+    
+  public productRating: Array<QueryList> = [
+    { id: 1, name: "1" },
+    { id: 2, name: "2" },
+    { id: 3, name: "3" },
+    { id: 4, name: "4" },
+    { id: 5, name: "5" }];
 
 
-  
+
   getCategories() {
     this.dataService.get('api/Categories')
       .subscribe((categories) => {
