@@ -30,7 +30,7 @@ export class QueryService {
 
           this.dataService.get('api/Niches', [{ key: 'categoryId', value: x.id }])
             .subscribe((niches) => {
-              x.niches = niches;
+              x.children = niches;
             });
         })
       });
@@ -49,5 +49,5 @@ export class QueryService {
 export interface QueryList {
   id: number;
   name: string;
-  niches?: Array<QueryList>;
+  children?: Array<QueryList>;
 }
