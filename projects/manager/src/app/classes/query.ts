@@ -19,161 +19,6 @@ export class QueryRowClass {
     public whereDropdownSelectedIndex: number;
 
 
-
-
-
-
-
-
-    getUsedDropdownOptions(queryType: QueryType) {
-        let usedDropdownOptions = [];
-
-        // Loop through all the queryrows
-        this.queryRows.forEach(x => {
-            // If we come across the queryrow that we're looking for
-            if (x.queryType == queryType) {
-
-                // And as long as that queryrow has NOT been set to 'none'
-                if (x.valueDropdownSelectedIndex != 0) {
-                    // Add the value of that queryrow to the used list
-                    usedDropdownOptions.push(parseInt(x.value));
-                }
-            }
-        });
-        return usedDropdownOptions;
-    }
-
-
-
-    buildDropdown(queryRow: IQueryRow, usedDropdownOptions: Array<number>, queryList: Array<QueryList>) {
-        // Create the first option in the dropdown list
-        queryRow.dropdownList = [{ key: "None", value: null }];
-
-        // Loop through all the items of the query list
-        queryList.forEach(y => {
-
-            // If we come across an item in the list that is NOT a dropdown option that has been used yet
-            // or the item happens to be the same as the selected option of this quryrow
-            if (usedDropdownOptions.indexOf(y.id) == -1 || y.id == parseInt(queryRow.value)) {
-
-                // Add it to the dropdown list of this quryrow
-                queryRow.dropdownList.push({
-                    key: y.name,
-                    value: y.id
-                })
-            }
-        })
-        // Now that the dropdown list has been created, set the option that will be selected
-        queryRow.valueDropdownSelectedIndex = queryRow.dropdownList.findIndex(y => y.value == queryRow.value);
-    }
-
-
-
-
-
-
-
-
-
-    updateUsedCategoriesList(usedCategories: Array<number>, categoryQueryRow: IQueryRow, databaseCategories: Array<QueryList>) {
-
-        // If we come across a queryrow where its type is category
-        if (categoryQueryRow.queryType == QueryType.Category) {
-
-            // As long as the value of the category queryrow is NOT null
-            if (categoryQueryRow.value != null) {
-
-                // Get the index of the category from the database categories that corresponds with the 
-                // value of the current category queryrow and add that index to the used categories list
-                usedCategories.push(databaseCategories.findIndex(y => y.id == parseInt(categoryQueryRow.value)));
-            }
-        }
-    }
-
-
-
-
-
-    buildNicheDropdown(nicheQueryRow: IQueryRow, usedNicheDropdownOptions: Array<number>, usedCategories: Array<number>, databaseCategories: Array<QueryList>) {
-        // Create the first option in the niche dropdown list
-        nicheQueryRow.dropdownList = [{ key: "None", value: null }];
-
-        // If NO category is available yet to build the niche dropdown list
-        if (usedCategories.length == 0) {
-
-            // Loop through all the categories of the categories array
-            databaseCategories.forEach(y => {
-
-                // Then loop through each niche of that current category
-                y.children.forEach(z => {
-
-                    // And if we come across a niche that has NOT been used yet or is the selected niche in the dropdown of the current niche quryrow
-                    if (usedNicheDropdownOptions.indexOf(z.id) == -1 || z.id == parseInt(nicheQueryRow.value)) {
-
-                        // Add it to the dropdown list of the current niche quryrow
-                        nicheQueryRow.dropdownList.push({
-                            key: z.name,
-                            value: z.id
-                        })
-                    }
-                })
-            });
-
-            // If a category is available to build the niche dropdown list 
-        } else {
-
-            // Loop through all the categories that have been used so far
-            usedCategories.forEach(y => {
-
-                // Then loop through each niche of that category
-                databaseCategories[y].children.forEach(z => {
-
-                    // And if we come across a niche that has NOT been used yet or is the selected niche in the dropdown of the current niche quryrow
-                    if (usedNicheDropdownOptions.indexOf(z.id) == -1 || z.id == parseInt(nicheQueryRow.value)) {
-
-                        // Add it to the dropdown list of the current niche quryrow
-                        nicheQueryRow.dropdownList.push({
-                            key: z.name,
-                            value: z.id
-                        })
-                    }
-                });
-            })
-        }
-
-        // Get the index of the option in the dropdown list where the option's value matches the current niche queryrow value
-        let valueDropdownSelectedIndex = nicheQueryRow.dropdownList.findIndex(y => y.value == nicheQueryRow.value);
-
-        // If an option value in the dropdown list does NOT match the current niche queryrow value, then assign the selected
-        // index as zero (None). But if a match is found, assign the selected index the index of that dropdown option
-        nicheQueryRow.valueDropdownSelectedIndex = valueDropdownSelectedIndex == -1 ? 0 : valueDropdownSelectedIndex;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     updateQuery(queryType: QueryType) {
         let queryIndex: number = this.queries.findIndex(x => x.queryType == queryType);
         if (queryIndex != -1) this.queries.splice(queryIndex, 1);
@@ -200,78 +45,6 @@ export class QueryRowClass {
             }
         });
     }
-
-
-
-
-
-    updateNicheQuery(databaseCategories: Array<QueryList>) {
-        let categoryQueryIndex: number;
-        let categoryId: number;
-        let nicheQueryIndex: number = this.queries.findIndex(x => x.queryType == QueryType.Niche);
-        if (nicheQueryIndex != -1) this.queries.splice(nicheQueryIndex, 1);
-
-        // Loop through all the queryrows
-        this.queryRows.forEach(x => {
-
-            // If we come across a queryrow where its type is niche
-            if (x.queryType == QueryType.Niche) {
-
-                categoryQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Category);
-                nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
-
-                // As long as the current niche has NOT been set to 'none'
-                if (x.valueDropdownSelectedIndex != 0) {
-
-                    // Create the niche query if it has NOT been created already
-                    if (nicheQueryIndex == -1) {
-                        this.queries.push({ queryType: QueryType.Niche, operator: [OperatorType.Equals], value: [] });
-                        nicheQueryIndex = this.queries.length - 1;
-                    }
-
-                    // Add the current niche to the niche query
-                    this.queries[nicheQueryIndex].value.push(x.dropdownList[x.valueDropdownSelectedIndex].value.toString());
-
-                    // If a category query exists
-                    if (categoryQueryIndex != -1) {
-
-                        // Loop through all the categories of the category array
-                        for (let i = 0; i < databaseCategories.length; i++) {
-                            // Loop through each niche of the curret category
-                            for (let j = 0; j < databaseCategories[i].children.length; j++) {
-                                // If we come across a niche where its id matches the current niche
-                                if (databaseCategories[i].children[j].id == x.dropdownList[x.valueDropdownSelectedIndex].value) {
-                                    // Look to the category where that niche resides and record the id of that category
-                                    categoryId = databaseCategories[i].id;
-                                    break;
-                                }
-                            }
-                        }
-
-                        // As long as the current niche queryrow resides after the category queryrow it belongs to
-                        if (this.queryRows.indexOf(x) > this.queryRows.findIndex(y => y.value == categoryId.toString())) {
-                            // Get the index of the id in the category query that matches the id of the category
-                            let categoryIdIndex = this.queries[categoryQueryIndex].value.indexOf(categoryId.toString());
-
-                            // If the id in the category query exists
-                            if (categoryIdIndex != -1) {
-                                // Remove that id from category query
-                                this.queries[categoryQueryIndex].value.splice(categoryIdIndex, 1);
-                            }
-
-                            // If all categories are removed from the category query
-                            if (this.queries[categoryQueryIndex].value.length == 0) {
-                                // Then remove the category query
-                                this.queries.splice(categoryQueryIndex, 1);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-
 
 
     updateQueriesOLD(oldQueryType: QueryType, newQueryType: QueryType) {
@@ -367,9 +140,6 @@ export class QueryRowClass {
             this.queries[index].value = valueList;
         }
     }
-
-
-
 
     setQueriesOperator(queryType: QueryType) {
         let index = this.queries.findIndex(x => x.queryType == queryType);
@@ -552,55 +322,29 @@ export class QueryRow {
 
 
 
-export class DropdownParentQueryRow extends QueryRow {
-    constructor(whereDropdownSelectedIndex: number, queryRows: Array<IQueryRow>, queries: Array<Query>, public queryService: QueryService) {
-        super(queryRows, queries);
-        this.hasOperators = false;
-        this.valueType = ValueType.Dropdown;
-        this.whereDropdownSelectedIndex = whereDropdownSelectedIndex;
-    }
-    public queryList: Array<QueryList>;
-    public valueDropdownSelectedIndex: number = 0;
-    public dropdownList: Array<KeyValue<any, any>>;
-    public childQueryType: QueryType;
-
-
-
-    initialize(parentQueryType: QueryType, childQueryType: QueryType, queryRowIndex: number, queryList: Array<QueryList>) {
-        this.queryRows[queryRowIndex].queryType = parentQueryType;
-        this.queryRows[queryRowIndex].childQueryType = childQueryType;
-        this.queryRows[queryRowIndex].queryList = queryList;
-
-        // Build the dropdown for this new parent queryrow
-        let usedParentDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.queryRows[queryRowIndex].queryType);
-        this.buildDropdown(this.queryRows[queryRowIndex], usedParentDropdownOptions, this.queryRows[queryRowIndex].queryList);
-    }
-
-
-    // updateValue(newValue: number) {
-    //     // Update the value and the selected index
-    //     this.value = newValue != null ? newValue.toString() : null;
-    //     this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.value);
-
-    //     // Rebuild all the dropdowns
-    //     let usedDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.queryType);
-    //     this.queryRows.forEach(x => {
-    //         if (x.queryType == this.queryType) {
-    //             this.buildDropdown(x, usedDropdownOptions, this.queryList);
-    //         }
-    //     });
-
-    //     // Update the query
-    //     this.updateQuery(this.queryType)
-    // }
 
 
 
 
-    updateUsedParentIds(usedParentIds: Array<number>, parentQueryRow: IQueryRow, parentList: Array<QueryList>) {
 
+
+
+
+
+
+
+
+
+
+
+
+
+export class DropdownParentChildQueryRow extends QueryRow {
+    public otherQueryType: QueryType;
+
+    updateUsedParentIds(parentQueryType: QueryType, usedParentIds: Array<number>, parentQueryRow: IQueryRow, parentList: Array<QueryList>) {
         // If we come across a queryrow where its type is parent
-        if (parentQueryRow.queryType == this.queryType) {
+        if (parentQueryRow.queryType == parentQueryType) {
 
             // As long as the value of the parent queryrow is NOT null
             if (parentQueryRow.value != null) {
@@ -671,66 +415,65 @@ export class DropdownParentQueryRow extends QueryRow {
     }
 
 
-
-
-    updateNicheQuery(databaseCategories: Array<QueryList>) {
-        let categoryQueryIndex: number;
-        let categoryId: number;
-        let nicheQueryIndex: number = this.queries.findIndex(x => x.queryType == QueryType.Niche);
-        if (nicheQueryIndex != -1) this.queries.splice(nicheQueryIndex, 1);
+    updateChildQuery(parentQueryType: QueryType, childQueryType: QueryType, parentList: Array<QueryList>) {
+        let parentQueryIndex: number;
+        let parentId: number;
+        let childQueryIndex: number = this.queries.findIndex(x => x.queryType == childQueryType);
+        if (childQueryIndex != -1) this.queries.splice(childQueryIndex, 1);
 
         // Loop through all the queryrows
         this.queryRows.forEach(x => {
 
-            // If we come across a queryrow where its type is niche
-            if (x.queryType == QueryType.Niche) {
+            // If we come across a child queryrow
+            if (x.queryType == childQueryType) {
 
-                categoryQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Category);
-                nicheQueryIndex = this.queries.findIndex(x => x.queryType == QueryType.Niche);
+                // Find the index again for both the parent and child queries just in case they have changed
+                parentQueryIndex = this.queries.findIndex(x => x.queryType == parentQueryType);
+                childQueryIndex = this.queries.findIndex(x => x.queryType == childQueryType);
 
-                // As long as the current niche has NOT been set to 'none'
+                // As long as the current child has NOT been set to 'none'
                 if (x.valueDropdownSelectedIndex != 0) {
 
-                    // Create the niche query if it has NOT been created already
-                    if (nicheQueryIndex == -1) {
-                        this.queries.push({ queryType: QueryType.Niche, operator: [OperatorType.Equals], value: [] });
-                        nicheQueryIndex = this.queries.length - 1;
+                    // Create the child query if it has NOT been created already
+                    if (childQueryIndex == -1) {
+                        this.queries.push({ queryType: childQueryType, operator: [OperatorType.Equals], value: [] });
+                        childQueryIndex = this.queries.length - 1;
                     }
 
-                    // Add the current niche to the niche query
-                    this.queries[nicheQueryIndex].value.push(x.dropdownList[x.valueDropdownSelectedIndex].value.toString());
+                    // Add the current child to the child query
+                    this.queries[childQueryIndex].value.push(x.dropdownList[x.valueDropdownSelectedIndex].value.toString());
 
-                    // If a category query exists
-                    if (categoryQueryIndex != -1) {
+                    // If a parent query exists
+                    if (parentQueryIndex != -1) {
 
-                        // Loop through all the categories of the category array
-                        for (let i = 0; i < databaseCategories.length; i++) {
-                            // Loop through each niche of the curret category
-                            for (let j = 0; j < databaseCategories[i].children.length; j++) {
-                                // If we come across a niche where its id matches the current niche
-                                if (databaseCategories[i].children[j].id == x.dropdownList[x.valueDropdownSelectedIndex].value) {
-                                    // Look to the category where that niche resides and record the id of that category
-                                    categoryId = databaseCategories[i].id;
+                        // Loop through all the parents of the parent list
+                        for (let i = 0; i < parentList.length; i++) {
+                            // Loop through each child of the curret parent
+                            for (let j = 0; j < parentList[i].children.length; j++) {
+                                // If we come across a child where its id matches the current child
+                                if (parentList[i].children[j].id == x.dropdownList[x.valueDropdownSelectedIndex].value) {
+                                    // Look to the parent where that child resides and record the id of that parent
+                                    parentId = parentList[i].id;
                                     break;
                                 }
                             }
                         }
 
-                        // As long as the current niche queryrow resides after the category queryrow it belongs to
-                        if (this.queryRows.indexOf(x) > this.queryRows.findIndex(y => y.value == categoryId.toString())) {
-                            // Get the index of the id in the category query that matches the id of the category
-                            let categoryIdIndex = this.queries[categoryQueryIndex].value.indexOf(categoryId.toString());
+                        // As long as the current child queryrow resides after the parent queryrow it belongs to
+                        if (this.queryRows.indexOf(x) > this.queryRows.findIndex(y => y.value == parentId.toString())) {
+                            // Get the index of the id in the parent query that matches the id of the parent
+                            let parentIdIndex = this.queries[parentQueryIndex].value.indexOf(parentId.toString());
 
-                            // If the id in the category query exists
-                            if (categoryIdIndex != -1) {
-                                // Remove that id from category query
-                                this.queries[categoryQueryIndex].value.splice(categoryIdIndex, 1);
+                            // If the id in the parent query exists
+                            if (parentIdIndex != -1) {
+                                // Remove that id from parent query
+                                this.queries[parentQueryIndex].value.splice(parentIdIndex, 1);
                             }
 
-                            // If all categories are removed from the category query
-                            if (this.queries[categoryQueryIndex].value.length == 0) {
-                                // Then remove the category query
-                                this.queries.splice(categoryQueryIndex, 1);
+                            // If all parents are removed from the parent query
+                            if (this.queries[parentQueryIndex].value.length == 0) {
+                                // Then remove the parent query
+                                this.queries.splice(parentQueryIndex, 1);
                             }
                         }
                     }
@@ -738,8 +481,32 @@ export class DropdownParentQueryRow extends QueryRow {
             }
         });
     }
+}
 
 
+
+
+
+export class DropdownParentQueryRow extends DropdownParentChildQueryRow {
+    constructor(whereDropdownSelectedIndex: number, queryRows: Array<IQueryRow>, queries: Array<Query>, public queryService: QueryService) {
+        super(queryRows, queries);
+        this.hasOperators = false;
+        this.valueType = ValueType.Dropdown;
+        this.whereDropdownSelectedIndex = whereDropdownSelectedIndex;
+    }
+    public queryList: Array<QueryList>;
+    public valueDropdownSelectedIndex: number = 0;
+    public dropdownList: Array<KeyValue<any, any>>;
+
+    initialize(parentQueryType: QueryType, childQueryType: QueryType, queryRowIndex: number, queryList: Array<QueryList>) {
+        this.queryRows[queryRowIndex].queryType = parentQueryType;
+        this.queryRows[queryRowIndex].otherQueryType = childQueryType;
+        this.queryRows[queryRowIndex].queryList = queryList;
+
+        // Build the dropdown for this new parent queryrow
+        let usedParentDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.queryRows[queryRowIndex].queryType);
+        this.buildDropdown(this.queryRows[queryRowIndex], usedParentDropdownOptions, this.queryRows[queryRowIndex].queryList);
+    }
 
 
 
@@ -760,12 +527,12 @@ export class DropdownParentQueryRow extends QueryRow {
 
         // Rebuild all the child queryrow dropdowns
         let usedParentIds: Array<number> = [];
-        let usedChildDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.childQueryType);
+        let usedChildDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.otherQueryType);
         this.queryRows.forEach(x => {
             // Update the list of parent ids that have been used so far
-            this.updateUsedParentIds(usedParentIds, x, this.queryList);
+            this.updateUsedParentIds(this.queryType, usedParentIds, x, this.queryList);
 
-            if (x.queryType == this.childQueryType) {
+            if (x.queryType == this.otherQueryType) {
                 // And as long as the current child queryrow resides after the parent queryrow that was selected
                 if (this.queryRows.indexOf(x) > this.queryRows.indexOf(this)) {
                     this.buildChildDropdown(x, usedChildDropdownOptions, usedParentIds, this.queryList);
@@ -775,13 +542,13 @@ export class DropdownParentQueryRow extends QueryRow {
 
 
         // If there are any child queryrows that reside before the first parent queryrow
-        if (this.queryRows.findIndex(x => x.queryType == this.childQueryType) < this.queryRows.findIndex(x => x.queryType == this.queryType)) {
+        if (this.queryRows.findIndex(x => x.queryType == this.otherQueryType) < this.queryRows.findIndex(x => x.queryType == this.queryType)) {
             usedParentIds = [];
 
             // Rebuild those child queryrow dropdowns
-            usedChildDropdownOptions = this.getUsedDropdownOptions(this.childQueryType);
+            usedChildDropdownOptions = this.getUsedDropdownOptions(this.otherQueryType);
             this.queryRows.forEach(x => {
-                if (x.queryType == this.childQueryType) {
+                if (x.queryType == this.otherQueryType) {
 
                     // As long as the current child queryrow resides before the first parent queryrow
                     if (this.queryRows.indexOf(x) < this.queryRows.findIndex(x => x.queryType == this.queryType)) {
@@ -794,7 +561,7 @@ export class DropdownParentQueryRow extends QueryRow {
         // Update the parent query
         this.updateQuery(this.queryType);
         // Update the child query
-        this.updateNicheQuery(this.queryList);
+        this.updateChildQuery(this.queryType, this.otherQueryType, this.queryList);
     }
 }
 
@@ -809,138 +576,43 @@ export class CategoryQueryRow extends DropdownParentQueryRow implements IQueryRo
         // Initialize the new category queryrow
         this.initialize(QueryType.Category, QueryType.Niche, queryRowIndex, this.queryService.categories);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // constructor(
-    //     queryRows: Array<IQueryRow>,
-    //     queries: Array<Query>,
-    //     private queryService: QueryService) {
-    //     super(queryRows, queries);
-    //     this.queryType = QueryType.Category;
-    //     this.hasOperators = false;
-    //     this.valueType = ValueType.Dropdown;
-    //     this.whereDropdownSelectedIndex = 1;
-    // }
-    // public valueDropdownSelectedIndex: number = 0;
-    // public dropdownList: Array<KeyValue<any, any>>;
-
-    // newQueryRow(queryRowIndex: number) {
-    //     // Create the new category queryrow
-    //     this.queryRows.splice(queryRowIndex, 1);
-    //     this.queryRows.splice(queryRowIndex, 0, new CategoryQueryRow(this.queryRows, this.queries, this.queryService));
-
-    //     // Build the dropdown for this new category queryrow
-    //     let usedCategoryDropdownOptions: Array<number> = this.getUsedDropdownOptions(QueryType.Category);
-    //     this.buildDropdown(this.queryRows[queryRowIndex], usedCategoryDropdownOptions, this.queryService.categories);
-    // }
-
-
-    // updateValue(newValue: number) {
-    //     // Update the value and the selected index
-    //     this.value = newValue != null ? newValue.toString() : null;
-    //     this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.value);
-
-
-    //     // Rebuild all the category queryrow dropdowns
-    //     let usedCategoryDropdownOptions: Array<number> = this.getUsedDropdownOptions(QueryType.Category);
-    //     this.queryRows.forEach(x => {
-    //         if (x.queryType == QueryType.Category) {
-    //             this.buildDropdown(x, usedCategoryDropdownOptions, this.queryService.categories);
-    //         }
-    //     });
-
-
-    //     // Rebuild all the niche queryrow dropdowns
-    //     let usedCategories: Array<number> = [];
-    //     let usedNicheDropdownOptions: Array<number> = this.getUsedDropdownOptions(QueryType.Niche);
-    //     this.queryRows.forEach(x => {
-    //         // Update the list of categories that have been used so far
-    //         this.updateUsedCategoriesList(usedCategories, x, this.queryService.categories);
-
-    //         if (x.queryType == QueryType.Niche) {
-    //             // And as long as the current niche queryrow resides after the category queryrow that was selected
-    //             if (this.queryRows.indexOf(x) > this.queryRows.indexOf(this)) {
-    //                 this.buildNicheDropdown(x, usedNicheDropdownOptions, usedCategories, this.queryService.categories);
-    //             }
-    //         }
-    //     });
-
-
-    //     // If there are any niche queryrows that reside before the first category queryrow
-    //     if (this.queryRows.findIndex(x => x.queryType == QueryType.Niche) < this.queryRows.findIndex(x => x.queryType == QueryType.Category)) {
-    //         usedCategories = [];
-
-    //         // Rebuild those niche queryrow dropdowns
-    //         usedNicheDropdownOptions = this.getUsedDropdownOptions(QueryType.Niche);
-    //         this.queryRows.forEach(x => {
-    //             if (x.queryType == QueryType.Niche) {
-
-    //                 // As long as the current niche queryrow resides before the first category queryrow
-    //                 if (this.queryRows.indexOf(x) < this.queryRows.findIndex(x => x.queryType == QueryType.Category)) {
-    //                     this.buildNicheDropdown(x, usedNicheDropdownOptions, usedCategories, this.queryService.categories);
-    //                 }
-    //             }
-    //         });
-    //     }
-
-    //     // Update the category query
-    //     this.updateQuery(QueryType.Category);
-    //     // Update the niche query
-    //     this.updateNicheQuery(this.queryService.categories);
-    // }
 }
 
 
-// ===================================================( NICHE QUERY ROW )===================================================\\
-export class NicheQueryRow extends QueryRowClass implements IQueryRow {
-    constructor(
-        queryRows: Array<IQueryRow>,
-        queries: Array<Query>,
-        private queryService: QueryService) {
+
+
+
+
+
+
+export class DropdownChildQueryRow extends DropdownParentChildQueryRow {
+    constructor(whereDropdownSelectedIndex: number, queryRows: Array<IQueryRow>, queries: Array<Query>,
+        public queryService: QueryService) {
         super(queryRows, queries);
-        this.queryType = QueryType.Niche;
         this.hasOperators = false;
         this.valueType = ValueType.Dropdown;
-        this.whereDropdownSelectedIndex = 2;
+        this.whereDropdownSelectedIndex = whereDropdownSelectedIndex;
     }
+    public queryList: Array<QueryList>;
     public valueDropdownSelectedIndex: number = 0;
     public dropdownList: Array<KeyValue<any, any>>;
 
-    newQueryRow(queryRowIndex: number) {
-        // Create the new niche queryrow
-        this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new NicheQueryRow(this.queryRows, this.queries, this.queryService));
+
+
+    initialize(parentQueryType: QueryType, childQueryType: QueryType, queryRowIndex: number, queryList: Array<QueryList>) {
+        this.queryRows[queryRowIndex].queryType = childQueryType;
+        this.queryRows[queryRowIndex].otherQueryType = parentQueryType;
+        this.queryRows[queryRowIndex].queryList = queryList;
 
         // Update the list of categories that have been used so far
         let usedCategories: Array<number> = [];
         this.queryRows.forEach(x => {
-            this.updateUsedCategoriesList(usedCategories, x, this.queryService.categories);
+            this.updateUsedParentIds(this.queryRows[queryRowIndex].otherQueryType, usedCategories, x, this.queryRows[queryRowIndex].queryList);
         })
 
         // Build the dropdown for this new niche queryrow
-        let usedNicheDropdownOptions: Array<number> = this.getUsedDropdownOptions(QueryType.Niche);
-        this.buildNicheDropdown(this.queryRows[queryRowIndex], usedNicheDropdownOptions, usedCategories, this.queryService.categories);
+        let usedNicheDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.queryRows[queryRowIndex].queryType);
+        this.buildChildDropdown(this.queryRows[queryRowIndex], usedNicheDropdownOptions, usedCategories, this.queryRows[queryRowIndex].queryList);
     }
 
 
@@ -952,25 +624,40 @@ export class NicheQueryRow extends QueryRowClass implements IQueryRow {
 
         // Rebuild all the niche queryrow dropdowns
         let usedCategories: Array<number> = [];
-        let usedNicheDropdownOptions: Array<number> = this.getUsedDropdownOptions(QueryType.Niche);
+        let usedNicheDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.queryType);
         this.queryRows.forEach(x => {
             // Update the list of categories that have been used so far
-            this.updateUsedCategoriesList(usedCategories, x, this.queryService.categories);
+            this.updateUsedParentIds(this.otherQueryType, usedCategories, x, this.queryList);
 
-            if (x.queryType == QueryType.Niche) {
-                this.buildNicheDropdown(x, usedNicheDropdownOptions, usedCategories, this.queryService.categories);
+            if (x.queryType == this.queryType) {
+                this.buildChildDropdown(x, usedNicheDropdownOptions, usedCategories, this.queryList);
             }
         });
 
         // Update the category query
-        this.updateQuery(QueryType.Category);
+        this.updateQuery(this.otherQueryType);
         // Update the niche query
-        this.updateNicheQuery(this.queryService.categories);
+        this.updateChildQuery(this.otherQueryType, this.queryType, this.queryList);
     }
+
 }
 
 
 
+
+
+
+// ===================================================( NICHE QUERY ROW )===================================================\\
+export class NicheQueryRow extends DropdownChildQueryRow implements IQueryRow {
+    newQueryRow(queryRowIndex: number) {
+        // Create the new niche queryrow
+        this.queryRows.splice(queryRowIndex, 1);
+        this.queryRows.splice(queryRowIndex, 0, new NicheQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.queryService));
+
+        // Initialize the new category queryrow
+        this.initialize(QueryType.Category, QueryType.Niche, queryRowIndex, this.queryService.categories);
+    }
+}
 
 
 
@@ -995,7 +682,7 @@ export class NicheQueryRow extends QueryRowClass implements IQueryRow {
 
 export interface IQueryRow {
     queryType: QueryType;
-    childQueryType?: QueryType;
+    otherQueryType?: QueryType;
     hasOperators: boolean;
     operatorType: OperatorType;
     valueType: ValueType;

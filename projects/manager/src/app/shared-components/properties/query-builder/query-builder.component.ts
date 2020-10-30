@@ -24,7 +24,7 @@ export class QueryBuilderComponent {
   public whereList: Array<KeyValue<any, IQueryRow>> = [
     { key: "None", value: new QueryRowNone(this.queryRows, this.queries) },
     { key: "Category", value: new CategoryQueryRow(1, this.queryRows, this.queries, this.queryService) },
-    { key: "Niche", value: new NicheQueryRow(this.queryRows, this.queries, this.queryService) },
+    { key: "Niche", value: new NicheQueryRow(2, this.queryRows, this.queries, this.queryService) },
     { key: "Product Subgroup", value: new ProductSubgroupQueryRow(3, this.queryRows, this.queries, this.queryService) },
     { key: "Featured Products", value: new FeaturedProductsQueryRow(this.queryRows, this.queries) },
     { key: "Customer Related Products", value: new CustomerRelatedProductsQueryRow(5, this.queryRows, this.queries, this.queryService) },
