@@ -1,9 +1,8 @@
-import { Niche } from './niche';
-
 export interface Category {
-    id: number;
+    // id: number;
+    urlId: string;
     name: string;
     urlName: string;
-    icon: string;
-    niches: Array<Niche>;
+    // icon: string;
+    // niches: Array<Niche>;
 }

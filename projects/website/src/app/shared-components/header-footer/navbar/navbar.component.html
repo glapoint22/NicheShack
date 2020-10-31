@@ -1,3 +1,5 @@
+<div *show="suggestions && suggestions.length > 0" transitionClass="fade-end" class="suggestions-mask fade-start"></div>
+
 <nav class="primary-color-gradient shadow">
 
     <!-- Logo and menu bars -->
@@ -10,10 +12,39 @@
 
     <!-- Search -->
     <div class="search-container">
-        <category-dropdown-button [items]="categories" [defaultIndex]="selectedCategoryIndex" class="show-xxs">
+        <category-dropdown-button [items]="categoriesList" [defaultIndex]="selectedCategoryIndex" class="show-xxs"
+            (itemClick)="onCategoryClick($event)">
         </category-dropdown-button>
 
-        <input placeholder="Search">
+        <div class="input-container">
+            <input #input placeholder="Search" (input)="getSuggestions(input.value)"
+                (mousedown)="getSuggestions(input.value)" (keydown.escape)="suggestions = []"
+                (blur)="hideSuggestionBox()" (keydown.enter)="search(input.value)">
+            <div id="suggestionBox" *ngIf="suggestions && suggestions.length > 0" class="suggestion-box"
+                (mousedown)="mousedown()">
+                <ng-container *ngFor="let suggestion of suggestions; let i = index">
+
+                    <!-- Suggestion -->
+                    <div class="suggestion" (click)="search(suggestion.name)" [title]="getSuggestionTooltip(suggestion.name)">
+                        <div class="suggestion-text" [innerHTML]="suggestion.html"></div>
+                    </div>
+
+                    <!-- Suggested Category -->
+                    <div *ngIf="suggestion.category" class="suggestion"
+                        [title]="suggestion.name + ' in ' + suggestion.category.name">
+                        <div class="suggestion-text suggested-category">
+                            in {{suggestion.category.name}}
+                        </div>
+                    </div>
+                </ng-container>
+
+
+
+
+
+            </div>
+        </div>
+
         <button class="alt-button button-rounded-right"><i class="fas fa-search"></i></button>
     </div>
 
@@ -22,7 +53,7 @@
 
     <!-- Account -->
     <div class="account-container">
-        
+
         <!-- Account Dropdown -->
         <div (click)="accountMenu.onClick()" (mousedown)="accountMenu.onMousedown()" class="account-dropdown show-md">
             <div style="cursor: pointer;">
@@ -41,13 +72,13 @@
 
 
         <!-- Order Support -->
-        <a href="https://www.clkbank.com" target="_blank"
-            style="min-width: 90px;" class="link show-lg">Order Support</a>
+        <a href="https://www.clkbank.com" target="_blank" style="min-width: 90px;" class="link show-lg">Order
+            Support</a>
 
 
         <!-- Account Image -->
-        <a *ngIf="customerName" class="customer-container show-md" style="max-width: 100px; margin-left: 40px; margin-right: 10px;"
-            routerLink="/account/profile">
+        <a *ngIf="customerName" class="customer-container show-md"
+            style="max-width: 100px; margin-left: 40px; margin-right: 10px;" routerLink="/account/profile">
 
             <img [src]="customerImage ? 'images/' + customerImage : 'assets/no-account-pic.png'">
             <div class="text-truncate" style="margin-top: 4px;">{{customerName}}</div>
@@ -56,7 +87,8 @@
 
 
         <!-- Sign in -->
-        <a *ngIf="!customerName" class="customer-container show-md" style="margin-left: 34px; margin-right: 10px;" routerLink="/sign-in">
+        <a *ngIf="!customerName" class="customer-container show-md" style="margin-left: 34px; margin-right: 10px;"
+            routerLink="/sign-in">
             <i class="far fa-user"></i>
             <div class="text-truncate">sign in</div>
         </a>
