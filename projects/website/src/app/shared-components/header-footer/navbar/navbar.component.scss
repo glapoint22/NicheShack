@@ -1,5 +1,15 @@
 @import '../../../../scss/variables';
 
+.suggestions-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(4, 4, 4, 0.8);
+    z-index: 10;
+}
+
 nav {
     padding: 0 16px;
     position: fixed;
@@ -37,17 +47,65 @@ nav {
         width: 100%;
         max-width: 800px;
 
-        input {
+        .input-container {
+            position: relative;
             flex: 1 1 auto;
-            background: white;
-            border-radius: 0;
-            border: none;
-            height: 36px;
-            color: black;
-            width: 100%;
-            border-top-left-radius: 100px;
-            border-bottom-left-radius: 100px;
+
+            input {
+                background: white;
+                border-radius: 0;
+                border: none;
+                height: 36px;
+                color: black;
+                width: 100%;
+                border-top-left-radius: 100px;
+                border-bottom-left-radius: 100px;
+            }
+
+            .suggestion-box {
+                width: 100%;
+                position: absolute;
+                background: white;
+                top: 36px;
+                left: 0;
+                border-top: 1px solid #d8d8d8;
+                color: #232323;
+                border-bottom: 1px solid transparent;
+
+                .suggestion {
+                    margin: 0 1px;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: #d8d8d8;
+                        outline: 1px solid #d8d8d8;
+                        
+                    }
+
+                    &:not(:first-child) > .suggestion-text {
+                        border-top: 1px solid  #d8d8d8;
+                    }
+
+                .suggestion-text {
+                    margin: 0 10px;
+                    padding: 8px;
+                    
+                    
+                    &:not(.suggested-category) {
+                        font-weight: bold;
+                    }
+                }
+
+                .suggested-category {
+                    padding-left: 20px;
+                    color: $primary-color;
+                }
+                   
+                }
+            }
         }
+
+        
     }
 
 
@@ -103,10 +161,13 @@ nav {
 @media (min-width: map-get($breakpoints, xxs)) {
     nav {
         .search-container {
-            input {
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
+            .input-container {
+                input {
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
             }
+            
         }
     }
 }

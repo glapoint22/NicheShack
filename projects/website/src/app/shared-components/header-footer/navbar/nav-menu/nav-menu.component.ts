@@ -31,16 +31,16 @@ export class NavMenuComponent implements OnInit {
   }
 
 
-  onCategoryClick(categoryId: number) {
-    this.currentCategory = this.categories[categoryId];
-    this.niches = this.categories[categoryId].niches;
-    this.nicheView = true;
-  }
+  // onCategoryClick(categoryId: number) {
+  //   this.currentCategory = this.categories[categoryId];
+  //   this.niches = this.categories[categoryId].niches;
+  //   this.nicheView = true;
+  // }
 
-  onNicheClick(nicheId: number) {
-    this.router.navigate(['/search'], {
-      queryParams: { 'categoryId': this.currentCategory.id, 'nicheId': nicheId }
-    });
-    this.show = false;
-  }
+  // onNicheClick(nicheId: number) {
+  //   this.router.navigate(['/search'], {
+  //     queryParams: { 'categoryId': this.currentCategory.id, 'nicheId': nicheId }
+  //   });
+  //   this.show = false;
+  // }
 }
