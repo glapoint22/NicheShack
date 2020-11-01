@@ -13,7 +13,7 @@
     <!-- Search -->
     <div class="search-container">
         <category-dropdown-button [items]="categoriesList" [defaultIndex]="selectedCategoryIndex" class="show-xxs"
-            (itemClick)="onCategoryClick($event)">
+            (itemClick)="onCategoryClick($event, input)">
         </category-dropdown-button>
 
         <div class="input-container">
@@ -25,27 +25,25 @@
                 <ng-container *ngFor="let suggestion of suggestions; let i = index">
 
                     <!-- Suggestion -->
-                    <div class="suggestion" (click)="search(suggestion.name)" [title]="getSuggestionTooltip(suggestion.name)">
+                    <div class="suggestion" (click)="search(suggestion.name)"
+                        [title]="getSuggestionTooltip(suggestion.name)">
                         <div class="suggestion-text" [innerHTML]="suggestion.html"></div>
                     </div>
 
                     <!-- Suggested Category -->
                     <div *ngIf="suggestion.category" class="suggestion"
+                        (click)="search(suggestion.name, suggestion.category)"
                         [title]="suggestion.name + ' in ' + suggestion.category.name">
                         <div class="suggestion-text suggested-category">
                             in {{suggestion.category.name}}
                         </div>
                     </div>
                 </ng-container>
-
-
-
-
-
             </div>
         </div>
 
-        <button class="alt-button button-rounded-right"><i class="fas fa-search"></i></button>
+        <button class="alt-button button-rounded-right" (click)="search(input.value)"><i
+                class="fas fa-search"></i></button>
     </div>
 
 
