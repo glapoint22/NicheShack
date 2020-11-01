@@ -9,7 +9,7 @@ import { MenuOption } from './menu-option';
 export interface Query {
     queryType: QueryType;
     operator: Array<OperatorType>;
-    value: Array<string>;
+    numValue: Array<number>;
 }
 
 export interface IQueryRow {
@@ -18,8 +18,8 @@ export interface IQueryRow {
     hasOperators: boolean;
     operatorType: OperatorType;
     valueType: ValueType;
-    value: string;
-    value2?: string;
+    numValue: number;
+    value2?: number;
     whereDropdownSelectedIndex: number;
     dropdownList?: Array<KeyValue<any, any>>;
     dropdownList2?: Array<KeyValue<any, any>>;
@@ -66,7 +66,7 @@ export class QueryRowClass {
     constructor(public queryRows: Array<IQueryRow>, public queries: Array<Query>) { }
     public queryType: QueryType;
     public operatorType: OperatorType = OperatorType.Equals;
-    public value: string;
+    public numValue: number;
     public hasOperators: boolean;
     public valueType: ValueType;
     public whereDropdownSelectedIndex: number;
@@ -88,12 +88,12 @@ export class QueryRowClass {
 
                     // Create the query if it has NOT been created already
                     if (queryIndex == -1) {
-                        this.queries.push({ queryType: queryType, operator: [OperatorType.Equals], value: [] });
+                        this.queries.push({ queryType: queryType, operator: [OperatorType.Equals], numValue: [] });
                         queryIndex = this.queries.length - 1;
                     }
 
                     // Update the query
-                    this.queries[queryIndex].value.push(x.value);
+                    this.queries[queryIndex].numValue.push(x.numValue);
                 }
             }
         });
@@ -128,7 +128,7 @@ export class QueryRowClass {
         // Check to see if the queryrow with this updated querytype has a corresponding query
         if (this.queries.findIndex(x => x.queryType == newQueryType) == -1) {
             // If the updated queryrow does NOT have a corresponding query, then create one
-            this.queries.push({ queryType: this.queryType, operator: [this.operatorType], value: [this.value] });
+            this.queries.push({ queryType: this.queryType, operator: [this.operatorType], numValue: [this.numValue] });
         }
 
         // Set the value to the query with the value of its corresponding queryrow
@@ -140,12 +140,12 @@ export class QueryRowClass {
     }
 
     setQueriesValue(queryType: QueryType) {
-        let valueList: Array<string> = [];
+        let valueList: Array<number> = [];
 
         // Check to see if the queryrow with this querytype has a corresponding query
         if (this.queries.findIndex(x => x.queryType == queryType) == -1) {
             // If the queryrow does NOT have a corresponding query, then create one
-            this.queries.push({ queryType: this.queryType, operator: [this.operatorType], value: [] });
+            this.queries.push({ queryType: this.queryType, operator: [this.operatorType], numValue: [] });
         }
 
         let index = this.queries.findIndex(x => x.queryType == queryType);
@@ -159,9 +159,9 @@ export class QueryRowClass {
                 if (!this.hasOperators) {
 
                     // Then check to see if the value of that queryrow has NOT yet been added to this temporary value list
-                    if (valueList.findIndex(y => y == x.value) == -1) {
+                    if (valueList.findIndex(y => y == x.numValue) == -1) {
                         // If not, add the value from that queryrow to this temporary value list
-                        valueList.push(x.value);
+                        valueList.push(x.numValue);
                     }
 
                     // If the query's corresponding queryrow has operators
@@ -169,11 +169,11 @@ export class QueryRowClass {
 
                     if (x.operatorType == OperatorType.IsBetween) {
 
-                        valueList.push(x.value + "," + x.value2);
+                        // valueList.push(x.numValue + "," + x.value2);
 
                     } else {
                         // Then just add the value from that queryrow to this temporary value list
-                        valueList.push(x.value);
+                        valueList.push(x.numValue);
                     }
                 }
             }
@@ -184,13 +184,13 @@ export class QueryRowClass {
             // Convert the value list into one long string
             let valueListJoin = valueList.join();
             // Then turn that string into a single array
-            this.queries[index].value = valueListJoin.split(',');
+            // this.queries[index].numValue = valueListJoin.split(',');
 
             // If the value type is anything other than a list
         } else {
 
             // Assign the value list to the query that corresponds with the querytype
-            this.queries[index].value = valueList;
+            this.queries[index].numValue = valueList;
         }
     }
 
@@ -210,7 +210,7 @@ export class QueryRowClass {
 
         if (index == -1) {
             // If the queryrow does NOT have a corresponding query, then create one
-            this.queries.push({ queryType: this.queryType, operator: [this.operatorType], value: [] });
+            this.queries.push({ queryType: this.queryType, operator: [this.operatorType], numValue: [] });
 
             index = this.queries.findIndex(x => x.queryType == queryType);
         }
@@ -251,7 +251,7 @@ export class QueryRow {
     constructor(public queryRows: Array<IQueryRow>, public queries: Array<Query>) { }
     public queryType: QueryType;
     public operatorType: OperatorType = OperatorType.Equals;
-    public value: string;
+    public numValue: number;
     public hasOperators: boolean;
     public valueType: ValueType;
     public whereDropdownSelectedIndex: number;
@@ -273,12 +273,12 @@ export class QueryRow {
 
                     // Create the query if it has NOT been created already
                     if (queryIndex == -1) {
-                        this.queries.push({ queryType: queryType, operator: [OperatorType.Equals], value: [] });
+                        this.queries.push({ queryType: queryType, operator: [OperatorType.Equals], numValue: [] });
                         queryIndex = this.queries.length - 1;
                     }
 
                     // Update the query
-                    this.queries[queryIndex].value.push(x.value);
+                    this.queries[queryIndex].numValue.push(x.numValue);
                 }
             }
         });
@@ -311,7 +311,7 @@ export class QueryRowDropdownBase extends QueryRow {
                 // And as long as that queryrow has NOT been set to 'none'
                 if (x.valueDropdownSelectedIndex != 0) {
                     // Add the value of that queryrow to the used list
-                    usedDropdownOptions.push(parseInt(x.value));
+                    usedDropdownOptions.push(x.numValue);
                 }
             }
         });
@@ -329,7 +329,7 @@ export class QueryRowDropdownBase extends QueryRow {
 
             // If we come across an item in the list that is NOT a dropdown option that has been used yet
             // or the item happens to be the same as the selected option of this quryrow
-            if (usedDropdownOptions.indexOf(y.id) == -1 || y.id == parseInt(queryRow.value)) {
+            if (usedDropdownOptions.indexOf(y.id) == -1 || y.id == queryRow.numValue) {
 
                 // Add it to the dropdown list of this quryrow
                 queryRow.dropdownList.push({
@@ -339,7 +339,7 @@ export class QueryRowDropdownBase extends QueryRow {
             }
         })
         // Now that the dropdown list has been created, set the option that will be selected
-        queryRow.valueDropdownSelectedIndex = queryRow.dropdownList.findIndex(y => y.value == queryRow.value);
+        queryRow.valueDropdownSelectedIndex = queryRow.dropdownList.findIndex(y => y.value == queryRow.numValue);
     }
 }
 
@@ -356,8 +356,8 @@ export class QueryRowDropdown extends QueryRowDropdownBase {
 
     updateValue(newValue: number) {
         // Update the value and the selected index
-        this.value = newValue != null ? newValue.toString() : null;
-        this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.value);
+        this.numValue = newValue != null ? newValue : null;
+        this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.numValue);
 
         // Rebuild all the dropdowns
         let usedDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.queryType);
@@ -382,11 +382,11 @@ export class QueryRowDropdownParentChild extends QueryRowDropdownBase {
         if (parentQueryRow.queryType == parentQueryType) {
 
             // As long as the value of the parent queryrow is NOT null
-            if (parentQueryRow.value != null) {
+            if (parentQueryRow.numValue != null) {
 
                 // Get the index of the parent from the parent list that corresponds with the 
                 // value of the current parent queryrow and add that index to the used parent ids list
-                usedParentIds.push(parentList.findIndex(y => y.id == parseInt(parentQueryRow.value)));
+                usedParentIds.push(parentList.findIndex(y => y.id == parentQueryRow.numValue));
             }
         }
     }
@@ -408,7 +408,7 @@ export class QueryRowDropdownParentChild extends QueryRowDropdownBase {
                 y.children.forEach(z => {
 
                     // And if we come across a child that has NOT been used yet or is the selected child in the dropdown of the current child quryrow
-                    if (usedChildDropdownOptions.indexOf(z.id) == -1 || z.id == parseInt(childQueryRow.value)) {
+                    if (usedChildDropdownOptions.indexOf(z.id) == -1 || z.id == childQueryRow.numValue) {
 
                         // Add it to the dropdown list of the current child quryrow
                         childQueryRow.dropdownList.push({
@@ -429,7 +429,7 @@ export class QueryRowDropdownParentChild extends QueryRowDropdownBase {
                 parentList[y].children.forEach(z => {
 
                     // And if we come across a child that has NOT been used yet or is the selected child in the dropdown of the current child quryrow
-                    if (usedChildDropdownOptions.indexOf(z.id) == -1 || z.id == parseInt(childQueryRow.value)) {
+                    if (usedChildDropdownOptions.indexOf(z.id) == -1 || z.id == childQueryRow.numValue) {
 
                         // Add it to the dropdown list of the current child quryrow
                         childQueryRow.dropdownList.push({
@@ -442,7 +442,7 @@ export class QueryRowDropdownParentChild extends QueryRowDropdownBase {
         }
 
         // Get the index of the option in the dropdown list where the option's value matches the current child queryrow value
-        let valueDropdownSelectedIndex = childQueryRow.dropdownList.findIndex(y => y.value == childQueryRow.value);
+        let valueDropdownSelectedIndex = childQueryRow.dropdownList.findIndex(y => y.value == childQueryRow.numValue);
 
         // If an option value in the dropdown list does NOT match the current child queryrow value, then assign the selected
         // index as zero (None). But if a match is found, assign the selected index the index of that dropdown option
@@ -471,12 +471,12 @@ export class QueryRowDropdownParentChild extends QueryRowDropdownBase {
 
                     // Create the child query if it has NOT been created already
                     if (childQueryIndex == -1) {
-                        this.queries.push({ queryType: childQueryType, operator: [OperatorType.Equals], value: [] });
+                        this.queries.push({ queryType: childQueryType, operator: [OperatorType.Equals], numValue: [] });
                         childQueryIndex = this.queries.length - 1;
                     }
 
                     // Add the current child to the child query
-                    this.queries[childQueryIndex].value.push(x.dropdownList[x.valueDropdownSelectedIndex].value.toString());
+                    this.queries[childQueryIndex].numValue.push(x.dropdownList[x.valueDropdownSelectedIndex].value);
 
                     // If a parent query exists
                     if (parentQueryIndex != -1) {
@@ -495,18 +495,18 @@ export class QueryRowDropdownParentChild extends QueryRowDropdownBase {
                         }
 
                         // As long as the current child queryrow resides after the parent queryrow it belongs to
-                        if (this.queryRows.indexOf(x) > this.queryRows.findIndex(y => y.value == parentId.toString())) {
+                        if (this.queryRows.indexOf(x) > this.queryRows.findIndex(y => y.numValue == parentId)) {
                             // Get the index of the id in the parent query that matches the id of the parent
-                            let parentIdIndex = this.queries[parentQueryIndex].value.indexOf(parentId.toString());
+                            let parentIdIndex = this.queries[parentQueryIndex].numValue.indexOf(parentId);
 
                             // If the id in the parent query exists
                             if (parentIdIndex != -1) {
                                 // Remove that id from parent query
-                                this.queries[parentQueryIndex].value.splice(parentIdIndex, 1);
+                                this.queries[parentQueryIndex].numValue.splice(parentIdIndex, 1);
                             }
 
                             // If all parents are removed from the parent query
-                            if (this.queries[parentQueryIndex].value.length == 0) {
+                            if (this.queries[parentQueryIndex].numValue.length == 0) {
                                 // Then remove the parent query
                                 this.queries.splice(parentQueryIndex, 1);
                             }
@@ -536,8 +536,8 @@ export class QueryRowDropdownParent extends QueryRowDropdownParentChild {
 
     updateValue(newValue: number) {
         // Update the value and the selected index
-        this.value = newValue != null ? newValue.toString() : null;
-        this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.value);
+        this.numValue = newValue != null ? newValue : null;
+        this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.numValue);
 
 
         // Rebuild all the parent queryrow dropdowns
@@ -611,8 +611,8 @@ export class QueryRowDropdownChild extends QueryRowDropdownParentChild {
 
     updateValue(newValue: number) {
         // Update the value and the selected index
-        this.value = newValue != null ? newValue.toString() : null;
-        this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.value);
+        this.numValue = newValue != null ? newValue : null;
+        this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.numValue);
 
 
         // Rebuild all the child queryrow dropdowns
@@ -642,7 +642,7 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
     }
     public valueDropdownSelectedIndex2: number = 0;
     public dropdownList2: Array<KeyValue<any, any>>;
-    public value2: string;
+    public value2: number;
     public queryRowIndex: number;
 
 
@@ -670,7 +670,7 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
                 if (x.valueDropdownSelectedIndex != 0) {
 
                     // Add the value of that queryrow to the used list
-                    usedDropdownOptions.push(parseInt(x.value));
+                    usedDropdownOptions.push(x.numValue);
                 }
 
                 // If a range operator has been selected
@@ -679,7 +679,7 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
                     // And as long as that value dropdown has NOT been set to 'none'
                     if (x.valueDropdownSelectedIndex2 != 0) {
                         // Add the selected value of that value dropdown to the used list
-                        usedDropdownOptions.push(parseInt(x.value2));
+                        usedDropdownOptions.push(x.value2);
                     }
                 }
             }
@@ -703,7 +703,7 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
                 // If we come across an item in the list that is NOT a dropdown option that has been used yet
                 // or the item happens to be the same as the selected option of this quryrow
-                if ((usedDropdownOptions.indexOf(y.id) == -1 || y.id == parseInt(queryRow.value2)) && y.id > parseInt(queryRow.value)) {
+                if ((usedDropdownOptions.indexOf(y.id) == -1 || y.id == queryRow.value2) && y.id > queryRow.numValue) {
 
                     // Add it to the dropdown list of this quryrow
                     queryRow.dropdownList2.push({
@@ -740,12 +740,12 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
                         // Create the query if it has NOT been created already
                         if (queryIndex == -1) {
-                            this.queries.push({ queryType: queryType, operator: [], value: [] });
+                            this.queries.push({ queryType: queryType, operator: [], numValue: [] });
                             queryIndex = this.queries.length - 1;
                         }
 
                         // Update the query
-                        this.queries[queryIndex].value.push(x.value);
+                        this.queries[queryIndex].numValue.push(x.numValue);
                         this.queries[queryIndex].operator.push(x.operatorType);
 
                         // If any operator other than the range operator has been selected
@@ -756,13 +756,13 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
                             // Create the query if it has NOT been created already
                             if (queryIndex == -1) {
-                                this.queries.push({ queryType: queryType, operator: [], value: [] });
+                                this.queries.push({ queryType: queryType, operator: [], numValue: [] });
                                 queryIndex = this.queries.length - 1;
                             }
 
                             // Update the query
                             this.queries[queryIndex].operator.push(x.operatorType);
-                            this.queries[queryIndex].value.push(x.value + "," + x.value2);
+                            // this.queries[queryIndex].numValue.push(x.numValue + "," + x.value2);
                         }
                     }
                 }
@@ -786,10 +786,10 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
     }
 
 
-    updateValue(newValue: string) {
+    updateValue(newValue: number) {
         // Update the value and the selected index
-        this.value = newValue != null ? newValue.toString() : null;
-        this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.value);
+        this.numValue = newValue != null ? newValue : null;
+        this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.numValue);
 
         // Rebuild all the dropdowns
         let usedDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.queryType);
@@ -814,9 +814,9 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
         this.updateQuery(this.queryType);
     }
 
-    updateValue2(newValue2: string) {
+    updateValue2(newValue2: number) {
         // Update the value and the selected index
-        this.value2 = newValue2 != null ? newValue2.toString() : null;
+        this.value2 = newValue2 != null ? newValue2 : null;
         this.valueDropdownSelectedIndex2 = this.dropdownList.findIndex(x => x.value == this.value2);
 
         // Rebuild all the dropdowns
@@ -844,7 +844,7 @@ export class QueryRowNone implements IQueryRow {
     hasOperators = null;
     operatorType = null;
     valueType = null;
-    value = null;
+    numValue = null;
     whereDropdownSelectedIndex = 0;
 
     newQueryRow(queryRowIndex: number) {
@@ -900,7 +900,7 @@ export class FeaturedProductsQueryRow extends QueryRowClass implements IQueryRow
     constructor(queryRows: Array<IQueryRow>, queries: Array<Query>) {
         super(queryRows, queries);
         this.queryType = QueryType.FeaturedProducts;
-        this.value = "";
+        this.numValue = null;
         this.hasOperators = false;
         this.valueType = ValueType.ItemList;
         this.whereDropdownSelectedIndex = 4;
@@ -948,7 +948,7 @@ export class FeaturedProductsQueryRow extends QueryRowClass implements IQueryRow
     onListItemAdd() {
         this.itemList.onListItemAdd();
         if (this.itemList.listItems[0].name.length > 0) {
-            this.value = this.listItems.map(x => x.name).toString();
+            // this.numValue = this.listItems.map(x => x.name).toString();
             this.setQueriesValue(QueryType.FeaturedProducts);
         }
     }
@@ -956,7 +956,7 @@ export class FeaturedProductsQueryRow extends QueryRowClass implements IQueryRow
 
     onListItemDelete() {
         this.itemList.deleteListItem();
-        this.value = this.listItems.map(x => x.name).toString();
+        // this.numValue = this.listItems.map(x => x.name).toString();
         this.setQueriesValue(QueryType.FeaturedProducts);
     }
 
@@ -981,64 +981,117 @@ export class CustomerRelatedProductsQueryRow extends QueryRowDropdown {
 
 
 
+
+
+
+
+
+
+
+
+
+export class QueryRowPrice extends QueryRow {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ===================================================( PRODUCT PRICE QUERY ROW )===================================================\\
-export class ProductPriceQueryRow extends QueryRowClass implements IQueryRow {
+export class ProductPriceQueryRow extends QueryRowPrice implements IQueryRow {
     constructor(queryRows: Array<IQueryRow>, queries: Array<Query>) {
         super(queryRows, queries);
         this.queryType = QueryType.ProductPrice;
-        this.value = "0.00";
+        this.numValue = null;
         this.hasOperators = true;
         this.valueType = ValueType.Price;
         this.whereDropdownSelectedIndex = 6;
     }
-    public value2 = "0.00";
+    public value2 = null;
+    private doubleValue: number;
+    private doubleValue2: number;
 
     newQueryRow(queryRowIndex: number) {
-        let oldQueryType = this.queryRows[queryRowIndex].queryType;
-
-        // Update the query row
+        // Create the new product price queryrow
         this.queryRows.splice(queryRowIndex, 1);
         this.queryRows.splice(queryRowIndex, 0, new ProductPriceQueryRow(this.queryRows, this.queries));
 
         // Then update the queries
-        this.updateQueriesOLD(oldQueryType, QueryType.ProductPrice);
+        // this.updateQueriesOLD(oldQueryType, QueryType.ProductPrice);
     }
 
     updateOperator(operatorType: OperatorType) {
         this.operatorType = operatorType;
-        this.setQueriesOperator(QueryType.ProductPrice);
+        // this.setQueriesOperator(QueryType.ProductPrice);
     }
 
     updateWholeNumberValue(wholeNumberInputText: HTMLInputElement, decimalInputText: HTMLInputElement) {
         !(/^[0123456789]*$/i).test(wholeNumberInputText.value) ? wholeNumberInputText.value = wholeNumberInputText.value.replace(/[^0123456789]/ig, '') : null;
 
-        if (wholeNumberInputText.id == "wholeNumber1") {
-            this.value = (wholeNumberInputText.value.length == 0 ? 0 : wholeNumberInputText.value) + "." + (decimalInputText.value.length == 0 ? "00" : decimalInputText.value);
+
+        let wholeNumberValue: number = 0;
+        let decimalValue: number = 0.0;
+
+
+        if (wholeNumberInputText.value.length == 0) {
+            wholeNumberValue = 0;
         } else {
-            this.value2 = (wholeNumberInputText.value.length == 0 ? 0 : wholeNumberInputText.value) + "." + (decimalInputText.value.length == 0 ? "00" : decimalInputText.value);
+
+
+
+            wholeNumberValue = parseInt(wholeNumberInputText.value);
         }
 
-        this.setQueriesValue(QueryType.ProductPrice);
+
+        if (decimalInputText.value.length == 0) {
+
+            decimalValue = 0;
+        } else {
+            decimalValue = parseInt(decimalInputText.value) * 0.01;
+
+
+        }
+
+
+
+
+        if (wholeNumberInputText.id == "wholeNumber1") {
+            this.doubleValue = wholeNumberValue + decimalValue;
+
+        } else {
+            this.doubleValue2 = wholeNumberValue + decimalValue;
+        }
+
+        
     }
 
     updateDecimalValue(wholeNumberInputText: HTMLInputElement, decimalInputText: HTMLInputElement) {
         !(/^[0123456789]*$/i).test(decimalInputText.value) ? decimalInputText.value = decimalInputText.value.replace(/[^0123456789]/ig, '') : null;
-        let intValue = parseInt(decimalInputText.value);
+        let intValue = decimalInputText.value;
 
         if (decimalInputText.id == "decimal1") {
-            this.value = wholeNumberInputText.value + "." + (intValue < 10 && decimalInputText.value.length == 1 ? "0" + decimalInputText.value : decimalInputText.value.length == 0 ? "00" : decimalInputText.value);
+            // this.numValue = wholeNumberInputText.value + "." + (intValue < 10 && decimalInputText.value.length == 1 ? "0" + decimalInputText.value : decimalInputText.value.length == 0 ? "00" : decimalInputText.value);
         } else {
-            this.value2 = wholeNumberInputText.value + "." + (intValue < 10 && decimalInputText.value.length == 1 ? "0" + decimalInputText.value : decimalInputText.value.length == 0 ? "00" : decimalInputText.value);
+            // this.value2 = wholeNumberInputText.value + "." + (intValue < 10 && decimalInputText.value.length == 1 ? "0" + decimalInputText.value : decimalInputText.value.length == 0 ? "00" : decimalInputText.value);
         }
 
-        this.setQueriesValue(QueryType.ProductPrice);
+        // this.setQueriesValue(QueryType.ProductPrice);
     }
 
     onDecimalInputBlur(decimalInputText: HTMLInputElement) {
         let intValue = parseInt(decimalInputText.value);
 
-        if (intValue < 10) {
-            decimalInputText.value = "0" + intValue;
+        if (intValue < 10 && decimalInputText.value.length == 1) {
+            decimalInputText.value = intValue + "0";
         }
     }
 }
@@ -1065,7 +1118,7 @@ export class ProductKeywordsQueryRow extends QueryRowClass implements IQueryRow 
     constructor(queryRows: Array<IQueryRow>, queries: Array<Query>) {
         super(queryRows, queries);
         this.queryType = QueryType.ProductKeywords;
-        this.value = "";
+        this.numValue = null;
         this.hasOperators = false;
         this.valueType = ValueType.EditableItemList;
         this.whereDropdownSelectedIndex = 8;
@@ -1114,7 +1167,7 @@ export class ProductKeywordsQueryRow extends QueryRowClass implements IQueryRow 
     onListItemAdd() {
         this.editableItemList.onListItemAdd();
         if (this.editableItemList.listItems[0].name.length > 0) {
-            this.value = this.editableListItems.map(x => x.name).toString();
+            // this.numValue = this.editableListItems.map(x => x.name).toString();
             this.setQueriesValue(QueryType.ProductKeywords);
         }
     }
@@ -1122,14 +1175,14 @@ export class ProductKeywordsQueryRow extends QueryRowClass implements IQueryRow 
 
     onListItemEdit() {
         this.editableItemList.onListItemEdit();
-        this.value = this.editableListItems.map(x => x.name).toString();
+        // this.numValue = this.editableListItems.map(x => x.name).toString();
         this.setQueriesValue(QueryType.ProductKeywords);
     }
 
 
     onListItemDelete() {
         this.editableItemList.deleteListItem();
-        this.value = this.editableListItems.map(x => x.name).toString();
+        // this.numValue = this.editableListItems.map(x => x.name).toString();
         this.setQueriesValue(QueryType.ProductKeywords);
     }
 }
@@ -1142,12 +1195,12 @@ export class ProductCreationDateQueryRow extends QueryRowClass implements IQuery
     constructor(queryRows: Array<IQueryRow>, queries: Array<Query>) {
         super(queryRows, queries);
         this.queryType = QueryType.ProductCreationDate;
-        this.value = "";
+        this.numValue = null;
         this.hasOperators = true;
         this.valueType = ValueType.Date;
         this.whereDropdownSelectedIndex = 9;
     }
-    public value2 = "";
+    public value2 = null;
 
     newQueryRow(queryRowIndex: number) {
         let oldQueryType = this.queryRows[queryRowIndex].queryType;
@@ -1166,7 +1219,7 @@ export class ProductCreationDateQueryRow extends QueryRowClass implements IQuery
     }
 
     updateValue(inputText: HTMLInputElement) {
-        this.value = inputText.value;
+        // this.numValue = inputText.value;
         this.setQueriesValue(QueryType.ProductCreationDate);
     }
 
