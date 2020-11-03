@@ -22,7 +22,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public customerImage: string;
   private subscription: Subscription;
   public suggestions: Array<Suggestion>;
-  // public suggestedCategory: SuggestedCategory;
   private isSuggestionBoxMousedown: boolean;
   private categories: Array<Category>;
   private selectedCategory: Category;
@@ -93,7 +92,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       let parameters: Array<any>;
 
       if (this.selectedCategory) {
-       parameters = [
+        parameters = [
           {
             key: 'searchWords',
             value: searchwords
@@ -111,11 +110,24 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.dataService.get('api/Products/GetSuggestions', parameters)
         .subscribe((suggestions: Array<Suggestion>) => {
           this.suggestions = [];
-          // this.suggestedCategory = null;
+
 
           if (suggestions) {
-            // this.suggestedCategory = suggestions.suggestedCategory;
-            suggestions.forEach((suggestion) => {
+            let suggestionsCount: number;
+
+            if (window.innerHeight > 800) {
+              suggestionsCount = suggestions.length;
+            } else if (window.innerHeight > 600) {
+              suggestionsCount = 8;
+            } else if (window.innerHeight > 400) {
+              suggestionsCount = 6;
+            } else {
+              suggestionsCount = 4;
+            }
+
+
+            for (let i = 0; i < suggestionsCount; i++) {
+              let suggestion: Suggestion = suggestions[i];
               let html: string = suggestion.name.replace(new RegExp(searchwords, "i"), '<span style="font-weight: normal">' + searchwords.toLowerCase() + '</span>');
 
               this.suggestions.push({
@@ -123,7 +135,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 category: suggestion.category,
                 html: this.sanitizer.bypassSecurityTrustHtml(html)
               });
-            });
+            }
+
+
           }
 
         });
@@ -149,12 +163,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
 
-  onCategoryClick(category: KeyValue<string, string>) {
+  onCategoryClick(category: KeyValue<string, string>, input: HTMLInputElement) {
     if (category.key == null) {
       this.selectedCategory = null;
     } else {
       this.selectedCategory = this.categories.find(x => x.urlId == category.key);
     }
+
+    input.focus();
+    
+    this.getSuggestions(input.value);
+    
   }
 
 
@@ -169,18 +188,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
 
-  search(searchword: string) {
+  search(searchword: string, category?: Category) {
     let queryParams: Params;
 
-    if (!this.selectedCategory) {
+    if (!this.selectedCategory && !category) {
       queryParams = { 'query': searchword }
     } else {
-
-
       queryParams = {
         'query': searchword,
-        'categoryId': this.selectedCategory.urlId,
-        'categoryName': this.selectedCategory.urlName
+        'categoryId': (this.selectedCategory && this.selectedCategory.urlId) || (category && category.urlId),
+        'categoryName': (this.selectedCategory && this.selectedCategory.urlName) || (category && category.urlName)
       }
     }
 

@@ -99,18 +99,16 @@ nav {
                 .suggested-category {
                     padding-left: 20px;
                     color: $primary-color;
+                    font-style: italic;
                 }
                    
                 }
             }
         }
-
-        
     }
 
 
     .account-container {
-        
         display: flex;
         justify-content: flex-end;
         position: relative;
