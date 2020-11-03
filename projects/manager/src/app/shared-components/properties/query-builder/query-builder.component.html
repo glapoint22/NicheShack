@@ -203,7 +203,7 @@
 
                             <!-- Add -->
                             <div class="icon-container" (click)="queryRow.onListItemAdd()"
-                                [attr.title]="'New Keyword (Ctrl+Alt+N)'"
+                                [attr.title]="'New ' + queryRow.itemType + ' (Ctrl+Alt+N)'"
                                 (mouseout)="editableItemList.onIconButtonMouseOut()"
                                 (mouseover)="editableItemList.isOverIconButton = true"
                                 [ngClass]="{'icon-disabled': editableItemList.addIcon.isDisabled}"><i
@@ -212,7 +212,7 @@
 
                             <!-- Edit -->
                             <div class="icon-container" (click)="queryRow.onListItemEdit()"
-                                [attr.title]="'Edit Keyword (Ctrl+Alt+E)'"
+                                [attr.title]="'Edit ' + queryRow.itemType + ' (Ctrl+Alt+E)'"
                                 (mouseout)="editableItemList.onIconButtonMouseOut()"
                                 (mouseover)="editableItemList.isOverIconButton = true"
                                 [ngClass]="{'icon-disabled': editableItemList.editIcon.isDisabled}"><i
@@ -225,7 +225,7 @@
                                 (mouseout)="editableItemList.onIconButtonMouseOut()"
                                 (mouseover)="editableItemList.isOverIconButton = true"
                                 [ngClass]="{'icon-disabled': editableItemList.deleteIcon.isDisabled}"
-                                [attr.title]="!editableItemList.isMultiSelected ? 'Delete Keyword (Delete)' : 'Delete Keywords (Delete)'">
+                                [attr.title]="!editableItemList.isMultiSelected ? 'Delete ' + queryRow.itemType + ' (Delete)' : 'Delete ' + queryRow.itemTypes + ' (Delete)'">
                                 <i class="fas fa-trash-alt"></i>
                             </div>
                         </div>

@@ -9,7 +9,9 @@ import { MenuOption } from './menu-option';
 export interface Query {
     queryType: QueryType;
     operator: Array<OperatorType>;
-    numValue: Array<number>;
+    numValue?: Array<number>;
+    doubleValue?: Array<number>;
+    dateValue?: Array<Date>;
 }
 
 export interface IQueryRow {
@@ -19,7 +21,11 @@ export interface IQueryRow {
     operatorType: OperatorType;
     valueType: ValueType;
     numValue: number;
-    value2?: number;
+    numValue2?: number;
+    doubleValue?: number;
+    doubleValue2?: number;
+    dateValue?: Date;
+    dateValue2?: Date;
     whereDropdownSelectedIndex: number;
     dropdownList?: Array<KeyValue<any, any>>;
     dropdownList2?: Array<KeyValue<any, any>>;
@@ -27,6 +33,8 @@ export interface IQueryRow {
     valueDropdownSelectedIndex2?: number;
     queryRowIndex?: number;
     queryList?: Array<QueryList>;
+    itemType?: string;
+    itemTypes?: string;
 }
 
 export enum ValueType {
@@ -169,7 +177,7 @@ export class QueryRowClass {
 
                     if (x.operatorType == OperatorType.IsBetween) {
 
-                        // valueList.push(x.numValue + "," + x.value2);
+                        // valueList.push(x.numValue + "," + x.numValue2);
 
                     } else {
                         // Then just add the value from that queryrow to this temporary value list
@@ -248,41 +256,12 @@ export class QueryRowClass {
 
 
 export class QueryRow {
-    constructor(public queryRows: Array<IQueryRow>, public queries: Array<Query>) { }
+    constructor(public whereDropdownSelectedIndex: number, public queryRows: Array<IQueryRow>, public queries: Array<Query>) { }
     public queryType: QueryType;
     public operatorType: OperatorType = OperatorType.Equals;
     public numValue: number;
     public hasOperators: boolean;
     public valueType: ValueType;
-    public whereDropdownSelectedIndex: number;
-
-
-    updateQuery(queryType: QueryType) {
-        let queryIndex: number = this.queries.findIndex(x => x.queryType == queryType);
-        if (queryIndex != -1) this.queries.splice(queryIndex, 1);
-        queryIndex = -1;
-
-        // Loop through all the queryrows
-        this.queryRows.forEach(x => {
-
-            // If we come across the queryrow that we're looking for
-            if (x.queryType == queryType) {
-
-                // And as long as the this queryrow has NOT been set to 'none'
-                if (x.valueDropdownSelectedIndex != 0) {
-
-                    // Create the query if it has NOT been created already
-                    if (queryIndex == -1) {
-                        this.queries.push({ queryType: queryType, operator: [OperatorType.Equals], numValue: [] });
-                        queryIndex = this.queries.length - 1;
-                    }
-
-                    // Update the query
-                    this.queries[queryIndex].numValue.push(x.numValue);
-                }
-            }
-        });
-    }
 }
 
 
@@ -290,10 +269,9 @@ export class QueryRow {
 
 export class QueryRowDropdownBase extends QueryRow {
     constructor(public whereDropdownSelectedIndex: number, public queryRows: Array<IQueryRow>, public queries: Array<Query>, public queryService: QueryService) {
-        super(queryRows, queries);
+        super(whereDropdownSelectedIndex, queryRows, queries);
         this.hasOperators = false;
         this.valueType = ValueType.Dropdown;
-        this.whereDropdownSelectedIndex = whereDropdownSelectedIndex;
     }
     public queryList: Array<QueryList>;
     public valueDropdownSelectedIndex: number = 0;
@@ -340,6 +318,33 @@ export class QueryRowDropdownBase extends QueryRow {
         })
         // Now that the dropdown list has been created, set the option that will be selected
         queryRow.valueDropdownSelectedIndex = queryRow.dropdownList.findIndex(y => y.value == queryRow.numValue);
+    }
+
+    updateQuery(queryType: QueryType) {
+        let queryIndex: number = this.queries.findIndex(x => x.queryType == queryType);
+        if (queryIndex != -1) this.queries.splice(queryIndex, 1);
+        queryIndex = -1;
+
+        // Loop through all the queryrows
+        this.queryRows.forEach(x => {
+
+            // If we come across the queryrow that we're looking for
+            if (x.queryType == queryType) {
+
+                // And as long as the this queryrow has NOT been set to 'none'
+                if (x.valueDropdownSelectedIndex != 0) {
+
+                    // Create the query if it has NOT been created already
+                    if (queryIndex == -1) {
+                        this.queries.push({ queryType: queryType, operator: [OperatorType.Equals], numValue: [] });
+                        queryIndex = this.queries.length - 1;
+                    }
+
+                    // Update the query
+                    this.queries[queryIndex].numValue.push(x.numValue);
+                }
+            }
+        });
     }
 }
 
@@ -642,7 +647,7 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
     }
     public valueDropdownSelectedIndex2: number = 0;
     public dropdownList2: Array<KeyValue<any, any>>;
-    public value2: number;
+    public numValue2: number;
     public queryRowIndex: number;
 
 
@@ -679,7 +684,7 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
                     // And as long as that value dropdown has NOT been set to 'none'
                     if (x.valueDropdownSelectedIndex2 != 0) {
                         // Add the selected value of that value dropdown to the used list
-                        usedDropdownOptions.push(x.value2);
+                        usedDropdownOptions.push(x.numValue2);
                     }
                 }
             }
@@ -703,7 +708,7 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
                 // If we come across an item in the list that is NOT a dropdown option that has been used yet
                 // or the item happens to be the same as the selected option of this quryrow
-                if ((usedDropdownOptions.indexOf(y.id) == -1 || y.id == queryRow.value2) && y.id > queryRow.numValue) {
+                if ((usedDropdownOptions.indexOf(y.id) == -1 || y.id == queryRow.numValue2) && y.id > queryRow.numValue) {
 
                     // Add it to the dropdown list of this quryrow
                     queryRow.dropdownList2.push({
@@ -713,7 +718,7 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
                 }
             })
             // Get the index of the option in the dropdown list where the option's value matches the current queryrow value
-            let valueDropdownSelectedIndex2 = queryRow.dropdownList2.findIndex(y => y.value == queryRow.value2);
+            let valueDropdownSelectedIndex2 = queryRow.dropdownList2.findIndex(y => y.value == queryRow.numValue2);
 
             // If an option value in the dropdown list does NOT match the current queryrow value, then assign the selected
             // index as zero (None). But if a match is found, assign the selected index the index of that dropdown option
@@ -762,7 +767,9 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
                             // Update the query
                             this.queries[queryIndex].operator.push(x.operatorType);
-                            // this.queries[queryIndex].numValue.push(x.numValue + "," + x.value2);
+                            this.queries[queryIndex].numValue.push(x.numValue);
+                            this.queries[queryIndex].numValue.push(x.numValue2);
+                            // this.queries[queryIndex].numValue.push(x.numValue + "," + x.numValue2);
                         }
                     }
                 }
@@ -801,7 +808,7 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
 
         // Rebuild all the dropdowns again if a second value dropdown has been set to 'none' from not having a high enough option available
-        if (this.value2 != null && this.valueDropdownSelectedIndex2 == 0) {
+        if (this.numValue2 != null && this.valueDropdownSelectedIndex2 == 0) {
             let usedDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.queryType);
             this.queryRows.forEach(x => {
                 if (x.queryType == this.queryType) {
@@ -816,8 +823,8 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
     updateValue2(newValue2: number) {
         // Update the value and the selected index
-        this.value2 = newValue2 != null ? newValue2 : null;
-        this.valueDropdownSelectedIndex2 = this.dropdownList.findIndex(x => x.value == this.value2);
+        this.numValue2 = newValue2 != null ? newValue2 : null;
+        this.valueDropdownSelectedIndex2 = this.dropdownList.findIndex(x => x.value == this.numValue2);
 
         // Rebuild all the dropdowns
         let usedDropdownOptions: Array<number> = this.getUsedDropdownOptions(this.queryType);
@@ -829,6 +836,214 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
         // Update the query
         this.updateQuery(this.queryType);
+    }
+}
+
+
+
+export class QueryRowPrice extends QueryRow {
+    constructor(whereDropdownSelectedIndex: number, queryRows: Array<IQueryRow>, queries: Array<Query>) {
+        super(whereDropdownSelectedIndex, queryRows, queries)
+        this.hasOperators = true;
+        this.valueType = ValueType.Price;
+    }
+    public doubleValue: number;
+    public doubleValue2: number;
+
+
+    initialize(queryType: QueryType, queryRowIndex: number) {
+        this.queryRows[queryRowIndex].queryType = queryType;
+        this.queryRows[queryRowIndex].queryRowIndex = queryRowIndex;
+    }
+
+    getPrice(wholeNumberInputText: HTMLInputElement, decimalInputText: HTMLInputElement) {
+        let wholeNumberValue: number = 0;
+        let decimalValue: number = 0.0;
+
+        // Calculate the whole number and decimal values based on what is being passed in from the input text boxes
+        wholeNumberValue = wholeNumberInputText.value.length == 0 ? 0 : parseInt(wholeNumberInputText.value);
+        decimalValue = decimalInputText.value.length == 0 ? 0 : decimalValue = parseInt(decimalInputText.value) * (decimalInputText.value.length == 1 ? 0.1 : 0.01);
+
+        // Return the whole number and decimal value
+        return wholeNumberValue + decimalValue;
+    }
+
+
+
+    updateWholeNumberValue(wholeNumberInputText: HTMLInputElement, decimalInputText: HTMLInputElement) {
+        !(/^[0123456789]*$/i).test(wholeNumberInputText.value) ? wholeNumberInputText.value = wholeNumberInputText.value.replace(/[^0123456789]/ig, '') : null;
+
+        // Get the whole number value from the 1st input text
+        if (wholeNumberInputText.id == "wholeNumber1") {
+            this.doubleValue = this.getPrice(wholeNumberInputText, decimalInputText);
+            // If the range operator has been selected, get the whole number value from the 2nd input text
+        } else {
+            this.doubleValue2 = this.getPrice(wholeNumberInputText, decimalInputText);
+        }
+        // Update the query
+        this.updateQuery(this.queryType);
+    }
+
+    updateDecimalValue(wholeNumberInputText: HTMLInputElement, decimalInputText: HTMLInputElement) {
+        !(/^[0123456789]*$/i).test(decimalInputText.value) ? decimalInputText.value = decimalInputText.value.replace(/[^0123456789]/ig, '') : null;
+
+        // Get the decimal value from the 1st input text
+        if (decimalInputText.id == "decimal1") {
+            this.doubleValue = this.getPrice(wholeNumberInputText, decimalInputText);
+            // If the range operator has been selected, get the decimal value from the 2nd input text
+        } else {
+            this.doubleValue2 = this.getPrice(wholeNumberInputText, decimalInputText);
+        }
+        // Update the query
+        this.updateQuery(this.queryType);
+    }
+
+
+    updateOperator(operatorType: OperatorType) {
+        this.operatorType = operatorType;
+        this.updateQuery(this.queryType);
+    }
+
+
+    updateQuery(queryType: QueryType) {
+        let queryIndex: number = this.queries.findIndex(x => x.queryType == queryType);
+        if (queryIndex != -1) this.queries.splice(queryIndex, 1);
+        queryIndex = -1;
+
+        // Loop through all the queryrows
+        this.queryRows.forEach(x => {
+
+            // If we come across the queryrow that we're looking for
+            if (x.queryType == queryType) {
+
+                // And as long as the value for this queryrow has NOT been set to '0.00'
+                if (x.doubleValue != 0 && x.doubleValue != null) {
+
+                    // If the range operator has NOT been selected
+                    if (x.operatorType != OperatorType.IsBetween) {
+
+                        // Create the query if it has NOT been created already
+                        if (queryIndex == -1) {
+                            this.queries.push({ queryType: queryType, operator: [], doubleValue: [] });
+                            queryIndex = this.queries.length - 1;
+                        }
+
+                        // Update the query
+                        this.queries[queryIndex].doubleValue.push(x.doubleValue);
+                        this.queries[queryIndex].operator.push(x.operatorType);
+
+                        // If the range operator has been selected
+                    } else {
+
+                        // And as long as the 2nd value for this queryrow has NOT been set to '0.00'
+                        if (x.doubleValue2 != 0 && x.doubleValue2 != null) {
+
+                            // Create the query if it has NOT been created already
+                            if (queryIndex == -1) {
+                                this.queries.push({ queryType: queryType, operator: [], doubleValue: [] });
+                                queryIndex = this.queries.length - 1;
+                            }
+
+                            // Update the query
+                            this.queries[queryIndex].operator.push(x.operatorType);
+                            this.queries[queryIndex].doubleValue.push(x.doubleValue);
+                            this.queries[queryIndex].doubleValue.push(x.doubleValue2);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    onDecimalInputBlur(decimalInputText: HTMLInputElement) {
+        let intValue = parseInt(decimalInputText.value);
+
+        if (intValue < 10 && decimalInputText.value.length == 1) {
+            decimalInputText.value = intValue + "0";
+        }
+    }
+}
+
+
+
+export class QueryRowDate extends QueryRow {
+    constructor(whereDropdownSelectedIndex: number, queryRows: Array<IQueryRow>, queries: Array<Query>) {
+        super(whereDropdownSelectedIndex, queryRows, queries)
+        this.hasOperators = true;
+        this.valueType = ValueType.Date;
+    }
+    public dateValue: Date;
+    public dateValue2: Date;
+
+
+    initialize(queryType: QueryType, queryRowIndex: number) {
+        this.queryRows[queryRowIndex].queryType = queryType;
+        this.queryRows[queryRowIndex].queryRowIndex = queryRowIndex;
+    }
+
+    updateOperator(operatorType: OperatorType) {
+        this.operatorType = operatorType;
+        this.updateQuery(QueryType.ProductCreationDate);
+    }
+
+    updateValue(inputText: HTMLInputElement) {
+        this.dateValue = new Date(inputText.value.replace(/[-]/ig, '/'));
+        this.updateQuery(QueryType.ProductCreationDate);
+    }
+
+    updateValue2(inputText2: HTMLInputElement) {
+        this.dateValue2 = new Date(inputText2.value.replace(/[-]/ig, '/'));
+        this.updateQuery(QueryType.ProductCreationDate);
+    }
+
+    updateQuery(queryType: QueryType) {
+        let queryIndex: number = this.queries.findIndex(x => x.queryType == queryType);
+        if (queryIndex != -1) this.queries.splice(queryIndex, 1);
+        queryIndex = -1;
+
+        // Loop through all the queryrows
+        this.queryRows.forEach(x => {
+
+            // If we come across the queryrow that we're looking for
+            if (x.queryType == queryType) {
+
+                // And as long as the value for this queryrow has NOT been set to null
+                if (x.dateValue != null) {
+
+                    // If the range operator has NOT been selected
+                    if (x.operatorType != OperatorType.IsBetween) {
+
+                        // Create the query if it has NOT been created already
+                        if (queryIndex == -1) {
+                            this.queries.push({ queryType: queryType, operator: [], dateValue: [] });
+                            queryIndex = this.queries.length - 1;
+                        }
+
+                        // Update the query
+                        this.queries[queryIndex].dateValue.push(x.dateValue);
+                        this.queries[queryIndex].operator.push(x.operatorType);
+
+                        // If the range operator has been selected
+                    } else {
+
+                        // And as long as the 2nd value for this queryrow has NOT been set to null
+                        if (x.dateValue2 != null) {
+
+                            // Create the query if it has NOT been created already
+                            if (queryIndex == -1) {
+                                this.queries.push({ queryType: queryType, operator: [], dateValue: [] });
+                                queryIndex = this.queries.length - 1;
+                            }
+
+                            // Update the query
+                            this.queries[queryIndex].operator.push(x.operatorType);
+                            this.queries[queryIndex].dateValue.push(x.dateValue);
+                            this.queries[queryIndex].dateValue.push(x.dateValue2);
+                        }
+                    }
+                }
+            }
+        });
     }
 }
 
@@ -979,120 +1194,14 @@ export class CustomerRelatedProductsQueryRow extends QueryRowDropdown {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-export class QueryRowPrice extends QueryRow {
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ===================================================( PRODUCT PRICE QUERY ROW )===================================================\\
 export class ProductPriceQueryRow extends QueryRowPrice implements IQueryRow {
-    constructor(queryRows: Array<IQueryRow>, queries: Array<Query>) {
-        super(queryRows, queries);
-        this.queryType = QueryType.ProductPrice;
-        this.numValue = null;
-        this.hasOperators = true;
-        this.valueType = ValueType.Price;
-        this.whereDropdownSelectedIndex = 6;
-    }
-    public value2 = null;
-    private doubleValue: number;
-    private doubleValue2: number;
-
     newQueryRow(queryRowIndex: number) {
         // Create the new product price queryrow
         this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new ProductPriceQueryRow(this.queryRows, this.queries));
+        this.queryRows.splice(queryRowIndex, 0, new ProductPriceQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries));
 
-        // Then update the queries
-        // this.updateQueriesOLD(oldQueryType, QueryType.ProductPrice);
-    }
-
-    updateOperator(operatorType: OperatorType) {
-        this.operatorType = operatorType;
-        // this.setQueriesOperator(QueryType.ProductPrice);
-    }
-
-    updateWholeNumberValue(wholeNumberInputText: HTMLInputElement, decimalInputText: HTMLInputElement) {
-        !(/^[0123456789]*$/i).test(wholeNumberInputText.value) ? wholeNumberInputText.value = wholeNumberInputText.value.replace(/[^0123456789]/ig, '') : null;
-
-
-        let wholeNumberValue: number = 0;
-        let decimalValue: number = 0.0;
-
-
-        if (wholeNumberInputText.value.length == 0) {
-            wholeNumberValue = 0;
-        } else {
-
-
-
-            wholeNumberValue = parseInt(wholeNumberInputText.value);
-        }
-
-
-        if (decimalInputText.value.length == 0) {
-
-            decimalValue = 0;
-        } else {
-            decimalValue = parseInt(decimalInputText.value) * 0.01;
-
-
-        }
-
-
-
-
-        if (wholeNumberInputText.id == "wholeNumber1") {
-            this.doubleValue = wholeNumberValue + decimalValue;
-
-        } else {
-            this.doubleValue2 = wholeNumberValue + decimalValue;
-        }
-
-        
-    }
-
-    updateDecimalValue(wholeNumberInputText: HTMLInputElement, decimalInputText: HTMLInputElement) {
-        !(/^[0123456789]*$/i).test(decimalInputText.value) ? decimalInputText.value = decimalInputText.value.replace(/[^0123456789]/ig, '') : null;
-        let intValue = decimalInputText.value;
-
-        if (decimalInputText.id == "decimal1") {
-            // this.numValue = wholeNumberInputText.value + "." + (intValue < 10 && decimalInputText.value.length == 1 ? "0" + decimalInputText.value : decimalInputText.value.length == 0 ? "00" : decimalInputText.value);
-        } else {
-            // this.value2 = wholeNumberInputText.value + "." + (intValue < 10 && decimalInputText.value.length == 1 ? "0" + decimalInputText.value : decimalInputText.value.length == 0 ? "00" : decimalInputText.value);
-        }
-
-        // this.setQueriesValue(QueryType.ProductPrice);
-    }
-
-    onDecimalInputBlur(decimalInputText: HTMLInputElement) {
-        let intValue = parseInt(decimalInputText.value);
-
-        if (intValue < 10 && decimalInputText.value.length == 1) {
-            decimalInputText.value = intValue + "0";
-        }
+        this.initialize(QueryType.ProductPrice, queryRowIndex)
     }
 }
 
@@ -1113,29 +1222,33 @@ export class ProductRatingQueryRow extends QueryRowDropdownWithOperator implemen
 
 
 
-// ===================================================( PRODUCT KEYWORDS QUERY ROW )===================================================\\
-export class ProductKeywordsQueryRow extends QueryRowClass implements IQueryRow {
-    constructor(queryRows: Array<IQueryRow>, queries: Array<Query>) {
-        super(queryRows, queries);
-        this.queryType = QueryType.ProductKeywords;
-        this.numValue = null;
-        this.hasOperators = false;
+
+
+
+
+
+
+
+export class QueryRowEditableItemList extends QueryRow {
+    constructor(whereDropdownSelectedIndex: number, queryRows: Array<IQueryRow>, queries: Array<Query>) {
+        super(whereDropdownSelectedIndex, queryRows, queries)
+        this.hasOperators = true;
         this.valueType = ValueType.EditableItemList;
-        this.whereDropdownSelectedIndex = 8;
     }
+    public stringValue: string;
     public editableListItems: Array<ListItem> = [];
     private editableItemList: EditableItemListComponent;
+    public itemType: string;
+    public itemTypes: string;
 
-    newQueryRow(queryRowIndex: number) {
-        let oldQueryType = this.queryRows[queryRowIndex].queryType;
 
-        // Update the query row
-        this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new ProductKeywordsQueryRow(this.queryRows, this.queries));
-
-        // Then update the queries
-        this.updateQueriesOLD(oldQueryType, QueryType.ProductKeywords);
+    initialize(queryType: QueryType, queryRowIndex: number, itemType: string, itemTypes) {
+        this.queryRows[queryRowIndex].queryType = queryType;
+        this.queryRows[queryRowIndex].queryRowIndex = queryRowIndex;
+        this.queryRows[queryRowIndex].itemType = itemType;
+        this.queryRows[queryRowIndex].itemTypes = itemTypes;
     }
+
 
     editableListOptions(editableItemList: EditableItemListComponent) {
         this.editableItemList = editableItemList;
@@ -1147,12 +1260,12 @@ export class ProductKeywordsQueryRow extends QueryRowClass implements IQueryRow 
             // Menu Options
             menuOptions: () => {
                 return [
-                    // New Keyword
-                    new MenuOption('New Keyword', editableItemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
-                    // Edit Keyword
-                    new MenuOption('Edit Keyword', editableItemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E'),
-                    // Delete Keyword
-                    new MenuOption(!editableItemList.isMultiSelected ? 'Delete Keyword' : 'Delete Keywords', editableItemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+                    // New
+                    new MenuOption('New ' + this.itemType, editableItemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
+                    // Edit
+                    new MenuOption('Edit ' + this.itemType, editableItemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E'),
+                    // Delete
+                    new MenuOption(!editableItemList.isMultiSelected ? 'Delete ' + this.itemType : 'Delete ' + this.itemTypes, editableItemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
                 ]
             },
             // On Add Item
@@ -1167,8 +1280,8 @@ export class ProductKeywordsQueryRow extends QueryRowClass implements IQueryRow 
     onListItemAdd() {
         this.editableItemList.onListItemAdd();
         if (this.editableItemList.listItems[0].name.length > 0) {
-            // this.numValue = this.editableListItems.map(x => x.name).toString();
-            this.setQueriesValue(QueryType.ProductKeywords);
+            this.stringValue = this.editableListItems.map(x => x.name).toString();
+            // this.setQueriesValue(QueryType.ProductKeywords);
         }
     }
 
@@ -1176,55 +1289,122 @@ export class ProductKeywordsQueryRow extends QueryRowClass implements IQueryRow 
     onListItemEdit() {
         this.editableItemList.onListItemEdit();
         // this.numValue = this.editableListItems.map(x => x.name).toString();
-        this.setQueriesValue(QueryType.ProductKeywords);
+        // this.setQueriesValue(QueryType.ProductKeywords);
     }
 
 
     onListItemDelete() {
         this.editableItemList.deleteListItem();
         // this.numValue = this.editableListItems.map(x => x.name).toString();
-        this.setQueriesValue(QueryType.ProductKeywords);
+        // this.setQueriesValue(QueryType.ProductKeywords);
     }
 }
 
 
 
 
-// ===================================================( PRODUCT CREATION DATE QUERY ROW )===================================================\\
-export class ProductCreationDateQueryRow extends QueryRowClass implements IQueryRow {
-    constructor(queryRows: Array<IQueryRow>, queries: Array<Query>) {
-        super(queryRows, queries);
-        this.queryType = QueryType.ProductCreationDate;
-        this.numValue = null;
-        this.hasOperators = true;
-        this.valueType = ValueType.Date;
-        this.whereDropdownSelectedIndex = 9;
-    }
-    public value2 = null;
 
+
+
+
+
+
+
+
+// ===================================================( PRODUCT KEYWORDS QUERY ROW )===================================================\\
+export class ProductKeywordsQueryRow extends QueryRowEditableItemList implements IQueryRow {
     newQueryRow(queryRowIndex: number) {
-        let oldQueryType = this.queryRows[queryRowIndex].queryType;
-
-        // Update the query row
+        // Create the new keywords queryrow
         this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new ProductCreationDateQueryRow(this.queryRows, this.queries));
+        this.queryRows.splice(queryRowIndex, 0, new ProductKeywordsQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries));
 
-        // Then update the queries
-        this.updateQueriesOLD(oldQueryType, QueryType.ProductCreationDate);
+        this.initialize(QueryType.ProductKeywords, queryRowIndex, "Keyword", "Keywords")
     }
 
-    updateOperator(operatorType: OperatorType) {
-        this.operatorType = operatorType;
-        this.setQueriesOperator(QueryType.ProductCreationDate);
-    }
 
-    updateValue(inputText: HTMLInputElement) {
-        // this.numValue = inputText.value;
-        this.setQueriesValue(QueryType.ProductCreationDate);
-    }
 
-    updateValue2(inputText2: HTMLInputElement) {
-        this.value2 = inputText2.value;
-        this.setQueriesValue(QueryType.ProductCreationDate);
+
+
+    // constructor(queryRows: Array<IQueryRow>, queries: Array<Query>) {
+    //     super(queryRows, queries);
+    //     this.queryType = QueryType.ProductKeywords;
+    //     this.numValue = null;
+    //     this.hasOperators = false;
+    //     this.valueType = ValueType.EditableItemList;
+    //     this.whereDropdownSelectedIndex = 8;
+    // }
+    // public editableListItems: Array<ListItem> = [];
+    // private editableItemList: EditableItemListComponent;
+
+    // newQueryRow(queryRowIndex: number) {
+    //     let oldQueryType = this.queryRows[queryRowIndex].queryType;
+
+    //     // Update the query row
+    //     this.queryRows.splice(queryRowIndex, 1);
+    //     this.queryRows.splice(queryRowIndex, 0, new ProductKeywordsQueryRow(this.queryRows, this.queries));
+
+    //     // Then update the queries
+    //     this.updateQueriesOLD(oldQueryType, QueryType.ProductKeywords);
+    // }
+
+    // editableListOptions(editableItemList: EditableItemListComponent) {
+    //     this.editableItemList = editableItemList;
+
+    //     // Define the item list options
+    //     return {
+    //         // Current Object
+    //         currentObj: this,
+    //         // Menu Options
+    //         menuOptions: () => {
+    //             return [
+    //                 // New Keyword
+    //                 new MenuOption('New Keyword', editableItemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
+    //                 // Edit Keyword
+    //                 new MenuOption('Edit Keyword', editableItemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E'),
+    //                 // Delete Keyword
+    //                 new MenuOption(!editableItemList.isMultiSelected ? 'Delete Keyword' : 'Delete Keywords', editableItemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+    //             ]
+    //         },
+    //         // On Add Item
+    //         onAddItem: this.onListItemAdd,
+    //         // On Add Item
+    //         onEditItem: this.onListItemEdit,
+    //         // On Delete Item
+    //         onDeleteItem: this.onListItemDelete
+    //     }
+    // }
+
+    // onListItemAdd() {
+    //     this.editableItemList.onListItemAdd();
+    //     if (this.editableItemList.listItems[0].name.length > 0) {
+    //         // this.numValue = this.editableListItems.map(x => x.name).toString();
+    //         this.setQueriesValue(QueryType.ProductKeywords);
+    //     }
+    // }
+
+
+    // onListItemEdit() {
+    //     this.editableItemList.onListItemEdit();
+    //     // this.numValue = this.editableListItems.map(x => x.name).toString();
+    //     this.setQueriesValue(QueryType.ProductKeywords);
+    // }
+
+
+    // onListItemDelete() {
+    //     this.editableItemList.deleteListItem();
+    //     // this.numValue = this.editableListItems.map(x => x.name).toString();
+    //     this.setQueriesValue(QueryType.ProductKeywords);
+    // }
+}
+
+
+// ===================================================( PRODUCT CREATION DATE QUERY ROW )===================================================\\
+export class ProductCreationDateQueryRow extends QueryRowDate implements IQueryRow {
+    newQueryRow(queryRowIndex: number) {
+        // Create the new product creation date queryrow
+        this.queryRows.splice(queryRowIndex, 1);
+        this.queryRows.splice(queryRowIndex, 0, new ProductCreationDateQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries));
+
+        this.initialize(QueryType.ProductCreationDate, queryRowIndex)
     }
 }

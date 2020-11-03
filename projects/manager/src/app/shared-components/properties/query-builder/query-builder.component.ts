@@ -28,10 +28,10 @@ export class QueryBuilderComponent {
     { key: "Product Subgroup", value: new ProductSubgroupQueryRow(3, this.queryRows, this.queries, this.queryService) },
     { key: "Featured Products", value: new FeaturedProductsQueryRow(this.queryRows, this.queries) },
     { key: "Customer Related Products", value: new CustomerRelatedProductsQueryRow(5, this.queryRows, this.queries, this.queryService) },
-    { key: "Product Price", value: new ProductPriceQueryRow(this.queryRows, this.queries) },
+    { key: "Product Price", value: new ProductPriceQueryRow(6, this.queryRows, this.queries) },
     { key: "Product Rating", value: new ProductRatingQueryRow(7, this.queryRows, this.queries, this.queryService) },
-    { key: "Product Keywords", value: new ProductKeywordsQueryRow(this.queryRows, this.queries) },
-    { key: "Product Creation Date", value: new ProductCreationDateQueryRow(this.queryRows, this.queries) }
+    { key: "Product Keywords", value: new ProductKeywordsQueryRow(8, this.queryRows, this.queries) },
+    { key: "Product Creation Date", value: new ProductCreationDateQueryRow(9, this.queryRows, this.queries) }
   ];
 
 
