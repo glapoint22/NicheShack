@@ -22,16 +22,16 @@ export class QueryBuilderComponent {
   public queries: Array<Query> = [];
 
   public whereList: Array<KeyValue<any, IQueryRow>> = [
-    { key: "None", value: new QueryRowNone(this.queryRows, this.queries) },
-    { key: "Category", value: new CategoryQueryRow(1, this.queryRows, this.queries, this.queryService) },
-    { key: "Niche", value: new NicheQueryRow(2, this.queryRows, this.queries, this.queryService) },
-    { key: "Product Subgroup", value: new ProductSubgroupQueryRow(3, this.queryRows, this.queries, this.queryService) },
-    { key: "Featured Products", value: new FeaturedProductsQueryRow(this.queryRows, this.queries) },
-    { key: "Customer Related Products", value: new CustomerRelatedProductsQueryRow(5, this.queryRows, this.queries, this.queryService) },
-    { key: "Product Price", value: new ProductPriceQueryRow(6, this.queryRows, this.queries) },
-    { key: "Product Rating", value: new ProductRatingQueryRow(7, this.queryRows, this.queries, this.queryService) },
-    { key: "Product Keywords", value: new ProductKeywordsQueryRow(8, this.queryRows, this.queries) },
-    { key: "Product Creation Date", value: new ProductCreationDateQueryRow(9, this.queryRows, this.queries) }
+    { key: "None", value: new QueryRowNone(0, this.queryRows, this.queries, this.dataService) },
+    { key: "Category", value: new CategoryQueryRow(1, this.queryRows, this.queries, this.dataService, this.queryService) },
+    { key: "Niche", value: new NicheQueryRow(2, this.queryRows, this.queries, this.dataService, this.queryService) },
+    { key: "Product Subgroup", value: new ProductSubgroupQueryRow(3, this.queryRows, this.queries, this.dataService, this.queryService) },
+    { key: "Featured Products", value: new FeaturedProductsQueryRow(4, this.queryRows, this.queries, this.dataService) },
+    { key: "Customer Related Products", value: new CustomerRelatedProductsQueryRow(5, this.queryRows, this.queries, this.dataService, this.queryService) },
+    { key: "Product Price", value: new ProductPriceQueryRow(6, this.queryRows, this.queries, this.dataService) },
+    { key: "Product Rating", value: new ProductRatingQueryRow(7, this.queryRows, this.queries, this.dataService, this.queryService) },
+    { key: "Product Keywords", value: new ProductKeywordsQueryRow(8, this.queryRows, this.queries, this.dataService) },
+    { key: "Product Creation Date", value: new ProductCreationDateQueryRow(9, this.queryRows, this.queries, this.dataService) }
   ];
 
 
@@ -41,13 +41,13 @@ export class QueryBuilderComponent {
     { key: ">=", value: OperatorType.GreaterThanOrEqualTo },
     { key: "<", value: OperatorType.LessThan },
     { key: "<=", value: OperatorType.LessThanOrEqualTo },
-    { key: "Is Between", value: OperatorType.IsBetween }
+    // { key: "Is Between", value: OperatorType.IsBetween }
   ];
 
 
 
   onQueryAdd() {
-    this.queryRows.push(new QueryRowNone(this.queryRows, this.queries));
+    this.queryRows.push(new QueryRowNone(0, this.queryRows, this.queries, this.dataService));
   }
 
 
