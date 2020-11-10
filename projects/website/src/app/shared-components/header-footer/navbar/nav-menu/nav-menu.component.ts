@@ -3,6 +3,7 @@ import { CategoriesService } from 'projects/website/src/app/services/categories.
 import { Category } from 'projects/website/src/app/interfaces/category';
 import { Niche } from 'projects/website/src/app/interfaces/niche';
 import { Router } from '@angular/router';
+import { DataService } from 'services/data.service';
 
 @Component({
   selector: 'nav-menu',
@@ -17,7 +18,7 @@ export class NavMenuComponent implements OnInit {
   public show: boolean;
 
 
-  constructor(private categoriesService: CategoriesService, private router: Router) { }
+  constructor(private categoriesService: CategoriesService, private router: Router, private dataService: DataService) { }
 
   onClick() {
     this.nicheView = false;
@@ -31,16 +32,24 @@ export class NavMenuComponent implements OnInit {
   }
 
 
-  // onCategoryClick(categoryId: number) {
-  //   this.currentCategory = this.categories[categoryId];
-  //   this.niches = this.categories[categoryId].niches;
-  //   this.nicheView = true;
-  // }
+  onCategoryClick(category: Category) {
+    this.dataService.get('api/Niches', [{ key: 'categoryId', value: category.id }])
+      .subscribe(niches => {
+        this.niches = niches;
+        this.nicheView = true;
+        this.currentCategory = category;
+      });
+  }
 
-  // onNicheClick(nicheId: number) {
-  //   this.router.navigate(['/search'], {
-  //     queryParams: { 'categoryId': this.currentCategory.id, 'nicheId': nicheId }
-  //   });
-  //   this.show = false;
-  // }
+  onNicheClick(niche: Niche) {
+    let queryParams = {
+      'nicheName': niche.urlName,
+      'nicheId': niche.urlId
+    }
+
+    this.router.navigate(['/browse'], {
+      queryParams
+    });
+    this.show = false;
+  }
 }

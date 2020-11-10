@@ -26,10 +26,8 @@
 
 
                     <!-- Categories -->
-                    <!-- (click)="onCategoryClick(category.id)" -->
                     <div *ngFor="let category of categories"
-                        class="menu-item"
-                        >
+                        class="menu-item" (click)="onCategoryClick(category)">
                         <span>{{category.name}}</span>
                     </div>
                 </div>
@@ -50,10 +48,8 @@
                     <h3 class="heading">{{currentCategory.name}}</h3>
 
                     <!-- Niches -->
-                    <!-- (click)="onNicheClick(niche.id)" -->
                     <div *ngFor="let niche of niches"
-                        class="menu-item"
-                        >
+                        class="menu-item" (click)="onNicheClick(niche)">
                         <span>{{niche.name}}</span>
                     </div>
 

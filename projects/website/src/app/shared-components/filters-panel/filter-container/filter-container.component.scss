@@ -1,0 +1,52 @@
+@import '../../../../scss/variables';
+
+.filter-container{
+    min-height: 44px;
+    border: 1px solid $primary-color;
+    padding-left: 20px;
+    padding-right: 10px;
+    position:relative;
+    color: #e7e7e7;
+    overflow: hidden;
+    backface-visibility: hidden;
+    user-select: none;
+}
+.padding{
+    padding-bottom: 10px;
+}
+.caption{
+    font-weight: bold;
+    margin: 10px 0 10px;
+    color: white;
+    font-size: 18px;
+}
+.arrow-container{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    cursor: pointer;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fa-caret-right{
+    font-size: 20px;
+    transition: transform 0.25s;
+}
+.content {
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.25s;
+}
+.rotate {
+    transform: translate(-1px, 1px) rotate(90deg);
+}
+.show-content {
+    max-height: 28px;
+    opacity: 1;
+}
+.opacity {
+    opacity: 1;
+}

@@ -1,0 +1,42 @@
+
+<div *ngFor="let category of categories">
+
+    <!-- Category name -->
+    <div class="text">
+        
+
+            
+        <div style="display: inline-block"
+            (click)="onCategoryClick(category)"
+            class="highlight">
+            {{category.name}}</div>
+    </div>
+
+    
+    <div *ngFor="let niche of category.niches">
+        <div 
+            class="margin-left text"
+            (click)="onNicheClick(niche)">
+            {{niche.name}}
+        </div>
+    </div>
+
+    
+    <!-- <div *ngIf="category.niches.length > maxCount" class="margin-left"
+        [ngClass]="{'show-content': showContent}">
+        <i class="fas"
+            [ngClass]="{'fa-angle-double-down' : !category.seeMore, 'fa-angle-double-up' : category.seeMore}"></i>
+        <div class="see-more-less pointer" (click)="showHideNiches(category)"
+            [innerHtml]="!category.seeMore ? 'See More' : 'See Less'"></div>
+    </div> -->
+</div>
+
+<!-- See all/See fewer categories -->
+<!-- <div *ngIf="categories.length > maxCount"
+    [ngClass]="{'show-content': showContent}">
+    <i class="fas"
+        [ngClass]="{'fa-angle-double-down' : !seeMoreCategories, 'fa-angle-double-up' : seeMoreCategories}"></i>
+    <div style="margin-top: 10px" class="see-more-less pointer" (click)="showHideCategories()"
+        [innerHtml]="!seeMoreCategories ? 'See All ' + categories.length + ' Categories' : 'See Fewer Categories'">
+    </div>
+</div> -->

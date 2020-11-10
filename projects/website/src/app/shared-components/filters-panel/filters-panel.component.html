@@ -1,0 +1,29 @@
+<div *ngIf="filters" style="max-width: 250px;">
+
+    <!-- Categories Filter -->
+    <filter-container [caption]="'Categories'">
+        <categories-filter [categories]="filters.categoryFilters"></categories-filter>
+    </filter-container>
+
+
+
+    <!-- Price Filter -->
+    <filter-container [caption]="filters.priceFilter.caption">
+        <price-filter #priceFilter [filter]="filters.priceFilter" (onChange)="setFilter($event)"></price-filter>
+    </filter-container>
+
+
+
+    <!-- Rating Filter -->
+    <filter-container [caption]="filters.ratingFilter.caption">
+        <rating-filter #ratingFilter [filter]="filters.ratingFilter" (onChange)="setFilter($event)"></rating-filter>
+    </filter-container>
+
+
+    <!-- Custom Filters -->
+    <ng-container *ngFor="let filter of filters.customFilters; trackBy:trackFilter">
+        <filter-container [caption]="filter.caption">
+            <custom-filter #customFilter [filter]="filter" (onChange)="setFilter($event)"></custom-filter>
+        </filter-container>
+    </ng-container>
+</div>

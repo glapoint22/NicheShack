@@ -1,0 +1,11 @@
+<div class="filter-container primary-background-color-darker shadow">
+    <div class="caption">{{caption}}</div>
+
+    <!-- Arrow -->
+    <div (click)="onArrowClick()" class="arrow-container">
+        <i class="fas fa-caret-right niche-shack-gold-color" [ngClass]="{'rotate': show}"></i>
+    </div>
+
+    <!-- Content -->
+    <ng-content *ngIf="show"></ng-content>
+</div>

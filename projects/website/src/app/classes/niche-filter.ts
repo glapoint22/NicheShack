@@ -1,5 +1,4 @@
-export interface Category {
-    id: number;
+export interface NicheFilter {
     urlId: string;
     name: string;
     urlName: string;
