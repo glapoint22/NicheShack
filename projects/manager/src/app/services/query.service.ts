@@ -6,6 +6,8 @@ import { DataService } from 'services/data.service';
 })
 export class QueryService {
   constructor(private dataService: DataService) { }
+  public results: number = 0;
+  public productResultsInProgress: boolean;
   public subgroups: Array<QueryList> = [];
   public categories: Array<QueryList> = [];
   public customerRelatedProducts: Array<QueryList> = [

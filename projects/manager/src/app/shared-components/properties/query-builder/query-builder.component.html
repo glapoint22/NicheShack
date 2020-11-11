@@ -73,7 +73,8 @@
                 <div style="padding-top: 2px; padding-bottom: 2px;">
 
                     <dropdown #whereDropdown [height]="22" [title]="''" [dropdownList]="whereList"
-                        [selectedIndex]="queryRow.whereDropdownSelectedIndex" (onChange)="$event.newQueryRow(queryRowIndex)">
+                        [selectedIndex]="queryRow.whereDropdownSelectedIndex"
+                        (onChange)="$event.newQueryRow(queryRowIndex)">
                     </dropdown>
                 </div>
             </div>
@@ -116,12 +117,14 @@
 
 
                     <div *ngIf="queryRow.valueType == valueType.Dropdown">
-                        <dropdown *ngIf="queryRow.dropdownList; else spinner1" [height]="22" [title]="''" [dropdownList]="queryRow.dropdownList" [selectedIndex]="queryRow.valueDropdownSelectedIndex"
+                        <dropdown *ngIf="queryRow.dropdownList; else spinner1" [height]="22" [title]="''"
+                            [dropdownList]="queryRow.dropdownList" [selectedIndex]="queryRow.valueDropdownSelectedIndex"
                             (onChange)="queryRow.updateValue($event)">
                         </dropdown>
 
                         <ng-template #spinner1>
-                            <div style="width: 100%; height: 22px; display: flex; justify-content: center; align-items: center;">
+                            <div
+                                style="width: 100%; height: 22px; display: flex; justify-content: center; align-items: center;">
                                 <i class="fas fa-spinner fa-pulse"></i>
                             </div>
                         </ng-template>
@@ -182,8 +185,7 @@
 
 
                             <!-- Delete -->
-                            <div class="icon-container" (click)="queryRow.onListItemDelete()"
-                                style="margin-left: 0;"
+                            <div class="icon-container" (click)="queryRow.onListItemDelete()" style="margin-left: 0;"
                                 (mouseout)="editableItemList.onIconButtonMouseOut()"
                                 (mouseover)="editableItemList.isOverIconButton = true"
                                 [ngClass]="{'icon-disabled': editableItemList.deleteIcon.isDisabled}"
@@ -321,8 +323,8 @@
                 <div *ngIf="queryRowIndex == 0" style="background: #3c3c3c; height: 20px;  margin-bottom: 2px;"></div>
 
 
-                <div
-                    style="padding-top: 2px; height: 22px; display: flex; justify-content: center; align-items: center; cursor: pointer;" (click)="queryRow.onDelete(queryRowIndex)">
+                <div style="padding-top: 2px; height: 22px; display: flex; justify-content: center; align-items: center; cursor: pointer;"
+                    (click)="queryRow.onDelete(queryRowIndex)">
 
                     <i style="font-size: 11px;" class="fas fa-trash-alt"></i>
                 </div>
@@ -336,5 +338,25 @@
 
     </div>
 
-    <button style="margin-top: 10px; float: right; font-size: 12px; display: flex; height: 21px;" (click)="getProducts()">Get Products</button>
+
+    <div style="display: table; width: auto; padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 5px; border: 1px solid #727272; margin-top: 10px; margin-left: 2px;">
+        
+        <div style="font-size: 12px; display: flex;">
+
+            <div style="color: #d8d8d8;">Products:&nbsp;</div>
+
+            <div *ngIf="!queryService.productResultsInProgress; else productSpinner">{{queryService.results}}</div>
+
+
+
+
+            <ng-template #productSpinner>
+                <div style="width: 14px; height: 14px;">
+                    <i class="fas fa-spinner fa-pulse"></i>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+
 </panel>

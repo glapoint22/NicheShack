@@ -1,4 +1,6 @@
 import { KeyValue } from '@angular/common';
+import { fromEvent } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
 import { DataService } from 'services/data.service';
 import { QueryList, QueryService } from '../services/query.service';
 import { EditableItemListComponent } from '../shared-components/item-lists/editable-item-list/editable-item-list.component';
@@ -74,7 +76,8 @@ export class QueryRow {
         public whereDropdownSelectedIndex: number,
         public queryRows: Array<IQueryRow>,
         public queries: Array<Query>,
-        public dataService: DataService) { }
+        public dataService: DataService,
+        public queryService: QueryService) { }
     public queryType: QueryType;
     public operatorType: OperatorType = OperatorType.Equals;
     public intValue: number;
@@ -87,10 +90,16 @@ export class QueryRow {
     }
 
     getProducts() {
-        this.dataService.post('api/Products/Alita', this.queries)
-            .subscribe((products) => {
-                console.log(products)
-            });
+        if (this.queries.length > 0) {
+            this.queryService.productResultsInProgress = true;
+            this.dataService.post('api/Products/Alita', this.queries)
+                .subscribe((products) => {
+                    this.queryService.productResultsInProgress = false;
+                    this.queryService.results = products.length;
+                });
+        } else {
+            this.queryService.results = 0;
+        }
     }
 }
 
@@ -104,7 +113,7 @@ export class QueryRowDropdownBase extends QueryRow {
         public queries: Array<Query>,
         public dataService: DataService,
         public queryService: QueryService) {
-        super(whereDropdownSelectedIndex, queryRows, queries, dataService);
+        super(whereDropdownSelectedIndex, queryRows, queries, dataService, queryService);
         this.hasOperators = false;
         this.valueType = ValueType.Dropdown;
     }
@@ -226,6 +235,8 @@ export class QueryRowDropdown extends QueryRowDropdownBase {
 
         // Update the query
         this.updateDropdownQuery(this.queryType)
+
+        this.getProducts();
     }
 }
 
@@ -613,6 +624,11 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
                 }
             }
         });
+
+        // As long as the value dropdown for this queryrow has NOT been set to 'none'
+        if (this.valueDropdownSelectedIndex != 0) {
+            this.getProducts();
+        }
     }
 
 
@@ -638,8 +654,6 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
         // Update the query
         this.updateDropdownQuery(this.queryType);
-
-        this.getProducts();
     }
 }
 
@@ -650,8 +664,9 @@ export class QueryRowPrice extends QueryRow {
         public whereDropdownSelectedIndex: number,
         public queryRows: Array<IQueryRow>,
         public queries: Array<Query>,
-        public dataService: DataService) {
-        super(whereDropdownSelectedIndex, queryRows, queries, dataService)
+        public dataService: DataService,
+        public queryService: QueryService) {
+        super(whereDropdownSelectedIndex, queryRows, queries, dataService, queryService)
         this.hasOperators = true;
         this.valueType = ValueType.Price;
     }
@@ -729,7 +744,10 @@ export class QueryRowPrice extends QueryRow {
             }
         });
 
-        this.getProducts();
+        // As long as the value for this queryrow has NOT been set to '0.00'
+        if (this.doubleValue != 0 && this.doubleValue != null) {
+            this.getProducts();
+        }
     }
 
     onDecimalInputBlur(decimalInputText: HTMLInputElement) {
@@ -763,8 +781,9 @@ export class QueryRowItemList extends QueryRow {
         public whereDropdownSelectedIndex: number,
         public queryRows: Array<IQueryRow>,
         public queries: Array<Query>,
-        public dataService: DataService) {
-        super(whereDropdownSelectedIndex, queryRows, queries, dataService)
+        public dataService: DataService,
+        public queryService: QueryService) {
+        super(whereDropdownSelectedIndex, queryRows, queries, dataService, queryService)
         this.hasOperators = false;
         this.valueType = ValueType.ItemList;
     }
@@ -879,8 +898,9 @@ export class QueryRowEditableItemList extends QueryRow {
         public whereDropdownSelectedIndex: number,
         public queryRows: Array<IQueryRow>,
         public queries: Array<Query>,
-        public dataService: DataService) {
-        super(whereDropdownSelectedIndex, queryRows, queries, dataService)
+        public dataService: DataService,
+        public queryService: QueryService) {
+        super(whereDropdownSelectedIndex, queryRows, queries, dataService, queryService)
         this.hasOperators = false;
         this.valueType = ValueType.EditableItemList;
     }
@@ -1003,8 +1023,9 @@ export class QueryRowDate extends QueryRow {
         public whereDropdownSelectedIndex: number,
         public queryRows: Array<IQueryRow>,
         public queries: Array<Query>,
-        public dataService: DataService) {
-        super(whereDropdownSelectedIndex, queryRows, queries, dataService)
+        public dataService: DataService,
+        public queryService: QueryService) {
+        super(whereDropdownSelectedIndex, queryRows, queries, dataService, queryService)
         this.hasOperators = true;
         this.valueType = ValueType.Date;
     }
@@ -1055,7 +1076,10 @@ export class QueryRowDate extends QueryRow {
             }
         });
 
-        this.getProducts();
+        // As long as the value for this queryrow has NOT been set to null
+        if (this.dateValue != null) {
+            this.getProducts();
+        }
     }
 
 
@@ -1086,7 +1110,7 @@ export class QueryRowNone extends QueryRow implements IQueryRow {
 
         // Create the new none queryrow
         this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new QueryRowNone(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService));
+        this.queryRows.splice(queryRowIndex, 0, new QueryRowNone(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService, this.queryService));
     }
 }
 
@@ -1146,7 +1170,7 @@ export class FeaturedProductsQueryRow extends QueryRowItemList implements IQuery
 
         // Create the new featured products queryrow
         this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new FeaturedProductsQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService));
+        this.queryRows.splice(queryRowIndex, 0, new FeaturedProductsQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService, this.queryService));
 
         // Initialize the new featured products queryrow
         this.initialize(QueryType.FeaturedProducts, queryRowIndex, "Product", "Products")
@@ -1177,7 +1201,7 @@ export class ProductPriceQueryRow extends QueryRowPrice implements IQueryRow {
 
         // Create the new product price queryrow
         this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new ProductPriceQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService));
+        this.queryRows.splice(queryRowIndex, 0, new ProductPriceQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService, this.queryService));
 
         // Initialize the new product price queryrow
         this.initialize(QueryType.ProductPrice, queryRowIndex)
@@ -1209,7 +1233,7 @@ export class ProductKeywordsQueryRow extends QueryRowEditableItemList implements
 
         // Create the new keywords queryrow
         this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new ProductKeywordsQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService));
+        this.queryRows.splice(queryRowIndex, 0, new ProductKeywordsQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService, this.queryService));
 
         // Initialize the new keywords queryrow
         this.initialize(QueryType.ProductKeywords, queryRowIndex, "Keyword", "Keywords")
@@ -1225,7 +1249,7 @@ export class ProductCreationDateQueryRow extends QueryRowDate implements IQueryR
 
         // Create the new product creation date queryrow
         this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new ProductCreationDateQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService));
+        this.queryRows.splice(queryRowIndex, 0, new ProductCreationDateQueryRow(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService, this.queryService));
 
         // Initialize the new product creation date queryrow
         this.initialize(QueryType.ProductCreationDate, queryRowIndex)
