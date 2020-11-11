@@ -5,8 +5,17 @@
     width: 16px !important;
     border-radius: 3px !important;
     &:after {
-        left: 4px;
-        width: 7px !important;
-        height: 12px !important;
+        left: 5px !important;
+        top: 2px !important;
+        width: 5px !important;
+        height: 10px !important;
+    }
+}
+
+[id=custom-input] {
+    label {
+        height: 16px;
+        line-height: 16px;
+        font-size: 14px;
     }
 }

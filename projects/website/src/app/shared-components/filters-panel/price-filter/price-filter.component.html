@@ -1,0 +1,23 @@
+<form (ngSubmit)="onSubmit(priceForm)" #priceForm="ngForm">
+    <span>
+        $
+        <input required pattern="(\d+)?\.?(\d+)?" [(ngModel)]="min" name="min" #minNum="ngModel"
+            [ngClass]="{'error-display': priceForm.submitted && !minNum.valid}">
+        <span style="margin-left: 5px">to</span> $
+        <input required pattern="(\d+)?\.?(\d+)?" [(ngModel)]="max" name="max" #maxNum="ngModel"
+            [ngClass]="{'error-display': priceForm.submitted && !maxNum.valid}">
+    </span>
+    <button type="submit" class="alt-button">Go</button>
+
+
+
+    <div [hidden]="!priceForm.submitted || (minNum.valid && maxNum.valid)" class="error">Please enter a valid price
+        range</div>
+    <div *ngIf="showClearPrice" class="clear-price" (click)="clearPrice(priceForm)">Clear Price Range
+    </div>
+
+</form>
+
+<div *ngFor="let option of filter.options; trackBy:trackOption" style="margin-bottom: 10px;">
+    <checkbox #checkbox [value]="option.id" [label]="option.label" (change)="onFilterClick(option.id)"></checkbox>
+</div>

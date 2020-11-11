@@ -118,11 +118,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
             if (window.innerHeight > 800) {
               suggestionsCount = suggestions.length;
             } else if (window.innerHeight > 600) {
-              suggestionsCount = 8;
+              suggestionsCount = Math.min(8, suggestions.length);
             } else if (window.innerHeight > 400) {
-              suggestionsCount = 6;
+              suggestionsCount = Math.min(6, suggestions.length);
             } else {
-              suggestionsCount = 4;
+              suggestionsCount = Math.min(4, suggestions.length);
             }
 
 
@@ -171,9 +171,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     input.focus();
-    
+
     this.getSuggestions(input.value);
-    
+
   }
 
 

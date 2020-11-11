@@ -1,0 +1,7 @@
+<ng-container *ngFor="let option of filter.options; trackBy:trackOption">
+    <div style="display: flex;
+    align-items: center; height: 16px; margin-bottom: 10px;">
+        <checkbox #checkbox style="margin-right: 5px;" (change)="onFilterClick(option.id)" [value]="option.id"></checkbox>
+        <stars [rating]="option" style="margin-right: 5px;"></stars> <span> & Up</span>
+    </div>
+</ng-container>

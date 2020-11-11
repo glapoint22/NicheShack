@@ -1,0 +1,44 @@
+.margin-left {
+    margin-left: 15px;
+}
+.see-more-less {
+    display: inline-block;
+    color: white;
+    margin-left: 5px;
+    font-size: 15px;
+}
+.see-more-less:hover {
+    text-decoration: underline;
+}
+.pointer {
+    cursor: pointer;
+}
+.pointer:hover {
+    text-decoration: underline;
+}
+.margin-top {
+    margin-top: 10px;
+}
+.highlight {
+    color: gold;
+}
+.caption {
+    margin: 10px 0 0;
+}
+.fa-angle-left {
+    margin-right: 5px;
+    color: white;
+}
+.inline {
+    display: inline-block;
+}
+.text {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 15px;
+}
+.fa-angle-double-up, .fa-angle-double-down {
+    color: white;
+    font-size: 14px;
+}

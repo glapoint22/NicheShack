@@ -1,0 +1,33 @@
+input{
+    width: 60px;
+    height: 22px;
+    border-radius: 4px;
+    background: white;
+    color: black;
+}
+button{
+    margin-left: 10px;
+    height: 22px;
+    padding: 0 10px;
+}
+.error{
+    font-size: 15px;
+    color: #f3c231;
+    margin-top: 8px;
+}
+.error-display{
+    border: 2px solid red;
+    background: #dad8a2;
+}
+.clear-price{
+    color: white;
+    margin-top: 4px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.clear-price:hover{
+    text-decoration: underline;
+}
+form {
+    margin-bottom: 15px;
+}
