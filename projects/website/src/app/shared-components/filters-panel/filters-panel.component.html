@@ -1,4 +1,4 @@
-<div *ngIf="filters" style="max-width: 250px;">
+<div *ngIf="filters" class="container">
 
     <!-- Categories Filter -->
     <filter-container [caption]="'Categories'">
@@ -21,7 +21,7 @@
 
 
     <!-- Custom Filters -->
-    <ng-container *ngFor="let filter of filters.customFilters; trackBy:trackFilter">
+    <ng-container *ngFor="let filter of filters.customFilters">
         <filter-container [caption]="filter.caption">
             <custom-filter #customFilter [filter]="filter" (onChange)="setFilter($event)"></custom-filter>
         </filter-container>

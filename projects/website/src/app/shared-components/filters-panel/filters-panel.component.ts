@@ -1,10 +1,12 @@
 import { isPlatformBrowser, KeyValue } from '@angular/common';
 import { Component, Inject, Input, OnChanges, PLATFORM_ID, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { CheckboxComponent } from 'shared-components/custom-input/checkbox/checkbox.component';
 import { Filters } from '../../classes/filters';
 import { QueryFilter } from '../../classes/query-filter';
 import { QueryFilterOption } from '../../classes/query-filter-option';
 import { CustomFilterComponent } from './custom-filter/custom-filter.component';
+import { FilterComponent } from './filter/filter.component';
 import { PriceFilterComponent } from './price-filter/price-filter.component';
 import { RatingFilterComponent } from './rating-filter/rating-filter.component';
 
@@ -24,17 +26,17 @@ export class FiltersPanelComponent implements OnChanges {
 
   constructor(private router: Router, private route: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) { }
 
-  
+
 
 
   ngOnChanges() {
     if (isPlatformBrowser(this.platformId)) {
       if (!this.filters) return;
+      
 
+      window.setTimeout(() => {
 
-      // Only if the url has not been updated
-      if (!this.urlUpdated) {
-        window.setTimeout(() => {
+        if (!this.urlUpdated) {
           // Get the filters from the query params
           let filterString: string = this.route.snapshot.queryParams['filters'];
 
@@ -60,55 +62,61 @@ export class FiltersPanelComponent implements OnChanges {
                 caption: caption,
                 options: options
               });
-
-              // This will add checks to the filters
-
-              // Price range
-              if (caption == 'Price Range') {
-                let optionsArray = options[0].id.split('-');
-                this.priceFilter.min = this.priceFilter.currentMin = optionsArray[0];
-                this.priceFilter.max = this.priceFilter.currentMax = optionsArray[1];
-                this.priceFilter.showClearPrice = true;
-              }
-
-
-
-              // Price Filter
-              if (caption == this.priceFilter.filter.caption) {
-                options.forEach((option: QueryFilterOption) => {
-                  this.priceFilter.checkboxes.find(x => x.value == option.id).checked = true;
-                });
-              }
-
-
-
-              // Rating filter
-              if (caption == this.ratingFilter.filter.caption) {
-                options.forEach((option: QueryFilterOption) => {
-                  this.ratingFilter.checkboxes.find(x => x.value == option.id).checked = true;
-                });
-              }
-
-
-
-              // Custom filters
-              let customFilter = this.customFilters.find(x => x.filter.caption == caption);
-
-              if (customFilter) {
-                options.forEach((option: QueryFilterOption) => {
-                  customFilter.checkboxes.find(x => x.value == option.id).checked = true;
-                });
-              }
             }
           }
+        }
+
+        // Set the filter options
+
+
+        // Price range
+        let queryFilter: QueryFilter = this.queryFilters.find(x => x.caption == 'Price Range');
+
+        if (queryFilter) {
+          let optionsArray = queryFilter.options[0].id.split('-');
+          this.priceFilter.min = this.priceFilter.currentMin = this.priceFilter.currentMin = optionsArray[0];
+          this.priceFilter.max = this.priceFilter.currentMax = this.priceFilter.currentMax = optionsArray[1];
+          this.priceFilter.showClearPrice = true;
+        } else {
+          this.priceFilter.resetPriceForm();
+        }
+
+
+
+        // Price Filter
+        this.setFilterOptions(this.priceFilter);
+
+
+
+
+        // Rating Filter
+        this.setFilterOptions(this.ratingFilter);
+
+
+        // Custom Filters
+        this.customFilters.forEach((customFilter: CustomFilterComponent) => {
+          this.setFilterOptions(customFilter);
         });
-      }
+      });
+
 
       this.urlUpdated = false;
     }
   }
 
 
+
+  setFilterOptions(filterComponent: FilterComponent) {
+    let queryFilter: QueryFilter = this.queryFilters.find(x => x.caption == filterComponent.filter.caption);
+
+    filterComponent.checkboxes.forEach((checkbox: CheckboxComponent) => {
+      if (queryFilter) {
+        checkbox.checked = queryFilter.options.some(x => x.id == checkbox.value);
+      } else {
+        checkbox.checked = false;
+      }
+    });
+  }
 
 
 
@@ -194,10 +202,5 @@ export class FiltersPanelComponent implements OnChanges {
 
     this.router.navigate([location.pathname], { queryParams: params, queryParamsHandling: 'merge' });
     this.urlUpdated = true;
-  }
-
-
-  trackFilter(index: number) {
-    return index;
   }
 }

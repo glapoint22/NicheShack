@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit(priceForm)" #priceForm="ngForm">
+<form (ngSubmit)="onSubmit()" #priceForm="ngForm">
     <span>
         $
         <input required pattern="(\d+)?\.?(\d+)?" [(ngModel)]="min" name="min" #minNum="ngModel"
@@ -13,11 +13,12 @@
 
     <div [hidden]="!priceForm.submitted || (minNum.valid && maxNum.valid)" class="error">Please enter a valid price
         range</div>
-    <div *ngIf="showClearPrice" class="clear-price" (click)="clearPrice(priceForm)">Clear Price Range
+    <div *ngIf="showClearPrice" class="clear-price" (click)="clearPrice()">Clear Price Range
     </div>
 
 </form>
 
-<div *ngFor="let option of filter.options; trackBy:trackOption" style="margin-bottom: 10px;">
-    <checkbox #checkbox [value]="option.id" [label]="option.label" (change)="onFilterClick(option.id)"></checkbox>
+<div *ngFor="let option of filter.options" style="margin-bottom: 10px;">
+    <checkbox #checkbox [value]="option.min + '-' + option.max" [label]="option.label"
+        (change)="onFilterClick(option.min + '-' + option.max)"></checkbox>
 </div>
