@@ -1,340 +1,76 @@
 <panel [title]="'Query Builder'">
-    <!--  -->
-    <div style="display: flex; justify-content: flex-end; margin-bottom: 2px; margin-top: -11px; margin-right: 1px;">
-        <div class="icon-container" (click)="onQueryAdd()" [attr.title]="'Add'">
-            <i class="fas fa-plus-circle"></i>
-        </div>
 
-    </div>
+    <div style="border: 1px solid #444444; background: #222222; padding: 2px; padding-right: 1px; padding-bottom: 1px;">
 
-    <div style="border: 1px solid #444444; padding: 2px; min-height: 54px; overflow: hidden;">
+        <div style="height: 22px; background: #3b3b3b; margin-bottom: 2px; display: flex; align-items: center; justify-content: flex-end; border-right: 1px solid #222222;">
 
-
-
-
-
-        <div *ngIf="queryRows.length == 0" style="display: flex;">
-
-            <div style="width: 100%;">
-                <div
-                    style="background: #3c3c3c; height: 20px; color: #e1e1e1; font-size: 12px; display: flex; align-items: center; padding-left: 5px; margin-bottom: 2px;">
-                    Where
-                </div>
+            <div class="icon-container" [attr.title]="'Add'">
+                <div style="padding-bottom: 3px; color: #9e9e9e;">[&nbsp;&nbsp;]</div>
             </div>
 
-
-            <div style="width: 100%; max-width: 58px; margin-left: 2px;">
-                <div
-                    style="background: #3c3c3c; height: 20px; color: #e1e1e1; font-size: 12px; display: flex; align-items: center; padding-left: 5px; margin-bottom: 2px;">
-                    Operator
-                </div>
-            </div>
-
-
-            <div style="width: 100%; margin-left: 2px;">
-                <div
-                    style="background: #3c3c3c; height: 20px; color: #e1e1e1; font-size: 12px; display: flex; align-items: center; padding-left: 5px; margin-bottom: 2px;">
-                    Value
-                </div>
-            </div>
-
-
-
-            <div style="width: 100%; max-width: 14px; margin-left: 2px;">
-
-                <div style="background: #3c3c3c; height: 20px;  margin-bottom: 2px;"></div>
+            <div style="margin-left: 5px;" class="icon-container" (click)="onQueryAdd()" [attr.title]="'Add'">
+                <i class="fas fa-plus-circle"></i>
             </div>
         </div>
 
-
-        <div *ngIf="queryRows.length == 0"
-            style="font-size: 11px; margin: -2px; color: #999999; height: 30px; display: flex; align-items: center; justify-content: center;">
+        <!-- <div *ngIf="queryRows.length == 0"
+            style="font-size: 11px; margin: -2px; color: #888888; height: 30px; display: flex; align-items: center; justify-content: center;">
             No query available
-        </div>
+        </div> -->
 
+        <div style="height: 31px; display: flex;">
 
-
-
-
-
-
-
-        <div *ngFor="let queryRow of queryRows; let queryRowIndex = index" style="display: flex;">
-
-
+            
             <div style="width: 100%;">
-                <div *ngIf="queryRowIndex == 0"
-                    style="background: #3c3c3c; height: 20px; color: #e1e1e1; font-size: 12px; display: flex; align-items: center; padding-left: 5px; margin-bottom: 2px;">
-                    Where
+                <query-dropdown [dropdownList]="whereList" [selectedIndex]="0"></query-dropdown>
+            </div>
+            
+
+
+            <div style="width: 100%; max-width: 35px;">
+                <query-dropdown [dropdownList]="operatorList" [selectedIndex]="0"></query-dropdown>
+            </div>
+
+
+            
+
+
+
+
+            <div style="background: #454545; width: 100%; border-left: 1px solid #5f5f5f; border-top: 1px solid #5f5f5f; border-right: 1px solid #000000; border-bottom: 1px solid #000000; position: relative; padding-top: 1px;">
+                <input
+                    style="font-size: 12px; color: #c9c9c9; border: none; width: 100%; height: 12px; text-align:center; text-overflow: ellipsis; background: none;"
+                    [value]="'Health & Fitness '">
+
+                <div style="display: flex; justify-content: center;">
+                    <div
+                        style="margin-left: 0px; border-width: 4px; border-style: solid; border-color:  #606060 transparent transparent transparent;">
+                    </div>
                 </div>
 
-
-                <!-- Where Dropdown -->
-                <div style="padding-top: 2px; padding-bottom: 2px;">
-
-                    <dropdown #whereDropdown [height]="22" [title]="''" [dropdownList]="whereList"
-                        [selectedIndex]="queryRow.whereDropdownSelectedIndex" (onChange)="$event.newQueryRow(queryRowIndex)">
-                    </dropdown>
-                </div>
+                <div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%;"></div>
             </div>
 
 
 
 
 
-            <div style="width: 100%; max-width: 58px; margin-left: 2px;">
-                <div *ngIf="queryRowIndex == 0"
-                    style="background: #3c3c3c; height: 20px; color: #e1e1e1; font-size: 12px; display: flex; align-items: center; padding-left: 5px; margin-bottom: 2px;">
-                    Operator
-                </div>
-
-
-
-                <!-- Operator Dropdown -->
-                <div style="padding-top: 2px; padding-bottom: 2px;">
-                    <dropdown *ngIf="queryRow.hasOperators" [height]="22" [title]="''" [dropdownList]="operatorList"
-                        [selectedIndex]="0" (onChange)="queryRow.updateOperator($event)"></dropdown>
-                    <div *ngIf="!queryRow.hasOperators && queryRow.hasOperators != null"
-                        style="width: 100%; display: flex; justify-content: center; align-items: center;">=</div>
-                </div>
-            </div>
-
-
-
-
-            <div style="width: 100%; margin-left: 2px;">
-                <div *ngIf="queryRowIndex == 0"
-                    style="background: #3c3c3c; height: 20px; color: #e1e1e1; font-size: 12px; display: flex; align-items: center; padding-left: 5px; margin-bottom: 2px;">
-                    Value
-                </div>
-
-
-
-                <!-- Value -->
-                <div style="padding-top: 2px; padding-bottom: 2px;">
-
-
-
-                    <div *ngIf="queryRow.valueType == valueType.Dropdown">
-                        <dropdown *ngIf="queryRow.dropdownList; else spinner1" [height]="22" [title]="''" [dropdownList]="queryRow.dropdownList" [selectedIndex]="queryRow.valueDropdownSelectedIndex"
-                            (onChange)="queryRow.updateValue($event)">
-                        </dropdown>
-
-                        <ng-template #spinner1>
-                            <div style="width: 100%; height: 22px; display: flex; justify-content: center; align-items: center;">
-                                <i class="fas fa-spinner fa-pulse"></i>
-                            </div>
-                        </ng-template>
-                    </div>
-
-
-
-
-                    <div *ngIf="queryRow.valueType == valueType.Price">
-                        <div style="display: flex; align-items: center;">
-                            <div style="margin-left: 2px; margin-right: 2px;">$</div>
-                            <input #wholeNumberInput1 id="wholeNumber1"
-                                style="width: 100%; height: 22px; text-align: right; padding-right: 3px; padding-left: 0;"
-                                placeholder="0" (input)="queryRow.updateWholeNumberValue($event.target, decimalInput1)">
-                            <div style="margin-left: 1px; margin-right: 1px; font-size: 17px; font-weight: bold;">.
-                            </div>
-                            <input #decimalInput1 id="decimal1" style="width: 100%; height: 22px; padding-left: 3px;"
-                                placeholder="00" maxlength="2"
-                                (input)="queryRow.updateDecimalValue(wholeNumberInput1, $event.target)"
-                                (blur)="queryRow.onDecimalInputBlur($event.target)">
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-                    <div *ngIf="queryRow.valueType == valueType.EditableItemList" class="property-box-dark"
-                        style="position: relative;">
-
-                        <!-- Icons -->
-                        <div class="icons">
-
-
-                            <!-- Add -->
-                            <div class="icon-container" (click)="queryRow.onListItemAdd()"
-                                [attr.title]="'New ' + queryRow.itemType + ' (Ctrl+Alt+N)'"
-                                (mouseout)="editableItemList.onIconButtonMouseOut()"
-                                (mouseover)="editableItemList.isOverIconButton = true"
-                                [ngClass]="{'icon-disabled': editableItemList.addIcon.isDisabled}"><i
-                                    class="fas fa-plus-circle"></i>
-                            </div>
-
-                            <!-- Edit -->
-                            <div class="icon-container" (click)="queryRow.onListItemEdit()"
-                                [attr.title]="'Edit ' + queryRow.itemType + ' (Ctrl+Alt+E)'"
-                                (mouseout)="editableItemList.onIconButtonMouseOut()"
-                                (mouseover)="editableItemList.isOverIconButton = true"
-                                [ngClass]="{'icon-disabled': editableItemList.editIcon.isDisabled}"><i
-                                    class="fas fa-edit"></i>
-                            </div>
-
-
-                            <!-- Delete -->
-                            <div class="icon-container" (click)="queryRow.onListItemDelete()"
-                                style="margin-left: 0;"
-                                (mouseout)="editableItemList.onIconButtonMouseOut()"
-                                (mouseover)="editableItemList.isOverIconButton = true"
-                                [ngClass]="{'icon-disabled': editableItemList.deleteIcon.isDisabled}"
-                                [attr.title]="!editableItemList.isMultiSelected ? 'Delete ' + queryRow.itemType + ' (Delete)' : 'Delete ' + queryRow.itemTypes + ' (Delete)'">
-                                <i class="fas fa-trash-alt"></i>
-                            </div>
-                        </div>
-
-
-                        <!-- Editable Item LIst -->
-                        <editable-item-list #editableItemList [listItems]="queryRow.editableListItems"
-                            [listOptions]="queryRow.editableListOptions(editableItemList)">
-                        </editable-item-list>
-
-
-                        <!-- Placeholder -->
-                        <div *ngIf="queryRow.editableListItems && queryRow.editableListItems == 0" class="no-property">
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <div *ngIf="queryRow.valueType == valueType.ItemList" class="property-box-dark"
-                        style="position: relative;">
-
-                        <!-- Icons -->
-                        <div class="icons">
-
-
-                            <!-- Add -->
-                            <div class="icon-container" (click)="queryRow.openPopup($event.target)"
-                                [attr.title]="'New ' + queryRow.itemType + ' (Ctrl+Alt+N)'"
-                                (mouseout)="itemList.onIconButtonMouseOut()"
-                                (mouseover)="itemList.isOverIconButton = true"
-                                [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"><i
-                                    class="fas fa-plus-circle"></i>
-                            </div>
-
-
-
-                            <!-- Delete -->
-                            <div class="icon-container" (click)="queryRow.onListItemDelete()"
-                                (mouseout)="itemList.onIconButtonMouseOut()"
-                                (mouseover)="itemList.isOverIconButton = true"
-                                [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
-                                [attr.title]="!itemList.isMultiSelected ? 'Delete ' + queryRow.itemType + ' (Delete)' : 'Delete ' + queryRow.itemTypes + ' (Delete)'">
-                                <i class="fas fa-trash-alt"></i>
-                            </div>
-                        </div>
-
-
-                        <!-- Item LIst -->
-                        <item-list #itemList [listItems]="queryRow.listItems"
-                            [listOptions]="queryRow.listOptions(itemList)">
-                        </item-list>
-
-
-                        <!-- Placeholder -->
-                        <div *ngIf="queryRow.listItems && queryRow.listItems.length == 0" class="no-property"></div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <div *ngIf="queryRow.valueType == valueType.Date">
-
-
-                        <div style="display: flex; flex-direction: row-reverse; position: relative;">
-
-
-                            <input #dateInput type="date" style="width: 55px; height: 22px; pointer-events: all;"
-                                (input)="queryRow.updateValue($event.target)">
-
-                            <div
-                                style="position: absolute; width: 100%; height: 100%; pointer-events: none; display: flex;">
-
-
-                                <input [value]="dateInput.value | date :'M/d/yy'" placeholder="mm/dd/yy"
-                                    style="border-top-right-radius: 0; border-bottom-right-radius: 0;  border-right: none; width: 100%; height: 100%; display: flex; align-items: center; padding-left: 3px;">
-
-
-
-
-                                <div
-                                    style="background:#414141; border: 1px solid #4f4f4f; width: 25px; height: 100%; pointer-events:none; display: flex; justify-content: center; align-items: center; border-top-right-radius: 3px; border-bottom-right-radius: 3px;">
-                                    <i class="far fa-calendar-alt" style="font-size: 12px;"></i>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-            <div style="width: 100%; max-width: 14px; margin-left: 2px;">
-
-                <div *ngIf="queryRowIndex == 0" style="background: #3c3c3c; height: 20px;  margin-bottom: 2px;"></div>
-
-
-                <div
-                    style="padding-top: 2px; height: 22px; display: flex; justify-content: center; align-items: center; cursor: pointer;" (click)="queryRow.onDelete(queryRowIndex)">
-
+            <div style="background: #454545; width: 100%; max-width: 20px; border-left: 1px solid #5f5f5f; border-top: 1px solid #5f5f5f; border-right: 1px solid #000000; border-bottom: 1px solid #000000; display: flex; justify-content: center; align-items: center;">
+                <div class="icon-container" [attr.title]="'Delete'">
                     <i style="font-size: 11px;" class="fas fa-trash-alt"></i>
                 </div>
-
-            </div>
+                
+            </div> 
         </div>
 
 
 
 
+       
+        <div style="width: 100%;">
+            <query-dropdown [dropdownList]="logicalOperatorList" [selectedIndex]="0" [logicalOperator]="true"></query-dropdown>
+        </div>
+
 
     </div>
-
-    <button style="margin-top: 10px; float: right; font-size: 12px; display: flex; height: 21px;" (click)="getProducts()">Get Products</button>
 </panel>
