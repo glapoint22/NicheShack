@@ -1,4 +1,4 @@
-<ng-container *ngFor="let option of filter.options; trackBy:trackOption">
+<ng-container *ngFor="let option of filter.options">
     <div style="margin-bottom: 10px;">
         <checkbox #checkbox [label]="option.label" [value]="option.id" (change)="onFilterClick(option.id)"></checkbox>
     </div>

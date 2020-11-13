@@ -3,7 +3,6 @@ import { FilterComponent } from '../filter/filter.component';
 
 @Component({
   selector: 'custom-filter',
-  templateUrl: './custom-filter.component.html',
-  styleUrls: ['./custom-filter.component.scss']
+  templateUrl: './custom-filter.component.html'
 })
 export class CustomFilterComponent extends FilterComponent { }

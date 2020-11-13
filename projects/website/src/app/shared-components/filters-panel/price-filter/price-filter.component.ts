@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { QueryFilterOption } from '../../../classes/query-filter-option';
@@ -11,6 +11,7 @@ import { FilterComponent } from '../filter/filter.component';
 })
 export class PriceFilterComponent extends FilterComponent {
   @Input() options: Array<QueryFilterOption>;
+  @ViewChild('priceForm', { static: false }) priceForm: NgForm;
   public min: string;
   public max: string;
   public currentMin: string;
@@ -22,8 +23,8 @@ export class PriceFilterComponent extends FilterComponent {
   }
 
 
-  onSubmit(priceForm: NgForm) {
-    if (priceForm.valid) {
+  onSubmit() {
+    if (this.priceForm.valid) {
       let filter = encodeURIComponent('Price Range|' + this.min + '-' + this.max + '|');
       let filterString: string = this.route.snapshot.queryParams['filters'];
 
@@ -44,14 +45,20 @@ export class PriceFilterComponent extends FilterComponent {
 
 
 
-  clearPrice(priceForm: NgForm) {
+  clearPrice() {
     this.onChange.emit({
       key: 'Price Range',
       value: this.currentMin + '-' + this.currentMax
     });
+    
+    this.resetPriceForm();
+  }
+
+
+  resetPriceForm() {
     this.min = undefined;
     this.max = undefined;
     this.showClearPrice = false;
-    priceForm.resetForm();
+    this.priceForm.resetForm();
   }
 }

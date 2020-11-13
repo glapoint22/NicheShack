@@ -4,9 +4,7 @@ import { CheckboxComponent } from 'shared-components/custom-input/checkbox/check
 import { QueryFilter } from '../../../classes/query-filter';
 
 @Component({
-  selector: 'filter',
-  templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss']
+  template: ''
 })
 export class FilterComponent {
   @Input() filter: QueryFilter;
@@ -18,9 +16,5 @@ export class FilterComponent {
       key: this.filter.caption,
       value: value
     });
-  }
-
-  trackOption(index: number) {
-    return index;
   }
 }
