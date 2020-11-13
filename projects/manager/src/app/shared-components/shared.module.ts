@@ -15,6 +15,7 @@ import { ImageComponent } from './properties/image/image.component';
 import { ProductContentComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-content/product-content.component';
 import { FormsModule } from '@angular/forms';
 import { ProductMediaComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-media/product-media.component';
+import { QueryDropdownComponent } from './elements/dropdowns/query-dropdown/query-dropdown.component';
 
 
 
@@ -23,6 +24,7 @@ import { ProductMediaComponent } from '../pages/niche-shack-editor/product-edito
     PaginatorComponent,
     DropdownComponent,
     EditableDropdownComponent,
+    QueryDropdownComponent,
     ItemListComponent,
     CheckboxItemListComponent,
     EditableItemListComponent,
@@ -43,6 +45,7 @@ import { ProductMediaComponent } from '../pages/niche-shack-editor/product-edito
     PaginatorComponent,
     DropdownComponent,
     EditableDropdownComponent,
+    QueryDropdownComponent,
     ItemListComponent,
     CheckboxItemListComponent,
     EditableItemListComponent,

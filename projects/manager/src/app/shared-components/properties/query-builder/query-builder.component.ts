@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { DataService } from 'services/data.service';
 import { OperatorType, Query, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType } from '../../../classes/query';
 import { QueryService } from '../../../services/query.service';
+import { DropdownComponent } from '../../elements/dropdowns/dropdown/dropdown.component';
 
 @Component({
   selector: 'query-builder',
@@ -40,12 +41,21 @@ export class QueryBuilderComponent {
     { key: ">", value: OperatorType.GreaterThan },
     { key: ">=", value: OperatorType.GreaterThanOrEqualTo },
     { key: "<", value: OperatorType.LessThan },
-    { key: "<=", value: OperatorType.LessThanOrEqualTo },
+    { key: "<=", value: OperatorType.LessThanOrEqualTo }
   ];
 
+
+  public logicalOperatorList: Array<KeyValue<any, any>> = [
+    { key: "And", value: 0 },
+    { key: "Or", value: 1 }
+  ];
 
 
   onQueryAdd() {
     this.queryRows.push(new QueryRowNone(0, this.queryRows, this.queries, this.dataService, this.queryService));
   }
+
+
+
+  
 }
