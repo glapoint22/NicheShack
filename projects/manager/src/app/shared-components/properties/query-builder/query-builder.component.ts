@@ -1,9 +1,9 @@
 import { KeyValue } from '@angular/common';
 import { Component } from '@angular/core';
 import { DataService } from 'services/data.service';
+import { ListItem } from '../../../classes/list-item';
 import { OperatorType, Query, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType } from '../../../classes/query';
 import { QueryService } from '../../../services/query.service';
-import { DropdownComponent } from '../../elements/dropdowns/dropdown/dropdown.component';
 
 @Component({
   selector: 'query-builder',
@@ -49,6 +49,10 @@ export class QueryBuilderComponent {
     { key: "And", value: 0 },
     { key: "Or", value: 1 }
   ];
+
+
+
+  public editableListItems: Array<ListItem> = [{id: 0, name: "Alita", selected: null, selectType: null}, {id: 1, name: "Battle", selected: null, selectType: null}, {id: 0, name: "Angel", selected: null, selectType: null}];
 
 
   onQueryAdd() {

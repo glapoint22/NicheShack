@@ -13,62 +13,128 @@
             </div>
         </div>
 
+
+
         <!-- <div *ngIf="queryRows.length == 0"
             style="font-size: 11px; margin: -2px; color: #888888; height: 30px; display: flex; align-items: center; justify-content: center;">
             No query available
         </div> -->
 
-        <div style="height: 31px; display: flex;">
 
-            
+
+        <!-- =============================(  )============================= -->
+        <div style="height: 31px; display: flex;">
+            <!-- Where -->
             <div style="width: 100%;">
                 <query-dropdown [dropdownList]="whereList" [selectedIndex]="0"></query-dropdown>
             </div>
             
-
-
+            <!-- Operator -->
             <div style="width: 100%; max-width: 35px;">
                 <query-dropdown [dropdownList]="operatorList" [selectedIndex]="0"></query-dropdown>
             </div>
 
-
-            
-
-
-
-
-            <div style="background: #454545; width: 100%; border-left: 1px solid #5f5f5f; border-top: 1px solid #5f5f5f; border-right: 1px solid #000000; border-bottom: 1px solid #000000; position: relative; padding-top: 1px;">
-                <input
-                    style="font-size: 12px; color: #c9c9c9; border: none; width: 100%; height: 12px; text-align:center; text-overflow: ellipsis; background: none;"
-                    [value]="'Health & Fitness '">
-
-                <div style="display: flex; justify-content: center;">
-                    <div
-                        style="margin-left: 0px; border-width: 4px; border-style: solid; border-color:  #606060 transparent transparent transparent;">
-                    </div>
-                </div>
-
-                <div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%;"></div>
+            <!-- Value -->
+            <div style="width: 100%;">
+                <query-dropdown [dropdownList]="whereList" [selectedIndex]="0"></query-dropdown>
             </div>
 
-
-
-
-
+            <!-- Delete -->
             <div style="background: #454545; width: 100%; max-width: 20px; border-left: 1px solid #5f5f5f; border-top: 1px solid #5f5f5f; border-right: 1px solid #000000; border-bottom: 1px solid #000000; display: flex; justify-content: center; align-items: center;">
                 <div class="icon-container" [attr.title]="'Delete'">
                     <i style="font-size: 11px;" class="fas fa-trash-alt"></i>
                 </div>
-                
             </div> 
         </div>
 
 
 
-
-       
+       <!-- =============================( AND )============================= -->
         <div style="width: 100%;">
             <query-dropdown [dropdownList]="logicalOperatorList" [selectedIndex]="0" [logicalOperator]="true"></query-dropdown>
+        </div>
+
+
+
+        <!-- =============================(  )============================= -->
+        <div style="height: 31px; display: flex;">
+            <!-- Where -->
+            <div style="width: 100%;">
+                <query-dropdown [dropdownList]="whereList" [selectedIndex]="0"></query-dropdown>
+            </div>
+            
+
+            <!-- Operator -->
+            <div style="width: 100%; max-width: 35px;">
+                <query-dropdown [dropdownList]="operatorList" [selectedIndex]="0"></query-dropdown>
+            </div>
+
+
+            <!-- Value -->
+            <div style="background: #454545; width: 100%; border-left: 1px solid #5f5f5f; border-top: 1px solid #5f5f5f; border-right: 1px solid #000000; border-bottom: 1px solid #000000; display: flex; justify-content: flex-end; align-items: center;">
+                <div style="margin-right: 6px;" class="icon-container" [attr.title]="'Delete'">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                
+                
+                <div style="margin-right: 7px;" class="icon-container" [attr.title]="'Add'">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+            </div> 
+
+
+            <!-- Delete -->
+            <div style="background: #454545; width: 100%; max-width: 20px; border-left: 1px solid #5f5f5f; border-top: 1px solid #5f5f5f; border-right: 1px solid #000000; border-bottom: 1px solid #000000; display: flex; justify-content: center; align-items: center;">
+                <div class="icon-container" [attr.title]="'Delete'">
+                    <i style="font-size: 11px;" class="fas fa-trash-alt"></i>
+                </div>
+            </div> 
+        </div>
+
+        <div style="display: flex;">
+            <div style="background: #454545; width: 100%; border-left: 1px solid #5f5f5f; border-top: 1px solid #5f5f5f; border-bottom: 1px solid #000000;"></div>
+            <div style="background: #454545; width: 100%; max-width: 35px; border-top: 1px solid #5f5f5f; border-bottom: 1px solid #000000;"></div>
+            <div style="background: #272727; width: 100%; border-bottom: 1px solid #000000;">
+                <editable-item-list #editableItemList [listItems]="editableListItems"></editable-item-list>
+            </div> 
+            <div style="background: #454545; width: 100%; max-width: 20px; border-top: 1px solid #5f5f5f; border-right: 1px solid #000000; border-bottom: 1px solid #000000;"></div> 
+        </div>
+
+
+        <!-- =============================( AND )============================= -->
+        <div style="width: 100%;">
+            <query-dropdown [dropdownList]="logicalOperatorList" [selectedIndex]="0" [logicalOperator]="true"></query-dropdown>
+        </div>
+
+
+        
+
+        <!-- =============================(  )============================= -->
+        <div style="height: 31px; display: flex;">
+            <!-- Where -->
+            <div style="width: 100%;">
+                <query-dropdown [dropdownList]="whereList" [selectedIndex]="0"></query-dropdown>
+            </div>
+            
+
+            <!-- Operator -->
+            <div style="width: 100%; max-width: 35px;">
+                <query-dropdown [dropdownList]="operatorList" [selectedIndex]="0"></query-dropdown>
+            </div>
+
+
+            <!-- Value -->
+            <div style="background: #454545; width: 100%; border-left: 1px solid #5f5f5f; border-top: 1px solid #5f5f5f; border-right: 1px solid #000000; border-bottom: 1px solid #000000; display: flex; justify-content: flex-end; align-items: center;">
+                
+            </div> 
+
+
+            <!-- Delete -->
+            <div style="background: #454545; width: 100%; max-width: 20px; border-left: 1px solid #5f5f5f; border-top: 1px solid #5f5f5f; border-right: 1px solid #000000; border-bottom: 1px solid #000000; display: flex; justify-content: center; align-items: center;">
+                <div class="icon-container" [attr.title]="'Delete'">
+                    <i style="font-size: 11px;" class="fas fa-trash-alt"></i>
+                </div>
+            </div> 
         </div>
 
 
