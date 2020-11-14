@@ -52,7 +52,7 @@ export class QueryBuilderComponent {
 
 
 
-  public editableListItems: Array<ListItem> = [{id: 0, name: "Alita", selected: null, selectType: null}, {id: 1, name: "Battle", selected: null, selectType: null}, {id: 0, name: "Angel", selected: null, selectType: null}];
+  public tempList: Array<ListItem> = [{id: 0, name: "Alita", selected: null, selectType: null}, {id: 1, name: "Battle", selected: null, selectType: null}, {id: 0, name: "Angel", selected: null, selectType: null}];
 
 
   onQueryAdd() {

@@ -76,11 +76,11 @@ $arrow-color: #636363;
     border-top-color: darken($border-left-top-color, 5%);
 
     input {
-        color: darken($text-color, 10%);
+        color: darken($text-color, 6%);
     }
 
     .arrow {
-        border-top-color: darken($arrow-color, 10%);
+        border-top-color: darken($arrow-color, 5.5%);
     }
 
     &:hover {
@@ -112,10 +112,10 @@ $arrow-color: #636363;
     border-top-color: lighten(darken($border-left-top-color, 5%), 2.5%);
 
     input {
-        color: lighten(darken($text-color, 10%), 15%);
+        color: lighten(darken($text-color, 6%), 15%);
     }
 
     .arrow {
-        border-top-color: lighten(darken($arrow-color, 10%), 15%);;
+        border-top-color: lighten(darken($arrow-color, 5.5%), 15%);;
     }
 }
