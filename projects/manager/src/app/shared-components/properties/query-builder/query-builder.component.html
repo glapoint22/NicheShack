@@ -13,7 +13,7 @@
             
 
             <div style="display: flex;">
-                <div class="icon-container" [attr.title]="'Add'" (click)="alita()">
+                <div class="icon-container" [attr.title]="'Add'" (click)="onSubQueryAdd()">
                     <div style="padding-bottom: 3px; color: #9e9e9e;">[&nbsp;&nbsp;]</div>
                 </div>
     
@@ -47,15 +47,6 @@
             <div *ngIf="queryRowIndex != 0" style="width: 100%;">
                 <query-dropdown [dropdownList]="logicalOperatorList" [selectedIndex]="0" [logicalOperator]="true"></query-dropdown>
             </div>
-
-
-
-
-
-            <div *ngIf="queryRow.queryType == 22" style="background: red; width: 100%; height: 31px;"></div>
-
-
-
 
 
 
@@ -116,6 +107,7 @@
 
 
             <!-- =============================( PRICE )============================= -->
+
             <div *ngIf="queryRow.valueType == valueType.Price" style="height: 31px; display: flex;">
                 <!-- Where -->
                 <div style="width: 100%; height: 31px;">
@@ -319,6 +311,7 @@
 
 
             <!-- =============================( DATE )============================= -->
+
             <div *ngIf="queryRow.valueType == valueType.Date" style="height: 31px; display: flex;">
 
                 <!-- Where -->
@@ -359,7 +352,33 @@
 
             
 
+            <!-- =============================( SUB QUERY )============================= -->
+
+            <div *ngIf="queryRow.queryType == queryType.SubQuery" style="width: 100%; height: 31px; margin-top: 11px; margin-bottom: 11px; padding-left: 11px; padding-right: 11px;">
             
+                <div style="border: 1px solid #444444; background: #222222; padding: 2px; padding-right: 1px; padding-bottom: 1px;">
+
+
+                    <div style="height: 22px; background: #3b3b3b; margin-bottom: 2px; display: flex; align-items: center; justify-content: space-between; border-right: 1px solid #222222;">
+
+
+                        <div style="margin-left: 5px; display: flex; font-size: 12px; cursor: default;">
+                            
+                        </div>
+                        
+            
+                        <div style="display: flex;">
+                            <div class="icon-container" [attr.title]="'Add'" (click)="onSubQueryAdd()">
+                                <div style="padding-bottom: 3px; color: #9e9e9e;">[&nbsp;&nbsp;]</div>
+                            </div>
+                
+                            <div style="margin-left: 5px;" class="icon-container" (click)="onQueryAdd()" [attr.title]="'Add'">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 

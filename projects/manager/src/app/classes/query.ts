@@ -57,7 +57,8 @@ export enum QueryType {
     ProductPrice,
     ProductRating,
     ProductKeywords,
-    ProductCreationDate
+    ProductCreationDate,
+    SubQuery
 }
 
 
@@ -1092,39 +1093,7 @@ export class QueryRowDate extends QueryRow {
 
 
 
-// ===================================================( QUERY ROW NONE )===================================================\\
-export class QueryRowSub extends QueryRow implements IQueryRow {
-    
 
-    constructor(public whereDropdownSelectedIndex: number,
-        public queryRows: Array<IQueryRow>,
-        public queries: Array<Query>,
-        public dataService: DataService,
-        public queryService: QueryService) {
-        super(whereDropdownSelectedIndex,
-            queryRows,
-            queries,
-            dataService,
-            queryService)
-
-            this.queryType = 22;
-    }
-
-
-
-
-
-
-
-    newQueryRow(queryRowIndex: number) {
-        // Reset the query
-        this.queryRows[queryRowIndex].resetQuery();
-
-        // Create the new none queryrow
-        this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new QueryRowNone(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService, this.queryService));
-    }
-}
 
 
 
@@ -1279,5 +1248,19 @@ export class ProductCreationDateQueryRow extends QueryRowDate implements IQueryR
 
         // Initialize the new product creation date queryrow
         this.initialize(QueryType.ProductCreationDate, queryRowIndex)
+    }
+}
+
+
+// ===================================================( SUB QUERY ROW )===================================================\\
+export class SubQueryRow extends QueryRow implements IQueryRow {
+    constructor(
+        public whereDropdownSelectedIndex: number,
+        public queryRows: Array<IQueryRow>,
+        public queries: Array<Query>,
+        public dataService: DataService,
+        public queryService: QueryService) {
+        super(whereDropdownSelectedIndex, queryRows, queries, dataService, queryService);
+        this.queryType = QueryType.SubQuery;
     }
 }

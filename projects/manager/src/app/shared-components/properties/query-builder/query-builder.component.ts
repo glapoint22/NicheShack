@@ -2,7 +2,7 @@ import { KeyValue } from '@angular/common';
 import { Component } from '@angular/core';
 import { DataService } from 'services/data.service';
 import { ListItem } from '../../../classes/list-item';
-import { OperatorType, Query, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType, QueryRowSub } from '../../../classes/query';
+import { OperatorType, Query, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType, SubQueryRow, QueryType } from '../../../classes/query';
 import { QueryService } from '../../../services/query.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class QueryBuilderComponent {
   public queryRows: Array<IQueryRow> = [];
   public operatorType = OperatorType;
   public valueType = ValueType;
+  public queryType = QueryType;
   public queries: Array<Query> = [];
 
   public whereList: Array<KeyValue<any, IQueryRow>> = [
@@ -60,8 +61,7 @@ export class QueryBuilderComponent {
   }
 
 
-  alita() {
-    this.queryRows.push(new QueryRowSub(0, this.queryRows, this.queries, this.dataService, this.queryService));
+  onSubQueryAdd() {
+    this.queryRows.push(new SubQueryRow(null, this.queryRows, this.queries, this.dataService, this.queryService));
   }
-  
 }
