@@ -2,7 +2,7 @@ import { KeyValue } from '@angular/common';
 import { Component } from '@angular/core';
 import { DataService } from 'services/data.service';
 import { ListItem } from '../../../classes/list-item';
-import { OperatorType, Query, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType } from '../../../classes/query';
+import { OperatorType, Query, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType, QueryRowSub } from '../../../classes/query';
 import { QueryService } from '../../../services/query.service';
 
 @Component({
@@ -26,13 +26,13 @@ export class QueryBuilderComponent {
     { key: "None", value: new QueryRowNone(0, this.queryRows, this.queries, this.dataService, this.queryService) },
     { key: "Category", value: new CategoryQueryRow(1, this.queryRows, this.queries, this.dataService, this.queryService) },
     { key: "Niche", value: new NicheQueryRow(2, this.queryRows, this.queries, this.dataService, this.queryService) },
-    { key: "Product Subgroup", value: new ProductSubgroupQueryRow(3, this.queryRows, this.queries, this.dataService, this.queryService) },
+    { key: "Subgroup", value: new ProductSubgroupQueryRow(3, this.queryRows, this.queries, this.dataService, this.queryService) },
     { key: "Featured Products", value: new FeaturedProductsQueryRow(4, this.queryRows, this.queries, this.dataService, this.queryService) },
-    { key: "Customer Related Products", value: new CustomerRelatedProductsQueryRow(5, this.queryRows, this.queries, this.dataService, this.queryService) },
-    { key: "Product Price", value: new ProductPriceQueryRow(6, this.queryRows, this.queries, this.dataService, this.queryService) },
-    { key: "Product Rating", value: new ProductRatingQueryRow(7, this.queryRows, this.queries, this.dataService, this.queryService) },
-    { key: "Product Keywords", value: new ProductKeywordsQueryRow(8, this.queryRows, this.queries, this.dataService, this.queryService) },
-    { key: "Product Creation Date", value: new ProductCreationDateQueryRow(9, this.queryRows, this.queries, this.dataService, this.queryService) }
+    { key: "Customer Related", value: new CustomerRelatedProductsQueryRow(5, this.queryRows, this.queries, this.dataService, this.queryService) },
+    { key: "Price", value: new ProductPriceQueryRow(6, this.queryRows, this.queries, this.dataService, this.queryService) },
+    { key: "Rating", value: new ProductRatingQueryRow(7, this.queryRows, this.queries, this.dataService, this.queryService) },
+    { key: "Keywords", value: new ProductKeywordsQueryRow(8, this.queryRows, this.queries, this.dataService, this.queryService) },
+    { key: "Creation Date", value: new ProductCreationDateQueryRow(9, this.queryRows, this.queries, this.dataService, this.queryService) }
   ];
 
 
@@ -60,6 +60,8 @@ export class QueryBuilderComponent {
   }
 
 
-
+  alita() {
+    this.queryRows.push(new QueryRowSub(0, this.queryRows, this.queries, this.dataService, this.queryService));
+  }
   
 }

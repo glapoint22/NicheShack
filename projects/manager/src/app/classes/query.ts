@@ -814,9 +814,9 @@ export class QueryRowItemList extends QueryRow {
             menuOptions: () => {
                 return [
                     // New
-                    new MenuOption('New ' + this.itemType, itemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
+                    new MenuOption('New ' + this.itemType, itemList.addIcon.isDisabled, this.openPopup, null, null),
                     // Delete
-                    new MenuOption(!itemList.isMultiSelected ? 'Delete ' + this.itemType : 'Delete ' + this.itemTypes, itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+                    new MenuOption(!itemList.isMultiSelected ? 'Delete ' + this.itemType : 'Delete ' + this.itemTypes, itemList.deleteIcon.isDisabled, this.onListItemDelete, null, null)
                 ]
             },
             // On Add Item
@@ -853,15 +853,6 @@ export class QueryRowItemList extends QueryRow {
         });
 
         this.getProducts();
-    }
-
-
-    onListItemAdd() {
-        this.itemList.onListItemAdd();
-        if (this.itemList.listItems[0].name.length > 0) {
-            this.stringValue = this.listItems.map(x => x.name).toString();
-            this.updateQuery(this.queryType);
-        }
     }
 
 
@@ -930,11 +921,11 @@ export class QueryRowEditableItemList extends QueryRow {
             menuOptions: () => {
                 return [
                     // New
-                    new MenuOption('New ' + this.itemType, editableItemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
+                    new MenuOption('New ' + this.itemType, editableItemList.addIcon.isDisabled, this.onListItemAdd, null, null),
                     // Edit
-                    new MenuOption('Edit ' + this.itemType, editableItemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E'),
+                    new MenuOption('Edit ' + this.itemType, editableItemList.editIcon.isDisabled, this.onListItemEdit, null, null),
                     // Delete
-                    new MenuOption(!editableItemList.isMultiSelected ? 'Delete ' + this.itemType : 'Delete ' + this.itemTypes, editableItemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+                    new MenuOption(!editableItemList.isMultiSelected ? 'Delete ' + this.itemType : 'Delete ' + this.itemTypes, editableItemList.deleteIcon.isDisabled, this.onListItemDelete, null, null)
                 ]
             },
             // On Add Item
@@ -1099,6 +1090,41 @@ export class QueryRowDate extends QueryRow {
 }
 
 
+
+
+// ===================================================( QUERY ROW NONE )===================================================\\
+export class QueryRowSub extends QueryRow implements IQueryRow {
+    
+
+    constructor(public whereDropdownSelectedIndex: number,
+        public queryRows: Array<IQueryRow>,
+        public queries: Array<Query>,
+        public dataService: DataService,
+        public queryService: QueryService) {
+        super(whereDropdownSelectedIndex,
+            queryRows,
+            queries,
+            dataService,
+            queryService)
+
+            this.queryType = 22;
+    }
+
+
+
+
+
+
+
+    newQueryRow(queryRowIndex: number) {
+        // Reset the query
+        this.queryRows[queryRowIndex].resetQuery();
+
+        // Create the new none queryrow
+        this.queryRows.splice(queryRowIndex, 1);
+        this.queryRows.splice(queryRowIndex, 0, new QueryRowNone(this.whereDropdownSelectedIndex, this.queryRows, this.queries, this.dataService, this.queryService));
+    }
+}
 
 
 

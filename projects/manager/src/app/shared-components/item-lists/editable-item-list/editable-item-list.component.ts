@@ -111,7 +111,11 @@ export class EditableItemListComponent extends ItemListComponent {
         this.deleteIcon.isDisabled = false;
         this.indexOfEditedListItem = null;
         this.pivotIndex = this.selectedListItemIndex;
-        this.listItems[this.selectedListItemIndex].selected = true;
+
+        // As long as there is items in the list
+        if(this.listItems.length > 0) {
+          this.listItems[this.selectedListItemIndex].selected = true;
+        }
       }
     }
   }
