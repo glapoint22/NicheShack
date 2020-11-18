@@ -1,20 +1,54 @@
-<div style="margin-bottom: 10px;">
-    <div *ngFor="let category of categories">
+<div *ngFor="let category of categories.visible">
+    <div style="margin-bottom: 10px;">
+        <!-- Any category -->
+        <div *ngIf="route.snapshot.queryParams.categoryId || route.snapshot.queryParams.nicheId" class="gold-text"
+            (click)="onAnyCategoryClick()">Any category</div>
+
+        <div></div>
 
         <!-- Category name -->
-        <div class="text">
-            <div style="display: inline-block" (click)="onCategoryClick(category)" class="highlight">{{category.name}}</div>
-        </div>
-    
-        <!-- Niche -->
-        <div *ngFor="let niche of category.niches">
-            <div class="margin-left text" (click)="onNicheClick(niche)">
+        <div class="category text" (click)="onCategoryClick(category)">{{category.name}}</div>
+
+
+        <!-- Display all visible niches -->
+        <div *ngFor="let niche of category.niches.visible">
+            <div class="margin-left" (click)="onNicheClick(niche)"
+                [ngClass]="{'text': !route.snapshot.queryParams.nicheId}">
                 {{niche.name}}
             </div>
         </div>
-    
-    
-    
+
+        <!-- If show hidden is true -->
+        <ng-container *ngIf="category.niches.showHidden">
+            <div *ngFor="let niche of category.niches.hidden">
+                <div class="margin-left text" (click)="onNicheClick(niche)">
+                    {{niche.name}}
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- See all / see fewer -->
+        <div *ngIf="category.niches.hidden" class="margin-left gold-text"
+            (click)="category.niches.showHidden = !category.niches.showHidden">
+            {{category.niches.showHidden ? 'See fewer ' + category.name : 'See all ' + category.name}}</div>
     </div>
 </div>
 
+
+
+<div style="margin-bottom: 10px;">
+
+    <!-- See all categories -->
+    <ng-container *ngIf="seeAllCategories">
+
+        <!-- Display hidden categories -->
+        <div *ngFor="let category of categories.hidden">
+            <div class="category text" (click)="onCategoryClick(category)">{{category.name}}</div>
+        </div>
+    </ng-container>
+
+
+    <!-- See all/ see fewer categories -->
+    <div *ngIf="categories.hidden" class="gold-text" (click)="seeAllCategories = !seeAllCategories">
+        {{seeAllCategories ? 'See fewer categories' : 'See all categories'}}</div>
+</div>

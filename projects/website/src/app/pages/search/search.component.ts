@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DataService } from 'services/data.service';
 import { Filters } from '../../classes/filters';
+import { ProductResults } from '../../classes/product-results';
 
 @Component({
   selector: 'search',
@@ -21,8 +22,8 @@ export class SearchComponent implements OnInit {
       }));
       
       this.dataService.get('api/Products', parameters)
-        .subscribe((filters: Filters) => {
-          this.filters = filters;
+        .subscribe((productResults: ProductResults) => {
+          this.filters = productResults.filters;
         })
     });
   }

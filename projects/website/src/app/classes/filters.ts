@@ -1,9 +1,9 @@
-import { CategoryFilter } from './category-filter';
+import { CategoriesFilter } from './categories-filter';
 import { PriceFilter } from './price-filter';
 import { QueryFilter } from './query-filter';
 
 export interface Filters {
-    categoryFilters: Array<CategoryFilter>;
+    categoriesFilter: CategoriesFilter;
     priceFilter: PriceFilter;
     ratingFilter: QueryFilter;
     customFilters: Array<QueryFilter>;

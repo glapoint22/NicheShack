@@ -1,16 +1,28 @@
-.text {
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 15px;
+@import '../../../../scss/variables';
+
+.gold-text {
+    color: $niche-shack-gold;
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block;
 }
 
 
-.highlight {
-    color: gold;
+.category {
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 
 .margin-left {
     margin-left: 15px;
+}
+
+.text {
+    display: inline-block;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
 }

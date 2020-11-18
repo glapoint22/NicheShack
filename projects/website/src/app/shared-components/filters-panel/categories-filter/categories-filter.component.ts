@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { CategoriesFilter } from '../../../classes/categories-filter';
 import { CategoryFilter } from '../../../classes/category-filter';
 import { NicheFilter } from '../../../classes/niche-filter';
 import { FilterComponent } from '../filter/filter.component';
@@ -10,10 +11,11 @@ import { FilterComponent } from '../filter/filter.component';
   styleUrls: ['./categories-filter.component.scss']
 })
 export class CategoriesFilterComponent extends FilterComponent {
-  @Input() categories: Array<CategoryFilter>;
+  @Input() categories: CategoriesFilter;
+  public seeAllCategories: boolean;
 
 
-  constructor(private router: Router) { super() }
+  constructor(public route: ActivatedRoute, private router: Router) { super() }
 
 
   onCategoryClick(category: CategoryFilter) {
@@ -43,10 +45,19 @@ export class CategoriesFilterComponent extends FilterComponent {
   }
 
 
-  updateUrl(params: Params) {
+  onAnyCategoryClick() {
+    let params: Params = {
+      categoryId: null,
+      categoryName: null,
+      nicheId: null,
+      nicheName: null,
+      page: null
+    }
 
-    this.router.navigate([location.pathname], { queryParams: params, queryParamsHandling: 'merge' });
-
+    this.updateUrl(params);
   }
 
+  updateUrl(params: Params) {
+    this.router.navigate([location.pathname], { queryParams: params, queryParamsHandling: 'merge' });
+  }
 }
