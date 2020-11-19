@@ -17,23 +17,26 @@
         </category-dropdown-button>
 
         <div class="input-container">
-            <input #input placeholder="Search" (input)="getSuggestions(input.value)"
-                (mousedown)="getSuggestions(input.value)" (keydown.escape)="suggestions = []"
-                (blur)="hideSuggestionBox()" (keydown.enter)="search(input.value)" (keydown.arrowUp)="onArrowPress(-1)"
-                (keydown.arrowDown)="onArrowPress(1)">
+            <input #input [placeholder]="'Search in ' + (selectedCategory ? selectedCategory.name : 'All Categories')"
+                (input)="getSuggestions(input)" (mousedown)="getSuggestions(input)" (keydown.escape)="suggestions = []"
+                (blur)="hideSuggestionBox()" (keydown.enter)="search(input.value)"
+                (keydown.arrowUp)="onArrowPress(-1, input); $event.preventDefault()"
+                (keydown.arrowDown)="onArrowPress(1, input); $event.preventDefault()">
             <div id="suggestionBox" *ngIf="suggestions && suggestions.length > 0" class="suggestion-box"
                 (mousedown)="mousedown()">
                 <ng-container *ngFor="let suggestion of suggestions; let i = index">
 
                     <!-- Suggestion -->
-                    <div class="suggestion" (click)="search(suggestion.name)"
+                    <div *ngIf="!suggestion.category" class="suggestion" (click)="search(suggestion.name)"
+                        (mouseover)="suggestionIndex = i" [ngClass]="{'highlight': i == suggestionIndex}"
                         [title]="getSuggestionTooltip(suggestion.name)">
                         <div class="suggestion-text" [innerHTML]="suggestion.html"></div>
                     </div>
 
                     <!-- Suggested Category -->
                     <div *ngIf="suggestion.category" class="suggestion"
-                        (click)="search(suggestion.name, suggestion.category)"
+                        (click)="search(suggestion.name, suggestion.category)" (mouseover)="suggestionIndex = i"
+                        [ngClass]="{'highlight': i == suggestionIndex}"
                         [title]="suggestion.name + ' in ' + suggestion.category.name">
                         <div class="suggestion-text suggested-category">
                             in {{suggestion.category.name}}
