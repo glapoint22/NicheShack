@@ -19,7 +19,8 @@
         <div class="input-container">
             <input #input placeholder="Search" (input)="getSuggestions(input.value)"
                 (mousedown)="getSuggestions(input.value)" (keydown.escape)="suggestions = []"
-                (blur)="hideSuggestionBox()" (keydown.enter)="search(input.value)">
+                (blur)="hideSuggestionBox()" (keydown.enter)="search(input.value)" (keydown.arrowUp)="onArrowPress(-1)"
+                (keydown.arrowDown)="onArrowPress(1)">
             <div id="suggestionBox" *ngIf="suggestions && suggestions.length > 0" class="suggestion-box"
                 (mousedown)="mousedown()">
                 <ng-container *ngFor="let suggestion of suggestions; let i = index">

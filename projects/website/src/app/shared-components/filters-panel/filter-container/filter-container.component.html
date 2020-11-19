@@ -7,5 +7,8 @@
     </div>
 
     <!-- Content -->
-    <ng-content *ngIf="show"></ng-content>
+    <div #content class="filter-content" [ngStyle]="{'maxHeight.px': expanded ? contentMaxHeight : 0}" (transitionend)="transitionend()">
+        <ng-content></ng-content>
+    </div>
+    
 </div>

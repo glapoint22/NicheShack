@@ -20,7 +20,10 @@
 
         <!-- If show hidden is true -->
         <ng-container *ngIf="category.niches.showHidden">
-            <div *ngFor="let niche of category.niches.hidden">
+            <div *ngFor="let niche of category.niches.hidden" class="show"
+                [style.maxHeight.px]="!niche.visible ? 0 : 21" [style.opacity]="!niche.visible ? 0 : 1"
+                (transitionend)="nichesTransitionend(niche, category.niches)">
+
                 <div class="margin-left text" (click)="onNicheClick(niche)">
                     {{niche.name}}
                 </div>
@@ -28,9 +31,8 @@
         </ng-container>
 
         <!-- See all / see fewer -->
-        <div *ngIf="category.niches.hidden" class="margin-left gold-text"
-            (click)="category.niches.showHidden = !category.niches.showHidden">
-            {{category.niches.showHidden ? 'See fewer ' + category.name : 'See all ' + category.name}}</div>
+        <div *ngIf="category.niches.hidden" class="margin-left gold-text" (click)="seeAllFewerNiches(category.niches)">
+            {{category.niches.hidden[0].visible ? 'See fewer ' + category.name : 'See all ' + category.name}}</div>
     </div>
 </div>
 
@@ -42,13 +44,14 @@
     <ng-container *ngIf="seeAllCategories">
 
         <!-- Display hidden categories -->
-        <div *ngFor="let category of categories.hidden">
+        <div *ngFor="let category of categories.hidden" class="show" [style.maxHeight.px]="!category.visible ? 0 : 21"
+            [style.opacity]="!category.visible ? 0 : 1" (transitionend)="categoriesTransitionend(category)">
             <div class="category text" (click)="onCategoryClick(category)">{{category.name}}</div>
         </div>
     </ng-container>
 
 
     <!-- See all/ see fewer categories -->
-    <div *ngIf="categories.hidden" class="gold-text" (click)="seeAllCategories = !seeAllCategories">
-        {{seeAllCategories ? 'See fewer categories' : 'See all categories'}}</div>
+    <div *ngIf="categories.hidden" class="gold-text" (click)="seeAllFewerCategories()">
+        {{categories.hidden[0].visible ? 'See fewer categories' : 'See all categories'}}</div>
 </div>

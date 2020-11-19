@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private isSuggestionBoxMousedown: boolean;
   private categories: Array<Category>;
   private selectedCategory: Category;
+  private suggestionIndex: number = -1;
 
   constructor(
     private categoriesService: CategoriesService,
@@ -205,5 +206,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
       queryParams: queryParams
     });
     this.suggestions = [];
+  }
+
+
+  onArrowPress(direction: number) {
+    this.suggestionIndex += direction;
+
+    let suggestionBox = document.getElementById('suggestionBox');
+
+    console.log(suggestionBox.children[this.suggestionIndex].firstChild.innerText)
   }
 }

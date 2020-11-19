@@ -6,4 +6,5 @@ export interface CategoryFilter {
     name: string;
     urlName: string;
     niches: NichesFilter;
+    visible: boolean;
 }
