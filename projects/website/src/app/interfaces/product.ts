@@ -1,9 +1,11 @@
+import { ImageData } from 'classes/image-data';
+
 export interface Product {
     id: string;
     urlId: string;
     name: string;
     urlName: string;
-    image: string;
+    image: ImageData;
     rating: number;
     totalReviews: number;
     minPrice: number;

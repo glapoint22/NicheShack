@@ -20,11 +20,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public selectedCategoryIndex: number = 0;
   public customerName: string;
   public customerImage: string;
+  public suggestionIndex: number = -1;
+  public selectedCategory: Category;
   private subscription: Subscription;
   public suggestions: Array<Suggestion>;
   private isSuggestionBoxMousedown: boolean;
   private categories: Array<Category>;
-  private selectedCategory: Category;
+  private searchwords: string;
 
   constructor(
     private categoriesService: CategoriesService,
@@ -73,7 +75,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.categoriesList = categories.slice().map(x => ({ key: x.urlId, value: x.name }));
 
     // Prepend "all" to the list of categories
-    this.categoriesList.unshift({ key: null, value: 'All' });
+    this.categoriesList.unshift({ key: null, value: 'All Categories' });
   }
 
   setSelectedCategory(queryParams: ParamMap) {
@@ -87,15 +89,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
-  getSuggestions(searchwords: string) {
-    if (searchwords) {
+  getSuggestions(input: HTMLInputElement) {
+    this.searchwords = input.value;
+
+
+    if (this.searchwords) {
       let parameters: Array<any>;
 
       if (this.selectedCategory) {
         parameters = [
           {
             key: 'searchWords',
-            value: searchwords
+            value: this.searchwords
           },
           {
             key: 'categoryId',
@@ -103,14 +108,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
           }
         ]
       } else {
-        parameters = [{ key: 'searchWords', value: searchwords }];
+        parameters = [{ key: 'searchWords', value: this.searchwords }];
       }
 
 
       this.dataService.get('api/Products/GetSuggestions', parameters)
         .subscribe((suggestions: Array<Suggestion>) => {
           this.suggestions = [];
-
+          this.suggestionIndex = -1;
+          if (!input.value) return;
 
           if (suggestions) {
             let suggestionsCount: number;
@@ -128,7 +134,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
             for (let i = 0; i < suggestionsCount; i++) {
               let suggestion: Suggestion = suggestions[i];
-              let html: string = suggestion.name.replace(new RegExp(searchwords, "i"), '<span style="font-weight: normal">' + searchwords.toLowerCase() + '</span>');
+              let html: string = suggestion.name.replace(new RegExp(this.searchwords, "i"), '<span style="font-weight: normal">' + this.searchwords.toLowerCase() + '</span>');
 
               this.suggestions.push({
                 name: suggestion.name,
@@ -172,7 +178,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     input.focus();
 
-    this.getSuggestions(input.value);
+    this.getSuggestions(input);
 
   }
 
@@ -205,5 +211,35 @@ export class NavbarComponent implements OnInit, OnDestroy {
       queryParams: queryParams
     });
     this.suggestions = [];
+  }
+
+
+  onArrowPress(direction: number, input: HTMLInputElement) {
+    this.suggestionIndex += direction;
+
+    // Display the search words if the suggestionIndex is outside the bounds
+    if (this.suggestionIndex == -1 || this.suggestionIndex == this.suggestions.length) {
+      input.value = this.searchwords;
+      return;
+    }
+
+    // This will cause the selection to loop
+    if (this.suggestionIndex == -2) {
+      this.suggestionIndex = this.suggestions.length - 1;
+    } else if (this.suggestionIndex == this.suggestions.length + 1) {
+      this.suggestionIndex = 0;
+    }
+
+    // Display the suggestion in the search input
+    input.value = this.suggestions[this.suggestionIndex].name;
+
+    // Set the category in the category dropdown if the suggestion has a category
+    if (this.suggestions[this.suggestionIndex].category) {
+      this.selectedCategoryIndex = this.categoriesList.findIndex(x => x.value == this.suggestions[this.suggestionIndex].category.name);
+      this.selectedCategory = this.categories.find(x => x.name == this.categoriesList[this.selectedCategoryIndex].value);
+    } else {
+      this.selectedCategoryIndex = 0;
+      this.selectedCategory = null;
+    }
   }
 }

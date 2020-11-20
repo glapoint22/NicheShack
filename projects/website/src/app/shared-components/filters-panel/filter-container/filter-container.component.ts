@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'filter-container',
@@ -7,9 +7,29 @@ import { Component, Input } from '@angular/core';
 })
 export class FilterContainerComponent {
   @Input() caption: string;
+  @ViewChild('content', { static: false }) content: ElementRef;
+  public contentMaxHeight: number;
+  public expanded: boolean = true;
   public show: boolean = true;
 
+  
+
+ 
+
   onArrowClick() {
-    this.show = !this.show;
+    if (this.show) {
+      this.contentMaxHeight = this.content.nativeElement.scrollHeight;
+      this.show = false;
+      window.setTimeout(() => {
+        this.expanded = false;
+      });
+    } else {
+      this.expanded = true;
+      this.show = true;
+    }
+  }
+
+  transitionend() {
+    if (this.expanded) this.contentMaxHeight = null;
   }
 }

@@ -76,11 +76,11 @@ nav {
                     margin: 0 1px;
                     cursor: pointer;
 
-                    &:hover {
-                        background-color: #d8d8d8;
-                        outline: 1px solid #d8d8d8;
+                    // &:hover {
+                    //     background-color: #d8d8d8;
+                    //     outline: 1px solid #d8d8d8;
                         
-                    }
+                    // }
 
                     &:not(:first-child) > .suggestion-text {
                         border-top: 1px solid  #d8d8d8;
@@ -153,6 +153,12 @@ nav {
             }
         }
     }
+}
+
+
+.highlight {
+    background-color: #d8d8d8;
+    outline: 1px solid #d8d8d8;
 }
 
 
