@@ -8,14 +8,14 @@ export class QueryService {
   constructor(private dataService: DataService) { }
   public results: number = 0;
   public productResultsInProgress: boolean;
-  public subgroups: Array<QueryList> = [];
-  public categories: Array<QueryList> = [];
-  public customerRelatedProducts: Array<QueryList> = [
+  public subgroups: Array<QueryDropdownList> = [];
+  public categories: Array<QueryDropdownList> = [];
+  public customerRelatedProducts: Array<QueryDropdownList> = [
     { id: 1, name: "List Products" },
     { id: 2, name: "Purchased Products" },
     { id: 3, name: "Browsed Products" }];
     
-  public productRating: Array<QueryList> = [
+  public productRating: Array<QueryDropdownList> = [
     { id: 1, name: "1" },
     { id: 2, name: "2" },
     { id: 3, name: "3" },
@@ -48,8 +48,8 @@ export class QueryService {
 }
 
 
-export interface QueryList {
+export interface QueryDropdownList {
   id: number;
   name: string;
-  children?: Array<QueryList>;
+  children?: Array<QueryDropdownList>;
 }

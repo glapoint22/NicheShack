@@ -50,6 +50,7 @@ import { PanelComponent } from '../panel/panel.component';
 import { HierarchyCheckboxContentComponent } from '../hierarchy/hierarchy-checkbox-content/hierarchy-checkbox-content.component';
 import { SharedModule } from '../shared.module';
 import { QueryBuilderComponent } from '../properties/query-builder/query-builder.component';
+import { QueryListComponent } from '../properties/query-builder/query-list/query-list.component';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { QueryBuilderComponent } from '../properties/query-builder/query-builder
     FiltersHierarchyComponent,
     EmailPropertiesComponent,
     HierarchyCheckboxContentComponent,
-    QueryBuilderComponent
+    QueryBuilderComponent,
+    QueryListComponent
   ],
   imports: [
     CommonModule,
@@ -154,7 +156,8 @@ import { QueryBuilderComponent } from '../properties/query-builder/query-builder
     FiltersHierarchyComponent,
     EmailPropertiesComponent,
     HierarchyCheckboxContentComponent,
-    QueryBuilderComponent
+    QueryBuilderComponent,
+    QueryListComponent
   ]
 })
 export class PropertiesEditorModule { }
