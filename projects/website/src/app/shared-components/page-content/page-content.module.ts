@@ -16,6 +16,7 @@ import { CategoriesWidgetComponent } from './categories-widget/categories-widget
 import { CarouselWidgetComponent } from './carousel-widget/carousel-widget.component';
 import { RouterModule } from '@angular/router';
 import { CarouselModule } from '../../directives/carousel.module';
+import { GridWidgetModule } from './grid-widget/grid-widget.module';
 
 
 
@@ -39,7 +40,8 @@ import { CarouselModule } from '../../directives/carousel.module';
   imports: [
     CommonModule,
     RouterModule,
-    CarouselModule
+    CarouselModule,
+    GridWidgetModule
   ],
   exports: [
     PageContentComponent,
