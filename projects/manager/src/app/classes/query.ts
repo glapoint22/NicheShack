@@ -9,7 +9,7 @@ import { MenuOption } from './menu-option';
 
 export interface Query {
     queryType: QueryType;
-    operator: Array<OperatorType>;
+    operator: Array<ComparisonOperatorType>;
     intValue?: Array<number>;
     stringValue?: Array<string>;
     doubleValue?: Array<number>;
@@ -20,7 +20,7 @@ export interface IQueryRow {
     queryType: QueryType;
     otherQueryType?: QueryType;
     hasOperators: boolean;
-    operatorType: OperatorType;
+    ComparisonOperatorType: ComparisonOperatorType;
     valueType: ValueType;
     intValue: number;
     doubleValue?: number;
@@ -61,12 +61,19 @@ export enum QueryType {
 }
 
 
-export enum OperatorType {
-    Equals,
+export enum ComparisonOperatorType {
+    Equal,
+    NotEqual,
     GreaterThan,
-    GreaterThanOrEqualTo,
+    GreaterThanOrEqual,
     LessThan,
-    LessThanOrEqualTo,
+    LessThanOrEqual,
+}
+
+
+export enum LogicalOperatorType {
+    And,
+    Or
 }
 
 
@@ -79,7 +86,7 @@ export class QueryRow {
         public dataService: DataService,
         public queryService: QueryService) { }
     public queryType: QueryType;
-    public operatorType: OperatorType = OperatorType.Equals;
+    public ComparisonOperatorType: ComparisonOperatorType = ComparisonOperatorType.Equal;
     public intValue: number;
     public hasOperators: boolean;
     public valueType: ValueType;
@@ -90,14 +97,16 @@ export class QueryRow {
     }
 
     getProducts() {
+
+        this.queries = [];
         // if (this.queries.length > 0) {
         //     this.queryService.productResultsInProgress = true;
-            this.dataService.post('api/Products/Alita', this.queries)
-                .subscribe((products) => {
-                    // this.queryService.productResultsInProgress = false;
-                    // this.queryService.results = products.length;
-                    console.log(products)
-                });
+        this.dataService.post('api/Products/Alita', this.queries)
+            .subscribe((products) => {
+                // this.queryService.productResultsInProgress = false;
+                // this.queryService.results = products.length;
+                console.log(products)
+            });
         // } else {
         //     this.queryService.results = 0;
         // }
@@ -180,7 +189,7 @@ export class QueryRowDropdownBase extends QueryRow {
 
                     // Create the query if it has NOT been created already
                     if (queryIndex == -1) {
-                        this.queries.push({ queryType: queryType, operator: [OperatorType.Equals], intValue: [] });
+                        this.queries.push({ queryType: queryType, operator: [ComparisonOperatorType.Equal], intValue: [] });
                         queryIndex = this.queries.length - 1;
                     }
 
@@ -340,7 +349,7 @@ export class QueryRowDropdownParentChild extends QueryRowDropdownBase {
 
                     // Create the child query if it has NOT been created already
                     if (childQueryIndex == -1) {
-                        this.queries.push({ queryType: childQueryType, operator: [OperatorType.Equals], intValue: [] });
+                        this.queries.push({ queryType: childQueryType, operator: [ComparisonOperatorType.Equal], intValue: [] });
                         childQueryIndex = this.queries.length - 1;
                     }
 
@@ -621,7 +630,7 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
                     // Update the query
                     this.queries[queryIndex].doubleValue.push(x.doubleValue);
-                    this.queries[queryIndex].operator.push(x.operatorType);
+                    this.queries[queryIndex].operator.push(x.ComparisonOperatorType);
                 }
             }
         });
@@ -634,8 +643,8 @@ export class QueryRowDropdownWithOperator extends QueryRowDropdownBase {
 
 
 
-    updateOperator(operatorType: OperatorType) {
-        this.operatorType = operatorType;
+    updateOperator(ComparisonOperatorType: ComparisonOperatorType) {
+        this.ComparisonOperatorType = ComparisonOperatorType;
         this.updateDropdownQuery(this.queryType);
     }
 
@@ -712,8 +721,8 @@ export class QueryRowPrice extends QueryRow {
     }
 
 
-    updateOperator(operatorType: OperatorType) {
-        this.operatorType = operatorType;
+    updateOperator(ComparisonOperatorType: ComparisonOperatorType) {
+        this.ComparisonOperatorType = ComparisonOperatorType;
         this.updateQuery(this.queryType);
     }
 
@@ -740,7 +749,7 @@ export class QueryRowPrice extends QueryRow {
 
                     // Update the query
                     this.queries[queryIndex].doubleValue.push(x.doubleValue);
-                    this.queries[queryIndex].operator.push(x.operatorType);
+                    this.queries[queryIndex].operator.push(x.ComparisonOperatorType);
                 }
             }
         });
@@ -843,7 +852,7 @@ export class QueryRowItemList extends QueryRow {
 
                     // Create the query if it has NOT been created already
                     if (queryIndex == -1) {
-                        this.queries.push({ queryType: queryType, operator: [OperatorType.Equals], stringValue: [] });
+                        this.queries.push({ queryType: queryType, operator: [ComparisonOperatorType.Equal], stringValue: [] });
                         queryIndex = this.queries.length - 1;
                     }
 
@@ -955,7 +964,7 @@ export class QueryRowEditableItemList extends QueryRow {
 
                     // Create the query if it has NOT been created already
                     if (queryIndex == -1) {
-                        this.queries.push({ queryType: queryType, operator: [OperatorType.Equals], stringValue: [] });
+                        this.queries.push({ queryType: queryType, operator: [ComparisonOperatorType.Equal], stringValue: [] });
                         queryIndex = this.queries.length - 1;
                     }
 
@@ -1029,8 +1038,8 @@ export class QueryRowDate extends QueryRow {
         this.queryRows[queryRowIndex].queryRowIndex = queryRowIndex;
     }
 
-    updateOperator(operatorType: OperatorType) {
-        this.operatorType = operatorType;
+    updateOperator(ComparisonOperatorType: ComparisonOperatorType) {
+        this.ComparisonOperatorType = ComparisonOperatorType;
         this.updateQuery(QueryType.ProductCreationDate);
     }
 
@@ -1063,7 +1072,7 @@ export class QueryRowDate extends QueryRow {
 
                     // Update the query
                     this.queries[queryIndex].dateValue.push(x.dateValue);
-                    this.queries[queryIndex].operator.push(x.operatorType);
+                    this.queries[queryIndex].operator.push(x.ComparisonOperatorType);
                 }
             }
         });

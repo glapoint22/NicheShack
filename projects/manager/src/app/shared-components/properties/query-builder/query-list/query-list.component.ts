@@ -1,7 +1,7 @@
 import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataService } from 'services/data.service';
-import { OperatorType, Query, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType, SubQueryRow, QueryType } from '../../../../classes/query';
+import { ComparisonOperatorType, Query, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType, SubQueryRow, QueryType, LogicalOperatorType } from '../../../../classes/query';
 import { QueryService } from '../../../../services/query.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class QueryListComponent implements OnInit {
 
   // Public
   public queryRows: Array<IQueryRow> = [];
-  public operatorType = OperatorType;
+  public ComparisonOperatorType = ComparisonOperatorType;
   public valueType = ValueType;
   public queryType = QueryType;
   public queries: Array<Query> = [];
@@ -39,17 +39,18 @@ export class QueryListComponent implements OnInit {
 
 
   public operatorList: Array<KeyValue<any, any>> = [
-    { key: "=", value: OperatorType.Equals },
-    { key: ">", value: OperatorType.GreaterThan },
-    { key: ">=", value: OperatorType.GreaterThanOrEqualTo },
-    { key: "<", value: OperatorType.LessThan },
-    { key: "<=", value: OperatorType.LessThanOrEqualTo }
+    { key: "=", value: ComparisonOperatorType.Equal },
+    { key: "!=", value: ComparisonOperatorType.NotEqual },
+    { key: ">", value: ComparisonOperatorType.GreaterThan },
+    { key: ">=", value: ComparisonOperatorType.GreaterThanOrEqual },
+    { key: "<", value: ComparisonOperatorType.LessThan },
+    { key: "<=", value: ComparisonOperatorType.LessThanOrEqual }
   ];
 
 
   public logicalOperatorList: Array<KeyValue<any, any>> = [
-    { key: "And", value: 0 },
-    { key: "Or", value: 1 }
+    { key: "And", value: LogicalOperatorType.And },
+    { key: "Or", value: LogicalOperatorType.Or }
   ];
 
 
