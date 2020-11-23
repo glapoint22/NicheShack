@@ -6,6 +6,8 @@ export interface ProductResults {
     products: Array<Product>;
     totalProducts: number;
     filters: Filters;
-    numProductsPerPageOptions: KeyValue<string, string>;
-    sortOptions: KeyValue<string, string>;
+    pageCount: number;
+    sortOptions: any;
+    start: number;
+    end: number;
 }

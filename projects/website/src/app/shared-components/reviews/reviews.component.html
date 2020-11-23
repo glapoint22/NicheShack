@@ -79,7 +79,7 @@
         View all {{product.totalReviews | number}} reviews
     </button>
 
-    <paginator *ngIf="paging" [currentPage]="currentPage" [pageCount]="pageCount" (onPageChange)="setPage($event)">
+    <paginator *ngIf="paging" [currentPage]="currentPage" [pageCount]="pageCount">
     </paginator>
 
 

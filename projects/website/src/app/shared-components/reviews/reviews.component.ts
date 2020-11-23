@@ -109,12 +109,7 @@ export class ReviewsComponent implements OnInit {
     });
   }
 
-  setPage(page: number) {
-    this.router.navigate([], {
-      queryParams: { page: page },
-      queryParamsHandling: 'merge'
-    });
-  }
+  
 
   onViewAllReviewsClick() {
     this.router.navigate(['reviews'], {

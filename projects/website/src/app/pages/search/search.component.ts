@@ -1,5 +1,6 @@
+import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { DataService } from 'services/data.service';
 import { Filters } from '../../classes/filters';
 import { ProductResults } from '../../classes/product-results';
@@ -13,22 +14,54 @@ import { Product } from '../../interfaces/product';
 export class SearchComponent implements OnInit {
   public filters: Filters;
   public products: Array<Product>;
+  public page: number = 1;
+  public pageCount: number;
+  public sortOptions: Array<KeyValue<string, string>>;
+  public selectedSortOption: KeyValue<string, string>;
+  public totalProducts: number;
+  public start: number;
+  public end: number;
+  public showFilterMenu: boolean;
 
-  constructor(private route: ActivatedRoute, private dataService: DataService) { }
+  constructor(public route: ActivatedRoute, private dataService: DataService, private router: Router) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params: Params) => {
-      let parameters = Object.keys(params).map(key => ({
+    this.route.queryParamMap.subscribe((params: ParamMap) => {
+      let parameters = params.keys.map(key => ({
         key: key,
-        value: params[key]
+        value: params.get(key)
       }));
+
       
+
+      this.page = params.has('page') ? Math.max(1, Number.parseInt(params.get('page'))) : 1;
+
       this.dataService.get('api/Products', parameters)
         .subscribe((productResults: ProductResults) => {
+          this.sortOptions = productResults.sortOptions.map(x => ({
+            key: x.Key,
+            value: x.Value
+          }));
+          
+  
+          let index = Math.max(0, this.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
+          this.selectedSortOption = this.sortOptions[index];
+
+
           this.filters = productResults.filters;
           this.products = productResults.products;
-        })
+          this.pageCount = productResults.pageCount;
+          this.totalProducts = productResults.totalProducts;
+          this.start = productResults.start;
+          this.end = productResults.end;
+        });
     });
   }
 
+  setSort() {
+    this.router.navigate([], {
+      queryParams: { sort: this.selectedSortOption.value, page: null },
+      queryParamsHandling: 'merge'
+    });
+  }
 }
