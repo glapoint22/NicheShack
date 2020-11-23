@@ -1,23 +1,18 @@
 @import '../../../scss/variables';
 
-.product {
+.product-container {
     cursor: pointer;
-    width: 240px;
-
-    .img-container {
-        position: relative;
-        line-height: initial;
-        width: 100px;
-        height: auto;
-        flex-shrink: 0;
-        margin-bottom: 8px;
-        text-align: center;
-        img {
-            max-width: 100px;
-            max-height: 100px;
-        }
+    border: 1px solid #424242;
+    padding: 10px;
+    height: 100%;
+    background:#222222;
+    &:hover {
+        background:#292929;
     }
+}
 
+.product {
+    
     .title {
         font-weight: bold;
     }
@@ -28,33 +23,30 @@
     }
 }
 
+
+img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain;
+    max-width: 75px;
+    max-height: 75px;
+}
+
 @media (min-width: map-get($breakpoints, xxs)) {
-    .product {
-        width: 300px;
-    
-        .img-container {
-            width: 150px;
-            img {
-                max-width: 150px;
-                max-height: 150px;
-            }
-        }
+    img {
+        max-width: 150px;
+        max-height: 150px;
     }
 }
 
 
 
 @media (min-width: map-get($breakpoints, md)) {
-    .product {
-        width: 200px;
-    
-        .img-container {
-            line-height: 200px;
-            width: 200px;
-            img {
-                max-width: 200px;
-                max-height: 200px;
-            }
-        }
+    img {
+        margin: auto;
+        margin-bottom: 10px;
+        max-width: 200px;
+        display: block;
+        max-height: 200px;
     }
 }

@@ -1,3 +1,5 @@
+@import '../../../../scss/variables';
+
 input{
     width: 60px;
     height: 22px;
@@ -6,13 +8,19 @@ input{
     color: black;
 }
 button{
-    float: right;
-    height: 22px;
-    padding: 0 10px;
+    margin-left: 5px;
+    padding: 0;
+    background: transparent;
+    color: $niche-shack-gold;
+    text-decoration: underline;
+
+    &:hover:not(:disabled) {
+        background: transparent;
+    }
 }
 .error{
-    font-size: 15px;
-    color: #f3c231;
+    font-size: 13px;
+    color: $niche-shack-gold;
     margin-top: 8px;
 }
 .error-display{
@@ -22,7 +30,7 @@ button{
 .clear-price{
     color: white;
     margin-top: 4px;
-    font-size: 15px;
+    font-size: 13px;
     cursor: pointer;
 }
 .clear-price:hover{

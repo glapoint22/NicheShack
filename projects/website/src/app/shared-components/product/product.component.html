@@ -1,33 +1,32 @@
-<div class="product display-flex display-block-md" [title]="product.name" (click)="onClick()">
+<div class="product-container" (click)="onClick()">
+    <div class="product display-flex display-block-md align-items-center" [title]="product.name">
 
-    <!-- Image -->
-    <div class="img-container">
+
         <img [src]="'images/' + product.image.url" [alt]="product.image.name" [title]="product.image.name">
-    </div>
+
+        <div class="margin-left-8 margin-left-16-xxs margin-left-0-md margin-right-8 margin-right-4-xxs">
+            <!-- Product Title -->
+            <div class="title text-break">{{product.name}}</div>
 
 
-    <div class="margin-left-8 margin-left-16-xxs margin-left-0-md margin-right-8 margin-right-4-xxs">
-        <!-- Product Title -->
-        <div class="title text-break">{{product.name}}</div>
+            <!-- Stars -->
+            <stars [rating]="product.rating"></stars>
 
 
-        <!-- Stars -->
-        <stars [rating]="product.rating"></stars>
+            <!-- Reviews -->
+            <span class="reviews primary-color-light" *ngIf="product.rating > 0">
+                {{product.totalReviews | number}} reviews
+            </span>
 
 
-        <!-- Reviews -->
-        <span class="reviews primary-color-light" *ngIf="product.rating > 0">
-            {{product.totalReviews | number}} reviews
-        </span>
-
-
-        <!-- Price -->
-        <div class="niche-shack-gold-color">
-            <div *ngIf="product.maxPrice == 0">
-                {{product.minPrice | currency:'USD'}}
-            </div>
-            <div *ngIf="product.maxPrice > 0">
-                {{product.minPrice | currency:'USD'}} - {{product.maxPrice | currency:'USD'}}
+            <!-- Price -->
+            <div class="niche-shack-gold-color">
+                <div *ngIf="product.maxPrice == 0">
+                    {{product.minPrice | currency:'USD'}}
+                </div>
+                <div *ngIf="product.maxPrice > 0">
+                    {{product.minPrice | currency:'USD'}} - {{product.maxPrice | currency:'USD'}}
+                </div>
             </div>
         </div>
     </div>

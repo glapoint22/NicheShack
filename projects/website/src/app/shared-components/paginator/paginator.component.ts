@@ -1,4 +1,5 @@
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'paginator',
@@ -8,8 +9,9 @@ import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core
 export class PaginatorComponent implements OnChanges {
   @Input() public pageCount: number;
   @Input() public currentPage: number;
-  @Output() onPageChange: EventEmitter<number> = new EventEmitter();
   public pages: Array<string>;
+
+  constructor(private router: Router) {}
 
   ngOnChanges() {
     this.pages = [];
@@ -35,5 +37,13 @@ export class PaginatorComponent implements OnChanges {
       if (this.pageCount > 5) this.pages.push('...');
     }
     if (this.pageCount > 1) this.pages.push(this.pageCount.toString());
+  }
+
+
+  setPage(page: number) {
+    this.router.navigate([], {
+      queryParams: { page: page },
+      queryParamsHandling: 'merge'
+    });
   }
 }

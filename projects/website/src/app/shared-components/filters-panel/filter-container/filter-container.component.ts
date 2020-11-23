@@ -11,9 +11,6 @@ export class FilterContainerComponent {
   public contentMaxHeight: number;
   public expanded: boolean = true;
   public show: boolean = true;
-
-  
-
  
 
   onArrowClick() {

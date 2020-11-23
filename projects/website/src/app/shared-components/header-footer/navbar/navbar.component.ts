@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { CategoriesService } from '../../../services/categories.service';
 import { Category } from '../../../interfaces/category';
@@ -16,6 +16,7 @@ import { Suggestion } from '../../../classes/suggestion';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  @ViewChild('input', { static: false }) searchInput: ElementRef<HTMLInputElement>;
   public categoriesList: Array<KeyValue<string, string>> = []
   public selectedCategoryIndex: number = 0;
   public customerName: string;
@@ -37,6 +38,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer
   ) { }
 
+
+
+  ngAfterViewInit() {
+    this.route.queryParamMap.subscribe((queryParams: ParamMap) => {
+      this.searchInput.nativeElement.value = queryParams.get('query');
+    });
+  }
+
+
   ngOnInit(): void {
     // Get the customer's first name
     this.subscription = this.accountService.customer
@@ -49,6 +59,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
     this.route.queryParamMap.subscribe((queryParams: ParamMap) => {
+
       // If we don't have categories yet, use the categories service to get them from the database
       if (this.categoriesList.length == 0) {
         this.categoriesService.categories.subscribe((categories: Array<Category>) => {
@@ -234,12 +245,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     input.value = this.suggestions[this.suggestionIndex].name;
 
     // Set the category in the category dropdown if the suggestion has a category
-    if (this.suggestions[this.suggestionIndex].category) {
-      this.selectedCategoryIndex = this.categoriesList.findIndex(x => x.value == this.suggestions[this.suggestionIndex].category.name);
-      this.selectedCategory = this.categories.find(x => x.name == this.categoriesList[this.selectedCategoryIndex].value);
-    } else {
-      this.selectedCategoryIndex = 0;
-      this.selectedCategory = null;
+    if (this.suggestions.findIndex(x => x.category) != -1) {
+      if (this.suggestions[this.suggestionIndex].category) {
+        this.selectedCategoryIndex = this.categoriesList.findIndex(x => x.value == this.suggestions[this.suggestionIndex].category.name);
+        this.selectedCategory = this.categories.find(x => x.name == this.categoriesList[this.selectedCategoryIndex].value);
+      } else {
+        this.selectedCategoryIndex = 0;
+        this.selectedCategory = null;
+      }
     }
+
   }
 }

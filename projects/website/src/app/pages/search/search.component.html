@@ -1,2 +1,119 @@
-<!-- <filters-panel [filters]="filters"></filters-panel> -->
-<grid-widget [products]="products"></grid-widget>
+<navbar></navbar>
+
+
+<!-- <div *show="showFilterMenu" class="filter-menu fade-translate-start" transitionClass="fade-translate-end" tabindex="0"
+    (onHide)="showFilterMenu = false">
+
+    <div (mousedown)="$event.stopPropagation()">
+        
+        <div class="close-header">
+            <i (click)="showFilterMenu = false; setSelectedFilter()" class="fas fa-times"></i>
+        </div>
+
+
+        <div class="mobile-orders">
+            <div class="overflow-container">
+                
+                <h3>Filter by order date</h3>
+
+                
+                <radio-button style="margin-bottom: 10px; display: block;"
+                    *ngFor="let filterOption of filter; let i = index" [name]="'option'" [label]="filterOption.value"
+                    [checked]="i == getDefaultIndex()" (change)="selectedFilter = filterOption"></radio-button>
+
+
+                
+                <div style="height: 50px;">
+                    <div class="apply-button" style="height:50px;">
+                        <button class="alt-button"
+                            (click)="onFilterClick(selectedFilter); showFilterMenu = false">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+<div class="page-container">
+    <div class="content-container">
+
+        <div *ngIf="products" style="margin: auto;width: 100%;max-width: 1465px; margin-bottom: 10px; padding-left: 10px;">
+
+            <ng-container *ngIf="products.length > 0; else noMatch">
+
+                <div class="header">
+
+
+                    <div class="width-auto margin-bottom-16 margin-bottom-0-xs"
+                        style="white-space: nowrap; margin-bottom: 4px;">
+                        {{start}} - {{end}} of {{totalProducts}} results
+                    </div>
+
+                    <!-- Sort Options -->
+                    <select class="show-md" [(ngModel)]="selectedSortOption" (change)="setSort()"
+                        style="margin-bottom: 10px; margin-right: 10px;">
+                        <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">Sort by
+                            {{sortOption.key}}</option>
+                    </select>
+
+                    <button class="alt-button hide-md" style="margin-bottom: 10px; margin-right: 10px;" (click)="showFilterMenu = true;">Sort & Filter</button>
+                </div>
+
+
+
+
+
+                <div style="display: flex;">
+
+                    <filters-panel [filters]="filters" style="flex-shrink: 0; margin-right: 10px; flex: 1" class="show-md">
+                    </filters-panel>
+
+                    <div style="width: 100%; margin-top: -10px;">
+                        <grid-widget [products]="products"></grid-widget>
+                        <paginator [currentPage]="page" [pageCount]="pageCount"></paginator>
+                    </div>
+
+                </div>
+            </ng-container>
+
+
+            <ng-template #noMatch>
+                <div style="margin-top: 10px;
+                background: #45003c;
+                padding: 20px;">
+
+                    <div style="display: flex;">
+                        <i class="fas fa-info-circle" style="font-size: 22px; color: #ffba00;"></i>
+                        <div style="margin-left: 10px">
+                            <div style="font-weight: bold;">
+                                Sorry, we couldn't find a match for "{{route.snapshot.queryParams.query}}"
+                            </div>
+                            <ul style="padding-inline-start: 16px;">
+                                <li>Check your spelling</li>
+                                <li>Use different keywords and try again</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </ng-template>
+
+
+        </div>
+
+
+
+
+
+
+
+        <navfooter></navfooter>
+    </div>
+</div>
