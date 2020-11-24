@@ -50,8 +50,8 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
   }
 
 
-  // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
-  onPaginatorClick(index: number) {
+  // --------------------------------( ON COUNTER CLICK )-------------------------------- \\
+  onCounterClick(index: number) {
     this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
       .subscribe((notification: ProductContentNotification) => {
         this.notificationService.productContentNotification = notification;

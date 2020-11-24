@@ -16,7 +16,13 @@ import { CategoriesWidgetComponent } from './categories-widget/categories-widget
 import { CarouselWidgetComponent } from './carousel-widget/carousel-widget.component';
 import { RouterModule } from '@angular/router';
 import { CarouselModule } from '../../directives/carousel.module';
-import { GridWidgetModule } from './grid-widget/grid-widget.module';
+import { GridWidgetComponent } from './grid-widget/grid-widget.component';
+import { ProductFiltersModule } from 'shared-components/product-filters/product-filters.module';
+import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
+import { ShowHideModule } from 'directives/show-hide/show-hide.module';
+import { FormsModule } from '@angular/forms';
+import { ProductModule } from 'shared-components/product/product.module';
+import { PaginatorModule } from 'shared-components/paginator/paginator.module';
 
 
 
@@ -35,13 +41,19 @@ import { GridWidgetModule } from './grid-widget/grid-widget.module';
     VideoWidgetComponent,
     ProductGroupWidgetComponent,
     CategoriesWidgetComponent,
-    CarouselWidgetComponent
+    CarouselWidgetComponent,
+    GridWidgetComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     CarouselModule,
-    GridWidgetModule
+    ProductFiltersModule,
+    CustomInputModule,
+    ShowHideModule,
+    FormsModule,
+    ProductModule,
+    PaginatorModule
   ],
   exports: [
     PageContentComponent,
@@ -57,7 +69,8 @@ import { GridWidgetModule } from './grid-widget/grid-widget.module';
     VideoWidgetComponent,
     ProductGroupWidgetComponent,
     CategoriesWidgetComponent,
-    CarouselWidgetComponent
+    CarouselWidgetComponent,
+    GridWidgetComponent
   ],
   entryComponents: [
     RowComponent,
@@ -70,7 +83,8 @@ import { GridWidgetModule } from './grid-widget/grid-widget.module';
     VideoWidgetComponent,
     ProductGroupWidgetComponent,
     CategoriesWidgetComponent,
-    CarouselWidgetComponent
+    CarouselWidgetComponent,
+    GridWidgetComponent
   ]
 })
 export class PageContentModule { }

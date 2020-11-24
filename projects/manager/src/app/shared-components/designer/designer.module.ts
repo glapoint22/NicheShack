@@ -17,6 +17,11 @@ import { ProductGroupWidgetComponent } from './widgets/product-group-widget/prod
 import { CategoriesWidgetComponent } from './widgets/categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from './widgets/carousel-widget/carousel-widget.component';
 import { SharedModule } from '../shared.module';
+import { GridWidgetComponent } from './widgets/grid-widget/grid-widget.component';
+import { FormsModule } from '@angular/forms';
+import { ProductFiltersModule } from 'shared-components/product-filters/product-filters.module';
+import { ProductModule } from 'shared-components/product/product.module';
+import { PaginatorModule } from 'shared-components/paginator/paginator.module';
 
 @NgModule({
   declarations: [
@@ -35,11 +40,16 @@ import { SharedModule } from '../shared.module';
     FreeformWidgetComponent,
     ProductGroupWidgetComponent,
     CategoriesWidgetComponent,
-    CarouselWidgetComponent
+    CarouselWidgetComponent,
+    GridWidgetComponent
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ProductFiltersModule,
+    ProductModule,
+    PaginatorModule
   ],
   exports: [DesignerComponent],
   entryComponents: [
@@ -53,7 +63,8 @@ import { SharedModule } from '../shared.module';
     ColumnComponent,
     ProductGroupWidgetComponent,
     CategoriesWidgetComponent,
-    CarouselWidgetComponent
+    CarouselWidgetComponent,
+    GridWidgetComponent
   ]
 })
 export class DesignerModule { }

@@ -13,7 +13,6 @@ import { MenuDivider } from 'projects/manager/src/app/classes/menu-divider';
 import { DataService } from 'services/data.service';
 import { NotificationType } from 'projects/manager/src/app/classes/notification-type';
 import { NotificationTab } from 'projects/manager/src/app/classes/notification-tab';
-import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
@@ -50,8 +49,8 @@ export class GeneralNotificationPopupComponent extends MessageNotificationPopupC
   }
 
 
-  // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
-  onPaginatorClick(index: number) {
+  // --------------------------------( ON COUNTER CLICK )-------------------------------- \\
+  onCounterClick(index: number) {
     this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
       .subscribe((notification: GeneralNotification) => {
         this.notificationService.generalNotification = notification;

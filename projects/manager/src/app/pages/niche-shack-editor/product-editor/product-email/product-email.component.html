@@ -1,27 +1,27 @@
 <!-- Property Box -->
 <div class="property-box-light" *ngIf="initialPageLoaded">
-    <!-- Container for paginator & icons -->
+    <!-- Container for counter & icons -->
     <div class="container">
 
-        <paginator #paginator [itemCount]="emailIds.length" (onItemChange)="onEmailChange($event)"></paginator>
+        <counter #counter [itemCount]="emailIds.length" (onItemChange)="onEmailChange($event)"></counter>
 
         <!-- Icons -->
         <div class="icons">
 
             <!-- Delete Email Icon -->
             <div class="icon-container" title="Delete Email" [ngClass]="{'icon-disabled': !currentEmailId}"
-                (click)="onDeleteClick(paginator)">
+                (click)="onDeleteClick(counter)">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
             <!-- Duplicate Page Icon -->
             <div class="icon-container" title="Duplicate Email" [ngClass]="{'icon-disabled': !currentEmailId}"
-                (click)="duplicateEmail(paginator)">
+                (click)="duplicateEmail(counter)">
                 <i class="fas fa-clone"></i>
             </div>
 
             <!-- Add Page Icon -->
-            <div class="icon-container" title="Add Email" (click)="addEmail(paginator)">
+            <div class="icon-container" title="Add Email" (click)="addEmail(counter)">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>

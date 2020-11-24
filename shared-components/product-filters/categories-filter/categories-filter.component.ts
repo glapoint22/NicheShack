@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CategoriesFilter } from '../../../classes/categories-filter';
-import { CategoryFilter } from '../../../classes/category-filter';
-import { NicheFilter } from '../../../classes/niche-filter';
-import { NichesFilter } from '../../../classes/niches-filter';
+import { CategoriesFilter } from 'classes/categories-filter';
+import { CategoryFilter } from 'classes/category-filter';
+import { NicheFilter } from 'classes/niche-filter';
+import { NichesFilter } from 'classes/niches-filter';
 import { FilterComponent } from '../filter/filter.component';
 
 @Component({

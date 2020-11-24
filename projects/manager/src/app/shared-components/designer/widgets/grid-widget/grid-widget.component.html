@@ -1,0 +1,45 @@
+<div #widget class="widget" (mousedown)="onMousedown()" style="border: 1px solid #7a7a7a; width: 100%;"
+    (click)="onClick($event)" [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}">
+
+    <!-- Header -->
+    <div class="header">
+
+        <!-- Product count -->
+        <div class="product-count">
+            {{productCountStart}} - {{productCountEnd}} of {{totalProducts}} results
+        </div>
+
+        <!-- Sort Options -->
+        <select *ngIf="sortOptions" [(ngModel)]="selectedSortOption" (change)="setSort()"
+            style="margin-bottom: 10px; margin-right: 10px;">
+            <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">Sort by
+                {{sortOption.key}}</option>
+        </select>
+    </div>
+
+
+
+    <div style="display: flex;">
+
+        <!-- Filters -->
+        <filters-panel [filters]="filters" class="filters">
+        </filters-panel>
+
+        <!-- Grid -->
+        <div class="grid-container">
+
+            <!-- Products -->
+            <div class="product-grid">
+                <div class="grid-row">
+                    <div class="column" *ngFor="let product of products">
+                        <product [product]="product"></product>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Paginator -->
+            <paginator [currentPage]="page" [pageCount]="pageCount"></paginator>
+        </div>
+    </div>
+</div>

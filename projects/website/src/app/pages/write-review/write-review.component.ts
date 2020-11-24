@@ -3,11 +3,11 @@ import { ValidationPageComponent } from '../validation-page/validation-page.comp
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { DataService } from 'services/data.service';
-import { Product } from '../../interfaces/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Review } from '../../classes/review';
 import { tap } from 'rxjs/operators';
+import { Product } from 'classes/product';
 
 @Component({
   templateUrl: './write-review.component.html',

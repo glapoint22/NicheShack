@@ -1,12 +1,12 @@
 <!-- Property Box -->
 <div class="property-box-light">
 
-    <!-- Container for paginator & icons -->
+    <!-- Container for counter & icons -->
     <div class="property-box-light-icon-bar">
 
-        <!-- Paginator -->
-        <paginator #paginator [itemCount]="carouselWidget.banners.length"
-            (onItemChange)="carouselWidget.currentBannerIndex = $event"></paginator>
+        <!-- Counter -->
+        <counter #counter [itemCount]="carouselWidget.banners.length"
+            (onItemChange)="carouselWidget.currentBannerIndex = $event"></counter>
 
         <!-- Icons -->
         <div class="icons">

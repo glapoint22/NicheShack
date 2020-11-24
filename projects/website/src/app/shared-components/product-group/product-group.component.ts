@@ -1,6 +1,6 @@
 import { Component, Input, HostListener, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { Product } from '../../interfaces/product';
 import { isPlatformBrowser } from '@angular/common';
+import { Product } from 'classes/product';
 
 @Component({
   selector: 'product-group',

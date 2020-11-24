@@ -7,5 +7,6 @@ export enum WidgetType {
     Video,
     ProductGroup,
     Categories,
-    Carousel
+    Carousel,
+    Grid
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PageService } from 'projects/manager/src/app/services/page.service';
 import { PageType } from 'projects/manager/src/app/classes/page';
@@ -7,6 +6,7 @@ import { PropertyView } from 'projects/manager/src/app/classes/property-view';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
 import { DataService } from 'services/data.service';
 import { PromptService } from 'services/prompt.service';
+import { CounterComponent } from 'projects/manager/src/app/shared-components/counter/counter.component';
 
 @Component({
   selector: 'product-email',
@@ -62,19 +62,19 @@ export class ProductEmailComponent implements OnInit {
 
 
   // --------------------------------------------------------------------- On Delete Click --------------------------------------------------------
-  onDeleteClick(paginator: PaginatorComponent) {
+  onDeleteClick(counter: CounterComponent) {
     if (!this.currentEmailId) return;
 
     // Prompt the user
     let promptTitle = 'Delete Email';
     let promptMessage = 'Are you sure you want to delete this email?';
-    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteEmail, this, [paginator]);
+    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteEmail, this, [counter]);
   }
 
 
 
   // --------------------------------------------------------------------- Delete Email --------------------------------------------------------
-  deleteEmail(paginator: PaginatorComponent) {
+  deleteEmail(counter: CounterComponent) {
     // Display the loading screen
     this.loadingService.loading = true;
 
@@ -90,9 +90,9 @@ export class ProductEmailComponent implements OnInit {
           // Set the index of the previous page
           index = Math.min(this.emailIds.length - 1, index);
 
-          // Chage the page and reset the paginator
+          // Chage the page and reset the counter
           this.onEmailChange(index);
-          paginator.setPage(index + 1);
+          counter.set(index + 1);
 
           // We have no pages left
         } else {
@@ -146,7 +146,7 @@ export class ProductEmailComponent implements OnInit {
 
 
   // ---------------------------------------------------------------------- Add Email --------------------------------------------------------
-  addEmail(paginator: PaginatorComponent) {
+  addEmail(counter: CounterComponent) {
     // Display the loading screen
     this.loadingService.loading = true;
 
@@ -158,24 +158,24 @@ export class ProductEmailComponent implements OnInit {
         this.loadPage(page);
 
         // Set the new page
-        this.setNewEmail(paginator);
+        this.setNewEmail(counter);
       });
   }
 
 
   // ------------------------------------------------------------------------- Set New Email -----------------------------------------------------------
-  setNewEmail(paginator: PaginatorComponent) {
+  setNewEmail(counter: CounterComponent) {
     // Add the new email id
     this.currentEmailId = this.pageService.page.id;
     this.emailIds.push(this.currentEmailId);
 
-    // Set the paginator to show the new page number
-    paginator.setPage(this.emailIds.length);
+    // Set the counter to show the new page number
+    counter.set(this.emailIds.length);
   }
 
 
   // ------------------------------------------------------------------------ Duplicate Email --------------------------------------------------------
-  duplicateEmail(paginator: PaginatorComponent) {
+  duplicateEmail(counter: CounterComponent) {
     if (!this.currentEmailId) return;
 
     this.loadingService.loading = true;
@@ -188,7 +188,7 @@ export class ProductEmailComponent implements OnInit {
         this.loadPage(page);
 
         // Set the new page
-        this.setNewEmail(paginator);
+        this.setNewEmail(counter);
       });
   }
 }

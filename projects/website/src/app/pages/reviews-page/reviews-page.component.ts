@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from '../../interfaces/product';
 import { DataService } from 'services/data.service';
 import { ActivatedRoute } from '@angular/router';
+import { Product } from 'classes/product';
 
 @Component({
   templateUrl: './reviews-page.component.html',

@@ -1,4 +1,4 @@
-import { Product } from './product';
+import { Product } from 'classes/product';
 import { Media } from './media';
 
 export interface ProductInfo {

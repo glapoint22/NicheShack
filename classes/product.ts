@@ -11,7 +11,6 @@ export interface Product {
     minPrice: number;
     maxPrice: number;
     hoplink: string;
-    shareImage: string;
     description: string;
     oneStar: number;
     twoStars: number;

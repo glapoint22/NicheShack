@@ -19,6 +19,7 @@ import { CarouselWidgetComponent } from '../shared-components/page-content/carou
 import { BackgroundBase } from 'classes/background-base';
 import { ContainerWidgetData } from './container-widget-data';
 import { RowDataBase } from 'classes/row-data-base';
+import { GridWidgetComponent } from '../shared-components/page-content/grid-widget/grid-widget.component';
 
 export class Page {
     public width: number;
@@ -133,6 +134,11 @@ export class Page {
             // Carousel
             case WidgetType.Carousel:
                 widget = CarouselWidgetComponent;
+                break;
+
+                // Grid
+            case WidgetType.Grid:
+                widget = GridWidgetComponent;
                 break;
         }
 

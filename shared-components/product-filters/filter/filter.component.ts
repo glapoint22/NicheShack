@@ -1,7 +1,7 @@
 import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { QueryFilter } from 'classes/query-filter';
 import { CheckboxComponent } from 'shared-components/custom-input/checkbox/checkbox.component';
-import { QueryFilter } from '../../../classes/query-filter';
 
 @Component({
   template: ''

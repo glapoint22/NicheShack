@@ -19,8 +19,8 @@ export class ProductImageNotificationPopupComponent extends GeneralNotificationP
   }
 
 
-// --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
-  onPaginatorClick(index: number) {
+// --------------------------------( ON COUNTER CLICK )-------------------------------- \\
+  onCounterClick(index: number) {
     this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
       .subscribe((notification: ProductImageNotification) => {
         this.notificationService.productImageNotification = notification;

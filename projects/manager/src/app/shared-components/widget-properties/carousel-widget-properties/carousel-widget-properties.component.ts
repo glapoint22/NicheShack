@@ -2,9 +2,9 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { CarouselWidgetComponent } from '../../designer/widgets/carousel-widget/carousel-widget.component';
 import { MediaType } from '../../../classes/media';
 import { CarouselBanner } from '../../../../../../../classes/carousel-banner';
-import { PaginatorComponent } from '../../paginator/paginator.component';
 import { PageService } from '../../../services/page.service';
 import { PromptService } from 'services/prompt.service';
+import { CounterComponent } from '../../counter/counter.component';
 
 @Component({
   selector: 'carousel-widget-properties',
@@ -13,7 +13,7 @@ import { PromptService } from 'services/prompt.service';
 })
 export class CarouselWidgetPropertiesComponent {
   @Input() carouselWidget: CarouselWidgetComponent;
-  @ViewChild('paginator', { static: false }) paginator: PaginatorComponent;
+  @ViewChild('counter', { static: false }) counter: CounterComponent;
   public mediaType = MediaType;
 
 
@@ -23,7 +23,7 @@ export class CarouselWidgetPropertiesComponent {
   // --------------------------------------------------------------------- On Add Banner --------------------------------------------------------
   onAddBannerClick() {
     this.carouselWidget.banners.push(new CarouselBanner());
-    this.paginator.setPage(this.carouselWidget.banners.length);
+    this.counter.set(this.carouselWidget.banners.length);
     this.carouselWidget.currentBannerIndex = this.carouselWidget.banners.length - 1;
     this.pageService.save();
   }
@@ -48,7 +48,7 @@ export class CarouselWidgetPropertiesComponent {
     // If we still have banners left
     if (this.carouselWidget.banners.length > 0) {
       this.carouselWidget.currentBannerIndex = Math.min(this.carouselWidget.banners.length - 1, this.carouselWidget.currentBannerIndex);
-      this.paginator.setPage(this.carouselWidget.currentBannerIndex + 1);
+      this.counter.set(this.carouselWidget.currentBannerIndex + 1);
     }
 
     this.pageService.save();

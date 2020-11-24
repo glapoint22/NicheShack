@@ -40,8 +40,8 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
   }
 
 
-  // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
-  onPaginatorClick(index: number) {
+  // --------------------------------( ON Counter CLICK )-------------------------------- \\
+  onCounterClick(index: number) {
     this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
       .subscribe((notification: ProductMediaNotification) => {
         this.notificationService.productMediaNotification = notification;

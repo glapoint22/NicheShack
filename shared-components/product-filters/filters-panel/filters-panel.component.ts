@@ -1,14 +1,14 @@
 import { isPlatformBrowser, KeyValue } from '@angular/common';
 import { Component, Inject, Input, OnChanges, PLATFORM_ID, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Filters } from 'classes/filters';
+import { QueryFilter } from 'classes/query-filter';
+import { QueryFilterOption } from 'classes/query-filter-option';
 import { CheckboxComponent } from 'shared-components/custom-input/checkbox/checkbox.component';
-import { Filters } from '../../classes/filters';
-import { QueryFilter } from '../../classes/query-filter';
-import { QueryFilterOption } from '../../classes/query-filter-option';
-import { CustomFilterComponent } from './custom-filter/custom-filter.component';
-import { FilterComponent } from './filter/filter.component';
-import { PriceFilterComponent } from './price-filter/price-filter.component';
-import { RatingFilterComponent } from './rating-filter/rating-filter.component';
+import { CustomFilterComponent } from '../custom-filter/custom-filter.component';
+import { FilterComponent } from '../filter/filter.component';
+import { PriceFilterComponent } from '../price-filter/price-filter.component';
+import { RatingFilterComponent } from '../rating-filter/rating-filter.component';
 
 @Component({
   selector: 'filters-panel',

@@ -14,11 +14,11 @@
     <!-- Main Property Box -->
     <div class="main-property-box">
 
-        <!-- Paginator -->
-        <div class="paginator-bar">
-            <paginator #paginator [itemCount]="notificationService.notificationIds.length"
-                (onItemChange)="onPaginatorClick($event)">
-            </paginator>
+        <!-- Counter -->
+        <div class="counter-bar">
+            <counter #counter [itemCount]="notificationService.notificationIds.length"
+                (onItemChange)="onCounterClick($event)">
+            </counter>
         </div>
 
 

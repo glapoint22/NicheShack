@@ -129,14 +129,20 @@
 
 .categories-icon {
     @extend .image-icon;
-    margin-top: 18px;
 }
 
 
 .carousel-icon {
     @extend .image-icon;
-    margin-top: 35px;
+    width: 18px;
 }
+
+
+.product-group-icon {
+    @extend .image-icon;
+    width: 22px;
+}
+
 
 .breakpoints-dropdown-container {
     width: 55px;

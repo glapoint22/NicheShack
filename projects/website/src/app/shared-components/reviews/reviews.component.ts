@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Review } from '../../classes/review';
-import { Product } from '../../interfaces/product';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DataService } from 'services/data.service';
 import { KeyValue } from '@angular/common';
 import { ReportReviewComponent } from './report-review/report-review.component';
+import { Product } from 'classes/product';
 
 @Component({
   selector: 'reviews',

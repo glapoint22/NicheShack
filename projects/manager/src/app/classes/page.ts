@@ -20,6 +20,7 @@ import { WidgetCursor } from './widget-cursor';
 import { RowData } from 'projects/manager/src/app/classes/row-data';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
 import { Color } from 'classes/color';
+import { GridWidgetComponent } from '../shared-components/designer/widgets/grid-widget/grid-widget.component';
 
 export class Page {
     public id: number;
@@ -197,6 +198,11 @@ export class Page {
             case WidgetType.Carousel:
                 widget = CarouselWidgetComponent;
                 break;
+
+            // Grid
+            case WidgetType.Grid:
+                widget = GridWidgetComponent;
+                break;
         }
 
         return widget;
@@ -275,7 +281,7 @@ export class Page {
                         {
                             title: 'Product Group',
                             widget: ProductGroupWidgetComponent,
-                            icon: '<img class="image-icon" src="assets/product-group-widget-icon.png">',
+                            icon: '<img class="product-group-icon" src="assets/product-group-widget-icon.png">',
                             allowed: 'product-group-widget-allowed.png',
                             notAllowed: 'product-group-widget-not-allowed.png'
                         },
@@ -292,6 +298,13 @@ export class Page {
                             icon: '<img class="carousel-icon" src="assets/carousel-widget-icon.png">',
                             allowed: 'carousel-widget-allowed.png',
                             notAllowed: 'carousel-widget-not-allowed.png'
+                        },
+                        {
+                            title: 'Grid',
+                            widget: GridWidgetComponent,
+                            icon: '<i class="fas fa-th"></i>',
+                            allowed: 'grid-widget-allowed.png',
+                            notAllowed: 'grid-widget-not-allowed.png'
                         }
                     ]
                 )

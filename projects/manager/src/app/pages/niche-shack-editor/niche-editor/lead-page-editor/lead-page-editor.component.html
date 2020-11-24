@@ -1,27 +1,27 @@
 <!-- Property Box -->
 <div class="property-box-light" *ngIf="initialPageLoaded">
-    <!-- Container for paginator & icons -->
+    <!-- Container for counter & icons -->
     <div class="container">
 
-        <paginator #paginator [itemCount]="leadPageIds.length" (onItemChange)="onPageChange($event)"></paginator>
+        <counter #counter [itemCount]="leadPageIds.length" (onItemChange)="onPageChange($event)"></counter>
 
         <!-- Icons -->
         <div class="icons">
 
             <!-- Delete Page Icon -->
             <div class="icon-container" title="Delete Lead Page" [ngClass]="{'icon-disabled': !currentLeadPageId}"
-                (click)="onDeleteClick(paginator)">
+                (click)="onDeleteClick(counter)">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
             <!-- Duplicate Page Icon -->
             <div class="icon-container" title="Duplicate Lead Page" [ngClass]="{'icon-disabled': !currentLeadPageId}"
-                (click)="duplicateLeadPage(paginator)">
+                (click)="duplicateLeadPage(counter)">
                 <i class="fas fa-clone"></i>
             </div>
 
             <!-- Add Page Icon -->
-            <div class="icon-container" title="Add Lead Page" (click)="addLeadPage(paginator)">
+            <div class="icon-container" title="Add Lead Page" (click)="addLeadPage(counter)">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>

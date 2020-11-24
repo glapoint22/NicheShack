@@ -2,12 +2,12 @@ import { Component, Input, ViewChild, OnChanges } from '@angular/core';
 import { Media, MediaType } from 'projects/manager/src/app/classes/media';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
 import { ProductService } from 'projects/manager/src/app/services/product.service';
-import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { SaveService } from 'projects/manager/src/app/services/save.service';
 import { DataService } from 'services/data.service';
 import { Product } from 'projects/manager/src/app/classes/product';
 import { Subscription } from 'rxjs';
 import { PromptService } from 'services/prompt.service';
+import { CounterComponent } from 'projects/manager/src/app/shared-components/counter/counter.component';
 
 @Component({
   selector: 'product-media',
@@ -16,7 +16,7 @@ import { PromptService } from 'services/prompt.service';
 })
 export class ProductMediaComponent implements OnChanges {
   @Input() product: Product;
-  @ViewChild('paginator', { static: false }) paginator: PaginatorComponent;
+  @ViewChild('counter', { static: false }) counter: CounterComponent;
   public mediaType = MediaType;
   private currentMediaId: number;
   private subscription: Subscription;
@@ -81,7 +81,7 @@ export class ProductMediaComponent implements OnChanges {
       name: null,
       url: null
     });
-    this.paginator.setPage(this.product.media.length);
+    this.counter.set(this.product.media.length);
     this.product.selectedMedia = this.product.media[this.product.media.length - 1];
     this.currentMediaId = null;
   }
@@ -91,8 +91,8 @@ export class ProductMediaComponent implements OnChanges {
 
 
 
-  // -----------------------------( ON PAGINATOR CLICK )------------------------------ \\
-  onPaginatorClick(index: number) {
+  // -----------------------------( ON COUNTER CLICK )------------------------------ \\
+  onCounterClick(index: number) {
     this.product.selectedMedia = this.product.media[index];
     this.productService.setCurrentSelectedMedia(this.product.selectedMedia);
     this.currentMediaId = this.product.selectedMedia.id;

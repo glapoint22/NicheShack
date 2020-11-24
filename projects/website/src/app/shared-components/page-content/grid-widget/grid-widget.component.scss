@@ -1,8 +1,87 @@
+@import '../../../../scss/variables';
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+
+.filter-menu {
+    width: 100%;
+    background-color: #191919;
+    position: fixed;
+    outline: 0;
+    z-index: 1000;
+    min-height: 100%;
+    top: 0;
+    left: 0;
+
+    .close-header {
+        background-color: #242424;
+        padding: 8px 0;
+        overflow: auto;
+        display: flex;
+        justify-content: flex-end;
+
+        .fa-times {
+            margin-right: 8px;
+            color: $niche-shack-gold;
+        }
+    }
+
+    .background {
+        position: absolute;
+        top: 30px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        overflow: auto;
+    }
+}
+
+
 .column {
     width: 100%;
     padding: 10px 10px 10px 0;
 }
 
+
+
+.filters {
+    flex-shrink: 0;
+    margin-right: 10px;
+    flex: 1;
+}
+
+
+.grid-container {
+    width: 100%;
+    margin-top: -10px;
+}
+
+
+.alt-button {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+
+.no-match {
+    margin-top: 10px;
+    background: #222222;
+    padding: 20px;
+
+    .fa-info-circle {
+        font-size: 22px;
+        color: $niche-shack-gold;;
+    }
+
+    ul {
+        padding-inline-start: 16px;
+    }
+}
 
 
 @media (min-width: 768px) {

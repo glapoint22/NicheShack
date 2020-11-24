@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'paginator',
-  templateUrl: './paginator.component.html',
-  styleUrls: ['./paginator.component.scss']
+  selector: 'counter',
+  templateUrl: './counter.component.html',
+  styleUrls: ['./counter.component.scss']
 })
-export class PaginatorComponent {
+export class CounterComponent {
   @Input() itemCount: number;
   @Input() currentIndex: number = 0;
   @Output() onItemChange: EventEmitter<number> = new EventEmitter();
@@ -17,7 +17,7 @@ export class PaginatorComponent {
     this.onItemChange.emit(this.currentIndex);
   }
 
-  setPage(pageNumber: number) {
-    this.currentIndex = pageNumber - 1;
+  set(number: number) {
+    this.currentIndex = number - 1;
   }
 }

@@ -51,6 +51,7 @@ import { HierarchyCheckboxContentComponent } from '../hierarchy/hierarchy-checkb
 import { SharedModule } from '../shared.module';
 import { QueryBuilderComponent } from '../properties/query-builder/query-builder.component';
 import { QueryListComponent } from '../properties/query-builder/query-list/query-list.component';
+import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-properties/grid-widget-properties.component';
 
 
 @NgModule({
@@ -101,7 +102,8 @@ import { QueryListComponent } from '../properties/query-builder/query-list/query
     EmailPropertiesComponent,
     HierarchyCheckboxContentComponent,
     QueryBuilderComponent,
-    QueryListComponent
+    QueryListComponent,
+    GridWidgetPropertiesComponent
   ],
   imports: [
     CommonModule,
@@ -157,7 +159,8 @@ import { QueryListComponent } from '../properties/query-builder/query-list/query
     EmailPropertiesComponent,
     HierarchyCheckboxContentComponent,
     QueryBuilderComponent,
-    QueryListComponent
+    QueryListComponent,
+    GridWidgetPropertiesComponent
   ]
 })
 export class PropertiesEditorModule { }

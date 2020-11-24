@@ -1,23 +1,23 @@
 <!-- Property Box -->
 <div class="property-box-light">
 
-    <!-- Container for paginator & icons -->
+    <!-- Container for counter & icons -->
     <div class="property-box-light-icon-bar">
 
-        <!-- Paginator -->
-        <paginator #paginator [itemCount]="product.content.length" (onItemChange)="onItemChange($event)">
-        </paginator>
+        <!-- Counter -->
+        <counter #counter [itemCount]="product.content.length" (onItemChange)="onItemChange($event)">
+        </counter>
 
         <!-- Icons -->
         <div class="icons">
 
             <!-- Delete Content Icon -->
-            <div class="icon-container" (click)="onDeleteContent(paginator)" title="Delete Content">
+            <div class="icon-container" (click)="onDeleteContent(counter)" title="Delete Content">
                 <i class="fas fa-trash-alt"></i>
             </div>
 
             <!-- Add Content Icon -->
-            <div class="icon-container" (click)="addContent(paginator)" title="Add Content">
+            <div class="icon-container" (click)="addContent(counter)" title="Add Content">
                 <i class="fas fa-plus-circle"></i>
             </div>
         </div>

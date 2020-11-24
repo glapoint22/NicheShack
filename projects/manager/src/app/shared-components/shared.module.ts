@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PaginatorComponent } from './paginator/paginator.component';
 import { DropdownComponent } from './elements/dropdowns/dropdown/dropdown.component';
 import { ItemListComponent } from './item-lists/item-list/item-list.component';
 import { CheckboxItemListComponent } from './item-lists/checkbox-item-list/checkbox-item-list.component';
@@ -16,12 +15,13 @@ import { ProductContentComponent } from '../pages/niche-shack-editor/product-edi
 import { FormsModule } from '@angular/forms';
 import { ProductMediaComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-media/product-media.component';
 import { QueryDropdownComponent } from './elements/dropdowns/query-dropdown/query-dropdown.component';
+import { CounterComponent } from './counter/counter.component';
 
 
 
 @NgModule({
   declarations: [
-    PaginatorComponent,
+    CounterComponent,
     DropdownComponent,
     EditableDropdownComponent,
     QueryDropdownComponent,
@@ -42,7 +42,7 @@ import { QueryDropdownComponent } from './elements/dropdowns/query-dropdown/quer
     FormsModule
   ],
   exports: [
-    PaginatorComponent,
+    CounterComponent,
     DropdownComponent,
     EditableDropdownComponent,
     QueryDropdownComponent,

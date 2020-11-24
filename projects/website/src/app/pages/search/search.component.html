@@ -1,5 +1,5 @@
-<navbar></navbar>
 
+<navbar></navbar>
 
 <!-- <div *show="showFilterMenu" class="filter-menu fade-translate-start" transitionClass="fade-translate-end" tabindex="0"
     (onHide)="showFilterMenu = false">
@@ -7,39 +7,32 @@
     <div (mousedown)="$event.stopPropagation()">
         
         <div class="close-header">
-            <i (click)="showFilterMenu = false; setSelectedFilter()" class="fas fa-times"></i>
+            <i (click)="showFilterMenu = false" class="fas fa-times"></i>
         </div>
 
-
-        <div class="mobile-orders">
-            <div class="overflow-container">
-                
-                <h3>Filter by order date</h3>
-
-                
-                <radio-button style="margin-bottom: 10px; display: block;"
-                    *ngFor="let filterOption of filter; let i = index" [name]="'option'" [label]="filterOption.value"
-                    [checked]="i == getDefaultIndex()" (change)="selectedFilter = filterOption"></radio-button>
-
-
-                
-                <div style="height: 50px;">
-                    <div class="apply-button" style="height:50px;">
-                        <button class="alt-button"
-                            (click)="onFilterClick(selectedFilter); showFilterMenu = false">Apply</button>
-                    </div>
-                </div>
-            </div>
+        <div style="position: absolute;
+        top: 30px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        overflow: auto;">
+        
+            <filters-panel [filters]="filters"></filters-panel>
         </div>
+
+        
     </div>
 </div> -->
 
 
 
+
+
 <div class="page-container">
     <div class="content-container">
+        
 
-        <div *ngIf="products" style="margin: auto;width: 100%;max-width: 1465px; margin-bottom: 10px; padding-left: 10px;">
+        <!-- <div *ngIf="products && !showFilterMenu" style="margin: auto;width: 100%;max-width: 1465px; margin-bottom: 10px; padding-left: 10px;">
 
             <ng-container *ngIf="products.length > 0; else noMatch">
 
@@ -51,7 +44,7 @@
                         {{start}} - {{end}} of {{totalProducts}} results
                     </div>
 
-                    <!-- Sort Options -->
+                    
                     <select class="show-md" [(ngModel)]="selectedSortOption" (change)="setSort()"
                         style="margin-bottom: 10px; margin-right: 10px;">
                         <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">Sort by
@@ -106,7 +99,7 @@
             </ng-template>
 
 
-        </div>
+        </div> -->
 
 
 

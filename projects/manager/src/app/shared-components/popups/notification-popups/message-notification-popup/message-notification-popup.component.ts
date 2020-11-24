@@ -5,14 +5,13 @@ import { CoverService } from 'projects/manager/src/app/services/cover.service';
 import { MenuService } from 'projects/manager/src/app/services/menu.service';
 import { NotificationService } from 'projects/manager/src/app/services/notification.service';
 import { DropdownMenuService } from 'projects/manager/src/app/services/dropdown-menu.service';
-import { PaginatorComponent } from '../../../paginator/paginator.component';
 import { DataService } from 'services/data.service';
 import { NotificationTab } from 'projects/manager/src/app/classes/notification-tab';
 import { NotificationListItem } from 'projects/manager/src/app/classes/notification-list-item';
 import { Notification } from 'projects/manager/src/app/classes/notification';
-import { GeneralNotification } from 'projects/manager/src/app/classes/general-notification';
 import { NotificationText } from 'projects/manager/src/app/classes/notification-text';
 import { MessageNotification } from 'projects/manager/src/app/classes/message-notification';
+import { CounterComponent } from '../../../counter/counter.component';
 
 @Component({
   selector: 'message-notification-popup',
@@ -20,8 +19,8 @@ import { MessageNotification } from 'projects/manager/src/app/classes/message-no
   styleUrls: ['../../popup/popup.component.scss', './message-notification-popup.component.scss']
 })
 export class MessageNotificationPopupComponent extends PopupComponent implements OnInit {
-  @ViewChild('paginator', { static: false }) paginator: PaginatorComponent;
-  public paginatorIndex: number;
+  @ViewChild('counter', { static: false }) counter: CounterComponent;
+  public counterIndex: number;
   public notificationTab = NotificationTab;
 
 
@@ -44,7 +43,7 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
   onPopupShow(popup, arrow) {
     super.onPopupShow(popup, arrow);
-    this.paginatorIndex = 0;
+    this.counterIndex = 0;
 
     window.setTimeout(() => {
       this.cover.showNormalCover = true;
@@ -52,9 +51,9 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
   }
 
 
-  // --------------------------------( ON PAGINATOR CLICK )-------------------------------- \\
-  onPaginatorClick(index: number) {
-    this.paginatorIndex = index;
+  // --------------------------------( ON COUNTER CLICK )-------------------------------- \\
+  onCounterClick(index: number) {
+    this.counterIndex = index;
 
     this.dataService.get('api/Notifications/Notification', [{ key: 'id', value: this.notificationService.notificationIds[index] }])
       .subscribe((notification: MessageNotification) => {
@@ -91,7 +90,7 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
       // Update
       this.dataService.put('api/Notifications/State', {
-        id: this.notificationService.notificationIds[this.paginatorIndex],
+        id: this.notificationService.notificationIds[this.counterIndex],
         destinationState: destinationArray == this.notificationService.pendingNotifications ? 1 : 2
       }).subscribe();
 
@@ -171,7 +170,7 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
       if (notesText.length > 0) {
         // Create a new record in the database with the new notes written in the text area
         this.dataService.post('api/Notifications/NewNote', {
-          notificationId: this.notificationService.notificationIds[this.paginatorIndex],
+          notificationId: this.notificationService.notificationIds[this.counterIndex],
           notificationNote: htmlNotes.textContent
         }).subscribe();
       }
@@ -181,7 +180,7 @@ export class MessageNotificationPopupComponent extends PopupComponent implements
 
       // Update the record in the database with the updated notes
       this.dataService.put('api/Notifications/UpdateNote', {
-        notificationId: this.notificationService.notificationIds[this.paginatorIndex],
+        notificationId: this.notificationService.notificationIds[this.counterIndex],
         notificationNote: htmlNotes.textContent
       }).subscribe();
     }

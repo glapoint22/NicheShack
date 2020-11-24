@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Product } from '../../interfaces/product';
 import { Router } from '@angular/router';
+import { Product } from 'classes/product';
 
 @Component({
   selector: 'product',

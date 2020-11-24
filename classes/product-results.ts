@@ -1,6 +1,5 @@
-import { KeyValue } from '@angular/common';
-import { Product } from '../interfaces/product';
 import { Filters } from './filters';
+import { Product } from './product';
 
 export interface ProductResults {
     products: Array<Product>;
@@ -8,6 +7,6 @@ export interface ProductResults {
     filters: Filters;
     pageCount: number;
     sortOptions: any;
-    start: number;
-    end: number;
+    productCountStart: number;
+    productCountEnd: number;
 }

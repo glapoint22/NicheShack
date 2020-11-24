@@ -52,4 +52,10 @@
     <carousel-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Carousel"
         [carouselWidget]="pageService.selectedWidget">
     </carousel-widget-properties>
+    
+
+    <!-- Grid -->
+    <grid-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Grid"
+        [gridWidget]="pageService.selectedWidget">
+    </grid-widget-properties>
 </ng-container>

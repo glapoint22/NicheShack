@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Product } from '../../../interfaces/product';
 import { KeyValue } from '@angular/common';
 import { DataService } from 'services/data.service';
 import { Router } from '@angular/router';

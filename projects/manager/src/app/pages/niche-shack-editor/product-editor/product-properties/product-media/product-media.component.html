@@ -4,10 +4,10 @@
     <!-- Icon bar -->
     <div class="property-box-light-icon-bar">
 
-        <!-- Paginator -->
-        <paginator #paginator [itemCount]="product.media ? product.media.length: 0" [currentIndex]="getMediaIndex()"
-            (onItemChange)="onPaginatorClick($event)">
-        </paginator>
+        <!-- Counter -->
+        <counter #counter [itemCount]="product.media ? product.media.length: 0" [currentIndex]="getMediaIndex()"
+            (onItemChange)="onCounterClick($event)">
+        </counter>
 
         <!-- Icons -->
         <div class="icons">

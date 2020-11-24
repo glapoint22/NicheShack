@@ -1,12 +1,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { PageService } from 'projects/manager/src/app/services/page.service';
-import { PaginatorComponent } from 'projects/manager/src/app/shared-components/paginator/paginator.component';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { PropertyView } from 'projects/manager/src/app/classes/property-view';
 import { PageType } from 'projects/manager/src/app/classes/page';
 import { DataService } from 'services/data.service';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
 import { PromptService } from 'services/prompt.service';
+import { CounterComponent } from 'projects/manager/src/app/shared-components/counter/counter.component';
 
 @Component({
   selector: 'lead-page-editor',
@@ -188,7 +188,7 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // ---------------------------------------------------------------------- Add Lead Page --------------------------------------------------------
-  addLeadPage(paginator: PaginatorComponent) {
+  addLeadPage(counter: CounterComponent) {
     // Display the loading screen
     this.loadingService.loading = true;
 
@@ -201,7 +201,7 @@ export class LeadPageEditorComponent implements OnChanges {
         this.loadPage(PageType.LeadPage, page);
 
         // Set the new page
-        this.setNewPage(paginator);
+        this.setNewPage(counter);
       });
   }
 
@@ -212,7 +212,7 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // --------------------------------------------------------------------- Duplicate Lead Page --------------------------------------------------------
-  duplicateLeadPage(paginator: PaginatorComponent) {
+  duplicateLeadPage(counter: CounterComponent) {
     if (!this.currentLeadPageId) return;
 
     this.loadingService.loading = true;
@@ -226,7 +226,7 @@ export class LeadPageEditorComponent implements OnChanges {
         this.loadPage(PageType.LeadPage, page);
 
         // Set the new page
-        this.setNewPage(paginator);
+        this.setNewPage(counter);
       });
   }
 
@@ -235,13 +235,13 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // ------------------------------------------------------------------------- Set New Page -----------------------------------------------------------
-  setNewPage(paginator: PaginatorComponent) {
+  setNewPage(counter: CounterComponent) {
     // Add the new lead page id
     this.currentLeadPageId = this.pageService.page.id;
     this.leadPageIds.push(this.currentLeadPageId);
 
-    // Set the paginator to show the new page number
-    paginator.setPage(this.leadPageIds.length);
+    // Set the counter to show the new page number
+    counter.set(this.leadPageIds.length);
   }
 
 
@@ -251,13 +251,13 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // --------------------------------------------------------------------- On Delete Click --------------------------------------------------------
-  onDeleteClick(paginator: PaginatorComponent) {
+  onDeleteClick(counter: CounterComponent) {
     if (!this.currentLeadPageId) return;
 
     // Prompt the user
     let promptTitle = 'Delete Lead Page';
     let promptMessage = 'Are you sure you want to delete this lead page?';
-    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteLeadPage, this, [paginator]);
+    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteLeadPage, this, [counter]);
   }
 
 
@@ -269,7 +269,7 @@ export class LeadPageEditorComponent implements OnChanges {
 
 
   // --------------------------------------------------------------------- Delete Lead Page --------------------------------------------------------
-  deleteLeadPage(paginator: PaginatorComponent) {
+  deleteLeadPage(counter: CounterComponent) {
     // Display the loading screen
     this.loadingService.loading = true;
 
@@ -285,9 +285,9 @@ export class LeadPageEditorComponent implements OnChanges {
           // Set the index of the previous page
           index = Math.min(this.leadPageIds.length - 1, index);
 
-          // Chage the page and reset the paginator
+          // Chage the page and reset the counter
           this.onPageChange(index);
-          paginator.setPage(index + 1);
+          counter.set(index + 1);
 
           // We have no pages left
         } else {
