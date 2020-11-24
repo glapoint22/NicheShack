@@ -1,7 +1,6 @@
 import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { DataService } from 'services/data.service';
-import { ComparisonOperatorType, Query, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType, SubQueryRow, QueryType, LogicalOperatorType } from '../../../../classes/query';
+import { ComparisonOperatorType, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType, SubQueryRow, QueryType, LogicalOperatorType } from '../../../../classes/query';
 import { QueryService } from '../../../../services/query.service';
 import { QueryBuilderComponent } from '../query-builder.component';
 
@@ -11,7 +10,7 @@ import { QueryBuilderComponent } from '../query-builder.component';
   styleUrls: ['./query-list.component.scss']
 })
 export class QueryListComponent implements OnInit, OnChanges {
-  constructor(public queryService: QueryService, private dataService: DataService) { }
+  constructor(public queryService: QueryService) { }
 
   // Public
   public queryRows: Array<IQueryRow> = [];
@@ -24,9 +23,6 @@ export class QueryListComponent implements OnInit, OnChanges {
   @Input() isSubQuery: boolean;
   @Output() onSubQueryDelete: EventEmitter<void> = new EventEmitter();
   @Output() subQueryRows: EventEmitter<Array<IQueryRow>> = new EventEmitter();
-
-
-
 
 
   public operatorList: Array<KeyValue<any, any>> = [
@@ -55,16 +51,16 @@ export class QueryListComponent implements OnInit, OnChanges {
     if (changes['queryBuilder']) {
 
       this.whereList = [
-        { key: "None", value: new QueryRowNone(0, this.queryBuilder, this.queryRows, this.dataService, this.queryService) },
-        { key: "Category", value: new CategoryQueryRow(1, this.queryBuilder, this.queryRows, this.dataService, this.queryService) },
-        { key: "Niche", value: new NicheQueryRow(2, this.queryBuilder, this.queryRows, this.dataService, this.queryService) },
-        { key: "Subgroup", value: new ProductSubgroupQueryRow(3, this.queryBuilder, this.queryRows, this.dataService, this.queryService) },
-        { key: "Featured Products", value: new FeaturedProductsQueryRow(4, this.queryBuilder, this.queryRows, this.dataService, this.queryService) },
-        { key: "Customer Related", value: new CustomerRelatedProductsQueryRow(5, this.queryBuilder, this.queryRows, this.dataService, this.queryService) },
-        { key: "Price", value: new ProductPriceQueryRow(6, this.queryBuilder, this.queryRows, this.dataService, this.queryService) },
-        { key: "Rating", value: new ProductRatingQueryRow(7, this.queryBuilder, this.queryRows, this.dataService, this.queryService) },
-        { key: "Keywords", value: new ProductKeywordsQueryRow(8, this.queryBuilder, this.queryRows, this.dataService, this.queryService) },
-        { key: "Creation Date", value: new ProductCreationDateQueryRow(9, this.queryBuilder, this.queryRows, this.dataService, this.queryService) }
+        { key: "None", value: new QueryRowNone(0, this.queryBuilder, this.queryRows) },
+        { key: "Category", value: new CategoryQueryRow(1, this.queryBuilder, this.queryRows, this.queryService) },
+        { key: "Niche", value: new NicheQueryRow(2, this.queryBuilder, this.queryRows, this.queryService) },
+        { key: "Subgroup", value: new ProductSubgroupQueryRow(3, this.queryBuilder, this.queryRows, this.queryService) },
+        { key: "Featured Products", value: new FeaturedProductsQueryRow(4, this.queryBuilder, this.queryRows) },
+        { key: "Customer Related", value: new CustomerRelatedProductsQueryRow(5, this.queryBuilder, this.queryRows, this.queryService) },
+        { key: "Price", value: new ProductPriceQueryRow(6, this.queryBuilder, this.queryRows) },
+        { key: "Rating", value: new ProductRatingQueryRow(7, this.queryBuilder, this.queryRows, this.queryService) },
+        { key: "Keywords", value: new ProductKeywordsQueryRow(8, this.queryBuilder, this.queryRows) },
+        { key: "Creation Date", value: new ProductCreationDateQueryRow(9, this.queryBuilder, this.queryRows) }
       ];
     }
   }
@@ -72,12 +68,12 @@ export class QueryListComponent implements OnInit, OnChanges {
 
 
   onQueryAdd() {
-    this.queryRows.push(new QueryRowNone(0, this.queryBuilder, this.queryRows, this.dataService, this.queryService));
+    this.queryRows.push(new QueryRowNone(0, this.queryBuilder, this.queryRows));
   }
 
 
   onSubQueryAdd() {
-    this.queryRows.push(new SubQueryRow(null, this.queryBuilder, this.queryRows, this.dataService, this.queryService));
+    this.queryRows.push(new SubQueryRow(null, this.queryBuilder, this.queryRows));
   }
 
   subQueryDelete() {
