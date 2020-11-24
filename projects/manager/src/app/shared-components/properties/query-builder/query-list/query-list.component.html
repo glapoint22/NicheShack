@@ -357,7 +357,7 @@
         <!-- =============================( SUB QUERY )============================= -->
 
         <div *ngIf="queryRow.queryType == queryType.SubQuery" style="width: 100%; margin-top: 11px; margin-bottom: 11px; padding-left: 11px; padding-right: 11px;">
-            <query-list #queryList [isSubQuery]="true" (onSubQueryDelete)="queryRow.onDelete(queryRowIndex)" (subQueryRows)="queryRow.subQueryRows = $event"></query-list>
+            <query-list #queryList [queryBuilder]="queryBuilder" [isSubQuery]="true" (onSubQueryDelete)="queryRow.onDelete(queryRowIndex)" (subQueryRows)="queryRow.subQueryRows = $event"></query-list>
         </div>
     </div>
 </div>
