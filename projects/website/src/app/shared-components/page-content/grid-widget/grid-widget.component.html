@@ -1,106 +1,127 @@
 <div #widget>
 
-    <!-- Filter Menu -->
-    <div *show="showFilterMenu" class="filter-menu fade-translate-start" transitionClass="fade-translate-end"
-        tabindex="0" (onHide)="showFilterMenu = false">
+    <ng-container *ngIf="gridData">
+        <!-- Filter Menu -->
+        <div *show="showFilterMenu" class="filter-menu fade-translate-start" transitionClass="fade-translate-end"
+            tabindex="0" (onHide)="showFilterMenu = false">
 
-        <div (mousedown)="$event.stopPropagation()">
-            <!-- Header -->
-            <div class="close-header">
-                <i (click)="showFilterMenu = false" class="fas fa-times"></i>
-            </div>
-
-            <!-- Filters -->
-            <div class="background">
-
-                <!-- Sort -->
-                <filter-container [caption]="'Sort By'">
-                    <radio-button style="margin-bottom: 10px; display: block;"
-                        *ngFor="let sortOption of sortOptions; let i = index" [name]="'option'" [label]="sortOption.key"
-                        [checked]="i == getDefaultIndex()" (change)="selectedSortOption = sortOption; setSort()">
-                    </radio-button>
-                </filter-container>
-
+            <div (mousedown)="$event.stopPropagation()">
+                <!-- Header -->
+                <div class="close-header">
+                    <div class="clear-filters" style="float: left; line-height: 30px;"
+                        *ngIf="route.snapshot.queryParams.filters" (click)="clearFilters()">Clear Filters</div>
+                    <button class="alt-button" style="margin-right: 10px; float: right;"
+                        (click)="showFilterMenu = false">Done</button>
+                </div>
 
                 <!-- Filters -->
-                <filters-panel [filters]="filters"></filters-panel>
+                <div class="background">
+
+                    <!-- Sort -->
+                    <filter-container [caption]="'Sort By'">
+                        <radio-button style="margin-bottom: 10px; display: block;"
+                            *ngFor="let sortOption of gridData.sortOptions; let i = index" [name]="'option'"
+                            [label]="sortOption.key" [checked]="i == getDefaultIndex()"
+                            (change)="selectedSortOption = sortOption; setSort()">
+                        </radio-button>
+                    </filter-container>
+
+
+                    <!-- Filters -->
+                    <filters-panel [filters]="gridData.filters"></filters-panel>
+                </div>
             </div>
         </div>
-    </div>
 
 
 
-    <!-- Grid -->
-    <div *ngIf="products && !showFilterMenu">
+        <!-- Grid -->
+        <div *ngIf="gridData.products && !showFilterMenu">
 
-        <ng-container *ngIf="products.length > 0; else noMatch">
+            <ng-container *ngIf="gridData.products.length > 0; else noMatch">
 
-            <!-- Header -->
-            <div class="header">
-                <div class="width-auto margin-bottom-16 margin-bottom-0-xs"
-                    style="white-space: nowrap; margin-bottom: 4px;">
-                    {{productCountStart}} - {{productCountEnd}} of {{totalProducts}} results
-                </div>
+                <!-- Header -->
+                <div class="header">
+                    <div class="width-auto margin-bottom-16 margin-bottom-0-xs"
+                        style="white-space: nowrap; margin-bottom: 4px;">
 
-                <!-- Sort Options -->
-                <select class="show-md" [(ngModel)]="selectedSortOption" (change)="setSort()"
-                    style="margin-bottom: 10px; margin-right: 10px;">
-                    <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">Sort by
-                        {{sortOption.key}}</option>
-                </select>
-
-                <!-- Sort & Filter button -->
-                <button class="alt-button hide-md" (click)="showFilterMenu = true;">Sort & Filter</button>
-            </div>
-
-
-
-
-
-            <div style="display: flex;">
-
-                <!-- Filters -->
-                <filters-panel [filters]="filters" class="show-md filters"></filters-panel>
-
-
-                <!-- Grid Container -->
-                <div class="grid-container">
-                    <div class="grid">
-                        <div class="row">
-                            <div class="column" *ngFor="let product of products">
-                                <product [product]="product"></product>
+                        <div style="display: flex;">
+                            <div>
+                                {{gridData.productCountStart}} - {{gridData.productCountEnd}} of
+                                {{gridData.totalProducts}}
+                                results
                             </div>
+
+                            <div class="show-md" class="clear-filters" *ngIf="route.snapshot.queryParams.filters"
+                                (click)="clearFilters()">Clear Filters</div>
                         </div>
+
+
                     </div>
 
+                    <!-- Sort Options -->
+                    <select class="show-md" [(ngModel)]="selectedSortOption" (change)="setSort()"
+                        style="margin-bottom: 10px; margin-right: 10px;">
+                        <option *ngFor="let sortOption of gridData.sortOptions" [ngValue]="sortOption">Sort by
+                            {{sortOption.key}}</option>
+                    </select>
 
-                    <!-- Paginator -->
-                    <paginator [currentPage]="page" [pageCount]="pageCount"></paginator>
+                    <!-- Sort & Filter button -->
+                    <button class="alt-button hide-md" style="margin-bottom: 10px; margin-right: 10px;"
+                        (click)="showFilterMenu = true;">Sort & Filter</button>
                 </div>
 
-            </div>
-        </ng-container>
 
-        <!-- No Match -->
-        <ng-template #noMatch>
-            <div class="no-match">
+
+
 
                 <div style="display: flex;">
-                    <i class="fas fa-info-circle"></i>
-                    <div style="margin-left: 10px">
+
+                    <!-- Filters -->
+                    <filters-panel [filters]="gridData.filters" class="show-md filters"></filters-panel>
 
 
-                        <div style="font-weight: bold;">
-                            Sorry, we couldn't find a match for "{{query}}"
+                    <!-- Grid Container -->
+                    <div class="grid-container">
+                        <div class="grid">
+                            <div class="row">
+                                <div class="column" *ngFor="let product of gridData.products">
+                                    <product [product]="product"></product>
+                                </div>
+                            </div>
                         </div>
 
-                        <ul>
-                            <li>Check your spelling</li>
-                            <li>Use different keywords and try again</li>
-                        </ul>
+
+                        <!-- Paginator -->
+                        <paginator [currentPage]="queryParams.page" [pageCount]="gridData.pageCount"></paginator>
+                    </div>
+
+                </div>
+            </ng-container>
+
+            <!-- No Match -->
+            <ng-template #noMatch>
+                <div class="no-match">
+
+                    <div style="display: flex;">
+                        <i class="fas fa-info-circle"></i>
+                        <div style="margin-left: 10px">
+
+
+                            <div style="font-weight: bold;">
+                                Sorry, we couldn't find a match for "{{search}}"
+                            </div>
+
+                            <ul>
+                                <li>Check your spelling</li>
+                                <li>Use different keywords and try again</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </ng-template>
-    </div>
+            </ng-template>
+        </div>
+    </ng-container>
+
+
 </div>

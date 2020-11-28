@@ -12,7 +12,7 @@
                 </span>
 
                 <span style="margin-left: 20px; text-decoration: underline; cursor: pointer;"
-                    *ngIf="route.snapshot.queryParams.filters" (click)="clearFilters()">Clear filters</span>
+                    *ngIf="route.snapshot.queryParams.filters" (click)="clearFilters()">Clear Filters</span>
             </div>
 
             <div *ngIf="gridData.products.length == 0" class="product-count">
@@ -53,10 +53,12 @@
         </div>
     </ng-container>
 
+    <!-- No Data -->
     <ng-template #noData>
-        <div style="display: flex; justify-content: center; align-items: center; padding: 10px">
-            Grid Widget
+        <div class="header">
+            <div class="product-count">
+                0 results
+            </div>
         </div>
     </ng-template>
-
 </div>
