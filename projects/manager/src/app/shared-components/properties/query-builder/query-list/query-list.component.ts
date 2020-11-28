@@ -1,6 +1,7 @@
 import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ComparisonOperatorType, IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType, SubQueryRow, QueryType, LogicalOperatorType } from '../../../../classes/query';
+import { ComparisonOperatorType, LogicalOperatorType, QueryType } from 'classes/query';
+import { IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType, SubQueryRow } from '../../../../classes/query';
 import { QueryService } from '../../../../services/query.service';
 import { QueryBuilderComponent } from '../query-builder.component';
 

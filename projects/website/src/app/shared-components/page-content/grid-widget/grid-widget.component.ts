@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Filters } from 'classes/filters';
 import { Product } from 'classes/product';
-import { ProductResults } from 'classes/product-results';
 import { DataService } from 'services/data.service';
 import { WidgetComponent } from '../widget/widget.component';
 

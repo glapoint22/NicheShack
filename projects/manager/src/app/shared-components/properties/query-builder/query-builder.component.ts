@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Query, QueryType } from 'classes/query';
+import { QueryableWidget } from 'classes/queryable-widget';
 import { DataService } from 'services/data.service';
-import { Query, QueryType } from '../../../classes/query';
 import { QueryService } from '../../../services/query.service';
 import { QueryListComponent } from './query-list/query-list.component';
 
@@ -10,31 +11,43 @@ import { QueryListComponent } from './query-list/query-list.component';
   styleUrls: ['./query-builder.component.scss']
 })
 export class QueryBuilderComponent {
+  @ViewChild('queryList', { static: false }) queryList: QueryListComponent;
+  @Input() queryableWidget: QueryableWidget;
+  public queries: Array<Query> = [];
+  
+
+
   constructor(private queryService: QueryService, private dataService: DataService) {
     if (this.queryService.categories.length == 0) this.queryService.getCategories();
     if (this.queryService.subgroups.length == 0) this.queryService.getSubgroups();
   }
-  public queries: Array<Query> = [];
-  @ViewChild('queryList', { static: false }) queryList: QueryListComponent;
 
 
   getProducts() {
     this.queries = [];
     this.getQueryRows(this.queryList);
 
-    // if (this.queries.length > 0) {
-    //   this.queryService.productResultsInProgress = true;
-    //   this.dataService.post('api/Products/Alita', this.queries)
-    //     .subscribe((products) => {
-    //       this.queryService.productResultsInProgress = false;
-    //       this.queryService.results = products.length;
-    //       console.log(products)
-    //     });
-    // } else {
-    //   this.queryService.results = 0;
-    // }
+    if (this.queries.length > 0) {
+      this.queryableWidget.query(this.queries);
+      // this.queryService.productResultsInProgress = true;
+      
+      
+      // this.dataService.post('api/Products/Alita', this.queries)
+      //   .subscribe((productResults: ProductResults) => {
+      //     this.queryableWidget.products = productResults.products;
 
-    console.log(this.queries)
+      //     this.queryService.productResultsInProgress = false;
+      //     this.queryService.results = products.length;
+      //     console.log(products)
+      //   });
+
+
+
+    } else {
+      this.queryService.results = 0;
+    }
+
+    
   }
 
 

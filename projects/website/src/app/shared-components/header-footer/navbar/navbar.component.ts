@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit() {
     this.route.queryParamMap.subscribe((queryParams: ParamMap) => {
-      this.searchInput.nativeElement.value = queryParams.get('query');
+      this.searchInput.nativeElement.value = queryParams.get('search');
     });
   }
 
@@ -209,10 +209,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     let queryParams: Params;
 
     if (!this.selectedCategory && !category) {
-      queryParams = { 'query': searchword }
+      queryParams = { 'search': searchword }
     } else {
       queryParams = {
-        'query': searchword,
+        'search': searchword,
         'categoryId': (this.selectedCategory && this.selectedCategory.urlId) || (category && category.urlId),
         'categoryName': (this.selectedCategory && this.selectedCategory.urlName) || (category && category.urlName)
       }

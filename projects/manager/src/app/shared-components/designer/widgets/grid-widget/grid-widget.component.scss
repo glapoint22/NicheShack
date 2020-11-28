@@ -2,13 +2,14 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    align-items: flex-end;
+    align-items: center;
+    padding: 10px;
+    background: #292929;
+    border-bottom: 1px solid #525252;
 
     .product-count {
         white-space: nowrap;
-        margin-bottom: 4px;
         width: auto;
-        margin-bottom: 16px;
     }
 }
 

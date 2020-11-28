@@ -1,45 +1,62 @@
 <div #widget class="widget" (mousedown)="onMousedown()" style="border: 1px solid #7a7a7a; width: 100%;"
     (click)="onClick($event)" [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}">
 
-    <!-- Header -->
-    <div class="header">
+    <ng-container *ngIf="gridData; else noData">
+        <!-- Header -->
+        <div class="header" [style.marginBottom.px]="gridData.products.length > 0 ? 10 : 0">
 
-        <!-- Product count -->
-        <div class="product-count">
-            {{productCountStart}} - {{productCountEnd}} of {{totalProducts}} results
-        </div>
+            <!-- Product count -->
+            <div *ngIf="gridData.products.length > 0" class="product-count">
+                <span>
+                    {{gridData.productCountStart}} - {{gridData.productCountEnd}} of {{gridData.totalProducts}} results
+                </span>
 
-        <!-- Sort Options -->
-        <select *ngIf="sortOptions" [(ngModel)]="selectedSortOption" (change)="setSort()"
-            style="margin-bottom: 10px; margin-right: 10px;">
-            <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">Sort by
-                {{sortOption.key}}</option>
-        </select>
-    </div>
-
-
-
-    <div style="display: flex;">
-
-        <!-- Filters -->
-        <filters-panel [filters]="filters" class="filters">
-        </filters-panel>
-
-        <!-- Grid -->
-        <div class="grid-container">
-
-            <!-- Products -->
-            <div class="product-grid">
-                <div class="grid-row">
-                    <div class="column" *ngFor="let product of products">
-                        <product [product]="product"></product>
-                    </div>
-                </div>
+                <span style="margin-left: 20px; text-decoration: underline; cursor: pointer;"
+                    *ngIf="route.snapshot.queryParams.filters" (click)="clearFilters()">Clear filters</span>
             </div>
 
+            <div *ngIf="gridData.products.length == 0" class="product-count">
+                0 results
+            </div>
 
-            <!-- Paginator -->
-            <paginator [currentPage]="page" [pageCount]="pageCount"></paginator>
+            <!-- Sort Options -->
+            <select *ngIf="gridData.products.length > 0" [(ngModel)]="selectedSortOption" (change)="setSort()">
+                <option *ngFor="let sortOption of gridData.sortOptions" [ngValue]="sortOption">Sort by
+                    {{sortOption.key}}</option>
+            </select>
         </div>
-    </div>
+
+
+
+        <div *ngIf="gridData.products.length > 0" style="display: flex;">
+
+            <!-- Filters -->
+            <filters-panel [filters]="gridData.filters" class="filters">
+            </filters-panel>
+
+            <!-- Grid -->
+            <div class="grid-container">
+
+                <!-- Products -->
+                <div class="product-grid">
+                    <div class="grid-row">
+                        <div class="column" *ngFor="let product of gridData.products">
+                            <product [product]="product"></product>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Paginator -->
+                <paginator [currentPage]="queryParams.page" [pageCount]="gridData.pageCount"></paginator>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #noData>
+        <div style="display: flex; justify-content: center; align-items: center; padding: 10px">
+            Grid Widget
+        </div>
+    </ng-template>
+
 </div>
