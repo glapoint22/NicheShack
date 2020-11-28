@@ -41,6 +41,7 @@ export class QueryListComponent implements OnInit, OnChanges {
   ];
 
 
+  // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     this.subQueryRows.emit(this.queryRows);
   }
@@ -66,16 +67,19 @@ export class QueryListComponent implements OnInit, OnChanges {
   }
 
 
-
+  // -----------------------------( ON QUERY ADD )------------------------------ \\
   onQueryAdd() {
     this.queryRows.push(new QueryRowNone(0, this.queryBuilder, this.queryRows));
   }
 
 
+  // -----------------------------( ON SUB QUERY ADD )------------------------------ \\
   onSubQueryAdd() {
     this.queryRows.push(new SubQueryRow(null, this.queryBuilder, this.queryRows));
   }
 
+
+  // -----------------------------( SUB QUERY DELETE )------------------------------ \\
   subQueryDelete() {
     this.onSubQueryDelete.emit();
   }
