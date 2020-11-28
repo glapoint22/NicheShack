@@ -7,7 +7,7 @@ import { DataService } from 'services/data.service';
 export class QueryService {
   constructor(private dataService: DataService) { }
   public results: number = 0;
-  public productResultsInProgress: boolean;
+  // public productResultsInProgress: boolean;
   public subgroups: Array<QueryDropdownList> = [];
   public categories: Array<QueryDropdownList> = [];
   public customerRelatedProducts: Array<QueryDropdownList> = [

@@ -1,4 +1,4 @@
-import { Query } from './query';
+import { Query } from 'classes/query';
 import { WidgetData } from './widget-data';
 
 export interface GridWidgetData extends WidgetData {

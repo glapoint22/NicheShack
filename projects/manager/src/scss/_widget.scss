@@ -157,7 +157,7 @@ body {
                 &:hover {
                     outline: 1px dashed $row-color;
 
-                    & div[class*='col'] {
+                    & > div[class*='col'] {
                         outline: 1px solid $column-color;
 
 
@@ -244,7 +244,7 @@ body {
            & .row {
                 outline: 1px solid $row-color;
 
-                & div[class*='col'] {
+                & > div[class*='col'] {
 
                     outline: 1px solid $column-color;
 

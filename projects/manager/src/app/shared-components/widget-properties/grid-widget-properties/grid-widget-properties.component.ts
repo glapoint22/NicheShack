@@ -8,4 +8,5 @@ import { GridWidgetComponent } from '../../designer/widgets/grid-widget/grid-wid
 })
 export class GridWidgetPropertiesComponent {
   @Input() gridWidget: GridWidgetComponent;
+  
 }

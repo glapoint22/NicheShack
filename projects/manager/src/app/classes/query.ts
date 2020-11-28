@@ -1,4 +1,5 @@
 import { KeyValue } from '@angular/common';
+import { ComparisonOperatorType, LogicalOperatorType, Query, QueryType } from 'classes/query';
 import { QueryDropdownList, QueryService } from '../services/query.service';
 import { EditableItemListComponent } from '../shared-components/item-lists/editable-item-list/editable-item-list.component';
 import { ItemListComponent } from '../shared-components/item-lists/item-list/item-list.component';
@@ -7,16 +8,7 @@ import { ListItem } from './list-item';
 import { MenuOption } from './menu-option';
 
 
-export interface Query {
-    queryType: QueryType;
-    comparisonOperator: ComparisonOperatorType;
-    logicalOperator: LogicalOperatorType;
-    intValue?: number;
-    stringValues?: Array<string>;
-    doubleValue?: number;
-    dateValue?: Date;
-    subQueries?: Array<Query>;
-}
+
 
 export interface IQueryRow {
     queryType: QueryType;
@@ -50,34 +42,7 @@ export enum ValueType {
 
 
 
-export enum QueryType {
-    Category,
-    Niche,
-    ProductSubgroup,
-    FeaturedProducts,
-    CustomerRelatedProducts,
-    ProductPrice,
-    ProductRating,
-    ProductKeywords,
-    ProductCreationDate,
-    SubQuery
-}
 
-
-export enum ComparisonOperatorType {
-    Equal,
-    NotEqual,
-    GreaterThan,
-    GreaterThanOrEqual,
-    LessThan,
-    LessThanOrEqual
-}
-
-
-export enum LogicalOperatorType {
-    And,
-    Or
-}
 
 
 

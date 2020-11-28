@@ -1,7 +1,7 @@
 import { Filters } from './filters';
 import { Product } from './product';
 
-export interface ProductResults {
+export interface GridData {
     products: Array<Product>;
     totalProducts: number;
     filters: Filters;
