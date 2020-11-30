@@ -1,21 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { WidgetType } from 'classes/widget-type';
-import { ProductGroupType } from 'classes/product-group-type';
 import { ProductGroupWidgetData } from 'projects/manager/src/app/classes/product-group-widget-data';
 import { Caption } from 'projects/manager/src/app/classes/caption';
 import { Color } from 'classes/color';
-import { Item } from 'projects/manager/src/app/classes/item';
+import { QueryParams } from 'classes/query-params';
+import { Query } from 'classes/query';
+import { QueryableWidget } from 'classes/queryable-widget';
+import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
+import { DataService } from 'services/data.service';
+import { Product } from 'classes/product';
 
 @Component({
   selector: 'product-group-widget',
   templateUrl: './product-group-widget.component.html',
   styleUrls: ['./product-group-widget.component.scss']
 })
-export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
+export class ProductGroupWidgetComponent extends FreeformWidgetComponent implements OnInit, QueryableWidget {
   public caption: Caption = new Caption();
-  public productGroupType: ProductGroupType = ProductGroupType.FeaturedProducts;
-  public featuredProducts: Array<Item> = [];
+  public queryParams: QueryParams = new QueryParams;
+  public products: Array<Product>;
+
+  constructor(breakpointService: BreakpointService, private dataService: DataService){super(breakpointService)}
 
   ngOnInit() {
     this.height = 250
@@ -25,14 +31,16 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
     this.caption.color = new Color(255, 187, 0, 1);
     this.caption.fontSize.selectedIndex = 9;
     this.caption.fontSize.styleValue = this.caption.fontSize.options[this.caption.fontSize.selectedIndex].value;
+    this.queryParams.limit = 20;
     super.ngOnInit();
   }
 
   setData(widgetData: ProductGroupWidgetData) {
     this.caption.setData(widgetData.caption);
-    if (widgetData.productGroupType) this.productGroupType = widgetData.productGroupType;
-    if (widgetData.featuredProducts) this.featuredProducts = widgetData.featuredProducts;
-
+    if (widgetData.queries) {
+      this.queryParams.queries = widgetData.queries;
+      this.getProducts();
+    }
     super.setData(widgetData);
   }
 
@@ -48,13 +56,25 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent {
       height: null,
       horizontalAlignment: widgetData.horizontalAlignment,
       caption: this.caption.getData(),
-      productGroupType: this.productGroupType != ProductGroupType.FeaturedProducts ? this.productGroupType : 0,
-      featuredProducts: this.featuredProducts.length > 0 ? this.featuredProducts.map(x => ({
-        id: x.id,
-        name: x.name
-      })) : [],
-      breakpoints: []
+      breakpoints: [],
+      queries: this.queryParams.queries.length > 0 ? this.queryParams.queries : []
     }
+  }
+
+
+  query(queries: Array<Query>) {
+    this.queryParams.queries = queries;
+    this.column.row.container.save();
+    this.getProducts();
+  }
+
+
+
+  getProducts() {
+    this.dataService.post('api/Products/ProductGroup', this.queryParams)
+      .subscribe((products: Array<Product>) => {
+        this.products = products;
+      });
   }
 
 

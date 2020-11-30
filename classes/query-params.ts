@@ -2,12 +2,12 @@ import { ParamMap } from '@angular/router';
 import { Query } from './query';
 
 export class QueryParams {
-    search?: string;
-    filters: string;
-    categoryId: string;
-    nicheId: string;
-    sort: string;
-    page: number;
+    search?: string = '';
+    filters: string = '';
+    categoryId: string = '';
+    nicheId: string = '';
+    sort: string = '';
+    page: number = 1;
     limit: number;
     queries: Array<Query>;
 
