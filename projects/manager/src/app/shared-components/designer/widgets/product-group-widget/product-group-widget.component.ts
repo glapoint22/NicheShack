@@ -21,6 +21,13 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent impleme
   public queryParams: QueryParams = new QueryParams;
   public products: Array<Product>;
 
+
+  public translate: number = 0;
+  private currentPage: number = 1;
+  public productWidth: number = 250;
+  private currentTranslation: number = 0;
+  private translations: Array<number> = [this.currentTranslation];
+
   constructor(breakpointService: BreakpointService, private dataService: DataService){super(breakpointService)}
 
   ngOnInit() {
@@ -31,7 +38,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent impleme
     this.caption.color = new Color(255, 187, 0, 1);
     this.caption.fontSize.selectedIndex = 9;
     this.caption.fontSize.styleValue = this.caption.fontSize.options[this.caption.fontSize.selectedIndex].value;
-    this.queryParams.limit = 20;
+    this.queryParams.limit = 24;
     super.ngOnInit();
   }
 
@@ -76,6 +83,38 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent impleme
         this.products = products;
       });
   }
+
+
+
+  onRightButtonClick(containerWidth: number) {
+    // Increment the page
+    this.currentPage++;
+
+    // Calculate how much to move the slider
+    this.currentTranslation = this.translate = containerWidth + this.currentTranslation;
+    this.translations.push(this.currentTranslation);
+  }
+
+
+  onLeftButtonClick() {
+    // Get the previous translation from the array to move the slider back
+    this.currentTranslation = this.translate = this.translations[this.translations.length - 2];
+    this.currentPage--;
+    this.translations.pop();
+  }
+
+  isLastPage(containerWidth: number) {
+    // Calculate how many products should be on each page
+    let productsPerPage = (containerWidth) / (this.productWidth);
+
+    // Calculate the remaining products based on the current page and how many products per page
+    let remainingProducts = this.products.length - (this.currentPage * productsPerPage);
+
+    // See if we are on the last page
+    return remainingProducts <= 0;
+  }
+
+
 
 
   buildPreview(parent: HTMLElement) {

@@ -11,6 +11,8 @@ $product-width: 250px;
 .caption {
     text-align: center;
     margin-bottom: 10px;
+    word-break: break-word; // IE & < Edge 18
+    overflow-wrap: break-word;
 }
 
 
@@ -52,7 +54,7 @@ $product-width: 250px;
 }
 
 .left-button {
-    left: 10px;
+    left: 16px;
 
     .fa-caret-left {
         font-size: 22px;
@@ -61,17 +63,12 @@ $product-width: 250px;
 }
 
 .right-button {
-    right: 26px;
+    right: 16px;
 
     .fa-caret-right {
         font-size: 22px;
         transform: translateX(1px);
     }
-}
-
-
-.border-bottom {
-    border-bottom: 1px solid $border-color;
 }
 
 
@@ -94,10 +91,6 @@ $product-width: 250px;
             
                 .left-button, .right-button {
                     visibility: visible;
-                }
-
-                .border-none {
-                    border: none;
                 }
             }
 
