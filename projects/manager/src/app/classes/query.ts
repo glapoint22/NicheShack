@@ -1,5 +1,6 @@
 import { KeyValue } from '@angular/common';
 import { ComparisonOperatorType, LogicalOperatorType, Query, QueryType } from 'classes/query';
+import { PopupService } from '../services/popup.service';
 import { QueryDropdownList, QueryService } from '../services/query.service';
 import { EditableItemListComponent } from '../shared-components/item-lists/editable-item-list/editable-item-list.component';
 import { ItemListComponent } from '../shared-components/item-lists/item-list/item-list.component';
@@ -15,10 +16,13 @@ export interface IQueryRow {
     otherQueryType?: QueryType;
     hasOperators: boolean;
     comparisonOperator: ComparisonOperatorType;
+    logicalOperator: LogicalOperatorType;
     valueType: ValueType;
     doubleValue?: number;
     dateValue?: Date;
     stringValues?: Array<string>;
+    listItems?: Array<ListItem>;
+    editableListItems?: Array<ListItem>;
     dropdownValue?: any;
     whereDropdownSelectedIndex: number;
     dropdownList?: Array<KeyValue<any, any>>;
@@ -28,8 +32,15 @@ export interface IQueryRow {
     itemType?: string;
     itemTypes?: string;
     subQueryRows?: Array<IQueryRow>;
+    wholeNumberValue?: string;
+    decimalValue?: string;
+    stringDate?: string;
     getQueryRows?(queryRows: Array<IQueryRow>): void;
     setQuery?(queries: Array<Query>): void;
+    setQueryRow?(queryRowIndex: number): void;
+    setPrice?(wholeString: string, decimalString: string): void;
+    setItemList?(editableListItems: Array<ListItem>): void;
+    setDate?(stringDate: string): void;
 }
 
 export enum ValueType {
@@ -67,6 +78,9 @@ export class QueryRow {
         this.queryRows.splice(queryRowIndex, 1);
         // Get the products
         this.queryBuilder.getProducts();
+    }
+
+    setQuery(queries: Array<Query>) {
     }
 }
 
@@ -107,7 +121,7 @@ export class QueryRowDropdownBase extends QueryRow {
         // Update the value and the selected index
         this.dropdownValue = newValue != null ? newValue : null;
         this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.dropdownValue);
-
+        
         // Get the products
         this.queryBuilder.getProducts();
     }
@@ -172,10 +186,10 @@ export class QueryRowParentChildDropdown extends QueryRowDropdownBase {
 
             // If a parent is available to build the child dropdown list 
         } else {
-
+            
             // Loop through all the parent ids that have been used so far
             usedParentIds.forEach(y => {
-
+                
                 // Then loop through each child of that parent
                 parentList[y].children.forEach(z => {
 
@@ -209,7 +223,9 @@ export class QueryRowParentDropdown extends QueryRowParentChildDropdown {
 
 
     updateValue(newValue: number) {
-        super.updateValue(newValue);
+        // Update the value and the selected index
+        this.dropdownValue = newValue != null ? newValue : null;
+        this.valueDropdownSelectedIndex = this.dropdownList.findIndex(x => x.value == this.dropdownValue);
 
         // Rebuild all the child queryrow dropdowns
         let usedParentIds: Array<number> = [];
@@ -224,6 +240,9 @@ export class QueryRowParentDropdown extends QueryRowParentChildDropdown {
                 }
             }
         });
+
+        // Get the products
+        this.queryBuilder.getProducts();
     }
 }
 
@@ -240,7 +259,7 @@ export class QueryRowChildDropdown extends QueryRowParentChildDropdown {
         this.queryRows.forEach(x => {
             this.updateUsedParentIds(this.queryRows[queryRowIndex].otherQueryType, usedParentIds, x, this.queryRows[queryRowIndex].queryDropdownList);
         })
-
+        
         // Build the dropdown for this new child queryrow
         this.buildChildDropdown(this.queryRows[queryRowIndex], this.queryRows[queryRowIndex].queryDropdownList, usedParentIds);
     }
@@ -283,6 +302,8 @@ export class QueryRowPrice extends QueryRow {
         this.hasOperators = true;
         this.valueType = ValueType.Price;
     }
+    public wholeNumberValue: string = "";
+    public decimalValue: string = "";
     public doubleValue: number;
 
 
@@ -297,10 +318,25 @@ export class QueryRowPrice extends QueryRow {
 
         // Calculate the whole number and decimal values based on what is being passed in from the input text boxes
         wholeNumberValue = wholeNumberInputText.value.length == 0 ? 0 : parseInt(wholeNumberInputText.value);
-        decimalValue = decimalInputText.value.length == 0 ? 0 : decimalValue = parseInt(decimalInputText.value) * (decimalInputText.value.length == 1 ? 0.1 : 0.01);
+        decimalValue = decimalInputText.value.length == 0 ? 0 : parseInt(decimalInputText.value) * (decimalInputText.value.length == 1 ? 0.1 : 0.01);
 
         // Return the whole number and decimal value
         return wholeNumberValue + decimalValue;
+    }
+
+
+    setPrice(wholeString: string, decimalString: string) {
+        let wholeNumberValue: number = 0;
+        let decimalValue: number = 0.0;
+        this.wholeNumberValue = wholeString;
+        this.decimalValue = decimalString;
+
+        // Calculate the whole number and decimal values based on what is being passed in from the input text boxes
+        wholeNumberValue = wholeString.length == 0 ? 0 : parseInt(wholeString);
+        decimalValue = decimalString.length == 0 ? 0 : parseInt(decimalString) * (decimalString.length == 1 ? 0.1 : 0.01);
+
+        // Return the whole number and decimal value
+        this.doubleValue = wholeNumberValue + decimalValue;
     }
 
     updateWholeNumberValue(wholeNumberInputText: HTMLInputElement, decimalInputText: HTMLInputElement) {
@@ -335,11 +371,6 @@ export class QueryRowPrice extends QueryRow {
         }
     }
 
-    onDelete(queryRowIndex: number) {
-        // Delete the queryrow
-        super.onDelete(queryRowIndex);
-    }
-
     setQuery(queries: Array<Query>) {
         // As long as the value for this queryrow has NOT been set to '0.00'
         if (this.doubleValue != 0 && this.doubleValue != null) {
@@ -353,12 +384,13 @@ export class QueryRowItemList extends QueryRow {
     constructor(
         public whereDropdownSelectedIndex: number,
         public queryBuilder: QueryBuilderComponent,
-        public queryRows: Array<IQueryRow>) {
+        public queryRows: Array<IQueryRow>,
+        public popupService: PopupService) {
         super(whereDropdownSelectedIndex, queryBuilder, queryRows)
         this.hasOperators = false;
         this.valueType = ValueType.ItemList;
     }
-    public stringValues: Array<string>;
+    public stringValues: Array<string> = [];
     public listItems: Array<ListItem> = [];
     private itemList: ItemListComponent;
     public itemType: string;
@@ -402,7 +434,14 @@ export class QueryRowItemList extends QueryRow {
     }
 
     openPopup(sourceElement: HTMLElement) {
-        console.log("open Popup")
+        this.popupService.sourceElement = sourceElement;
+        // this.popupService.searchPopup.searchable = this;
+        this.popupService.searchPopup.show = !this.popupService.searchPopup.show;
+    }
+
+    setItemList(listItems: Array<ListItem>) {
+        this.listItems = listItems;
+        this.stringValues = this.listItems.map(x => x.name);
     }
 
     setQuery(queries: Array<Query>) {
@@ -423,9 +462,9 @@ export class QueryRowEditableItemList extends QueryRow {
         this.hasOperators = false;
         this.valueType = ValueType.EditableItemList;
     }
-    public stringValues: Array<string>;
+    public stringValues: Array<string> = [];
     public editableListItems: Array<ListItem> = [];
-    private editableItemList: EditableItemListComponent;
+    public editableItemList: EditableItemListComponent;
     public itemType: string;
     public itemTypes: string;
 
@@ -486,6 +525,11 @@ export class QueryRowEditableItemList extends QueryRow {
         this.queryBuilder.getProducts();
     }
 
+    setItemList(editableListItems: Array<ListItem>) {
+        this.editableListItems = editableListItems;
+        this.stringValues = this.editableListItems.map(x => x.name);
+    }
+
     setQuery(queries: Array<Query>) {
         // As long as the this queryrow list is NOT empty
         if (this.stringValues.length != 0) {
@@ -506,6 +550,7 @@ export class QueryRowDate extends QueryRow {
         this.valueType = ValueType.Date;
     }
     public dateValue: Date;
+    public stringDate: string;
 
     initialize(queryType: QueryType, queryRowIndex: number) {
         this.queryRows[queryRowIndex].queryType = queryType;
@@ -522,6 +567,11 @@ export class QueryRowDate extends QueryRow {
         this.dateValue = new Date(inputText.value);
         // Get the products
         this.queryBuilder.getProducts();
+    }
+
+    setDate(stringDate: string) {
+        this.stringDate = stringDate;
+        this.dateValue = new Date(stringDate);
     }
 
     setQuery(queries: Array<Query>) {
@@ -556,6 +606,11 @@ export class CategoryQueryRow extends QueryRowParentDropdown implements IQueryRo
         this.queryRows.splice(queryRowIndex, 1);
         this.queryRows.splice(queryRowIndex, 0, new CategoryQueryRow(this.whereDropdownSelectedIndex, this.queryBuilder, this.queryRows, this.queryService));
 
+        // Set the new category queryrow
+        this.setQueryRow(queryRowIndex);
+    }
+
+    setQueryRow(queryRowIndex: number) {
         // Initialize the new category queryrow
         this.initialize(QueryType.Category, QueryType.Niche, queryRowIndex, this.queryService.categories);
     }
@@ -568,6 +623,11 @@ export class NicheQueryRow extends QueryRowChildDropdown implements IQueryRow {
         this.queryRows.splice(queryRowIndex, 1);
         this.queryRows.splice(queryRowIndex, 0, new NicheQueryRow(this.whereDropdownSelectedIndex, this.queryBuilder, this.queryRows, this.queryService));
 
+        // Set the new niche queryrow
+        this.setQueryRow(queryRowIndex);
+    }
+
+    setQueryRow(queryRowIndex: number) {
         // Initialize the new niche queryrow
         this.initialize(QueryType.Category, QueryType.Niche, queryRowIndex, this.queryService.categories);
     }
@@ -581,6 +641,11 @@ export class ProductSubgroupQueryRow extends QueryRowDropdown {
         this.queryRows.splice(queryRowIndex, 1);
         this.queryRows.splice(queryRowIndex, 0, new ProductSubgroupQueryRow(this.whereDropdownSelectedIndex, this.queryBuilder, this.queryRows, this.queryService));
 
+        // Set the new subgroup queryrow
+        this.setQueryRow(queryRowIndex);
+    }
+
+    setQueryRow(queryRowIndex: number) {
         // Initialize the new subgroup queryrow
         this.initialize(QueryType.ProductSubgroup, queryRowIndex, this.queryService.subgroups);
     }
@@ -592,10 +657,15 @@ export class FeaturedProductsQueryRow extends QueryRowItemList implements IQuery
     newQueryRow(queryRowIndex: number) {
         // Create the new featured products queryrow
         this.queryRows.splice(queryRowIndex, 1);
-        this.queryRows.splice(queryRowIndex, 0, new FeaturedProductsQueryRow(this.whereDropdownSelectedIndex, this.queryBuilder, this.queryRows));
+        this.queryRows.splice(queryRowIndex, 0, new FeaturedProductsQueryRow(this.whereDropdownSelectedIndex, this.queryBuilder, this.queryRows, this.popupService));
 
+        // Set the new featured products queryrow
+        this.setQueryRow(queryRowIndex);
+    }
+
+    setQueryRow(queryRowIndex: number) {
         // Initialize the new featured products queryrow
-        this.initialize(QueryType.FeaturedProducts, queryRowIndex, "Product", "Products")
+        this.initialize(QueryType.FeaturedProducts, queryRowIndex, "Product", "Products");
     }
 }
 
@@ -607,6 +677,11 @@ export class CustomerRelatedProductsQueryRow extends QueryRowDropdown {
         this.queryRows.splice(queryRowIndex, 1);
         this.queryRows.splice(queryRowIndex, 0, new CustomerRelatedProductsQueryRow(this.whereDropdownSelectedIndex, this.queryBuilder, this.queryRows, this.queryService));
 
+        // Set the new customer related products queryrow
+        this.setQueryRow(queryRowIndex);
+    }
+
+    setQueryRow(queryRowIndex: number) {
         // Initialize the new customer related products queryrow
         this.initialize(QueryType.CustomerRelatedProducts, queryRowIndex, this.queryService.customerRelatedProducts);
     }
@@ -619,8 +694,13 @@ export class ProductPriceQueryRow extends QueryRowPrice implements IQueryRow {
         this.queryRows.splice(queryRowIndex, 1);
         this.queryRows.splice(queryRowIndex, 0, new ProductPriceQueryRow(this.whereDropdownSelectedIndex, this.queryBuilder, this.queryRows));
 
+        // Set the new product price queryrow
+        this.setQueryRow(queryRowIndex);
+    }
+
+    setQueryRow(queryRowIndex: number) {
         // Initialize the new product price queryrow
-        this.initialize(QueryType.ProductPrice, queryRowIndex)
+        this.initialize(QueryType.ProductPrice, queryRowIndex);
     }
 }
 
@@ -632,6 +712,11 @@ export class ProductRatingQueryRow extends QueryRowDropdownWithOperator implemen
         this.queryRows.splice(queryRowIndex, 1);
         this.queryRows.splice(queryRowIndex, 0, new ProductRatingQueryRow(this.whereDropdownSelectedIndex, this.queryBuilder, this.queryRows, this.queryService));
 
+        // Set the new product rating queryrow
+        this.setQueryRow(queryRowIndex);
+    }
+
+    setQueryRow(queryRowIndex: number) {
         // Initialize the new product rating queryrow
         this.initialize(QueryType.ProductRating, queryRowIndex, this.queryService.productRating);
     }
@@ -645,8 +730,13 @@ export class ProductKeywordsQueryRow extends QueryRowEditableItemList implements
         this.queryRows.splice(queryRowIndex, 1);
         this.queryRows.splice(queryRowIndex, 0, new ProductKeywordsQueryRow(this.whereDropdownSelectedIndex, this.queryBuilder, this.queryRows));
 
+        // Set the new keywords queryrow
+        this.setQueryRow(queryRowIndex);
+    }
+
+    setQueryRow(queryRowIndex: number) {
         // Initialize the new keywords queryrow
-        this.initialize(QueryType.ProductKeywords, queryRowIndex, "Keyword", "Keywords")
+        this.initialize(QueryType.ProductKeywords, queryRowIndex, "Keyword", "Keywords");
     }
 }
 
@@ -658,6 +748,11 @@ export class ProductCreationDateQueryRow extends QueryRowDate implements IQueryR
         this.queryRows.splice(queryRowIndex, 1);
         this.queryRows.splice(queryRowIndex, 0, new ProductCreationDateQueryRow(this.whereDropdownSelectedIndex, this.queryBuilder, this.queryRows));
 
+        // Set the new product creation date queryrow
+        this.setQueryRow(queryRowIndex);
+    }
+
+    setQueryRow(queryRowIndex: number) {
         // Initialize the new product creation date queryrow
         this.initialize(QueryType.ProductCreationDate, queryRowIndex)
     }

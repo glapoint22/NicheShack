@@ -44,9 +44,9 @@
 
         <div *ngIf="queryRowIndex != 0">
             <query-dropdown 
-                [selectedIndex]="0"
                 [logicalOperator]="true"
                 [dropdownList]="logicalOperatorList"
+                [selectedIndex]="queryRow.logicalOperator"
                 (onChange)="queryRow.updateLogicalOperator($event)">
             </query-dropdown>
         </div>
@@ -96,7 +96,7 @@
             <!-- Operator -->
             <div class="operator-dropdown-container">
                 <query-dropdown *ngIf="queryRow.hasOperators"
-                    [selectedIndex]="0"
+                    [selectedIndex]="queryRow.comparisonOperator"
                     [dropdownList]="operatorList"
                     (onChange)="queryRow.updateComparisonOperator($event)">
                 </query-dropdown>
@@ -142,7 +142,7 @@
             <!-- Operator -->
             <div class="operator-dropdown-container">
                 <query-dropdown
-                    [selectedIndex]="0"
+                    [selectedIndex]="queryRow.comparisonOperator"
                     [dropdownList]="operatorList"
                     (onChange)="queryRow.updateComparisonOperator($event)">
                 </query-dropdown>
@@ -156,6 +156,7 @@
                     <input #wholeNumberInput
                            placeholder="0"
                            class="whole-number-input"
+                           [value] = "queryRow.wholeNumberValue"
                            (input)="queryRow.updateWholeNumberValue($event.target, decimalInput)">
                     <!-- Decimal Point -->
                     <div class="decimal-point">.</div>
@@ -164,6 +165,7 @@
                            maxlength="2"
                            placeholder="00"
                            class="decimal-point-input"
+                           [value]="queryRow.decimalValue"
                            (blur)="queryRow.onDecimalInputBlur($event.target)"
                            (input)="queryRow.updateDecimalValue(wholeNumberInput, $event.target)">
                 </div>
@@ -279,9 +281,7 @@
                 
                 <!-- Operator -->
                 <div class="operator-dropdown-container">
-                    <div class="equals-operator-container">
-                        =
-                    </div> 
+                    <div class="equals-operator-container">=</div> 
                 </div>
 
 
@@ -372,7 +372,7 @@
             <!-- Operator -->
             <div class="operator-dropdown-container">
                 <query-dropdown
-                    [selectedIndex]="0"
+                    [selectedIndex]="queryRow.comparisonOperator"
                     [dropdownList]="operatorList">
                 </query-dropdown>
             </div>
@@ -383,6 +383,7 @@
                 <!-- Hidden date input -->
                 <input #dateInput 
                        type="date" 
+                       [value]="queryRow.stringDate"
                        class="hidden-date-input"
                        (input)="queryRow.updateValue($event.target)">
                 <!-- Date input -->
