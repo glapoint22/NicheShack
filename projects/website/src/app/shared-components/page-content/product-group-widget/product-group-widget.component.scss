@@ -1,0 +1,104 @@
+@import '../../../../scss/variables';
+
+$container-width: 500px;
+$product-width: 250px;
+
+.product-group-container {
+    overflow: hidden;
+    margin: auto;
+}
+
+.caption {
+    text-align: center;
+    margin-bottom: 10px;
+    word-break: break-word; // IE & < Edge 18
+    overflow-wrap: break-word;
+}
+
+
+.slider {
+    display: flex;
+    flex-wrap: wrap;
+    transition: transform 0.5s ease-in-out;
+}
+
+.product-container {
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.product {
+    height: 100%;
+}
+
+.left-button, .right-button {
+    visibility: hidden;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+    border: 1px solid $border-color;
+    background: rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+    &:after {
+        transition: transform .1s ease-out 0s;
+    }
+    &:hover:after {
+        transform: scale(1.25);
+    }
+}
+
+.left-button {
+    left: 16px;
+
+    .fa-caret-left {
+        font-size: 22px;
+        transform: translateX(-1px);
+    }
+}
+
+.right-button {
+    right: 16px;
+
+    .fa-caret-right {
+        font-size: 22px;
+        transform: translateX(1px);
+    }
+}
+
+
+@each $key, $value in $breakpoints {
+    @if($value >= map-get($breakpoints, md)) {
+        @media (min-width: $value) {
+            @if($key == md) {
+                .slider {
+                    flex-wrap: nowrap;
+                }
+            
+                .product-container {
+                    max-width: $product-width;
+                }
+
+                .product {
+                    margin: 0;
+                    margin-right: 1rem;
+                }
+            
+                .left-button, .right-button {
+                    visibility: visible;
+                }
+            }
+
+
+            .product-group-container {
+                width: $container-width;
+            }
+        }
+        $container-width: $container-width + $product-width;
+    }
+}

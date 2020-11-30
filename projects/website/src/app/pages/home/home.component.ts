@@ -27,8 +27,8 @@ export class HomeComponent extends SharePageComponent implements OnInit {
     super.ngOnInit();
 
     this.dataService.get('api/Home')
-    .subscribe((pageData: PageData)=> {
-      this.pageData = pageData;
-    });
+      .subscribe((pageData: PageData) => {
+        this.pageData = pageData;
+      });
   }
 }

@@ -8,7 +8,6 @@ import { ButtonColorComponent } from '../widget-properties/button-widget-propert
 import { TextComponent } from '../widget-properties/text-widget-properties/text/text.component';
 import { StyleComponent } from '../widget-properties/line-widget-properties/style/style.component';
 import { BannersComponent } from '../widget-properties/carousel-widget-properties/banners/banners.component';
-import { ProductGroupTypeComponent } from '../widget-properties/product-group-widget-properties/product-group-type/product-group-type.component';
 import { CategoriesComponent } from '../widget-properties/categories-widget-properties/categories/categories.component';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 import { LinkComponent } from '../properties/link/link.component';
@@ -68,7 +67,6 @@ import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-
     StyleComponent,
     BannersComponent,
     ProductGroupWidgetPropertiesComponent,
-    ProductGroupTypeComponent,
     CategoriesComponent,
     PanelComponent,
     LinkComponent,
@@ -125,7 +123,6 @@ import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-
     StyleComponent,
     BannersComponent,
     ProductGroupWidgetPropertiesComponent,
-    ProductGroupTypeComponent,
     CategoriesComponent,
     PanelComponent,
     LinkComponent,

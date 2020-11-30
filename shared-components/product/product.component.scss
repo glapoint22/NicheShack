@@ -12,7 +12,14 @@
 }
 
 .product {
-    
+    display: flex;
+    height: 100%;
+
+    .product-info {
+        width: 250px;
+        margin-left: 20px;
+    }
+
     .title {
         font-weight: bold;
     }
@@ -40,13 +47,36 @@ img {
 }
 
 
+@media (min-width: map-get($breakpoints, xs)) {
+    img {
+        max-width: 170px;
+        max-height: 170px;
+    }
+}
+
+
+@media (min-width: map-get($breakpoints, sm)) {
+    img {
+        max-width: 200px;
+        max-height: 200px;
+    }
+}
+
+
 
 @media (min-width: map-get($breakpoints, md)) {
+    .product {
+        min-height: 300px;
+        align-items: center;
+        justify-content: space-between;
+        .product-info {
+            width: 100%;
+        }
+    }
+
+
     img {
-        margin: auto;
-        margin-bottom: 10px;
-        max-width: 200px;
         display: block;
-        max-height: 200px;
+        margin-bottom: 10px;
     }
 }

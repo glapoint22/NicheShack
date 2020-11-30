@@ -17,7 +17,6 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
   styleUrls: ['./grid-widget.component.scss']
 })
 export class GridWidgetComponent extends FreeformWidgetComponent implements OnInit, QueryableWidget {
-  public queries: Array<Query> = [];
   public gridData: GridData;
   public selectedSortOption: KeyValue<string, string>;
   public queryParams: QueryParams = new QueryParams;
@@ -44,14 +43,17 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
       // If we have queries
       if (this.queryParams.queries) {
         this.queryParams.set(params);
-        this.query(this.queryParams.queries);
+        this.getGridData();
       }
     });
   }
 
 
   setData(widgetData: GridWidgetData) {
-    if (widgetData.queries) this.queries = widgetData.queries;
+    if (widgetData.queries) {
+      this.queryParams.queries = widgetData.queries;
+      this.getGridData();
+    }
 
     super.setData(widgetData);
   }
@@ -68,7 +70,7 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
       height: null,
       horizontalAlignment: widgetData.horizontalAlignment,
       breakpoints: [],
-      queries: this.queries.length > 0 ? this.queries : []
+      queries: this.queryParams.queries.length > 0 ? this.queryParams.queries : []
     }
   }
 
@@ -83,7 +85,13 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
 
   query(queries: Array<Query>) {
     this.queryParams.queries = queries;
+    this.column.row.container.save();
+    this.getGridData();
+  }
 
+
+
+  getGridData() {
     this.dataService.post('api/Products/GridData', this.queryParams)
       .subscribe((gridData: GridData) => {
         this.gridData = gridData;

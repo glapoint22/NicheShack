@@ -1,7 +1,7 @@
 import { CaptionData } from './caption-data';
-import { ProductGroupType } from './product-group-type';
+import { Query } from './query';
 
 export interface ProductGroupWidgetDataBase {
     caption: CaptionData;
-    productGroupType: ProductGroupType;
+    queries: Array<Query>;
 }

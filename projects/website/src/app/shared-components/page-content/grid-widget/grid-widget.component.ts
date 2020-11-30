@@ -1,9 +1,10 @@
 import { KeyValue } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Filters } from 'classes/filters';
-import { Product } from 'classes/product';
+import { GridData } from 'classes/grid-data';
+import { QueryParams } from 'classes/query-params';
 import { DataService } from 'services/data.service';
+import { GridWidgetData } from '../../../classes/grid-widget-data';
 import { WidgetComponent } from '../widget/widget.component';
 
 
@@ -13,54 +14,57 @@ import { WidgetComponent } from '../widget/widget.component';
   styleUrls: ['./grid-widget.component.scss']
 })
 export class GridWidgetComponent extends WidgetComponent {
-  public filters: Filters;
-  public products: Array<Product>;
-  public page: number = 1;
-  public pageCount: number;
-  public sortOptions: Array<KeyValue<string, string>>;
+  public gridData: GridData;
   public selectedSortOption: KeyValue<string, string>;
-  public totalProducts: number;
-  public productCountStart: number;
-  public productCountEnd: number;
+  public queryParams: QueryParams = new QueryParams;
+  public search: string;
   public showFilterMenu: boolean;
-  public query: string;
 
   
-  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) {super()}
+  constructor(private dataService: DataService, public route: ActivatedRoute, private router: Router) {super()}
+
 
   ngOnInit() {
-    // this.route.queryParamMap.subscribe((params: ParamMap) => {
-    //   let parameters = params.keys.map(key => ({
-    //     key: key,
-    //     value: params.get(key)
-    //   }));
+    this.queryParams.page = 1;
+    this.queryParams.limit = screen.width >= 600 ? 40 : 20;
+    
 
-      
-    //   this.query = params.get('query');
+    this.route.queryParamMap.subscribe((params: ParamMap) => {
+      this.search = params.get('search');
 
-    //   this.page = params.has('page') ? Math.max(1, Number.parseInt(params.get('page'))) : 1;
-
-    //   this.dataService.get('api/Products', parameters)
-    //     .subscribe((productResults: ProductResults) => {
-    //       this.sortOptions = productResults.sortOptions.map(x => ({
-    //         key: x.Key,
-    //         value: x.Value
-    //       }));
-          
-  
-    //       let index = Math.max(0, this.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
-    //       this.selectedSortOption = this.sortOptions[index];
-
-
-    //       this.filters = productResults.filters;
-    //       this.products = productResults.products;
-    //       this.pageCount = productResults.pageCount;
-    //       this.totalProducts = productResults.totalProducts;
-    //       this.productCountStart = productResults.productCountStart;
-    //       this.productCountEnd = productResults.productCountEnd;
-    //     });
-    // });
+      // If we have queries
+      if (this.queryParams.queries) {
+        this.queryParams.set(params);
+        this.getGridData();
+      }
+    });
   }
+
+
+  setData(widgetData: GridWidgetData) {
+    if (widgetData.queries) {
+      this.queryParams.queries = widgetData.queries;
+      this.queryParams.set(this.route.snapshot.queryParamMap);
+      this.getGridData();
+    }
+
+    super.setData(widgetData);
+  }
+
+
+
+
+  getGridData() {
+    this.dataService.post('api/Products/GridData', this.queryParams)
+      .subscribe((gridData: GridData) => {
+        this.gridData = gridData;
+
+        let index = Math.max(0, this.gridData.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
+        this.selectedSortOption = this.gridData.sortOptions[index];
+      });
+  }
+
+
 
   setSort() {
     this.router.navigate([], {
@@ -72,9 +76,15 @@ export class GridWidgetComponent extends WidgetComponent {
 
   getDefaultIndex() {
     // Used to display the defulat selection
-    if (this.sortOptions) return this.sortOptions.findIndex(x => x == this.selectedSortOption);
+    if (this.gridData.sortOptions) return this.gridData.sortOptions.findIndex(x => x == this.selectedSortOption);
     return {};
   }
-  
 
+
+  clearFilters() {
+    this.router.navigate([], {
+      queryParams: { filters: null },
+      queryParamsHandling: 'merge'
+    });
+  }
 }
