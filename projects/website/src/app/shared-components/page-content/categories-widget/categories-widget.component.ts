@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { BackgroundColorBase } from 'classes/background-color-base';
 import { Color } from 'classes/color';
-import { ShadowBase } from 'classes/shadow-base';
+import { ShopItem } from 'classes/shop-item';
 import { TextColorBase } from 'classes/text-color-base';
 import { Caption } from '../../../classes/caption';
-import { CategoriesWidgetData } from '../../../classes/categories-widget-data';
-import { Category } from '../../../interfaces/category';
+import { ShopWidgetData } from '../../../classes/shop-widget-data';
 import { WidgetComponent } from '../widget/widget.component';
 
 @Component({
@@ -15,18 +13,14 @@ import { WidgetComponent } from '../widget/widget.component';
 })
 export class CategoriesWidgetComponent extends WidgetComponent {
   public caption: Caption = new Caption();
-  public categories: Array<Category> = [];
+  public items: Array<ShopItem> = [];
   public textColor: TextColorBase = new TextColorBase(new Color(255, 255, 255, 1));
-  public backgroundColor: BackgroundColorBase = new BackgroundColorBase(new Color(66, 0, 51, 1));
-  public shadow: ShadowBase = new ShadowBase();
 
 
-  setData(widgetData: CategoriesWidgetData) {
+  setData(widgetData: ShopWidgetData) {
     this.caption.setData(widgetData.caption);
-    if (widgetData.categories) this.categories = widgetData.categories;
+    if (widgetData.items) this.items = widgetData.items;
     this.textColor.setData(widgetData.textColor);
-    this.backgroundColor.setData(widgetData.backgroundColor);
-    this.shadow.setData(widgetData.shadow);
     super.setData(widgetData);
   }
 }

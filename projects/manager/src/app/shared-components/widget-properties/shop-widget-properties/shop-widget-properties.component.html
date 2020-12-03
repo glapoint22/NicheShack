@@ -1,0 +1,18 @@
+<!-- Type -->
+<div class="type">Type:</div>
+
+<!-- Dropdown -->
+<div class="dropdown-container">
+    <dropdown #dropdown [height]="20" [dropdownList]="dropdownList" [selectedIndex]="selectedIndex"
+        (onChange)="onDropdownChange($event)"></dropdown>
+</div>
+
+
+<!-- Caption -->
+<caption-property [caption]="shopWidget.caption" (onChange)="pageService.save()"></caption-property>
+
+<!-- Text Color -->
+<color [caption]="'Text Color'" [color]="shopWidget.textColor.value" (onChange)="pageService.save()"></color>
+
+<!-- Shop Items -->
+<shop-items [shopWidget]="shopWidget"></shop-items>

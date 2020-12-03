@@ -15,11 +15,9 @@ import { PromptService } from 'services/prompt.service';
   templateUrl: './page-editor.component.html',
   styleUrls: ['./page-editor.component.scss']
 })
-export class PageEditorComponent implements OnInit, Searchable {
+export class PageEditorComponent implements OnInit, Searchable<Item> {
   public currentPageId: number;
   public apiUrl: string;
-  public searchResults: Array<Item>;
-  public items: Array<Item>;
   public pageType: PageType;
   public PageType = PageType;
   public propertyView = PropertyView;

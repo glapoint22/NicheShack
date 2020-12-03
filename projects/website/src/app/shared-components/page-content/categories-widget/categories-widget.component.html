@@ -6,9 +6,7 @@
         </div>
         <div class="categories">
             <a [routerLink]="'/category/' + category.urlName" class="category" *ngFor="let category of categories">
-                <img *ngIf="category.icon" src="images/{{category.icon.url}}"
-                    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : null"
-                    [style.backgroundColor]="backgroundColor.value.toRGBString()">
+                <img *ngIf="category.icon" src="images/{{category.icon.url}}">
                 <div class="title" [style.color]="textColor.value.toRGBString()">{{category.name}}</div>
             </a>
         </div>

@@ -1,8 +1,4 @@
-import { Item } from './item';
-
-export interface Searchable {
+export interface Searchable<T> {
     apiUrl: string;
-    searchResults: Array<Item>;
-    items: Array<Item>;
-    setSearchItem(searchItem: any): void;
+    setSearchItem(searchItem: T): void;
 }

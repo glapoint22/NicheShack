@@ -1,0 +1,68 @@
+<!-- Panel -->
+<panel [title]="'Items'">
+
+    <!-- Property Box -->
+    <div class="property-box-light">
+
+        <!-- Container for counter & icons -->
+        <div class="property-box-light-icon-bar">
+
+            <!-- Counter -->
+            <counter #counter [itemCount]="shopWidget.items.length"
+                (onItemChange)="shopWidget.currentItemIndex = $event"></counter>
+
+            <!-- Icons -->
+            <div class="icons">
+
+                <!-- Delete Item Icon -->
+                <div class="icon-container" (click)="onDeleteClick()"
+                    [ngClass]="{'icon-disabled': shopWidget.items.length == 0}">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+
+                <!-- Add Item Icon -->
+                <div class="icon-container" (click)="onAddItemClick()">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Content -->
+        <div class="content" *ngIf="shopWidget.items.length > 0; else placeholder">
+            <!-- label -->
+            <div class="property">
+                <div class="label">Item:</div>
+            </div>
+
+            <!-- Item Container -->
+            <div class="item-container">
+
+                <!-- Item -->
+                <div class="item text-truncate">
+                    {{shopWidget.items[shopWidget.currentItemIndex].name}}</div>
+
+                <!-- Search -->
+                <div #search class="search-container" (click)="openPopup(search)">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+
+            <!-- Link label -->
+            <div class="property">
+                <div class="label">Link:</div>
+            </div>
+
+
+            <!-- Link -->
+            <link-property [link]="shopWidget.items[shopWidget.currentItemIndex].link" (onChange)="pageService.save()">
+            </link-property>
+        </div>
+
+        <!-- Placeholder -->
+        <ng-template #placeholder>
+            <div class="no-property">No items available</div>
+        </ng-template>
+    </div>
+</panel>

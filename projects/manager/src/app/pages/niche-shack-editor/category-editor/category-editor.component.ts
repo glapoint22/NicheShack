@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Category } from '../../../classes/category';
+import { DetailedItem } from '../../../classes/detailed-item';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
 import { LoadingService } from '../../../services/loading.service';
 import { MediaType } from '../../../classes/media';
@@ -14,7 +14,7 @@ import { Image } from '../../../classes/image';
 })
 export class CategoryEditorComponent implements OnChanges {
   @Input() hierarchyItem: HierarchyItem;
-  public category: Category;
+  public category: DetailedItem;
   public mediaType = MediaType;
 
   constructor(

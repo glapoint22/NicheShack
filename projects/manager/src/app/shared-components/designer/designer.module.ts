@@ -14,7 +14,6 @@ import { ColumnComponent } from './column/column.component';
 import { ProportionalWidgetComponent } from './widgets/proportional-widget/proportional-widget.component';
 import { FreeformWidgetComponent } from './widgets/freeform-widget/freeform-widget.component';
 import { ProductGroupWidgetComponent } from './widgets/product-group-widget/product-group-widget.component';
-import { CategoriesWidgetComponent } from './widgets/categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from './widgets/carousel-widget/carousel-widget.component';
 import { SharedModule } from '../shared.module';
 import { GridWidgetComponent } from './widgets/grid-widget/grid-widget.component';
@@ -22,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductFiltersModule } from 'shared-components/product-filters/product-filters.module';
 import { ProductModule } from 'shared-components/product/product.module';
 import { PaginatorModule } from 'shared-components/paginator/paginator.module';
+import { ShopWidgetComponent } from './widgets/shop-widget/shop-widget.component';
 
 @NgModule({
   declarations: [
@@ -39,9 +39,9 @@ import { PaginatorModule } from 'shared-components/paginator/paginator.module';
     ProportionalWidgetComponent,
     FreeformWidgetComponent,
     ProductGroupWidgetComponent,
-    CategoriesWidgetComponent,
     CarouselWidgetComponent,
-    GridWidgetComponent
+    GridWidgetComponent,
+    ShopWidgetComponent
   ],
   imports: [
     CommonModule,
@@ -62,9 +62,9 @@ import { PaginatorModule } from 'shared-components/paginator/paginator.module';
     RowComponent,
     ColumnComponent,
     ProductGroupWidgetComponent,
-    CategoriesWidgetComponent,
     CarouselWidgetComponent,
-    GridWidgetComponent
+    GridWidgetComponent,
+    ShopWidgetComponent
   ]
 })
 export class DesignerModule { }

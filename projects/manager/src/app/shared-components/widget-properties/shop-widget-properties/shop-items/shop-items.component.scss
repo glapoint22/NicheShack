@@ -30,3 +30,32 @@
     padding-right: 10px;
     padding-bottom: 10px;
 }
+
+.item-container {
+    width: 100%;
+    background: #3b3b3b;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+
+    .item {
+        flex: 1;
+        color: white;
+        font-size: 13px;
+    }
+
+    .search-container {
+        width: 15px;
+        height: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin-left: 10px;
+        
+        &:hover .fa-search {
+            color: #d4d4d4;
+        }
+    }
+}

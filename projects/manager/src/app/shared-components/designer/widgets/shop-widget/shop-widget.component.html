@@ -9,20 +9,24 @@
     <div id="handle" class="right-handle-bar" (mousedown)="onHandleMousedown('right', $event)"></div>
     <div id="handle" class="left-handle-bar" (mousedown)="onHandleMousedown('left', $event)"></div>
 
-    <!-- Categories -->
-    <div class="categories-container">
+    <!-- Items -->
+    <div class="container">
         <div style="text-align: center;" [style.fontFamily]="caption.font.styleValue"
             [style.fontSize]="caption.fontSize.styleValue" [style.fontWeight]="caption.fontWeight"
             [style.fontStyle]="caption.fontStyle" [style.textDecoration]="caption.textDecoration"
             [style.color]="caption.color.toRGBString()">{{caption.text}}
         </div>
-        <div class="categories">
-            <div class="category" *ngFor="let category of categories">
-                <img *ngIf="category.icon" src="images/{{category.icon.url}}"
-                    [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : null"
-                    [style.backgroundColor]="backgroundColor.value.toRGBString()">
-                <div class="title" [style.color]="textColor.value.toRGBString()">{{category.name}}</div>
-            </div>
+        <div class="items">
+            <ng-container *ngFor="let item of items">
+                <ng-container *ngIf="item.icon && item.icon.url">
+                    <div class="item">
+                        <img src="images/{{item.icon.url}}">
+                        <div class="title" [style.color]="textColor.value.toRGBString()">{{item.name}}</div>
+                    </div>
+
+                </ng-container>
+
+            </ng-container>
         </div>
     </div>
 </div>

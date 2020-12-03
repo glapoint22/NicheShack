@@ -1,49 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Color } from 'classes/color';
+import { Caption } from 'projects/manager/src/app/classes/caption';
+import { ShopType } from 'projects/manager/src/app/classes/shop-type';
+import { ShopItem } from 'classes/shop-item';
+import { TextColor } from 'projects/manager/src/app/classes/text-color';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { WidgetType } from 'classes/widget-type';
-import { Category } from 'projects/manager/src/app/classes/category';
-import { CategoriesWidgetData } from 'projects/manager/src/app/classes/categories-widget-data';
-import { Caption } from 'projects/manager/src/app/classes/caption';
-import { Color } from 'classes/color';
-import { TextColor } from 'projects/manager/src/app/classes/text-color';
-import { BackgroundColor } from 'projects/manager/src/app/classes/background-color';
-import { Shadow } from 'projects/manager/src/app/classes/shadow';
+import { ShopWidgetData } from 'projects/manager/src/app/classes/shop-widget-data';
 
 @Component({
-  selector: 'categories-widget',
-  templateUrl: './categories-widget.component.html',
-  styleUrls: ['./categories-widget.component.scss']
+  selector: 'shop-widget',
+  templateUrl: './shop-widget.component.html',
+  styleUrls: ['./shop-widget.component.scss']
 })
-export class CategoriesWidgetComponent extends FreeformWidgetComponent {
+export class ShopWidgetComponent extends FreeformWidgetComponent implements OnInit {
   public caption: Caption = new Caption();
-  public categories: Array<Category> = [];
   public textColor: TextColor = new TextColor(new Color(255, 255, 255, 1));
-  public backgroundColor: BackgroundColor = new BackgroundColor(new Color(66, 0, 51, 1));
-  public shadow: Shadow = new Shadow();
+  public items: Array<ShopItem> = [];
+  public shopType: ShopType = ShopType.Category;
+  public currentItemIndex: number = 0;
+
+  
 
   ngOnInit() {
     this.height = 250
-    this.name = this.defaultName = 'Categories';
-    this.type = WidgetType.Categories;
-    this.caption.text = 'Shop by category';
+    this.name = this.defaultName = 'Shop';
+    this.type = WidgetType.Shop;
+    this.caption.text = 'Shop by Niche';
     this.caption.color = new Color(255, 187, 0, 1);
     this.caption.fontSize.selectedIndex = 9;
     this.caption.fontSize.styleValue = this.caption.fontSize.options[this.caption.fontSize.selectedIndex].value;
     super.ngOnInit();
   }
 
-  setData(widgetData: CategoriesWidgetData) {
-    this.caption.setData(widgetData.caption);
-    if (widgetData.categories) this.categories = widgetData.categories;
 
+  setData(widgetData: ShopWidgetData) {
+    this.caption.setData(widgetData.caption);
+    if(widgetData.items) {
+      widgetData.items.forEach((item: ShopItem) => {
+        this.items.push(new ShopItem(item));
+      });
+    }
+    
+    this.shopType = widgetData.shopType;
     this.textColor.setData(widgetData.textColor);
-    this.backgroundColor.setData(widgetData.backgroundColor);
-    this.shadow.setData(widgetData.shadow);
     super.setData(widgetData);
   }
 
 
-  getData(): CategoriesWidgetData {
+  getData(): ShopWidgetData {
     let widgetData = super.getData();
 
     return {
@@ -52,22 +57,15 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
       width: widgetData.width,
       height: null,
       horizontalAlignment: widgetData.horizontalAlignment,
-      shadow: this.shadow.getData(),
       caption: this.caption.getData(),
       textColor: this.textColor.value.toHex(),
-      backgroundColor: this.backgroundColor.value.toHex(),
-      categories: this.categories.length > 0 ? this.categories.map(x => ({
-        name: x.name,
-        urlName: x.urlName,
-        icon: x.icon,
-        id: x.id
-      })) : [],
+      shopType: this.shopType,
+      items: this.items.length > 0 ? this.items : [],
       breakpoints: []
     }
   }
 
   buildPreview(parent: HTMLElement) {
-    // Categories container
     let categoriesContainer = document.createElement('div');
     categoriesContainer.classList.add('categories-container');
 
@@ -85,22 +83,18 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
     categories.classList.add('categories');
 
     // Loop through each category
-    this.categories.forEach((category: Category) => {
+    this.items.forEach((item: ShopItem) => {
       // Category
       let categoryElement = document.createElement('div');
       categoryElement.classList.add('category');
 
       // Image
       let img = document.createElement('img');
-      img.src = 'images/' + category.icon.url;
-
-      // Shadow
-      this.shadow.applyStyle(img);
-      this.backgroundColor.applyStyle(img);
+      img.src = 'images/' + item.icon.url;
 
       // title
       let title = document.createElement('div');
-      title.innerText = category.name;
+      title.innerText = item.name;
       title.classList.add('title');
       this.textColor.applyStyle(title);
 
@@ -117,4 +111,7 @@ export class CategoriesWidgetComponent extends FreeformWidgetComponent {
 
     super.buildPreview(parent, categoriesContainer);
   }
+
+
+
 }

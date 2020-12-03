@@ -126,7 +126,7 @@ export class Page {
 
 
             // Categories
-            case WidgetType.Categories:
+            case WidgetType.Shop:
                 widget = CategoriesWidgetComponent;
                 break;
 
