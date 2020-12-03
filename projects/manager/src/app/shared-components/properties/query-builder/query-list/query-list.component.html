@@ -62,7 +62,7 @@
             <div class="dropdown-container">
                 <query-dropdown
                     [dropdownList]="whereList"
-                    (onChange)="$event.newQueryRow(queryRowIndex)"
+                    (onChange)="buildQueryRow(queryRowIndex, $event)"
                     [selectedIndex]="queryRow.whereDropdownSelectedIndex">
                 </query-dropdown>
             </div>
@@ -88,7 +88,7 @@
             <div class="dropdown-container">
                 <query-dropdown
                     [dropdownList]="whereList"
-                    (onChange)="$event.newQueryRow(queryRowIndex)"
+                    (onChange)="buildQueryRow(queryRowIndex, $event)"
                     [selectedIndex]="queryRow.whereDropdownSelectedIndex">
                 </query-dropdown>
             </div>
@@ -133,7 +133,7 @@
             <div class="dropdown-container">
                 <query-dropdown
                     [dropdownList]="whereList"
-                    (onChange)="$event.newQueryRow(queryRowIndex)"
+                    (onChange)="buildQueryRow(queryRowIndex, $event)"
                     [selectedIndex]="queryRow.whereDropdownSelectedIndex">
                 </query-dropdown>
             </div>
@@ -194,7 +194,7 @@
                 <div class="dropdown-container">
                     <query-dropdown
                         [dropdownList]="whereList"
-                        (onChange)="$event.newQueryRow(queryRowIndex)"
+                        (onChange)="buildQueryRow(queryRowIndex, $event)"
                         [selectedIndex]="queryRow.whereDropdownSelectedIndex">
                     </query-dropdown>
                 </div>
@@ -274,7 +274,7 @@
                 <div class="dropdown-container">
                     <query-dropdown
                         [dropdownList]="whereList"
-                        (onChange)="$event.newQueryRow(queryRowIndex)"
+                        (onChange)="buildQueryRow(queryRowIndex, $event)"
                         [selectedIndex]="queryRow.whereDropdownSelectedIndex">
                     </query-dropdown>
                 </div>
@@ -363,7 +363,7 @@
             <div class="dropdown-container">
                 <query-dropdown
                     [dropdownList]="whereList"
-                    (onChange)="$event.newQueryRow(queryRowIndex)"
+                    (onChange)="buildQueryRow(queryRowIndex, $event)"
                     [selectedIndex]="queryRow.whereDropdownSelectedIndex">
                 </query-dropdown>
             </div>

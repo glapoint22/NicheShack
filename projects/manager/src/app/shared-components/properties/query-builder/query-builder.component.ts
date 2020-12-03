@@ -10,132 +10,24 @@ import { QueryListComponent } from './query-list/query-list.component';
   styleUrls: ['./query-builder.component.scss']
 })
 export class QueryBuilderComponent {
+  constructor(private queryService: QueryService) { }
+  private queries: Array<Query>;
   @ViewChild('queryList', { static: false }) queryList: QueryListComponent;
   @Input() queryableWidget: QueryableWidget;
-  public queries: Array<Query> = [];
-
-
-  public queryRows = [
-
-    
-    {
-      queryType: QueryType.Category,
-      value: 1,
-      logicalOperator: LogicalOperatorType.And
-    },
-
-    {
-      queryType: QueryType.Niche,
-      value: 3,
-      logicalOperator: LogicalOperatorType.And
-    },
-
-    {
-      queryType: QueryType.SubQuery,
-      logicalOperator: LogicalOperatorType.Or,
-      value: [{
-        queryType: QueryType.Category,
-        value: 2
-      }]
-    },
-
-    {
-      queryType: QueryType.ProductSubgroup,
-      value: 4,
-      logicalOperator: LogicalOperatorType.Or
-    },
-
-    {
-      queryType: QueryType.CustomerRelatedProducts,
-      value: 1,
-      logicalOperator: LogicalOperatorType.Or
-    },
-
-    {
-      queryType: QueryType.ProductRating,
-      value: 3,
-      logicalOperator: LogicalOperatorType.And,
-      comparisonOperator: 2
-    },
-
-    {
-      queryType: QueryType.ProductPrice,
-      wholeNumberValue: "5",
-      decimalValue: "22",
-      logicalOperator: LogicalOperatorType.And,
-      comparisonOperator: 3
-    },
-
-    {
-      queryType: QueryType.FeaturedProducts,
-      value: [
-        {
-          name: "Featured"
-        },
-
-        {
-          name: "Products"
-        }
-      ],
-      logicalOperator: LogicalOperatorType.Or
-    },
-
-    {
-      queryType: QueryType.ProductKeywords,
-      value: [
-        {
-          name: "Product"
-        },
-
-        {
-          name: "Key"
-        },
-
-        {
-          name: "Words"
-        }
-      ],
-      logicalOperator: LogicalOperatorType.Or
-    },
-
-
-    {
-      queryType: QueryType.ProductCreationDate,
-      value: "2020-05-22",
-      logicalOperator: LogicalOperatorType.And,
-      comparisonOperator: 2
-    }
-
-
-
-
-  ];
-
-
-
-  constructor(private queryService: QueryService) {
-    if (this.queryService.categories.length == 0) this.queryService.getCategories();
-    if (this.queryService.subgroups.length == 0) this.queryService.getSubgroups();
-  }
-
-
-
-
 
   ngAfterViewInit() {
-    window.setTimeout(() => {
+    this.queryService.getDropdownLists();
 
-
-      this.queryList.setQueryRows(this.queryRows);
-
-    }, 1000)
-
+    this.queryService.onDropdownListsLoaded.subscribe(() => {
+      this.queryList.load(this.queryableWidget.queryParams.queries);
+    });
   }
 
 
   getProducts() {
     this.queries = [];
     this.getQueryRows(this.queryList);
+
 
     if (this.queries.length > 0) {
       this.queryableWidget.query(this.queries);
@@ -155,11 +47,16 @@ export class QueryBuilderComponent {
 
 
   getQueryRows(queryList: QueryListComponent) {
+    // Loop through all the queryrows of this query builder
     queryList.queryRows.forEach(x => {
 
+      // Allow each queryrow to update the queries array accordingly
       x.setQuery(this.queries);
 
+      // If we come across a subquery queryrow
       if (x.queryType == QueryType.SubQuery) {
+
+        // Call this method on the subquery queryrow that will loop through all of its queryrows
         x.getQueryRows(x.subQueryRows);
       }
     })

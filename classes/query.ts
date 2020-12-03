@@ -3,6 +3,8 @@ export interface Query {
     comparisonOperator: ComparisonOperatorType;
     logicalOperator: LogicalOperatorType;
     intValue?: number;
+    intValues?: Array<number>;
+    stringValue?: string;
     stringValues?: Array<string>;
     doubleValue?: number;
     dateValue?: Date;
@@ -11,6 +13,7 @@ export interface Query {
 
 
 export enum QueryType {
+    None,
     Category,
     Niche,
     ProductSubgroup,
@@ -25,7 +28,7 @@ export enum QueryType {
 
 
 export enum ComparisonOperatorType {
-    Equal,
+    Equal = 1,
     NotEqual,
     GreaterThan,
     GreaterThanOrEqual,
@@ -35,6 +38,6 @@ export enum ComparisonOperatorType {
 
 
 export enum LogicalOperatorType {
-    And,
+    And = 1,
     Or
 }

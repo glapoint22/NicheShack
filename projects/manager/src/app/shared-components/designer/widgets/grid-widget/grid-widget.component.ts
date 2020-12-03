@@ -70,7 +70,7 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
       height: null,
       horizontalAlignment: widgetData.horizontalAlignment,
       breakpoints: [],
-      queries: this.queryParams.queries.length > 0 ? this.queryParams.queries : []
+      queries: this.queryParams.queries && this.queryParams.queries.length > 0 ? this.queryParams.queries : []
     }
   }
 
