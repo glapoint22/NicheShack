@@ -14,13 +14,13 @@ import { ImageWidgetComponent } from '../shared-components/designer/widgets/imag
 import { LineWidgetComponent } from '../shared-components/designer/widgets/line-widget/line-widget.component';
 import { VideoWidgetComponent } from '../shared-components/designer/widgets/video-widget/video-widget.component';
 import { ProductGroupWidgetComponent } from '../shared-components/designer/widgets/product-group-widget/product-group-widget.component';
-import { CategoriesWidgetComponent } from '../shared-components/designer/widgets/categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from '../shared-components/designer/widgets/carousel-widget/carousel-widget.component';
 import { WidgetCursor } from './widget-cursor';
 import { RowData } from 'projects/manager/src/app/classes/row-data';
 import { PageData } from 'projects/manager/src/app/classes/page-data';
 import { Color } from 'classes/color';
 import { GridWidgetComponent } from '../shared-components/designer/widgets/grid-widget/grid-widget.component';
+import { ShopWidgetComponent } from '../shared-components/designer/widgets/shop-widget/shop-widget.component';
 
 export class Page {
     public id: number;
@@ -189,8 +189,8 @@ export class Page {
 
 
             // Categories
-            case WidgetType.Categories:
-                widget = CategoriesWidgetComponent;
+            case WidgetType.Shop:
+                widget = ShopWidgetComponent;
                 break;
 
 
@@ -286,11 +286,11 @@ export class Page {
                             notAllowed: 'product-group-widget-not-allowed.png'
                         },
                         {
-                            title: 'Categories',
-                            widget: CategoriesWidgetComponent,
-                            icon: '<img class="categories-icon" src="assets/categories-widget-icon.png">',
-                            allowed: 'categories-widget-allowed.png',
-                            notAllowed: 'categories-widget-not-allowed.png'
+                            title: 'Shop',
+                            widget: ShopWidgetComponent,
+                            icon: '<i class="fas fa-shopping-cart"></i>',
+                            allowed: 'shop-widget-allowed.png',
+                            notAllowed: 'shop-widget-not-allowed.png'
                         },
                         {
                             title: 'Carousel',

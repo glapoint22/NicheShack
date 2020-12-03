@@ -1,0 +1,32 @@
+<div #widget [class]="'widget ' + horizontalAlignment.getClass()" (mousedown)="onMousedown()"
+    [style.maxWidth.px]="width ? width : null" (click)="onClick($event)"
+    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}">
+
+
+    <!-- Handles -->
+    <div id="handle" class="left-handle"></div>
+    <div id="handle" class="right-handle"></div>
+    <div id="handle" class="right-handle-bar" (mousedown)="onHandleMousedown('right', $event)"></div>
+    <div id="handle" class="left-handle-bar" (mousedown)="onHandleMousedown('left', $event)"></div>
+
+    <!-- Items -->
+    <div class="container">
+        <div style="text-align: center;" [style.fontFamily]="caption.font.styleValue"
+            [style.fontSize]="caption.fontSize.styleValue" [style.fontWeight]="caption.fontWeight"
+            [style.fontStyle]="caption.fontStyle" [style.textDecoration]="caption.textDecoration"
+            [style.color]="caption.color.toRGBString()">{{caption.text}}
+        </div>
+        <div class="items">
+            <ng-container *ngFor="let item of items">
+                <ng-container *ngIf="item.icon && item.icon.url">
+                    <div class="item">
+                        <img src="images/{{item.icon.url}}">
+                        <div class="title" [style.color]="textColor.value.toRGBString()">{{item.name}}</div>
+                    </div>
+
+                </ng-container>
+
+            </ng-container>
+        </div>
+    </div>
+</div>

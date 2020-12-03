@@ -1,7 +1,7 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
-import { CarouselBanner } from 'classes/carousel-banner';
-import { CarouselBannerData } from 'classes/carousel-banner-data';
+import { LinkableImage } from 'classes/linkable-image';
+import { LinkableImageData } from 'classes/linkable-image-data';
 import { CarouselWidgetDataBase } from 'classes/carousel-widget-data-base';
 import { LinkService } from 'services/link.service';
 import { CarouselDirective } from '../../../directives/carousel.directive';
@@ -14,7 +14,7 @@ import { WidgetComponent } from '../widget/widget.component';
 })
 export class CarouselWidgetComponent extends WidgetComponent implements AfterViewInit {
   @ViewChild(CarouselDirective, { static: false }) carousel: CarouselDirective;
-  public banners: Array<CarouselBanner> = [];
+  public banners: Array<LinkableImage> = [];
   public currentBannerIndex: number = 0;
 
   constructor(
@@ -30,8 +30,8 @@ export class CarouselWidgetComponent extends WidgetComponent implements AfterVie
   }
 
   setData(widgetData: CarouselWidgetDataBase) {
-    widgetData.banners.forEach((banner: CarouselBannerData) => {
-      this.banners.push(new CarouselBanner(banner));
+    widgetData.banners.forEach((banner: LinkableImageData) => {
+      this.banners.push(new LinkableImage(banner));
     });
   }
 

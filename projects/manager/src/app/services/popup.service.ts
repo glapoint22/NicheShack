@@ -38,7 +38,7 @@ export class PopupService {
   public productMediaNotificationPopup: ProductMediaNotificationPopupComponent;
   public productContentNotificationPopup: ProductContentNotificationPopupComponent;
   public hoplinkPopup: HoplinkPopupComponent;
-  public searchPopup: SearchPopupComponent;
+  public searchPopup: SearchPopupComponent<any>;
   public nicheShackHierarchyPopup: NicheShackHierarchyPopupComponent;
   public highlightPopup: HighlightPopupComponent;
 }

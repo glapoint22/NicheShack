@@ -10,7 +10,6 @@ import { MenuOption } from '../../classes/menu-option';
 import { DataService } from 'services/data.service';
 import { NotificationListItem } from '../../classes/notification-list-item';
 import { QueryService } from '../../services/query.service';
-import { Category } from '../../classes/category';
 
 @Component({
   selector: 'menu-bar',

@@ -1,9 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { WidgetType } from 'classes/widget-type';
-import { CarouselBanner } from 'classes/carousel-banner';
+import { LinkableImage } from 'classes/linkable-image';
 import { CarouselWidgetData } from 'projects/manager/src/app/classes/carousel-widget-data';
-import { CarouselBannerData } from 'classes/carousel-banner-data';
+import { LinkableImageData } from 'classes/linkable-image-data';
 import { Image } from 'projects/manager/src/app/classes/image';
 import { ImageBase } from 'classes/Image-base';
 
@@ -14,7 +14,7 @@ import { ImageBase } from 'classes/Image-base';
 })
 export class CarouselWidgetComponent extends FreeformWidgetComponent {
   @ViewChild('svg', { static: false }) placeholder: ElementRef;
-  public banners: Array<CarouselBanner> = [];
+  public banners: Array<LinkableImage> = [];
   public currentBannerIndex: number = 0;
 
 
@@ -29,8 +29,8 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
 
 
   setData(widgetData: CarouselWidgetData) {
-    widgetData.banners.forEach((banner: CarouselBannerData) => {
-      this.banners.push(new CarouselBanner(banner));
+    widgetData.banners.forEach((banner: LinkableImageData) => {
+      this.banners.push(new LinkableImage(banner));
     });
     super.setData(widgetData);
   }

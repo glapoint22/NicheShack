@@ -15,11 +15,9 @@ import { DataService } from 'services/data.service';
   templateUrl: './product-vendor.component.html',
   styleUrls: ['./product-vendor.component.scss']
 })
-export class ProductVendorComponent implements Searchable {
+export class ProductVendorComponent implements Searchable<Item> {
   @Input() product: Product;
   public apiUrl: string = 'api/Vendors';
-  public searchResults: Array<Item>;
-  public items: Array<Item>;
   private subscription: Subscription;
 
   constructor(

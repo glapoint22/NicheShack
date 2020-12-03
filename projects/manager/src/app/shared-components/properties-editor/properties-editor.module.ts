@@ -7,8 +7,6 @@ import { HorizontalAlignmentComponent } from '../column-properties/horizontal-al
 import { ButtonColorComponent } from '../widget-properties/button-widget-properties/button-color/button-color.component';
 import { TextComponent } from '../widget-properties/text-widget-properties/text/text.component';
 import { StyleComponent } from '../widget-properties/line-widget-properties/style/style.component';
-import { BannersComponent } from '../widget-properties/carousel-widget-properties/banners/banners.component';
-import { CategoriesComponent } from '../widget-properties/categories-widget-properties/categories/categories.component';
 import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
 import { LinkComponent } from '../properties/link/link.component';
 import { BorderComponent } from '../properties/border/border.component';
@@ -38,7 +36,6 @@ import { VideoWidgetPropertiesComponent } from '../widget-properties/video-widge
 import { ContainerWidgetPropertiesComponent } from '../widget-properties/container-widget-properties/container-widget-properties.component';
 import { LineWidgetPropertiesComponent } from '../widget-properties/line-widget-properties/line-widget-properties.component';
 import { CarouselWidgetPropertiesComponent } from '../widget-properties/carousel-widget-properties/carousel-widget-properties.component';
-import { CategoriesWidgetPropertiesComponent } from '../widget-properties/categories-widget-properties/categories-widget-properties.component';
 import { ProductGroupWidgetPropertiesComponent } from '../widget-properties/product-group-widget-properties/product-group-widget-properties.component';
 import { BackgroundComponent } from '../properties/background/background.component';
 import { ColorComponent } from '../properties/color/color.component';
@@ -51,6 +48,8 @@ import { SharedModule } from '../shared.module';
 import { QueryBuilderComponent } from '../properties/query-builder/query-builder.component';
 import { QueryListComponent } from '../properties/query-builder/query-list/query-list.component';
 import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-properties/grid-widget-properties.component';
+import { ShopWidgetPropertiesComponent } from '../widget-properties/shop-widget-properties/shop-widget-properties.component';
+import { ShopItemsComponent } from '../widget-properties/shop-widget-properties/shop-items/shop-items.component';
 
 
 @NgModule({
@@ -65,9 +64,7 @@ import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-
     ButtonColorComponent,
     TextComponent,
     StyleComponent,
-    BannersComponent,
     ProductGroupWidgetPropertiesComponent,
-    CategoriesComponent,
     PanelComponent,
     LinkComponent,
     BorderComponent,
@@ -93,7 +90,6 @@ import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-
     ContainerWidgetPropertiesComponent,
     LineWidgetPropertiesComponent,
     CarouselWidgetPropertiesComponent,
-    CategoriesWidgetPropertiesComponent,
     BackgroundComponent,
     ColorComponent,
     FiltersHierarchyComponent,
@@ -101,7 +97,9 @@ import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-
     HierarchyCheckboxContentComponent,
     QueryBuilderComponent,
     QueryListComponent,
-    GridWidgetPropertiesComponent
+    GridWidgetPropertiesComponent,
+    ShopWidgetPropertiesComponent,
+    ShopItemsComponent
   ],
   imports: [
     CommonModule,
@@ -121,9 +119,7 @@ import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-
     ButtonColorComponent,
     TextComponent,
     StyleComponent,
-    BannersComponent,
     ProductGroupWidgetPropertiesComponent,
-    CategoriesComponent,
     PanelComponent,
     LinkComponent,
     BorderComponent,
@@ -149,7 +145,6 @@ import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-
     ContainerWidgetPropertiesComponent,
     LineWidgetPropertiesComponent,
     CarouselWidgetPropertiesComponent,
-    CategoriesWidgetPropertiesComponent,
     BackgroundComponent,
     ColorComponent,
     FiltersHierarchyComponent,
@@ -157,7 +152,9 @@ import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-
     HierarchyCheckboxContentComponent,
     QueryBuilderComponent,
     QueryListComponent,
-    GridWidgetPropertiesComponent
+    GridWidgetPropertiesComponent,
+    ShopWidgetPropertiesComponent,
+    ShopItemsComponent
   ]
 })
 export class PropertiesEditorModule { }

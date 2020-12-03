@@ -20,13 +20,11 @@ import { PromptService } from 'services/prompt.service';
   templateUrl: './vendor-form.component.html',
   styleUrls: ['./vendor-form.component.scss']
 })
-export class VendorFormComponent extends FormComponent implements OnInit, Searchable {
+export class VendorFormComponent extends FormComponent implements OnInit, Searchable<Item> {
   public vendor: Vendor = new Vendor();
   public editMode: boolean;
   public onSubmit = new Subject<Item>();
   public apiUrl: string = 'api/Vendors';
-  public searchResults: Array<Item>;
-  public items: Array<Item>;
 
   constructor(
     formService: FormService,
@@ -175,8 +173,6 @@ export class VendorFormComponent extends FormComponent implements OnInit, Search
         // This is needed to remove any products from this vendor
         this.popupService.nicheShackHierarchyPopup.items = null;
 
-        this.items = null;
-        this.searchResults = null;
 
         // Clear the vendor
         this.vendor = new Vendor();

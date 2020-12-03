@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { CarouselWidgetComponent } from '../../designer/widgets/carousel-widget/carousel-widget.component';
 import { MediaType } from '../../../classes/media';
-import { CarouselBanner } from '../../../../../../../classes/carousel-banner';
+import { LinkableImage } from '../../../../../../../classes/linkable-image';
 import { PageService } from '../../../services/page.service';
 import { PromptService } from 'services/prompt.service';
 import { CounterComponent } from '../../counter/counter.component';
@@ -22,7 +22,7 @@ export class CarouselWidgetPropertiesComponent {
 
   // --------------------------------------------------------------------- On Add Banner --------------------------------------------------------
   onAddBannerClick() {
-    this.carouselWidget.banners.push(new CarouselBanner());
+    this.carouselWidget.banners.push(new LinkableImage());
     this.counter.set(this.carouselWidget.banners.length);
     this.carouselWidget.currentBannerIndex = this.carouselWidget.banners.length - 1;
     this.pageService.save();

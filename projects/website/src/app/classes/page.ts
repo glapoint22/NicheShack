@@ -14,12 +14,12 @@ import { ContainerWidgetComponent } from '../shared-components/page-content/cont
 import { LineWidgetComponent } from '../shared-components/page-content/line-widget/line-widget.component';
 import { VideoWidgetComponent } from '../shared-components/page-content/video-widget/video-widget.component';
 import { ProductGroupWidgetComponent } from '../shared-components/page-content/product-group-widget/product-group-widget.component';
-import { CategoriesWidgetComponent } from '../shared-components/page-content/categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from '../shared-components/page-content/carousel-widget/carousel-widget.component';
 import { BackgroundBase } from 'classes/background-base';
 import { ContainerWidgetData } from './container-widget-data';
 import { RowDataBase } from 'classes/row-data-base';
 import { GridWidgetComponent } from '../shared-components/page-content/grid-widget/grid-widget.component';
+import { ShopWidgetComponent } from '../shared-components/page-content/shop-widget/shop-widget.component';
 
 export class Page {
     public width: number;
@@ -125,9 +125,9 @@ export class Page {
                 break;
 
 
-            // Categories
-            case WidgetType.Categories:
-                widget = CategoriesWidgetComponent;
+            // Shop
+            case WidgetType.Shop:
+                widget = ShopWidgetComponent;
                 break;
 
 

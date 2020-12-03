@@ -15,12 +15,12 @@
 
 
     <!-- Results -->
-    <div class="results-container" *ngIf="(searchable.searchResults && searchable.searchResults.length > 0) || 
-        (searchable.items && searchable.items.length > 0); else noResults">
+    <div class="results-container" *ngIf="(searchResults && searchResults.length > 0) || 
+        (items && items.length > 0); else noResults">
 
         <!-- Items -->
         <div class="search-item"
-            *ngFor="let item of (searchable.searchResults ? searchable.searchResults : searchable.items)"
+            *ngFor="let item of (searchResults ? searchResults : items)"
             (click)="onItemClick(item)">
             {{item.name}}
         </div>
@@ -32,13 +32,13 @@
         <div class="no-results results-container">
             
             <!-- Loading -->
-            <div *ngIf="!searchable.items">
+            <div *ngIf="!items">
                 <i class="fas fa-spinner fa-pulse"></i>
             </div>
 
             <!-- No results -->
             <div
-                *ngIf="(searchable.searchResults && searchable.searchResults.length == 0) || (searchable.items && searchable.items.length == 0)">
+                *ngIf="(searchResults && searchResults.length == 0) || (items && items.length == 0)">
                 No results available.
             </div>
         </div>
