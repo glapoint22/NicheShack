@@ -1,13 +1,13 @@
 <div #widget>
-    <div class="categories-container">
+    <div class="container">
         <div style="text-align: center;" [style.fontFamily]="caption.font" [style.fontSize]="caption.fontSize"
             [style.fontWeight]="caption.fontWeight" [style.fontStyle]="caption.fontStyle"
             [style.textDecoration]="caption.textDecoration" [style.color]="caption.color.toRGBString()">{{caption.text}}
         </div>
-        <div class="categories">
-            <a [routerLink]="'/category/' + category.urlName" class="category" *ngFor="let category of categories">
-                <img *ngIf="category.icon" src="images/{{category.icon.url}}">
-                <div class="title" [style.color]="textColor.value.toRGBString()">{{category.name}}</div>
+        <div class="items">
+            <a [routerLink]="item.link.url" class="item" *ngFor="let item of items">
+                <img *ngIf="item.icon" src="images/{{item.icon.url}}">
+                <div class="title" [style.color]="textColor.value.toRGBString()">{{item.name}}</div>
             </a>
         </div>
     </div>

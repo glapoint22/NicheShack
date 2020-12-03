@@ -12,7 +12,6 @@ import { ContainerWidgetComponent } from './container-widget/container-widget.co
 import { LineWidgetComponent } from './line-widget/line-widget.component';
 import { VideoWidgetComponent } from './video-widget/video-widget.component';
 import { ProductGroupWidgetComponent } from './product-group-widget/product-group-widget.component';
-import { CategoriesWidgetComponent } from './categories-widget/categories-widget.component';
 import { CarouselWidgetComponent } from './carousel-widget/carousel-widget.component';
 import { RouterModule } from '@angular/router';
 import { CarouselModule } from '../../directives/carousel.module';
@@ -23,6 +22,7 @@ import { ShowHideModule } from 'directives/show-hide/show-hide.module';
 import { FormsModule } from '@angular/forms';
 import { ProductModule } from 'shared-components/product/product.module';
 import { PaginatorModule } from 'shared-components/paginator/paginator.module';
+import { ShopWidgetComponent } from './shop-widget/shop-widget.component';
 
 
 
@@ -40,9 +40,9 @@ import { PaginatorModule } from 'shared-components/paginator/paginator.module';
     LineWidgetComponent,
     VideoWidgetComponent,
     ProductGroupWidgetComponent,
-    CategoriesWidgetComponent,
     CarouselWidgetComponent,
-    GridWidgetComponent
+    GridWidgetComponent,
+    ShopWidgetComponent
   ],
   imports: [
     CommonModule,
@@ -68,9 +68,9 @@ import { PaginatorModule } from 'shared-components/paginator/paginator.module';
     LineWidgetComponent,
     VideoWidgetComponent,
     ProductGroupWidgetComponent,
-    CategoriesWidgetComponent,
     CarouselWidgetComponent,
-    GridWidgetComponent
+    GridWidgetComponent,
+    ShopWidgetComponent
   ],
   entryComponents: [
     RowComponent,
@@ -82,9 +82,9 @@ import { PaginatorModule } from 'shared-components/paginator/paginator.module';
     LineWidgetComponent,
     VideoWidgetComponent,
     ProductGroupWidgetComponent,
-    CategoriesWidgetComponent,
     CarouselWidgetComponent,
-    GridWidgetComponent
+    GridWidgetComponent,
+    ShopWidgetComponent
   ]
 })
 export class PageContentModule { }

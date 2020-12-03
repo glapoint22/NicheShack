@@ -1,4 +1,4 @@
-.categories-container {
+.container {
     width: 100%;
 
     .caption {
@@ -8,13 +8,13 @@
         overflow-wrap: break-word;
     }
 
-    .categories {
+    .items {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
     
-        .category {
+        .item {
             margin: 20px;
             max-width: 170px;
             text-decoration: none;

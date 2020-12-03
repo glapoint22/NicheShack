@@ -7,11 +7,11 @@ import { ShopWidgetData } from '../../../classes/shop-widget-data';
 import { WidgetComponent } from '../widget/widget.component';
 
 @Component({
-  selector: 'categories-widget',
-  templateUrl: './categories-widget.component.html',
-  styleUrls: ['./categories-widget.component.scss']
+  selector: 'shop-widget',
+  templateUrl: './shop-widget.component.html',
+  styleUrls: ['./shop-widget.component.scss']
 })
-export class CategoriesWidgetComponent extends WidgetComponent {
+export class ShopWidgetComponent extends WidgetComponent {
   public caption: Caption = new Caption();
   public items: Array<ShopItem> = [];
   public textColor: TextColorBase = new TextColorBase(new Color(255, 255, 255, 1));
