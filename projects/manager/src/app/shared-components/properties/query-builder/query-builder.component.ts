@@ -27,22 +27,7 @@ export class QueryBuilderComponent {
   getProducts() {
     this.queries = [];
     this.getQueryRows(this.queryList);
-
-
-    if (this.queries.length > 0) {
-      this.queryableWidget.query(this.queries);
-
-    } else {
-
-      this.queries.push({
-        comparisonOperator: 0,
-        intValue: 0,
-        logicalOperator: 0,
-        queryType: 0
-      });
-
-      this.queryableWidget.query(this.queries);
-    }
+    this.queryableWidget.query(this.queries);
   }
 
 

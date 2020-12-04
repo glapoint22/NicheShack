@@ -377,7 +377,7 @@ export class QueryRowPrice extends QueryRow {
 }
 
 
-export class QueryRowItemList extends QueryRow implements Searchable {
+export class QueryRowItemList extends QueryRow implements Searchable<ListItem> {
     constructor(
         public whereDropdownSelectedIndex: number,
         public queryBuilder: QueryBuilderComponent,
@@ -439,7 +439,7 @@ export class QueryRowItemList extends QueryRow implements Searchable {
     }
 
 
-    setSearchItem(searchItem: any) {
+    setSearchItem(searchItem: ListItem) {
         // Add the item to the list
         this.listItems.unshift(searchItem);
         // Select the new list item

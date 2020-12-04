@@ -85,8 +85,14 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
 
   query(queries: Array<Query>) {
     this.queryParams.queries = queries;
+    
+    if(this.queryParams.queries && this.queryParams.queries.length > 0) {
+      this.getGridData();
+    } else {
+      this.gridData = null;
+    }
+
     this.column.row.container.save();
-    this.getGridData();
   }
 
 

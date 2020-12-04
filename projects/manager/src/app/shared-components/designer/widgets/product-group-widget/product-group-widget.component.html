@@ -1,34 +1,37 @@
 <div #widget class="widget" (mousedown)="onMousedown()" style="width: 100%;" (click)="onClick($event)"
     [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}">
 
-    <div #container *ngIf="products && products.length > 0" class="product-group-container">
+    <div #container class="product-group-container">
         <!-- Caption -->
         <div class="caption" [style.fontFamily]="caption.font.styleValue" [style.fontSize]="caption.fontSize.styleValue"
             [style.fontWeight]="caption.fontWeight" [style.fontStyle]="caption.fontStyle"
             [style.textDecoration]="caption.textDecoration" [style.color]="caption.color.toRGBString()">{{caption.text}}
         </div>
 
+        <ng-container *ngIf="products && products.length > 0">
+            <div style="position: relative; padding-left: 8px;">
+                <!-- Slider -->
+                <div #slider class="slider" [style.transform]="'translateX(-' + translate + 'px)'">
 
-        <div style="position: relative; padding-left: 8px;">
-            <!-- Slider -->
-            <div #slider class="slider" [style.transform]="'translateX(-' + translate + 'px)'">
-
-                <!-- Products -->
-                <div *ngFor="let product of products" class="product-container">
-                    <div class="product">
-                        <product [product]="product"></product>
+                    <!-- Products -->
+                    <div *ngFor="let product of products" class="product-container">
+                        <div class="product">
+                            <product [product]="product"></product>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Buttons -->
-            <div class="left-button" *ngIf="translate != 0" (click)="onLeftButtonClick()">
-                <i class="fas fa-caret-left"></i>
+                <!-- Buttons -->
+                <div class="left-button" *ngIf="translate != 0" (click)="onLeftButtonClick()">
+                    <i class="fas fa-caret-left"></i>
+                </div>
+                <div class="right-button" *ngIf="!isLastPage(container.offsetWidth)"
+                    (click)="onRightButtonClick(container.offsetWidth)">
+                    <i class="fas fa-caret-right"></i>
+                </div>
             </div>
-            <div class="right-button" *ngIf="!isLastPage(container.offsetWidth)"
-                (click)="onRightButtonClick(container.offsetWidth)">
-                <i class="fas fa-caret-right"></i>
-            </div>
-        </div>
+        </ng-container>
+
+
     </div>
 </div>

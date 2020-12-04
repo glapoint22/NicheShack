@@ -64,15 +64,21 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent impleme
       horizontalAlignment: widgetData.horizontalAlignment,
       caption: this.caption.getData(),
       breakpoints: [],
-      queries: this.queryParams.queries.length > 0 ? this.queryParams.queries : []
+      queries: this.queryParams.queries && this.queryParams.queries.length > 0 ? this.queryParams.queries : []
     }
   }
 
 
   query(queries: Array<Query>) {
     this.queryParams.queries = queries;
+    
+    if(this.queryParams.queries && this.queryParams.queries.length > 0) {
+      this.getProducts();
+    } else {
+      this.products = null;
+    }
+
     this.column.row.container.save();
-    this.getProducts();
   }
 
 
