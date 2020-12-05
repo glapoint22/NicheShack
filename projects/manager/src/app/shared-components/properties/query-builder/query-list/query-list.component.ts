@@ -74,111 +74,134 @@ export class QueryListComponent implements OnInit {
   buildQueryRow(queryRowIndex: number, queryType: QueryType, queryRow?: Query) {
     switch (queryType) {
 
+      // None
       case QueryType.None: {
         this.queryRows[queryRowIndex] = new QueryRowNone(0, this.queryBuilder, this.queryRows);
-        this.queryBuilder.getProducts();
         break;
       }
 
+      // Category
       case QueryType.Category: {
         this.queryRows[queryRowIndex] = new CategoryQueryRow(1, this.queryBuilder, this.queryRows, this.queryService);
         if (queryRow != null) {
           this.queryRows[queryRowIndex].dropdownValue = queryRow.intValue;
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
         }
         this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
         break;
       }
 
+      // Niche
       case QueryType.Niche: {
         this.queryRows[queryRowIndex] = new NicheQueryRow(2, this.queryBuilder, this.queryRows, this.queryService);
         if (queryRow != null) {
           this.queryRows[queryRowIndex].dropdownValue = queryRow.intValue;
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
         }
         this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
         break;
       }
 
+      // Subgroup
       case QueryType.ProductSubgroup: {
         this.queryRows[queryRowIndex] = new ProductSubgroupQueryRow(3, this.queryBuilder, this.queryRows, this.queryService);
         if (queryRow != null) {
           this.queryRows[queryRowIndex].dropdownValue = queryRow.intValue;
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
         }
         this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
         break;
       }
 
+      // Featured Products
       case QueryType.FeaturedProducts: {
-        this.queryRows[queryRowIndex] = new FeaturedProductsQueryRow(4, this.queryBuilder, this.queryRows, this.popupService);
+        this.queryRows[queryRowIndex] = new FeaturedProductsQueryRow(4, this.queryBuilder, this.queryRows, this.popupService, "Product", "Products", "api/Products/QueryBuilder");
         if (queryRow != null) {
           this.queryRows[queryRowIndex].setItemList(queryRow.stringValues, queryRow.intValues);
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
         }
         this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
         break;
       }
 
+      // Customer Related Products
       case QueryType.CustomerRelatedProducts: {
         this.queryRows[queryRowIndex] = new CustomerRelatedProductsQueryRow(5, this.queryBuilder, this.queryRows, this.queryService);
         if (queryRow != null) {
           this.queryRows[queryRowIndex].dropdownValue = queryRow.intValue;
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
         }
         this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
         break;
       }
 
+      // Price
       case QueryType.ProductPrice: {
         this.queryRows[queryRowIndex] = new ProductPriceQueryRow(6, this.queryBuilder, this.queryRows);
         if (queryRow != null) {
           this.queryRows[queryRowIndex].setPrice(queryRow.stringValue)
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
           this.queryRows[queryRowIndex].comparisonOperator = queryRow.comparisonOperator;
+          this.queryRows[queryRowIndex].comparisonOperatorDropdownSelectedIndex = queryRow.comparisonOperator - 1;
         }
         this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
         break;
       }
 
+      // Rating
       case QueryType.ProductRating: {
         this.queryRows[queryRowIndex] = new ProductRatingQueryRow(7, this.queryBuilder, this.queryRows, this.queryService);
         if (queryRow != null) {
-          this.queryRows[queryRowIndex].dropdownValue = queryRow.intValue;
+          this.queryRows[queryRowIndex].dropdownValue = queryRow.doubleValue;
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
           this.queryRows[queryRowIndex].comparisonOperator = queryRow.comparisonOperator;
+          this.queryRows[queryRowIndex].comparisonOperatorDropdownSelectedIndex = queryRow.comparisonOperator - 1;
         }
         this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
         break;
       }
 
+      // Keywords
       case QueryType.ProductKeywords: {
-        this.queryRows[queryRowIndex] = new ProductKeywordsQueryRow(8, this.queryBuilder, this.queryRows);
+        this.queryRows[queryRowIndex] = new ProductKeywordsQueryRow(8, this.queryBuilder, this.queryRows, this.popupService, "Keyword", "Keywords", "api/Products/Keywords");
         if (queryRow != null) {
-          this.queryRows[queryRowIndex].setItemList(queryRow.stringValues);
+          this.queryRows[queryRowIndex].setItemList(queryRow.stringValues, queryRow.intValues);
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
         }
         this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
         break;
       }
 
+      // Date
       case QueryType.ProductCreationDate: {
         this.queryRows[queryRowIndex] = new ProductCreationDateQueryRow(9, this.queryBuilder, this.queryRows);
         if (queryRow != null) {
           this.queryRows[queryRowIndex].setDate(queryRow.stringValue);
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
           this.queryRows[queryRowIndex].comparisonOperator = queryRow.comparisonOperator;
+          this.queryRows[queryRowIndex].comparisonOperatorDropdownSelectedIndex = queryRow.comparisonOperator - 1;
         }
         this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
         break;
       }
 
+      // Sub Query
       case QueryType.SubQuery: {
         this.queryRows[queryRowIndex] = new SubQueryRow(null, this.queryBuilder, this.queryRows);
         this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+        this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
 
-        let queryListTimer: number = window.setInterval(()=> {
-          if(this.queryList != null) {
+        let queryListTimer: number = window.setInterval(() => {
+          if (this.queryList != null) {
             window.clearInterval(queryListTimer);
             this.queryList.load(queryRow.subQueries);
           }
@@ -186,10 +209,16 @@ export class QueryListComponent implements OnInit {
         break;
       }
     }
+
+    // If a wheredropdown option has been selected
+    if (queryRow == null) {
+      // Get the products
+      this.queryBuilder.getProducts();
+    }
   }
 
 
-  
+
 
 
 

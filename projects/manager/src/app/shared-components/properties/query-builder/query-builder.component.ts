@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { LogicalOperatorType, Query, QueryType } from 'classes/query';
+import { Query, QueryType } from 'classes/query';
 import { QueryableWidget } from 'classes/queryable-widget';
 import { QueryService } from '../../../services/query.service';
 import { QueryListComponent } from './query-list/query-list.component';
@@ -19,7 +19,9 @@ export class QueryBuilderComponent {
     this.queryService.getDropdownLists();
 
     this.queryService.onDropdownListsLoaded.subscribe(() => {
-      this.queryList.load(this.queryableWidget.queryParams.queries);
+      if(this.queryableWidget.queryParams.queries) {
+        this.queryList.load(this.queryableWidget.queryParams.queries);
+      }
     });
   }
 

@@ -1,7 +1,7 @@
 export interface Query {
     queryType: QueryType;
-    comparisonOperator: ComparisonOperatorType;
     logicalOperator: LogicalOperatorType;
+    comparisonOperator?: ComparisonOperatorType;
     intValue?: number;
     intValues?: Array<number>;
     stringValue?: string;

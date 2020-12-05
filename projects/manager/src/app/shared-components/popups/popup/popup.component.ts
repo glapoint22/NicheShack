@@ -16,7 +16,6 @@ export class PopupComponent {
   private popup;
   private arrow;
   private popupTop: number;
-  public bottomBuffer: number = 20;
   public arrowOnTop: boolean = false;
   constructor(public popupService: PopupService, public cover: CoverService, public menuService: MenuService, public dropdownMenuService: DropdownMenuService, public dataService: DataService) { }
 
@@ -26,8 +25,11 @@ export class PopupComponent {
     return this._show;
   }
   public set show(value: boolean) {
-    
-    if (!value) this.onPopupClose.next();
+
+    if (!value) {
+      this.popupService.bottomBuffer = 20;
+      this.onPopupClose.next();
+    }
     this._show = value;
   }
 
@@ -64,7 +66,7 @@ export class PopupComponent {
             // And the mouse is beyond the top of the popup
             (e.clientY < this.popup.getBoundingClientRect().top - 20 ||
               // Or the mouse is below the bottom of the source element
-              (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + this.bottomBuffer))))) {
+              (e.clientY > this.popupService.sourceElement.getBoundingClientRect().top + this.popupService.sourceElement.getBoundingClientRect().height + this.popupService.bottomBuffer))))) {
         this.onPopupOut();
       }
     }
@@ -96,22 +98,22 @@ export class PopupComponent {
 
 
 
-      let popupTop = this.popupTop;
-      let popupBottom = popupTop + this.popup.getBoundingClientRect().height;
-      let popupOffset = popupBottom - window.innerHeight;
+    let popupTop = this.popupTop;
+    let popupBottom = popupTop + this.popup.getBoundingClientRect().height;
+    let popupOffset = popupBottom - window.innerHeight;
 
 
-      // If the menu extends beyond the bottom of the screen
-      if (popupBottom > window.innerHeight) {
-        // Re-adjust the position of the menu so that the bottom of the menu is placed at the bottom of the screen
-        this.popup.style.top = (popupTop - popupOffset) + "px";
+    // If the menu extends beyond the bottom of the screen
+    if (popupBottom > window.innerHeight) {
+      // Re-adjust the position of the menu so that the bottom of the menu is placed at the bottom of the screen
+      this.popup.style.top = (popupTop - popupOffset) + "px";
 
 
-        // If the menu does NOT extend beyond the bottom of the screen
-      } else {
-        // Place the menu as intended
-        this.popup.style.top = popupTop + "px";
-      }
+      // If the menu does NOT extend beyond the bottom of the screen
+    } else {
+      // Place the menu as intended
+      this.popup.style.top = popupTop + "px";
+    }
 
 
 
@@ -149,6 +151,14 @@ export class PopupComponent {
 
   // --------------------------------( SET ARROW LEFT )-------------------------------- \\
   setArrowLeft() {
-    this.arrow.style.left = ((this.popupService.sourceElement.getBoundingClientRect().left - this.popup.getBoundingClientRect().left) + (this.popupService.sourceElement.getBoundingClientRect().width / 2)) + "px";
+    let arrowLeft = ((this.popupService.sourceElement.getBoundingClientRect().left - this.popup.getBoundingClientRect().left) + (this.popupService.sourceElement.getBoundingClientRect().width / 2));
+
+    // If the arrow left position is greater than the width of the popup
+    if ((this.popupService.sourceElement.getBoundingClientRect().width / 2) > this.popup.getBoundingClientRect().width) {
+      // Position the arrow left in the center of the popup
+      arrowLeft = ((this.popup.getBoundingClientRect().left - this.popupService.sourceElement.getBoundingClientRect().left) + (this.popup.getBoundingClientRect().width / 2));
+    }
+
+    this.arrow.style.left = arrowLeft + "px";
   }
 }

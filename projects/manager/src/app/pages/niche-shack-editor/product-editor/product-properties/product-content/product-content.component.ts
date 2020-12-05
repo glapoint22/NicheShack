@@ -290,9 +290,9 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
 
     window.setTimeout(() => {
       // Get reference to the new source element
-      let newSourceElement: HTMLElement = this.itemList.rowItem.find((item, index) => index == 0).nativeElement;
+      let newSourceElement: HTMLElement = this.itemList.rowItem.find((item, index) => index == this.itemList.selectedListItemIndex).nativeElement;
       // Get the distance between the original source element and the new source element
-      this.popupService.bottomBuffer = (originalSourceElement.getBoundingClientRect().top - newSourceElement.getBoundingClientRect().top) + 5;
+      this.popupService.bottomBuffer = 50;
       // Show the price point popup
       this.showPricePointPopup(newSourceElement);
     })

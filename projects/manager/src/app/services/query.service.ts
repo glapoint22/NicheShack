@@ -7,7 +7,6 @@ import { DataService } from 'services/data.service';
 })
 export class QueryService {
   constructor(private dataService: DataService) { }
-  private dropdownListsLoaded: boolean;
   public onDropdownListsLoaded = new Subject<void>();
   public subgroups: Array<QueryDropdownList> = [];
   public categories: Array<QueryDropdownList> = [];
@@ -26,7 +25,6 @@ export class QueryService {
 
 
   getDropdownLists() {
-    console.log("download")
     this.dataService.get('api/Categories')
       .subscribe((categories) => {
         this.categories = categories;
@@ -40,15 +38,12 @@ export class QueryService {
                 this.dataService.get('api/Subgroups')
                   .subscribe((subgroups) => {
                     this.subgroups = subgroups;
-                    this.dropdownListsLoaded = true;
                     this.onDropdownListsLoaded.next();
                   });
               }
             });
         })
       });
-
-
   }
 
 
