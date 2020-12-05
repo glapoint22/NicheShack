@@ -16,18 +16,11 @@ export class PanelComponent {
   public contentMaxHeight: number;
   public contentPadding: number = 14;
 
-  ngAfterViewInit() {
-    this.onContentLoad();
-  }
-
-  onContentLoad() {
-    this.contentMaxHeight = this.content.nativeElement.scrollHeight + (this.contentPadding * 2);
-  }
 
   click(input: HTMLInputElement) {
-    if (input.checked) {
-      this.onContentLoad();
+    this.contentMaxHeight = this.content.nativeElement.scrollHeight + (this.contentPadding * 2);
 
+    if (input.checked) {
       window.setTimeout(() => {
         this.expanded = false;
       });

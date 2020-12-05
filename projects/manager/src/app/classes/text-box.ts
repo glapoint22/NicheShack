@@ -186,6 +186,8 @@ export class TextBox {
 
             // Remove any empty nodes;
             style.removeEmptyNodes(this.content);
+
+            this.onChange.next(this.content.innerHTML);
         });
 
 
@@ -212,8 +214,11 @@ export class TextBox {
         });
 
         contentDocument.oninput = () => {
-            this.onChange.next(this.content.innerHTML);
-            applicationRef.tick();
+            window.setTimeout(() => {
+                this.onChange.next(this.content.innerHTML);
+                applicationRef.tick();
+            });
+
         }
 
         // Take care of selection change on keydown
@@ -438,7 +443,7 @@ export class TextBox {
 
     initialize() {
         this.selectContents();
-        
+
         let selection = this.contentDocument.getSelection();
         let range = selection.getRangeAt(0);
 

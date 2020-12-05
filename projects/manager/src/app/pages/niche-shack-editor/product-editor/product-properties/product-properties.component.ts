@@ -45,7 +45,13 @@ export class ProductPropertiesComponent implements OnChanges {
 
           // Assign the product description
           if(this.productDescription) {
-            this.productDescription.description.content.innerHTML = product.description;
+            if(product.description) {
+              this.productDescription.description.content.innerHTML = product.description;
+            } else {
+              this.productDescription.description.content.innerHTML = '<div>&#8203;</div>';
+            }
+            
+            this.productDescription.setHeight();
           }
 
           this.loadingService.loading = false;

@@ -23,9 +23,6 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
     // Load the filters
     this.load('api/Filters').subscribe((items: Array<HierarchyCheckboxItem>) => {
       this.items = items;
-      window.setTimeout(() => {
-        this.panel.onContentLoad();
-      });
     });
   }
 

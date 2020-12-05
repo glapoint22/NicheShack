@@ -44,6 +44,7 @@ export class ProductDescriptionComponent implements AfterViewInit {
 
         // Initialize
         this.description.initialize();
+        this.setHeight();
       }
 
 
@@ -54,6 +55,7 @@ export class ProductDescriptionComponent implements AfterViewInit {
 
       this.description.onChange
         .subscribe((description: string) => {
+          this.setHeight();
           // Update the description in the product info window
           this.productService.product.safeDescription = this.sanitizer.bypassSecurityTrustHtml(description);
 
@@ -70,18 +72,8 @@ export class ProductDescriptionComponent implements AfterViewInit {
   }
 
 
-
-  ngDoCheck() {
-    if (this.description && this.iframe) this.setHeight();
-  }
-
-
-
-
   // -----------------------------( SET IFRAME HEIGHT )------------------------------ \\
   setHeight() {
     this.iframe.nativeElement.style.height = Math.max(64, this.description.getContentHeight()) + 'px';
-    if (!this.panel.expanded) this.panel.onContentLoad();
-
   }
 }

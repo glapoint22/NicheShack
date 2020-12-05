@@ -6,5 +6,27 @@
     <div class="name">{{hierarchyItem.name}}</div>
 </div>
 
-<!-- Lead Page editor -->
-<lead-page-editor [nicheId]="niche.id"></lead-page-editor>
+
+<ng-container *ngIf="niche">
+    <!-- Image -->
+    <panel [title]="'Image'">
+
+        <!-- Save & Publish buttons -->
+        <div class="grooved-container">
+            <div class="button-center">Publish</div>
+        </div>
+
+
+        <!-- Category Icon -->
+        <image [image]="niche.icon" [mediaType]="mediaType.CategoryImage" [noDelete]="true" (onChange)="onChange()">
+        </image>
+    </panel>
+
+
+
+
+    <!-- Lead Page editor -->
+    <panel [title]="'Lead Page'">
+        <lead-page-editor [nicheId]="niche.id"></lead-page-editor>
+    </panel>
+</ng-container>
