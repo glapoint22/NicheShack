@@ -18,7 +18,7 @@ export class CategoryEditorComponent implements OnChanges {
   public mediaType = MediaType;
 
   constructor(
-    public loadingService: LoadingService,
+    private loadingService: LoadingService,
     private dataService: DataService,
     private saveService: SaveService
   ) { }
