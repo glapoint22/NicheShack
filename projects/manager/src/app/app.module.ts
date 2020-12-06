@@ -41,6 +41,7 @@ import { MenuBarComponent } from './shared-components/menu-bar/menu-bar.componen
 import { SharedModule } from './shared-components/shared.module';
 import { NotificationProductDescriptionComponent } from './shared-components/popups/notification-popups/product-description-notification-popup/notification-product-description/notification-product-description.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SubgroupsFormComponent } from './shared-components/forms/subgroups-form/subgroups-form.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { HttpClientModule } from '@angular/common/http';
     PopupComponent,
     ShackIconComponent,
     MenuBarComponent,
-    NotificationProductDescriptionComponent
+    NotificationProductDescriptionComponent,
+    SubgroupsFormComponent
   ],
   imports: [
     BrowserModule,

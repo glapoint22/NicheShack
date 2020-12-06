@@ -1,0 +1,46 @@
+.form {
+    max-width: 350px;
+}
+
+.loading-container {
+    height: 100%;
+}
+
+.panel-dark {
+    height: 200px;
+    overflow: auto;
+    padding: 0;
+}
+
+.search-bar {
+    div {
+        width: 94px;
+    }
+}
+
+.icon-bar {
+    border: none;
+    padding: 0;
+    margin-top: 13px;
+    margin-bottom: 4px;
+}
+
+input {
+    border-radius: 100px;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.fa-spinner {
+    font-size: 16px;
+}
+
+.fa-times {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    cursor: pointer;
+    &:hover {
+        color: white;
+    }
+}

@@ -4,6 +4,7 @@ import { VideoUrlFormComponent } from '../shared-components/forms/video-url-form
 import { Subject } from 'rxjs';
 import { FiltersFormComponent } from '../shared-components/forms/filters-form/filters-form.component';
 import { ProductsFormComponent } from '../shared-components/forms/products-form/products-form.component';
+import { SubgroupsFormComponent } from '../shared-components/forms/subgroups-form/subgroups-form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,4 +15,5 @@ export class FormService {
   public onVideoUrlFormSubmit = new Subject<string>();
   public filtersForm: FiltersFormComponent;
   public productsForm: ProductsFormComponent;
+  public subgroupsForm: SubgroupsFormComponent;
 }
