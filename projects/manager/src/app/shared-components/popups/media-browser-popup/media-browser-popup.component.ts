@@ -45,6 +45,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       { key: 'Background Images', value: MediaType.BackgroundImage },
       { key: 'Banner Images', value: MediaType.BannerImage },
       { key: 'Category Images', value: MediaType.CategoryImage },
+      { key: 'Niche Images', value: MediaType.NicheImage },
       { key: 'Product Images', value: MediaType.ProductImage },
       { key: 'Product Media Images', value: MediaType.ProductMediaImage },
       { key: 'Icons', value: MediaType.Icon },
@@ -56,6 +57,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
     { new: 'New Background Image', edit: 'Edit Background Image Name', update: 'Update Background Image', delete: 'Delete Background Image', deletes: 'Delete Background Images' },
     { new: 'New Banner Image', edit: 'Edit Banner Image Name', update: 'Update Banner Image', delete: 'Delete Banner Image', deletes: 'Delete Banner Images' },
     { new: 'New Category Image', edit: 'Edit Category Image Name', update: 'Update Category Image', delete: 'Delete Category Image', deletes: 'Delete Category Images' },
+    { new: 'New Niche Image', edit: 'Edit Niche Image Name', update: 'Update Niche Image', delete: 'Delete Niche Image', deletes: 'Delete Niche Images' },
     { new: 'New Product Image', edit: 'Edit Product Image Name', update: 'Update Product Image', delete: 'Delete Product Image', deletes: 'Delete Product Images' },
     { new: 'New Product Media Image', edit: 'Edit Product Media Image Name', update: 'Update Product Media Image', delete: 'Delete Product Media Image', deletes: 'Delete Product Media Images' },
     { new: 'New Icon', edit: 'Edit Icon Name', update: 'Update Icon', delete: 'Delete Icon', deletes: 'Delete Icons' },
@@ -266,6 +268,11 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       case MediaType.CategoryImage: {
         promptTitle = !this.itemList.isMultiSelected ? 'Delete Category Image' : 'Delete Category Images';
         promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected category image?' : 'Are you sure you want to delete all the selected category images?';
+        break;
+      }
+      case MediaType.NicheImage: {
+        promptTitle = !this.itemList.isMultiSelected ? 'Delete Niche Image' : 'Delete Niche Images';
+        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected niche image?' : 'Are you sure you want to delete all the selected niche images?';
         break;
       }
       case MediaType.ProductImage: {

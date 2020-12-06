@@ -156,7 +156,7 @@ export class PopupComponent {
     // If the arrow left position is greater than the width of the popup
     if ((this.popupService.sourceElement.getBoundingClientRect().width / 2) > this.popup.getBoundingClientRect().width) {
       // Position the arrow left in the center of the popup
-      arrowLeft = ((this.popup.getBoundingClientRect().left - this.popupService.sourceElement.getBoundingClientRect().left) + (this.popup.getBoundingClientRect().width / 2));
+      arrowLeft = this.popup.getBoundingClientRect().width / 2;
     }
 
     this.arrow.style.left = arrowLeft + "px";

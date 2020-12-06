@@ -18,18 +18,18 @@
 
             
             <!-- Edit -->
-            <div class="icon-container"
+            <!-- <div class="icon-container"
                  (click)="onListItemEdit()"
                  [attr.title]="'Edit Keyword (Ctrl+Alt+E)'"
                  (mouseout)="itemList.onIconButtonMouseOut()"
                  (mouseover)="itemList.isOverIconButton = true"
                  [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"><i class="fas fa-edit"></i>
-            </div>
+            </div> -->
 
 
             <!-- Add -->
             <div class="icon-container"
-                 (click)="onListItemAdd()"
+                 (click)="openPopup($event.target)"
                  [attr.title]="'New Keyword (Ctrl+Alt+N)'"
                  (mouseout)="itemList.onIconButtonMouseOut()"
                  (mouseover)="itemList.isOverIconButton = true"
@@ -39,11 +39,11 @@
 
 
         <!-- Editable Item LIst -->
-        <editable-item-list 
+        <item-list 
             #itemList
             [listItems]="product.keywords"
             [listOptions]="itemListOptions">
-        </editable-item-list>
+        </item-list>
 
 
         <!-- Placeholder -->

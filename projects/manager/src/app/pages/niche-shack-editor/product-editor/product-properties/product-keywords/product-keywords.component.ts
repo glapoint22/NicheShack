@@ -7,24 +7,28 @@ import { Product } from 'projects/manager/src/app/classes/product';
 import { SaveService } from 'projects/manager/src/app/services/save.service';
 import { DataService } from 'services/data.service';
 import { PromptService } from 'services/prompt.service';
+import { ItemListComponent } from 'projects/manager/src/app/shared-components/item-lists/item-list/item-list.component';
+import { Searchable } from 'projects/manager/src/app/classes/searchable';
+import { PopupService } from 'projects/manager/src/app/services/popup.service';
 
 @Component({
   selector: 'product-keywords',
   templateUrl: './product-keywords.component.html',
   styleUrls: ['./product-keywords.component.scss']
 })
-export class ProductKeywordsComponent {
+export class ProductKeywordsComponent implements Searchable<ListItem>{
   // Decorators
   @Input() product: Product;
-  @ViewChild('itemList', { static: false }) itemList: EditableItemListComponent;
+  @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
   public itemListOptions: ItemListOptions;
-  private apiUrl: string = 'api/Products/Keyword';
+  public apiUrl: string = 'api/Products/Keywords';
 
 
   constructor(
     private promptService: PromptService,
     private dataService: DataService,
-    private saveService: SaveService
+    private saveService: SaveService,
+    private popupService: PopupService
   ) { }
 
 
@@ -39,16 +43,12 @@ export class ProductKeywordsComponent {
         return [
           // New Keyword
           new MenuOption('New Keyword', this.itemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
-          // Edit Keyword
-          new MenuOption('Edit Keyword', this.itemList.editIcon.isDisabled, this.onListItemEdit, null, 'Ctrl+Alt+E'),
           // Delete Keyword
           new MenuOption(!this.itemList.isMultiSelected ? 'Delete Keyword' : 'Delete Keywords', this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
         ]
       },
       // On Add Item
-      onAddItem: this.postKeyword,
-      // On Add Item
-      onEditItem: this.updateKeyword,
+      onAddItem: this.openPopup,
       // On Delete Item
       onDeleteItem: this.openDeletePrompt
     }
@@ -61,9 +61,25 @@ export class ProductKeywordsComponent {
   }
 
 
-  // -----------------------------( ON LIST ITEM EDIT )------------------------------ \\
-  onListItemEdit() {
-    this.itemList.onListItemEdit();
+  openPopup(sourceElement: HTMLElement) {
+    this.popupService.sourceElement = sourceElement;
+    this.popupService.searchPopup.searchable = this;
+    this.popupService.searchPopup.show = !this.popupService.searchPopup.show;
+  }
+
+
+  setSearchItem(searchItem: ListItem) {
+    // Add the item to the list
+    this.product.keywords.unshift(searchItem);
+    // Select the new list item
+    this.itemList.setListItemSelection(0);
+
+    this.dataService.post('api/Products/Keyword', {
+      productId: this.product.id,
+      keywordId: searchItem.id
+    }).subscribe((id: number) => {
+      searchItem.id = id;
+    });
   }
 
 
@@ -82,36 +98,11 @@ export class ProductKeywordsComponent {
     this.promptService.showPrompt(promptTitle, promptMessage, this.deleteKeyword, this, null, this.onPromptCancel);
   }
 
-
-  // -----------------------------( POST KEYWORD )------------------------------ \\
-  postKeyword(keyword: ListItem) {
-    this.dataService.post(this.apiUrl, {
-      id: this.product.id,
-      name: keyword.name
-    }).subscribe((id: number) => {
-      keyword.id = id;
-    });
-  }
-
-
-  // -----------------------------( UPDATE KEYWORD )------------------------------ \\
-  updateKeyword(keyword: ListItem) {
-    // Update the keyword
-    this.saveService.save({
-      url: this.apiUrl,
-      data: {
-        id: keyword.id,
-        name: keyword.name
-      }
-    });
-  }
-
-
   // -----------------------------( DELETE KEYWORD )------------------------------ \\
   deleteKeyword() {
     let deletedKeywords: Array<ListItem> = this.itemList.deleteListItem();
 
-    this.dataService.delete(this.apiUrl, {ids: deletedKeywords.map(x => x.id)}).subscribe();
+    this.dataService.delete('api/Products/Keyword', { ids: deletedKeywords.map(x => x.id) }).subscribe();
   }
 
 

@@ -34,11 +34,14 @@
     <div class="search-container">
         <!-- Icon -->
         <div class="search-icon-container">
+
+            <i class="fas fa-search search-icon"></i>
+
             <input #mediaSelectInput
                    type="file"
                    class="media-select-input"
                    (change)="updatingMediaIndex == null ? setNewImage($event) : setUpdateImage($event)">
-            <i class="fas fa-search search-icon"></i>
+            
         </div>
 
         <!-- Input -->
@@ -64,6 +67,9 @@
             <div *ngIf="indexOfCurrentMediaList == mediaType.BackgroundImage">No background images available</div>
             <div *ngIf="indexOfCurrentMediaList == mediaType.BannerImage">No banner images available</div>
             <div *ngIf="indexOfCurrentMediaList == mediaType.CategoryImage">No category images available</div>
+
+            <div *ngIf="indexOfCurrentMediaList == mediaType.NicheImage">No niche images available</div>
+
             <div *ngIf="indexOfCurrentMediaList == mediaType.ProductImage">No product images available</div>
             <div *ngIf="indexOfCurrentMediaList == mediaType.ProductMediaImage">No product media images available</div>
             <div *ngIf="indexOfCurrentMediaList == mediaType.Icon">No icons available</div>
