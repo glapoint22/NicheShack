@@ -1,0 +1,58 @@
+<div *show="show" transitionClass="fade-end" class="modal-background fade-start" style="z-index: 10;"
+    (onShow)="onShow()">
+    <div class="form">
+        <!-- Bar -->
+        <div class="form-bar">
+            Subgroups
+            <div class="form-x-button" (click)="show = false">X</div>
+        </div>
+
+        <!-- Panel -->
+        <div class="panel-light">
+
+
+            <!-- Search bar -->
+            <div style="position: relative;">
+                <!-- Search bar -->
+                <div class="search-bar">
+                    <input #searchInput id="search-input" autocomplete="off">
+                    <i class="fas fa-times" (click)="clearSearchResults(searchInput)" title="Clear"></i>
+                </div>
+            </div>
+
+
+            <!-- Icons -->
+            <div class="icon-bar">
+                <!-- Add -->
+                <div class="icon-container" (click)="onListItemAdd()" title="Add Subgroup"
+                    [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"
+                    (mouseout)="itemList.onIconButtonMouseOut()" (mouseover)="itemList.isOverIconButton = true">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+
+                <!-- Rename -->
+                <div class="icon-container" (click)="onListItemEdit()" title="Remame Subgroup"
+                    [ngClass]="{'icon-disabled': itemList.editIcon.isDisabled}"
+                    (mouseout)="itemList.onIconButtonMouseOut()" (mouseover)="itemList.isOverIconButton = true">
+                    <i class="fas fa-pencil-alt"></i>
+                </div>
+
+
+                <!-- Delete -->
+                <div class="icon-container" (click)="onListItemDelete()" title="Delete Subgroup"
+                    [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
+                    (mouseout)="itemList.onIconButtonMouseOut()" (mouseover)="itemList.isOverIconButton = true">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+            </div>
+
+
+            <!-- Content -->
+            <div class="panel-dark">
+                <!-- Editable Item LIst -->
+                <editable-item-list #itemList [listItems]="subgroups" [listOptions]="itemListOptions">
+                </editable-item-list>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,6 +33,7 @@ export class MenuBarComponent implements OnInit {
           new MenuDivider(),
           new MenuOption("Vendor Form", false, () => this.formService.vendorForm.show = true),
           new MenuOption("Filters Form", false, () => this.formService.filtersForm.show = true),
+          new MenuOption("Subgroups Form", false, () => this.formService.subgroupsForm.show = true),
           new MenuDivider(),
           new MenuOption("Sign Out", false, () => { })
         ]
