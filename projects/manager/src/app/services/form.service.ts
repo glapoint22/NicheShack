@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { FiltersFormComponent } from '../shared-components/forms/filters-form/filters-form.component';
 import { ProductsFormComponent } from '../shared-components/forms/products-form/products-form.component';
 import { SubgroupsFormComponent } from '../shared-components/forms/subgroups-form/subgroups-form.component';
+import { KeywordsFormComponent } from '../shared-components/forms/keywords-form/keywords-form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -16,4 +17,5 @@ export class FormService {
   public filtersForm: FiltersFormComponent;
   public productsForm: ProductsFormComponent;
   public subgroupsForm: SubgroupsFormComponent;
+  public keywordsForm: KeywordsFormComponent;
 }

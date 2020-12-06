@@ -34,6 +34,7 @@ export class MenuBarComponent implements OnInit {
           new MenuOption("Vendor Form", false, () => this.formService.vendorForm.show = true),
           new MenuOption("Filters Form", false, () => this.formService.filtersForm.show = true),
           new MenuOption("Subgroups Form", false, () => this.formService.subgroupsForm.show = true),
+          new MenuOption("Keywords Form", false, () => this.formService.keywordsForm.show = true),
           new MenuDivider(),
           new MenuOption("Sign Out", false, () => { })
         ]
