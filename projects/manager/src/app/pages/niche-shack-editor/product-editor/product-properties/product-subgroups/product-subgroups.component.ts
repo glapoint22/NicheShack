@@ -1,30 +1,30 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { ItemListOptions } from 'projects/manager/src/app/classes/item-list-options';
-import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 import { ListItem } from 'projects/manager/src/app/classes/list-item';
+import { MenuOption } from 'projects/manager/src/app/classes/menu-option';
 import { Product } from 'projects/manager/src/app/classes/product';
-import { DataService } from 'services/data.service';
-import { PromptService } from 'services/prompt.service';
-import { ItemListComponent } from 'projects/manager/src/app/shared-components/item-lists/item-list/item-list.component';
 import { Searchable } from 'projects/manager/src/app/classes/searchable';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
+import { ItemListComponent } from 'projects/manager/src/app/shared-components/item-lists/item-list/item-list.component';
+import { DataService } from 'services/data.service';
+import { PromptService } from 'services/prompt.service';
 
 @Component({
-  selector: 'product-keywords',
-  templateUrl: './product-keywords.component.html',
-  styleUrls: ['./product-keywords.component.scss']
+  selector: 'product-subgroups',
+  templateUrl: './product-subgroups.component.html',
+  styleUrls: ['./product-subgroups.component.scss']
 })
-export class ProductKeywordsComponent implements Searchable<ListItem>{
+export class ProductSubgroupsComponent implements Searchable<ListItem> {
   constructor(private promptService: PromptService, private dataService: DataService, private popupService: PopupService) { }
 
   // Public
   public itemListOptions: ItemListOptions;
-  public apiUrl: string = 'api/Products/Keywords';
+  public apiUrl: string = 'api/subgroups';
 
   // Decorators
   @Input() product: Product;
   @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
-  
+
 
   // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
@@ -35,10 +35,10 @@ export class ProductKeywordsComponent implements Searchable<ListItem>{
       // Menu Options
       menuOptions: () => {
         return [
-          // New Keyword
-          new MenuOption('New Keyword', this.itemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
-          // Delete Keyword
-          new MenuOption(!this.itemList.isMultiSelected ? 'Delete Keyword' : 'Delete Keywords', this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+          // New subgroup
+          new MenuOption('New subgroup', this.itemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
+          // Delete subgroup
+          new MenuOption(!this.itemList.isMultiSelected ? 'Delete subgroup' : 'Delete subgroups', this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
         ]
       },
       // On Add Item
@@ -66,15 +66,15 @@ export class ProductKeywordsComponent implements Searchable<ListItem>{
   // -----------------------------( SET SEARCH ITEM )------------------------------ \\
   setSearchItem(searchItem: ListItem) {
     // Add the item to the list
-    this.product.keywords.push(searchItem);
+    this.product.subgroups.push(searchItem);
     // Select the new list item
     this.itemList.setListItemSelection(this.itemList.listItems.length - 1);
 
-    this.dataService.post('api/Products/Keyword', {
+    this.dataService.post(this.apiUrl + "/subgroup", {
       productId: this.product.id,
       itemId: searchItem.id
-    }).subscribe((id: number) => {
-      searchItem.id = id;
+    }).subscribe(() => {
+      // searchItem.id = id;
     });
   }
 
@@ -89,16 +89,16 @@ export class ProductKeywordsComponent implements Searchable<ListItem>{
   openDeletePrompt() {
     // Prompt the user
     this.itemList.itemDeletionPending = true;
-    let promptTitle = !this.itemList.isMultiSelected ? 'Delete Keyword' : 'Delete Keywords';
-    let promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected keyword?' : 'Are you sure you want to delete all the selected keywords?';
-    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteKeyword, this, null, this.onPromptCancel);
+    let promptTitle = !this.itemList.isMultiSelected ? 'Delete subgroup' : 'Delete subgroups';
+    let promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected subgroup?' : 'Are you sure you want to delete all the selected subgroups?';
+    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteSubgroup, this, null, this.onPromptCancel);
   }
 
-  // -----------------------------( DELETE KEYWORD )------------------------------ \\
-  deleteKeyword() {
-    let deletedKeywords: Array<ListItem> = this.itemList.deleteListItem();
+  // -----------------------------( DELETE SUBGROUP )------------------------------ \\
+  deleteSubgroup() {
+    let deletedSubgroups: Array<ListItem> = this.itemList.deleteListItem();
 
-    this.dataService.delete('api/Products/Keyword', { ids: deletedKeywords.map(x => x.id) }).subscribe();
+    this.dataService.delete(this.apiUrl, { ids: deletedSubgroups.map(x => x.id) }).subscribe();
   }
 
 

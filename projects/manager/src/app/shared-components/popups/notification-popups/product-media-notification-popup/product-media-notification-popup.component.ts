@@ -71,7 +71,8 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
         media: this.notificationService.productMediaNotification.media,
         minPrice: null,
         maxPrice: null,
-        keywords: null
+        keywords: null,
+        subgroups: null
       }
 
       if (this.product.media.length > 0) {

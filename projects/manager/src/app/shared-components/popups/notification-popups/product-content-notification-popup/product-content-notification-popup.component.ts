@@ -81,7 +81,8 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
         media: null,
         minPrice: this.notificationService.productContentNotification.minPrice,
         maxPrice: this.notificationService.productContentNotification.maxPrice,
-        keywords: null
+        keywords: null,
+        subgroups: null
       }
     }
   }

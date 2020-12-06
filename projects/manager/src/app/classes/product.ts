@@ -20,6 +20,7 @@ export interface Product {
     minPrice: number;
     maxPrice: number;
     keywords: Array<Item>;
+    subgroups: Array<Item>;
     safeDescription?: SafeHtml;
     selectedMedia?: ProductMedia;
 }
