@@ -70,11 +70,11 @@ export class ProductSubgroupsComponent implements Searchable<ListItem> {
     // Select the new list item
     this.itemList.setListItemSelection(this.itemList.listItems.length - 1);
 
-    this.dataService.post(this.apiUrl + "/subgroup", {
+    this.dataService.post("api/Products/subgroup", {
       productId: this.product.id,
       itemId: searchItem.id
-    }).subscribe(() => {
-      // searchItem.id = id;
+    }).subscribe((id: number) => {
+      searchItem.id = id;
     });
   }
 
@@ -98,7 +98,7 @@ export class ProductSubgroupsComponent implements Searchable<ListItem> {
   deleteSubgroup() {
     let deletedSubgroups: Array<ListItem> = this.itemList.deleteListItem();
 
-    this.dataService.delete(this.apiUrl, { ids: deletedSubgroups.map(x => x.id) }).subscribe();
+    this.dataService.delete("api/Products/subgroup", { ids: deletedSubgroups.map(x => x.id) }).subscribe();
   }
 
 

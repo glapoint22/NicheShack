@@ -19,7 +19,7 @@ export class ProductKeywordsComponent implements Searchable<ListItem>{
 
   // Public
   public itemListOptions: ItemListOptions;
-  public apiUrl: string = 'api/Products/Keywords';
+  public apiUrl: string = 'api/Keywords';
 
   // Decorators
   @Input() product: Product;
