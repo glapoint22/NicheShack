@@ -145,6 +145,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
       if (el.innerText == '') {
         if (!this.selectedItem.name) {
           this.deleteItem();
+          this.editMode = false;
         } else {
           el.innerText = this.selectedItem.name;
           this.editMode = false;
@@ -254,7 +255,6 @@ export class EditableHierarchyComponent extends HierarchyComponent {
     } else {
       items.splice(items.findIndex(x => x == this.selectedItem), 1);
       this.selectedItem = null;
-      this.editMode = false;
     }
   }
 
@@ -380,12 +380,11 @@ export class EditableHierarchyComponent extends HierarchyComponent {
     if (this.selectedItem) {
 
       // Get the element
-      let el: HTMLElement = document.getElementById(this.selectedItem.id.toString());
+      let el: HTMLElement = document.getElementById(this.selectedItem.hierarchyId);
 
       // Set editable to false
       if (el && el.contentEditable == 'true') {
         el.contentEditable = 'false';
-        this.editMode = false;
       } else {
         // If prompt is not up, deselect the selected item
         if (!this.promptService.show) {
@@ -393,6 +392,8 @@ export class EditableHierarchyComponent extends HierarchyComponent {
         }
       }
     }
+
+    this.editMode = false;
   }
 
 

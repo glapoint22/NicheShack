@@ -241,16 +241,7 @@ export class FiltersFormComponent extends EditableHierarchyComponent implements 
 
   // --------------------------------( ON KEYDOWN )-------------------------------- \\
   onKeydown() {
-    if (this.show) {
-      super.onKeydown();
-    }
-  }
-
-
-
-  // --------------------------------( ON ESCAPE KEYDOWN )-------------------------------- \\
-  @HostListener('document:keydown.escape')
-  onEscapeKeydown() {
-    this.show = false;
+    if (!this.selectedItem && !this.editMode) this.show = false;
+    super.onKeydown();
   }
 }

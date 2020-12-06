@@ -42,6 +42,8 @@ import { SharedModule } from './shared-components/shared.module';
 import { NotificationProductDescriptionComponent } from './shared-components/popups/notification-popups/product-description-notification-popup/notification-product-description/notification-product-description.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SubgroupsFormComponent } from './shared-components/forms/subgroups-form/subgroups-form.component';
+import { ListFormComponent } from './shared-components/forms/list-form/list-form.component';
+import { KeywordsFormComponent } from './shared-components/forms/keywords-form/keywords-form.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,9 @@ import { SubgroupsFormComponent } from './shared-components/forms/subgroups-form
     ShackIconComponent,
     MenuBarComponent,
     NotificationProductDescriptionComponent,
-    SubgroupsFormComponent
+    SubgroupsFormComponent,
+    ListFormComponent,
+    KeywordsFormComponent
   ],
   imports: [
     BrowserModule,
