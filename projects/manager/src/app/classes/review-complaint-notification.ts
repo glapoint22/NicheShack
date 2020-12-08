@@ -1,7 +1,7 @@
 import { GeneralNotification } from './general-notification';
-import { NotificationText } from './notification-text';
+import { ReviewNotificationText } from './review-notification-text';
 
 export interface ReviewComplaintNotification extends GeneralNotification {
     isChecked: boolean[];
-    review: NotificationText;
+    review: ReviewNotificationText;
 }

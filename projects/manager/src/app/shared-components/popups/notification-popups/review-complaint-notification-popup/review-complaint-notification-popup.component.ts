@@ -30,5 +30,7 @@ export class ReviewComplaintNotificationPopupComponent extends GeneralNotificati
   onSubmit(notification: Notification, htmlNotes: HTMLElement, notes: NotificationText) {
     super.onSubmit(notification, htmlNotes, notes);
 
+    this.dataService.put('api/ProductReviews', { id: this.notificationService.reviewComplaintNotification.review.reviewId })
+    .subscribe();
   }
 }
