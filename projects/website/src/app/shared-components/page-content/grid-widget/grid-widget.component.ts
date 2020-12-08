@@ -33,7 +33,7 @@ export class GridWidgetComponent extends WidgetComponent {
       this.search = params.get('search');
 
       // If we have queries
-      if (this.queryParams.queries) {
+      if (this.queryParams.queries || this.search) {
         this.queryParams.set(params);
         this.getGridData();
       }

@@ -17,6 +17,8 @@ export class LinkPopupComponent extends PopupComponent implements OnInit {
   public apiUrl: string;
   public searchResults: Array<LinkItem>;
   private searchInput: HTMLInputElement;
+  public pagesUrl = 'api/Pages/Link';
+  public productsUrl = 'api/Products/Link';
 
 
   // --------------------------------( NG ON INIT )-------------------------------- \\
@@ -32,20 +34,27 @@ export class LinkPopupComponent extends PopupComponent implements OnInit {
 
     this.searchInput = document.getElementById('search-input') as HTMLInputElement;
 
+    // Init link option and apiUrl
+    if (!this.link.selectedOption) {
+      this.link.selectedOption = this.linkOption.None;
+    } else if (this.link.selectedOption == LinkOption.Page) {
+      this.apiUrl = this.pagesUrl;
+    } else if (this.link.selectedOption == this.linkOption.Product) {
+      this.apiUrl = this.productsUrl;
+    }
+
 
     // Get the items from the database when the user types in the search input
     fromEvent(this.searchInput, 'input')
       .pipe(
         debounceTime(250),
         switchMap((event: any) => {
-          if (this.link.selectedOption == LinkOption.WebAddress) {
+          if (this.link.selectedOption == LinkOption.WebAddress || this.searchInput.value == '') {
+            if (this.searchInput.value == '') this.reset();
             return of();
           }
 
-          if (this.link.optionValue == '') {
-            this.clearSearchResults();
-            return of();
-          }
+
 
           return this.dataService.get(this.apiUrl, [{ key: 'searchWords', value: event.target.value }]);
         }))
@@ -55,17 +64,6 @@ export class LinkPopupComponent extends PopupComponent implements OnInit {
       });
   }
 
-
-
-
-
-  // -----------------------------( CLEAR SEARCH RESULTS )------------------------------ \\
-  clearSearchResults() {
-    if (this.searchResults) {
-      this.searchResults = null;
-      this.searchInput.value = '';
-    }
-  }
 
 
 
@@ -87,11 +85,12 @@ export class LinkPopupComponent extends PopupComponent implements OnInit {
 
 
   // -----------------------------( ON OPTION CHANGE )------------------------------ \\
-  onOptionChange() {
+  reset() {
     this.link.optionValue = '';
     this.link.url = '';
     this.searchResults = null;
     this.preventNoShow = false;
+    this.searchInput.value = '';
   }
 
 
@@ -101,9 +100,10 @@ export class LinkPopupComponent extends PopupComponent implements OnInit {
 
 
   // -----------------------------( ON INPUT )------------------------------ \\
-  OnInput() {
+  OnInput(value: string) {
     if (this.link.selectedOption == this.linkOption.WebAddress) {
-      this.link.url = this.link.optionValue;
+      this.link.url = value;
+      this.link.optionValue = value;
     }
 
   }

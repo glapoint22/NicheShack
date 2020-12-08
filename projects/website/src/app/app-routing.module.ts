@@ -64,7 +64,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
   },
   {
-    path: 'browse',
+    path: 'browse/:urlTitle/:id',
     loadChildren: () => import('./pages/browse/browse.module').then(m => m.BrowseModule)
   },
   {
@@ -84,6 +84,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/write-review/write-review.module').then(m => m.WriteReviewModule),
     canLoad: [AccountGuard],
     canActivate: [AccountGuard]
+  },
+  {
+    path: 'cp/:urlTitle/:id',
+    loadChildren: () => import('./pages/custom-page/custom-page.module').then(m => m.CustomPageModule)
   },
   {
     path: ':urlTitle/:id',

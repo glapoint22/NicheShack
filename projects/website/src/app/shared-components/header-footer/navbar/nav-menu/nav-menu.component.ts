@@ -42,14 +42,12 @@ export class NavMenuComponent implements OnInit {
   }
 
   onNicheClick(niche: Niche) {
-    let queryParams = {
-      'nicheName': niche.urlName,
-      'nicheId': niche.urlId
-    }
+    // let queryParams = {
+    //   'nicheName': niche.urlName,
+    //   'nicheId': niche.urlId
+    // }
 
-    this.router.navigate(['/browse'], {
-      queryParams
-    });
+    this.router.navigate(['browse', niche.urlName, niche.urlId]);
     this.show = false;
   }
 }

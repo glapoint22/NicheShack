@@ -9,37 +9,23 @@
     <!-- None -->
     <div class="radio-button-option">
         <radio-button [name]="'link-option'" [label]="'None'"
-            (change)="link.selectedOption = linkOption.None; link.url = ''; onOptionChange()"
+            (change)="link.selectedOption = linkOption.None; link.url = ''; reset()"
             [checked]="link.selectedOption == linkOption.None"></radio-button>
     </div>
 
     <!-- Page -->
     <div class="radio-button-option">
         <radio-button [name]="'link-option'" [label]="'Page'"
-            (change)="link.selectedOption = linkOption.Page; apiUrl = 'api/Pages/Links'; onOptionChange()"
+            (change)="link.selectedOption = linkOption.Page; apiUrl = pagesUrl; reset()"
             [checked]="link.selectedOption == linkOption.Page"></radio-button>
     </div>
 
-    <!-- Category -->
-    <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Category'"
-            (change)="link.selectedOption = linkOption.Category; apiUrl = 'api/Categories/Links'; onOptionChange()"
-            [checked]="link.selectedOption == linkOption.Category">
-        </radio-button>
-    </div>
-
-    <!-- Niche -->
-    <div class="radio-button-option">
-        <radio-button [name]="'link-option'" [label]="'Niche'"
-            (change)="link.selectedOption = linkOption.Niche; apiUrl = 'api/Niches/Links'; onOptionChange()"
-            [checked]="link.selectedOption == linkOption.Niche">
-        </radio-button>
-    </div>
+    
 
     <!-- Product -->
     <div class="radio-button-option">
         <radio-button [name]="'link-option'" [label]="'Product'"
-            (change)="link.selectedOption = linkOption.Product; apiUrl = 'api/Products/Links'; onOptionChange()"
+            (change)="link.selectedOption = linkOption.Product; apiUrl = productsUrl; reset()"
             [checked]="link.selectedOption == linkOption.Product">
         </radio-button>
     </div>
@@ -47,7 +33,7 @@
     <!-- Web Address -->
     <div class="radio-button-option">
         <radio-button [name]="'link-option'" [label]="'Web Address'"
-            (change)="link.selectedOption = linkOption.WebAddress; searchResults = null; onOptionChange()"
+            (change)="link.selectedOption = linkOption.WebAddress; searchResults = null; reset()"
             [checked]="link.selectedOption == linkOption.WebAddress"></radio-button>
     </div>
 
@@ -60,17 +46,17 @@
 
     <div style="position: relative;">
         <!-- Input -->
-        <input id="search-input" class="txt-20" [(ngModel)]="link.optionValue" (click)="$event.target.select()"
+        <input id="search-input" class="txt-20" (click)="$event.target.select()" [value]="link.optionValue ? link.optionValue : ''"
             [disabled]="link.selectedOption == linkOption.None || link.selectedOption == linkOption.OnClick"
-            autocomplete="off" (input)="OnInput()">
+            autocomplete="off" (input)="OnInput($event.target.value)">
 
-            <div class="clear-results" (click)="clearSearchResults()" [ngClass]="{'disabled-clear-results': !searchResults}">
+            <div class="clear-results" (click)="reset()" >
                 <i class="fas fa-times"></i>
             </div>
 
         <!-- Search -->
         <div class="search-container" *ngIf="searchResults">
-            <div class="search-item" *ngFor="let result of searchResults" (click)="onResultClick(result)">
+            <div class="search-item text-truncate" *ngFor="let result of searchResults" (click)="onResultClick(result)" [title]="result.name">
                 {{result.name}}</div>
         </div>
     </div>

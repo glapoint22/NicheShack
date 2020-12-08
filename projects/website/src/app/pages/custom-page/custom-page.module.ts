@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { BrowseRoutingModule } from './browse-routing.module';
-import { BrowseComponent } from './browse.component';
+import { CustomPageRoutingModule } from './custom-page-routing.module';
+import { CustomPageComponent } from './custom-page.component';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
 import { PageContentModule } from '../../shared-components/page-content/page-content.module';
 
 
 @NgModule({
-  declarations: [BrowseComponent],
+  declarations: [CustomPageComponent],
   imports: [
     CommonModule,
-    BrowseRoutingModule,
+    CustomPageRoutingModule,
     HeaderFooterModule,
     PageContentModule
   ]
 })
-export class BrowseModule { }
+export class CustomPageModule { }

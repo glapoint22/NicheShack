@@ -9,8 +9,8 @@
     </div>
 
     <!-- Link -->
-    <div *ngIf="link.url; else placeholder" class="link">
-        <a [href]="link.url" target="_blank">{{link.url}}</a>
+    <div *ngIf="link.optionValue; else placeholder" class="link">
+        <a *ngIf="link.url" [href]="link.url" target="_blank">{{link.url}}</a>
     </div>
 
 

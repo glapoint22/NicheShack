@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './search.component';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
-// import { FormsModule } from '@angular/forms';
-// import { ShowHideModule } from 'directives/show-hide/show-hide.module';
-// import { CustomInputModule } from 'shared-components/custom-input/custom-input.module';
-// import { PaginatorModule } from 'shared-components/paginator/paginator.module';
+import { PageContentModule } from '../../shared-components/page-content/page-content.module';
 
 
 @NgModule({
@@ -16,10 +12,7 @@ import { HeaderFooterModule } from '../../shared-components/header-footer/header
     CommonModule,
     SearchRoutingModule,
     HeaderFooterModule,
-    // PaginatorModule,
-    // FormsModule,
-    // ShowHideModule,
-    // CustomInputModule
+    PageContentModule
   ]
 })
 export class SearchModule { }

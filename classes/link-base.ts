@@ -19,8 +19,6 @@ export class LinkBase {
 export enum LinkOption {
     None,
     Page,
-    Category,
-    Niche,
     Product,
     WebAddress,
     OnClick

@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, DoCheck, Output, EventEmitter } from '@angular/core';
+import { LinkOption } from 'classes/link-base';
 import { Link } from '../../../classes/link';
 
 @Component({
@@ -10,6 +11,7 @@ export class LinkComponent implements OnChanges, DoCheck {
   @Input() link: Link;
   @Output() onChange: EventEmitter<void> = new EventEmitter();
   private currentLink: Link = new Link();
+  public linkOption = LinkOption;
 
   ngOnChanges() {
     this.setCurrentLink();
