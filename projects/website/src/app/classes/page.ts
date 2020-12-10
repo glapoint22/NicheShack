@@ -29,6 +29,7 @@ export class Page {
 
     // -----------------------------( SET DATA )------------------------------ \\
     setData(pageData: PageData) {
+        this.rootContainer.viewContainerRef.remove();
         this.width = pageData.width;
 
         // Set the background data

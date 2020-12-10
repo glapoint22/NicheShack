@@ -1,8 +1,9 @@
 import { KeyValue } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { GridData } from 'classes/grid-data';
 import { QueryParams } from 'classes/query-params';
+import { Subscription } from 'rxjs';
 import { DataService } from 'services/data.service';
 import { GridWidgetData } from '../../../classes/grid-widget-data';
 import { WidgetComponent } from '../widget/widget.component';
@@ -13,42 +14,55 @@ import { WidgetComponent } from '../widget/widget.component';
   templateUrl: './grid-widget.component.html',
   styleUrls: ['./grid-widget.component.scss']
 })
-export class GridWidgetComponent extends WidgetComponent {
+export class GridWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
   public gridData: GridData;
   public selectedSortOption: KeyValue<string, string>;
   public queryParams: QueryParams = new QueryParams;
-  public search: string;
   public showFilterMenu: boolean;
+  private subscription: Subscription;
+  private dataSet: boolean;
+  private currentId: string;
 
-  
-  constructor(private dataService: DataService, public route: ActivatedRoute, private router: Router) {super()}
+  constructor(private dataService: DataService, public route: ActivatedRoute, private router: Router) { super() }
 
 
   ngOnInit() {
     this.queryParams.page = 1;
     this.queryParams.limit = screen.width >= 600 ? 40 : 20;
-    
 
-    this.route.queryParamMap.subscribe((params: ParamMap) => {
-      this.search = params.get('search');
 
-      // If we have queries
-      if (this.queryParams.queries || this.search) {
-        this.queryParams.set(params);
-        this.getGridData();
-      }
-    });
+    this.subscription = this.route.queryParamMap
+      .subscribe((params: ParamMap) => {
+
+
+        if (this.dataSet && this.queryParams.search == params.get('search') && this.currentId == this.route.snapshot.paramMap.get('id')) {
+          this.queryParams.set(params);
+          this.getGridData();
+        }
+      });
   }
 
 
   setData(widgetData: GridWidgetData) {
-    if (widgetData.queries) {
-      this.queryParams.queries = widgetData.queries;
-      this.queryParams.set(this.route.snapshot.queryParamMap);
-      this.getGridData();
+    this.queryParams.queries = widgetData.queries;
+    this.queryParams.set(this.route.snapshot.queryParamMap);
+    
+    if(!this.queryParams.queries && !this.queryParams.search) {
+      this.currentId = this.route.snapshot.paramMap.get('id');
+      this.queryParams.queries = [{
+        stringValue: this.currentId,
+        logicalOperator: 1,
+        queryType: 2
+      }];
     }
+    
+    
+    this.getGridData();
 
     super.setData(widgetData);
+    this.dataSet = true;
+
+    
   }
 
 
@@ -86,5 +100,10 @@ export class GridWidgetComponent extends WidgetComponent {
       queryParams: { filters: null },
       queryParamsHandling: 'merge'
     });
+  }
+
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

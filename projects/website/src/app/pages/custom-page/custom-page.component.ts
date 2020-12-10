@@ -1,22 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { DataService } from 'services/data.service';
 import { PageData } from '../../classes/page-data';
+import { PageContentComponent } from '../../shared-components/page-content/page-content.component';
 
 @Component({
   selector: 'custom-page',
   templateUrl: './custom-page.component.html',
   styleUrls: ['./custom-page.component.scss']
 })
-export class CustomPageComponent implements OnInit {
-  public pageData: PageData;
+export class CustomPageComponent implements AfterViewInit {
+  @ViewChild('pageContent', { static: false }) pageContent: PageContentComponent;
 
   constructor(private route: ActivatedRoute, private dataService: DataService) { }
 
-  ngOnInit() {
-    this.dataService.get('api/Pages', [{ key: 'id', value: this.route.snapshot.params.id }])
-      .subscribe((pageData: PageData) => {
-        this.pageData = pageData;
+  ngAfterViewInit() {
+    this.route.paramMap
+      .subscribe((params: ParamMap) => {
+        
+          
+
+        this.dataService.get('api/Pages', [{ key: 'id', value: params.get('id') }])
+        .subscribe((pageData: PageData) => {
+          this.pageContent.page.setData(pageData);
+        });
+        
+
+
       });
+
+
+
+    
   }
 }

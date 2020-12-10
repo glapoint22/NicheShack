@@ -1,16 +1,17 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { DataService } from 'services/data.service';
 import { SharePageComponent } from '../share-page/share-page.component';
 import { PageData } from '../../classes/page-data';
+import { PageContentComponent } from '../../shared-components/page-content/page-content.component';
 
 @Component({
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent extends SharePageComponent implements OnInit {
-  public pageData: PageData;
+export class HomeComponent extends SharePageComponent implements OnInit, AfterViewInit {
+  @ViewChild('pageContent', { static: false }) pageContent: PageContentComponent;
 
   constructor(titleService: Title,
     metaService: Meta,
@@ -26,9 +27,14 @@ export class HomeComponent extends SharePageComponent implements OnInit {
 
     super.ngOnInit();
 
+    
+  }
+
+
+  ngAfterViewInit() {
     this.dataService.get('api/Home')
       .subscribe((pageData: PageData) => {
-        this.pageData = pageData;
+        this.pageContent.page.setData(pageData);
       });
   }
 }
