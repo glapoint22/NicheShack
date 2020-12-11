@@ -21,6 +21,8 @@ import { PageData } from 'projects/manager/src/app/classes/page-data';
 import { Color } from 'classes/color';
 import { GridWidgetComponent } from '../shared-components/designer/widgets/grid-widget/grid-widget.component';
 import { ShopWidgetComponent } from '../shared-components/designer/widgets/shop-widget/shop-widget.component';
+import { PageDisplayType } from './page-display-type';
+import { ListItem } from './list-item';
 
 export class Page {
     public id: number;
@@ -29,6 +31,8 @@ export class Page {
     public background: Background = new Background();
     public rootContainer: ContainerComponent;
     public type: PageType = PageType.Page;
+    public displayType: PageDisplayType = PageDisplayType.Custom;
+    public displayItems: Array<ListItem> = [];
     public widgetCursors: Array<WidgetCursor>;
     public get defaultWidth(): number {
         let width: number;
@@ -72,6 +76,10 @@ export class Page {
         // Set the page id
         this.id = pageData.id;
 
+        this.displayType = pageData.displayType ? pageData.displayType : PageDisplayType.Custom;
+
+        this.displayItems = pageData.displayItems ? pageData.displayItems : [];
+
         // Set the name and width of the page
         this.name = pageData.name;
         this.width = pageData.width ? pageData.width : this.width;
@@ -95,6 +103,8 @@ export class Page {
             id: this.id,
             name: this.name,
             width: this.width,
+            displayType: this.displayType,
+            displayItems: this.displayItems,
             background: this.background.getData(),
             rows: this.rootContainer.getData()
         }
