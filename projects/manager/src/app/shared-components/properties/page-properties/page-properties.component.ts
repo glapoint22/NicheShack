@@ -9,6 +9,7 @@ import { PageDisplayType } from '../../../classes/page-display-type';
 import { Searchable } from '../../../classes/searchable';
 import { PageService } from '../../../services/page.service';
 import { PopupService } from '../../../services/popup.service';
+import { DropdownComponent } from '../../elements/dropdowns/dropdown/dropdown.component';
 import { ItemListComponent } from '../../item-lists/item-list/item-list.component';
 
 @Component({
@@ -19,8 +20,9 @@ import { ItemListComponent } from '../../item-lists/item-list/item-list.componen
 export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
   @Input() page: Page = new Page();
   @ViewChild('itemList', { static: false }) itemList: ItemListComponent;
+  @ViewChild('dropdown', { static: false }) dropdown: DropdownComponent;
   public itemListOptions: ItemListOptions;
-  public apiUrl: string = 'api/Keywords';
+  public apiUrl: string;
   public pageDisplayType = PageDisplayType;
   public displayTypes = [
     {
@@ -48,6 +50,8 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
   constructor(public pageService: PageService, private promptService: PromptService, public dataService: DataService, private popupService: PopupService) { }
 
 
+
+  // -----------------------------( NG ON INIT )------------------------------ \\
   ngOnInit() {
     // Define the item list options
     this.itemListOptions = {
@@ -56,10 +60,10 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
       // Menu Options
       menuOptions: () => {
         return [
-          // New Keyword
-          new MenuOption('New Keyword', this.itemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
-          // Delete Keyword
-          new MenuOption(!this.itemList.isMultiSelected ? 'Delete Keyword' : 'Delete Keywords', this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
+          // New Item
+          new MenuOption('New ' + this.getItemType(), this.itemList.addIcon.isDisabled, this.onListItemAdd, null, 'Ctrl+Alt+N'),
+          // Delete Item
+          new MenuOption(!this.itemList.isMultiSelected ? 'Delete ' + this.getItemType() : 'Delete ' + this.getItemType() + 's', this.itemList.deleteIcon.isDisabled, this.onListItemDelete, null, 'Delete')
         ]
       },
       // On Add Item
@@ -74,6 +78,9 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
   }
 
 
+
+
+  // -----------------------------( SET PAGE WIDTH )------------------------------ \\
   setPageWidth(width: number) {
     this.page.width = width;
     this.pageService.setPageWidth(width);
@@ -81,10 +88,38 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
   }
 
 
+
+
+  // -----------------------------( ON PAGE TYPE CHANGE )------------------------------ \\
   onPageTypeChange(pageType: PageDisplayType) {
+    let currentIndex = this.getSelectedIndex();
+
+    if (this.page.displayItems.length > 0) {
+      this.promptService.showPrompt('Change Type', 'Changing this type will remove all your items. Do you want to proceed?', this.changeType, this, [pageType], this.resetSelectedIndex, [currentIndex]);
+    } else {
+      this.changeType(pageType);
+    }
+  }
+
+
+  // -----------------------------( CHANGE TYPE )------------------------------ \\
+  changeType(pageType: PageDisplayType) {
+    if (this.page.displayItems.length > 0) {
+      this.page.displayItems.forEach(x => x.selected = true);
+      this.deleteItem();
+    }
+
     this.page.displayType = pageType;
     this.pageService.save();
   }
+
+
+
+  // -----------------------------( RESET SELECTED INDEX )------------------------------ \\
+  resetSelectedIndex(currentIndex: number) {
+    this.dropdown.selectedIndex = currentIndex;
+  }
+
 
 
 
@@ -97,9 +132,9 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
 
   // -----------------------------( OPEN POPUP )------------------------------ \\
   openPopup(sourceElement: HTMLElement) {
-    if(this.page.displayType == PageDisplayType.Search) {
+    if (this.page.displayType == PageDisplayType.Search) {
       this.apiUrl = 'api/Keywords';
-    } else if(this.page.displayType == PageDisplayType.Browse) {
+    } else if (this.page.displayType == PageDisplayType.Browse) {
       this.apiUrl = 'api/Niches';
     }
 
@@ -116,7 +151,7 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
     // Add the item to the list
     this.page.displayItems.push(searchItem);
 
-    // this.pageService.save();
+
 
     // Select the new list item
     this.itemList.setListItemSelection(this.itemList.listItems.length - 1);
@@ -147,16 +182,16 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
   openDeletePrompt() {
     // Prompt the user
     this.itemList.itemDeletionPending = true;
-    let promptTitle = !this.itemList.isMultiSelected ? 'Delete Keyword' : 'Delete Keywords';
-    let promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected keyword?' : 'Are you sure you want to delete all the selected keywords?';
-    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteKeyword, this, null, this.onPromptCancel);
+    let promptTitle = !this.itemList.isMultiSelected ? 'Delete ' + this.getItemType() : 'Delete ' + this.getItemType() + 's';
+    let promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected ' + this.getItemType() + '?' : 'Are you sure you want to delete all the selected ' + this.getItemType() + 's?';
+    this.promptService.showPrompt(promptTitle, promptMessage, this.deleteItem, this, null, this.onPromptCancel);
   }
 
-  // -----------------------------( DELETE KEYWORD )------------------------------ \\
-  deleteKeyword() {
-    let deletedKeywords: Array<ListItem> = this.itemList.deleteListItem();
+  // -----------------------------( DELETE ITEM )------------------------------ \\
+  deleteItem() {
+    let deletedItems: Array<ListItem> = this.itemList.deleteListItem();
 
-    this.dataService.delete('api/Pages/PageDisplayTypeId', { ids: deletedKeywords.map(x => x.id) }).subscribe();
+    this.dataService.delete('api/Pages/PageDisplayTypeId', { ids: deletedItems.map(x => x.id) }).subscribe();
     this.pageService.save();
   }
 
@@ -164,5 +199,13 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
   // -----------------------------( ON PROMPT CANCEL )------------------------------ \\
   onPromptCancel() {
     this.itemList.onPromptCancel()
+  }
+
+
+
+
+  // -----------------------------( GET ITEM TYPE )------------------------------ \\
+  getItemType() {
+    return this.page.displayType == PageDisplayType.Browse ? 'Niche' : 'Keyword';
   }
 }

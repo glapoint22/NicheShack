@@ -11,27 +11,29 @@ export class PromptService {
   public onYes: Function;
   public onNo: Function;
   private currentObject: any;
-  private argArray: any;
+  private yesArgsArray: any;
+  private noArgsArray: any;
   public onPromptClose = new Subject<void>();
 
-  showPrompt(promptTitle: string, message: string, onYes?: Function, currentObject?: any, argArray?: any, onNo?: Function) {
+  showPrompt(promptTitle: string, message: string, onYes?: Function, currentObject?: any, yesArgsArray?: any, onNo?: Function, noArgsArray?: any) {
     this.show = true;
     this.promptTitle = promptTitle;
     this.message = message;
     this.onYes = onYes;
     this.onNo = onNo;
     this.currentObject = currentObject;
-    this.argArray = argArray;
+    this.yesArgsArray = yesArgsArray;
+    this.noArgsArray = noArgsArray;
   }
 
   onYesClick() {
-    this.onYes.apply(this.currentObject, this.argArray);
+    this.onYes.apply(this.currentObject, this.yesArgsArray);
     this.onPromptClose.next();
   }
 
   onNoClick() {
     if(this.onNo != null) {
-      this.onNo.apply(this.currentObject);
+      this.onNo.apply(this.currentObject, this.noArgsArray);
     }
     this.onPromptClose.next();
   }
