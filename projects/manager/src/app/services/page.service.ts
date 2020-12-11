@@ -45,7 +45,7 @@ export class PageService {
         pageId: this.page.id,
         name: this.page.name,
         displayType: this.page.displayType,
-        displayItems: this.page.displayItems,
+        referenceItems: this.page.referenceItems,
         content: this.stringifyPage(this.page.getData())
       }
     });

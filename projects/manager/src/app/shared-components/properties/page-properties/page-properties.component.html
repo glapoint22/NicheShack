@@ -46,12 +46,12 @@
 
 
             <!-- Item LIst -->
-            <item-list #itemList [listItems]="page.displayItems" [listOptions]="itemListOptions">
+            <item-list #itemList [listItems]="page.referenceItems" [listOptions]="itemListOptions">
             </item-list>
 
 
             <!-- Placeholder -->
-            <div *ngIf="page.displayItems && page.displayItems.length == 0" class="no-property">No
+            <div *ngIf="page.referenceItems && page.referenceItems.length == 0" class="no-property">No
                 {{getItemType() + 's'}} available</div>
         </div>
     </ng-container>

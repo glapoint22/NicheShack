@@ -94,7 +94,7 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
   onPageTypeChange(pageType: PageDisplayType) {
     let currentIndex = this.getSelectedIndex();
 
-    if (this.page.displayItems.length > 0) {
+    if (this.page.referenceItems.length > 0) {
       this.promptService.showPrompt('Change Type', 'Changing this type will remove all your items. Do you want to proceed?', this.changeType, this, [pageType], this.resetSelectedIndex, [currentIndex]);
     } else {
       this.changeType(pageType);
@@ -104,8 +104,8 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
 
   // -----------------------------( CHANGE TYPE )------------------------------ \\
   changeType(pageType: PageDisplayType) {
-    if (this.page.displayItems.length > 0) {
-      this.page.displayItems.forEach(x => x.selected = true);
+    if (this.page.referenceItems.length > 0) {
+      this.page.referenceItems.forEach(x => x.selected = true);
       this.deleteItem();
     }
 
@@ -146,27 +146,27 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
 
   // -----------------------------( SET SEARCH ITEM )------------------------------ \\
   setSearchItem(searchItem: ListItem) {
-    if (this.page.displayItems.some(x => x.name == searchItem.name)) return;
+    if (this.page.referenceItems.some(x => x.name == searchItem.name)) return;
 
     // Add the item to the list
-    this.page.displayItems.push(searchItem);
+    this.page.referenceItems.push(searchItem);
 
 
 
     // Select the new list item
     this.itemList.setListItemSelection(this.itemList.listItems.length - 1);
 
-    this.dataService.post('api/Pages/PageDisplayTypeId', {
+    this.dataService.post('api/Pages/PageReferenceItem', {
       pageId: this.page.id,
       displayId: searchItem.id
     }).subscribe((id: number) => {
       searchItem.id = id;
-      let selectType = this.page.displayItems[this.page.displayItems.length - 1].selectType
-      this.page.displayItems[this.page.displayItems.length - 1].selectType = null;
-      this.page.displayItems[this.page.displayItems.length - 1].selected = false;
+      let selectType = this.page.referenceItems[this.page.referenceItems.length - 1].selectType
+      this.page.referenceItems[this.page.referenceItems.length - 1].selectType = null;
+      this.page.referenceItems[this.page.referenceItems.length - 1].selected = false;
       this.pageService.save();
-      this.page.displayItems[this.page.displayItems.length - 1].selectType = selectType;
-      this.page.displayItems[this.page.displayItems.length - 1].selected = true;
+      this.page.referenceItems[this.page.referenceItems.length - 1].selectType = selectType;
+      this.page.referenceItems[this.page.referenceItems.length - 1].selected = true;
 
     });
   }
@@ -191,7 +191,7 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
   deleteItem() {
     let deletedItems: Array<ListItem> = this.itemList.deleteListItem();
 
-    this.dataService.delete('api/Pages/PageDisplayTypeId', { ids: deletedItems.map(x => x.id) }).subscribe();
+    this.dataService.delete('api/Pages/PageReferenceItem', { ids: deletedItems.map(x => x.id) }).subscribe();
     this.pageService.save();
   }
 

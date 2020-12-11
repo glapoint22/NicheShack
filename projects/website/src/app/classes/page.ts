@@ -20,6 +20,7 @@ import { ContainerWidgetData } from './container-widget-data';
 import { RowDataBase } from 'classes/row-data-base';
 import { GridWidgetComponent } from '../shared-components/page-content/grid-widget/grid-widget.component';
 import { ShopWidgetComponent } from '../shared-components/page-content/shop-widget/shop-widget.component';
+import { Color } from 'classes/color';
 
 export class Page {
     public width: number;
@@ -29,7 +30,7 @@ export class Page {
 
     // -----------------------------( SET DATA )------------------------------ \\
     setData(pageData: PageData) {
-        this.rootContainer.viewContainerRef.remove();
+        this.clear();
         this.width = pageData.width;
 
         // Set the background data
@@ -37,6 +38,17 @@ export class Page {
 
         if (pageData.rows && pageData.rows.length > 0) {
             this.setRows(pageData.rows, this.rootContainer);
+        }
+    }
+
+
+
+    // -----------------------------( CLEAR )------------------------------ \\
+    clear() {
+        if (this.rootContainer) {
+            this.rootContainer.viewContainerRef.clear();
+            this.background = new BackgroundBase();
+            this.background.color = new Color(0, 0, 0, 0);
         }
     }
 

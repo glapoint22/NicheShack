@@ -32,7 +32,7 @@ export class Page {
     public rootContainer: ContainerComponent;
     public type: PageType = PageType.Page;
     public displayType: PageDisplayType = PageDisplayType.Custom;
-    public displayItems: Array<ListItem> = [];
+    public referenceItems: Array<ListItem> = [];
     public widgetCursors: Array<WidgetCursor>;
     public get defaultWidth(): number {
         let width: number;
@@ -78,7 +78,7 @@ export class Page {
 
         this.displayType = pageData.displayType ? pageData.displayType : PageDisplayType.Custom;
 
-        this.displayItems = pageData.displayItems ? pageData.displayItems : [];
+        this.referenceItems = pageData.referenceItems ? pageData.referenceItems : [];
 
         // Set the name and width of the page
         this.name = pageData.name;
@@ -104,7 +104,7 @@ export class Page {
             name: this.name,
             width: this.width,
             displayType: this.displayType,
-            displayItems: this.displayItems,
+            referenceItems: this.referenceItems,
             background: this.background.getData(),
             rows: this.rootContainer.getData()
         }

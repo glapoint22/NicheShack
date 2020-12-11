@@ -17,15 +17,10 @@ export class BrowseComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.route.paramMap
       .subscribe((params: ParamMap) => {
-        // if (params.get('search') != this.currentSearchword) {
-          // this.currentSearchword = params.get('search');
-
-          this.dataService.get('api/Pages/Browse')
-            .subscribe((pageData: PageData) => {
-              this.pageContent.page.setData(pageData);
-            });
-        // }
+        this.dataService.get('api/Pages/Browse', [{ key: 'urlId', value: params.get('id') }])
+          .subscribe((pageData: PageData) => {
+            this.pageContent.page.setData(pageData);
+          });
       });
   }
-
 }
