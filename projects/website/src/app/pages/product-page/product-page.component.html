@@ -15,7 +15,7 @@
                     <div class="content-heading"
                         [ngStyle]="{'text-align': productData.pricePoints.length > 1 ? 'center' : 'left'}">
                         {{productData.pricePoints.length > 1 ? 'Price Points' : 'Included with your purchase'}}
-                </div>
+                    </div>
 
 
 
@@ -45,6 +45,14 @@
                         </div>
                     </div>
                 </ng-container>
+
+
+
+
+
+                <!-- Page Conent -->
+                <page-content #pageContent></page-content>
+
 
 
                 <!-- Reviews -->

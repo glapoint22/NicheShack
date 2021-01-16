@@ -44,6 +44,10 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
     {
       key: 'Grid',
       value: 4
+    },
+    {
+      key: 'Product',
+      value: 5
     }
   ];
 
@@ -136,6 +140,8 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
       this.apiUrl = 'api/Keywords';
     } else if (this.page.displayType == PageDisplayType.Browse) {
       this.apiUrl = 'api/Niches';
+    } else if (this.page.displayType == PageDisplayType.Product) {
+      this.apiUrl = 'api/Products';
     }
 
     this.popupService.sourceElement = sourceElement;
@@ -206,6 +212,16 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
 
   // -----------------------------( GET ITEM TYPE )------------------------------ \\
   getItemType() {
-    return this.page.displayType == PageDisplayType.Browse ? 'Niche' : 'Keyword';
+    let itemType: string;
+
+    if (this.page.displayType == PageDisplayType.Search) {
+      itemType = 'Keyword'
+    } else if (this.page.displayType == PageDisplayType.Browse) {
+      itemType = 'Niche'
+    } else if (this.page.displayType == PageDisplayType.Product) {
+      itemType = 'Product'
+    }
+
+    return itemType;
   }
 }

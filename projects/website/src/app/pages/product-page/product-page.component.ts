@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { DataService } from 'services/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { SharePageComponent } from '../share-page/share-page.component';
+import { PageContentComponent } from '../../shared-components/page-content/page-content.component';
+import { PageData } from '../../classes/page-data';
 
 @Component({
   templateUrl: './product-page.component.html',
@@ -13,6 +15,8 @@ import { SharePageComponent } from '../share-page/share-page.component';
 })
 export class ProductPageComponent extends SharePageComponent implements OnInit {
   public productData$: Observable<any>;
+  @ViewChild('pageContent', { static: false }) pageContent: PageContentComponent;
+  private pageSet: boolean;
 
   constructor(
     titleService: Title,
@@ -30,9 +34,24 @@ export class ProductPageComponent extends SharePageComponent implements OnInit {
         this.description = productData.productInfo.product.description;
         super.ngOnInit();
       }));
-
-
   }
+
+
+
+  ngDoCheck() {
+    if(!this.pageSet && this.pageContent) {
+      this.pageSet = true;
+      this.dataService.get('api/Products/PageContent', [{ key: 'urlId', value: this.route.snapshot.params.id }])
+      .subscribe((pageData: PageData) => {
+        if (pageData) this.pageContent.page.setData(pageData);
+      });
+    }
+  }
+
+
+
+
+
 
   hasIndex(priceIndices, index) {
     return priceIndices.some(x => x == index);

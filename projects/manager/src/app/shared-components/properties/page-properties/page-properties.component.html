@@ -17,7 +17,8 @@
     </div>
 
 
-    <ng-container *ngIf="page.displayType == pageDisplayType.Browse || page.displayType == pageDisplayType.Search">
+    <ng-container
+        *ngIf="page.displayType == pageDisplayType.Browse || page.displayType == pageDisplayType.Search || page.displayType == pageDisplayType.Product">
         <div style="font-size: 12px;">{{getItemType() + 's'}}:</div>
 
 

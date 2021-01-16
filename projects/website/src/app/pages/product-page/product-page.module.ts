@@ -6,6 +6,7 @@ import { ProductPageComponent } from './product-page.component';
 import { HeaderFooterModule } from '../../shared-components/header-footer/header-footer.module';
 import { ProductInfoModule } from '../../shared-components/product-info/product-info.module';
 import { ReviewsModule } from '../../shared-components/reviews/reviews.module';
+import { PageContentModule } from '../../shared-components/page-content/page-content.module';
 
 @NgModule({
   declarations: [ProductPageComponent],
@@ -14,7 +15,8 @@ import { ReviewsModule } from '../../shared-components/reviews/reviews.module';
     ProductPageRoutingModule,
     HeaderFooterModule,
     ProductInfoModule,
-    ReviewsModule
+    ReviewsModule,
+    PageContentModule
   ]
 })
 export class ProductPageModule { }

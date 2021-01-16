@@ -4,5 +4,6 @@ export enum PageDisplayType
     Home,
     Browse,
     Search,
-    Grid
+    Grid,
+    Product
 }
