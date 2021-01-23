@@ -138,9 +138,9 @@
                                         <!-- Product Image -->
                                         <div class="img-container"
                                             (click)="onProductClick({id: order.productUrlId, urlName: order.urlName})">
-                                            <img [src]="product.image.url ? '/images/' + product.image.url : 'assets/no_image.png'"
-                                                [alt]="product.image.name ? product.image.name : 'No Image Available'"
-                                                [title]="product.image.name ? product.image.name : 'No Image Available'">
+                                            <img [src]="product.image && product.image.url ? '/images/' + product.image.url : 'assets/no_image.png'"
+                                                [alt]="product.image && product.image.name ? product.image.name : 'No Image Available'"
+                                                [title]="product.image && product.image.name ? product.image.name : 'No Image Available'">
                                         </div>
 
                                         <!-- Product Info -->
@@ -241,9 +241,9 @@
                         <!-- Product Image -->
                         <div class="img-container"
                             (click)="onProductClick({id: product.productUrlId, urlName: product.urlName})">
-                            <img [src]="product.image.url ? '/images/' + product.image.url : 'assets/no_image.png'"
-                                [alt]="product.image.name ? product.image.name : 'No Image Available'"
-                                [title]="product.image.name ? product.image.name : 'No Image Available'">
+                            <img [src]="product.image && product.image.url ? '/images/' + product.image.url : 'assets/no_image.png'"
+                                [alt]="product.image && product.image.name ? product.image.name : 'No Image Available'"
+                                [title]="product.image && product.image.name ? product.image.name : 'No Image Available'">
                         </div>
 
                         <!-- Product Info -->

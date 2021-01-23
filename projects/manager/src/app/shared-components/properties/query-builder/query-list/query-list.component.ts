@@ -170,7 +170,7 @@ export class QueryListComponent implements OnInit {
 
       // Keywords
       case QueryType.ProductKeywords: {
-        this.queryRows[queryRowIndex] = new ProductKeywordsQueryRow(8, this.queryBuilder, this.queryRows, this.popupService, "Keyword", "Keywords", "api/Products/Keywords");
+        this.queryRows[queryRowIndex] = new ProductKeywordsQueryRow(8, this.queryBuilder, this.queryRows, this.popupService, "Keyword", "Keywords", "api/Keywords");
         if (queryRow != null) {
           this.queryRows[queryRowIndex].setItemList(queryRow.stringValues, queryRow.intValues);
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
