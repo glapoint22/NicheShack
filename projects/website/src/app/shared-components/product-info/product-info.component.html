@@ -3,8 +3,7 @@
     <!-- Media Group -->
     <div *ngIf="productInfo.media.length > 1" class="media-group show-lg">
         <ng-container *ngFor="let media of productInfo.media">
-            <div class="thumbnail"
-                [ngClass]="{'selected-media': media == selectedMedia}"
+            <div class="thumbnail" [ngClass]="{'selected-media': media == selectedMedia}"
                 [ngStyle]="{ 'background-image': 'url(images/' + (media.type == mediaType.Video ? media.thumbnail : media.url) + ')'}"
                 (click)="onThumbnailClick(media)" [title]="media.name">
                 <i *ngIf="media.type == mediaType.Video" class="far fa-play-circle"></i>
@@ -15,17 +14,15 @@
 
 
 
-
-
-
     <!-- Media display -->
     <div class="media-display show-lg">
-        <img *ngIf="selectedMedia && selectedMedia.type == mediaType.Image" [src]="'/images/' + selectedMedia.url"
-            [alt]="selectedMedia.name" [title]="selectedMedia.name">
+        <ng-container *ngIf="selectedMedia && selectedMedia.url || selectedMedia.safeUrl">
+            <img *ngIf="selectedMedia.type == mediaType.Image" [src]="'/images/' + selectedMedia.url"
+                [alt]="selectedMedia.name" [title]="selectedMedia.name">
 
-        <div class="iframe-container" *ngIf="selectedMedia && selectedMedia.type == mediaType.Video">
-            <iframe frameborder="0" [src]="selectedMedia.safeUrl" allowfullscreen></iframe>
-        </div>
+            <iframe *ngIf="selectedMedia.type == mediaType.Video" frameborder="0" [src]="selectedMedia.safeUrl"
+                allowfullscreen></iframe>
+        </ng-container>
     </div>
 
 

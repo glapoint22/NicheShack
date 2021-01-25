@@ -10,6 +10,6 @@ export interface Media {
 
 
 export enum MediaType {
-    Image = 5,
-    Video = 7,
+    Image = 6,
+    Video = 8,
 }

@@ -38,7 +38,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
   public updatingMediaInProgress: boolean;
   public autoSelectedMediaItemIndex: number;
   public dropdownOptions: Array<KeyValue<any, MediaType>>;
-  public mediaLists: MediaItem[][] = [[], [], [], [], [], [], [], []];
+  public mediaLists: MediaItem[][] = [[], [], [], [], [], [], [], [], []];
   private dropdownList: Array<KeyValue<any, MediaType>> =
     [
       { key: 'Images', value: MediaType.Image },
