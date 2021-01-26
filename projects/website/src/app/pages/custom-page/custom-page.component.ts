@@ -17,20 +17,11 @@ export class CustomPageComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.route.paramMap
       .subscribe((params: ParamMap) => {
-        
-          
-
+        this.dataService.loading = true;
         this.dataService.get('api/Pages', [{ key: 'id', value: params.get('id') }])
-        .subscribe((pageData: PageData) => {
-          this.pageContent.page.setData(pageData);
-        });
-        
-
-
+          .subscribe((pageData: PageData) => {
+            this.pageContent.page.setData(pageData);
+          });
       });
-
-
-
-    
   }
 }

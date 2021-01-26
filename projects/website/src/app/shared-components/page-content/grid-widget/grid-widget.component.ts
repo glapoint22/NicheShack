@@ -33,10 +33,9 @@ export class GridWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
     this.subscription = this.route.queryParamMap
       .subscribe((params: ParamMap) => {
-
-
         if (this.dataSet && this.queryParams.search == params.get('search') && this.currentId == this.route.snapshot.paramMap.get('id')) {
           this.queryParams.set(params);
+          this.dataService.loading = true;
           this.getGridData();
         }
       });
@@ -46,23 +45,20 @@ export class GridWidgetComponent extends WidgetComponent implements OnInit, OnDe
   setData(widgetData: GridWidgetData) {
     this.queryParams.queries = widgetData.queries;
     this.queryParams.set(this.route.snapshot.queryParamMap);
-    
-    if(!this.queryParams.queries && !this.queryParams.search) {
-      this.currentId = this.route.snapshot.paramMap.get('id');
+    this.currentId = this.route.snapshot.paramMap.get('id');
+
+    if (!this.queryParams.queries && !this.queryParams.search) {
       this.queryParams.queries = [{
         stringValue: this.currentId,
         logicalOperator: 1,
         queryType: 2
       }];
     }
-    
-    
+
     this.getGridData();
 
     super.setData(widgetData);
     this.dataSet = true;
-
-    
   }
 
 
@@ -75,6 +71,7 @@ export class GridWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
         let index = Math.max(0, this.gridData.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
         this.selectedSortOption = this.gridData.sortOptions[index];
+        this.dataService.loading = false;
       });
   }
 

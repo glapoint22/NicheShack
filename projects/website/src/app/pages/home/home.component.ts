@@ -27,7 +27,7 @@ export class HomeComponent extends SharePageComponent implements OnInit, AfterVi
 
     super.ngOnInit();
 
-    
+    this.dataService.loading = true;
   }
 
 
@@ -35,6 +35,7 @@ export class HomeComponent extends SharePageComponent implements OnInit, AfterVi
     this.dataService.get('api/Home')
       .subscribe((pageData: PageData) => {
         this.pageContent.page.setData(pageData);
+        this.dataService.loading = false;
       });
   }
 }

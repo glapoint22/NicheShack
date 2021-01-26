@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { Customer } from 'classes/customer';
 import { AccountService } from 'services/account.service';
 import { EditProfilePictureComponent } from './edit-profile-picture/edit-profile-picture.component';
-import { DataService } from 'services/data.service';
 
 @Component({
   templateUrl: './profile.component.html',
@@ -24,9 +23,8 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
     private router: Router,
-    private accountService: AccountService,
-    private dataService: DataService
-    ) {
+    private accountService: AccountService
+  ) {
     super(titleService, metaService, document);
   }
 
@@ -70,7 +68,7 @@ export class ProfileComponent extends PageComponent implements OnInit, OnDestroy
     editProfilePictureForm.show = true;
   }
 
-  
+
   openEditProfilePictureForm(editProfilePictureForm: EditProfilePictureComponent) {
     editProfilePictureForm.customerImage = this.customer.image;
     editProfilePictureForm.show = true;

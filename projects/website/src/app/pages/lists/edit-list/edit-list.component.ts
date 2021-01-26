@@ -24,6 +24,7 @@ export class EditListComponent implements OnInit {
 
   onSave() {
     // Update database
+    this.dataService.loading = true;
     this.dataService.put('api/Lists', {
       id: this.list.id,
       name: this.name,
@@ -33,6 +34,7 @@ export class EditListComponent implements OnInit {
         this.list.name = list.name;
         this.list.description = list.description;
         this.show = false;
+        this.dataService.loading = false;
       });
   }
 }

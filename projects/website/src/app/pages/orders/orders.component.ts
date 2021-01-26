@@ -54,6 +54,7 @@ export class OrdersComponent extends PageComponent implements OnInit {
       }
 
       // Get orders or products from the database
+      this.dataService.loading = true;
       this.dataService
         .get('api/ProductOrders', parameters)
         .subscribe(response => {
@@ -81,6 +82,7 @@ export class OrdersComponent extends PageComponent implements OnInit {
           }
 
           this.setSelectedFilter();
+          this.dataService.loading = false;
         });
     });
   }

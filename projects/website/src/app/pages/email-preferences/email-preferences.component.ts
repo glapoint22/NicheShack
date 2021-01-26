@@ -15,11 +15,13 @@ export class EmailPreferencesComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    this.dataService.loading = true;
     this.dataService.get('api/EmailPreferences')
       .subscribe((preferences: EmailPreferences) => {
         this.preferences = preferences;
         Object.keys(preferences).forEach(key => {
           this.initialPreferences[key] = preferences[key];
+          this.dataService.loading = false;
         });
       })
   }

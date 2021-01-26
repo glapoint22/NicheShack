@@ -22,6 +22,7 @@ export class ManageCollaboratorsComponent {
 
   onRemoveCollaborator() {
     // Update database!
+    this.dataService.loading = true;
     this.dataService.put('api/Lists/RemoveCollaborator', {
       id: this.currentCollaborator.id,
       listId: this.listId
@@ -31,6 +32,7 @@ export class ManageCollaboratorsComponent {
         this.collaborators.splice(index, 1);
         this.confirm = false;
         if (this.collaborators.length == 0) this.show = false;
+        this.dataService.loading = false;
       });
   }
 }

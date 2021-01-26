@@ -16,7 +16,7 @@
 
     <!-- Media display -->
     <div class="media-display show-lg">
-        <ng-container *ngIf="selectedMedia && selectedMedia.url || selectedMedia.safeUrl">
+        <ng-container *ngIf="selectedMedia && (selectedMedia.url || selectedMedia.safeUrl)">
             <img *ngIf="selectedMedia.type == mediaType.Image" [src]="'/images/' + selectedMedia.url"
                 [alt]="selectedMedia.name" [title]="selectedMedia.name">
 
@@ -74,8 +74,7 @@
         </div>
 
         <!-- Buy Button -->
-        <button class="alt-button" style="margin: 8px 0;" (click)="onBuyClick(productInfo.product.hoplink)">Visit
-            Product Page To Buy</button>
+        <button class="alt-button" style="margin: 8px 0;" (click)="onBuyClick(productInfo.product.hoplink)">Go to sales page</button>
 
 
         <!-- Description -->

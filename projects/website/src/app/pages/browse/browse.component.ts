@@ -17,6 +17,7 @@ export class BrowseComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.route.paramMap
       .subscribe((params: ParamMap) => {
+        this.dataService.loading = true;
         this.dataService.get('api/Pages/Browse', [{ key: 'urlId', value: params.get('id') }])
           .subscribe((pageData: PageData) => {
             this.pageContent.page.setData(pageData);

@@ -9,7 +9,6 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  // public loading: boolean;
   public isBrowser: boolean;
 
   constructor(public dataService: DataService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
@@ -21,13 +20,8 @@ export class AppComponent {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationStart) {
         this.dataService.error = undefined;
-        this.dataService.loading = false;
         this.dataService.pageNotFound = undefined;
       }
     });
   }
-
-  // ngDoCheck() {
-  //   this.loading = this.dataService.loading;
-  // }
 }

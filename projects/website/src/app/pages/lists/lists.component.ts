@@ -38,6 +38,7 @@ export class ListsComponent extends SharePageComponent implements OnInit {
   ) { super(titleService, metaService, document) }
 
   ngOnInit() {
+    this.dataService.loading = true;
     this.init();
 
     this.sortOptions$ = this.dataService
@@ -70,6 +71,7 @@ export class ListsComponent extends SharePageComponent implements OnInit {
         // Set the selected sort option
         let index = Math.max(0, this.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
         this.selectedSortOption = this.sortOptions[index];
+        this.dataService.loading = false;
       }))
 
 
@@ -91,6 +93,7 @@ export class ListsComponent extends SharePageComponent implements OnInit {
       .pipe(concatMap((exists) => {
         // If the id does not exists, flag page not found
         if (!exists) {
+          this.dataService.loading = false;
           this.dataService.pageNotFound = true;
           return of();
         }
@@ -145,6 +148,7 @@ export class ListsComponent extends SharePageComponent implements OnInit {
 
   onListClick(list: any, lists: Array<any>) {
     if (this.selectedList.id != list.id) {
+      this.dataService.loading = true;
       this.selectedList = list;
       this.setMoveToLists(lists);
       this.router.navigate(['account/lists', list.id]);
@@ -168,10 +172,12 @@ export class ListsComponent extends SharePageComponent implements OnInit {
 
 
   removeProduct(product: any) {
+    this.dataService.loading = true;
     this.dataService.delete('api/Lists/Product', { productId: product.id, collaboratorId: product.collaborator.id, listId: this.selectedList.id })
       .subscribe(() => {
         product.removed = true;
         this.selectedList.totalItems--;
+        this.dataService.loading = false;
       });
 
   }
@@ -186,12 +192,14 @@ export class ListsComponent extends SharePageComponent implements OnInit {
   }
 
   moveProduct(list: any, product: any) {
+    this.dataService.loading = true;
     this.dataService.put('api/Lists/Product', {
       productId: product.id,
       collaboratorId: product.collaborator.id,
       fromListId: this.selectedList.id,
       ToListId: list.key
     }).subscribe((isDuplicate: boolean) => {
+      this.dataService.loading = false;
       if (isDuplicate) {
         let promptTitle = 'Duplicate';
         let promptMessage = list.value + ' already contains ' + product.title;
@@ -208,6 +216,7 @@ export class ListsComponent extends SharePageComponent implements OnInit {
 
 
   setSort() {
+    this.dataService.loading = true;
     this.router.navigate([], {
       queryParams: { sort: this.selectedSortOption.value, page: null },
       queryParamsHandling: 'merge'
@@ -216,7 +225,6 @@ export class ListsComponent extends SharePageComponent implements OnInit {
 
   onCreateListHide(listId: string) {
     if (listId) location.href = 'account/lists/' + listId;
-
   }
 
 
