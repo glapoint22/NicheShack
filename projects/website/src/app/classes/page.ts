@@ -31,13 +31,16 @@ export class Page {
     // -----------------------------( SET DATA )------------------------------ \\
     setData(pageData: PageData) {
         this.clear();
-        this.width = pageData.width;
 
-        // Set the background data
-        this.background.setData(pageData.background);
+        if (pageData) {
+            this.width = pageData.width;
 
-        if (pageData.rows && pageData.rows.length > 0) {
-            this.setRows(pageData.rows, this.rootContainer);
+            // Set the background data
+            this.background.setData(pageData.background);
+
+            if (pageData.rows && pageData.rows.length > 0) {
+                this.setRows(pageData.rows, this.rootContainer);
+            }
         }
     }
 
@@ -82,7 +85,7 @@ export class Page {
                     let containerWidgetData = columnData.widgetData as ContainerWidgetData;
 
                     // Load this container's widgets
-                    if(containerWidgetData.rows) {
+                    if (containerWidgetData.rows) {
                         this.setRows(containerWidgetData.rows, containerWidget.container);
                     }
                 }
@@ -149,7 +152,7 @@ export class Page {
                 widget = CarouselWidgetComponent;
                 break;
 
-                // Grid
+            // Grid
             case WidgetType.Grid:
                 widget = GridWidgetComponent;
                 break;

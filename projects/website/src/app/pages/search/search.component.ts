@@ -21,9 +21,13 @@ export class SearchComponent implements AfterViewInit {
         if (params.get('search') != this.currentSearchword) {
           this.currentSearchword = params.get('search');
           this.dataService.loading = true;
-          this.dataService.get('api/Pages/Search', [{key: 'searchTerm', value: params.get('search')}])
+          this.dataService.get('api/Pages/Search', [{ key: 'searchTerm', value: params.get('search') }])
             .subscribe((pageData: PageData) => {
-              this.pageContent.page.setData(pageData);
+              if (pageData) {
+                this.pageContent.page.setData(pageData);
+              } else {
+                this.dataService.loading = false;
+              }
             });
         }
       });
