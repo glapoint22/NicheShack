@@ -33,6 +33,7 @@ export class QueryListComponent implements OnInit {
     { key: "Niche", value: QueryType.Niche },
     { key: "Subgroup", value: QueryType.ProductSubgroup },
     { key: "Featured Products", value: QueryType.FeaturedProducts },
+    { key: "Related Products", value: QueryType.RelatedProducts },
     { key: "Customer Related", value: QueryType.CustomerRelatedProducts },
     { key: "Price", value: QueryType.ProductPrice },
     { key: "Rating", value: QueryType.ProductRating },
