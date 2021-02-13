@@ -11,7 +11,9 @@ export class QueryService {
   public subgroups: Array<QueryDropdownList> = [];
   public categories: Array<QueryDropdownList> = [];
   public customerRelatedProducts: Array<QueryDropdownList> = [
-    { id: 1, name: "Browsed Products" }];
+    { id: 1, name: "Browsed Products" },
+    { id: 2, name: "Related Products" }
+  ];
 
   public productRating: Array<QueryDropdownList> = [
     { id: 1, name: "1" },

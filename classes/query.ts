@@ -23,8 +23,7 @@ export enum QueryType {
     ProductRating,
     ProductKeywords,
     ProductCreationDate,
-    SubQuery,
-    RelatedProducts
+    SubQuery
 }
 
 
