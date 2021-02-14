@@ -1,6 +1,8 @@
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Product } from 'classes/product';
+import { Query, QueryType } from 'classes/query';
 import { QueryParams } from 'classes/query-params';
 import { DataService } from 'services/data.service';
 import { Caption } from '../../../classes/caption';
@@ -25,7 +27,11 @@ export class ProductGroupWidgetComponent extends WidgetComponent implements OnIn
   private translations: Array<number> = [this.currentTranslation];
 
 
-  constructor(private dataService: DataService, @Inject(PLATFORM_ID) private platformId: Object) {super()}
+  constructor(
+    private dataService: DataService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private document: Document,
+    private route: ActivatedRoute) { super() }
 
 
   ngOnInit() {
@@ -69,8 +75,60 @@ export class ProductGroupWidgetComponent extends WidgetComponent implements OnIn
   setData(widgetData: ProductGroupWidgetData) {
     this.caption.setData(widgetData.caption);
     if (widgetData.queries) {
-      this.queryParams.queries = widgetData.queries;
-      this.getProducts();
+
+      // Get all auto queries
+      let autoQueries: Array<Query> = widgetData.queries.filter(x => x.queryType == QueryType.Auto);
+
+
+      autoQueries.forEach((autoQuery: Query) => {
+
+        // Browsed Products
+        if (autoQuery.intValue == 1) {
+          // Get all cookies
+          let cookiesArray = this.document.cookie.split(';');
+
+          // Split the name and the content for each cookie
+          for (let i = 0; i < cookiesArray.length; i++) {
+            let cookiePair = cookiesArray[i].split("=");
+
+            // If the cookie name is browse
+            if (cookiePair[0].trim() == 'browse') {
+
+              // Get the product ids from the cookie
+              let content = decodeURIComponent(cookiePair[1]);
+              autoQuery.intValues = content.split(',').map(x => parseInt(x));
+              break;
+            }
+          }
+
+          // If there are no product ids
+          if (!autoQuery.intValues) {
+            let index = widgetData.queries.findIndex(x => x == autoQuery);
+            widgetData.queries.splice(index, 1);
+          }
+
+          // Related Products
+        } else if (autoQuery.intValue == 2) {
+          // Get the product id from the url
+          autoQuery.stringValue = this.route.snapshot.paramMap.get('id');
+
+
+          // If there is no product id
+          if (!autoQuery.stringValue) {
+            let index = widgetData.queries.findIndex(x => x == autoQuery);
+            widgetData.queries.splice(index, 1);
+          }
+        }
+      })
+
+
+
+      // If we have queries
+      if (widgetData.queries.length > 0) {
+        this.queryParams.queries = widgetData.queries;
+        this.getProducts();
+      }
+
     }
     super.setData(widgetData);
   }
@@ -101,5 +159,5 @@ export class ProductGroupWidgetComponent extends WidgetComponent implements OnIn
     this.translations = [this.currentTranslation];
     this.setShowAll();
   }
-  
+
 }

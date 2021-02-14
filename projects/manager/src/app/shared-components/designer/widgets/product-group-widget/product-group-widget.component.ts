@@ -5,7 +5,7 @@ import { ProductGroupWidgetData } from 'projects/manager/src/app/classes/product
 import { Caption } from 'projects/manager/src/app/classes/caption';
 import { Color } from 'classes/color';
 import { QueryParams } from 'classes/query-params';
-import { Query } from 'classes/query';
+import { Query, QueryType } from 'classes/query';
 import { QueryableWidget } from 'classes/queryable-widget';
 import { BreakpointService } from 'projects/manager/src/app/services/breakpoint.service';
 import { DataService } from 'services/data.service';
@@ -28,7 +28,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent impleme
   private currentTranslation: number = 0;
   private translations: Array<number> = [this.currentTranslation];
 
-  constructor(breakpointService: BreakpointService, private dataService: DataService){super(breakpointService)}
+  constructor(breakpointService: BreakpointService, private dataService: DataService) { super(breakpointService) }
 
   ngOnInit() {
     this.height = 250
@@ -71,8 +71,8 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent impleme
 
   query(queries: Array<Query>) {
     this.queryParams.queries = queries;
-    
-    if(this.queryParams.queries && this.queryParams.queries.length > 0) {
+
+    if (this.queryParams.queries && this.queryParams.queries.length > 0) {
       this.getProducts();
     } else {
       this.products = null;
@@ -84,6 +84,8 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent impleme
 
 
   getProducts() {
+    if (this.queryParams.queries.filter(x => x.queryType != QueryType.Auto).length == 0) return;
+
     this.dataService.post('api/Products/ProductGroup', this.queryParams)
       .subscribe((products: Array<Product>) => {
         this.products = products;

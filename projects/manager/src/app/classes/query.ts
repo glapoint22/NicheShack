@@ -719,9 +719,9 @@ export class FeaturedProductsQueryRow extends QueryRowItemList implements IQuery
 
 
 // ===================================================( CUSTOMER RELATED PRODUCTS QUERY ROW )===================================================\\
-export class CustomerRelatedProductsQueryRow extends QueryRowDropdown {
+export class AutoQueryRow extends QueryRowDropdown {
     setQueryRow(queryRowIndex: number) {
-        this.initialize(QueryType.CustomerRelatedProducts, queryRowIndex, this.queryService.customerRelatedProducts);
+        this.initialize(QueryType.Auto, queryRowIndex, this.queryService.auto);
     }
 }
 

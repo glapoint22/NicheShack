@@ -2,7 +2,7 @@ import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ComparisonOperatorType, LogicalOperatorType, Query, QueryType } from 'classes/query';
 import { PopupService } from 'projects/manager/src/app/services/popup.service';
-import { IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, CustomerRelatedProductsQueryRow, ProductSubgroupQueryRow, ValueType, SubQueryRow } from '../../../../classes/query';
+import { IQueryRow, CategoryQueryRow, ProductCreationDateQueryRow, FeaturedProductsQueryRow, ProductKeywordsQueryRow, NicheQueryRow, QueryRowNone, ProductPriceQueryRow, ProductRatingQueryRow, AutoQueryRow, ProductSubgroupQueryRow, ValueType, SubQueryRow } from '../../../../classes/query';
 import { QueryService } from '../../../../services/query.service';
 import { QueryBuilderComponent } from '../query-builder.component';
 
@@ -33,11 +33,11 @@ export class QueryListComponent implements OnInit {
     { key: "Niche", value: QueryType.Niche },
     { key: "Subgroup", value: QueryType.ProductSubgroup },
     { key: "Featured Products", value: QueryType.FeaturedProducts },
-    { key: "Customer Related", value: QueryType.CustomerRelatedProducts },
     { key: "Price", value: QueryType.ProductPrice },
     { key: "Rating", value: QueryType.ProductRating },
     { key: "Keywords", value: QueryType.ProductKeywords },
-    { key: "Creation Date", value: QueryType.ProductCreationDate }
+    { key: "Creation Date", value: QueryType.ProductCreationDate },
+    { key: "Auto", value: QueryType.Auto }
   ];
 
   public operatorList: Array<KeyValue<any, any>> = [
@@ -128,21 +128,11 @@ export class QueryListComponent implements OnInit {
         break;
       }
 
-      // Customer Related Products
-      case QueryType.CustomerRelatedProducts: {
-        this.queryRows[queryRowIndex] = new CustomerRelatedProductsQueryRow(5, this.queryBuilder, this.queryRows, this.queryService);
-        if (queryRow != null) {
-          this.queryRows[queryRowIndex].dropdownValue = queryRow.intValue;
-          this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
-          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
-        }
-        this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
-        break;
-      }
+
 
       // Price
       case QueryType.ProductPrice: {
-        this.queryRows[queryRowIndex] = new ProductPriceQueryRow(6, this.queryBuilder, this.queryRows);
+        this.queryRows[queryRowIndex] = new ProductPriceQueryRow(5, this.queryBuilder, this.queryRows);
         if (queryRow != null) {
           this.queryRows[queryRowIndex].setPrice(queryRow.stringValue)
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
@@ -156,7 +146,7 @@ export class QueryListComponent implements OnInit {
 
       // Rating
       case QueryType.ProductRating: {
-        this.queryRows[queryRowIndex] = new ProductRatingQueryRow(7, this.queryBuilder, this.queryRows, this.queryService);
+        this.queryRows[queryRowIndex] = new ProductRatingQueryRow(6, this.queryBuilder, this.queryRows, this.queryService);
         if (queryRow != null) {
           this.queryRows[queryRowIndex].dropdownValue = queryRow.doubleValue;
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
@@ -170,7 +160,7 @@ export class QueryListComponent implements OnInit {
 
       // Keywords
       case QueryType.ProductKeywords: {
-        this.queryRows[queryRowIndex] = new ProductKeywordsQueryRow(8, this.queryBuilder, this.queryRows, this.popupService, "Keyword", "Keywords", "api/Keywords");
+        this.queryRows[queryRowIndex] = new ProductKeywordsQueryRow(7, this.queryBuilder, this.queryRows, this.popupService, "Keyword", "Keywords", "api/Keywords");
         if (queryRow != null) {
           this.queryRows[queryRowIndex].setItemList(queryRow.stringValues, queryRow.intValues);
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
@@ -182,13 +172,26 @@ export class QueryListComponent implements OnInit {
 
       // Date
       case QueryType.ProductCreationDate: {
-        this.queryRows[queryRowIndex] = new ProductCreationDateQueryRow(9, this.queryBuilder, this.queryRows);
+        this.queryRows[queryRowIndex] = new ProductCreationDateQueryRow(8, this.queryBuilder, this.queryRows);
         if (queryRow != null) {
           this.queryRows[queryRowIndex].setDate(queryRow.stringValue);
           this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
           this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
           this.queryRows[queryRowIndex].comparisonOperator = queryRow.comparisonOperator;
           this.queryRows[queryRowIndex].comparisonOperatorDropdownSelectedIndex = queryRow.comparisonOperator - 1;
+        }
+        this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
+        break;
+      }
+
+
+      // Auto
+      case QueryType.Auto: {
+        this.queryRows[queryRowIndex] = new AutoQueryRow(9, this.queryBuilder, this.queryRows, this.queryService);
+        if (queryRow != null) {
+          this.queryRows[queryRowIndex].dropdownValue = queryRow.intValue;
+          this.queryRows[queryRowIndex].logicalOperator = queryRow.logicalOperator;
+          this.queryRows[queryRowIndex].logicalOperatorDropdownSelectedIndex = queryRow.logicalOperator - 1;
         }
         this.queryRows[queryRowIndex].setQueryRow(queryRowIndex);
         break;
@@ -208,6 +211,8 @@ export class QueryListComponent implements OnInit {
         })
         break;
       }
+
+
     }
 
     // If a wheredropdown option has been selected

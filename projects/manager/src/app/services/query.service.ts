@@ -10,7 +10,7 @@ export class QueryService {
   public onDropdownListsLoaded = new Subject<void>();
   public subgroups: Array<QueryDropdownList> = [];
   public categories: Array<QueryDropdownList> = [];
-  public customerRelatedProducts: Array<QueryDropdownList> = [
+  public auto: Array<QueryDropdownList> = [
     { id: 1, name: "Browsed Products" },
     { id: 2, name: "Related Products" }
   ];

@@ -18,12 +18,12 @@ export enum QueryType {
     Niche,
     ProductSubgroup,
     FeaturedProducts,
-    CustomerRelatedProducts,
     ProductPrice,
     ProductRating,
     ProductKeywords,
     ProductCreationDate,
-    SubQuery
+    SubQuery,
+    Auto
 }
 
 

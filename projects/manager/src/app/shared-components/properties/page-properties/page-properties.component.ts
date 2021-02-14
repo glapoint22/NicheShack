@@ -48,6 +48,10 @@ export class PagePropertiesComponent implements OnInit, Searchable<ListItem> {
     {
       key: 'Product',
       value: 5
+    },
+    {
+      key: 'Default Product',
+      value: 6
     }
   ];
 

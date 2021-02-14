@@ -16,7 +16,6 @@ import { PageData } from '../../classes/page-data';
 export class ProductPageComponent extends SharePageComponent implements OnInit {
   public productData$: Observable<any>;
   @ViewChild('pageContent', { static: false }) pageContent: PageContentComponent;
-  private pageSet: boolean;
 
   constructor(
     titleService: Title,
@@ -26,30 +25,27 @@ export class ProductPageComponent extends SharePageComponent implements OnInit {
     private route: ActivatedRoute
   ) { super(titleService, metaService, document) }
 
+
+
   ngOnInit() {
-    this.productData$ = this.dataService
-      .get('api/Products/ProductDetail', [{ key: 'id', value: this.route.snapshot.params.id }])
-      .pipe(tap((productData) => {
-        this.title = productData.productInfo.product.name;
-        this.description = productData.productInfo.product.description;
-        super.ngOnInit();
-      }));
+    this.route.paramMap.subscribe(() => {
+
+      // Get the product
+      this.productData$ = this.dataService
+        .get('api/Products/ProductDetail', [{ key: 'id', value: this.route.snapshot.params.id }])
+        .pipe(tap((productData) => {
+          this.title = productData.productInfo.product.name;
+          this.description = productData.productInfo.product.description;
+          super.ngOnInit();
+
+          // Get the page content
+          this.dataService.get('api/Products/PageContent', [{ key: 'urlId', value: this.route.snapshot.params.id }])
+            .subscribe((pageData: PageData) => {
+              if (pageData) this.pageContent.page.setData(pageData);
+            });
+        }));
+    });
   }
-
-
-
-  ngDoCheck() {
-    if(!this.pageSet && this.pageContent) {
-      this.pageSet = true;
-      this.dataService.get('api/Products/PageContent', [{ key: 'urlId', value: this.route.snapshot.params.id }])
-      .subscribe((pageData: PageData) => {
-        if (pageData) this.pageContent.page.setData(pageData);
-      });
-    }
-  }
-
-
-
 
 
 
