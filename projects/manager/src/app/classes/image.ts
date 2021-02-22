@@ -6,8 +6,8 @@ export class Image extends ImageBase implements Media {
     getData(): ImageData {
         return {
             id: this.id,
-            name: this.name,
-            url: this.url
+            name: null,
+            url: null
         }
     }
 }

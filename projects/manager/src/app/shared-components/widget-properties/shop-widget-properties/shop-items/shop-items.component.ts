@@ -48,6 +48,7 @@ export class ShopItemsComponent implements Searchable<ShopItem> {
 
   // -----------------------------( SET SEARCH ITEM )------------------------------ \\
   setSearchItem(searchItem: ShopItem) {
+    this.shopWidget.items[this.shopWidget.currentItemIndex].id = searchItem.id;
     this.shopWidget.items[this.shopWidget.currentItemIndex].name = searchItem.name;
     this.shopWidget.items[this.shopWidget.currentItemIndex].icon = searchItem.icon;
     this.pageService.save();

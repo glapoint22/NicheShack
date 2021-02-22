@@ -99,7 +99,8 @@ export class Video implements Media {
 
 
     setData(videoData: VideoData) {
-        if (videoData) {
+        if (videoData && videoData.url) {
+            this.id = videoData.id;
             this.url = videoData.url;
             this.thumbnail = videoData.thumbnail;
         }
@@ -108,11 +109,12 @@ export class Video implements Media {
 
 
     getData(): VideoData {
-        if (!this.url && !this.thumbnail) return null;
+        if (!this.id) return null;
 
         return {
-            url: this.url ? this.url : null,
-            thumbnail: this.thumbnail ? this.thumbnail : null
+            id: this.id,
+            url: null,
+            thumbnail: null
         }
     }
 }

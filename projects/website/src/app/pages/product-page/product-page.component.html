@@ -1,4 +1,4 @@
-<ng-container *ngIf="productData$ | async as productData">
+<!-- <ng-container *ngIf="productData$ | async as productData"> -->
     <navbar></navbar>
 
     <div class="page-container">
@@ -6,11 +6,11 @@
             <div class="content">
 
                 <!-- Product Info -->
-                <product-info [productInfo]="productData.productInfo"></product-info>
+                <product-info *ngIf="productData" [productInfo]="productData.productInfo"></product-info>
 
 
                 <!-- Product Conent -->
-                <ng-container *ngIf="productData.content.length > 1">
+                <ng-container *ngIf="productData && productData.content.length > 1">
 
                     <div class="content-heading"
                         [ngStyle]="{'text-align': productData.pricePoints.length > 1 ? 'center' : 'left'}">
@@ -57,7 +57,7 @@
 
                 <!-- Reviews -->
                 <div class="page-section">Customer Reviews</div>
-                <reviews [product]="productData.productInfo.product"></reviews>
+                <reviews *ngIf="productData" [product]="productData.productInfo.product"></reviews>
 
                 <navfooter></navfooter>
             </div>
@@ -65,4 +65,4 @@
 
         </div>
     </div>
-</ng-container>
+<!-- </ng-container> -->

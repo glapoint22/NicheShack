@@ -5,10 +5,12 @@
             [style.textDecoration]="caption.textDecoration" [style.color]="caption.color.toRGBString()">{{caption.text}}
         </div>
         <div class="items">
-            <a [routerLink]="item.link.url" class="item" *ngFor="let item of items">
-                <img *ngIf="item.icon" src="images/{{item.icon.url}}">
-                <div class="title" [style.color]="textColor.value.toRGBString()">{{item.name}}</div>
-            </a>
+            <div (click)="onClick(item)" class="item" *ngFor="let item of items">
+                <a [href]="item.link.url" (click)="$event.preventDefault()">
+                    <img *ngIf="item.icon" src="images/{{item.icon.url}}">
+                    <div class="title" [style.color]="textColor.value.toRGBString()">{{item.name}}</div>
+                </a>
+            </div>
         </div>
     </div>
 </div>

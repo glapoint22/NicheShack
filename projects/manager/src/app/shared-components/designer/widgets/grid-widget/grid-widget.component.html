@@ -1,7 +1,7 @@
 <div #widget class="widget" (mousedown)="onMousedown()" style="border: 1px solid #7a7a7a; width: 100%;"
     (click)="onClick($event)" [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}">
 
-    <ng-container *ngIf="gridData; else noData">
+    <ng-container *ngIf="gridData && gridData.products; else noData">
         <!-- Header -->
         <div class="header" [style.marginBottom.px]="gridData.products.length > 0 ? 10 : 0">
 

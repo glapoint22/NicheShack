@@ -20,6 +20,7 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
   public gridData: GridData;
   public selectedSortOption: KeyValue<string, string>;
   public queryParams: QueryParams = new QueryParams;
+  public queries: Array<Query>;
 
   constructor(
     breakpointService: BreakpointService,
@@ -34,12 +35,12 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
     this.type = WidgetType.Grid;
 
     super.ngOnInit();
-
     this.queryParams.page = 1;
     this.queryParams.limit = 40;
 
-    this.route.queryParamMap.subscribe((params: ParamMap) => {
 
+
+    this.route.queryParamMap.subscribe((params: ParamMap) => {
       // If we have queries
       if (this.queryParams.queries) {
         this.queryParams.set(params);
@@ -50,11 +51,9 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
 
 
   setData(widgetData: GridWidgetData) {
-    if (widgetData.queries) {
-      this.queryParams.queries = widgetData.queries;
-      this.getGridData();
-    }
-
+    this.queries = this.queryParams.queries = widgetData.queries;
+    this.gridData = widgetData.gridData;
+    this.setSortOption();
     super.setData(widgetData);
   }
 
@@ -70,7 +69,8 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
       height: null,
       horizontalAlignment: widgetData.horizontalAlignment,
       breakpoints: [],
-      queries: this.queryParams.queries && this.queryParams.queries.length > 0 ? this.queryParams.queries : []
+      queries: this.queries,
+      gridData: null
     }
   }
 
@@ -84,9 +84,9 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
 
 
   query(queries: Array<Query>) {
-    this.queryParams.queries = queries;
-    
-    if(this.queryParams.queries && this.queryParams.queries.length > 0) {
+    this.queries = this.queryParams.queries = queries;
+
+    if (queries && queries.length > 0) {
       this.getGridData();
     } else {
       this.gridData = null;
@@ -102,9 +102,17 @@ export class GridWidgetComponent extends FreeformWidgetComponent implements OnIn
       .subscribe((gridData: GridData) => {
         this.gridData = gridData;
 
-        let index = Math.max(0, this.gridData.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
-        this.selectedSortOption = this.gridData.sortOptions[index];
+        this.setSortOption()
       });
+  }
+
+
+
+  setSortOption() {
+    if (this.gridData.sortOptions) {
+      let index = Math.max(0, this.gridData.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
+      this.selectedSortOption = this.gridData.sortOptions[index];
+    }
   }
 
 

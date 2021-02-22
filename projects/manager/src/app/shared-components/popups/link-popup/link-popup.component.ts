@@ -74,6 +74,7 @@ export class LinkPopupComponent extends PopupComponent implements OnInit {
   // -----------------------------( ON RESULT CLICK )------------------------------ \\
   onResultClick(result: LinkItem) {
     this.preventNoShow = false;
+    this.link.id = result.id;
     this.link.url = result.link;
     this.link.optionValue = result.name;
     this.searchResults = null;

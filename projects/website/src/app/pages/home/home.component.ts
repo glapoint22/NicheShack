@@ -1,10 +1,13 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-import { DataService } from 'services/data.service';
 import { SharePageComponent } from '../share-page/share-page.component';
 import { PageData } from '../../classes/page-data';
 import { PageContentComponent } from '../../shared-components/page-content/page-content.component';
+import { PageService } from '../../services/page.service';
+import { ActivatedRoute } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   templateUrl: './home.component.html',
@@ -16,7 +19,8 @@ export class HomeComponent extends SharePageComponent implements OnInit, AfterVi
   constructor(titleService: Title,
     metaService: Meta,
     @Inject(DOCUMENT) document: Document,
-    private dataService: DataService) {
+    private pageService: PageService,
+    private route: ActivatedRoute) {
     super(titleService, metaService, document);
   }
 
@@ -26,16 +30,17 @@ export class HomeComponent extends SharePageComponent implements OnInit, AfterVi
     // this.image = '/Images/tlou2.jpg';
 
     super.ngOnInit();
-
-    this.dataService.loading = true;
   }
 
 
   ngAfterViewInit() {
-    this.dataService.get('api/Home')
-      .subscribe((pageData: PageData) => {
-        this.pageContent.page.setData(pageData);
-        this.dataService.loading = false;
+    combineLatest([this.route.queryParamMap, this.route.paramMap])
+      .pipe(
+        // debounceTime prevents from fetching the page twice
+        debounceTime(5),
+      ).subscribe(() => {
+        this.pageService.getPage(this.route.snapshot, 'api/Home')
+          .subscribe((pageData: PageData) => this.pageContent.page.setData(pageData));
       });
   }
 }

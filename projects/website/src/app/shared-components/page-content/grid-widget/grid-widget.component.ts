@@ -1,10 +1,7 @@
 import { KeyValue } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GridData } from 'classes/grid-data';
-import { QueryParams } from 'classes/query-params';
-import { Subscription } from 'rxjs';
-import { DataService } from 'services/data.service';
 import { GridWidgetData } from '../../../classes/grid-widget-data';
 import { WidgetComponent } from '../widget/widget.component';
 
@@ -14,67 +11,28 @@ import { WidgetComponent } from '../widget/widget.component';
   templateUrl: './grid-widget.component.html',
   styleUrls: ['./grid-widget.component.scss']
 })
-export class GridWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+export class GridWidgetComponent extends WidgetComponent {
   public gridData: GridData;
   public selectedSortOption: KeyValue<string, string>;
-  public queryParams: QueryParams = new QueryParams;
   public showFilterMenu: boolean;
-  private subscription: Subscription;
-  private dataSet: boolean;
-  private currentId: string;
 
-  constructor(private dataService: DataService, public route: ActivatedRoute, private router: Router) { super() }
-
-
-  ngOnInit() {
-    this.queryParams.page = 1;
-    this.queryParams.limit = screen.width >= 600 ? 40 : 20;
-
-
-    this.subscription = this.route.queryParamMap
-      .subscribe((params: ParamMap) => {
-        if (this.dataSet && this.queryParams.search == params.get('search') && this.currentId == this.route.snapshot.paramMap.get('id')) {
-          this.queryParams.set(params);
-          this.dataService.loading = true;
-          this.getGridData();
-        }
-      });
-  }
+  constructor(private router: Router, public route: ActivatedRoute) { super() }
 
 
   setData(widgetData: GridWidgetData) {
-    this.queryParams.queries = widgetData.queries;
-    this.queryParams.set(this.route.snapshot.queryParamMap);
-    this.currentId = this.route.snapshot.paramMap.get('id');
-
-    if (!this.queryParams.queries && !this.queryParams.search) {
-      this.queryParams.queries = [{
-        stringValue: this.currentId,
-        logicalOperator: 1,
-        queryType: 2
-      }];
-    }
-
-    this.getGridData();
-
+    this.gridData = widgetData.gridData;
+    this.setSortOption();
     super.setData(widgetData);
-    this.dataSet = true;
   }
 
 
 
-
-  getGridData() {
-    this.dataService.post('api/Products/GridData', this.queryParams)
-      .subscribe((gridData: GridData) => {
-        this.gridData = gridData;
-
-        let index = Math.max(0, this.gridData.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
-        this.selectedSortOption = this.gridData.sortOptions[index];
-        this.dataService.loading = false;
-      });
+  setSortOption() {
+    if (this.gridData.sortOptions) {
+      let index = Math.max(0, this.gridData.sortOptions.findIndex(x => x.value == this.route.snapshot.queryParams['sort']));
+      this.selectedSortOption = this.gridData.sortOptions[index];
+    }
   }
-
 
 
   setSort() {
@@ -100,7 +58,8 @@ export class GridWidgetComponent extends WidgetComponent implements OnInit, OnDe
   }
 
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  getPageNumber() {
+    return this.route.snapshot.queryParams.page ? parseInt(this.route.snapshot.queryParams.page) : 1;
   }
+
 }

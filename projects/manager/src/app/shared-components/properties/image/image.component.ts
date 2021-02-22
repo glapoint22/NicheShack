@@ -42,6 +42,7 @@ export class ImageComponent implements OnChanges, DoCheck {
   }
 
   deleteImage() {
+    this.image.id = 0;
     this.image.url = null;
     this.currentImage = null;
     this.onChange.emit();

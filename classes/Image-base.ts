@@ -7,6 +7,7 @@ export class ImageBase {
 
     setData(imageData: ImageData) {
         if (imageData) {
+            this.id = imageData.id;
             this.url = imageData.url;
             this.name = imageData.name;
         }

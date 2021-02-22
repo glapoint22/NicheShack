@@ -58,8 +58,8 @@ export class Background extends BackgroundBase implements Enableable {
                 color: this.color.toHex(),
                 image: this.image.url ? {
                     id: this.image.id,
-                    name: this.image.name,
-                    url: this.image.url,
+                    name: null,
+                    url: null,
                     position: this.image.position,
                     repeat: this.image.repeat,
                     attachment: this.image.attachment

@@ -1,11 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FreeformWidgetComponent } from '../freeform-widget/freeform-widget.component';
 import { WidgetType } from 'classes/widget-type';
-import { LinkableImage } from 'classes/linkable-image';
 import { CarouselWidgetData } from 'projects/manager/src/app/classes/carousel-widget-data';
 import { LinkableImageData } from 'classes/linkable-image-data';
-import { Image } from 'projects/manager/src/app/classes/image';
 import { ImageBase } from 'classes/Image-base';
+import { LinkableImage } from 'projects/manager/src/app/classes/linkable-image';
 
 @Component({
   selector: 'carousel-widget',
@@ -29,9 +28,12 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
 
 
   setData(widgetData: CarouselWidgetData) {
-    widgetData.banners.forEach((banner: LinkableImageData) => {
-      this.banners.push(new LinkableImage(banner));
-    });
+    if (widgetData.banners && widgetData.banners.length > 0) {
+      widgetData.banners.forEach((banner: LinkableImageData) => {
+        this.banners.push(new LinkableImage(banner));
+      });
+    }
+
     super.setData(widgetData);
   }
 
@@ -45,7 +47,7 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
       width: widgetData.width,
       height: null,
       horizontalAlignment: widgetData.horizontalAlignment,
-      banners: this.banners.length > 0 ? this.banners : [],
+      banners: this.banners.length > 0 ? this.banners.map((banner: LinkableImage) => banner.getData()) : [],
       breakpoints: []
     }
   }

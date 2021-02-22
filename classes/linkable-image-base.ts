@@ -2,14 +2,14 @@ import { LinkableImageData } from './linkable-image-data';
 import { ImageBase } from 'classes/Image-base';
 import { LinkBase } from 'classes/link-base';
 
-export class LinkableImage {
+export class LinkableImageBase {
     image: ImageBase = new ImageBase();
     link: LinkBase = new LinkBase();
 
-    constructor(carouselBannerData?: LinkableImageData) {
-        if (carouselBannerData) {
-            this.image.setData(carouselBannerData.image);
-            this.link.setData(carouselBannerData.link);
+    constructor(linkableImageData?: LinkableImageData) {
+        if (linkableImageData) {
+            this.image.setData(linkableImageData.image);
+            this.link.setData(linkableImageData.link);
         }
     }
 }

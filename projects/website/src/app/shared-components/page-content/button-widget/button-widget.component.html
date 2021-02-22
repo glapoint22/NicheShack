@@ -5,4 +5,11 @@ corners.bottomRight > 0 ||
 corners.bottomLeft > 0 ?
 corners.topLeft + 'px ' + corners.topRight + 'px ' + corners.bottomRight + 'px ' + corners.bottomLeft + 'px': null"
     [style.box-shadow]="shadow.enable ? shadow.x + 'px ' + shadow.y + 'px ' + shadow.blur + 'px ' + shadow.size + 'px ' + shadow.color.toHex() : null"
-    (click)="linkService.navigate(link)" style="text-align: center;">{{caption.text}}</div>
+    (click)="linkService.navigate(link)" style="text-align: center;">
+
+    <a *ngIf="link && link.url" [href]="link.url" (click)="$event.preventDefault()"
+        style="width: 100%; text-decoration: none;">
+        {{caption.text}}</a>
+
+    <div *ngIf="!link || !link.url">{{caption.text}}</div>
+</div>

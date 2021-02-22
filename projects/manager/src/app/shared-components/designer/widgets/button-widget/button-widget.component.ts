@@ -71,7 +71,6 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements Bu
     this.currentState = ButtonState.Normal;
     this.background.color = this.defaultBackgroundColor;
     this.background.enable = true;
-    this.link.selectedOption = LinkOption.None;
     super.ngOnInit();
   }
 

@@ -1,10 +1,11 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { CarouselWidgetComponent } from '../../designer/widgets/carousel-widget/carousel-widget.component';
 import { MediaType } from '../../../classes/media';
-import { LinkableImage } from '../../../../../../../classes/linkable-image';
+import { LinkableImageBase } from '../../../../../../../classes/linkable-image-base';
 import { PageService } from '../../../services/page.service';
 import { PromptService } from 'services/prompt.service';
 import { CounterComponent } from '../../counter/counter.component';
+import { LinkableImage } from '../../../classes/linkable-image';
 
 @Component({
   selector: 'carousel-widget-properties',

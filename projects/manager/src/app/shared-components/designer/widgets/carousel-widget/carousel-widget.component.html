@@ -1,6 +1,7 @@
 <div #widget class="widget" (mousedown)="onMousedown()" (click)="onClick($event)"
-    style="width: 100%; display: flex; justify-content: center; align-items: center;"
-    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}">
+    style="width: 100%; display: flex; justify-content: center; align-items: center"
+    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}"
+    [style.background]="banners.length > 0 && banners[currentBannerIndex].image && banners[currentBannerIndex].image.url ? null : 'white'">
 
 
 

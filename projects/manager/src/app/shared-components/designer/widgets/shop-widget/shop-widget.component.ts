@@ -20,7 +20,7 @@ export class ShopWidgetComponent extends FreeformWidgetComponent implements OnIn
   public shopType: ShopType = ShopType.Category;
   public currentItemIndex: number = 0;
 
-  
+
 
   ngOnInit() {
     this.height = 250
@@ -36,12 +36,12 @@ export class ShopWidgetComponent extends FreeformWidgetComponent implements OnIn
 
   setData(widgetData: ShopWidgetData) {
     this.caption.setData(widgetData.caption);
-    if(widgetData.items) {
+    if (widgetData.items) {
       widgetData.items.forEach((item: ShopItem) => {
         this.items.push(new ShopItem(item));
       });
     }
-    
+
     this.shopType = widgetData.shopType;
     this.textColor.setData(widgetData.textColor);
     super.setData(widgetData);
@@ -60,7 +60,10 @@ export class ShopWidgetComponent extends FreeformWidgetComponent implements OnIn
       caption: this.caption.getData(),
       textColor: this.textColor.value.toHex(),
       shopType: this.shopType,
-      items: this.items.length > 0 ? this.items : [],
+      items: this.items.length > 0 ? this.items.map(x => ({
+        id: x.id,
+        link: x.link.getData()
+      })) : [],
       breakpoints: []
     }
   }

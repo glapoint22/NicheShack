@@ -1,8 +1,8 @@
 import { CaptionData } from './caption-data';
-import { ShopItem } from './shop-item';
+import { ShopItemData } from './shop-item-data';
 
 export interface ShopWidgetDataBase {
     caption: CaptionData;
     textColor: string;
-    items: Array<ShopItem>;
+    items: Array<ShopItemData>;
 }

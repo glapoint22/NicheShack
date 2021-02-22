@@ -6,9 +6,10 @@ export class Link extends LinkBase {
         if (this.selectedOption == LinkOption.None) return null;
 
         return {
+            id: this.id,
             selectedOption: this.selectedOption,
-            url: this.url,
-            optionValue: this.optionValue
+            url: this.selectedOption != LinkOption.Page && this.selectedOption != LinkOption.Product ? this.url : null,
+            optionValue: this.selectedOption != LinkOption.Page && this.selectedOption != LinkOption.Product ? this.optionValue : null
         }
     }
 }

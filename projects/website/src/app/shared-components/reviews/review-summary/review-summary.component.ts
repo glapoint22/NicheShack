@@ -10,12 +10,15 @@ import { Product } from 'classes/product';
 })
 export class ReviewSummaryComponent {
   @Input() product: Product;
-  public reviewStats: Array<any> = [];
-  private percentageTotal: number = 0;
+  public reviewStats: Array<any>;
+  private percentageTotal: number;
 
   constructor(private router: Router) { }
 
   ngOnChanges(): void {
+    this.reviewStats = [];
+    this.percentageTotal = 0;
+
     if (this.product.id) {
       // 5 Stars
       this.reviewStats.push({
