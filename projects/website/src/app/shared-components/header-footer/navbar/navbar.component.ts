@@ -86,7 +86,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.categoriesList = categories.slice().map(x => ({ key: x.urlId, value: x.name }));
 
     // Prepend "all" to the list of categories
-    this.categoriesList.unshift({ key: null, value: 'All Categories' });
+    this.categoriesList.unshift({ key: null, value: 'All Niches' });
   }
 
   setSelectedCategory(queryParams: ParamMap) {

@@ -1,5 +1,5 @@
 import { KeyValue } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GridData } from 'classes/grid-data';
 import { GridWidgetData } from '../../../classes/grid-widget-data';
@@ -61,5 +61,4 @@ export class GridWidgetComponent extends WidgetComponent {
   getPageNumber() {
     return this.route.snapshot.queryParams.page ? parseInt(this.route.snapshot.queryParams.page) : 1;
   }
-
 }

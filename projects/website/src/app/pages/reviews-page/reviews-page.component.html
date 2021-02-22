@@ -6,14 +6,15 @@
             <div class="content" style="max-width: 1600px;">
                 <h1>Customer Reviews</h1>
 
-                
+
                 <div class="product-container">
 
                     <!-- Title -->
                     <div class="title text-break">{{product.name}}</div>
 
                     <!-- Image -->
-                    <img [src]="'/images/' + product.image.url" [alt]="product.image.name" [title]="product.image.name">
+                    <img *ngIf="product.image" [src]="'/images/' + product.image.url" [alt]="product.image.name"
+                        [title]="product.image.name">
                 </div>
 
                 <!-- Reviews -->

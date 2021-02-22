@@ -17,7 +17,7 @@
         </category-dropdown-button>
 
         <div class="input-container">
-            <input #input [placeholder]="'Search in ' + (selectedCategory ? selectedCategory.name : 'All Categories')"
+            <input #input [placeholder]="'Search in ' + (selectedCategory ? selectedCategory.name : 'all niches')"
                 (input)="getSuggestions(input)" (mousedown)="getSuggestions(input)" (keydown.escape)="suggestions = []"
                 (blur)="hideSuggestionBox()" (keydown.enter)="search(input.value)"
                 (keydown.arrowUp)="onArrowPress(-1, input); $event.preventDefault()"
