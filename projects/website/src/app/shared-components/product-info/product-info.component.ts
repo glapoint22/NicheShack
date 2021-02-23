@@ -2,7 +2,7 @@ import { Component, Input, ViewChild, OnChanges, AfterViewInit } from '@angular/
 import { ProductInfo } from '../../interfaces/product-info';
 import { ShareService } from '../../services/share.service';
 import { Media, MediaType } from '../../interfaces/media';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Video } from 'projects/manager/src/app/classes/video';
 import { ReportItemComponent } from './report-item/report-item.component';
 import { Router } from '@angular/router';
@@ -29,6 +29,7 @@ export class ProductInfoComponent implements OnChanges, AfterViewInit {
   private mobileVideo: Video;
   private subscription: Subscription;
   private isSignedIn: boolean;
+  public description: SafeHtml;
 
 
   constructor(
@@ -52,6 +53,8 @@ export class ProductInfoComponent implements OnChanges, AfterViewInit {
         this.setVideo(media);
       }
     });
+
+    this.description = this.sanitizer.bypassSecurityTrustHtml(this.productInfo.product.description);
   }
 
 
@@ -162,6 +165,10 @@ export class ProductInfoComponent implements OnChanges, AfterViewInit {
     }
   }
 
+
+  getDescriptionText() {
+    return this.productInfo.product.description.replace(/<[^>]*>/g, "");
+  }
 
 
   ngOnDestroy() {

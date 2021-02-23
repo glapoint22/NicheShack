@@ -48,7 +48,7 @@
                     <img src="assets/Twitter.png" title="Share on Twitter">
                 </div>
                 <div class="social-media"
-                    (click)="shareService.onPinterestClick(getProductUrl(), productInfo.media[0].url, productInfo.product.description)">
+                    (click)="shareService.onPinterestClick(getProductUrl(), productInfo.media && productInfo.media.length > 0 ? productInfo.media[0].url : null, getDescriptionText())">
                     <img src="assets/Pinterest.png" title="Share on Pinterest">
                 </div>
             </div>
@@ -78,7 +78,7 @@
 
 
         <!-- Description -->
-        <div class="show-lg">{{productInfo.product.description}}</div>
+        <div class="show-lg" [innerHTML]="description"></div>
 
 
         <!-- Product Utilities -->
@@ -137,7 +137,7 @@
 
 
     <!-- Description -->
-    <div style="margin-top: 8px;">{{productInfo.product.description}}</div>
+    <div style="margin-top: 8px;" [innerHTML]="description"></div>
 
 
     <!-- Product Utilities -->

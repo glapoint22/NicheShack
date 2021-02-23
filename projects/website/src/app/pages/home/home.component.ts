@@ -26,7 +26,7 @@ export class HomeComponent extends SharePageComponent implements OnInit, AfterVi
 
   ngOnInit() {
     this.title = 'What\'s your niche?';
-    this.description = 'Online shopping from the largest affiliate marketing site on the planet, promoting items from thousands of companies and individuals.';
+    this.description = 'Niche Shack is an online platform that promotes thousands of products and services for entrepreneurs to sell to customers all around the world.';
     // this.image = '/Images/tlou2.jpg';
 
     super.ngOnInit();

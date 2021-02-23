@@ -15,6 +15,7 @@ export class SharePageComponent extends PageComponent implements OnInit {
     @Inject(DOCUMENT) document: Document) { super(titleService, metaService, document) }
 
   ngOnInit() {
+    if (!this.title) return;
     super.ngOnInit();
 
     // Facebook

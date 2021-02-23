@@ -1,4 +1,5 @@
 import { Directive, ElementRef, HostListener, Output, EventEmitter, AfterViewChecked } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CarouselElement } from '../classes/carousel-element';
 
 @Directive({
@@ -16,9 +17,31 @@ export class CarouselDirective implements AfterViewChecked {
   private direction: number;
   private interval: number;
   private inTransition: boolean;
+  private initialized: boolean;
 
-  constructor(private el: ElementRef<HTMLElement>) { }
+  constructor(private el: ElementRef<HTMLElement>, private route: ActivatedRoute) { }
 
+  ngAfterViewInit() {
+    this.route.paramMap.subscribe(() => {
+      this.carouselElements.length = 0;
+      this.translation = 0;
+      this.currentElementIndex = 0;
+      this.currentX = 0;
+      this.direction = 0;
+      this.interval = 0;
+      this.inTransition = false;
+      this.el.nativeElement.style.transform = 'translateX(' + this.translation + 'px)';
+      this.onChange.emit(this.currentElementIndex);
+
+      // This will remove all carousel elements
+      if (this.initialized) {
+        for (let i = 0; i < this.el.nativeElement.children.length; i++) {
+          this.el.nativeElement.children[i].remove();
+          i--;
+        }
+      }
+    })
+  }
 
 
   // ----------------------------------------------------Ng After View Checked----------------------------------------------------------
@@ -45,18 +68,23 @@ export class CarouselDirective implements AfterViewChecked {
       this.el.nativeElement.appendChild(firstElement);
 
 
-      // Add the listeners
-      this.el.nativeElement.addEventListener("touchstart", (e: TouchEvent) => this.onTouchstart(e));
-      this.el.nativeElement.addEventListener("mousedown", (e: MouseEvent) => this.onMousedown(e));
-      this.el.nativeElement.addEventListener("click", () => this.click());
-      this.el.nativeElement.addEventListener('transitionend', () => {
-        this.inTransition = false;
-        this.el.nativeElement.style.transition = '';
-        if (this.isPlaying) {
-          window.clearInterval(this.interval);
-          this.play();
-        }
-      });
+      if (!this.initialized) {
+        // Add the listeners
+        this.el.nativeElement.addEventListener("touchstart", (e: TouchEvent) => this.onTouchstart(e));
+        this.el.nativeElement.addEventListener("mousedown", (e: MouseEvent) => this.onMousedown(e));
+        this.el.nativeElement.addEventListener("click", () => this.click());
+        this.el.nativeElement.addEventListener('transitionend', () => {
+          this.inTransition = false;
+          this.el.nativeElement.style.transition = '';
+          if (this.isPlaying) {
+            window.clearInterval(this.interval);
+            this.play();
+          }
+        });
+      }
+
+
+      this.initialized = true;
     }
   }
 

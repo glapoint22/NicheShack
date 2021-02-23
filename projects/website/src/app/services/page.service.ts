@@ -30,6 +30,7 @@ export class PageService {
           // Return the page
           subscriber.next(pageData);
           subscriber.complete();
+          if (window) window.scrollTo(0, 0);
         });
     });
   }
