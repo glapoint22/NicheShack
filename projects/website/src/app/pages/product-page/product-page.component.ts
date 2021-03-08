@@ -39,10 +39,14 @@ export class ProductPageComponent extends SharePageComponent implements OnInit {
         // Get the product
         this.dataService.get('api/Products/ProductDetail', [{ key: 'id', value: this.route.snapshot.params.id }])
           .subscribe((productData) => {
-            this.title = productData.productInfo.product.name;
-            this.description = productData.productInfo.product.description.replace(/<[^>]*>/g, "");;
-            this.productData = productData;
-            this.pageContent.page.setData(productData.pageContent);
+            if (productData && productData.productInfo && productData.productInfo.product) {
+              this.title = productData.productInfo.product.name ? productData.productInfo.product.name : '';
+              this.description = productData.productInfo.product.description ? productData.productInfo.product.description.replace(/<[^>]*>/g, "") : '';
+              this.productData = productData;
+              this.pageContent.page.setData(productData.pageContent);
+            }
+
+
             this.dataService.loading = false;
             if (window) window.scrollTo(0, 0);
             super.ngOnInit();

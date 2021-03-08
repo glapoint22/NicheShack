@@ -379,14 +379,19 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
   // -----------------------------( SET DROPDOWN OPTIONS )------------------------------ \\
   setDropdownOptions() {
+    // Clear the dropdown list so it can be rebuilt
     this.dropdownOptions = [];
 
+    // If the media type is video
     if (this.indexOfCurrentMediaList == MediaType.Video) {
+      // Build the list with just one dropdown option (Video)
       this.dropdownOptions[0] = this.dropdownList[MediaType.Video];
+
+      // If the media type is anything other than video
     } else {
-      for (let i = 0; i < 7; i++) {
-        this.dropdownOptions[i] = this.dropdownList[i];
-      }
+
+      // Build the list with all the media dropdown options except the video option
+      this.dropdownOptions = this.dropdownList.filter(x => x.value != MediaType.Video);
     }
   }
 
@@ -590,7 +595,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       formData.append('image', event.target.files[0]);
       formData.append('id', this.itemList.listItems[this.updatingMediaIndex].id.toString());
 
-      
+
       // Update the current image
       this.dataService.post('api/Media/UpdateImage', formData, 'text').subscribe((url: string) => {
         this.media.url = url;
@@ -611,7 +616,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
 
 
     // Populate the database with the new media
-    this.dataService.post('api/Media/Video', {name: url})
+    this.dataService.post('api/Media/Video', { name: url })
       .subscribe((media: Media) => {
         // Update the empty item with the new media data
         this.itemList.listItems[0].id = media.id;

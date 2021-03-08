@@ -346,6 +346,8 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
 
     // Update the database
     this.dataService.delete('api/Products/PricePoint', { ids: deletedPricePoints.map(x => x.id) }).subscribe();
+    this.popupService.pricePointPopup.product = this.product;
+    this.popupService.pricePointPopup.setPrice();
   }
 
 

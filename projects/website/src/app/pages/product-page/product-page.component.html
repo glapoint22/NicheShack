@@ -8,29 +8,18 @@
             <product-info *ngIf="productData" [productInfo]="productData.productInfo"></product-info>
 
 
-            <!-- Product Conent -->
-            <ng-container *ngIf="productData && productData.content.length > 1">
-
-                <div class="content-heading"
-                    [ngStyle]="{'text-align': productData.pricePoints.length > 1 ? 'center' : 'left'}">
-                    {{productData.pricePoints.length > 1 ? 'Price Points' : 'Included with your purchase'}}
-                </div>
-
-
-
-                <div [ngClass]="{'product-content-container': productData.pricePoints.length > 1}">
-
-
-                    <div *ngFor="let pricePoint of productData.pricePoints; let i = index"
-                        [ngClass]="{'price-point-container': productData.pricePoints.length > 1}">
-                        <div *ngIf="productData.pricePoints.length > 1" class="price-point">
+            <!-- Product Content -->
+            <ng-container *ngIf="productData && productData.pricePoints.length > 1">
+                <div class="product-content-container">
+                    <div *ngFor="let pricePoint of productData.pricePoints; let i = index" class="price-point-container">
+                        <div class="price-point">
                             <span *ngIf="pricePoint.textBefore">{{pricePoint.textBefore}} </span>
                             <span>{{pricePoint.wholeNumber + '.' + pricePoint.decimal | currency:'USD'}}</span>
                             <span *ngIf="pricePoint.textAfter"> {{pricePoint.textAfter}}</span>
                         </div>
 
 
-                        <div [ngStyle]="{'padding.px': productData.pricePoints.length > 1 ? 8 : 0}">
+                        <div style="padding: 8px;">
                             <ng-container *ngFor="let content of productData.content">
                                 <div *ngIf="hasIndex(content.priceIndices, i)">
                                     <img [src]="'images/' + content.icon.url" [title]="content.icon.name"

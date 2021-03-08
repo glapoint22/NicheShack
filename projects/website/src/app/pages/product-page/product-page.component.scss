@@ -5,7 +5,7 @@
     border: 1px solid $border-color;
 
     .price-point {
-        color: $niche-shack-gold;
+        color: #bababa;
         font-size: 16px;
         font-weight: bold;
         border-bottom: 1px solid $border-color;
@@ -19,16 +19,9 @@
     max-width: 928px;
 }
 
-.content-heading {
-    margin-top: 48px;
-    color: #cecece;
-    font-style: italic;
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
 
 .product-content-container {
+    margin-top: 48px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

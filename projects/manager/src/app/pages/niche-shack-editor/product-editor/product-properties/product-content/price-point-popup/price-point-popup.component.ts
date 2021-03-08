@@ -45,7 +45,7 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
     window.setTimeout(() => {
       let txtInput = this.txtInput.toArray();
       txtInput[0].nativeElement.focus();
-    },100)
+    }, 100)
 
   }
 
@@ -130,17 +130,23 @@ export class PricePointPopupComponent extends PopupComponent implements OnInit {
 
 
   setPrice() {
-    let prices: Array<number> = this.product.pricePoints.map(x => x.wholeNumber + (x.decimal * 0.01));
-    let minPrice = Math.min(...prices);
-    let maxPrice = Math.max(...prices);
+    if (this.product.pricePoints.length > 0) {
+      let prices: Array<number> = this.product.pricePoints.map(x => x.wholeNumber + (x.decimal * 0.01));
+      let minPrice = Math.min(...prices);
+      let maxPrice = Math.max(...prices);
 
-    if (minPrice == maxPrice) {
-      this.product.minPrice = minPrice;
-      this.product.maxPrice = 0;
+      if (minPrice == maxPrice) {
+        this.product.minPrice = minPrice;
+        this.product.maxPrice = 0;
+      } else {
+        this.product.minPrice = minPrice;
+        this.product.maxPrice = maxPrice;
+      }
     } else {
-      this.product.minPrice = minPrice;
-      this.product.maxPrice = maxPrice;
+      this.product.minPrice = 0;
+      this.product.maxPrice = 0;
     }
+
 
 
     // Update the price
