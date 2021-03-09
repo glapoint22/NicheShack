@@ -82,7 +82,7 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   // -----------------------------( SET FOCUS TO LIST )------------------------------ \\
   setFocusToList() {
 
-    
+
 
     // If we're adding an image
     if (this.mediaAddInitiated) this.mediaAddInitiated = false;
@@ -100,13 +100,17 @@ export class MediaItemListComponent extends EditableItemListComponent implements
   // -----------------------------( ON LIST ITEM DOWN )------------------------------ \\
   onListItemDown(index: number, e?: MouseEvent) {
     super.onListItemDown(index, e);
-    this.onMediaSelect.emit(this.listItems[index]);
+
+    // As long as the mouse down is from a left click only (not right click)
+    if (e != null && e.which == 1) {
+      this.onMediaSelect.emit(this.listItems[index]);
+    }
   }
 
 
   // // -----------------------------( EVALUATE EDIT )------------------------------ \\
   // evaluateEdit() {
-   
+
 
 
 

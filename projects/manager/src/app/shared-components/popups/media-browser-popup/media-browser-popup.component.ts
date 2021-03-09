@@ -595,7 +595,6 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       formData.append('image', event.target.files[0]);
       formData.append('id', this.itemList.listItems[this.updatingMediaIndex].id.toString());
 
-
       // Update the current image
       this.dataService.post('api/Media/UpdateImage', formData, 'text').subscribe((url: string) => {
         this.media.url = url;
