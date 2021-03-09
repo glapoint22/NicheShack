@@ -4,27 +4,29 @@
 .container {
     display: flex;
     margin: auto;
+    width: 100%;
+    max-width: 1300px;
 
     // Media Group
     .media-group {
         overflow: auto;
         flex: 1;
-        max-width: 88px;
-        margin-right: 15px;
+        max-width: 70px;
+        
 
         .thumbnail {
-            width: 88px; 
+            width: 50px; 
             height: 50px;
             background-position: center;
             background-repeat: no-repeat;
-            background-size: cover;
+            background-size: contain;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 40px;
+            font-size: 25px;
             color: white;
             cursor: pointer;
-            
+            border: 1px solid #5a5a5a;
         
             &:not(:last-child) {
                 margin-bottom: 14px;
@@ -41,23 +43,31 @@
     // Media display
     .media-display {
         width: 100%;
-        max-width: 880px;
+        max-width: 500px;
         max-height: 500px;
         margin-right: 15px;
         flex: 1;
-        background: #222222;
-        border: 1px solid #424242;
-    
+       
         img {
             width: 100%;
-            max-width: 880px;
+            max-width: 500px;
             max-height: 500px;
             object-fit: contain;
         }
 
-        iframe{
+        .video-container {
+            position: relative;
             width: 100%;
-            height: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+
+            iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
         }
     }
 
@@ -97,6 +107,8 @@
 
 .carousel-container {
     overflow: hidden;
+    max-width: 500px;
+    margin: auto;
     .carousel {
         display: flex;
         align-items: center;
@@ -232,10 +244,6 @@
 
 @media (min-width: map-get($breakpoints, lg)) {
     .container {
-        .product-info {
-            flex: 0.6;
-        }
-
         .media-group {
             height: 306px;
         }

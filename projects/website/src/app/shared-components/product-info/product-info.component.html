@@ -17,11 +17,19 @@
     <!-- Media display -->
     <div class="media-display show-lg">
         <ng-container *ngIf="selectedMedia && (selectedMedia.url || selectedMedia.safeUrl)">
+
+            <!-- Image -->
             <img *ngIf="selectedMedia.type == mediaType.Image" [src]="'/images/' + selectedMedia.url"
                 [alt]="selectedMedia.name" [title]="selectedMedia.name">
 
-            <iframe *ngIf="selectedMedia.type == mediaType.Video" frameborder="0" [src]="selectedMedia.safeUrl"
-                allowfullscreen></iframe>
+
+            <!-- Image -->
+            <div class="video-container" *ngIf="selectedMedia.type == mediaType.Video">
+                <!-- Had to add extra div here because vimeo script was adding padding -->
+                <div>
+                    <iframe [src]="selectedMedia.safeUrl" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
         </ng-container>
     </div>
 
@@ -74,7 +82,8 @@
         </div>
 
         <!-- Buy Button -->
-        <button class="alt-button" style="margin: 8px 0;" (click)="onBuyClick(productInfo.product.hoplink)">Go to sales page</button>
+        <button class="alt-button" style="margin: 8px 0;" (click)="onBuyClick(productInfo.product.hoplink)">Go to sales
+            page</button>
 
 
         <!-- Description -->

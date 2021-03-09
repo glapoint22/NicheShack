@@ -27,13 +27,24 @@
             <div class="media-container">
                 <ng-container
                     *ngIf="productService.product.selectedMedia.url || productService.product.selectedMedia.safeUrl; else noMedia">
+
+
+                    <!-- Image -->
                     <img *ngIf="productService.product.selectedMedia.type == mediaType.ProductMediaImage"
                         [src]="'/images/' + productService.product.selectedMedia.url"
                         [alt]="productService.product.selectedMedia.name"
                         [title]="productService.product.selectedMedia.name">
 
-                    <iframe *ngIf="productService.product.selectedMedia.type == mediaType.Video" frameborder="0"
-                        [src]="productService.product.selectedMedia.safeUrl" allowfullscreen></iframe>
+                    <!-- Video -->
+                    <div class="video-container" *ngIf="productService.product.selectedMedia.type == mediaType.Video">
+                        <!-- Had to add extra div here because vimeo script was adding padding -->
+                        <div>
+                            <iframe [src]="productService.product.selectedMedia.safeUrl" frameborder="0"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+
                 </ng-container>
 
                 <ng-template #noMedia>
@@ -84,19 +95,17 @@
         </div>
     </div>
 
-    <!-- <div class="disclaimer">*Niche Shack is not the creator/owner of {{productService.product.name}} or any
-        of its images and videos. Niche Shack is displaying this product for promotional use only and is
-        being compensated for each sale.</div> -->
 
     <!-- Product Conent -->
     <ng-container *ngIf="productService.product.pricePoints.length > 1">
-       
+
 
         <!-- Content -->
         <div class="product-content-container">
 
             <!-- Price Points -->
-            <div *ngFor="let pricePoint of productService.product.pricePoints; let i = index" class="price-points-container">
+            <div *ngFor="let pricePoint of productService.product.pricePoints; let i = index"
+                class="price-points-container">
 
 
                 <div class="price-points">
