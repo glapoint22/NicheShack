@@ -36,7 +36,7 @@ export class PaddingBase {
                 let paddingValue = paddingData[paddingType.substring(7).toLowerCase()];
 
                 // Only add class if value is not zero
-                if (paddingValue != '0px') {
+                if (paddingValue && paddingValue != '0px') {
                     element.classList.add(this.getClassName(BreakpointType[paddingType]) + '-' +
                         paddingValue.substr(0, paddingValue.length - 2));
                 }
