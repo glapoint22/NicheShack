@@ -15,9 +15,9 @@
     }
 }
 
-.content {
-    max-width: 928px;
-}
+// .content {
+//     max-width: 928px;
+// }
 
 
 .product-content-container {
@@ -27,8 +27,8 @@
     flex-wrap: wrap;
 }
 
-@media (min-width: map-get($breakpoints, lg)) {
-    .content {
-        max-width: 1600px;
-    }
-}
+// @media (min-width: map-get($breakpoints, lg)) {
+//     .content {
+//         max-width: 1600px;
+//     }
+// }

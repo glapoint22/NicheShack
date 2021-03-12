@@ -1,88 +1,90 @@
-<!-- Review Summary -->
-<review-summary [product]="product"></review-summary>
+<div style="max-width: 1600px; margin: auto; padding: 0 20px;">
+    <!-- Review Summary -->
+    <review-summary [product]="product"></review-summary>
 
-<ng-container *ngIf="reviews && reviews.length > 0">
+    <ng-container *ngIf="reviews && reviews.length > 0">
 
-    <!-- Positive & Negagive Reviews -->
-    <ng-container *ngIf="positiveReview || negativeReview">
-        <div class="flex-wrap flex-nowrap-sm" style="display: flex; justify-content: center; margin: 24px 0">
+        <!-- Positive & Negagive Reviews -->
+        <ng-container *ngIf="positiveReview || negativeReview">
+            <div class="flex-wrap flex-nowrap-sm" style="display: flex; justify-content: center; margin: 24px 0">
 
-            <!-- Postive Review -->
-            <div *ngIf="positiveReview" class="review margin-right-24-sm"
-                [ngClass]="{'margin-bottom-24 margin-bottom-0-sm': negativeReview}">
+                <!-- Postive Review -->
+                <div *ngIf="positiveReview" class="review margin-right-24-sm"
+                    [ngClass]="{'margin-bottom-24 margin-bottom-0-sm': negativeReview}">
 
-                <!-- Header -->
-                <h2 class="niche-shack-gold-color">
-                    Most helpful positive review
-                </h2>
+                    <!-- Header -->
+                    <h2 class="niche-shack-gold-color">
+                        Most helpful positive review
+                    </h2>
 
-                <!-- Likes -->
-                <div class="like">{{positiveReview.likes}} customers found this helpful</div>
+                    <!-- Likes -->
+                    <div class="like">{{positiveReview.likes}} customers found this helpful</div>
 
-                <!-- Review -->
-                <review [review]="positiveReview"></review>
+                    <!-- Review -->
+                    <review [review]="positiveReview"></review>
+                </div>
+
+
+
+                <!-- Negative Review -->
+                <div *ngIf="negativeReview" class="review">
+
+                    <!-- Header -->
+                    <h2 class="niche-shack-gold-color">
+                        Most helpful negative review
+                    </h2>
+
+                    <!-- Likes -->
+                    <div class="like">{{negativeReview.likes}} customers found this helpful</div>
+
+                    <!-- Review -->
+                    <review [review]="negativeReview"></review>
+                </div>
+            </div>
+        </ng-container>
+
+
+        <!-- Reviews -->
+        <div id="reviews" class="reviews-header">
+
+            <!-- Showing -->
+            <div class="width-100 width-auto-xs margin-bottom-16 margin-bottom-0-xs" style="white-space: nowrap;">
+                Showing {{reviewsStart}} - {{reviewsEnd}} of {{product.totalReviews | number}}
+                review{{product.totalReviews > 1 ? 's' : ''}}
             </div>
 
-
-
-            <!-- Negative Review -->
-            <div *ngIf="negativeReview" class="review">
-
-                <!-- Header -->
-                <h2 class="niche-shack-gold-color">
-                    Most helpful negative review
-                </h2>
-
-                <!-- Likes -->
-                <div class="like">{{negativeReview.likes}} customers found this helpful</div>
-
-                <!-- Review -->
-                <review [review]="negativeReview"></review>
-            </div>
+            <!-- Sort Options -->
+            <select [(ngModel)]="selectedSortOption" (change)="setSort()">
+                <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">Sort by
+                    {{sortOption.key}}</option>
+            </select>
         </div>
+
+        <!-- View All Button -->
+        <button *ngIf="!paging && product.totalReviews > reviewsPerPage" class="primary-button"
+            style="margin-bottom: 24px;" (click)="onViewAllReviewsClick()">
+            View all {{product.totalReviews | number}} reviews
+        </button>
+
+
+
+        <!-- Customer Reviews -->
+        <review *ngFor="let review of reviews; trackBy:trackReview" [review]="review" [showReviewHelpful]="true"
+            (onReportReviewClick)="onReportReviewClick(reportReview, $event)"></review>
+
+
+
+        <!-- View All Button -->
+        <button *ngIf="!paging && product.totalReviews > reviewsPerPage" class="primary-button"
+            (click)="onViewAllReviewsClick()">
+            View all {{product.totalReviews | number}} reviews
+        </button>
+
+        <paginator *ngIf="paging" [currentPage]="currentPage" [pageCount]="pageCount">
+        </paginator>
+
+
+        <!-- Report Review -->
+        <report-review #reportReview [review]="reportedReview"></report-review>
     </ng-container>
-
-
-    <!-- Reviews -->
-    <div id="reviews" class="reviews-header">
-
-        <!-- Showing -->
-        <div class="width-100 width-auto-xs margin-bottom-16 margin-bottom-0-xs" style="white-space: nowrap;">
-            Showing {{reviewsStart}} - {{reviewsEnd}} of {{product.totalReviews | number}}
-            review{{product.totalReviews > 1 ? 's' : ''}}
-        </div>
-
-        <!-- Sort Options -->
-        <select [(ngModel)]="selectedSortOption" (change)="setSort()">
-            <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">Sort by
-                {{sortOption.key}}</option>
-        </select>
-    </div>
-
-    <!-- View All Button -->
-    <button *ngIf="!paging && product.totalReviews > reviewsPerPage" class="primary-button" style="margin-bottom: 24px;"
-        (click)="onViewAllReviewsClick()">
-        View all {{product.totalReviews | number}} reviews
-    </button>
-
-
-
-    <!-- Customer Reviews -->
-    <review *ngFor="let review of reviews; trackBy:trackReview" [review]="review" [showReviewHelpful]="true"
-        (onReportReviewClick)="onReportReviewClick(reportReview, $event)"></review>
-
-
-
-    <!-- View All Button -->
-    <button *ngIf="!paging && product.totalReviews > reviewsPerPage" class="primary-button"
-        (click)="onViewAllReviewsClick()">
-        View all {{product.totalReviews | number}} reviews
-    </button>
-
-    <paginator *ngIf="paging" [currentPage]="currentPage" [pageCount]="pageCount">
-    </paginator>
-
-
-    <!-- Report Review -->
-    <report-review #reportReview [review]="reportedReview"></report-review>
-</ng-container>
+</div>
