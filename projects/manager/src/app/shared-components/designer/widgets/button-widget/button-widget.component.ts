@@ -252,4 +252,10 @@ export class ButtonWidgetComponent extends FreeformWidgetComponent implements Bu
 
     super.buildPreview(parent, button);
   }
+
+
+  getMinHeight(): number {
+    let children: Array<Element> = Array.from(this.widgetElement.nativeElement.children);
+    return Math.max(...children.filter(x => x.id != 'handle').map((x: any) => x.offsetHeight));
+  }
 }

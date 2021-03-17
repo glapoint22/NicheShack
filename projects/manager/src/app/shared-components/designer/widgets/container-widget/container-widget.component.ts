@@ -11,6 +11,7 @@ import { Background } from 'projects/manager/src/app/classes/background';
 import { Color } from 'classes/color';
 import { ContainerWidgetData } from 'projects/manager/src/app/classes/container-widget-data';
 import { BreakpointData } from 'classes/breakpoint-data';
+import { Row } from 'projects/manager/src/app/classes/row';
 
 @Component({
   selector: 'container-widget',
@@ -36,30 +37,47 @@ export class ContainerWidgetComponent extends FreeformWidgetComponent implements
 
 
   getMinHeight(): number {
-    if (this.container.rows.length == 0) return 20;
+    
 
-    let index = this.container.rows.length - 1;
+    let minHeight: number = 0;
 
-    return this.container.rows[index].component.top + this.container.rows[index].element.firstElementChild.clientHeight;
+    this.container.rows.forEach((row: Row) => {
+      minHeight += row.component.top + row.element.firstElementChild.clientHeight;
+    });
+
+    let value = minHeight + parseInt(this.padding.top.value) + parseInt(this.padding.bottom.value) + (this.border.enable ? this.border.width * 2 : 0);
+
+    if(value == 0) return 20;
+
+    return value;
+  }
+
+  getBorder(): number {
+    if (!this.border.enable) return 0;
+    return this.border.width * 2;
   }
 
 
   onRowTransform(delta) {
+    if (this.container.rows.length == 0) return;
+
     let lastChildRow = this.container.rows[this.container.rows.length - 1].element;
     let lastChildRowBottom = lastChildRow.getBoundingClientRect().top + delta + lastChildRow.clientHeight;
     let rowFixedHeight = this.column.row.rowElement.nativeElement.getBoundingClientRect().top + Math.max(this.getMaxRowHeight(), this.height);
     let newRowHeight = this.column.row.rowElement.nativeElement.getBoundingClientRect().top + this.column.row.rowElement.nativeElement.clientHeight;
+    let padding = parseInt(this.padding.bottom.value) + (this.border.enable ? this.border.width : 0);
+
 
     // If the last row's bottom in this container is greater than this row's fixed height, the container will flex
     // Because of this, we need to re-position the row after this container
-    if (lastChildRowBottom > rowFixedHeight) {
-      this.column.row.positionNextRow(lastChildRowBottom - newRowHeight);
+    if (lastChildRowBottom + padding > rowFixedHeight) {
+      this.column.row.positionNextRow((lastChildRowBottom + padding) - newRowHeight);
 
       // The last row's bottom is less or equal to this row's fixed height
     } else {
 
       // Position the next row only if the last row's bottom was greater than the row's fixed height
-      if (lastChildRow.getBoundingClientRect().top + lastChildRow.clientHeight > rowFixedHeight) {
+      if (lastChildRow.getBoundingClientRect().top + lastChildRow.clientHeight > rowFixedHeight - padding) {
         this.column.row.positionNextRow(rowFixedHeight - newRowHeight);
       }
     }

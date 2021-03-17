@@ -108,11 +108,12 @@ export class FreeformWidgetComponent extends WidgetComponent {
     let anchorHeight: number = this.widgetElement.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == VerticalAlign.Middle ? 0.5 : 1);
     let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().top + anchorHeight;
     let startHeight: number = this.widgetElement.nativeElement.clientHeight;
-    let previousHeight: number = startHeight;
+    let border = this.getBorder();
+    let previousHeight: number = startHeight + border;
     let maxRowHeight: number = this.getMaxRowHeight();
     let minHeight: number = this.getMinHeight();
     let maxHeight = this.getMaxHeight();
-    let offset = event.clientY - (anchorPoint - anchorHeight);
+    let offset = (event.clientY - (anchorPoint - anchorHeight)) + border;
 
     let onMousemove = (e: MouseEvent) => {
       let mousePos = (anchorPoint - e.clientY) + offset;
@@ -252,11 +253,12 @@ export class FreeformWidgetComponent extends WidgetComponent {
     let anchorHeight: number = this.widgetElement.nativeElement.clientHeight * (this.column.row.verticalAlignment.value == VerticalAlign.Middle ? 0.5 : 1);
     let anchorPoint: number = this.widgetElement.nativeElement.getBoundingClientRect().top + (this.column.row.verticalAlignment.value == VerticalAlign.Middle ? anchorHeight : 0);
     let startHeight: number = this.widgetElement.nativeElement.clientHeight;
-    let previousHeight: number = startHeight;
+    let border = this.getBorder();
+    let previousHeight: number = startHeight + border;
     let maxRowHeight: number = this.getMaxRowHeight();
     let minHeight: number = this.column.row.verticalAlignment.value == VerticalAlign.Bottom ? Math.max(this.getMinHeightAlt(), this.getMinHeight()) : this.getMinHeight();
     let maxHeight = this.getMaxHeight();
-    let offset = (anchorPoint + anchorHeight) - event.clientY;
+    let offset = ((anchorPoint + anchorHeight) - event.clientY) + border;
 
 
     let onMousemove = (e: MouseEvent) => {
@@ -414,8 +416,7 @@ export class FreeformWidgetComponent extends WidgetComponent {
   }
 
   getMinHeight(): number {
-    let children: Array<Element> = Array.from(this.widgetElement.nativeElement.children);
-    return Math.max(...children.filter(x => x.id != 'handle').map((x: any) => x.offsetHeight));
+    return 0;
   }
 
   getMinHeightAlt() {
@@ -432,5 +433,9 @@ export class FreeformWidgetComponent extends WidgetComponent {
 
 
     return height - topsTotal;
+  }
+
+  getBorder(): number {
+    return 0
   }
 }

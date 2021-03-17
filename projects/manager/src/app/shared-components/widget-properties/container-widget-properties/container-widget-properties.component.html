@@ -7,7 +7,7 @@
 </div>
 
 <!-- Border -->
-<border [border]="containerWidget.border" (onChange)="pageService.save()"></border>
+<border [border]="containerWidget.border" (onChange)="onBorderChanges(); pageService.save()"></border>
 
 <!-- Corners -->
 <corners [corners]="containerWidget.corners" (onChange)="pageService.save()"></corners>
@@ -22,7 +22,7 @@
 <columns [column]="containerWidget.column" (onChange)="pageService.save()"></columns>
 
 <!-- Padding -->
-<padding [paddingComponent]="containerWidget" (onChange)="pageService.save()"></padding>
+<padding [paddingComponent]="containerWidget" (onChange)="onPaddingChanges(); pageService.save()"></padding>
 
 <!-- Visibility -->
 <visibility [column]="containerWidget.column" (onChange)="pageService.save()"></visibility>
