@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { Vendor } from 'projects/manager/src/app/classes/vendor';
 import { LoadingService } from 'projects/manager/src/app/services/loading.service';
 import { Product } from 'projects/manager/src/app/classes/product';
-import { SaveService } from 'projects/manager/src/app/services/save.service';
 import { DataService } from 'services/data.service';
 
 @Component({
@@ -24,8 +23,7 @@ export class ProductVendorComponent implements Searchable<Item> {
     private popupService: PopupService,
     private formService: FormService,
     private loadingService: LoadingService,
-    private dataService: DataService,
-    private saveService: SaveService
+    private dataService: DataService
   ) { }
 
 
@@ -73,13 +71,10 @@ export class ProductVendorComponent implements Searchable<Item> {
       this.product.vendor = vendor;
 
       // Update the vendor
-      this.saveService.save({
-        url: 'api/Products/Vendor',
-        data: {
-          itemId: this.product.id,
-          propertyId: this.product.vendor.id
-        }
-      });
+      this.dataService.put('api/Products/Vendor', {
+        itemId: this.product.id,
+        propertyId: this.product.vendor.id
+      }).subscribe();
     }
   }
 }

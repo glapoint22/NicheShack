@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Save } from '../classes/save';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 import { DataService } from 'services/data.service';
 
 @Injectable({
@@ -13,9 +13,9 @@ export class SaveService {
   constructor(private dataService: DataService) {
     this.saveData.pipe(
       debounceTime(1000),
-      switchMap((save: Save) => {
-        return this.dataService.put(save.url, save.data);
-      })).subscribe();
+    ).subscribe((save: Save) => {
+      this.dataService.put(save.url, save.data).subscribe();
+    });
   }
 
   save(save: Save) {

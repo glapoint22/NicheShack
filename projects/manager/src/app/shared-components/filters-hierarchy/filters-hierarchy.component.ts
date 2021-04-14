@@ -59,13 +59,10 @@ export class FiltersHierarchyComponent extends HierarchyComponent {
 
   // -----------------------------( ON CHANGE )------------------------------ \\
   onChange(filterOption: HierarchyCheckboxItem) {
-    this.saveService.save({
-      url: 'api/Products/Filter',
-      data: {
-        productId: this.product.id,
-        filterOptionId: filterOption.id,
-        checked: filterOption.checked
-      }
-    });
+    this.dataService.put('api/Products/Filter', {
+      productId: this.product.id,
+      filterOptionId: filterOption.id,
+      checked: filterOption.checked
+    }).subscribe();
   }
 }

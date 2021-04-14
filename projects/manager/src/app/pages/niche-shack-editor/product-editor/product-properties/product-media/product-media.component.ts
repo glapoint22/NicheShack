@@ -39,7 +39,7 @@ export class ProductMediaComponent implements OnChanges {
 
 
 
-// -----------------------------( SET MEDIA )------------------------------ \\
+  // -----------------------------( SET MEDIA )------------------------------ \\
   setMedia(media: Media) {
     this.productService.setCurrentSelectedMedia(media);
 
@@ -56,15 +56,11 @@ export class ProductMediaComponent implements OnChanges {
 
       // Update the media
       if (this.currentMediaId != media.id) {
-        this.saveService.save({
-          url: 'api/Products/Media',
-          data: {
-            itemId: this.product.selectedMedia.itemId,
-            propertyId: media.id
-          }
-        });
+        this.dataService.put('api/Products/Media', {
+          itemId: this.product.selectedMedia.itemId,
+          propertyId: media.id
+        }).subscribe();
       }
-
     }
 
     this.currentMediaId = media.id;

@@ -79,10 +79,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     // Update the price point
     this.pricePointPopupSubscription = this.popupService.pricePointPopup.onPopupClose
       .subscribe(() => {
-        this.saveService.save({
-          url: 'api/Products/PricePoint',
-          data: this.popupService.pricePointPopup.pricePoint
-        });
+        this.dataService.put('api/Products/PricePoint', this.popupService.pricePointPopup.pricePoint).subscribe();
       });
   }
 
@@ -174,13 +171,10 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
 
   // -----------------------------( ON ICON CHANGE )------------------------------ \\
   onIconChange() {
-    this.saveService.save({
-      url: 'api/Products/ContentIcon',
-      data: {
-        ItemId: this.product.content[this.contentIndex].id,
-        PropertyId: this.product.content[this.contentIndex].icon.id
-      }
-    });
+    this.dataService.put('api/Products/ContentIcon', {
+      ItemId: this.product.content[this.contentIndex].id,
+      PropertyId: this.product.content[this.contentIndex].icon.id
+    }).subscribe();
   }
 
 
@@ -255,7 +249,7 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
     })
       .subscribe((id: number) => {
         pricePoint.id = id;
-        this.pricePointList[this.pricePointList.length-1].id = id;
+        this.pricePointList[this.pricePointList.length - 1].id = id;
       });
 
     // Push the new price point
@@ -369,14 +363,11 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
   // -----------------------------( MOVE PRICE POINT )------------------------------ \\
   movePricePoint(fromIndex: number, toIndex: number) {
     // Save the new order to the database
-    this.saveService.save({
-      url: 'api/Products/PricePointMove',
-      data: {
-        productId: this.product.id,
-        fromIndex: fromIndex,
-        toIndex: toIndex
-      }
-    });
+    this.dataService.put('api/Products/PricePointMove', {
+      productId: this.product.id,
+      fromIndex: fromIndex,
+      toIndex: toIndex
+    }).subscribe();
 
     // Update the price points (Price point data coming in)
     this.moveArrayElement(this.product.pricePoints, fromIndex, toIndex);
@@ -401,13 +392,10 @@ export class ProductContentComponent implements OnInit, OnChanges, OnDestroy {
 
   // -----------------------------( ON PRICE POINT CHANGE )------------------------------ \\
   onPricePointChange() {
-    this.saveService.save({
-      url: 'api/Products/PriceIndices',
-      data: {
-        productContentId: this.product.content[this.contentIndex].id,
-        priceIndices: this.product.content[this.contentIndex].priceIndices
-      }
-    });
+    this.dataService.put('api/Products/PriceIndices', {
+      productContentId: this.product.content[this.contentIndex].id,
+      priceIndices: this.product.content[this.contentIndex].priceIndices
+    }).subscribe();
   }
 
 

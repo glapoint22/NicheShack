@@ -3,7 +3,6 @@ import { DetailedItem } from '../../../classes/detailed-item';
 import { HierarchyItem } from '../../../classes/hierarchy-item';
 import { LoadingService } from '../../../services/loading.service';
 import { MediaType } from '../../../classes/media';
-import { SaveService } from '../../../services/save.service';
 import { DataService } from 'services/data.service';
 import { Image } from '../../../classes/image';
 
@@ -19,22 +18,17 @@ export class CategoryEditorComponent implements OnChanges {
 
   constructor(
     private loadingService: LoadingService,
-    private dataService: DataService,
-    private saveService: SaveService
+    private dataService: DataService
   ) { }
 
 
 
   onChange() {
     // Update the icon
-    this.saveService.save({
-      url: 'api/Categories/Image',
-      data: {
-        itemId: this.category.id,
-        propertyId: this.category.icon.id
-      }
-      
-    });
+    this.dataService.put('api/Categories/Image', {
+      itemId: this.category.id,
+      propertyId: this.category.icon.id
+    }).subscribe();
   }
 
 

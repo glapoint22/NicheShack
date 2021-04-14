@@ -6,7 +6,6 @@ import { Image } from '../../../classes/image';
 import { ImageData } from 'classes/image-data';
 import { DetailedItem } from '../../../classes/detailed-item';
 import { MediaType } from '../../../classes/media';
-import { SaveService } from '../../../services/save.service';
 
 @Component({
   selector: 'niche-editor',
@@ -18,19 +17,15 @@ export class NicheEditorComponent implements OnChanges {
   public niche: DetailedItem;
   public mediaType = MediaType;
 
-  constructor(private loadingService: LoadingService, private dataService: DataService, private saveService: SaveService){}
+  constructor(private loadingService: LoadingService, private dataService: DataService){}
 
 
   onChange() {
     // Update the icon
-    this.saveService.save({
-      url: 'api/Niches/Image',
-      data: {
-        itemId: this.niche.id,
-        propertyId: this.niche.icon.id
-      }
-      
-    });
+    this.dataService.put('api/Niches/Image', {
+      itemId: this.niche.id,
+      propertyId: this.niche.icon.id
+    }).subscribe();
   }
 
 
