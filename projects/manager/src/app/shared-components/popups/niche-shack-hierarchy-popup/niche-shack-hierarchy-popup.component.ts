@@ -13,24 +13,11 @@ import { PromptService } from 'services/prompt.service';
   styleUrls: ['../../hierarchy/editable-hierarchy/editable-hierarchy.component.scss']
 })
 export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponent implements OnInit {
-  @ViewChild('popup', { static: false }) popup: PopupComponent;
   public nicheShackHierarchyItemType = NicheShackHierarchyItemType;
   public showMenu: boolean;
-
-
-
-  private _show: boolean;
-  public get show(): boolean {
-    return this._show;
-  }
-  public set show(v: boolean) {
-    if (v) {
-      this.popup.show = v;
-      this.onPopupShow();
-    }
-    this._show = v;
-  }
-
+  private popup;
+  public arrowOnTop: boolean = false;
+  public show: boolean;
 
   constructor(
     dataService: DataService,
@@ -48,7 +35,7 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
 
 
   // -----------------------------( ON POPUP SHOW )------------------------------ \\
-  onPopupShow() {
+  onPopupShow(popup) {
     if (!this.items && !this.searchResults) {
       this.load(this.getUrl(NicheShackHierarchyItemType.Category))
         .subscribe((items: Array<HierarchyItem>) => {
@@ -59,12 +46,28 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
 
     window.setTimeout(() => {
       this.initSearch();
+
+
+      this.popup = popup;
+      window.addEventListener('mousemove', this.onMouseMove);
     });
   }
 
 
 
 
+  onMouseMove = (e: MouseEvent) => {
+    if (e.clientX > this.popup.getBoundingClientRect().left + this.popup.getBoundingClientRect().width + 20 || e.clientY > this.popup.getBoundingClientRect().top + this.popup.getBoundingClientRect().height + 20) {
+      this.onPopupOut();
+    }
+  }
+
+
+  onPopupOut() {
+    // Close this popup
+    this.show = false;
+    window.removeEventListener('mousemove', this.onMouseMove);
+  }
 
 
   // -----------------------------( GET URL )------------------------------ \\
@@ -326,13 +329,13 @@ export class NicheShackHierarchyPopupComponent extends EditableHierarchyComponen
   onDeleteClick() {
     if (this.isDeleteItemDisabled()) return;
 
-    this.popup.preventNoShow = true;
+    // this.popup.preventNoShow = true;
 
     super.onDeleteClick();
 
     this.promptService.onPromptClose
       .subscribe(() => {
-        this.popup.preventNoShow = false;
+        // this.popup.preventNoShow = false;
       });
   }
 

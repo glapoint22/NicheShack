@@ -1,4 +1,9 @@
-<popup #popup (onPopupClose)="show = false">
+<div #popup *show="show" transitionClass="fade-end" class="popup-base fade-start" (onShow)="onPopupShow(popup, arrow)"
+    style="position: absolute;
+    background:  rgba(25, 25, 25, 0.95);
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 10;">
     <!-- Search bar & filter menu -->
     <div style="position: relative;">
         <!-- Search bar -->
@@ -92,4 +97,4 @@
             No items available
         </div>
     </div>
-</popup>
+</div>
