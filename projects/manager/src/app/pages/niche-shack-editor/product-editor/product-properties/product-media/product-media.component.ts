@@ -108,7 +108,8 @@ export class ProductMediaComponent implements OnChanges {
 
     this.subscription = this.popupService.mediaBrowserPopup.onMediaChange
       .subscribe((media: Media) => {
-        this.setMedia(media);
+        if (media.type == MediaType.ProductMediaImage || media.type == MediaType.Video)
+          this.setMedia(media);
       });
   }
 
@@ -124,7 +125,8 @@ export class ProductMediaComponent implements OnChanges {
 
     this.subscription = this.popupService.mediaBrowserPopup.onMediaChange
       .subscribe((media: Media) => {
-        this.setMedia(media);
+        if (media.type == MediaType.ProductMediaImage || media.type == MediaType.Video)
+          this.setMedia(media);
       });
   }
 
