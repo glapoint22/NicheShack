@@ -48,7 +48,7 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
       { key: 'Niche Images', value: MediaType.NicheImage },
       { key: 'Product Images', value: MediaType.ProductImage },
       { key: 'Product Media Images', value: MediaType.ProductMediaImage },
-      { key: 'Icons', value: MediaType.Icon },
+      { key: 'Product Price Images', value: MediaType.ProductPriceImage },
       { key: 'Videos', value: MediaType.Video }
     ];
 
@@ -285,9 +285,9 @@ export class MediaBrowserPopupComponent extends PopupComponent implements OnInit
         promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected product Media image?' : 'Are you sure you want to delete all the selected product Media images?';
         break;
       }
-      case MediaType.Icon: {
-        promptTitle = !this.itemList.isMultiSelected ? 'Delete Icon' : 'Delete Icons';
-        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected icon?' : 'Are you sure you want to delete all the selected icons?';
+      case MediaType.ProductPriceImage: {
+        promptTitle = !this.itemList.isMultiSelected ? 'Delete Product Price Image' : 'Delete Product Price Images';
+        promptMessage = !this.itemList.isMultiSelected ? 'Are you sure you want to delete the selected product price image?' : 'Are you sure you want to delete all the selected product price images?';
         break;
       }
       case MediaType.Video: {

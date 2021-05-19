@@ -1,0 +1,72 @@
+<!-- Background -->
+<div *ngIf="product.isMultiPrice && product.price.length > 0" class="price-point-background">
+
+    <!-- Price Point container -->
+    <div *ngFor="let pricePoint of product.price" class="price-point-container">
+
+        <!-- Header -->
+        <div *ngIf="pricePoint.heading != null && pricePoint.heading.length > 0" class="price-point-header">
+
+            <!-- Header Text -->
+            <div class="header-text">
+                {{pricePoint.heading}}
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div [ngClass]="{'price-point-body-no-heading': pricePoint.heading == null || pricePoint.heading.length == 0}" class="price-point-body">
+
+            <!-- Quantity -->
+            <div *ngIf="pricePoint.quantity != null && pricePoint.quantity.length > 0" class="quantity">
+                {{pricePoint.quantity}}
+            </div>
+
+
+            <!-- Image -->
+            <img *ngIf="pricePoint.image.url != null" [src]="'/images/' + pricePoint.image.url">
+
+
+            <!-- Unit Container -->
+            <div *ngIf="(pricePoint.unitPrice != null && pricePoint.unitPrice.length > 0) || (pricePoint.unit != null && pricePoint.unit.length > 0)" class="unit-container">
+                <!-- Unit Price -->
+                <div *ngIf="pricePoint.unitPrice != null && pricePoint.unitPrice.length > 0" class="unit-price">{{'$' + pricePoint.unitPrice}}</div>
+
+                <!-- Unit -->
+                <div *ngIf="pricePoint.unit != null && pricePoint.unit.length > 0" class="unit">{{pricePoint.unitPrice != null && pricePoint.unitPrice.length > 0 ? '/ ' + pricePoint.unit : pricePoint.unit}}</div>
+            </div>
+
+
+            <!-- Total Container -->
+            <div *ngIf="(pricePoint.strikethroughPrice != null && pricePoint.strikethroughPrice.length > 0) || (pricePoint.price != null && pricePoint.price.length > 0)" class="total-container">
+                <!-- Total Label -->
+                <div  class="total-label">{{'Total:'}}</div>
+
+                <!-- Strikethrough -->
+                <div *ngIf="pricePoint.strikethroughPrice != null && pricePoint.strikethroughPrice.length > 0" class="strikethrough">
+
+                    <!-- Strikethrough Price -->
+                    <div  class="strikethrough-price">{{'$' + pricePoint.strikethroughPrice}}</div>
+                </div>
+
+                <!-- Total Price -->
+                <div *ngIf="pricePoint.price != null && pricePoint.price.length > 0" class="total-price">{{'$' + pricePoint.price}}</div>
+            </div>
+
+
+            <!-- Button -->
+            <div class="product-button">
+                Visit offical website to buy
+            </div>
+
+
+            <!-- Shipping Container -->
+            <div *ngIf="pricePoint.shipping != shippingType.None" class="shipping-container">
+                <!-- Shipping Icon -->
+                <i *ngIf="pricePoint.shipping != shippingType.None && pricePoint.shipping != shippingType.PlusShipping" class="fas fa-shipping-fast"></i>
+
+                <!-- Shipping Type -->
+                <div *ngIf="pricePoint.shipping != shippingType.None" class="shipping-type">{{pricePoint.shipping == shippingType.PlusShipping ? '+ Shipping' : pricePoint.shipping == shippingType.FreeShipping ? 'Free Shipping' : 'Free US Shipping'}}</div>
+            </div>
+        </div>
+    </div>
+</div>

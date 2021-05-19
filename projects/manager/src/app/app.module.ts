@@ -24,7 +24,7 @@ import { ProductDescriptionNotificationPopupComponent } from './shared-component
 import { ProductImageNotificationPopupComponent } from './shared-components/popups/notification-popups/product-image-notification-popup/product-image-notification-popup.component';
 import { ProductMediaNotificationPopupComponent } from './shared-components/popups/notification-popups/product-media-notification-popup/product-media-notification-popup.component';
 import { ProductContentNotificationPopupComponent } from './shared-components/popups/notification-popups/product-content-notification-popup/product-content-notification-popup.component';
-import { PricePointPopupComponent } from './pages/niche-shack-editor/product-editor/product-properties/product-content/price-point-popup/price-point-popup.component';
+// import { PricePointPopupComponent } from './pages/niche-shack-editor/product-editor/product-properties/product-content/price-point-popup/price-point-popup.component';
 import { MediaBrowserPopupComponent } from './shared-components/popups/media-browser-popup/media-browser-popup.component';
 import { PromptModule } from './shared-components/prompt/prompt.module';
 import { NicheShackHierarchyPopupComponent } from './shared-components/popups/niche-shack-hierarchy-popup/niche-shack-hierarchy-popup.component';
@@ -67,7 +67,7 @@ import { KeywordsFormComponent } from './shared-components/forms/keywords-form/k
     ProductImageNotificationPopupComponent,
     ProductMediaNotificationPopupComponent,
     ProductContentNotificationPopupComponent,
-    PricePointPopupComponent,
+    // PricePointPopupComponent,
     MediaBrowserPopupComponent,
     NicheShackHierarchyPopupComponent,
     GeneralNotificationPopupComponent,

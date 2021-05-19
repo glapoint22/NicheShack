@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ColorPickerPopupComponent } from '../shared-components/popups/color-picker-popup/color-picker-popup.component';
-import { PricePointPopupComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-content/price-point-popup/price-point-popup.component';
+// import { PricePointPopupComponent } from '../pages/niche-shack-editor/product-editor/product-properties/product-content/price-point-popup/price-point-popup.component';
 import { LinkPopupComponent } from '../shared-components/popups/link-popup/link-popup.component';
 import { MediaBrowserPopupComponent } from '../shared-components/popups/media-browser-popup/media-browser-popup.component';
 import { NotificationListPopupComponent } from '../shared-components/popups/notification-popups/notification-list-popup/notification-list-popup.component';
@@ -25,7 +25,7 @@ export class PopupService {
   public bottomBuffer: number = 20;
   public sourceElement: HTMLElement;
   public colorPickerPopup: ColorPickerPopupComponent;
-  public pricePointPopup: PricePointPopupComponent;
+  // public pricePointPopup: PricePointPopupComponent;
   public linkPopup: LinkPopupComponent;
   public mediaBrowserPopup: MediaBrowserPopupComponent;
   public mediaType: MediaType;

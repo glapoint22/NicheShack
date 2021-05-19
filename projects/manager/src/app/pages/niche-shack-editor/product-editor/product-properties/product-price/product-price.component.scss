@@ -1,0 +1,38 @@
+.price-type-radio-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 19px 12px;
+    padding-top: 0;
+}
+
+.single-price-container {
+    padding: 0 10px;
+}
+
+.field-label {
+    font-size: 12px;
+    color: #bbbbbb;
+    padding-left: 5px;
+    padding-bottom: 2px;
+    margin-right: 10px;
+}
+
+.property-box-bar {
+    display: flex;
+    justify-content: space-between;
+    background: #3b3b3b;
+    margin: 2px;
+    align-items: center;
+}
+
+.fields-container {
+    padding: 10px 10px;
+}
+
+.txt-22::placeholder {
+    color: #505050;
+}
+
+.strikethrough::placeholder {
+    text-decoration: line-through;
+}

@@ -65,8 +65,11 @@ export class ProductMediaNotificationPopupComponent extends GeneralNotificationP
         rating: null,
         totalReviews: null,
         description: null,
-        content: null,
-        pricePoints: null,
+        price: null,
+
+        isMultiPrice: null,
+        // content: null,
+        // pricePoints: null,
         image: null,
         media: this.notificationService.productMediaNotification.media,
         minPrice: null,

@@ -23,6 +23,8 @@ import { StarsModule } from 'shared-components/stars/stars.module';
 import { SharedModule } from '../../shared-components/shared.module';
 import { ProductImageComponent } from './product-editor/product-properties/product-image/product-image.component';
 import { ProductSubgroupsComponent } from './product-editor/product-properties/product-subgroups/product-subgroups.component';
+import { ProductPriceComponent } from './product-editor/product-properties/product-price/product-price.component';
+import { PricePointsModule } from 'shared-components/price-points/price-points.module';
 
 
 @NgModule({
@@ -40,7 +42,8 @@ import { ProductSubgroupsComponent } from './product-editor/product-properties/p
     ProductVendorComponent,
     ProductInfoComponent,
     ProductImageComponent,
-    ProductSubgroupsComponent
+    ProductSubgroupsComponent,
+    ProductPriceComponent
   ],
   imports: [
     CommonModule,
@@ -53,6 +56,7 @@ import { ProductSubgroupsComponent } from './product-editor/product-properties/p
     PromptModule,
     StarsModule,
     SharedModule,
+    PricePointsModule
   ]
 })
 export class NicheShackEditorModule { }

@@ -1,0 +1,120 @@
+<!-- Price -->
+<panel #panel [title]="'Price'">
+
+    <!-- ============================= PRICE TYPE RADIO BUTTONS ================================== -->
+
+    <div class="price-type-radio-buttons-container">
+        <!-- Single Price -->
+        <radio-button [name]="'price-type'" [label]="'Single Price'" [checked]="!isMultiPrice" (change)="onSinglePriceRadioButtonSelect()" ></radio-button>
+        <!-- Multi Price -->
+        <radio-button [name]="'price-type'" [label]="'Multi Price'" [checked]="isMultiPrice" (change)="onMultiPriceRadioButtonSelect()"></radio-button>
+    </div>
+
+
+    <!-- ============================= Single Price ================================== -->
+
+    <div *ngIf="!product.isMultiPrice" class="single-price-container">
+
+        <!-- Price -->
+        <div class="field-label">Price:</div>
+        <input id="single-price-input" class="txt-22" style="margin-bottom: 0;" (input)="onInputTextInput($event.target, 3)" [value]="product.price[counterIndex].price != null ? product.price[counterIndex].price : ''">
+    </div>
+
+
+    <!-- ============================= Multi Price ================================== -->
+
+    <div *ngIf="product.isMultiPrice" class="property-box-light">
+
+        <!-- Property Box Bar -->
+        <div class="property-box-bar">
+
+            <!-- Counter -->
+            <counter #counter [itemCount]="product.price.length" (onItemChange)="counterIndex = $event" [currentIndex]="counterIndex"></counter>
+
+            <!-- Icons -->
+            <div class="icons">
+                <!-- Delete -->
+                <div class="icon-container" title="Delete Media Item">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+
+                <!-- Add -->
+                <div class="icon-container" title="Add Media Item" (click)="addPricePoint()">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+            </div>
+        </div>
+
+
+        <div *ngIf="product.price.length == 0" class="no-property">No price points available</div>
+
+
+        <!-- Fields Container -->
+        <div *ngIf="product.price.length > 0" class="fields-container">
+
+
+            <!-- Heading -->
+            <div class="field-label">Heading:</div>
+            <input id="heading-input" class="txt-22" (input)="product.price[counterIndex].heading = $event.target.value" [value]="product.price[counterIndex].heading != null ? product.price[counterIndex].heading : ''" placeholder="BASIC - 1 BOTTLE">
+
+
+            <!-- Quantity -->
+            <div class="field-label">Quantity:</div>
+            <input id="quantity-input" class="txt-22"  (input)="product.price[counterIndex].quantity = $event.target.value" [value]="product.price[counterIndex].quantity != null ? product.price[counterIndex].quantity : ''" placeholder="30 Day Suply">
+
+            
+            <!-- Image -->
+            <div class="field-label">Image:</div>
+            <image [image]="product.price[counterIndex].image" [mediaType]="mediaType.ProductPriceImage" [noDelete]="true"></image>
+
+
+
+            <div style="height: 12px;"></div>
+
+
+            <!-- Unit Price -->
+            <div class="field-label">Unit Price:</div>
+            <input id="unit-price-input" class="txt-22" (input)="onInputTextInput($event.target, 1)" [value]="product.price[counterIndex].unitPrice != null ? product.price[counterIndex].unitPrice : ''" placeholder="$49">
+
+
+            <!-- Unit -->
+            <div class="field-label">Unit:</div>
+            <input id="unit-input" class="txt-22" (input)="product.price[counterIndex].unit = $event.target.value" [value]="product.price[counterIndex].unit != null ? product.price[counterIndex].unit : ''" placeholder="Bottle">
+
+
+            <!-- Strikethrough Price -->
+            <div class="field-label">Strikethrough Price:</div>
+            <input id="strikethrough-price-input" class="txt-22 strikethrough"  (input)="onInputTextInput($event.target, 2)" [value]="product.price[counterIndex].strikethroughPrice != null ? product.price[counterIndex].strikethroughPrice : ''" placeholder="297">
+
+
+            <!-- Total Price -->
+            <div class="field-label">Total Price:</div>
+            <input id="total-price-input" class="txt-22" (input)="onInputTextInput($event.target, 3)" [value]="product.price[counterIndex].price != null ? product.price[counterIndex].price : ''" placeholder="$177">
+
+
+            <!-- Shipping -->
+            <div class="field-label">Shipping:</div>
+
+            <!-- Shipping Radio Buttons -->
+            <div style="padding-top: 8px; padding-left: 20px;">
+
+                <!-- None -->
+                <div style="margin-bottom: 13px;">
+                    <radio-button [name]="'shipping'" [label]="'none'" [checked]="product.price[counterIndex].shipping == shippingType.None" (change)="onShippingType(shippingType.None)"></radio-button>
+                </div>
+                <!-- + Shipping -->
+                <div style="margin-bottom: 13px;">
+                    <radio-button [name]="'shipping'" [label]="'+ Shipping'" [checked]="product.price[counterIndex].shipping == shippingType.PlusShipping" (change)="onShippingType(shippingType.PlusShipping)"></radio-button>
+                </div>
+                <!-- Free Shipping -->
+                <div style="margin-bottom: 13px;">
+                    <radio-button [name]="'shipping'" [label]="'Free Shipping'" [checked]="product.price[counterIndex].shipping == shippingType.FreeShipping" (change)="onShippingType(shippingType.FreeShipping)"></radio-button>
+                </div>
+                <!-- Free Us Shipping -->
+                <div style="margin-bottom: 4px;">
+                    <radio-button [name]="'shipping'" [label]="'Free US Shipping'" [checked]="product.price[counterIndex].shipping == shippingType.FreeUsShipping" (change)="onShippingType(shippingType.FreeUsShipping)"></radio-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</panel>
