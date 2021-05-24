@@ -57,7 +57,7 @@ export class ProductPriceComponent implements OnChanges, DoCheck {
         this.multiPriceSet = true;
 
 
-        fromEvent(document.getElementById('heading-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
+        fromEvent(document.getElementById('header-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
 
         });
 
@@ -95,12 +95,12 @@ export class ProductPriceComponent implements OnChanges, DoCheck {
 
   onSinglePriceRadioButtonSelect() {
     this.isMultiPrice = false;
-    let multiPriceValueEntered: boolean = false;
+    let valueEnteredIntoPricePoint: boolean = false;
 
     // Loop through each price point
     this.product.price.forEach(x => {
-      // If a value has been entered into any of its properties
-      if (x.heading != null && x.heading.length > 0 ||
+      // If a value has been entered into any of the price points
+      if (x.header != null && x.header.length > 0 ||
         x.quantity != null && x.quantity.length > 0 ||
         x.image.url != null ||
         x.unitPrice != null && x.unitPrice.toString().length > 0 ||
@@ -109,13 +109,13 @@ export class ProductPriceComponent implements OnChanges, DoCheck {
         x.price != null && x.price.toString().length > 0 ||
         x.shipping != ShippingType.None) {
 
-          // Mark that a value has been entered
-          multiPriceValueEntered = true;
+        // Mark that a value has been entered into a price point
+        valueEnteredIntoPricePoint = true;
       }
     });
 
     // If a price point has been marked as having a value entered
-    if (multiPriceValueEntered) {
+    if (valueEnteredIntoPricePoint) {
 
       // Open the prompt
       this.promptService.showPrompt("Warning", "Changing to single price will remove all multi price information. Do you want to continue?",
@@ -191,12 +191,33 @@ export class ProductPriceComponent implements OnChanges, DoCheck {
       // Copy all the values from the previous price point to the newly created price point
       this.product.price[this.counterIndex].unit = this.product.price[this.counterIndex - 1].unit;
       this.product.price[this.counterIndex].price = this.product.price[this.counterIndex - 1].price;
-      this.product.price[this.counterIndex].heading = this.product.price[this.counterIndex - 1].heading;
+      this.product.price[this.counterIndex].header = this.product.price[this.counterIndex - 1].header;
       this.product.price[this.counterIndex].quantity = this.product.price[this.counterIndex - 1].quantity;
       this.product.price[this.counterIndex].shipping = this.product.price[this.counterIndex - 1].shipping;
       this.product.price[this.counterIndex].unitPrice = this.product.price[this.counterIndex - 1].unitPrice;
       this.product.price[this.counterIndex].strikethroughPrice = this.product.price[this.counterIndex - 1].strikethroughPrice;
     }
+  }
+
+
+
+  // ==============================( DELETE PRICE POINT )============================== \\
+
+  deletePricePoint() {
+    // Open the prompt
+    this.promptService.showPrompt("Delete Price Point", "Are you sure you want to delete this price point?",
+
+      // Yes
+      () => {
+        this.product.price.splice(this.counterIndex, 1);
+        
+      }, this, null,
+
+      // No
+      () => {
+        
+      }
+    );
   }
 
 

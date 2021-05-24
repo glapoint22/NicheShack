@@ -4,7 +4,7 @@ import { ShippingType } from "./shipping-type";
 export class ProductPrice {
     id: number;
     image: ImageData = new ImageData();
-    heading: string;
+    header: string;
     quantity: string;
     unitPrice: number;
     unit: string;

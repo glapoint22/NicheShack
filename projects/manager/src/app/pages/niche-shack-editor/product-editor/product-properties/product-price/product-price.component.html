@@ -34,7 +34,7 @@
             <!-- Icons -->
             <div class="icons">
                 <!-- Delete -->
-                <div class="icon-container" title="Delete Media Item">
+                <div class="icon-container" title="Delete Media Item" (click)="deletePricePoint()">
                     <i class="fas fa-trash-alt"></i>
                 </div>
 
@@ -53,9 +53,9 @@
         <div *ngIf="product.price.length > 0" class="fields-container">
 
 
-            <!-- Heading -->
-            <div class="field-label">Heading:</div>
-            <input id="heading-input" class="txt-22" (input)="product.price[counterIndex].heading = $event.target.value" [value]="product.price[counterIndex].heading != null ? product.price[counterIndex].heading : ''" placeholder="BASIC - 1 BOTTLE">
+            <!-- Header -->
+            <div class="field-label">Header:</div>
+            <input id="header-input" class="txt-22" (input)="product.price[counterIndex].header = $event.target.value" [value]="product.price[counterIndex].header != null ? product.price[counterIndex].header : ''" placeholder="BASIC - 1 BOTTLE">
 
 
             <!-- Quantity -->
@@ -65,7 +65,7 @@
             
             <!-- Image -->
             <div class="field-label">Image:</div>
-            <image [image]="product.price[counterIndex].image" [mediaType]="mediaType.ProductPriceImage" [noDelete]="true"></image>
+            <image [image]="product.price[counterIndex].image" [mediaType]="mediaType.ProductPriceImage"></image>
 
 
 

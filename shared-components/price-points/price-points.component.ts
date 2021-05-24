@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ShippingType } from 'classes/shipping-type';
 import { Product } from 'projects/manager/src/app/classes/product';
 
@@ -7,12 +7,8 @@ import { Product } from 'projects/manager/src/app/classes/product';
   templateUrl: './price-points.component.html',
   styleUrls: ['./price-points.component.scss']
 })
-export class PricePointsComponent implements OnInit {
+export class PricePointsComponent {
   constructor() { }
   public shippingType = ShippingType;
   @Input() product: Product;
-
-  ngOnInit() {
-  }
-
 }
