@@ -46,9 +46,8 @@ nav {
         display: flex;
         width: 100%;
         max-width: 800px;
-
+        position: relative;
         .input-container {
-            position: relative;
             flex: 1 1 auto;
 
             input {
@@ -67,7 +66,7 @@ nav {
                 position: absolute;
                 background: white;
                 top: 36px;
-                left: 0;
+                left: 12px;
                 border-top: 1px solid #d8d8d8;
                 color: #232323;
                 border-bottom: 1px solid transparent;
@@ -76,12 +75,6 @@ nav {
                     margin: 0 1px;
                     cursor: pointer;
 
-                    // &:hover {
-                    //     background-color: #d8d8d8;
-                    //     outline: 1px solid #d8d8d8;
-                        
-                    // }
-
                     &:not(:first-child) > .suggestion-text {
                         border-top: 1px solid  #d8d8d8;
                     }
@@ -89,17 +82,13 @@ nav {
                 .suggestion-text {
                     margin: 0 10px;
                     padding: 8px;
-                    
-                    
-                    &:not(.suggested-category) {
-                        font-weight: bold;
-                    }
                 }
 
                 .suggested-category {
-                    padding-left: 20px;
+                    padding-left: 30px;
                     color: $primary-color;
                     font-style: italic;
+                    font-size: 13px;
                 }
                    
                 }

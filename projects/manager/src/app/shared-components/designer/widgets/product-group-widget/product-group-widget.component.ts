@@ -35,7 +35,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent impleme
     this.height = 250
     this.name = this.defaultName = 'Product Group';
     this.type = WidgetType.ProductGroup;
-    this.caption.text = 'Check out these products';
+    // this.caption.text = 'Check out these products';
     this.caption.color = new Color(255, 187, 0, 1);
     this.caption.fontSize.selectedIndex = 9;
     this.caption.fontSize.styleValue = this.caption.fontSize.options[this.caption.fontSize.selectedIndex].value;

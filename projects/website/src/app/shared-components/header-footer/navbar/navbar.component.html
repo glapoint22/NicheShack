@@ -11,7 +11,7 @@
 
 
     <!-- Search -->
-    <div class="search-container">
+    <div #searchContainer class="search-container">
         <category-dropdown-button [items]="categoriesList" [defaultIndex]="selectedCategoryIndex" class="show-xxs"
             (itemClick)="onCategoryClick($event, input)">
         </category-dropdown-button>
@@ -23,7 +23,7 @@
                 (keydown.arrowUp)="onArrowPress(-1, input); $event.preventDefault()"
                 (keydown.arrowDown)="onArrowPress(1, input); $event.preventDefault()">
             <div id="suggestionBox" *ngIf="suggestions && suggestions.length > 0" class="suggestion-box"
-                (mousedown)="mousedown()">
+                [style.width.px]="searchContainer.clientWidth - 56" (mousedown)="mousedown()">
                 <ng-container *ngFor="let suggestion of suggestions; let i = index">
 
                     <!-- Suggestion -->
