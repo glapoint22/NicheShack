@@ -75,8 +75,11 @@ export class ProductContentNotificationPopupComponent extends GeneralNotificatio
         rating: null,
         totalReviews: null,
         description: null,
-        content: this.notificationService.productContentNotification.content,
-        pricePoints: this.notificationService.productContentNotification.pricePoints,
+        price: null,
+
+        isMultiPrice: null,
+        // content: this.notificationService.productContentNotification.content,
+        // pricePoints: this.notificationService.productContentNotification.pricePoints,
         image: null,
         media: null,
         minPrice: this.notificationService.productContentNotification.minPrice,
