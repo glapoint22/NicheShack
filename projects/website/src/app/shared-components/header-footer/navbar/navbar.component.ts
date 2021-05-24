@@ -97,6 +97,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (categoryId) {
       let index: number = this.categoriesList.findIndex(x => x.key == categoryId);
       if (index >= 0) this.selectedCategoryIndex = index;
+      this.selectedCategory = this.categories.find(x => x.urlId == categoryId);
     }
   }
 
@@ -111,7 +112,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         parameters = [
           {
             key: 'searchWords',
-            value: this.searchwords
+            value: this.searchwords.toLowerCase()
           },
           {
             key: 'categoryId',
@@ -119,7 +120,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
           }
         ]
       } else {
-        parameters = [{ key: 'searchWords', value: this.searchwords }];
+        parameters = [{ key: 'searchWords', value: this.searchwords.toLowerCase() }];
       }
 
 
@@ -145,7 +146,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
             for (let i = 0; i < suggestionsCount; i++) {
               let suggestion: Suggestion = suggestions[i];
-              let html: string = suggestion.name.replace(new RegExp(this.searchwords, "i"), '<span style="font-weight: normal">' + this.searchwords.toLowerCase() + '</span>');
+              let html: string = suggestion.name.replace(new RegExp("\\b" + this.searchwords, "i"), '<span style="font-weight: 900;">' + this.searchwords.toLowerCase() + '</span>');
 
               this.suggestions.push({
                 name: suggestion.name,
@@ -229,7 +230,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.suggestionIndex += direction;
 
     // Display the search words if the suggestionIndex is outside the bounds
-    if (this.suggestionIndex == -1 || this.suggestionIndex == this.suggestions.length) {
+    if (this.suggestions.length == 0 || this.suggestionIndex == -1 || this.suggestionIndex == this.suggestions.length) {
       input.value = this.searchwords;
       return;
     }
