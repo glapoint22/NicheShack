@@ -1,0 +1,9 @@
+<div #widget class="widget" (mousedown)="onMousedown()" (click)="onClick($event)"
+    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}">
+
+
+    <div class="container">
+        <div class="background"></div>
+        <div class="text">{{getText()}}</div>
+    </div>
+</div>

@@ -29,6 +29,10 @@ export class DesignerComponent implements AfterViewInit {
       value: ''
     },
     {
+      key: '240',
+      value: '240px'
+    },
+    {
       key: '320',
       value: '320px'
     },

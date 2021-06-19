@@ -50,6 +50,7 @@ import { QueryListComponent } from '../properties/query-builder/query-list/query
 import { GridWidgetPropertiesComponent } from '../widget-properties/grid-widget-properties/grid-widget-properties.component';
 import { ShopWidgetPropertiesComponent } from '../widget-properties/shop-widget-properties/shop-widget-properties.component';
 import { ShopItemsComponent } from '../widget-properties/shop-widget-properties/shop-items/shop-items.component';
+import { SectionWidgetPropertiesComponent } from '../widget-properties/section-widget-properties/section-widget-properties.component';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { ShopItemsComponent } from '../widget-properties/shop-widget-properties/
     QueryListComponent,
     GridWidgetPropertiesComponent,
     ShopWidgetPropertiesComponent,
-    ShopItemsComponent
+    ShopItemsComponent,
+    SectionWidgetPropertiesComponent
   ],
   imports: [
     CommonModule,
@@ -154,7 +156,8 @@ import { ShopItemsComponent } from '../widget-properties/shop-widget-properties/
     QueryListComponent,
     GridWidgetPropertiesComponent,
     ShopWidgetPropertiesComponent,
-    ShopItemsComponent
+    ShopItemsComponent,
+    SectionWidgetPropertiesComponent
   ]
 })
 export class PropertiesEditorModule { }

@@ -64,7 +64,7 @@ export class ShopWidgetComponent extends FreeformWidgetComponent implements OnIn
         id: x.id,
         link: x.link.getData()
       })) : [],
-      breakpoints: []
+      breakpoints: widgetData.breakpoints
     }
   }
 

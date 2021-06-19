@@ -1,0 +1,6 @@
+<div #widget class="widget" (mousedown)="onMousedown()" (click)="onClick($event)"
+    [ngClass]="{'widget-selected': column.row.pageService.selectedWidget == this}">
+
+
+    <div style="width: 100%; height: 1px; background: linear-gradient(to right, transparent, #505050, transparent)"></div>
+</div>

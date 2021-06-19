@@ -58,4 +58,9 @@
     <grid-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Grid"
         [gridWidget]="pageService.selectedWidget">
     </grid-widget-properties>
+
+    <!-- Section -->
+    <section-widget-properties *ngIf="pageService.selectedWidget.type == widgetType.Section"
+        [sectionWidget]="pageService.selectedWidget">
+    </section-widget-properties>
 </ng-container>

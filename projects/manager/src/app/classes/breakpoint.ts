@@ -8,6 +8,7 @@ export class Breakpoint implements BreakpointData {
 
 export enum BreakpointScreenSize {
     Z = '0',
+    MICRO = '240',
     XXS = '320',
     XS = '480',
     SM = '600',

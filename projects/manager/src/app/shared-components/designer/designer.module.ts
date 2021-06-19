@@ -22,6 +22,8 @@ import { ProductFiltersModule } from 'shared-components/product-filters/product-
 import { ProductModule } from 'shared-components/product/product.module';
 import { PaginatorModule } from 'shared-components/paginator/paginator.module';
 import { ShopWidgetComponent } from './widgets/shop-widget/shop-widget.component';
+import { SectionWidgetComponent } from './widgets/section-widget/section-widget.component';
+import { DividerWidgetComponent } from './widgets/divider-widget/divider-widget.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { ShopWidgetComponent } from './widgets/shop-widget/shop-widget.component
     ProductGroupWidgetComponent,
     CarouselWidgetComponent,
     GridWidgetComponent,
-    ShopWidgetComponent
+    ShopWidgetComponent,
+    SectionWidgetComponent,
+    DividerWidgetComponent
   ],
   imports: [
     CommonModule,
@@ -64,7 +68,9 @@ import { ShopWidgetComponent } from './widgets/shop-widget/shop-widget.component
     ProductGroupWidgetComponent,
     CarouselWidgetComponent,
     GridWidgetComponent,
-    ShopWidgetComponent
+    ShopWidgetComponent,
+    SectionWidgetComponent,
+    DividerWidgetComponent
   ]
 })
 export class DesignerModule { }

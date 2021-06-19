@@ -1,0 +1,33 @@
+<div class="content">
+    <div>
+        <div style="font-size: 12px;
+        color: #bbbbbb;
+        margin-bottom: 10px;">Section Type:</div>
+
+        <!-- Bonuses -->
+        <div class="radio-button-option">
+            <radio-button [name]="'link-option'" [label]="'Bonuses'" [checked]="!sectionWidget.sectionType"
+                (change)="sectionWidget.sectionType = 0; pageService.save()"></radio-button>
+        </div>
+
+        <!-- Bonus -->
+        <div class="radio-button-option">
+            <radio-button [name]="'link-option'" [label]="'Bonus'" [checked]="sectionWidget.sectionType == 1"
+                (change)="sectionWidget.sectionType = 1; pageService.save()">
+            </radio-button>
+        </div>
+
+        <!-- Components -->
+        <div class="radio-button-option">
+            <radio-button [name]="'link-option'" [label]="'Components'" [checked]="sectionWidget.sectionType == 2"
+                (change)="sectionWidget.sectionType = 2; pageService.save()"></radio-button>
+        </div>
+
+        <!-- Component -->
+        <div class="radio-button-option">
+            <radio-button [name]="'link-option'" [label]="'Component'" [checked]="sectionWidget.sectionType == 3"
+                (change)="sectionWidget.sectionType = 3; pageService.save()">
+            </radio-button>
+        </div>
+    </div>
+</div>
