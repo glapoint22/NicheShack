@@ -23,6 +23,8 @@ import { FormsModule } from '@angular/forms';
 import { ProductModule } from 'shared-components/product/product.module';
 import { PaginatorModule } from 'shared-components/paginator/paginator.module';
 import { ShopWidgetComponent } from './shop-widget/shop-widget.component';
+import { SectionWidgetComponent } from './section-widget/section-widget.component';
+import { DividerWidgetComponent } from './divider-widget/divider-widget.component';
 
 
 
@@ -42,7 +44,9 @@ import { ShopWidgetComponent } from './shop-widget/shop-widget.component';
     ProductGroupWidgetComponent,
     CarouselWidgetComponent,
     GridWidgetComponent,
-    ShopWidgetComponent
+    ShopWidgetComponent,
+    SectionWidgetComponent,
+    DividerWidgetComponent
   ],
   imports: [
     CommonModule,
@@ -70,7 +74,9 @@ import { ShopWidgetComponent } from './shop-widget/shop-widget.component';
     ProductGroupWidgetComponent,
     CarouselWidgetComponent,
     GridWidgetComponent,
-    ShopWidgetComponent
+    ShopWidgetComponent,
+    SectionWidgetComponent,
+    DividerWidgetComponent
   ],
   entryComponents: [
     RowComponent,
@@ -84,7 +90,9 @@ import { ShopWidgetComponent } from './shop-widget/shop-widget.component';
     ProductGroupWidgetComponent,
     CarouselWidgetComponent,
     GridWidgetComponent,
-    ShopWidgetComponent
+    ShopWidgetComponent,
+    SectionWidgetComponent,
+    DividerWidgetComponent
   ]
 })
 export class PageContentModule { }

@@ -58,7 +58,7 @@ export class VideoWidgetComponent extends ProportionalWidgetComponent implements
       corners: this.corners.getData(),
       shadow: this.shadow.getData(),
       video: this.video.getData(),
-      breakpoints: []
+      breakpoints: widgetData.breakpoints
     }
   }
 

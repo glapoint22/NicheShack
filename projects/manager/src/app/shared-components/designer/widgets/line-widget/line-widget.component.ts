@@ -41,7 +41,7 @@ export class LineWidgetComponent extends FreeformWidgetComponent implements Brea
       horizontalAlignment: widgetData.horizontalAlignment,
       border: this.border.getData(),
       shadow: this.shadow.getData(),
-      breakpoints: []
+      breakpoints: widgetData.breakpoints
     }
   }
 

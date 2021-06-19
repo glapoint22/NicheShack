@@ -21,6 +21,8 @@ import { RowDataBase } from 'classes/row-data-base';
 import { GridWidgetComponent } from '../shared-components/page-content/grid-widget/grid-widget.component';
 import { ShopWidgetComponent } from '../shared-components/page-content/shop-widget/shop-widget.component';
 import { Color } from 'classes/color';
+import { SectionWidgetComponent } from '../shared-components/page-content/section-widget/section-widget.component';
+import { DividerWidgetComponent } from '../shared-components/page-content/divider-widget/divider-widget.component';
 
 export class Page {
     public width: number;
@@ -155,6 +157,16 @@ export class Page {
             // Grid
             case WidgetType.Grid:
                 widget = GridWidgetComponent;
+                break;
+
+            // Section
+            case WidgetType.Section:
+                widget = SectionWidgetComponent;
+                break;
+
+                // Section
+            case WidgetType.Divider:
+                widget = DividerWidgetComponent;
                 break;
         }
 

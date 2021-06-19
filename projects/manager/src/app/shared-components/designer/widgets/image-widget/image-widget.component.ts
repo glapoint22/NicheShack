@@ -64,7 +64,7 @@ export class ImageWidgetComponent extends ProportionalWidgetComponent implements
       corners: this.corners.getData(),
       shadow: this.shadow.getData(),
       link: this.link.getData(),
-      breakpoints: []
+      breakpoints: widgetData.breakpoints
     }
   }
 

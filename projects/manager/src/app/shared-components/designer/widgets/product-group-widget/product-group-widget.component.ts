@@ -62,7 +62,7 @@ export class ProductGroupWidgetComponent extends FreeformWidgetComponent impleme
       height: null,
       horizontalAlignment: widgetData.horizontalAlignment,
       caption: this.caption.getData(),
-      breakpoints: [],
+      breakpoints: widgetData.breakpoints,
       queries: this.queries,
       products: null
     }

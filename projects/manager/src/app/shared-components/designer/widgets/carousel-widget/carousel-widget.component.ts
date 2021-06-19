@@ -48,7 +48,7 @@ export class CarouselWidgetComponent extends FreeformWidgetComponent {
       height: null,
       horizontalAlignment: widgetData.horizontalAlignment,
       banners: this.banners.length > 0 ? this.banners.map((banner: LinkableImage) => banner.getData()) : [],
-      breakpoints: []
+      breakpoints: widgetData.breakpoints
     }
   }
 

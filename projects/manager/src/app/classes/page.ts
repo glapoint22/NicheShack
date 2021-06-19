@@ -23,6 +23,8 @@ import { GridWidgetComponent } from '../shared-components/designer/widgets/grid-
 import { ShopWidgetComponent } from '../shared-components/designer/widgets/shop-widget/shop-widget.component';
 import { PageDisplayType } from './page-display-type';
 import { ListItem } from './list-item';
+import { SectionWidgetComponent } from '../shared-components/designer/widgets/section-widget/section-widget.component';
+import { DividerWidgetComponent } from '../shared-components/designer/widgets/divider-widget/divider-widget.component';
 
 export class Page {
     public id: number;
@@ -213,6 +215,16 @@ export class Page {
             case WidgetType.Grid:
                 widget = GridWidgetComponent;
                 break;
+
+            // Section
+            case WidgetType.Section:
+                widget = SectionWidgetComponent;
+                break;
+
+            // Divider
+            case WidgetType.Divider:
+                widget = DividerWidgetComponent;
+                break;
         }
 
         return widget;
@@ -312,6 +324,20 @@ export class Page {
                         {
                             title: 'Grid',
                             widget: GridWidgetComponent,
+                            icon: '<i class="fas fa-th"></i>',
+                            allowed: 'grid-widget-allowed.png',
+                            notAllowed: 'grid-widget-not-allowed.png'
+                        },
+                        {
+                            title: 'Section',
+                            widget: SectionWidgetComponent,
+                            icon: '<i class="fas fa-th"></i>',
+                            allowed: 'grid-widget-allowed.png',
+                            notAllowed: 'grid-widget-not-allowed.png'
+                        },
+                        {
+                            title: 'Divider',
+                            widget: DividerWidgetComponent,
                             icon: '<i class="fas fa-th"></i>',
                             allowed: 'grid-widget-allowed.png',
                             notAllowed: 'grid-widget-not-allowed.png'
