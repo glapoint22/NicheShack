@@ -16,12 +16,16 @@ export class ProductService {
   }
   public set product(product: Product) {
     if(product) this.onProductSet.next(product);
+
+    
     
     this._product = product;
   }
 
 
   public onProductSet = new Subject<Product>();
+
+
 
 
   constructor(private sanitizer: DomSanitizer, private popupService: PopupService) { }

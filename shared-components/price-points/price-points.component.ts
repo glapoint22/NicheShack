@@ -11,4 +11,8 @@ export class PricePointsComponent {
   constructor() { }
   public shippingType = ShippingType;
   @Input() product: Product;
+
+  onBuyClick(url: string) {
+    window.open(url);
+  }
 }

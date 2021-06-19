@@ -25,4 +25,19 @@ export class ProductInfoComponent implements OnInit {
     window.open(url);
   }
 
+  getMinPrice() {
+    let minPrice = Math.min(...this.productService.product.price.map(x => x.price));
+
+
+    // Return min price as long as it's a number or it does NOT equel zero, otherwise return null
+    return isNaN(minPrice) ? null : minPrice;
+  }
+
+  getMaxPrice() {
+    let minPrice = Math.min(...this.productService.product.price.map(x => x.price));
+    let maxPrice = Math.max(...this.productService.product.price.map(x => x.price));
+
+    // Return max price as long as it's a number or max price does NOT equel min price, otherwise return null
+    return isNaN(maxPrice) || minPrice == maxPrice ? null : maxPrice;
+  }
 }

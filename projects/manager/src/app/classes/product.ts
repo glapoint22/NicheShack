@@ -14,12 +14,8 @@ export class Product {
     rating: number;
     totalReviews: number;
     description: string;
-    // content: Array<ProductContent>;
-    // pricePoints: Array<ProductPricePoint>;
     price: Array<ProductPrice>;
-
     isMultiPrice: boolean = false;
-
     image: ImageData;
     media: Array<ProductMedia>;
     minPrice: number;

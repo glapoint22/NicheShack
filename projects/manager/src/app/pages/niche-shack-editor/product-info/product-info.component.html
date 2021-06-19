@@ -74,17 +74,21 @@
 
 
             <!-- Price -->
-            <div class="price">
-                <div *ngIf="productService.product.maxPrice == 0">
-                    {{productService.product.minPrice | currency:'USD'}}
-                </div>
-                <div *ngIf="productService.product.maxPrice > 0">
-                    {{productService.product.minPrice | currency:'USD'}} -
-                    {{productService.product.maxPrice | currency:'USD'}}
+            <div *ngIf="productService.product" class="price">
+
+                <!-- Single Price -->
+                <div *ngIf="!productService.product.isMultiPrice">
+                    {{productService.product.price[0].price | currency:'USD'}}
                 </div>
 
-
+                <!-- Multi Price -->
+                <div *ngIf="productService.product.isMultiPrice" style="display: flex;">
+                    <div *ngIf="getMinPrice() != null">{{getMinPrice() | currency:'USD'}}</div>
+                    <div *ngIf="getMinPrice() != null && getMaxPrice() != null" style="margin-left: 4px; margin-right: 4px;">-</div>
+                    <div *ngIf="getMaxPrice() != null">{{getMaxPrice() | currency:'USD'}}</div>
+                </div>
             </div>
+
 
             <div *ngIf="productService.product.hoplink" class="product-button"
                 (click)="onBuyClick(productService.product.hoplink)">Visit offical website to buy

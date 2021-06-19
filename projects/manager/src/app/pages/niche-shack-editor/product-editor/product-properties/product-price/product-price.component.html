@@ -17,7 +17,7 @@
 
         <!-- Price -->
         <div class="field-label">Price:</div>
-        <input id="single-price-input" class="txt-22" style="margin-bottom: 0;" (input)="onInputTextInput($event.target, 3)" [value]="product.price[counterIndex].price != null ? product.price[counterIndex].price : ''">
+        <input id="single-price-input" class="txt-22" style="margin-bottom: 0;" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].price">
     </div>
 
 
@@ -34,7 +34,7 @@
             <!-- Icons -->
             <div class="icons">
                 <!-- Delete -->
-                <div class="icon-container" title="Delete Media Item" (click)="deletePricePoint()">
+                <div class="icon-container" title="Delete Media Item" (click)="deletePricePoint()" [ngClass]="{'icon-disabled': product.price.length == 1}">
                     <i class="fas fa-trash-alt"></i>
                 </div>
 
@@ -55,12 +55,12 @@
 
             <!-- Header -->
             <div class="field-label">Header:</div>
-            <input id="header-input" class="txt-22" (input)="product.price[counterIndex].header = $event.target.value" [value]="product.price[counterIndex].header != null ? product.price[counterIndex].header : ''" placeholder="BASIC - 1 BOTTLE">
+            <input id="header-input" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].header" placeholder="BASIC - 1 BOTTLE">
 
 
             <!-- Quantity -->
             <div class="field-label">Quantity:</div>
-            <input id="quantity-input" class="txt-22"  (input)="product.price[counterIndex].quantity = $event.target.value" [value]="product.price[counterIndex].quantity != null ? product.price[counterIndex].quantity : ''" placeholder="30 Day Suply">
+            <input id="quantity-input" class="txt-22"  (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].quantity" placeholder="30 Day Supply">
 
             
             <!-- Image -->
@@ -74,22 +74,22 @@
 
             <!-- Unit Price -->
             <div class="field-label">Unit Price:</div>
-            <input id="unit-price-input" class="txt-22" (input)="onInputTextInput($event.target, 1)" [value]="product.price[counterIndex].unitPrice != null ? product.price[counterIndex].unitPrice : ''" placeholder="$49">
+            <input id="unit-price-input" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].unitPrice" placeholder="$49">
 
 
             <!-- Unit -->
             <div class="field-label">Unit:</div>
-            <input id="unit-input" class="txt-22" (input)="product.price[counterIndex].unit = $event.target.value" [value]="product.price[counterIndex].unit != null ? product.price[counterIndex].unit : ''" placeholder="Bottle">
+            <input id="unit-input" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].unit" placeholder="Bottle">
 
 
             <!-- Strikethrough Price -->
             <div class="field-label">Strikethrough Price:</div>
-            <input id="strikethrough-price-input" class="txt-22 strikethrough"  (input)="onInputTextInput($event.target, 2)" [value]="product.price[counterIndex].strikethroughPrice != null ? product.price[counterIndex].strikethroughPrice : ''" placeholder="297">
+            <input id="strikethrough-price-input" class="txt-22 strikethrough"  (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].strikethroughPrice" placeholder="297">
 
 
             <!-- Total Price -->
             <div class="field-label">Total Price:</div>
-            <input id="total-price-input" class="txt-22" (input)="onInputTextInput($event.target, 3)" [value]="product.price[counterIndex].price != null ? product.price[counterIndex].price : ''" placeholder="$177">
+            <input id="total-price-input" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].price" placeholder="$177">
 
 
             <!-- Shipping -->
@@ -102,17 +102,25 @@
                 <div style="margin-bottom: 13px;">
                     <radio-button [name]="'shipping'" [label]="'none'" [checked]="product.price[counterIndex].shipping == shippingType.None" (change)="onShippingType(shippingType.None)"></radio-button>
                 </div>
-                <!-- + Shipping -->
-                <div style="margin-bottom: 13px;">
-                    <radio-button [name]="'shipping'" [label]="'+ Shipping'" [checked]="product.price[counterIndex].shipping == shippingType.PlusShipping" (change)="onShippingType(shippingType.PlusShipping)"></radio-button>
-                </div>
                 <!-- Free Shipping -->
                 <div style="margin-bottom: 13px;">
                     <radio-button [name]="'shipping'" [label]="'Free Shipping'" [checked]="product.price[counterIndex].shipping == shippingType.FreeShipping" (change)="onShippingType(shippingType.FreeShipping)"></radio-button>
                 </div>
                 <!-- Free Us Shipping -->
-                <div style="margin-bottom: 4px;">
+                <div style="margin-bottom: 13px;">
                     <radio-button [name]="'shipping'" [label]="'Free US Shipping'" [checked]="product.price[counterIndex].shipping == shippingType.FreeUsShipping" (change)="onShippingType(shippingType.FreeUsShipping)"></radio-button>
+                </div>
+                <!-- + Shipping -->
+                <div style="margin-bottom: 13px;">
+                    <radio-button [name]="'shipping'" [label]="'+ Shipping'" [checked]="product.price[counterIndex].shipping == shippingType.PlusShipping" (change)="onShippingType(shippingType.PlusShipping)"></radio-button>
+                </div>
+                <!-- + Shipping Price -->
+                <div style="display: flex; position: relative;">
+                    <radio-button style="margin-right: 10px;" [name]="'shipping'" [label]="'+ Shipping Price'" [checked]="product.price[counterIndex].shipping == shippingType.PlusShippingPrice" (change)="onShippingType(shippingType.PlusShippingPrice)"></radio-button>
+                    
+                    
+                    <input id="shipping-price" style="margin-top: -4px; margin-bottom: 4px;" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].shippingPrice">
+                    <div *ngIf="product.price[counterIndex].shipping != shippingType.PlusShippingPrice" style="background: #3030309a; width: 99px; height: 22px; position: absolute; left: 118px; top: -3px;"></div>
                 </div>
             </div>
         </div>

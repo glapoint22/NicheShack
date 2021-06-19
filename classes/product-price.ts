@@ -6,9 +6,10 @@ export class ProductPrice {
     image: ImageData = new ImageData();
     header: string;
     quantity: string;
-    unitPrice: number;
+    unitPrice: string;
     unit: string;
-    strikethroughPrice: number;
+    strikethroughPrice: string;
     price: number;
-    shipping: ShippingType = ShippingType.None;
+    shipping: ShippingType;
+    shippingPrice: number;
 }
