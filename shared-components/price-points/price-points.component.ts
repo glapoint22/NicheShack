@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ShippingType } from 'classes/shipping-type';
 import { Product } from 'projects/manager/src/app/classes/product';
 
@@ -11,8 +11,5 @@ export class PricePointsComponent {
   constructor() { }
   public shippingType = ShippingType;
   @Input() product: Product;
-
-  onBuyClick(url: string) {
-    window.open(url);
-  }
+  @Output() onBuyClick: EventEmitter<string> = new EventEmitter();
 }

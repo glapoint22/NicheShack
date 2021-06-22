@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ProductPrice } from 'classes/product-price';
 import { ShippingType } from 'classes/shipping-type';
 import { MediaType } from 'projects/manager/src/app/classes/media';
@@ -15,52 +15,57 @@ import { PromptService } from 'services/prompt.service';
 })
 export class ProductPriceComponent implements OnInit {
   constructor(private promptService: PromptService, private dataService: DataService) { }
+  
   // Private
-  private singlePrice: Subscription;
-  private multiprice: Array<Subscription> = [];
+  private singlePriceSubscription: Subscription;
+  private multipriceSubscriptions: Array<Subscription> = [];
+
   // Public
   public isMultiPrice: boolean;
   public mediaType = MediaType;
   public counterIndex: number = 0;
   public shippingType = ShippingType;
+
+  // Decorators
   @Input() product: Product;
 
 
-
+  
   // ==============================( NG ON INIT )============================== \\
 
   ngOnInit() {
+    // Update ismultiprice
     this.isMultiPrice = this.product.isMultiPrice;
+
+    // Set the subscription based on whether price is single or multi
     if (!this.product.isMultiPrice) {
-      this.setSinglePrice();
+      this.setSinglePriceSubscription();
     } else {
-      this.setMultiPrice();
+      this.setMultiPriceSubscriptions();
     }
   }
 
 
 
-  // ==============================( SET SINGLE PRICE )============================== \\
+  // ==============================( SET SINGLE PRICE SUBSCRIPTION )============================== \\
 
-  setSinglePrice() {
+  setSinglePriceSubscription() {
 
-    if (this.multiprice) {
-      this.multiprice.forEach(x => {
+    // Unsubscribe from all the multiprice subscriptions
+    if (this.multipriceSubscriptions) {
+      this.multipriceSubscriptions.forEach(x => {
         x.unsubscribe();
       })
     }
 
-
     window.setTimeout(() => {
 
       // Single Price
-      this.singlePrice = fromEvent(document.getElementById('single-price-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
-        let singlePriceInput = document.getElementById('single-price-input') as HTMLInputElement;
-
+      this.singlePriceSubscription = fromEvent(document.getElementById('single-price-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
         this.dataService.put('api/Products/Price', {
           productId: this.product.id,
           id: this.product.price[this.counterIndex].id,
-          price: parseFloat(singlePriceInput.value)
+          price: this.product.price[this.counterIndex].price
         }).subscribe();
       });
     })
@@ -68,57 +73,73 @@ export class ProductPriceComponent implements OnInit {
 
 
 
-  // ==============================( SET MULTI PRICE )============================== \\
+  // ==============================( SET MULTI PRICE SUBSCRIPTIONS )============================== \\
 
-  setMultiPrice() {
-    if (this.singlePrice) {
-      this.singlePrice.unsubscribe();
+  setMultiPriceSubscriptions() {
+
+    // Unsubscribe from the singleprice subscription
+    if (this.singlePriceSubscription) {
+      this.singlePriceSubscription.unsubscribe();
     }
-
 
     window.setTimeout(() => {
 
       // Header
-      this.multiprice[0] = fromEvent(document.getElementById('header-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
-        // let headerInput = document.getElementById('header-input') as HTMLInputElement;
-
-        // this.dataService.put('api/Products/Price', {
-        //   productId: this.product.id,
-        //   id: this.product.price[this.counterIndex].id,
-        //   header: headerInput.value
-        // }).subscribe();
+      this.multipriceSubscriptions[0] = fromEvent(document.getElementById('header-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
+        this.updateMultiPrice();
       });
 
       // Quantity
-      this.multiprice[1] = fromEvent(document.getElementById('quantity-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
-
+      this.multipriceSubscriptions[1] = fromEvent(document.getElementById('quantity-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
+        this.updateMultiPrice();
       });
 
       // Unit Price
-      this.multiprice[2] = fromEvent(document.getElementById('unit-price-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
-
+      this.multipriceSubscriptions[2] = fromEvent(document.getElementById('unit-price-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
+        this.updateMultiPrice();
       });
 
       // Unit
-      this.multiprice[3] = fromEvent(document.getElementById('unit-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
-
+      this.multipriceSubscriptions[3] = fromEvent(document.getElementById('unit-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
+        this.updateMultiPrice();
       });
 
       // Strikethrough Price
-      this.multiprice[4] = fromEvent(document.getElementById('strikethrough-price-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
-
+      this.multipriceSubscriptions[4] = fromEvent(document.getElementById('strikethrough-price-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
+        this.updateMultiPrice();
       });
 
       // Total Price
-      this.multiprice[5] = fromEvent(document.getElementById('total-price-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
-
+      this.multipriceSubscriptions[5] = fromEvent(document.getElementById('total-price-input'), 'input').pipe(debounceTime(1000)).subscribe(() => {
+        this.updateMultiPrice();
       });
 
       // Shipping Price
-      this.multiprice[6] = fromEvent(document.getElementById('shipping-price'), 'input').pipe(debounceTime(1000)).subscribe(() => {
-
+      this.multipriceSubscriptions[6] = fromEvent(document.getElementById('shipping-price'), 'input').pipe(debounceTime(1000)).subscribe(() => {
+        this.updateMultiPrice();
       });
     })
+  }
+
+
+
+  // ==============================( UPDATE MULTI PRICE )============================== \\
+
+  updateMultiPrice() {
+    // Update all the product price properties to the database
+    this.dataService.put('api/Products/Price', {
+      productId: this.product.id,
+      id: this.product.price[this.counterIndex].id,
+      Header: this.product.price[this.counterIndex].header,
+      Quantity: this.product.price[this.counterIndex].quantity,
+      ImageId: this.product.price[this.counterIndex].image.id == 0 ? null : this.product.price[this.counterIndex].image.id,
+      UnitPrice: this.product.price[this.counterIndex].unitPrice,
+      Unit: this.product.price[this.counterIndex].unit,
+      StrikethroughPrice: this.product.price[this.counterIndex].strikethroughPrice,
+      Price: this.product.price[this.counterIndex].price,
+      Shipping: this.product.price[this.counterIndex].shipping,
+      ShippingPrice: this.product.price[this.counterIndex].shippingPrice
+    }).subscribe();
   }
 
 
@@ -155,9 +176,27 @@ export class ProductPriceComponent implements OnInit {
 
         // Yes
         () => {
+
+          // Reset counterindex back to zero
           this.counterIndex = 0;
+
+          // Reset ismultiprice
           this.product.isMultiPrice = false;
-          this.setSinglePrice();
+          this.setSinglePriceSubscription();
+          this.dataService.put('api/Products/IsMultiPrice', {
+            productId: this.product.id,
+            isMultiPrice: false
+          }).subscribe();
+
+          // Remove all price points then create default price
+          this.product.price = [];
+          this.product.price.push(new ProductPrice());
+          this.product.price[this.counterIndex].price = 0;
+          this.dataService.delete('api/Products/Prices', {
+            productId: this.product.id,
+          }).subscribe((priceId: number) => {
+            this.product.price[this.counterIndex].id = priceId;
+          });
         }, this, null,
 
         // No
@@ -171,7 +210,7 @@ export class ProductPriceComponent implements OnInit {
 
       this.counterIndex = 0;
       this.product.isMultiPrice = false;
-      this.setSinglePrice();
+      this.setSinglePriceSubscription();
       this.dataService.put('api/Products/IsMultiPrice', {
         productId: this.product.id,
         isMultiPrice: false
@@ -194,22 +233,21 @@ export class ProductPriceComponent implements OnInit {
 
         // Yes
         () => {
+
+          // Reset ismultiprice
           this.product.isMultiPrice = true;
-          this.setMultiPrice();
+          this.setMultiPriceSubscriptions();
+          this.dataService.put('api/Products/IsMultiPrice', {
+            productId: this.product.id,
+            isMultiPrice: true
+          }).subscribe();
 
+          // Reset price back to zero
           this.product.price[this.counterIndex].price = 0;
-
-
           this.dataService.put('api/Products/Price', {
             productId: this.product.id,
             id: this.product.price[this.counterIndex].id,
             price: 0
-          }).subscribe();
-
-
-          this.dataService.put('api/Products/IsMultiPrice', {
-            productId: this.product.id,
-            isMultiPrice: true
           }).subscribe();
         }, this, null,
 
@@ -223,7 +261,7 @@ export class ProductPriceComponent implements OnInit {
     } else {
 
       this.product.isMultiPrice = true;
-      this.setMultiPrice();
+      this.setMultiPriceSubscriptions();
       this.dataService.put('api/Products/IsMultiPrice', {
         productId: this.product.id,
         isMultiPrice: true
@@ -239,13 +277,6 @@ export class ProductPriceComponent implements OnInit {
     this.counterIndex = this.product.price.length;
     this.product.price.push(new ProductPrice());
 
-
-    this.dataService.post('api/Products/Price', {
-      productId: this.product.id
-    }).subscribe((id: number) => this.product.price[this.counterIndex].id = id);
-
-
-
     // As long as it's not the first price point
     if (this.counterIndex != 0) {
       // Copy all the values from the previous price point to the newly created price point
@@ -259,6 +290,14 @@ export class ProductPriceComponent implements OnInit {
       this.product.price[this.counterIndex].shipping = this.product.price[this.counterIndex - 1].shipping;
       this.product.price[this.counterIndex].shippingPrice = this.product.price[this.counterIndex - 1].shippingPrice;
     }
+
+    // Create the new price point in the database
+    this.dataService.post('api/Products/Price', {
+      productId: this.product.id
+    }).subscribe((priceId: number) => {
+      this.product.price[this.counterIndex].id = priceId;
+      this.updateMultiPrice();
+    });
   }
 
 
@@ -272,20 +311,21 @@ export class ProductPriceComponent implements OnInit {
 
         // Yes
         () => {
+          let priceId: number = this.product.price[this.counterIndex].id;
 
+          // Remove the price point from the array
+          this.product.price.splice(this.counterIndex, 1);
+          if (this.counterIndex > 0) this.counterIndex--;
+
+          // Remove the price point from the database
           this.dataService.delete('api/Products/Price', {
             productId: this.product.id,
-            priceId: this.product.price[this.counterIndex].id
-
-          }).subscribe(() => {
-            this.product.price.splice(this.counterIndex, 1);
-            if (this.counterIndex > 0) this.counterIndex--;
-          });
+            priceId: priceId
+          }).subscribe();
         }, this, null,
 
         // No
         () => {
-
         }
       );
     }
@@ -297,6 +337,7 @@ export class ProductPriceComponent implements OnInit {
 
   onShippingType(shippingType: ShippingType) {
     this.product.price[this.counterIndex].shipping = shippingType;
+    this.updateMultiPrice();
   }
 
 

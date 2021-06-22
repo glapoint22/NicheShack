@@ -65,7 +65,7 @@
             
             <!-- Image -->
             <div class="field-label">Image:</div>
-            <image [image]="product.price[counterIndex].image" [mediaType]="mediaType.ProductPriceImage"></image>
+            <image [image]="product.price[counterIndex].image" [mediaType]="mediaType.ProductPriceImage" (onChange)="updateMultiPrice()"></image>
 
 
 
