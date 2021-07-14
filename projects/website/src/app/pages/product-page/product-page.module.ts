@@ -7,6 +7,7 @@ import { HeaderFooterModule } from '../../shared-components/header-footer/header
 import { ProductInfoModule } from '../../shared-components/product-info/product-info.module';
 import { ReviewsModule } from '../../shared-components/reviews/reviews.module';
 import { PageContentModule } from '../../shared-components/page-content/page-content.module';
+import { PricePointsModule } from 'shared-components/price-points/price-points.module';
 
 @NgModule({
   declarations: [ProductPageComponent],
@@ -16,7 +17,8 @@ import { PageContentModule } from '../../shared-components/page-content/page-con
     HeaderFooterModule,
     ProductInfoModule,
     ReviewsModule,
-    PageContentModule
+    PageContentModule,
+    PricePointsModule
   ]
 })
 export class ProductPageModule { }

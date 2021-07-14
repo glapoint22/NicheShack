@@ -55,12 +55,12 @@
 
             <!-- Header -->
             <div class="field-label">Header:</div>
-            <input id="header-input" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].header" placeholder="BASIC - 1 BOTTLE">
+            <input id="header-input" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].header != null ? product.price[counterIndex].header : ''" placeholder="BASIC - 1 BOTTLE">
 
 
             <!-- Quantity -->
             <div class="field-label">Quantity:</div>
-            <input id="quantity-input" class="txt-22"  (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].quantity" placeholder="30 Day Supply">
+            <input id="quantity-input" class="txt-22"  (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].quantity != null ? product.price[counterIndex].quantity : ''" placeholder="30 Day Supply">
 
             
             <!-- Image -->
@@ -74,17 +74,17 @@
 
             <!-- Unit Price -->
             <div class="field-label">Unit Price:</div>
-            <input id="unit-price-input" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].unitPrice" placeholder="$49">
+            <input id="unit-price-input" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].unitPrice != null ? product.price[counterIndex].unitPrice : ''" placeholder="$49">
 
 
             <!-- Unit -->
             <div class="field-label">Unit:</div>
-            <input id="unit-input" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].unit" placeholder="Bottle">
+            <input id="unit-input" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].unit != null ? product.price[counterIndex].unit : ''" placeholder="Bottle">
 
 
             <!-- Strikethrough Price -->
             <div class="field-label">Strikethrough Price:</div>
-            <input id="strikethrough-price-input" class="txt-22 strikethrough"  (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].strikethroughPrice" placeholder="297">
+            <input id="strikethrough-price-input" class="txt-22 strikethrough"  (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].strikethroughPrice != null ? product.price[counterIndex].strikethroughPrice : ''" placeholder="297">
 
 
             <!-- Total Price -->
@@ -100,7 +100,7 @@
 
                 <!-- None -->
                 <div style="margin-bottom: 13px;">
-                    <radio-button [name]="'shipping'" [label]="'none'" [checked]="product.price[counterIndex].shipping == shippingType.None" (change)="onShippingType(shippingType.None)"></radio-button>
+                    <radio-button [name]="'shipping'" [label]="'none'" [checked]="product.price[counterIndex].shipping == shippingType.None || product.price[counterIndex].shipping == null" (change)="onShippingType(shippingType.None)"></radio-button>
                 </div>
                 <!-- Free Shipping -->
                 <div style="margin-bottom: 13px;">
@@ -118,8 +118,7 @@
                 <div style="display: flex; position: relative;">
                     <radio-button style="margin-right: 10px;" [name]="'shipping'" [label]="'+ Shipping Price'" [checked]="product.price[counterIndex].shipping == shippingType.PlusShippingPrice" (change)="onShippingType(shippingType.PlusShippingPrice)"></radio-button>
                     
-                    
-                    <input id="shipping-price" style="margin-top: -4px; margin-bottom: 4px;" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].shippingPrice">
+                    <input id="shipping-price" style="margin-top: -4px; margin-bottom: 4px;" class="txt-22" (input)="onInputTextInput($event.target)" [value]="product.price[counterIndex].shippingPrice != null ? product.price[counterIndex].shippingPrice : ''">
                     <div *ngIf="product.price[counterIndex].shipping != shippingType.PlusShippingPrice" style="background: #3030309a; width: 99px; height: 22px; position: absolute; left: 118px; top: -3px;"></div>
                 </div>
             </div>
