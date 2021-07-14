@@ -16,7 +16,8 @@
 
 
             <!-- Item -->
-            <div [id]="item.id" class="item">
+            <div [id]="item.hierarchyId" class="item" (click)="editable ? hierarchy.selectedItem = item: false"
+            [ngClass]="{'selected': editable && hierarchy.selectedItem == item, 'not-editable': !editable}">
                 {{item.name}}
             </div>
 
@@ -25,6 +26,6 @@
         </div>
 
         <!-- Hierarchy Content -->
-        <hierarchy-checkbox-content [items]="item.children" [hierarchy]="hierarchy" (onChange)="onChange.emit($event)"></hierarchy-checkbox-content>
+        <hierarchy-checkbox-content [items]="item.children" [hierarchy]="hierarchy" [editable]="editable" (onChange)="onChange.emit($event)"></hierarchy-checkbox-content>
     </div>
 </ng-container>

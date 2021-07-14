@@ -25,6 +25,8 @@ import { ProductImageComponent } from './product-editor/product-properties/produ
 import { ProductSubgroupsComponent } from './product-editor/product-properties/product-subgroups/product-subgroups.component';
 import { ProductPriceComponent } from './product-editor/product-properties/product-price/product-price.component';
 import { PricePointsModule } from 'shared-components/price-points/price-points.module';
+import { AvailableKeywordsComponent } from './product-editor/product-properties/product-keywords/available-keywords/available-keywords.component';
+import { SelectedKeywordsComponent } from './product-editor/product-properties/product-keywords/selected-keywords/selected-keywords.component';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { PricePointsModule } from 'shared-components/price-points/price-points.m
     ProductInfoComponent,
     ProductImageComponent,
     ProductSubgroupsComponent,
-    ProductPriceComponent
+    ProductPriceComponent,
+    AvailableKeywordsComponent,
+    SelectedKeywordsComponent
   ],
   imports: [
     CommonModule,

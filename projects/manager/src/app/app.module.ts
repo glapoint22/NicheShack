@@ -24,7 +24,6 @@ import { ProductDescriptionNotificationPopupComponent } from './shared-component
 import { ProductImageNotificationPopupComponent } from './shared-components/popups/notification-popups/product-image-notification-popup/product-image-notification-popup.component';
 import { ProductMediaNotificationPopupComponent } from './shared-components/popups/notification-popups/product-media-notification-popup/product-media-notification-popup.component';
 import { ProductContentNotificationPopupComponent } from './shared-components/popups/notification-popups/product-content-notification-popup/product-content-notification-popup.component';
-// import { PricePointPopupComponent } from './pages/niche-shack-editor/product-editor/product-properties/product-content/price-point-popup/price-point-popup.component';
 import { MediaBrowserPopupComponent } from './shared-components/popups/media-browser-popup/media-browser-popup.component';
 import { PromptModule } from './shared-components/prompt/prompt.module';
 import { NicheShackHierarchyPopupComponent } from './shared-components/popups/niche-shack-hierarchy-popup/niche-shack-hierarchy-popup.component';
@@ -34,7 +33,6 @@ import { HighlightPopupComponent } from './shared-components/popups/highlight-po
 import { ProductsFormComponent } from './shared-components/forms/products-form/products-form.component';
 import { HierarchyComponent } from './shared-components/hierarchy/hierarchy.component';
 import { EditableHierarchyComponent } from './shared-components/hierarchy/editable-hierarchy/editable-hierarchy.component';
-import { HierarchyContentComponent } from './shared-components/hierarchy/hierarchy-content/hierarchy-content.component';
 import { PopupComponent } from './shared-components/popups/popup/popup.component';
 import { ShackIconComponent } from './shared-components/shack-icon/shack-icon.component';
 import { MenuBarComponent } from './shared-components/menu-bar/menu-bar.component';
@@ -67,7 +65,6 @@ import { KeywordsFormComponent } from './shared-components/forms/keywords-form/k
     ProductImageNotificationPopupComponent,
     ProductMediaNotificationPopupComponent,
     ProductContentNotificationPopupComponent,
-    // PricePointPopupComponent,
     MediaBrowserPopupComponent,
     NicheShackHierarchyPopupComponent,
     GeneralNotificationPopupComponent,
@@ -76,7 +73,6 @@ import { KeywordsFormComponent } from './shared-components/forms/keywords-form/k
     ProductsFormComponent,
     HierarchyComponent,
     EditableHierarchyComponent,
-    HierarchyContentComponent,
     PopupComponent,
     ShackIconComponent,
     MenuBarComponent,

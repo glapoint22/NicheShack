@@ -1,4 +1,4 @@
-.item {
+.item.not-editable {
     cursor: default;
     &:hover:not(.selected) {
         background: none;

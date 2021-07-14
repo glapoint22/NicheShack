@@ -24,3 +24,8 @@ export enum FilterHierarchyItemType {
     Filter,
     FilterOption
 }
+
+export enum KeywordHierarchyItemType {
+    KeywordGroup,
+    Keyword
+}

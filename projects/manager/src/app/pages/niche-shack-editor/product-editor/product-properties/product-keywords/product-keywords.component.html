@@ -4,39 +4,20 @@
     <!-- Property Box -->
     <div class="property-box-dark" style="position: relative;">
 
-        <!-- Icons -->
-        <div class="icons">
 
-            <!-- Delete -->
-            <div class="icon-container"
-                 (click)="onListItemDelete()"
-                 (mouseout)="itemList.onIconButtonMouseOut()"
-                 (mouseover)="itemList.isOverIconButton = true"
-                 [ngClass]="{'icon-disabled': itemList.deleteIcon.isDisabled}"
-                 [attr.title]="!itemList.isMultiSelected ? 'Delete Keyword (Delete)' : 'Delete Keywords (Delete)'"><i class="fas fa-trash-alt"></i>
+        <div style="display: flex;">
+
+            <!-- Available Keywords -->
+            <available-keywords #availableKeywords style="flex: 1;"></available-keywords>
+
+            <div class="divider">
+                <button style="font-size: 20px" [disabled]="isAddButtonDisabled" (click)="onAddButtonClick()">
+                    <i class="far fa-caret-square-right"></i>
+                </button>
             </div>
 
-            
-            <!-- Add -->
-            <div class="icon-container"
-                 (click)="openPopup($event.target)"
-                 [attr.title]="'New Keyword (Ctrl+Alt+N)'"
-                 (mouseout)="itemList.onIconButtonMouseOut()"
-                 (mouseover)="itemList.isOverIconButton = true"
-                 [ngClass]="{'icon-disabled': itemList.addIcon.isDisabled}"><i class="fas fa-plus-circle"></i>
-            </div>
+            <!-- Selected Keywords -->
+            <selected-keywords #selectedKeywords style="flex: 1;" [productId]="product.id"></selected-keywords>
         </div>
-
-
-        <!-- Item LIst -->
-        <item-list 
-            #itemList
-            [listItems]="product.keywords"
-            [listOptions]="itemListOptions">
-        </item-list>
-
-
-        <!-- Placeholder -->
-        <div *ngIf="product.keywords && product.keywords.length == 0" class="no-property">No keywords available</div>
     </div>
 </panel>

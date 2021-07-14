@@ -1,0 +1,41 @@
+<div class="icons">
+    <!-- Collapse -->
+    <div class="icon-container" title="Collapse" (click)="onCollapseButtonClick()"
+        [ngClass]="{'icon-disabled': isCollapseButtonDisabled()}">
+
+        <i class="fas fa-minus-square"></i>
+    </div>
+
+    <!-- Add -->
+    <div class="icon-container" (click)="onAddItemButtonClick()" [title]="getAddButtonTitle()"
+        [ngClass]="{'icon-disabled': isAddItemDisabled()}">
+        <i class="fas fa-plus-circle"></i>
+    </div>
+
+    <!-- Rename -->
+    <div class="icon-container" [ngClass]="{'icon-disabled': isEditItemDisabled()}" (click)="onEditItemClick()"
+        [title]="selectedItem ? 'Rename ' + getItemName(selectedItem.type) : 'Rename'">
+
+        <i class="fas fa-pencil-alt"></i>
+    </div>
+
+
+    <!-- Delete -->
+    <div class="icon-container" [ngClass]="{'icon-disabled': isDeleteItemDisabled()}" (click)="onDeleteClick()"
+        [title]="selectedItem ? 'Delete ' + getItemName(selectedItem.type) : 'Delete'">
+
+        <i class="fas fa-trash-alt"></i>
+    </div>
+
+
+    <!-- Remove -->
+    <div class="icon-container" [ngClass]="{'icon-disabled': isRemoveItemDisabled()}" (click)="onRemoveItemClick()"
+        [title]="'Remove Keyword from group'">
+
+        <i class="fas fa-ban"></i>
+    </div>
+</div>
+
+<div style="max-height: 300px; overflow: auto;">
+    <hierarchy-content *ngIf="items && items.length > 0" [items]="items" [hierarchy]="this"></hierarchy-content>
+</div>

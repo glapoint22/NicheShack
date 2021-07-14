@@ -350,7 +350,7 @@ export class EditableHierarchyComponent extends HierarchyComponent {
     } else {
       // Post new item
       this.dataService.post(this.selectedItem.url, {
-        id: this.selectedItem.parent ? this.selectedItem.parent.id : 0,
+        id: this.getItemId(),
         name: element.innerText
       })
         .subscribe((id: number) => {
@@ -371,6 +371,10 @@ export class EditableHierarchyComponent extends HierarchyComponent {
   }
 
 
+
+  getItemId(): number {
+    return this.selectedItem.parent ? this.selectedItem.parent.id : 0;
+  }
 
 
   // -----------------------------( ON KEYDOWN )------------------------------ \\
