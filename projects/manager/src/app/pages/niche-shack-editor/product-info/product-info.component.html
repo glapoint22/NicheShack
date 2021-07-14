@@ -100,5 +100,5 @@
     </div>
 
     <!-- Price Points -->
-    <price-points [product]="productService.product"></price-points>
+    <price-points [product]="productService.product" (onBuyClick)="onBuyClick($event)"></price-points>
 </div>

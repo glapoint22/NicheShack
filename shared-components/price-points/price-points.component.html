@@ -2,10 +2,10 @@
 <div *ngIf="product.isMultiPrice" class="price-point-background">
 
     <!-- Price Point Container -->
-    <div *ngFor="let pricePoint of product.price" class="price-point-container">
+    <div #pricePoints *ngFor="let pricePoint of product.price">
 
         <!-- Price Point Base -->
-        <div  class="price-point-base">
+        <div #base class="price-point-base">
 
 
             <!-- Header -->
@@ -19,7 +19,10 @@
 
 
             <!-- Image -->
-            <div *ngIf="pricePoint.image.url != null" class="image" [ngStyle]="{'background-image': 'url(images/' + pricePoint.image.url + ')'}"></div> 
+            <div *ngIf="pricePoint.image.url != null" class="image-container">
+                <div class="image" [ngStyle]="{'background-image': 'url(images/' + pricePoint.image.url + ')'}"></div> 
+            </div>
+            
 
 
             <!-- Unit -->
@@ -30,21 +33,23 @@
 
 
              <!-- Total -->
-             <div *ngIf="(pricePoint.strikethroughPrice != null) || (pricePoint.price != null)" [ngStyle]="{'margin-top': pricePoint.unitPrice != null ? '0' : '13px'}" class="total-container">
+             <!-- <div *ngIf="(pricePoint.strikethroughPrice != null) || (pricePoint.price != null)" [ngStyle]="{'margin-top': pricePoint.unitPrice != null ? '0' : '13px'}" class="total-container">
                 <div class="total-label">{{'Total:'}}</div>
                 <div *ngIf="pricePoint.strikethroughPrice != null" class="strikethrough">
                     <div  class="strikethrough-price">{{'$' + pricePoint.strikethroughPrice}}</div>
                 </div>
                 <div *ngIf="pricePoint.price != null" class="total-price">{{'$' + pricePoint.price}}</div>
-            </div>
+            </div> -->
 
                 
             <!-- Product Button -->
-            <div (click)="onBuyClick(product.hoplink)" class="product-button">Visit offical website to buy</div>
-
+            <!-- <div class="product-button-container">
+                <div (click)="onBuyClick.emit(product.hoplink)" class="product-button">Visit official website to buy</div>
+            </div> -->
+            
 
             <!-- Shipping -->
-            <div *ngIf="pricePoint.shipping != shippingType.None" class="shipping-container">
+            <div *ngIf="pricePoint.shipping != shippingType.None && pricePoint.shipping != null" class="shipping-container">
                 <i *ngIf="pricePoint.shipping != shippingType.None && pricePoint.shipping != shippingType.PlusShipping && pricePoint.shipping != shippingType.PlusShippingPrice" class="fas fa-shipping-fast"></i>
                 <div *ngIf="pricePoint.shipping != shippingType.None" class="shipping-type">{{pricePoint.shipping == shippingType.PlusShippingPrice ? '+ ' + (pricePoint.shippingPrice == null ? '$0.00' : (pricePoint.shippingPrice | currency:'USD')) + ' Shipping' :     pricePoint.shipping == shippingType.PlusShipping ? '+ Shipping' : pricePoint.shipping == shippingType.FreeShipping ? 'Free Shipping' : 'Free US Shipping'}}</div>
             </div>
